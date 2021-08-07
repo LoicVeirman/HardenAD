@@ -11,6 +11,10 @@
  +--------+---------+---------------+-----------------------------+
  |21/05/31|02.00.000| Loic.Veirman  | Script Creation             |
  +--------+---------+---------------+-----------------------------+
+ |05/06/31|02.00.001| Loic.Veirman  | #6 - Display issue with the |
+ |        |         |               |      progress status when   |
+ |        |         |               |      pShell is minor to 5.0 |
+ +--------+---------+---------------+-----------------------------+
 
 ###################################################################>
 
@@ -25,10 +29,47 @@ Param(
 )
 
 ###################################################################
+## Functions                                                     ##
+## ---------                                                     ##
+## This part holds local function used by the sequencer only.    ##
+###################################################################
+Function New-LogEntry
+{
+    Param(
+        [Parameter(Mandatory=$true,Position=0)]
+        [ValidateSet("info","warning","debug","error")]
+        [String]
+        $LogLevel,
+
+        [Parameter(Mandatory=$true,Position=1)]
+        $LogText
+    )
+    #-Variables
+    $Result = @()
+    #-Generate timestamp
+    $Timstamp = Get-Date -Format "yyyy/MM/dd hh:mm:ss"
+    #-Generate log level
+    Switch ($LogLevel)
+    {
+        "info"    { $Level = "INFO" }
+        "warning" { $Level = "WARN" }
+        "debug"   { $Level = "DBUG" }
+        "error"   { $Level = "ERR!" }
+    }
+    #-Format text (able to handle multiple line)
+    foreach ($entry in $LogText)
+    {
+        $Result += "$Timstamp`t[$Level]`t$entry"
+    }
+    #-Return result
+    return $Result
+}
+
+###################################################################
 ## Script Block                                                  ##
 ## ------------                                                  ##
 ## Function called by the script block should return a psObject: ##
-## ResultCode: 0 (success), 1 (warning) or 2 (error)             ##
+## ResultCode: 0 (success), 1 (warning), 2 (error), 3 (ignore)   ##
 ## ResultMesg: Message to be displayed on screen.                ##
 ## TaskExeLog: Message to be added at global log.                ##
 ##                                                               ##
@@ -56,22 +97,64 @@ $Block = {  param(   #-Name of the function to be executed
             #-Relocating the new pShell session to the same location as the calling script.
             Push-Location $Location
 
+            #-Checking OS 
+            if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
+            {
+                $is2k8r2 = $true
+            } else {
+                $is2k8r2 = $false
+            }
+
             #-Loading modules, if needed.
-            Try   { 
+              Try   { 
                     #-Module loading...
-                    $mods | foreach { Import-Module $_ }
+                    if ($is2k8r2)
+                    {
+                        $null = $mods | foreach { Import-Module $_.fullName }
+                    } else {
+                        $null = $mods | foreach { Import-Module $_ }
+                    }
                   }
             Catch { 
                     #-No module to be loaded.
                   }
 
-            #-Run the function 
-            $RunData = . $Command $Parameters | Select -ExcludeProperty PSComputerName,RunspaceId,PSShowComputerName
+            #-Run the function
+            Try   {
+                    #-Checking for multiple parameters and OS...
+					#-More than 1 parameter but greater than 2008 R2
+                    if ($Parameters.count -gt 1 -and -not ($is2k8r2)) 
+					{
+						$RunData = . $Command @Parameters | Select -ExcludeProperty PSComputerName,RunspaceId,PSShowComputerName
+					} 
+                    
+                    #-More than 1 parameter and is 2008 R2
+                    if ($Parameters.count -gt 1 -and $is2k8r2) 
+					{
+						#-pShell 2.0 is not able to translate the multiple useParameters inputs from the xml file.
+                        # We rewrite the parmaters in a more compliant way.
+                        $tmpParam = @()
+                        for ($i = 0 ; $i -lt $Parameters.count ; $i++) 
+                        {
+                            $tmpParam += $Parameters[$i]
+                        }
+                        $RunData = . $Command @TmpParam | Select -ExcludeProperty PSComputerName,RunspaceId,PSShowComputerName
+					}
+                    
+                    #-1 parameter or less
+                    if ($Parameters.count -le 1) 
+                    {
+						$RunData = . $Command $Parameters | Select -ExcludeProperty PSComputerName,RunspaceId,PSShowComputerName
+					}
+                  }
+            Catch {
+                    $RunData = New-Object -TypeName psobject -Property @{ResultCode = 9 ; ResultMesg = "Error launching the function $command" ; TaskExeLog = "Error"}
+                  }
             
             #.Return the result
             $RunData
 
-        }#.End ScriptBlock.
+}#.End ScriptBlock.
 
 ###################################################################
 ## Script                                                        ##
@@ -85,14 +168,22 @@ $Block = {  param(   #-Name of the function to be executed
 $Host.UI.RawUI.BackgroundColor = 'black'
 
 #-Loading modules
-$scriptModules  = (Get-ChildItem .\Modules -Filter "*.psm1").FullName
+# When dealing with 2008R2, we need to import AD module first
+if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
+    $scriptModules  = (Get-ChildItem .\Modules -Filter "*.psm1") | Select FullName
+} else {
+    $scriptModules  = (Get-ChildItem .\Modules -Filter "*.psm1").FullName
+}
+
 
 #-Setting-up usefull variables
 $SchedulrConfig = [xml](get-content .\Configs\Configuration_Scheduler.xml)
+$SchedulrLoging = @()
 $TasksSeqConfig = [xml](get-content .\Configs\$TasksSequence)
 $ScriptLocation = Get-Location                                     
+$pShellMajorVer = ((Get-Host).version -split '\.')[0]
 
-#-Setting uip colors and texts scheme. 
+#-Setting up colors and texts scheme. 
 # To deal with highlight color in display, use the ` to initiate (or end) a color change in your string,
 #    then use ont of the three characters specified in value AltBaseHTxt(A,B, or C) to select your color.
 #    the color will switch back to normal at the next `.
@@ -103,7 +194,7 @@ $ColorsAndTexts = New-Object -TypeName psobject `
                                                 RunningColor = "Cyan"
                                                 WarningColor = "Yellow"
                                                 FailureColor = "Red"
-                                                IgnoredColor = "gray"
+                                                IgnoredColor = "cyan"
                                                 SuccessColor = "green"
                                                 BaseTxtColor = "white"
                                                 AltBaseHColA = "magenta"
@@ -115,6 +206,7 @@ $ColorsAndTexts = New-Object -TypeName psobject `
                                                 FailureText  = "failure"
                                                 SuccessText  = "success"
                                                 ignoredText  = "ignored"
+                                                FuncErrText  = "!ERROR!"
                                                 AltBaseHTxtA = "["
                                                 AltBaseHTxtB = "("
                                                 AltBaseHTxtC = "{"
@@ -211,6 +303,16 @@ $Resume = @()
 $Tasks  = $TasksSeqConfig.Settings.Sequence.ID | Sort-Object number
 foreach ($task in $Tasks)
 {
+    #-Update log
+    $SchedulrLoging += New-LogEntry "Info" ("NEW TASK: " + $task.Name)
+
+    #-Checking if a DSIagreement exists
+    if ($task.DSIagreement -eq 'Yes') { 
+        $doNotRun = $false 
+    } else { 
+        $doNotRun = $true 
+    }
+
     #-Get current cusror position on screen
     $InitialPosition = $host.UI.RawUI.CursorPosition
 
@@ -240,14 +342,30 @@ foreach ($task in $Tasks)
     $CharIndex = -1
     
     #-Cursor management
-    $esc        = [char]27
-    $hideCursor = "$esc[?25l"
-    $showCursor = "$esc[?25h"
-    $resetAll   = "$esc[0m" 
+    # Update for bug #6: if not pShell 5 or greater, the escape char will be ignored. Time for flashy Dance... That's backward compatibility :)
+    if ($pShellMajorVer -ge 5) 
+    {
+        $esc        = [char]27
+        $hideCursor = "$esc[?25l"
+        $showCursor = "$esc[?25h"
+        $resetAll   = "$esc[0m" 
+    } else {
+        $esc        = $null
+        $hideCursor = $null
+        $showCursor = $null
+        $resetAll   = $null 
+    }
+
+    # Logging
+    $SchedulrLoging += New-LogEntry "debug" ("--- ----: Calling function " + [string]($task.CallingFunction) + " with parameters " + [string]($task.UseParameters))
     
     #-Run the job
-    $job = Start-Job -ScriptBlock $Block -Name CurrentJob -ArgumentList $task.CallingFunction,$task.UseParameters,$ScriptLocation,$scriptModules
-    
+    if (-not ($doNotRun)) { 
+        $job = Start-Job -ScriptBlock $Block -Name CurrentJob -ArgumentList $task.CallingFunction,$task.UseParameters,$ScriptLocation,$scriptModules
+    } else {
+        $isRunning = $false
+    }
+        
     #-Looping around while the jos is still performing its task
     while ($isRunning) 
     { 
@@ -286,36 +404,68 @@ foreach ($task in $Tasks)
         }
         Start-Sleep -Milliseconds 175
     }
+    #-Logging
+    $SchedulrLoging += New-LogEntry "debug" ("--- ----: function's ended")
 
     #-Grab the job result.
-    $result = Receive-Job $job.Id
+    if (-not ($doNotRun)) { 
+        $result = Receive-Job $job.Id
+    } else {
+        $result = New-Object -TypeName psobject -Property @{Resultcode = 3}
+    }
+
     #-Display result on screen
     Switch ($result.ResultCode)
     {
-        0 { $zText = $ColorsAndTexts.SuccessText ; $zColor = $ColorsAndTexts.SuccessColor }
-        1 { $zText = $ColorsAndTexts.WarningText ; $zColor = $ColorsAndTexts.WarningColor }
-        2 { $zText = $ColorsAndTexts.FailureText ; $zColor = $ColorsAndTexts.FailureColor }
+        0       { $zText = $ColorsAndTexts.SuccessText ; $zColor = $ColorsAndTexts.SuccessColor }
+        1       { $zText = $ColorsAndTexts.WarningText ; $zColor = $ColorsAndTexts.WarningColor }
+        2       { $zText = $ColorsAndTexts.FailureText ; $zColor = $ColorsAndTexts.FailureColor }
+        3       { $zText = $ColorsAndTexts.IgnoredText ; $zColor = $ColorsAndTexts.IgnoredColor }
+        default { $zText = $ColorsAndTexts.FuncErrText ; $zColor = $ColorsAndTexts.FailureColor }
     }
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X,$InitialPosition.Y
     Write-Host (${hideCursor} + [string]$zText) -ForegroundColor $zColor -NoNewline
     #-Remove the job from the queue
-    Remove-Job $job.Id
+    if (-not ($doNotRun)) { 
+        Remove-Job $job.ID
+    }
     #-Next line ;)
     write-host $resetAll$showCursor
     #-Keeping a resume to be displayed at the end and exported to the output folder
     $Resume += New-Object -TypeName psobject -Property @{ TaskID = $Task.Number ; TaskName = $task.Name ; TaskResult = $zText }
+    #-Logging
+    $SchedulrLoging += New-LogEntry "debug" @(("--- ----: TaskID     = " + $Task.Number),("--- ----: TaskName   = " + $task.Name),"--- ----: TaskResult = $zText",("--- ----: Message    = " + $result.ResultMesg))
+    #-Extra logging when an error was faced.
+    if ($zText -eq $ColorsAndTexts.FuncErrText)
+    {
+        $SchedulrLoging += New-LogEntry "error" "ERR FUNC: it seems that the called function is missing or is not properly returning its result!" 
+        $SchedulrLoging += New-LogEntry "error" ("ERR FUNC: received result code: " + $result.ResultCode)
+    }
 }
 
 #-Script over. exporting run log.
-$LogName = (Get-Date -Format "yyyy-MM-dd_hhmmss_") + "HardenAD-Results.log"
+$csvName = (Get-Date -Format "yyyy-MM-dd_hhmmss_") + "HardenAD-Results.csv"
+$logName = (Get-Date -Format "yyyy-MM-dd_hhmmss_") + "HardenAD-Results.log"
 
 Write-Host "-------------------------"
-Write-Host "Exporting results to .\Logs\" -ForegroundColor Cyan -NoNewline
-Write-Host $LogName -ForegroundColor Yellow -NoNewline
-Write-Host "..." -ForegroundColor Cyan -NoNewline
+Write-Host "Exporting results to .\Logs\" -ForegroundColor Gray -NoNewline
+Write-Host $csvName -ForegroundColor DarkGray -NoNewline
+Write-Host "..." -ForegroundColor Gray -NoNewline
 
 Try { 
-    $Resume | Select TaskId,TaskResult,TaskName | Sort-Object TaskID | Export-Csv .\Logs\$LogName -Delimiter "`t" -Encoding Unicode -NoTypeInformation
+    $Resume | Select TaskId,TaskResult,TaskName | Sort-Object TaskID | Export-Csv .\Logs\$CsvName -Delimiter "`t" -Encoding Unicode -NoTypeInformation
+    Write-Host "success" -ForegroundColor Green
+    }
+Catch {
+    Write-Host "failure" -ForegroundColor red
+    }
+
+Write-Host "Exporting logging to .\Logs\" -ForegroundColor Gray -NoNewline
+Write-Host $logName -ForegroundColor DarkGray -NoNewline
+Write-Host "..." -ForegroundColor Gray -NoNewline
+
+Try { 
+    $SchedulrLoging | Out-File .\Logs\$LogName 
     Write-Host "success`n" -ForegroundColor Green
     }
 Catch {

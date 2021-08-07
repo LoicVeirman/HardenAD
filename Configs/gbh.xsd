@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="MODEL">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="BASELINE">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ADMINISTRATION">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="OU">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element minOccurs="0" name="OU">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element maxOccurs="unbounded" name="OU">
+                                  <xs:complexType>
+                                    <xs:sequence minOccurs="0">
+                                      <xs:element maxOccurs="unbounded" name="Group">
+                                        <xs:complexType>
+                                          <xs:sequence minOccurs="0">
+                                            <xs:element name="Member">
+                                              <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                    <xs:attribute name="Type" type="xs:string" use="required" />
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                          <xs:attribute name="Perimeter" type="xs:string" use="required" />
+                                          <xs:attribute name="name" type="xs:string" use="required" />
+                                          <xs:attribute name="category" type="xs:string" use="required" />
+                                          <xs:attribute name="scope" type="xs:string" use="required" />
+                                          <xs:attribute name="description" type="xs:string" use="required" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="Name" type="xs:string" use="required" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="Name" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element minOccurs="0" maxOccurs="unbounded" name="Group">
+                            <xs:complexType>
+                              <xs:sequence minOccurs="0">
+                                <xs:element maxOccurs="unbounded" name="Member" type="xs:string" />
+                                <xs:element minOccurs="0" maxOccurs="unbounded" name="MemberOf" type="xs:string" />
+                              </xs:sequence>
+                              <xs:attribute name="Perimeter" type="xs:string" use="required" />
+                              <xs:attribute name="name" type="xs:string" use="required" />
+                              <xs:attribute name="category" type="xs:string" use="required" />
+                              <xs:attribute name="scope" type="xs:string" use="required" />
+                              <xs:attribute name="description" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Name" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Name" type="xs:string" use="required" />
+                  <xs:attribute name="Path" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="PRODUCTION">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="OU">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="OU">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:choice maxOccurs="unbounded">
+                                  <xs:element maxOccurs="unbounded" name="ACL">
+                                    <xs:complexType>
+                                      <xs:attribute name="Rights" type="xs:string" use="required" />
+                                      <xs:attribute name="Group" type="xs:string" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                  <xs:element maxOccurs="unbounded" name="OU">
+                                    <xs:complexType>
+                                      <xs:sequence minOccurs="0">
+                                        <xs:element name="GPO">
+                                          <xs:complexType>
+                                            <xs:sequence>
+                                              <xs:element name="Preference">
+                                                <xs:complexType>
+                                                  <xs:attribute name="xml" type="xs:string" use="required" />
+                                                  <xs:attribute name="Path" type="xs:string" use="required" />
+                                                  <xs:attribute name="Member" type="xs:string" use="required" />
+                                                  <xs:attribute name="Filter" type="xs:string" use="required" />
+                                                </xs:complexType>
+                                              </xs:element>
+                                            </xs:sequence>
+                                            <xs:attribute name="Name" type="xs:string" use="required" />
+                                            <xs:attribute name="Action" type="xs:string" use="required" />
+                                          </xs:complexType>
+                                        </xs:element>
+                                      </xs:sequence>
+                                      <xs:attribute name="Name" type="xs:string" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                  <xs:element maxOccurs="unbounded" name="GPO">
+                                    <xs:complexType>
+                                      <xs:attribute name="Name" type="xs:string" use="required" />
+                                      <xs:attribute name="Action" type="xs:string" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                </xs:choice>
+                              </xs:sequence>
+                              <xs:attribute name="Name" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Name" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Name" type="xs:string" use="required" />
+                  <xs:attribute name="Path" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ENTITIES">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Country">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Society">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute name="NetworkAddress" type="xs:string" use="required" />
+                            <xs:attribute name="ADSite" type="xs:string" use="required" />
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:decimal" use="required" />
+      <xs:attribute name="Date" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,32 +1,204 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:element name="Settings">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="OrganizationalUnits" />
-				<xs:element name="GroupPolicies" />
-				<xs:element name="Accounts" />
-				<xs:element name="Groups" />
-				<xs:element name="Scheduling" />
-				<xs:element name="Microsoft365" />
-				<xs:element name="Sequence">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element maxOccurs="unbounded" name="Id">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="CallingFunction" type="xs:string" />
-										<xs:element name="UseParameters" type="xs:string" />
-										<xs:element name="TaskDescription" type="xs:string" />
-									</xs:sequence>
-									<xs:attribute name="Number" type="xs:unsignedByte" use="required" />
-									<xs:attribute name="Name" type="xs:string" use="required" />
-								</xs:complexType>
-							</xs:element>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+  <xs:element name="Settings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="OrganizationalUnits">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ouTree">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="OU">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element maxOccurs="unbounded" name="ChildOU">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Description" type="xs:string" />
+                                <xs:element name="Name" type="xs:string" />
+                                <xs:element minOccurs="0" maxOccurs="unbounded" name="ChildOU">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Description" type="xs:string" />
+                                      <xs:element name="Name" type="xs:string" />
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Class" type="xs:string" use="required" />
+                        <xs:attribute name="Name" type="xs:string" use="required" />
+                        <xs:attribute name="Description" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="GroupPolicies">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Translation">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="Object">
+                      <xs:complexType>
+                        <xs:attribute name="Class" type="xs:string" use="required" />
+                        <xs:attribute name="Name" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="WmiFilters">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="Filter">
+                      <xs:complexType>
+                        <xs:attribute name="Name" type="xs:string" use="required" />
+                        <xs:attribute name="Source" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element maxOccurs="unbounded" name="GPO">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="GpoBackup">
+                      <xs:complexType>
+                        <xs:attribute name="ID" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="GpoLink">
+                      <xs:complexType>
+                        <xs:attribute name="Path" type="xs:string" use="required" />
+                        <xs:attribute name="Enabled" type="xs:string" use="required" />
+                        <xs:attribute name="Enforced" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="GpoDeny">
+                      <xs:complexType>
+                        <xs:attribute name="ID" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="GpoFilter">
+                      <xs:complexType>
+                        <xs:attribute name="WMI" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Name" type="xs:string" use="required" />
+                  <xs:attribute name="Description" type="xs:string" use="required" />
+                  <xs:attribute name="Validation" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Accounts">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="User">
+                <xs:complexType>
+                  <xs:attribute name="GivenName" type="xs:string" use="required" />
+                  <xs:attribute name="Surname" type="xs:string" use="required" />
+                  <xs:attribute name="samAccountName" type="xs:string" use="required" />
+                  <xs:attribute name="DisplayName" type="xs:string" use="required" />
+                  <xs:attribute name="Description" type="xs:string" use="required" />
+                  <xs:attribute name="Path" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Groups">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="Group">
+                <xs:complexType mixed="true">
+                  <xs:sequence minOccurs="0">
+                    <xs:element maxOccurs="unbounded" name="Member">
+                      <xs:complexType>
+                        <xs:attribute name="samAccountName" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" use="required" />
+                  <xs:attribute name="Path" type="xs:string" use="required" />
+                  <xs:attribute name="Description" type="xs:string" use="required" />
+                  <xs:attribute name="Scope" type="xs:string" use="required" />
+                  <xs:attribute name="Category" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DefaultMembers">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="Group">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="Member" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="Target" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TaskSchedules">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SchedTask">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="SchedCmd" type="xs:string" />
+                    <xs:element name="SchedArg" type="xs:string" />
+                    <xs:element name="SchedDir" type="xs:string" />
+                    <xs:element name="SchedDsc" type="xs:string" />
+                    <xs:element name="SchedPth" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="Name" type="xs:string" use="required" />
+                  <xs:attribute name="Xml" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="BaseDir" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Microsoft365">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="Target" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Sequence">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="Id">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="CallingFunction" type="xs:string" />
+                    <xs:element maxOccurs="unbounded" name="UseParameters" type="xs:string" />
+                    <xs:element name="DSIagreement" type="xs:string" />
+                    <xs:element name="TaskDescription" type="xs:string" />
+                  </xs:sequence>
+                  <xs:attribute name="Number" type="xs:unsignedByte" use="required" />
+                  <xs:attribute name="Name" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
