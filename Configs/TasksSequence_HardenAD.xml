@@ -1,27 +1,431 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Settings>
-	<OrganizationalUnits></OrganizationalUnits>
-	<GroupPolicies></GroupPolicies>
-	<Accounts></Accounts>
-	<Groups></Groups>
-	<Scheduling></Scheduling>
-	<Microsoft365></Microsoft365>
+  <OrganizationalUnits>
+		<ouTree>
+			<!-- 
+			The section <ouTree> handle the base model for OU creation. When calling the function [Set-OUTree], add as parameter the class name
+			of the tree structure you want to add. This could also be used to manage new OU generation.
+			-->
+			<OU Class="SMB-ADMIN-FR" Name="Administration" Description="OU D'administration des comptes à privilèges">
+				<ChildOU>
+					<Description>Comptes d'administration Tier 1 et Tier 2</Description>
+					<Name>Comptes Administration</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Comptes d'administration Tier 0</Description>
+					<Name>Comptes Administration Tier0</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Comptes de services</Description>
+					<Name>Comptes Services</Name>
+					<ChildOU>
+						<Description>Comptes de services synchronisés avec Azure AD</Description>
+						<Name>Synchronisation AAD</Name>
+					</ChildOU>
+					<ChildOU>
+						<Description>Objets désactivés</Description>
+						<Name>Désactivés</Name>
+					</ChildOU>
+				</ChildOU>
+				<ChildOU>
+					<Description>Comptes de services a haut privilèges</Description>
+					<Name>Comptes Services Tier0</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Groupes d'administration Tier 1 et Tier 2</Description>
+					<Name>Groupes Administration</Name>
+					<ChildOU>
+						<Description>Groupes synchronisés avec Azure AD</Description>
+						<Name>Synchronisation AAD</Name>
+					</ChildOU>
+				</ChildOU>
+				<ChildOU>
+					<Description>Groupes d'administration Tier 0</Description>
+					<Name>Groupes Administration Tier0</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Serveurs d'administration Tier 1 et Tier 2</Description>
+					<Name>Serveurs Administration</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Serveurs d'administration Tier 0</Description>
+					<Name>Serveurs Administration Tier0</Name>
+				</ChildOU>
+			</OU>
+			<OU Class="SMB-ADMIN-EN" Name="Administration" Description="Privileged accounts administrative OU">
+				<ChildOU>
+					<Description>Admin Accounts Tier 1 and Tier 2</Description>
+					<Name>Admin Accounts</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Admin Accounts Tier 0</Description>
+					<Name>Admin Accounts (Tier 0)</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Service Accounts</Description>
+					<Name>Service Accounts</Name>
+					<ChildOU>
+						<Description>Azure AD synced service accounts</Description>
+						<Name>AAD Sync</Name>
+					</ChildOU>
+					<ChildOU>
+						<Description>Disabled Accounts</Description>
+						<Name>Disabled</Name>
+					</ChildOU>
+				</ChildOU>
+				<ChildOU>
+					<Description>High Privileges Service Accounts</Description>
+					<Name>Service Accounts (Tier 0)</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Administration Groups for Tier 1 and Tier 2</Description>
+					<Name>Administration Groups</Name>
+					<ChildOU>
+						<Description>Azure AD synchronized groups</Description>
+						<Name>AAD Sync</Name>
+					</ChildOU>
+				</ChildOU>
+				<ChildOU>
+					<Description>Administration Groups for Tier 0</Description>
+					<Name>Administration Groups (Tier 0)</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Administration Servers Tier 1 and Tier 2</Description>
+					<Name>Admninistration Servers</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Administration Servers for Tier 0</Description>
+					<Name>Administration Servers (Tier 0)</Name>
+				</ChildOU>
+			</OU>
+			<OU Class="PROVISIONNING-FR" Name="Integration" Description="OU d'intégration des nouveaux objets par défaut">
+				<ChildOU>
+					<Description>Nouveaux objets utilisateurs</Description>
+					<Name>Utilisateurs</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>Nouveaux objets ordinateurs</Description>
+					<Name>Ordinateurs</Name>
+				</ChildOU>
+			</OU>
+			<OU Class="PROVISIONNING-EN" Name="Provisionning" Description="New objects provisionning OU">
+				<ChildOU>
+					<Description>New user objects</Description>
+					<Name>Users</Name>
+				</ChildOU>
+				<ChildOU>
+					<Description>New computer objects</Description>
+					<Name>Computers</Name>
+				</ChildOU>
+			</OU>
+		</ouTree>
+	</OrganizationalUnits>
+	<GroupPolicies>
+ 		<!-- The section <groupPolicies> describe the GPO modeling and design for the whole domain. -->
+    <Translation>
+      <!-- the <translation> section is used to identify which identies should be refreshed with the current domain name. -->
+      <Object Class="Domain" Name="GRP_ADMIN_TIER_0"/>
+			<Object Class="Domain" Name="GRP_ADMIN_STATIONS"/>
+			<Object Class="Domain" Name="GRP_ADMIN_SERVEURS"/>
+			<Object Class="Domain" Name="GRP_ADMIN"/>
+			<Object Class="UNCPath" Name="DOMAIN_UNC_PATH"/>
+    </Translation>
+    <WmiFilters>
+      <Filter Name="OS is 64 bits" Source="OSx64.mof"/>
+			<Filter Name="OS is 32 bits" Source="OSx86.mof"/>
+    </WmiFilters>
+    <!-- The <GPO> elements refers to each gpo added to the domain. <NAME> will be the.. Name :). 
+             Description: will be the description label. 
+             Validation.: will say if this GPO has to be linked or just imported.
+						 gpoDeny....: will add the specified identity to the Deny Execute on it. Use as any input as requiered.
+             gpoLink....: Will link the GPO to the specified target. Use as any input as requiered. Each input need Enabled and Enforced values.
+    -->
+    <GPO Name="Security - Restriction - Login - Tier 0" Description="Deny any kind of login on a system for GRP_ADMIN_TIER_0. Domain Controllers are not concerned." Validation="Yes">
+      <GpoBackup ID="{5D50D6DC-9DA8-4EAD-8EB0-3B609C7AC01C}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoDeny ID="%SecPri%-9"/>
+    </GPO>
+    <GPO Name="Security - Local Administrator Password Solution (x64)" Description="Deploy and Configure LAPS on x64 systems" Validation="Yes">
+      <GpoBackup ID="{0F023B0B-6A0A-4C0D-B8B9-F29FC205F900}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
+			<GpoDeny ID="%SecPri%-9"/>
+			<GpoFilter WMI="OS is 64 bits"/>
+    </GPO>
+    <GPO Name="Security - Local Administrator Password Solution (x86)" Description="Deploy and Configure LAPS on x64 systems" Validation="Yes">
+      <GpoBackup ID="{ED334168-DC3C-4898-8BD0-1ACCE80A79F8}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
+			<GpoDeny ID="%SecPri%-9"/>
+			<GpoFilter WMI="OS is 32 bits"/>
+    </GPO>
+    <GPO Name="Security - Local Administrators - Stations" Description="Add GRP_ADMIN_STATIONS to local administrators group on Windows Clients systems." Validation="Yes">
+      <GpoBackup ID="{87EA60EA-0337-4A97-902D-041950FF1699}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
+    </GPO>
+    <GPO Name="Security - Local Administrators - servers" Description="Add GRP_ADMIN_SERVEURS to local administrators group on Windows Server systems." Validation="Yes">
+      <GpoBackup ID="{44699172-D454-4EFC-8FAB-ECFE6C082C6D}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
+    </GPO>
+    <GPO Name="Security - GPO Refresh Cycle - 20 minutes" Description="Enforce refresh cycle to 20 minutes." Validation="Yes">
+      <GpoBackup ID="{7B688698-BC99-48AA-B4E5-E7F93F45D9B2}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
+    </GPO>
+    <GPO Name="Security - PowerShell - Logs" Description="Enable PowerShell logging." Validation="Yes">
+      <GpoBackup ID="{536309D4-4900-4753-8BF6-A27E8B69FC78}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
+    </GPO>
+    <GPO Name="Security - Screenlock - 15 minutes" Description="Enforce screelock after 15 minutes of inactivity." Validation="Yes">
+      <GpoBackup ID="{748F5058-F22C-42EB-B6C5-D3D4344E9772}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
+    </GPO>
+    <GPO Name="Network - IPv4 - Priority" Description="Prioritization IPv4 over IPv6." Validation="Yes">
+      <GpoBackup ID="{B8D065EC-7E9F-4B2C-86BE-F05141FB8A57}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
+    </GPO>
+    <GPO Name="Security - Disable LLMNR" Description="Disabling Link-Local Multicast Name Resolution." Validation="Yes">
+      <GpoBackup ID="{C91C69B8-5340-4A2B-B302-8815D86302AE}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+    <GPO Name="Security - BloodHound - Block NetCease" Description="Rewrite lanManServer management permission to block BloodHound discovery mecanism." Validation="Yes">
+      <GpoBackup ID="{AB5098AC-3481-4D01-A8AC-989ABA263265}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+    <GPO Name="Security - Disable NTLMv1 and LM" Description="Enforce encryption level to NTLMv2 or greater." Validation="Yes">
+      <GpoBackup ID="{94D41145-F5F5-44BD-BA98-0BF903B87B4F}"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+		<GPO Name="Security - Disable Print Spooler Service" Description="Disable the print spooler service on windows systems" Validation="Yes">
+      <GpoBackup ID="{43ADF3DC-B776-437E-B856-1CBD67237E16}"/>
+      <GpoLink Path="OU=Domain Controllers,ROOTDN" Enabled="No" Enforced="No"/>
+    </GPO>
+  </GroupPolicies>
+	<Accounts>
+    <User GivenName="SuperAdmin" Surname="HARDENAD" samAccountName="SA-HARDENAD" DisplayName="SuperAdmin HARDENAD" Description="Super Administrateur HardenAD (Tier 0)" Path="OU=Comptes Administration Tier0,OU=Administration,ROOTDN"/>
+		<User GivenName="Admin"      Surname="HARDENAD" samAccountName="A-HARDENAD"  DisplayName="Admin HARDENAD"      Description="Administrateur HardenAD (Tier 1 et 2)"  Path="OU=Comptes Administration,OU=Administration,ROOTDN"/>
+  </Accounts>
+	<Groups>
+ 	  <Group name="GRP_ADMIN_TIER_0" Path="OU=Groupes Administration Tier0,OU=Administration,ROOTDN" Description="Groupe d'administration AD" Scope="Global" Category="Security">
+      <Member samAccountName="SA-HARDENAD"/>
+      <Member samAccountName="A-HARDENAD"/>
+    </Group>
+		<Group name="GRP_ADMIN_STATIONS" Path="OU=Groupes Administration,OU=Administration,ROOTDN" Description="Groupe d'administration Workstations" Scope="Global" Category="Security">
+      <Member samAccountName="A-HARDENAD"/>
+    </Group>
+		<Group name="GRP_ADMIN_SERVEURS" Path="OU=Groupes Administration,OU=Administration,ROOTDN" Description="Groupe d'administration Serveurs" Scope="Global" Category="Security">
+    </Group>
+		<Group name="GRP_ADMIN" Path="OU=Groupes Administration,OU=Administration,ROOTDN" Description="Groupe d'administration Tier 1 et 2" Scope="Global" Category="Security"> 
+    </Group>
+  </Groups>
+  <DefaultMembers>
+    <!-- Builtin\Administrators -->
+    <Group Target="S-1-5-32-544">
+      <Member>%DomainSID%-500</Member>
+			<Member>%DomainSID%-512</Member>
+      <Member>%DomainSID%-519</Member>
+    </Group>
+    <!-- Domain Admins -->
+    <Group Target="%DomainSID%-512">
+      <Member>%DomainSID%-500</Member>
+			<Member>monadmin</Member>
+    </Group>
+  </DefaultMembers>
+	<TaskSchedules BaseDir="C:\_ADM\TasksSchedulesScripts">
+    <!-- Use %BaseDir% to refer to the taskSchedule.BaseDir value -->
+    <!-- flushing Sensible groups with MCS-GroupsFlushing.ps1 -->
+    <SchedTask Name="MCS - Sensitive Groups Flushing" Xml="MCS-GroupsFlushing.xml">
+      <SchedCmd>powershell.exe</SchedCmd> 
+      <SchedArg>-windowstyle hidden -file .\MCS-GroupsFlushing.ps1</SchedArg>
+      <SchedDir>%BaseDir%\MCS-GroupsFlushing</SchedDir>
+			<SchedDsc>Flush highly sensitive groups (see MCS-GroupsScheduling.csv for details)</SchedDsc>
+      <SchedPth>HardenAD</SchedPth>
+    </SchedTask>
+  </TaskSchedules>
+	<Microsoft365>
+    <Target>OU=Ordinateurs,OU=Integration,ROOTDN</Target>
+		<Target>OU=Utilisateurs,OU=Integration,ROOTDN</Target>
+  </Microsoft365>
 	<Sequence>
-		<Id Number="1" Name="First test">
-			<CallingFunction>Test-Script</CallingFunction>
-			<UseParameters>@("Mon 1er message","Mon 2nd message")</UseParameters>
-			<TaskDescription>This is the `[first` test</TaskDescription>
+		<!--
+			To deal with highlight color in display, use the ` to initiate (or end) a color change in your string,
+			then use one of the three characters specified in value AltBaseHTxt(A,B, or C) to select your color.
+			the color will switch back to normal at the next `
+			
+			You can use some special input to replace value dynamically :
+			FileName = replace with the value of this file
+			RootDN   = replace with domain root DN
+		-->
+    
+    <!-- SET MS-DS-MACHINEACCOUNTQUOTA TO 0 -->
+		<Id Number="010" Name="Restrict computer junction to the domain">
+			<CallingFunction>Set-msDSMachineAccountQuota</CallingFunction>
+			<!--Parameter: new ms-DS-MachineAccountQuota value -->
+      <UseParameters>0</UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>set `(msDSMachineAccountQuota` to `(0` to restrict domain junction</TaskDescription>
 		</Id>
-		<Id Number="2" Name="Second test">
-			<CallingFunction>Test-Script2</CallingFunction>
-			<UseParameters>@("Mon 3eme message","Mon 4eme message")</UseParameters>
-			<TaskDescription>This `{is` the `(second` test</TaskDescription>
+    
+    <!-- ENABLE THE AD RECYCLE BIN -->
+		<Id Number="020" Name="Activate Active Directory Recycle Bin">
+			<CallingFunction>Set-ADRecycleBin</CallingFunction>
+			<UseParameters></UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>activate the `(AD Recycle Bin` optional feature</TaskDescription>
 		</Id>	
-		<Id Number="3" Name="Third test">
-			<CallingFunction>Test-Script</CallingFunction>
-			<UseParameters>@("Mon 5eme message","Mon 6eme message")</UseParameters>
-			<TaskDescription>This is the `[Third` test</TaskDescription>
+    
+    <!-- CONFIGURE ALL AD SITE LINKS WITH THE NOTIFY OPTIONS --> 
+		<Id Number="030" Name="Set Notify on every Site Links">
+			<CallingFunction>Set-SiteLinkNotify</CallingFunction>
+			<UseParameters></UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>set `(notify` on every `(Site Links</TaskDescription>
 		</Id>
+    
+		<!-- ACTIVATE THE GPO CENTRAL STORE -->	
+    <Id Number="040" Name="Set GPO Central Store">
+			<CallingFunction>Set-GpoCentralStore</CallingFunction>
+			<UseParameters></UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>set `(GPO Central Store` and update `{adm` and `{admx` files</TaskDescription>
+		</Id>
+    
+    <!-- GENERATE NEW ADMINISTRATION ORGANIZATIONAL UNIT -->
+		<Id Number="050" Name="Set Administration Organizational Unit">
+			<CallingFunction>Set-TreeOU</CallingFunction>
+			<!--Parameter: class name from OrganizationalUnits | ouTree in this document -->
+      <UseParameters>SMB-ADMIN-FR</UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>set `(Administration` organizational unit</TaskDescription>
+		</Id>
+    
+    <!-- GENERATE NEW DEFAULT OBJECTS LOCATION TREE -->
+		<Id Number="060" Name="Set Provisionnong Organizational Unit">
+			<CallingFunction>Set-TreeOU</CallingFunction>
+			<!--Parameter: class name from OrganizationalUnits | ouTree in this document -->
+      <UseParameters>PROVISIONNING-FR</UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>set `(Provisionning` organizational unit</TaskDescription>
+		</Id>
+    
+    <!-- RELOCATE NEW USER/GROUP OBJECT LOCATION -->
+		<Id Number="070" Name="Default user location on creation">
+			<CallingFunction>Set-DefaultObjectLocation</CallingFunction>
+			<!--Parameter: user or computer -->
+      <UseParameters>User</UseParameters>
+      <!--Parameter: OU distinguishedName. Use RootDN to automatically fill-in the domain name -->
+			<UseParameters>OU=utilisateurs,OU=Integration,RootDN</UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>set `(user objects` default location</TaskDescription>
+		</Id>
+    
+    <!-- RELOCATE NEW COMPUTER OBJECT LOCATION -->
+		<Id Number="071" Name="Default computer location on creation">
+			<CallingFunction>Set-DefaultObjectLocation</CallingFunction>
+			<!--Parameter: user or computer -->
+      <UseParameters>Computer</UseParameters>
+			<!--Parameter: OU distinguishedName. Use RootDN to automatically fill-in the domain name -->
+      <UseParameters>OU=ordinateurs,OU=Integration,RootDN</UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>set `(computer objects` default location</TaskDescription>
+		</Id>
+    
+    <!-- GENERATE NEW ADMIN ACCOUNTS ON WHICH THE DELEGATION MODEL WILL WORKS -->
+		<Id Number="080" Name="Create administration accounts">
+			<CallingFunction>New-AdministrationAccounts</CallingFunction>
+			<UseParameters></UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>create `(administration accounts` used by the tier model</TaskDescription>
+		</Id>
+    
+    <!-- GENERATE NEW ADMIN GOURPS ON WHICH THE DELEGATION MODEL WILL WORKS -->
+		<Id Number="090" Name="Create administration groups">
+			<CallingFunction>New-AdministrationGroups</CallingFunction>
+			<UseParameters></UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>create `(administration groups` used by the tier model</TaskDescription>
+		</Id>
+    
+    <!-- GENERATE MICROSOFT 365 SYNCING ORGANIZATIONAL UNITS: MANUAL INPUT -->
+		<Id Number="100" Name="Create Microsoft 365 syncing Oroganizational Units">
+			<CallingFunction>New-M365OrganizationalUnits</CallingFunction>
+			<!--Parameter: Name of the OU to be generated -->
+      <UseParameters>Microsoft 365</UseParameters>
+      <!--Parameter: action mode. Manual refers to entries from Microsft365 | Target and Automatic mode will cross the OU tree and generate the sync OU each time it founds a user/computers/groups object within it. -->
+      <UseParameters>Manual</UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>create `(synchronization OUs` used by `[Azure AD Connect`</TaskDescription>
+		</Id>
+    
+    <!-- GENERATE MICROSOFT 365 SYNCING ORGANIZATIONAL UNITS: AUTOMATIC INPUT -->
+		<Id Number="101" Name="Create Microsoft 365 syncing Oroganizational Units">
+			<CallingFunction>New-M365OrganizationalUnits</CallingFunction>
+			<!--Parameter: Name of the OU to be generated -->
+      <UseParameters>Microsoft 365</UseParameters>
+      <!--Parameter: action mode. Manual refers to entries from Microsft365 | Target and Automatic mode will cross the OU tree and generate the sync OU each time it founds a user/computers/groups object within it. -->
+      <UseParameters>Automatic</UseParameters>
+      <!--Parameter: used in combination with automatic mode: set the base DN for analysis -->
+      <UseParameters>RootDN</UseParameters>
+			<DSIagreement>Yes</DSIagreement>
+			<TaskDescription>create `(synchronization OUs` used by `[Azure AD Connect`</TaskDescription>
+		</Id>
+    
+    <!-- UPDATE THE MIGTABLE FILE TO REFLECT SOURCE/TARGET DOMAIN IDENTITIES-->
+    <Id Number="110" Name="Generate migration table for group policies">
+      <CallingFunction>Publish-MigrationTable</CallingFunction>
+      <!--Parameter: name of the migtable file to use as reference for translation -->
+      <UseParameters>dev.lab132.local.migtable</UseParameters>
+      <DSIagreement>Yes</DSIagreement>
+      <TaskDescription>Generate `(migration table` used by import function when adding a `[group policy`</TaskDescription>
+    </Id>
+    
+    <!-- GENERATE A TRANSLATION FILE FOR GPO PREFERENCE IMPORT -->
+    <Id Number="120" Name="Generate translation table for group policies preferences">
+      <CallingFunction>Update-PreferenceXML</CallingFunction>
+      <!--Parameter: name of the preftable file to use as reference for translation -->
+      <UseParameters>dev.lab132.local.preftable</UseParameters>
+      <DSIagreement>Yes</DSIagreement>
+      <TaskDescription>Update `(group policy xml preference files` with `[new SID values` according to the preferences migration table</TaskDescription>
+    </Id>
+		
+    <!-- IMPORT WMI FILTERS -->
+		<Id Number="125" Name="Import additional WMI Filters">
+      <CallingFunction>Import-WmiFilters</CallingFunction>
+			<!--Parameter: name of the domain from which the mof file has been generated -->
+      <UseParameters>DEV.LAB132.LOCAL</UseParameters>
+      <DSIagreement>Yes</DSIagreement>
+    <TaskDescription>Import `(WMI filter` to the domain</TaskDescription>
+    </Id>
+    
+    <!-- IMPORT GPOs -->
+    <Id Number="130" Name="Import new GPO or update existing ones">
+      <CallingFunction>New-GpoObject</CallingFunction>
+      <UseParameters></UseParameters>
+      <DSIagreement>Yes</DSIagreement>
+      <TaskDescription>Import or update `(group policy objects` to the domain and link them</TaskDescription>
+    </Id>
+    
+    <!-- LAPS DEPLOYMENT SCRIPT UDATE -->
+    <Id Number="135" Name="Update LAPS deployment scripts">
+      <CallingFunction>Set-LapsScripts</CallingFunction>
+      <!-- Parameter: use NETLOGON or SYSVOL for a dynamic location. Else enter the UNC Path -->
+      <UseParameters>NETLOGON\LAPS</UseParameters>
+      <DSIagreement>Yes</DSIagreement>
+      <TaskDescription>update `(LAPS Scripts` to match with the domain name</TaskDescription>
+    </Id>
+    
+    <!-- IMPORT SCHEDULE TASKS -->
+    <Id Number="140" Name="Import schedule tasks on the running system">
+      <CallingFunction>New-ScheduleTasks</CallingFunction>
+      <UseParameters></UseParameters>
+      <DSIagreement>Yes</DSIagreement>
+      <TaskDescription>Import new `(schedule tasks` to the `[running system`</TaskDescription>
+    </Id>
+  
+    <!-- RESET SENSIBLE GROUPS -->
+    <Id Number="150" Name="Reset Group Memberships">
+      <CallingFunction>Reset-GroupMembership</CallingFunction>
+      <UseParameters></UseParameters>
+      <DSIagreement>Yes</DSIagreement>
+      <TaskDescription>Reset `(groups's membeberships` to the `[trusted list`</TaskDescription>
+    </Id>
 	</Sequence>
 </Settings>
 

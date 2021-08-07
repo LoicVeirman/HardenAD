@@ -1,20 +1,67 @@
-# This module file merge all functions required by the script at any stage.
-
-Function Test-Script ($message1,$message2)
+##################################################################
+## Import-ini                                                   ##
+## ----------                                                   ##
+## This function will convert an ini to an array table.         ##
+##                                                              ##
+## Version: 01.00.000                                           ##
+##  Author: loic.veirman@mssec.fr                               ##
+##################################################################
+Function Import-Ini
 {
-	#.Simulate code exec
-	Start-Sleep -Seconds 1
+    <# 
+        .Synopsis
+        return ini file content to as array.
 
-	#.Simulate a return code
-	$result = Get-Random -Minimum 0 -Maximum 101
+        .Description
+        By parsing the ini file, will return an array letting script calls its content this way : $YourVar["Section"]["Parameter"]
+        
+        .Parameter FilePath
+        File path to the ini file.
 
-	#.Simulate a return message
-	if ($result -le 33)        { $msg = "It's a success!" ; $resultCode = 0 }
-	if ($result -gt 33 -le 66) { $msg = "Warning: woops?" ; $resultCode = 1 }
-	if ($result -gt 66)        { $msg = "It's a Failure!" ; $resultCode = 2 }
+        .Notes
+        Version 01.00: 24/08/2019. 
+            History: Function creation.
+    #>
 
-	#.Return data
-	return (New-Object -TypeName psobject -Property @{ResultCode = $resultCode ; ResultMesg = $msg ; TaskExeLog = "test A"})
+    ## Parameters 
+    Param (
+        # Path to the ini file
+        [Parameter(Mandatory=$true)]
+        [string]
+        $FilePath
+        )
+
+    ## Generate output variable container
+    $ini = @{}
+    
+    ## Parse the file content and compare it with regular expression
+    if (!(Test-Path $FilePath)) 
+    { 
+        return $null 
+        break 
+    }
+    
+    switch -regex -file $FilePath
+    {
+        # Section
+        "^\[(.+)\]"     { $section = $matches[1]
+                          $ini[$section] = @{}
+                          $CommentCount = 0 
+                        }
+        # Comment
+        "^(;.*)$"       { $value = $matches[1]
+                          $CommentCount = $CommentCount + 1
+                          $name = "Comment" + $CommentCount
+                          $ini[$section][$name] = $value 
+                        } 
+        # Key
+        "(.+?)\s*=(.*)" { $name,$value = $matches[1..2] 
+                          $ini[$section][$name] = $value 
+                        }
+    }    
+        
+    ## return value
+    return $ini
 }
 
 Export-ModuleMember -Function *
