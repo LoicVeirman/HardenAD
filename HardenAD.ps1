@@ -3,17 +3,23 @@
 
  .Detail
 
- .Parameter
+ .Parameter TasksSequence
+  USe this parameter to specify a custom XML rile in replacement of TasksSequence_HardenAD.xml.
 
  .Note
  +--------+---------+---------------+-----------------------------+
  | Date   | Version | Author        | Description                 |
  +--------+---------+---------------+-----------------------------+
- |21/05/31|02.00.000| Loic.Veirman  | Script Creation             |
+ |21/05/21|02.00.000| Loic.Veirman  | #1 - Script Creation        |
  +--------+---------+---------------+-----------------------------+
- |05/06/31|02.00.001| Loic.Veirman  | #6 - Display issue with the |
+ |05/06/21|02.00.001| Loic.Veirman  | #2 - Display issue with the |
  |        |         |               |      progress status when   |
  |        |         |               |      pShell is minor to 5.0 |
+ +--------+---------+---------------+-----------------------------+
+ |22/08/21|02.00.002| Loic.Veirman  | #3 - Adapted script to use  |
+ |        |         |               |      new xml file with a    |
+ |        |         |               |      more understandable    |
+ |        |         |               |      name.                  |
  +--------+---------+---------------+-----------------------------+
 
 ###################################################################>
@@ -97,7 +103,7 @@ $Block = {  param(   #-Name of the function to be executed
             #-Relocating the new pShell session to the same location as the calling script.
             Push-Location $Location
 
-            #-Checking OS 
+            #-Checking OS to handle pShell 2.0
             if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
             {
                 $is2k8r2 = $true
@@ -177,7 +183,7 @@ if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
 
 
 #-Setting-up usefull variables
-$SchedulrConfig = [xml](get-content .\Configs\Configuration_Scheduler.xml)
+$SchedulrConfig = [xml](get-content .\Configs\Configuration_HardenAD.xml)
 $SchedulrLoging = @()
 $TasksSeqConfig = [xml](get-content .\Configs\$TasksSequence)
 $ScriptLocation = Get-Location                                     
@@ -307,7 +313,7 @@ foreach ($task in $Tasks)
     $SchedulrLoging += New-LogEntry "Info" ("NEW TASK: " + $task.Name)
 
     #-Checking if a DSIagreement exists
-    if ($task.DSIagreement -eq 'Yes') { 
+    if ($task.TaskEnabled -eq 'Yes') { 
         $doNotRun = $false 
     } else { 
         $doNotRun = $true 
