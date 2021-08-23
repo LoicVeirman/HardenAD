@@ -434,4 +434,161 @@ Function Set-LapsScripts
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 
+##################################################################
+## Install-Laps                                                 ##
+## ------------                                                 ##
+## This function will install LAPS and PShell add-on on the     ##
+## local system.                                                ##
+##                                                              ##
+## Version: 01.00.000                                           ##
+##  Author: loic.veirman@mssec.fr                               ##
+##################################################################
+Function Install-LAPS
+{
+    <#
+        .Synopsis
+         To be deployed, LAPS need to update the AD Schema first.
+        
+        .Description
+         The script first update the schema, then it will install the management tool.
+
+        .Notes
+         Version: 01.00 -- Loic.veirman@mssec.fr
+         
+         history: 21.08.22 Script creation
+    #>
+    param(
+        [Parameter(mandatory=$true,Position=0)]
+        [ValidateSet('ForceDcIsSchemaOwner','IgnoreDcIsSchemaOwner')]
+        [String]
+        $SchemaOwnerMode
+    )
+
+    ## Function Log Debug File
+    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+    $dbgMess = @()
+
+    ## Start Debug Trace
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+
+    ## Indicates caller and options used
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
+    $result = 0
+
+    ## When dealing with 2008R2, we need to import AD module first
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
+    {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
+        
+        Try   { 
+                Import-Module ActiveDirectory
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+                } 
+        Catch {
+                $noError = $false
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
+                $result  = 2
+                $ResMess = "AD module not available."
+                }
+    } else {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
+    }
+
+    ## Check prerequesite: running user must be member of the Schema Admins group and running computer should be Schema Master owner.
+    $CurrentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+    $isSchemaAdm = Get-ADGroupMember -Recursive ((Get-ADDomain).DomainSID.value + "-518") | Where-Object { $_.SID -eq $CurrentUser.User }
+
+    $CurrentCptr = $env:COMPUTERNAME
+    $isSchemaOwn = (Get-ADForest).SchemaMaster -eq ($currentCptr + "." + (Get-ADDomain).DnsRoot)
+
+
+    ## Check if a bypass has been requested for the schema master owner condition
+    if ($SchemaOwnerMode -eq 'IgnoreDcIsSchameOwner')
+    {
+        $isSchemaOwn = $true
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Master owner...: $isSchemaOwn (enforced for bypass)"
+    } else {
+
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Master owner...: $isSchemaOwn"
+    }
+
+    if ($isSchemaAdm -and $isSchemaOwn)
+    {
+        ## User has suffisant right, the script will then proceed.
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Administrator..: True"
+
+        ## First, we need to install the pShell add-ons to be able to update the schema.
+        $ExeCmd = ".\Inputs\LocalAdminPwdSolution\Binaries\LAPS.x64.msi"
+        $Params = "ADDLOCAL=Management.UI,Management.PS,Management.ADMX"
+
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: & msiexec /i $ExeCmd $Params /quiet /norestart"
+
+        Try {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: === begin === "
+
+            Start-Process -FilePath "$env:systemroot\system32\msiexec.exe" `
+                          -WorkingDirectory .\Inputs\LocalAdminPwdSolution\Binaries `
+                          -ArgumentList '/i laps.x64.msi ADDLOCAL=Management.UI,Management.PS,Management.ADMX /quiet /norestart' `
+                          -NoNewWindow `
+                          -Wait
+            
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: === done! === "
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> installation is successfull."
+
+        } Catch {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: === Error === "
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> installation failed!"
+            $result  = 2
+            $ResMess = "ERROR! the command line has failed!"
+        }
+        
+        ## If the install is a success, then let's update the schema
+        if ($result -eq 0)
+        {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Proceding to schema extension"
+            Try {
+                Import-Module AdmPwd.PS -ErrorAction Stop -WarningAction Stop
+                $null = Update-AdmPwdADSchema
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> schema extension is successfull"
+
+            } Catch {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> schema extension failed (warning: .Net 4.0 or greater requiered)"
+                $result  = 1
+                $ResMess = "LAPS installed but the schema extension has failed (warning: .Net 4.0 or greater requiered)"
+            }
+        } Else {
+                $result  = 1
+                $ResMess = "The schema extension has been canceled"
+        }
+
+    } Else {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Administrator..: False"
+        $result  = 2
+        $ResMess = "The user is not a Schema Admins (group membership with recurse has failed)"
+    }
+
+    ## Exit
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    if (Test-Path .\Logs\Debug\$DbgFile)
+    {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
+        {
+            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
+        }
+    }
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
+
+    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+}
+
 Export-ModuleMember -Function *
