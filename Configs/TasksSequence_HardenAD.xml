@@ -15,52 +15,42 @@
           <Name>Admin Accounts</Name>
           <Description>Admin Accounts Tier 1 and Tier 2</Description>
         </ChildOU>
-
         <ChildOU>
           <Name>Admin Accounts (Tier 0)</Name>
           <Description>Admin Accounts Tier 0</Description>
         </ChildOU>
-
         <ChildOU>
           <Name>Service Accounts</Name>
           <Description>Service Accounts</Description>
-
           <ChildOU>
             <Name>AAD Sync</Name>
             <Description>Azure AD synced service accounts</Description>
           </ChildOU>
-
           <ChildOU>
             <Name>Disabled</Name>
             <Description>Disabled Accounts</Description>
           </ChildOU>
         </ChildOU>
-
         <ChildOU>
           <Name>Service Accounts (Tier 0)</Name>
           <Description>High Privileges Service Accounts</Description>
         </ChildOU>
-
         <ChildOU>
           <Name>Administration Groups</Name>
           <Description>Administration Groups for Tier 1 and Tier 2</Description>
-
           <ChildOU>
             <Name>AAD Sync</Name>
             <Description>Azure AD synchronized groups</Description>
           </ChildOU>
         </ChildOU>
-
         <ChildOU>
           <Name>Administration Groups (Tier 0)</Name>
           <Description>Administration Groups for Tier 0</Description>
         </ChildOU>
-
         <ChildOU>
-          <Name>Admninistration Servers</Name>
+          <Name>Administration Servers</Name>
           <Description>Administration Servers Tier 1 and Tier 2</Description>
         </ChildOU>
-
         <ChildOU>
           <Name>Administration Servers (Tier 0)</Name>
           <Description>Administration Servers for Tier 0</Description>
@@ -171,7 +161,7 @@
     <!-- LOGS -->
     <GPO Name="Security - Audit (extended log)"
          Description="Harden AD 2.1 - Enforce audit logging and extended audit logging."
-         Validation="Yes">
+         Validation="No">
       <GpoBackup ID="{4FF7B8BD-9F92-40A1-A72B-B4C215463F2B}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
@@ -349,6 +339,7 @@
       <GpoBackup ID="{1E9425AA-E9DA-4ABD-BD5C-C2D471179029}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
       <GpoDeny ID="%SecPri%-9"/>
+      <GpoFilter WMI="OS is 64 bits"/>
     </GPO>
 
     <GPO Name="Security - Local Administrator Password Solution (x86)"
@@ -357,6 +348,7 @@
       <GpoBackup ID="{B256970A-7AE0-4D30-9280-949D0EA92E52}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
       <GpoDeny ID="%SecPri%-9"/>
+      <GpoFilter WMI="OS is 32 bits"/>
     </GPO>
 
     <!-- DELEGATION -->
@@ -366,6 +358,7 @@
       <GpoBackup ID="{3CD73DE0-5C98-4BF0-A28F-CD064D493172}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
       <GpoDeny ID="%SecPri%-9"/>
+      <GpoFilter WMI="Servers Only"/>
     </GPO>
 
     <GPO Name="Security - Local Administrators - Stations"
@@ -374,6 +367,7 @@
       <GpoBackup ID="{A676F687-84EE-4A25-9779-5A8F598D7C33}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
       <GpoDeny ID="%SecPri%-9"/>
+      <GpoFilter WMI="Workstations Only"/>
     </GPO>
 
     <!-- SCREENLOCK -->
@@ -408,13 +402,13 @@
     <!--   > Description...: the description of the account                                                                                  -->
     <!--   > Path..........: the distingsuihedName of the OU containing the account. you can use ROOTDN to efer to the domain DN             -->
     <!-- ################################################################################################################################### -->
-    <!-- Fully Empowered Admin account                                                                                                     -->
+    <!-- Fully Empowered Admin account                                                                                                       -->
     <User DisplayName="SuperAdmin HARDENAD"
           Surname="HARDENAD"
           samAccountName="SA-HARDENAD"
           GivenName="SuperAdmin"
           Description="Super Administrateur HardenAD (Tier 0)"
-          Path="OU=Admin Accounts (Tier0),OU=Administration,ROOTDN"/>
+          Path="OU=Admin Accounts (Tier 0),OU=Administration,ROOTDN"/>
 
     <!-- Tier 1 admin account                                                                                                              -->
     <User DisplayName="Admin HARDENAD"
@@ -488,15 +482,6 @@
       <Member samAccountName="A-HARDENAD"/>
     </Group>
 
-    <!-- GRP_ADMIN: allow read to LAPS password -->
-    <Group name="G_Security-Restriction-Login-Tier 0"
-           Path="OU=Administration Groups (Tier 0),OU=Administration,ROOTDN"
-           Description="Group used to restrict login for Tier 0 account on system from Tier 1 and Tier 2"
-           Scope="Global"
-           Category="Security">
-      <Member samAccountName="GRP_ADMIN_TIER_0"/>
-    </Group>
-
     <!-- G_Security-BitLocker-TPM with PIN: Add computers to setup with bitlocker, tpm and passcode -->
     <Group name="G_Security-BitLocker-TPM with PIN"
            Path="OU=Administration Groups,OU=Administration,ROOTDN"
@@ -527,6 +512,7 @@
            Description="Group of Super Admins accounts defined as Tier 0 admins"
            Scope="Global"
            Category="Security">
+      <Member samAccountName="GRP_ADMIN_TIER_0"/>
     </Group>
 
     <!-- G_Security–Disable UAC: disable UAC on systems or accounts -->

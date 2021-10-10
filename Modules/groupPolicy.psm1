@@ -222,7 +222,7 @@ Function New-GpoObject
 
                             $DenyID = Get-ADObject -filter { SamAccountName -eq $targetID } -Properties samAccountName
                             $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $DenyID.samAccountName
-                            $NBName = [System.Security.Principal.NTAccount]$NtAccount
+                            $NBName = [System.Security.Principal.NTAccount]$NtAcct
                         
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........:  matched to $NBName"
                         }
