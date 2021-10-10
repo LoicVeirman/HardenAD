@@ -255,7 +255,8 @@ Write-Host "Written by : " -ForegroundColor Gray -NoNewline ; Write-Host $Author
 Write-Host "             " -ForegroundColor Gray -NoNewline ; Write-Host $apContr -ForegroundColor DarkGreen
 Write-Host "Description: " -ForegroundColor Gray -NoNewline ; Write-Host $ApDescr -ForegroundColor Cyan
 Write-Host "$SeparationLine" -ForegroundColor DarkGray
-
+#-Show me how nice you are ;)
+Start-Sleep -Seconds 2 
 #-Checking if all prerequesite are met
 $InitialPosition = $host.UI.RawUI.CursorPosition
 $FlagPreReq = $true
