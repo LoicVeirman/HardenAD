@@ -86,10 +86,10 @@
     <!--  > When class object is UNCPATH: the script will raise a call to new ID with Get-ADGroup  and refer to the DNSRoot     attribute  -->
     <!-- ################################################################################################################################# -->
     <Translation>
-      <Object Class="Domain"  Name="GRP_ADMIN_TIER_0"/>
+      <!--Object Class="Domain"  Name="GRP_ADMIN_TIER_0"/>
       <Object Class="Domain"  Name="GRP_ADMIN_STATIONS"/>
       <Object Class="Domain"  Name="GRP_ADMIN_SERVEURS"/>
-      <Object Class="Domain"  Name="GRP_ADMIN"/>
+      <Object Class="Domain"  Name="GRP_ADMIN"/-->
       <Object Class="UNCPath" Name="DOMAIN_UNC_PATH"/>
       <Object Class="Domain"  Name="G_Security–Disable-UAC"/>
       <Object Class="Domain"  Name="G_DELEG-Admin-Servers"/>
@@ -98,7 +98,7 @@
       <Object Class="Domain"  Name="G_Security-BitLocker-TPM with PIN"/>
       <Object Class="Domain"  Name="G_Security-BitLocker-TPM only"/>
       <Object Class="Domain"  Name="G_Security-Enable Print Spooler Service"/>
-      <Object Class="Domain"  Name="G_Security-Restriction-Login Tier 0"/>
+      <Object Class="Domain"  Name="G_Security-Restriction-Deny Login Tier 0"/>
       <Object Class="Domain"  Name="G_Security–Disable UAC"/>
       <Object Class="Domain"  Name="G_Security-Firewall-Audit Only"/>
       <Object Class="Domain"  Name="G_Security-Firewall-Enabled-Allow Local Rules"/>
@@ -162,7 +162,7 @@
     <GPO Name="Security - Audit (extended log)"
          Description="Harden AD 2.1 - Enforce audit logging and extended audit logging."
          Validation="No">
-      <GpoBackup ID="{4FF7B8BD-9F92-40A1-A72B-B4C215463F2B}"/>
+      <GpoBackup ID="{D5C90AFC-6BEC-4764-BEB5-D2E3CE064E63}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     
@@ -236,13 +236,6 @@
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
 
-    <GPO Name="Security - Disable LLMNR"
-         Description="Harden AD 2.1 - Disable Link-local Multicast Name Resolution on older systems"
-         Validation="No">
-      <GpoBackup ID="{E387DA7D-339F-4413-B9EE-A28D82DB0055}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
-    </GPO>
-
     <GPO Name="Security - Disable NTLM V1 et LM"
          Description="Harden AD 2.1 - Enforce NTLMv2"
          Validation="No">
@@ -299,7 +292,7 @@
       <GpoBackup ID="{FC7474F5-AEE9-467A-A2CF-1D0ED1898A38}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
       <GpoDeny ID="%SecPri%-9"/>
-      <GpoDeny ID="G_Security-Restriction-Login Tier 0"/>
+      <GpoDeny ID="G_Security-Restriction-Deny Login Tier 0"/>
     </GPO>
     
     <GPO Name="Security - Deny Networking to Internet"
@@ -321,14 +314,14 @@
     <GPO Name="Security - Firewall - Audit Only"
          Description="Harden AD 2.1 - Setup Microsoft Firewall in audit mode (allow all, log everything)"
          Validation="No">
-      <GpoBackup ID="{B0281D7A-D4E5-4B0A-B5B7-BB7F00870320}"/>
+      <GpoBackup ID="{261EFA8D-4DEE-4C50-862B-F5070900AF7D}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
     </GPO>
 
     <GPO Name="Security - Firewall - Enabled (Allow Local Rules)"
      Description="Harden AD 2.1 - Setup Microsoft Firewall in active mode in addition to system local rules"
      Validation="No">
-      <GpoBackup ID="{14064FDC-3387-4994-853C-A049653E9F70}"/>
+      <GpoBackup ID="{4522C9EB-CAA9-4A02-BFB3-50C4410E9AF9}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
     </GPO>
 
@@ -442,14 +435,14 @@
     </Group>
 
     <!-- GRP_ADMIN_STATIONS: local admin for stations -->
-    <Group name="GRP_ADMIN_STATIONS"
+    <!--Group name="GRP_ADMIN_STATIONS"
            Path="OU=Administration Groups,OU=Administration,ROOTDN"
            Description="Workstations admins group"
            Scope="Global"
            Category="Security">
-    </Group>
+    </Group-->
 
-    <!-- G_DELEG-Admin-Servers: Admin of all servers in the domain -->
+    <!-- G_DELEG-Admin-Servers: Admin of all stations in the domain -->
     <Group name="G_DELEG-Admin-Stations"
            Path="OU=Administration Groups,OU=Administration,ROOTDN"
            Description="Group providing local admin privilege on all stations in the domain"
@@ -457,13 +450,13 @@
            Category="Security">
     </Group>
 
-    <!-- GRP_ADMIN_SERVEURS: local admin for servers -->
-    <Group name="GRP_ADMIN_SERVEURS"
+    <!-- GRP_ADMIN_SERVERS: local admin for servers -->
+    <!--Group name="GRP_ADMIN_SERVERS"
            Path="OU=Administration Groups,OU=Administration,ROOTDN"
            Description="Servers admins group"
            Scope="Global"
            Category="Security">
-    </Group>
+    </Group-->
 
     <!-- G_DELEG-Admin-Servers: Admin of all servers in the domain -->
     <Group name="G_DELEG-Admin-Servers"
@@ -507,7 +500,7 @@
     </Group>
 
     <!-- G_Security-Restriction-Login Tier 0: tier 0 admins -->
-    <Group name="G_Security-Restriction-Login Tier 0"
+    <Group name="G_Security-Restriction-Deny Login Tier 0"
            Path="OU=Administration Groups (Tier 0),OU=Administration,ROOTDN"
            Description="Group of Super Admins accounts defined as Tier 0 admins"
            Scope="Global"
@@ -541,7 +534,7 @@
 
   </Groups>
   
-    <DefaultMembers>
+  <DefaultMembers>
     <!-- ################################################################################################################################### -->
     <!-- The <DefaultMembers> Section list strictely allowed members of a specified group.                                                   -->
     <!-- When the script call the function "Reset-GroupMembership", the function will use this data to leave only mandatory identity.        -->
@@ -558,7 +551,19 @@
     <Group Target="%DomainSID%-512">
       <Member>%DomainSID%-500</Member>
     </Group>
+    
+    <!-- Enterprise Admins -->
+    <Group Target="%DomainSID%-519">
+      <Member>G_DELEG-AD-TIER-0</Member>
+    </Group>
+    
+    <!-- Protected Users -->
+    <Group Target="%DomainSID%-525">
+      <Member>G_DELEG-AD-TIER-0</Member>
+    </Group>
+    
   </DefaultMembers>
+  
 
   <TaskSchedules BaseDir="C:\_ADM\TasksSchedulesScripts">
     <!-- ################################################################################################################################### -->
