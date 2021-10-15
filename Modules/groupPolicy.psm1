@@ -418,8 +418,22 @@ Function Convert-MigrationTable
         'Group'   { $result = $xmlData -replace "%$ObjectToTranslate%",(Get-ADGroup $ObjectToTranslate).SID 
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new Group: " + (Get-ADGroup $ObjectToTranslate).SID 
                   }
-        'Domain'  { $result = $xmlData -replace "%$ObjectToTranslate%",((Get-ADDomain).NetBIOSName + "\$ObjectToTranslate")
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new SName: " + (Get-ADDomain).NetBIOSName + "\$ObjectToTranslate"
+        'Domain'  { 
+                    Switch ($ObjectToTranslate)        
+                    {
+                        "Enterprise Admins"
+                        {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: Special use case detected (Enterprise Admins)"
+                            $newObjectToTranslate = (Get-ADGroup ((Get-ADDomain).DomainSID.Value + "-519")).sAMAccountName
+                            $result = $xmlData -replace "%$ObjectToTranslate%",((Get-ADDomain).NetBIOSName + "\$newObjectToTranslate")
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new SName: " + (Get-ADDomain).NetBIOSName + "\$newObjectToTranslate"
+                        }
+                        Default
+                        {
+                            $result = $xmlData -replace "%$ObjectToTranslate%",((Get-ADDomain).NetBIOSName + "\$ObjectToTranslate")
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new SName: " + (Get-ADDomain).NetBIOSName + "\$ObjectToTranslate"
+                        }
+                    }
                   }
         'UNCPath' { $result = $xmlData -replace "%$ObjectToTranslate%",(Get-ADDomain).DNSRoot
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new UNCp.: " + (Get-ADDomain).DNSRoot

@@ -84,10 +84,11 @@
     <!--  > When class object is GROUP..: the script will raise a call to new ID with Get-ADGroup  and refer to the SID         attribute  -->
     <!--  > When class object is DOMAIN.: the script will raise a call to new ID with Get-ADDomain and refer to the NetBIOSName attribute  -->
     <!--  > When class object is UNCPATH: the script will raise a call to new ID with Get-ADGroup  and refer to the DNSRoot     attribute  -->
+    <!--  > When class object is W.K.SID: the script will raise a call to new ID with Get-ADObject and refer to the NetBIOSNAme attribute  -->
     <!-- ################################################################################################################################# -->
     <Translation>
       <Object Class="UNCPath" Name="DOMAIN_UNC_PATH"/>
-      <Object Class="Domain"  Name="G_Security–Disable-UAC"/>
+      <Object Class="Domain"  Name="G_Security–Disable UAC"/>
       <Object Class="Domain"  Name="G_DELEG-Admin-Servers"/>
       <Object Class="Domain"  Name="G_DELEG-Admin-Stations"/>
       <Object Class="Domain"  Name="G_DELEG-Admin-%computername%"/>
@@ -100,7 +101,8 @@
       <Object Class="Domain"  Name="G_Admins-Tier 0"/>
       <Object Class="Domain"  Name="G_Admins-Tier 1"/>
       <Object Class="Domain"  Name="G_Security-Deny-Restriction Login Tier 0"/>
-      <Object Class="Domain"  Name="G_Security-LAPS-Password Reader"/>
+      <Object Class="Domain"  Name="G_LAPS-Password Reader"/>
+      <Object Class="Domain"  Name="Enterprise Admins"/>
     </Translation>
 
     <!-- ################################################################################################################################# -->
@@ -376,7 +378,7 @@
          Validation="Yes">
       <GpoBackup ID="{3A8F18C5-A399-4B72-A64D-5711C502FFDF}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
-      <GpoDeny ID="G_Security–Disable UAC"/>
+      <GpoDeny ID="G_Security-Disable UAC"/>
     </GPO>
 
   </GroupPolicies>
@@ -496,11 +498,11 @@
            Description="Group denying restriction to tier 0 account for system (dc promo, ...)"
            Scope="Global"
            Category="Security">
-      <Member samAccountName="GRP_ADMIN_TIER_0"/>
+      <Member samAccountName="G_Admins-Tier 0"/>
     </Group>
 
     <!-- G_Security–Disable UAC: disable UAC on systems or accounts -->
-    <Group name="G_Security–Disable UAC"
+    <Group name="G_Security-Disable UAC"
            Path="OU=Administration Groups,OU=Administration,ROOTDN"
            Description="Group used to disable UAC on systems"
            Scope="Global"
@@ -545,12 +547,12 @@
     
     <!-- Enterprise Admins -->
     <Group Target="%DomainSID%-519">
-      <Member>G_DELEG-AD-TIER-0</Member>
+      <Member>G_Admins-Tier 0</Member>
     </Group>
     
     <!-- Protected Users -->
     <Group Target="%DomainSID%-525">
-      <Member>G_DELEG-AD-TIER-0</Member>
+      <Member>G_Admins-Tier 0</Member>
     </Group>
     
   </DefaultMembers>

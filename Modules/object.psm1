@@ -553,6 +553,7 @@ Function Reset-GroupMembership
          
          history: 
             01.00 -- Script creation
+            01.01 -- Removed unecessary xmlSkeleton call. Added use case managment when a group is empty.
     #>
     param(
     )
@@ -612,7 +613,7 @@ Function Reset-GroupMembership
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Script Starts"
         
         ## recover XML data
-        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
+        #[xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
         $xmlGroups = $xmlSkeleton.Settings.DefaultMembers
 
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Found " + $xmlGroups.group.count + " group(s) to reset"
@@ -662,7 +663,8 @@ Function Reset-GroupMembership
             $groupTarget = Get-ADGroup $GroupID
 
             ## Get the Group members
-            $MbrInIt = Get-ADGroupMember $groupTarget
+            $MbrInIt = @()
+            $MbrInIt += Get-ADGroupMember $groupTarget
 
             ## Cleaning group and adding missing users
             foreach ($badID in (Compare-Object $MbrInIt $mbrLists))
