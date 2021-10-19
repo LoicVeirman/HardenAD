@@ -3,7 +3,7 @@
 ## -------------                                                ##
 ## This function will import a new gpo from a backup file.      ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 01.01.000                                           ##
 ##  Author: loic.veirman@mssec.fr                               ##
 ##################################################################
 Function New-GpoObject
@@ -21,6 +21,7 @@ Function New-GpoObject
          
          history: 
             01.00 -- Script creation
+            01.01 -- Added Security Filter option
     #>
     param(
     )
@@ -250,6 +251,86 @@ Function New-GpoObject
                         }
                     }
                 }
+                #.v1.1: added Security Filter
+                if($GPO.GpoSecurityFilter)
+                {
+                    #.adding new security filter permissions
+                    foreach ($SecurityFilter in $GPO.GpoSecurityFilter)
+                    {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: " + $SecurityFilter.ID
+                    
+                        $targetID = ($SecurityFilter.ID -replace '%domSid%',((Get-ADDomain).domainSID)) -replace '%SecPri%','S-1-5'
+                    
+                        $isSID = $false
+                        $isPRI = $false
+
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: translated to $targetID" 
+
+                        if ($targetID -match ((Get-ADDomain).domainSID))  
+                        { 
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: the specified ID is a SID"
+                            $isSID = $true
+                            $SecuID = Get-ADObject -filter { objectsid -eq $targetID } -Properties samAccountName
+                            $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $SecuID.samAccountName
+                            $NBName = [System.Security.Principal.NTAccount]$NtAccount
+                        
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> security filter:  matched to $NBName"
+                        } 
+
+                        if ($targetID -match "S-1-5")
+                        {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: the specified ID is a principal security"
+                            $isPRI = $true
+                            $sidAcc = new-object System.Security.Principal.SecurityIdentifier($targetID)
+                            $NBName = $sidAcc.Translate([System.Security.Principal.NTAccount])
+                        
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER:  matched to $NBName"
+                        }
+        
+                        if ( -not ($isSID) -and -not ($isPRI))
+                        { 
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: the specified ID is a samAccountName"
+
+                            $SecuID = Get-ADObject -filter { SamAccountName -eq $targetID } -Properties samAccountName
+                            $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $SecuID.samAccountName
+                            $NBName = [System.Security.Principal.NTAccount]$NtAcct
+                        
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER:  matched to $NBName"
+                        }
+
+                        #.Applying Security Filter
+                        Try {
+                            
+                            #.Adding new Security Filter
+                            Set-GPPermission -Name $gpName -PermissionLevel GpoApply -TargetName $NBName -TargetType Group -Confirm:$false
+
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: successfully addedd $NBName with GpoApply permission"
+
+                        } Catch {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: failed to add $nbname as new security filter!"
+                            $result = 1
+                            $errMess += " Error: could not apply the deny permission on one or more GPO"
+                        }
+                    }
+                
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: Forcing existing Security Filter (S-1-5-11) to read only"
+
+                    #.recover group name to adapt with AD running language
+                    $AuthUsers = (Get-ADObject -LDAPFilter "(&(objectSID=S-1-5-11))" -Properties msDS-PrincipalName)."msDS-PrincipalName"
+                    $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 has been translated to $AuthUsers"
+                    #.reset permission for Authenticated Users
+                    Try {
+                        Set-GPPermission -Name $GpName -PermissionLevel GpoRead -TargetName $AuthUsers -TargetType Group -Confirm:$false -Replace
+                        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 has been successfully set to read only and removed from security filter"
+                    }
+                    Catch {
+                        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 failed to be replaced with read only permission"
+                        $result = 1
+                        $errMess += " Error: failed to rewrite S-1-5-11 from security filter list"
+                    }
+
+                }
+
                 #.Linking to the target OU
                 if ($gpVali -eq "yes")
                 {
@@ -321,7 +402,7 @@ Function New-GpoObject
     $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
 
     ## Return function results
-    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ErrMess ; TaskExeLog = $ErrMess })
 }
 
 ##################################################################
@@ -954,7 +1035,7 @@ Function Import-WmiFilters
                 (Get-Content $mofPath) -Replace $sourceDomain,((Get-ADDomain).DNSRoot) | Out-File $mofPath -Force
 
                 try {
-                    $null = Start-Process "mofcomp.exe" -ArgumentList "-N:root\Policy",$mofPath -Wait
+                    $null = Start-Process "mofcomp.exe" -ArgumentList "-N:root\Policy",$mofPath -Wait -WindowStyle Hidden
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": successfully added to the domain"
                 } Catch {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": error! Could not add the filter!"
