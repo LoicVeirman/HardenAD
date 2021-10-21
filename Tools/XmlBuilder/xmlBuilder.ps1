@@ -8,7 +8,7 @@
 
 	.NOTES
 	 Version: 01.00.000
-	  Author: loic.veirman@mssec.fr
+	  Author: contact@hardenad.net 
 	    Date: 2021/08/23
 #>
 

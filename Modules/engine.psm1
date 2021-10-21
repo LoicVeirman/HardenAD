@@ -4,7 +4,7 @@
 ## This function will convert an ini to an array table.         ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Import-Ini
 {

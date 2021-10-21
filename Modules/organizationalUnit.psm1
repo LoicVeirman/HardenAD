@@ -5,7 +5,7 @@
 ## unit.                                                        ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Set-TreeOU
 {
@@ -23,7 +23,7 @@ Function Set-TreeOU
          Class name use to select a specific model within the skeleton.
 
         .Notes
-         Version: 01.00.000 -- Loic.veirman@mssec.fr
+         Version: 01.00.000 -- contact@hardenad.net 
          history: 2021/06.08 - Script creation
     #>
     param(
@@ -217,7 +217,7 @@ Function Set-TreeOU
 ## units as per user choice.                                    ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function New-M365OrganizationalUnits
 {
@@ -245,7 +245,7 @@ Function New-M365OrganizationalUnits
          Used in conjunction with automatic mode to set a base DN from which the script will loop into. If not specified and automatic mode is selected, the RootDN will be used.
 
         .Notes
-         Version: 01.00.000 -- Loic.veirman@mssec.fr
+         Version: 01.00.000 -- contact@hardenad.net 
          history: 2021/06.08 - Script creation
     #>
     param(

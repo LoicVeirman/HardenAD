@@ -5,7 +5,7 @@
 ## to the specified value.                                      ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Set-msDSMachineAccountQuota
 {
@@ -20,7 +20,7 @@ Function Set-msDSMachineAccountQuota
          YES if the DSI is informed and agreed.
 
         .Notes
-         Version: 02.00 -- Loic.veirman@mssec.fr
+         Version: 02.00 -- contact@hardenad.net
          history: 12/04/2021 Script creation
                   04/06/2021 removed parameter dsiAgreement (handled by the caller).
                              added parameter newValue that specify the msDSmachineAccountQuota setings
@@ -105,7 +105,7 @@ Function Set-msDSMachineAccountQuota
 ## This function will enable the AD Recycle Bin.                ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Set-ADRecycleBin
 {
@@ -118,7 +118,7 @@ Function Set-ADRecycleBin
          Return 0 if successfull, 2 if the control indicates that the option is not activated.
         
         .Notes
-         Version: 02.00 -- Loic.veirman@mssec.fr
+         Version: 02.00 -- contact@hardenad.net
          history: 19.08.31 Script creation
                   21.06.05 Version 2.0.0
     #>
@@ -211,7 +211,7 @@ Function Set-ADRecycleBin
 ## Link.                                                        ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Set-SiteLinkNotify
 {
@@ -225,8 +225,8 @@ Function Set-SiteLinkNotify
         
         .Notes
          Version: 
-            01.00 -- Loic.veirman@mssec.fr
-            01.01 -- Loic.veirman@mssec.fr
+            01.00 -- contact@hardenad.net
+            01.01 -- contact@hardenad.net
          
          history: 
             01.00 -- Script creation
@@ -334,7 +334,7 @@ Function Set-SiteLinkNotify
 ## specific kind of object.                                     ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Set-DefaultObjectLocation
 {
@@ -348,7 +348,7 @@ Function Set-DefaultObjectLocation
         
         .Notes
          Version: 
-            01.00 -- Loic.veirman@mssec.fr
+            01.00 -- contact@hardenad.net
          
          history: 
             01.00 -- Script creation

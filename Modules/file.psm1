@@ -4,7 +4,7 @@
 ## This function will set the GPO store within the SYSVOL share ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Set-GpoCentralStore
 {
@@ -17,8 +17,8 @@ Function Set-GpoCentralStore
          Return 0 if the states is as expected, else return 2.
         
         .Notes
-         Version: 01.00 -- Loic.veirman@mssec.fr
-                  01.01 -- Loic.veirman@mssec.fr
+         Version: 01.00 -- contact@hardenad.net 
+                  01.01 -- contact@hardenad.net 
          
          history: 19.08.31 Script creation
                   21.06.06 REmoved parameter DesiredState
@@ -99,7 +99,7 @@ Function Set-GpoCentralStore
 ## This function will add a new schedule tasks from config file ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function New-ScheduleTasks
 {
@@ -114,7 +114,7 @@ Function New-ScheduleTasks
          will be replaced by the config file content.
     
         .Notes
-         Version: 01.00 -- Loic.veirman@mssec.fr
+         Version: 01.00 -- contact@hardenad.net 
          
          history: 21.08.05 Script creation
     #>
@@ -280,7 +280,7 @@ Function New-ScheduleTasks
 ## This function will update scripts deployment used by LAPS.   ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Set-LapsScripts
 {
@@ -293,7 +293,7 @@ Function Set-LapsScripts
          The script will be overwritten and replace %RootDN% by the domain FQDN.
 
         .Notes
-         Version: 01.00 -- Loic.veirman@mssec.fr
+         Version: 01.00 -- contact@hardenad.net 
          
          history: 21.08.06 Script creation
     #>
@@ -441,7 +441,7 @@ Function Set-LapsScripts
 ## local system.                                                ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Install-LAPS
 {
@@ -453,7 +453,7 @@ Function Install-LAPS
          The script first update the schema, then it will install the management tool.
 
         .Notes
-         Version: 01.00 -- Loic.veirman@mssec.fr
+         Version: 01.00 -- contact@hardenad.net 
          
          history: 21.08.22 Script creation
     #>

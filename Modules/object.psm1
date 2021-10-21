@@ -5,7 +5,7 @@
 ## tier model and declared in the taskSequence xml file.        ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function New-AdministrationAccounts
 {
@@ -23,7 +23,7 @@ Function New-AdministrationAccounts
          
         .Notes
          Version: 
-            01.00 -- Loic.veirman@mssec.fr
+            01.00 -- contact@hardenad.net 
          
          history: 
             01.00 -- Script creation
@@ -303,7 +303,7 @@ Function New-AdministrationAccounts
 ## the tier model and declared in the taskSequence xml file.    ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function New-AdministrationGroups
 {
@@ -318,7 +318,7 @@ Function New-AdministrationGroups
         
         .Notes
          Version: 
-            01.00 -- Loic.veirman@mssec.fr
+            01.00 -- contact@hardenad.net 
          
          history: 
             01.00 -- Script creation
@@ -536,7 +536,7 @@ Function New-AdministrationGroups
 ## mandatory objects in it                                      ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Reset-GroupMembership
 {
@@ -549,7 +549,7 @@ Function Reset-GroupMembership
         
         .Notes
          Version: 
-            01.00 -- Loic.veirman@mssec.fr
+            01.00 -- contact@hardenad.net 
          
          history: 
             01.00 -- Script creation

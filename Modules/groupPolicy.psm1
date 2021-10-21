@@ -4,7 +4,7 @@
 ## This function will import a new gpo from a backup file.      ##
 ##                                                              ##
 ## Version: 01.01.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function New-GpoObject
 {
@@ -17,7 +17,7 @@ Function New-GpoObject
         
         .Notes
          Version: 
-            01.00 -- Loic.veirman@mssec.fr
+            01.00 -- contact@hardenad.net 
          
          history: 
             01.00 -- Script creation
@@ -412,7 +412,7 @@ Function New-GpoObject
 ## import                                                       ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Convert-MigrationTable
 {
@@ -436,7 +436,7 @@ Function Convert-MigrationTable
 
         .NOTES
             Version: 01.00
-            Author.: loic.veirman@mssec.fr - MSSEC
+            Author.: contact@hardenad.net  - MSSEC
             Desc...: Function creation.
     #>
 
@@ -552,7 +552,7 @@ Function Convert-MigrationTable
 ## from another domain to the production domain one.            ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Update-PreferenceXML
 {
@@ -567,7 +567,7 @@ Function Update-PreferenceXML
 
         .NOTES
             Version: 01.00
-            Author.: loic.veirman@mssec.fr - MSSEC
+            Author.: contact@hardenad.net  - MSSEC
             Desc...: Function creation.
     #>
 	
@@ -783,7 +783,7 @@ Function Update-PreferenceXML
 ## import                                                       ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Publish-MigrationTable
 {
@@ -799,7 +799,7 @@ Function Publish-MigrationTable
 
         .NOTES
             Version: 01.00
-            Author.: loic.veirman@mssec.fr - MSSEC
+            Author.: contact@hardenad.net  - MSSEC
             Desc...: Function creation.
     #>
 
@@ -941,7 +941,7 @@ Function Publish-MigrationTable
 ## This function will import wmi filters from backup files.     ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Import-WmiFilters
 {
@@ -954,7 +954,7 @@ Function Import-WmiFilters
 
         .NOTES
             Version: 01.00
-            Author.: loic.veirman@mssec.fr - MSSEC
+            Author.: contact@hardenad.net  - MSSEC
             Desc...: Function creation.
     #>
 
