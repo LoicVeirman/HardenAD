@@ -1053,7 +1053,8 @@ Function Import-WmiFilters
                 }
 
                 #.Checking import status
-                if ($CurrWmiFtr.'msWMI-Name' -match $filterData.Name)
+                $CheckWmiFtr = Get-ADObject -Filter { ObjectClass -eq 'msWMI-Som' } -Properties *
+                if ($CheckWmiFtr.'msWMI-Name' -match $filterData.Name)
                 {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": check OK - The wmi Filter is present."
                 }
