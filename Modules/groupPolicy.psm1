@@ -940,7 +940,7 @@ Function Publish-MigrationTable
 ## -----------------                                            ##
 ## This function will import wmi filters from backup files.     ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 01.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Import-WmiFilters
@@ -954,8 +954,13 @@ Function Import-WmiFilters
 
         .NOTES
             Version: 01.00
-            Author.: contact@hardenad.net  - MSSEC
+            Author.: contact@hardenad.net
             Desc...: Function creation.
+            
+            Version: 01.01
+            Author.: contact@hardenad.net
+            Desc...: modified the way wmi filter is imported. 
+                     Added a check for WMI filter being present after import.
     #>
 
     Param(
@@ -1035,12 +1040,28 @@ Function Import-WmiFilters
                 (Get-Content $mofPath) -Replace $sourceDomain,((Get-ADDomain).DNSRoot) | Out-File $mofPath -Force
 
                 try {
-                    $null = Start-Process "mofcomp.exe" -ArgumentList "-N:root\Policy",$mofPath -Wait -WindowStyle Hidden
+                    #.Old release, handle too much issue with import and causes fail on gpo import...
+                    #$null = Start-Process "mofcomp.exe" -ArgumentList "-N:root\Policy",$mofPath -Wait -WindowStyle Hidden
+                    #.New way of importing wmiFilter!
+                    $noSplash = mofcomp.exe -N:root\Policy $mofPath | Out-Null
+
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": successfully added to the domain"
                 } Catch {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": error! Could not add the filter!"
                     $Resultat = 1
                     $ResMess = "Some filter were not imported successfully."
+                }
+
+                #.Checking import status
+                if ($CurrWmiFtr.'msWMI-Name' -match $filterData.Name)
+                {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": check OK - The wmi Filter is present."
+                }
+                Else
+                {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": !!ERROR!! Check is KO - The wmi Filter is not present!"
+                    $Resultat = 1
+                    $ResMess = "Some filter failed to be found when checking the import result."
                 }
             }
         }
