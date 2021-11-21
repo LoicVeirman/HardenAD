@@ -305,7 +305,7 @@
          Description="Harden AD 2.1 - Set system Firewall to deny any traffic to non-local network"
          Validation="Yes">
       <GpoBackup ID="{02704F67-D7D2-482D-A236-ADABFA01AD66}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
+      <GpoLink Path="OU=Administration Servers (Tier 0),OU=Administration,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     
     <GPO Name="Security - Enforce Login Tier 0"
@@ -356,7 +356,7 @@
     <GPO Name="Security - Local Administrators - servers"
          Description="Harden AD 2.1 -Deploy an specific group as  local admin on each system (dynamic group name)"
          Validation="Yes">
-      <GpoBackup ID="{228C999F-4433-403B-A705-C73CA0B2198B}"/>
+      <GpoBackup ID="{07EE5CB3-6DA0-4A3C-9218-E8A0E543D670}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
       <GpoDeny ID="%SecPri%-9"/>
       <GpoFilter WMI="Servers Only"/>
@@ -365,7 +365,7 @@
     <GPO Name="Security - Local Administrators - Stations"
          Description="Harden AD 2.1 -Deploy an specific group as  local admin on each system (dynamic group name)"
          Validation="Yes">
-      <GpoBackup ID="{46696E05-0649-4C16-89DD-C465803DED82}"/>
+      <GpoBackup ID="{6F9F9886-0CA1-4DE2-A27D-4FD327680D97}"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
       <GpoDeny ID="%SecPri%-9"/>
       <GpoFilter WMI="Workstations Only"/>
@@ -444,7 +444,7 @@
     
     <!-- GRP_ADMIN_TIER_1: identity to manage server and workstation -->
     <Group name="G_Admins-Tier 1"
-           Path="OU=Administration Groups (Tier 0),OU=Administration,ROOTDN"
+           Path="OU=Administration Groups,OU=Administration,ROOTDN"
            Description="Group for Workstation and Server Management"
            Scope="Global"
            Category="Security">
@@ -505,7 +505,6 @@
            Description="Group denying restriction to tier 0 account for system (dc promo, ...)"
            Scope="Global"
            Category="Security">
-      <Member samAccountName="G_Admins-Tier 0"/>
     </Group>
 
     <!-- G_Security–Disable UAC: disable UAC on systems or accounts -->

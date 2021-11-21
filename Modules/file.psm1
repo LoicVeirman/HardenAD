@@ -279,7 +279,7 @@ Function New-ScheduleTasks
 ## ---------------                                              ##
 ## This function will update scripts deployment used by LAPS.   ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 01.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Set-LapsScripts
@@ -294,8 +294,10 @@ Function Set-LapsScripts
 
         .Notes
          Version: 01.00 -- contact@hardenad.net 
+         Version: 01.01 -- contact@hardenad.net 
          
          history: 21.08.06 Script creation
+                  21.11.21 Added admx/adml file to CentralStore repo
     #>
     param(
         [Parameter(mandatory=$true,Position=0)]
@@ -411,6 +413,26 @@ Function Set-LapsScripts
             $result   = 1
             $ResMess += "(Failed to rewrite the file " + $file.name + ")"
         }
+    }
+
+    ## Deploying ADML and ADMX files to the Central Repository Store
+    if ($result -eq 0)
+    {
+        if (((Get-WMIObject win32_operatingsystem).name -like "*2008*"))
+        {
+            Import-Module ActiveDirectory
+            $sysVolBasePath = ((net share | ? { $_ -like "SYSVOL*" }) -split " " | ? { $_ -ne "" })[1]
+        } else {
+            $sysVolBasePath = (Get-SmbShare SYSVOL).path
+        }
+
+        $domName = (Get-AdDomain).DNSRoot
+        
+        Robocopy.exe .\Inputs\LocalAdminPwdSolution\PolicyDefinitions $sysVolBasePath\$domName\Policies\PolicyDefinitions /s | Out-Null
+        
+        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> PolicyDefinitions files copied."
+    } else {
+        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "ERR ---> PolicyDefinitions files not copied due to a previous error!"
     }
 
     ## Exit
