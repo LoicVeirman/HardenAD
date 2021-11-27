@@ -596,6 +596,27 @@
     <Target>OU=Users,OU=Provisionning,ROOTDN</Target>
   </Microsoft365>
 
+  <LocalAdminPasswordSolution>
+    <!-- ################################################################################################################################### -->
+    <!-- the <LocalAdminPasswordSolution> is used to setup LAPS over an existing domain. By default, the xml set it up with permission at    -->
+    <!-- the root level of the domain and let only the native object readers being able to access the ms-Mcs-AdmPwd attribute (read/write).  -->
+    <!--                                                                                                                                     -->
+    <!-- <AdmPwdSelfPermission>:                                                                                                             -->
+    <!--    Target: target OU distinguished name with computer objects. use "RootDN" to dynamically specify the domain distanguished name.   -->
+    <!--                                                                                                                                     -->
+    <!-- <AdmPwdPasswordreader>:                                                                                                             -->
+    <!--    Target: target OU distinguished name with computer objects. use "RootDN" to dynamically specify the domain distanguished name.   -->
+    <!--    Id....: Specific the group sAMAccountName to be granted with the password read permission on the target OU.                      -->
+    <!--                                                                                                                                     -->
+    <!-- <AdmPwdPasswordreset>:                                                                                                              -->
+    <!--    Target: target OU distinguished name with computer objects. use "RootDN" to dynamically specify the domain distanguished name.   -->
+    <!--    Id....: Specific the group sAMAccountName to be granted with the password reset permission on the target OU.                     -->
+    <!-- ################################################################################################################################### -->
+    <AdmPwdSelfPermission Target="RootDN"/>
+    <AdmPwdPasswordReader Target="RootDN" Id="G_Admins-Tier 0"/>
+    <AdmPwdPasswordReset  Target="RootDN" Id="G_Admins-Tier 0"/>
+  </LocalAdminPasswordSolution>
+
   <Sequence>
     <!-- ################################################################################################################################### -->
     <!-- the <Sequence> section define the different tasks to iterate in "sequence" (can't resist to this one).                              -->
@@ -782,8 +803,18 @@
       <TaskDescription>Update `(AD Schema` for `[LAPS` and add `(PShell add-on`</TaskDescription>
     </Id>
 
+    <!-- LAPS PERMISSIONS DEPLOYMENT OVER THE DOMAIN                                                                                       -->
+    <Id Number="135" Name="Setup LAPS permissions over the domain">
+      <CallingFunction>Set-LapsPermissions</CallingFunction>
+      <!-- Parameter: CUSTOM.: will teach the script to apply a fine-grained definition (refering to <LocalAdminPasswordSolution>)         -->
+      <!--            DEFAULT: will aplly permission at the root domain level and leave domain admins as the only allowed users.           -->
+      <UseParameters>DEFAULT</UseParameters>
+      <TaskEnabled>NO</TaskEnabled>
+      <TaskDescription>Set-up `(LAPS` permissions on the target domain</TaskDescription>
+    </Id>
+
     <!-- LAPS DEPLOYMENT SCRIPT UDATE                                                                                                      -->
-    <Id Number="135" Name="Update LAPS deployment scripts">
+    <Id Number="136" Name="Update LAPS deployment scripts">
       <CallingFunction>Set-LapsScripts</CallingFunction>
       <!-- Parameter: use NETLOGON or SYSVOL for a dynamic location. Else enter the UNC Path                                               -->
       <UseParameters>NETLOGON\LAPS</UseParameters>
