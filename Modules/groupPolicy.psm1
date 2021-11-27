@@ -551,7 +551,7 @@ Function Convert-MigrationTable
 ## This function will modify GPO backup files by replacing SID  ##
 ## from another domain to the production domain one.            ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 01.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Update-PreferenceXML
@@ -569,6 +569,10 @@ Function Update-PreferenceXML
             Version: 01.00
             Author.: contact@hardenad.net  - MSSEC
             Desc...: Function creation.
+
+            Version: 01.01
+            Author.: contact@hardenad.net  - MSSEC
+            Desc...: Added exception when SID is null in the source file.
     #>
 	
 	Param (
@@ -635,12 +639,19 @@ Function Update-PreferenceXML
             $rawData  = $line -Split ';'
 		    $newName  = $rawData[1] -replace ($rawData[1] -split '\\')[0],(Get-ADDomain).NetBIOSName
 		
-            switch ($rawData[0])
-		    {
-			    "Group" { $newSid = (Get-ADGroup -Identity ($rawData[1] -split "\\")[1]).SID }
-			    "User"  { $newSid = (Get-ADUser  -Identity ($rawData[1] -split "\\")[1]).SID }
-			    Default { $newSid = $null }
-		    }
+            if ($rawData[2] -ne "")
+            {
+                switch ($rawData[0])
+		        {
+			        "Group" { $newSid = (Get-ADGroup -Identity ($rawData[1] -split "\\")[1]).SID }
+			        "User"  { $newSid = (Get-ADUser  -Identity ($rawData[1] -split "\\")[1]).SID }
+			        Default { $newSid = "" }
+		        }
+            }
+            else 
+            {
+                $newSid = ""
+            }
 		    $newIDs += ($line + ";$newName;$newSid") -replace "\\","\\"
 
 		    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> New data: $line;$newName;$newSid"
