@@ -15,13 +15,13 @@
                           <xs:element maxOccurs="unbounded" name="ChildOU">
                             <xs:complexType>
                               <xs:sequence>
-                                <xs:element name="Description" type="xs:string" />
                                 <xs:element name="Name" type="xs:string" />
+                                <xs:element name="Description" type="xs:string" />
                                 <xs:element minOccurs="0" maxOccurs="unbounded" name="ChildOU">
                                   <xs:complexType>
                                     <xs:sequence>
-                                      <xs:element name="Description" type="xs:string" />
                                       <xs:element name="Name" type="xs:string" />
+                                      <xs:element name="Description" type="xs:string" />
                                     </xs:sequence>
                                   </xs:complexType>
                                 </xs:element>
@@ -75,14 +75,19 @@
                         <xs:attribute name="ID" type="xs:string" use="required" />
                       </xs:complexType>
                     </xs:element>
-                    <xs:element name="GpoLink">
+                    <xs:element maxOccurs="unbounded" name="GpoLink">
                       <xs:complexType>
                         <xs:attribute name="Path" type="xs:string" use="required" />
                         <xs:attribute name="Enabled" type="xs:string" use="required" />
                         <xs:attribute name="Enforced" type="xs:string" use="required" />
                       </xs:complexType>
                     </xs:element>
-                    <xs:element minOccurs="0" name="GpoDeny">
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="GpoDeny">
+                      <xs:complexType>
+                        <xs:attribute name="ID" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="GpoSecurityFilter">
                       <xs:complexType>
                         <xs:attribute name="ID" type="xs:string" use="required" />
                       </xs:complexType>
@@ -106,10 +111,10 @@
             <xs:sequence>
               <xs:element maxOccurs="unbounded" name="User">
                 <xs:complexType>
-                  <xs:attribute name="GivenName" type="xs:string" use="required" />
+                  <xs:attribute name="DisplayName" type="xs:string" use="required" />
                   <xs:attribute name="Surname" type="xs:string" use="required" />
                   <xs:attribute name="samAccountName" type="xs:string" use="required" />
-                  <xs:attribute name="DisplayName" type="xs:string" use="required" />
+                  <xs:attribute name="GivenName" type="xs:string" use="required" />
                   <xs:attribute name="Description" type="xs:string" use="required" />
                   <xs:attribute name="Path" type="xs:string" use="required" />
                 </xs:complexType>
@@ -123,7 +128,7 @@
               <xs:element maxOccurs="unbounded" name="Group">
                 <xs:complexType mixed="true">
                   <xs:sequence minOccurs="0">
-                    <xs:element maxOccurs="unbounded" name="Member">
+                    <xs:element name="Member">
                       <xs:complexType>
                         <xs:attribute name="samAccountName" type="xs:string" use="required" />
                       </xs:complexType>
@@ -180,6 +185,29 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="LocalAdminPasswordSolution">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="AdmPwdSelfPermission">
+                <xs:complexType>
+                  <xs:attribute name="Target" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element maxOccurs="unbounded" name="AdmPwdPasswordReader">
+                <xs:complexType>
+                  <xs:attribute name="Target" type="xs:string" use="required" />
+                  <xs:attribute name="Id" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element maxOccurs="unbounded" name="AdmPwdPasswordReset">
+                <xs:complexType>
+                  <xs:attribute name="Target" type="xs:string" use="required" />
+                  <xs:attribute name="Id" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="Sequence">
           <xs:complexType>
             <xs:sequence>
@@ -188,7 +216,7 @@
                   <xs:sequence>
                     <xs:element name="CallingFunction" type="xs:string" />
                     <xs:element maxOccurs="unbounded" name="UseParameters" type="xs:string" />
-                    <xs:element name="DSIagreement" type="xs:string" />
+                    <xs:element name="TaskEnabled" type="xs:string" />
                     <xs:element name="TaskDescription" type="xs:string" />
                   </xs:sequence>
                   <xs:attribute name="Number" type="xs:unsignedByte" use="required" />

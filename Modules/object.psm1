@@ -5,7 +5,7 @@
 ## tier model and declared in the taskSequence xml file.        ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function New-AdministrationAccounts
 {
@@ -23,7 +23,7 @@ Function New-AdministrationAccounts
          
         .Notes
          Version: 
-            01.00 -- Loic.veirman@mssec.fr
+            01.00 -- contact@hardenad.net 
          
          history: 
             01.00 -- Script creation
@@ -303,7 +303,7 @@ Function New-AdministrationAccounts
 ## the tier model and declared in the taskSequence xml file.    ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function New-AdministrationGroups
 {
@@ -318,7 +318,7 @@ Function New-AdministrationGroups
         
         .Notes
          Version: 
-            01.00 -- Loic.veirman@mssec.fr
+            01.00 -- contact@hardenad.net 
          
          history: 
             01.00 -- Script creation
@@ -536,7 +536,7 @@ Function New-AdministrationGroups
 ## mandatory objects in it                                      ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Reset-GroupMembership
 {
@@ -549,10 +549,11 @@ Function Reset-GroupMembership
         
         .Notes
          Version: 
-            01.00 -- Loic.veirman@mssec.fr
+            01.00 -- contact@hardenad.net 
          
          history: 
             01.00 -- Script creation
+            01.01 -- Removed unecessary xmlSkeleton call. Added use case managment when a group is empty.
     #>
     param(
     )
@@ -612,7 +613,7 @@ Function Reset-GroupMembership
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Script Starts"
         
         ## recover XML data
-        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
+        #[xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
         $xmlGroups = $xmlSkeleton.Settings.DefaultMembers
 
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Found " + $xmlGroups.group.count + " group(s) to reset"
@@ -662,7 +663,8 @@ Function Reset-GroupMembership
             $groupTarget = Get-ADGroup $GroupID
 
             ## Get the Group members
-            $MbrInIt = Get-ADGroupMember $groupTarget
+            $MbrInIt = @()
+            $MbrInIt += Get-ADGroupMember $groupTarget
 
             ## Cleaning group and adding missing users
             foreach ($badID in (Compare-Object $MbrInIt $mbrLists))

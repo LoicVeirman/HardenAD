@@ -3,8 +3,8 @@
 ## -------------                                                ##
 ## This function will import a new gpo from a backup file.      ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+## Version: 01.01.000                                           ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function New-GpoObject
 {
@@ -17,10 +17,11 @@ Function New-GpoObject
         
         .Notes
          Version: 
-            01.00 -- Loic.veirman@mssec.fr
+            01.00 -- contact@hardenad.net 
          
          history: 
             01.00 -- Script creation
+            01.01 -- Added Security Filter option
     #>
     param(
     )
@@ -222,7 +223,7 @@ Function New-GpoObject
 
                             $DenyID = Get-ADObject -filter { SamAccountName -eq $targetID } -Properties samAccountName
                             $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $DenyID.samAccountName
-                            $NBName = [System.Security.Principal.NTAccount]$NtAccount
+                            $NBName = [System.Security.Principal.NTAccount]$NtAcct
                         
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........:  matched to $NBName"
                         }
@@ -250,6 +251,86 @@ Function New-GpoObject
                         }
                     }
                 }
+                #.v1.1: added Security Filter
+                if($GPO.GpoSecurityFilter)
+                {
+                    #.adding new security filter permissions
+                    foreach ($SecurityFilter in $GPO.GpoSecurityFilter)
+                    {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: " + $SecurityFilter.ID
+                    
+                        $targetID = ($SecurityFilter.ID -replace '%domSid%',((Get-ADDomain).domainSID)) -replace '%SecPri%','S-1-5'
+                    
+                        $isSID = $false
+                        $isPRI = $false
+
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: translated to $targetID" 
+
+                        if ($targetID -match ((Get-ADDomain).domainSID))  
+                        { 
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: the specified ID is a SID"
+                            $isSID = $true
+                            $SecuID = Get-ADObject -filter { objectsid -eq $targetID } -Properties samAccountName
+                            $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $SecuID.samAccountName
+                            $NBName = [System.Security.Principal.NTAccount]$NtAccount
+                        
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> security filter:  matched to $NBName"
+                        } 
+
+                        if ($targetID -match "S-1-5")
+                        {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: the specified ID is a principal security"
+                            $isPRI = $true
+                            $sidAcc = new-object System.Security.Principal.SecurityIdentifier($targetID)
+                            $NBName = $sidAcc.Translate([System.Security.Principal.NTAccount])
+                        
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER:  matched to $NBName"
+                        }
+        
+                        if ( -not ($isSID) -and -not ($isPRI))
+                        { 
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: the specified ID is a samAccountName"
+
+                            $SecuID = Get-ADObject -filter { SamAccountName -eq $targetID } -Properties samAccountName
+                            $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $SecuID.samAccountName
+                            $NBName = [System.Security.Principal.NTAccount]$NtAcct
+                        
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER:  matched to $NBName"
+                        }
+
+                        #.Applying Security Filter
+                        Try {
+                            
+                            #.Adding new Security Filter
+                            Set-GPPermission -Name $gpName -PermissionLevel GpoApply -TargetName $NBName -TargetType Group -Confirm:$false
+
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: successfully addedd $NBName with GpoApply permission"
+
+                        } Catch {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: failed to add $nbname as new security filter!"
+                            $result = 1
+                            $errMess += " Error: could not apply the deny permission on one or more GPO"
+                        }
+                    }
+                
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: Forcing existing Security Filter (S-1-5-11) to read only"
+
+                    #.recover group name to adapt with AD running language
+                    $AuthUsers = (Get-ADObject -LDAPFilter "(&(objectSID=S-1-5-11))" -Properties msDS-PrincipalName)."msDS-PrincipalName"
+                    $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 has been translated to $AuthUsers"
+                    #.reset permission for Authenticated Users
+                    Try {
+                        Set-GPPermission -Name $GpName -PermissionLevel GpoRead -TargetName $AuthUsers -TargetType Group -Confirm:$false -Replace
+                        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 has been successfully set to read only and removed from security filter"
+                    }
+                    Catch {
+                        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 failed to be replaced with read only permission"
+                        $result = 1
+                        $errMess += " Error: failed to rewrite S-1-5-11 from security filter list"
+                    }
+
+                }
+
                 #.Linking to the target OU
                 if ($gpVali -eq "yes")
                 {
@@ -321,7 +402,7 @@ Function New-GpoObject
     $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
 
     ## Return function results
-    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ErrMess ; TaskExeLog = $ErrMess })
 }
 
 ##################################################################
@@ -331,7 +412,7 @@ Function New-GpoObject
 ## import                                                       ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Convert-MigrationTable
 {
@@ -355,7 +436,7 @@ Function Convert-MigrationTable
 
         .NOTES
             Version: 01.00
-            Author.: loic.veirman@mssec.fr - MSSEC
+            Author.: contact@hardenad.net  - MSSEC
             Desc...: Function creation.
     #>
 
@@ -418,8 +499,22 @@ Function Convert-MigrationTable
         'Group'   { $result = $xmlData -replace "%$ObjectToTranslate%",(Get-ADGroup $ObjectToTranslate).SID 
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new Group: " + (Get-ADGroup $ObjectToTranslate).SID 
                   }
-        'Domain'  { $result = $xmlData -replace "%$ObjectToTranslate%",((Get-ADDomain).NetBIOSName + "\$ObjectToTranslate")
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new SName: " + (Get-ADDomain).NetBIOSName + "\$ObjectToTranslate"
+        'Domain'  { 
+                    Switch ($ObjectToTranslate)        
+                    {
+                        "Enterprise Admins"
+                        {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: Special use case detected (Enterprise Admins)"
+                            $newObjectToTranslate = (Get-ADGroup ((Get-ADDomain).DomainSID.Value + "-519")).sAMAccountName
+                            $result = $xmlData -replace "%$ObjectToTranslate%",((Get-ADDomain).NetBIOSName + "\$newObjectToTranslate")
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new SName: " + (Get-ADDomain).NetBIOSName + "\$newObjectToTranslate"
+                        }
+                        Default
+                        {
+                            $result = $xmlData -replace "%$ObjectToTranslate%",((Get-ADDomain).NetBIOSName + "\$ObjectToTranslate")
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new SName: " + (Get-ADDomain).NetBIOSName + "\$ObjectToTranslate"
+                        }
+                    }
                   }
         'UNCPath' { $result = $xmlData -replace "%$ObjectToTranslate%",(Get-ADDomain).DNSRoot
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new UNCp.: " + (Get-ADDomain).DNSRoot
@@ -456,8 +551,8 @@ Function Convert-MigrationTable
 ## This function will modify GPO backup files by replacing SID  ##
 ## from another domain to the production domain one.            ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+## Version: 01.01.000                                           ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Update-PreferenceXML
 {
@@ -472,8 +567,12 @@ Function Update-PreferenceXML
 
         .NOTES
             Version: 01.00
-            Author.: loic.veirman@mssec.fr - MSSEC
+            Author.: contact@hardenad.net  - MSSEC
             Desc...: Function creation.
+
+            Version: 01.01
+            Author.: contact@hardenad.net  - MSSEC
+            Desc...: Added exception when SID is null in the source file.
     #>
 	
 	Param (
@@ -540,12 +639,19 @@ Function Update-PreferenceXML
             $rawData  = $line -Split ';'
 		    $newName  = $rawData[1] -replace ($rawData[1] -split '\\')[0],(Get-ADDomain).NetBIOSName
 		
-            switch ($rawData[0])
-		    {
-			    "Group" { $newSid = (Get-ADGroup -Identity ($rawData[1] -split "\\")[1]).SID }
-			    "User"  { $newSid = (Get-ADUser  -Identity ($rawData[1] -split "\\")[1]).SID }
-			    Default { $newSid = $null }
-		    }
+            if ($rawData[2] -ne "")
+            {
+                switch ($rawData[0])
+		        {
+			        "Group" { $newSid = (Get-ADGroup -Identity ($rawData[1] -split "\\")[1]).SID }
+			        "User"  { $newSid = (Get-ADUser  -Identity ($rawData[1] -split "\\")[1]).SID }
+			        Default { $newSid = "" }
+		        }
+            }
+            else 
+            {
+                $newSid = ""
+            }
 		    $newIDs += ($line + ";$newName;$newSid") -replace "\\","\\"
 
 		    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> New data: $line;$newName;$newSid"
@@ -688,7 +794,7 @@ Function Update-PreferenceXML
 ## import                                                       ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Publish-MigrationTable
 {
@@ -704,7 +810,7 @@ Function Publish-MigrationTable
 
         .NOTES
             Version: 01.00
-            Author.: loic.veirman@mssec.fr - MSSEC
+            Author.: contact@hardenad.net  - MSSEC
             Desc...: Function creation.
     #>
 
@@ -845,8 +951,8 @@ Function Publish-MigrationTable
 ## -----------------                                            ##
 ## This function will import wmi filters from backup files.     ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
-##  Author: loic.veirman@mssec.fr                               ##
+## Version: 01.01.000                                           ##
+##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Import-WmiFilters
 {
@@ -859,8 +965,13 @@ Function Import-WmiFilters
 
         .NOTES
             Version: 01.00
-            Author.: loic.veirman@mssec.fr - MSSEC
+            Author.: contact@hardenad.net
             Desc...: Function creation.
+            
+            Version: 01.01
+            Author.: contact@hardenad.net
+            Desc...: modified the way wmi filter is imported. 
+                     Added a check for WMI filter being present after import.
     #>
 
     Param(
@@ -940,12 +1051,29 @@ Function Import-WmiFilters
                 (Get-Content $mofPath) -Replace $sourceDomain,((Get-ADDomain).DNSRoot) | Out-File $mofPath -Force
 
                 try {
-                    $null = Start-Process "mofcomp.exe" -ArgumentList "-N:root\Policy",$mofPath -Wait
+                    #.Old release, handle too much issue with import and causes fail on gpo import...
+                    #$null = Start-Process "mofcomp.exe" -ArgumentList "-N:root\Policy",$mofPath -Wait -WindowStyle Hidden
+                    #.New way of importing wmiFilter!
+                    $noSplash = mofcomp.exe -N:root\Policy $mofPath | Out-Null
+
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": successfully added to the domain"
                 } Catch {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": error! Could not add the filter!"
                     $Resultat = 1
                     $ResMess = "Some filter were not imported successfully."
+                }
+
+                #.Checking import status
+                $CheckWmiFtr = Get-ADObject -Filter { ObjectClass -eq 'msWMI-Som' } -Properties *
+                if ($CheckWmiFtr.'msWMI-Name' -match $filterData.Name)
+                {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": check OK - The wmi Filter is present."
+                }
+                Else
+                {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": !!ERROR!! Check is KO - The wmi Filter is not present!"
+                    $Resultat = 1
+                    $ResMess = "Some filter failed to be found when checking the import result."
                 }
             }
         }
