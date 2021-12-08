@@ -434,7 +434,7 @@
     <!-- In a second time, all groups are populated with the <member> input.                                                                 -->
     <!--   > sAMAccountName: the sAMAccountName of the target member.                                                                        -->
     <!-- ################################################################################################################################### -->
-    <!-- GRP_ADMIN_TIER_0: equivalent to domain Admins-->
+    <!-- G_ADMIN_TIER_0: equivalent to domain Admins-->
     <Group name="G_Admins-Tier 0"
            Path="OU=Administration Groups (Tier 0),OU=Administration,ROOTDN"
            Description="Group for AD High Level management"
@@ -443,7 +443,7 @@
       <Member samAccountName="SA-HARDENAD"/>
     </Group>
     
-    <!-- GRP_ADMIN_TIER_1: identity to manage server and workstation -->
+    <!-- G_ADMIN_TIER_1: identity to manage server and workstation -->
     <Group name="G_Admins-Tier 1"
            Path="OU=Administration Groups,OU=Administration,ROOTDN"
            Description="Group for Workstation and Server Management"
@@ -467,10 +467,10 @@
            Category="Security">
     </Group>
 
-    <!-- GRP_ADMIN: allow read to LAPS password -->
-    <Group name="G_LAPS-Password Reader"
+    <!-- G_LAPS-Password Manager: allow read and Reset to LAPS password -->
+    <Group name="G_LAPS-Password Manager"
            Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group delegated to read LAPS passwords"
+           Description="Group delegated to read and reset LAPS passwords"
            Scope="Global"
            Category="Security">
       <Member samAccountName="A-HARDENAD"/>
@@ -614,8 +614,8 @@
     <!--    Id....: Specific the group sAMAccountName to be granted with the password reset permission on the target OU.                     -->
     <!-- ################################################################################################################################### -->
     <AdmPwdSelfPermission Target="RootDN"/>
-    <AdmPwdPasswordReader Target="RootDN" Id="G_Admins-Tier 0"/>
-    <AdmPwdPasswordReset  Target="RootDN" Id="G_Admins-Tier 0"/>
+    <AdmPwdPasswordReader Target="RootDN" Id="G_LAPS-Password Manager"/>
+    <AdmPwdPasswordReset  Target="RootDN" Id="G_LAPS-Password Manager"/>
   </LocalAdminPasswordSolution>
 
   <Sequence>
@@ -807,9 +807,9 @@
     <!-- LAPS PERMISSIONS DEPLOYMENT OVER THE DOMAIN                                                                                       -->
     <Id Number="135" Name="Setup LAPS permissions over the domain">
       <CallingFunction>Set-LapsPermissions</CallingFunction>
-      <!-- Parameter: CUSTOM.: will teach the script to apply a fine-grained definition (refering to <LocalAdminPasswordSolution>)         -->
-      <!--            DEFAULT: will aplly permission at the root domain level and leave domain admins as the only allowed users.           -->
-      <UseParameters>DEFAULT</UseParameters>
+      <!-- Parameter: CUSTOM : will teach the script to apply a fine-grained definition (refering to <LocalAdminPasswordSolution>)         -->
+      <!--            DEFAULT: will apply permission at the root domain level and leave domain admins as the only allowed users.           -->
+      <UseParameters>CUSTOM</UseParameters>
       <TaskEnabled>YES</TaskEnabled>
       <TaskDescription>Set-up `(LAPS` permissions on the target domain</TaskDescription>
     </Id>
