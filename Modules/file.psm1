@@ -852,7 +852,7 @@ Function Set-LapsPermissions
 ##################################################################
 ## Get-PingCastle                                               ##
 ## -------------------                                          ##
-## This function This function will download PingCastle and     ##
+## This function will download PingCastle and                   ##
 ## execute an audit                                             ##
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
@@ -861,18 +861,29 @@ Function Get-PingCastle
 {
     <#
         .Synopsis
-         This function Execute and audit with PingCastle.
+         This function Download the latest release and execute and audit with PingCastle.
         
         .Description
          This function execute PingCastle with parameter --healthcheck --no-enum-limit  --level Full      
         
         .Notes
-         Version: 01.00 -- contact@hardenad.net 
+         Version: 01.01 -- contact@hardenad.net 
          
+         history: 21.12.16 Add Download latest release form Github
          history: 21.12.15 Script creation
     #>
     param(
+        [Parameter(mandatory=$false)]
+        [String]
+        $Arguments
     )
+
+        ## Default keepass password
+        if (-not($Arguments))
+        {
+            $Arguments = '--healthcheck --no-enum-limit  --level Full'
+        }
+    
 
     ## Function Log Debug File
     $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
@@ -886,9 +897,58 @@ Function Get-PingCastle
     ## Indicates caller and options used
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
 
-    Start-Process -FilePath .\Tools\PingCastle\PingCastle.exe -ArgumentList ' --healthcheck --no-enum-limit  --level Full ' -WindowStyle Minimized -Wait
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Test Internet connectivity  " 
 
-    $result = 0
+    $OriginalProgressPreference = $Global:ProgressPreference
+    $Global:ProgressPreference = 'SilentlyContinue'
+    $test = Test-NetConnection
+    
+    switch ($test.PingSucceeded) {
+         'True'{
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Test Internet connectivity OK " 
+           
+            $repo = "vletoux/pingcastle"
+            $file = "PingCastle.zip"
+            
+            $releases = "https://api.github.com/repos/$repo/releases"
+           
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Define repository to  $releases " 
+
+            $tag = (Invoke-WebRequest $releases | ConvertFrom-Json)[0].tag_name 
+            
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Find latest  release to PingCastle to $tag " 
+
+            $name = $file.Split(".")[0]
+            $zip = "$name`_$tag.zip"
+            
+            $download = "https://github.com/$repo/releases/download/$tag/$zip"
+            
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Downoad the file $zip " 
+
+            Invoke-WebRequest $download -Out $zip
+            
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Extract the File $Zip to the folder $name " 
+            Expand-Archive $zip -DestinationPath $name -Force 
+            
+            Remove-Item $zip -Recurse -Force -ErrorAction SilentlyContinue 
+            
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Cleaning the download file $Zip " 
+
+            Start-Process -FilePath .\$name\PingCastle.exe -ArgumentList "$Arguments" -WindowStyle Minimized -Wait
+
+            $result = 0
+
+           }
+         'False' {
+
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Test Internet connectivity KO ;( " 
+
+            $result = 1
+
+         }
+        Default {}
+    }
+
 
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
