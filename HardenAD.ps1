@@ -21,6 +21,12 @@
  |        |         |               |      more understandable    |
  |        |         |               |      name.                  |
  +--------+---------+---------------+-----------------------------+
+ |09/04/22|02.00.003| Loic.Veirman  | #4 - Added a test condition |
+ |        |         |               |      to ensure that the     |
+ |        |         |               |      script is not rerun in |
+ |        |         |               |      a different domain.    |
+ +--------+---------+---------------+-----------------------------+
+ 
 
 ###################################################################>
 
@@ -285,6 +291,39 @@ foreach ($Prerequesite in $Prerequesites.Directory)
         }
     }
 }
+
+#4-New test: should not contains customized GPO transcription files. 
+#            If it does, then the translation should be the same as the current domain name.
+Write-Host "Sanity Check: " -NoNewline -ForegroundColor DarkGray
+Write-Host "Has the script already been ran? " -ForegroundColor Gray -NoNewline
+
+if (test-path .\Inputs\GroupPolicies\translated.migtable)
+{
+    #.We found a translated migtable. We open it as an xml file and then check if the destination is set to our domain.
+    $sanityXml = [xml](Get-Content .\Inputs\GroupPolicies\translated.migtable)
+    $isCurrDom = $sanityXml.MigrationTable.Mapping[0].Destination -match (Get-ADDomain).NetBIOSName
+    # - popping-up the result
+    Switch ($isCurrDom)
+    {
+        $true  { Write-Host "Yes" -ForegroundColor magenta
+                 Write-Host "Sanity Check: " -NoNewline -ForegroundColor DarkGray
+                 Write-Host "is it the same netbios dom name? " -ForegroundColor Gray -NoNewline
+                 Write-Host "Yes" -ForegroundColor Green
+               }
+        
+        $false { Write-Host "Yes" -ForegroundColor Yellow
+                 Write-Host "Sanity Check: " -NoNewline -ForegroundColor DarkGray
+                 Write-Host "is it the same netbios dom name? " -ForegroundColor Gray -NoNewline
+                 Write-Host "No" -ForegroundColor Red
+                 #.Force leaving as test failed    
+                 $FlagPreReq = $false 
+               }
+    }
+} Else {
+    #.Script never run
+    Write-Host "No" -ForegroundColor Green
+}
+
 if ($FlagPreReq)
 {
     Write-Host "All prerequesites are OK."    
