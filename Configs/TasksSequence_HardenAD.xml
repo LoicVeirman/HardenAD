@@ -1,64 +1,286 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Settings>
-  <!-- ##################################################################################################################################### -->
-  <!-- Revision: 2021/10/21 - contact@hardenad.net                                                                                     -->
-  <!-- ##################################################################################################################################### -->
+  <!-- ################################################################################################################################### -->
+  <!-- Revision: 2022/07/08 - contact@hardenad.net                                                                                         -->
+  <!-- ################################################################################################################################### -->
   <OrganizationalUnits>
     <!-- The section <ouTree> handle the base model for OU creation.                                                                       -->
     <!-- When calling the function [Set-OUTree], you need to add as parameter the "OU class" name of the tree structure you want to add.   -->
     <!-- This could also be used to manage new OU generation.                                                                              -->
     <ouTree>
-      <!-- CLASS: SMB-ADMIN-EN                                                                                                             -->
+      <!-- CLASS: HardenAD_ADMIN                                                                                                           -->
       <!-- This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtiion.                 -->
-      <OU Class="SMB-ADMIN-EN" Name="Administration" Description="Privileged accounts administrative OU">
+      <OU Class="HardenAD_ADMIN" Name="Administration" Description="Privileged accounts administrative OU">
         <ChildOU>
-          <Name>Admin Accounts</Name>
-          <Description>Admin Accounts Tier 1 and Tier 2</Description>
-        </ChildOU>
-        <ChildOU>
-          <Name>Admin Accounts (Tier 0)</Name>
-          <Description>Admin Accounts Tier 0</Description>
-        </ChildOU>
-        <ChildOU>
-          <Name>Service Accounts</Name>
-          <Description>Service Accounts</Description>
+          <Name>Groups Tier 0</Name>
+          <Description>Groups to manage Tier 0 objects</Description>
           <ChildOU>
-            <Name>AAD Sync</Name>
-            <Description>Azure AD synced service accounts</Description>
+            <Name>Deleg</Name>
+            <Description>Groups used to delegate permissions on AD objects</Description>
           </ChildOU>
           <ChildOU>
-            <Name>Disabled</Name>
-            <Description>Disabled Accounts</Description>
+            <Name>GPO</Name>
+            <Description>Groups used to allow or deny settings via Group Policies Objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Local Admins</Name>
+            <Description>Groups used to grant a user being local administrator of a resource</Description>
           </ChildOU>
         </ChildOU>
         <ChildOU>
-          <Name>Service Accounts (Tier 0)</Name>
-          <Description>High Privileges Service Accounts</Description>
+          <Name>Users Tier 0</Name>
+          <Description>Users to manage Tier 0 objects</Description>
         </ChildOU>
         <ChildOU>
-          <Name>Administration Groups</Name>
-          <Description>Administration Groups for Tier 1 and Tier 2</Description>
+          <Name>Groups Tier 1</Name>
+          <Description>Groups to manage Tier 1 objects</Description>
           <ChildOU>
-            <Name>AAD Sync</Name>
-            <Description>Azure AD synchronized groups</Description>
+            <Name>Deleg</Name>
+            <Description>Groups used to delegate permissions on AD objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>GPO</Name>
+            <Description>Groups used to allow or deny settings via Group Policies Objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Local Admins</Name>
+            <Description>Groups used to grant a user being local administrator of a resource</Description>
           </ChildOU>
         </ChildOU>
         <ChildOU>
-          <Name>Administration Groups (Tier 0)</Name>
-          <Description>Administration Groups for Tier 0</Description>
+          <Name>Users Tier 1</Name>
+          <Description>Users to manage Tier 1 objects</Description>
         </ChildOU>
         <ChildOU>
-          <Name>Administration Servers</Name>
-          <Description>Administration Servers Tier 1 and Tier 2</Description>
+          <Name>Groups Tier 2</Name>
+          <Description>Groups to manage Tier 2 objects</Description>
+          <ChildOU>
+            <Name>Deleg</Name>
+            <Description>Groups used to delegate permissions on AD objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>GPO</Name>
+            <Description>Groups used to allow or deny settings via Group Policies Objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Local Admins</Name>
+            <Description>Groups used to grant a user being local administrator of a resource</Description>
+          </ChildOU>
         </ChildOU>
         <ChildOU>
-          <Name>Administration Servers (Tier 0)</Name>
-          <Description>Administration Servers for Tier 0</Description>
+          <Name>Users Tier 2</Name>
+          <Description>Groups to manage Tier 2 objects</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Groups Legacy</Name>
+          <Description>Groups to manage Legacy objects</Description>
+          <ChildOU>
+            <Name>Deleg</Name>
+            <Description>Groups used to delegate permissions on AD objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>GPO</Name>
+            <Description>Groups used to allow or deny settings via Group Policies Objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Local Admins</Name>
+            <Description>Groups used to grant a user being local administrator of a resource</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Users Legacy</Name>
+          <Description>Users to manage Legacy objects</Description>
         </ChildOU>
       </OU>
 
+      <!-- CLASS: HardenAD_PROD-T0                                                                                                         -->
+      <!-- This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtiion.                 -->
+      <OU Class="HardenAD_PROD-T0" Name="Harden - Tier 0" Description="Tier 0 resources">
+        <ChildOU>
+          <Name>Contacts</Name>
+          <Description>Contacts objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Groups</Name>
+          <Description>Groups objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Servers</Name>
+          <Description>Computer objects belonging to this Tier and acting as servers</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Services</Name>
+          <Description>Service accounts belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Service accounts synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled sevice accounts</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Users</Name>
+          <Description>User objects belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>User objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled user objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Workstations</Name>
+          <Description>Computer Objects belonging to this Tier and acting as clients</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+
+      </OU>
+
+      <!-- CLASS: HardenAD_PROD-T1and2                                                                                                     -->
+      <!-- This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtiion.                 -->
+      <OU Class="HardenAD_PROD-T1and2" Name="Harden - Tier 1 and 2" Description="Tier 1 and Tier 2 resources">
+        <ChildOU>
+          <Name>Contacts</Name>
+          <Description>Contacts objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Groups</Name>
+          <Description>Groups objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Servers</Name>
+          <Description>Computer objects belonging to this Tier and acting as servers</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Services</Name>
+          <Description>Service accounts belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Service accounts synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled sevice accounts</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Users</Name>
+          <Description>User objects belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>User objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled user objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Workstations</Name>
+          <Description>Computer Objects belonging to this Tier and acting as clients</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+
+      </OU>
+
+      <!-- CLASS: HardenAD_PROD-LEGACY                                                                                                     -->
+      <!-- This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtiion.                 -->
+      <OU Class="HardenAD_PROD-LEGACY" Name="Harden - Legacy" Description="Legacy resources">
+        <ChildOU>
+          <Name>Contacts</Name>
+          <Description>Contacts objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Groups</Name>
+          <Description>Groups objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Servers</Name>
+          <Description>Computer objects belonging to this Tier and acting as servers</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Services</Name>
+          <Description>Service accounts belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Service accounts synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled sevice accounts</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Users</Name>
+          <Description>User objects belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>User objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled user objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Workstations</Name>
+          <Description>Computer Objects belonging to this Tier and acting as clients</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+
+      </OU>
+
       <!-- CLASS: PROVISIONNING-EN                                                                                                         -->
-      <!-- This class generate an OU tree used for provisionning objects in a default location. This is the English Edtiion.               -->
+      <!-- This class generate an OU tree used for provisionning objects in a default location. This is the English Edition.               -->
       <OU Class="PROVISIONNING-EN" Name="Provisionning" Description="New objects provisionning OU">
         <ChildOU>
           <Name>Users</Name>
@@ -72,6 +294,64 @@
       </OU>
     </ouTree>
   </OrganizationalUnits>
+
+  <!-- ################################################################################################################################# -->
+  <!-- NEW SECTION (2022/07)                                                                                                             -->
+  <!-- This section push delegation ACL to designated OU                                                                                 -->
+  <!-- ################################################################################################################################# -->
+  <DelegationACEs>
+    <!-- Administration -->
+    <!-- Delegation for L-S-T1-DELEG_Group - Create and Delete (administration) -->
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="group" TargetDN="OU=Groups Tier 1,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="Group" ObjectType=""      TargetDN="OU=Groups Tier 1,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="group" TargetDN="OU=Groups Legacy,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="Group" ObjectType=""      TargetDN="OU=Groups Legacy,OU=Administration,ROOTDN"/>
+    <!-- Delegation for L-S-T2-DELEG_Group - Create and Delete (administration) -->
+    <ACL Trustee="L-S-T2-DELEG_Group - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="group" TargetDN="OU=Groups Tier 2,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Group - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="Group" ObjectType=""      TargetDN="OU=Groups Tier 2,OU=Administration,ROOTDN"/>
+    <!-- Delegation for L-S-T1-DELEG_User - Create and Delete (administration) -->
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="user"  TargetDN="OU=Users Tier 1,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user"  ObjectType=""      TargetDN="OU=Users Tier 1,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="user"  TargetDN="OU=Users Legacy,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user"  ObjectType=""      TargetDN="OU=Users Legacy,OU=Administration,ROOTDN"/>
+    <!-- Delegation for L-S-T1-DELEG_User - Create and Delete (administration) -->
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="user"  TargetDN="OU=Users Tier 2,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user"  ObjectType=""      TargetDN="OU=Users Tier 2,OU=Administration,ROOTDN"/>
+    <!-- Production -->
+    <!-- Delegation for L-S-T1-DELEG_Computer - Create and Delete -->
+    <ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""         ObjectType="computer" TargetDN="OU=Servers,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType=""         TargetDN="OU=Servers,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""         ObjectType="computer" TargetDN="OU=Servers,OU=Harden - Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType=""         TargetDN="OU=Servers,OU=Harden - Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T1-DELEG_User - Create and Delete -->
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""     ObjectType="user" TargetDN="OU=Services,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType=""     TargetDN="OU=Services,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""     ObjectType="user" TargetDN="OU=Services,OU=Harden - Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType=""     TargetDN="OU=Services,OU=Harden - Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T2-DELEG_Computer - Create and Delete -->
+    <ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""         ObjectType="computer" TargetDN="OU=Workstations,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType=""         TargetDN="OU=Workstations,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""         ObjectType="computer" TargetDN="OU=Workstations,OU=Harden - Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType=""         TargetDN="OU=Workstations,OU=Harden - Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T1-DELEG_Group - Create and Delete -->
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="group" TargetDN="OU=Groups,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType=""      TargetDN="OU=Groups,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="group" TargetDN="OU=Groups,OU=Harden - Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType=""      TargetDN="OU=Groups,OU=Harden - Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T2-DELEG_contact - Create and Delete -->
+    <ACL Trustee="L-S-T2-DELEG_Contact - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""        ObjectType="contact" TargetDN="OU=contacts,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Contact - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="contact" ObjectType=""        TargetDN="OU=Contacts,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Contact - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""        ObjectType="contact" TargetDN="OU=Contacts,OU=Harden - Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Contact - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="contact" ObjectType=""        TargetDN="OU=Contacts,OU=Harden - Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T2-DELEG_User - Create and Delete -->
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""     ObjectType="user" TargetDN="OU=Users,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType=""     TargetDN="OU=Users,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""     ObjectType="user" TargetDN="OU=Users,OU=Harden - Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType=""     TargetDN="OU=Users,OU=Harden - Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T2-DELEG_Group - Manage Membership -->
+    <ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden - Legacy,ROOTDN"/>
+  </DelegationACEs>
 
   <GroupPolicies>
     <!-- ################################################################################################################################# -->
@@ -98,8 +378,8 @@
       <Object Class="Domain"  Name="G_Security-Restriction-Deny Login Tier 0"/>
       <Object Class="Domain"  Name="G_Security-Firewall-Audit Only"/>
       <Object Class="Domain"  Name="G_Security-Firewall-Enabled-Allow Local Rules"/>
-      <Object Class="Domain"  Name="G_Admins-Tier 0"/>
-      <Object Class="Domain"  Name="G_Admins-Tier 1"/>
+      <Object Class="Domain"  Name="G-S-T0_Managers"/>
+      <Object Class="Domain"  Name="G-S-T1_Managers"/>
       <Object Class="Domain"  Name="G_Security-Deny-Restriction Login Tier 0"/>
       <Object Class="Domain"  Name="G_LAPS-Password Manager"/>
       <Object Class="Domain"  Name="Enterprise Admins"/>
@@ -171,7 +451,7 @@
     </GPO>
     
     <!-- UPDATES -->
-    <GPO Name="Security - Auto Update - Up to Win 8"
+    <GPO Name="Security - Auto Update - Up to Win 8"
          Description="Harden AD 2.1 - Setup Wsus Client for client up to Windows 8.1"
          Validation="Yes">
       <GpoBackup ID="{9EBAF070-546C-405B-842E-6CC59976CA58}"/>
@@ -179,7 +459,7 @@
       <GpoFilter WMI="OS is less or equal to Windows 8.1"/>
     </GPO>
     
-    <GPO Name="Security - Auto Update - Win 10"
+    <GPO Name="Security - Auto Update - Win 10"
          Description="Harden AD 2.1 - Setup Wsus Client for client equal to Windows 10 and above"
          Validation="Yes">
       <GpoBackup ID="{745F68A0-948D-4387-9A3D-DE1729081E17}"/>
@@ -187,7 +467,7 @@
       <GpoFilter WMI="OS is greater or equal to Windows 10"/>
     </GPO>
     
-    <GPO Name="Security - Auto Update - Up to Win Srv 2012 R2"
+    <GPO Name="Security - Auto Update - Up to Win Srv 2012 R2"
      Description="Harden AD 2.1 - Setup Wsus Client for server up to Windows server 2012 r2"
      Validation="Yes">
       <GpoBackup ID="{E78DDF6E-8096-4C1B-8C35-ED6DBCEC9DD7}"/>
@@ -195,7 +475,7 @@
       <GpoFilter WMI="OS is less or equal to Windows Server 2012 R2"/>
     </GPO>
     
-    <GPO Name="Security - Auto Update - Win Srv 2016"
+    <GPO Name="Security - Auto Update - Win Srv 2016"
      Description="Harden AD 2.1 - Setup Wsus Client for server equal to Windows server 2016 and above"
      Validation="Yes">
       <GpoBackup ID="{A102457A-DD0D-456A-937F-FC2186D90A99}"/>
@@ -388,7 +668,6 @@
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
       <GpoDeny ID="G_Security-Disable UAC"/>
     </GPO>
-
   </GroupPolicies>
 
   <Accounts>
@@ -434,105 +713,209 @@
     <!-- In a second time, all groups are populated with the <member> input.                                                                 -->
     <!--   > sAMAccountName: the sAMAccountName of the target member.                                                                        -->
     <!-- ################################################################################################################################### -->
-    <!-- G_ADMIN_TIER_0: equivalent to domain Admins-->
-    <Group name="G_Admins-Tier 0"
-           Path="OU=Administration Groups (Tier 0),OU=Administration,ROOTDN"
-           Description="Group for AD High Level management"
+    <!-- #### TIER 0 #### -->
+    <Group name="G-S-T0_Managers"
+           Path="OU=Groups Tier 0,OU=Administration,ROOTDN"
+           Description="Members of this group can see and manage all the Active Directory objects"
            Scope="Global"
            Category="Security">
-      <Member samAccountName="SA-HARDENAD"/>
+      <!--Member samAccountName="SA-HARDENAD"/-->
     </Group>
-    
-    <!-- G_ADMIN_TIER_1: identity to manage server and workstation -->
-    <Group name="G_Admins-Tier 1"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group for Workstation and Server Management"
-           Scope="Global"
+    <Group name="L-S-T0_LocalAdmins_Servers"
+           Path="OU=Local Admins,OU=Groups Tier 0,OU=Administration,ROOTDN"
+           Description="Members of this group will become member of the builtin\administrators group"
+           Scope="domainLocal"
            Category="Security">
-      <Member samAccountName="A-HARDENAD"/>
+      <!--Member samAccountName="SA-HARDENAD"/-->
     </Group>
-    <!-- G_DELEG-Admin-Servers: Admin of all stations in the domain -->
-    <Group name="G_DELEG-Admin-Stations"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group providing local admin privilege on all stations in the domain"
+   
+    <!-- #### TIER 1 #### -->
+    <Group name="G-S-T1_Managers"
+           Path="OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group can manage all Tier 1 ressources, including T1 admin users and groups"
            Scope="Global"
            Category="Security">
+      <!--Member samAccountName="A-HARDENAD"/-->
+    </Group>
+    <Group name="G-S-T1_Administrators"
+           Path="OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group can manage all Tier 1 ressources, excluding T1 admin users and groups"
+           Scope="Global"
+           Category="Security">
+      <!--Member samAccountName="A-HARDENAD"/-->
+    </Group>
+    <Group name="G-S-T1_Operators"
+           Path="OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group can operate on Tier 1 resources (login)"
+           Scope="Global"
+           Category="Security">
+      <!--Member samAccountName="A-HARDENAD"/-->
+    </Group>
+    <Group name="L-S-T1-DELEG_Group - Manage Membership"
+           Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group can add and remove members of tier 1 groups within productions OUs"
+           Scope="domainLocal"
+           Category="Security">
+      <!--Member samAccountName="SA-HARDENAD"/-->
+    </Group>
+    <Group name="L-S-T1-DELEG_Group - Create and Delete"
+           Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete groups within productions OUs (Tier 1 and 2)"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T1_Administrators"/>
+      <Member samAccountName="G-S-T1_Managers"/>
+    </Group>
+    <Group name="L-S-T1-DELEG_Group - Create and Delete (administration)"
+           Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete groups within Tier 1 Administration OU"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T1_Managers"/>
+    </Group>
+    <Group name="L-S-T1-DELEG_User - Create and Delete"
+           Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete users within productions OUs (Tier 1 and 2)"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T1_Administrators"/>
+      <Member samAccountName="G-S-T1_Managers"/>
+    </Group>
+    <Group name="L-S-T1-DELEG_User - Create and Delete (administration)"
+           Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete users within Tier 1 administration OU"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T1_Managers"/>
+    </Group>
+    <Group name="L-S-T1-DELEG_Computer - Create and Delete"
+           Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete commputers within productions OUs (Tier 1 and 2)"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T1_Administrators"/>
+      <Member samAccountName="G-S-T1_Managers"/>
+    </Group>
+    <Group name="L-S-T1-DELEG_Contact - Create and Delete"
+           Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete contact within productions OUs (Tier 1 and 2)"
+           Scope="domainLocal"
+           Category="Security">
+      <!--Member samAccountName="G-S-T1_Managers"/-->
+    </Group>
+    <Group name="L-S-T1_LocalAdmins_Servers"
+           Path="OU=Local Admins,OU=Groups Tier 1,OU=Administration,ROOTDN"
+           Description="Members of this group will become member of the builtin\administrators group"
+           Scope="domainLocal"
+           Category="Security">
+      <!--Member samAccountName="SA-HARDENAD"/-->
     </Group>
 
-    <!-- G_DELEG-Admin-Servers: Admin of all servers in the domain -->
-    <Group name="G_DELEG-Admin-Servers"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group providing local admin privilege on all servers in the domain"
+    <!-- #### TIER 2 #### -->
+    <Group name="G-S-T2_Managers"
+           Path="OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group can manage all Tier 2 ressources, including T1 admin users and groups"
            Scope="Global"
            Category="Security">
+      <!--Member samAccountName="A-HARDENAD"/-->
     </Group>
-
-    <!-- G_LAPS-Password Manager: allow read and Reset to LAPS password -->
-    <Group name="G_LAPS-Password Manager"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group delegated to read and reset LAPS passwords"
+    <Group name="G-S-T2_Administrators"
+           Path="OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group can manage all Tier 2 ressources, excluding T1 admin users and groups"
            Scope="Global"
            Category="Security">
-      <Member samAccountName="A-HARDENAD"/>
+      <!--Member samAccountName="A-HARDENAD"/-->
     </Group>
-
-    <!-- G_Security-BitLocker-TPM with PIN: Add computers to setup with bitlocker, tpm and passcode -->
-    <Group name="G_Security-BitLocker-TPM with PIN"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Computers to setup with bitlocker, tpm and passcode"
+    <Group name="G-S-T2_Operators"
+           Path="OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group can operate on Tier 2 resources (login)"
            Scope="Global"
            Category="Security">
+      <!--Member samAccountName="A-HARDENAD"/-->
+    </Group>
+    <Group name="L-S-T2-DELEG_Group - Manage Membership"
+           Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group can add and remove members of tier 1 groups within productions OUs"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T2_Administrators"/>
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+    <Group name="L-S-T2-DELEG_Group - Create and Delete"
+           Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete groups within productions OUs (Tier 1 and 2)"
+           Scope="domainLocal"
+           Category="Security">
+      <!--Member samAccountName="SA-HARDENAD"/-->
+    </Group>
+    <Group name="L-S-T2-DELEG_Group - Create and Delete (administration)"
+           Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete groups within Tier 1 Administration OU"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+    <Group name="L-S-T2-DELEG_User - Create and Delete"
+           Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete users within productions OUs (Tier 1 and 2)"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T2_Administrators"/>
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+    <Group name="L-S-T2-DELEG_User - Create and Delete (administration)"
+           Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete users within Tier 1 administration OU"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+    <Group name="L-S-T2-DELEG_Computer - Create and Delete"
+           Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete commputers within productions OUs (Tier 1 and 2)"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T2_Administrators"/>
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+    <Group name="L-S-T2-DELEG_Contact - Create and Delete"
+           Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group can create, update and delete contact within productions OUs (Tier 1 and 2)"
+           Scope="domainLocal"
+           Category="Security">
+      <Member samAccountName="G-S-T2_Administrators"/>
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+    <Group name="L-S-T2_LocalAdmins_Workstations"
+           Path="OU=Local Admins,OU=Groups Tier 2,OU=Administration,ROOTDN"
+           Description="Members of this group will become member of the builtin\administrators group"
+           Scope="domainLocal"
+           Category="Security">
+      <!--Member samAccountName="SA-HARDENAD"/-->
     </Group>
 
-    <!-- G_Security-BitLocker-TPM only: Add computers to setup with bitlocker and tpm -->
-    <Group name="G_Security-BitLocker-TPM only"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Computers to setup with bitlocker, tpm but no passcode"
+    <!-- #### TIER LEGACY #### -->
+    <Group name="G-S-TL_Operators"
+           Path="OU=Groups Legacy,OU=Administration,ROOTDN"
+           Description="Members of this group can operate on Tier Legacy resources (login)"
            Scope="Global"
            Category="Security">
+      <!--Member samAccountName="A-HARDENAD"/-->
     </Group>
-
-    <!-- G_Security-Enable-Print Spooler Service: computers allowed to run the Print Spooler Service -->
-    <Group name="G_Security-Enable-Print Spooler Service"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group of Systems allowed to run the Print Spooler Services"
-           Scope="Global"
+    <Group name="L-S-TL_LocalAdmins_Servers"
+           Path="OU=Local Admins,OU=Groups Legacy,OU=Administration,ROOTDN"
+           Description="Members of this group will become member of the builtin\administrators group"
+           Scope="domainLocal"
            Category="Security">
+      <!--Member samAccountName="SA-HARDENAD"/-->
     </Group>
-
-    <!-- G_Security-Restriction-Login Tier 0: tier 0 admins -->
-    <Group name="G_Security-Deny-Restriction Login Tier 0"
-           Path="OU=Administration Groups (Tier 0),OU=Administration,ROOTDN"
-           Description="Group denying restriction to tier 0 account for system (dc promo, ...)"
-           Scope="Global"
+    <Group name="L-S-TL_LocalAdmins_Workstations"
+           Path="OU=Local Admins,OU=Groups Legacy,OU=Administration,ROOTDN"
+           Description="Members of this group will become member of the builtin\administrators group"
+           Scope="domainLocal"
            Category="Security">
-    </Group>
-
-    <!-- G_Security–Disable UAC: disable UAC on systems or accounts -->
-    <Group name="G_Security-Disable UAC"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group used to disable UAC on systems"
-           Scope="Global"
-           Category="Security">
-    </Group>
-
-    <!-- G_Security-Firewall-Audit Only: systems with firewall in audit mode -->
-    <Group name="G_Security-Firewall-Audit Only"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group used to enabled audit with MS firewall"
-           Scope="Global"
-           Category="Security">
-    </Group>
-
-    <!-- G_Security-Firewall-Enabled-Allow Local Rules: disable UAC on systems or accounts -->
-    <Group name="G_Security-Firewall-Enabled-Allow Local Rules"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group used to enable ms Firewall on system"
-           Scope="Global"
-           Category="Security">
-    </Group>
-
-  </Groups>
+      <!--Member samAccountName="SA-HARDENAD"/-->
+    </Group>  </Groups>
   
   <DefaultMembers>
     <!-- ################################################################################################################################### -->
@@ -554,12 +937,12 @@
     
     <!-- Enterprise Admins -->
     <Group Target="%DomainSID%-519">
-      <Member>G_Admins-Tier 0</Member>
+      <Member>G-S-T0_Managers</Member>
     </Group>
     
     <!-- Protected Users -->
     <Group Target="%DomainSID%-525">
-      <Member>G_Admins-Tier 0</Member>
+      <Member>G-S-T0_Managers</Member>
     </Group>
     
   </DefaultMembers>
@@ -647,7 +1030,7 @@
       <CallingFunction>Set-msDSMachineAccountQuota</CallingFunction>
       <!--Parameter: new ms-DS-MachineAccountQuota value                                                                                     -->
       <UseParameters>0</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(msDSMachineAccountQuota` to `(0` to restrict domain junction</TaskDescription>
     </Id>
 
@@ -655,7 +1038,7 @@
     <Id Number="020" Name="Activate Active Directory Recycle Bin">
       <CallingFunction>Set-ADRecycleBin</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>activate the `(AD Recycle Bin` optional feature</TaskDescription>
     </Id>
 
@@ -663,7 +1046,7 @@
     <Id Number="030" Name="Set Notify on every Site Links">
       <CallingFunction>Set-SiteLinkNotify</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(notify` on every `(Site Links</TaskDescription>
     </Id>
 
@@ -671,7 +1054,7 @@
     <Id Number="040" Name="Set GPO Central Store">
       <CallingFunction>Set-GpoCentralStore</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(GPO Central Store` and update `{adm` and `{admx` files</TaskDescription>
     </Id>
 
@@ -679,9 +1062,36 @@
     <Id Number="050" Name="Set Administration Organizational Unit">
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
-      <UseParameters>SMB-ADMIN-EN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <UseParameters>HardenAD_ADMIN</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(Administration` organizational unit</TaskDescription>
+    </Id>
+
+    <!-- GENERATE NEW TIER 0 ORGANIZATIONAL UNIT                                                                                     -->
+    <Id Number="051" Name="Set Tier 0 Organizational Unit">
+      <CallingFunction>Set-TreeOU</CallingFunction>
+      <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
+      <UseParameters>HardenAD_PROD-T0</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>set `(Tier 0` organizational unit</TaskDescription>
+    </Id>
+
+    <!-- GENERATE NEW TIER 1 and 2 ORGANIZATIONAL UNIT                                                                                     -->
+    <Id Number="052" Name="Set Tier 1 and Tier 2 Organizational Unit">
+      <CallingFunction>Set-TreeOU</CallingFunction>
+      <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
+      <UseParameters>HardenAD_PROD-T1and2</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>set `(Tier 1 and Tier 2 combo` organizational unit</TaskDescription>
+    </Id>
+
+    <!-- GENERATE NEW LEGACY ORGANIZATIONAL UNIT                                                                                     -->
+    <Id Number="053" Name="Set Legacy Organizational Unit">
+      <CallingFunction>Set-TreeOU</CallingFunction>
+      <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
+      <UseParameters>HardenAD_PROD-LEGACY</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>set `(Tier Legacy` organizational unit</TaskDescription>
     </Id>
 
     <!-- GENERATE NEW DEFAULT OBJECTS LOCATION TREE                                                                                          -->
@@ -689,7 +1099,7 @@
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>PROVISIONNING-EN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(Provisionning` organizational unit</TaskDescription>
     </Id>
 
@@ -700,7 +1110,7 @@
       <UseParameters>User</UseParameters>
       <!--Parameter: OU distinguishedName. Use RootDN to automatically fill-in the domain name                                               -->
       <UseParameters>OU=users,OU=provisionning,RootDN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(user objects` default location</TaskDescription>
     </Id>
 
@@ -711,7 +1121,7 @@
       <UseParameters>Computer</UseParameters>
       <!--Parameter: OU distinguishedName. Use RootDN to automatically fill-in the domain name                                             -->
       <UseParameters>OU=computers,OU=provisionning,RootDN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(computer objects` default location</TaskDescription>
     </Id>
 
@@ -724,12 +1134,20 @@
       <TaskDescription>create `(administration accounts` used by the tier model</TaskDescription>
     </Id>
 
-    <!-- GENERATE NEW ADMIN GOURPS ON WHICH THE DELEGATION MODEL WILL WORKS                                                                -->
+    <!-- GENERATE NEW ADMIN GROUPS ON WHICH THE DELEGATION MODEL WILL WORKS                                                                -->
     <Id Number="090" Name="Create administration groups">
       <CallingFunction>New-AdministrationGroups</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>create `(administration groups` used by the tier model</TaskDescription>
+    </Id>
+
+    <!-- ACEs DEPLOYMENT FOR DELEGATION MODEL                                                                                               -->
+    <Id Number="095" Name="Enforce delegation model through ACEs">
+      <CallingFunction>Push-DelegationModel</CallingFunction>
+      <UseParameters></UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>Enforce `(Delegation ACEs` used by the tier model</TaskDescription>
     </Id>
 
     <!-- GENERATE MICROSOFT 365 SYNCING ORGANIZATIONAL UNITS: MANUAL INPUT                                                                 -->
@@ -835,11 +1253,11 @@
     <Id Number="150" Name="Reset Group Memberships">
       <CallingFunction>Reset-GroupMembership</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Reset `(groups's membeberships` to the `[trusted list`</TaskDescription>
     </Id>
 
-    <!-- RUN AN AUDIT WITH PINGCASTLE                                                                                                             -->
+    <!-- RUN AN AUDIT WITH PINGCASTLE                                                                                                       -->
     <Id Number="160" Name="Download PingCastle - Audit ">
       <CallingFunction>Get-PingCastle</CallingFunction>
       <UseParameters></UseParameters>
