@@ -972,12 +972,14 @@ Function Import-WmiFilters
             Author.: contact@hardenad.net
             Desc...: modified the way wmi filter is imported. 
                      Added a check for WMI filter being present after import.
+
+            Version: 02.00
+            Author.: contact@hardenad.net
+            Desc...: New release which will replace domain=xxxx.yyy by the running domain
+                     No more parameters needed.
     #>
 
     Param(
-        [Parameter(mandatory=$true)]
-        [String]
-        $sourceDomain
     )
 
     ## Function Log Debug File
@@ -1047,14 +1049,33 @@ Function Import-WmiFilters
 
                 $mofPath = $curDir + "\inputs\GroupPolicies\WmiFilters\" + $filterData.Source
 
-                #.Rewriting data to fetch to the new domain
-                (Get-Content $mofPath) -Replace $sourceDomain,((Get-ADDomain).DNSRoot) | Out-File $mofPath -Force
+                #.Rewriting data to fetch to the new domain (version 1.0)
+                #(Get-Content $mofPath) -Replace $sourceDomain,((Get-ADDomain).DNSRoot) | Out-File $mofPath -Force
+
+                #.Rewriting data to fetch to the new domain (version 2.0)
+                if (Test-Path ($mofPath +".tmp"))
+                {
+                    $null = Remove-Item ($mofPath + ".tmp") -Force
+                }
+                $readMof = Get-Content $mofPath
+                $outData = @()
+                foreach ($line in $readMof) 
+                {
+                    if ($line -like "*Domain = *")
+                    {
+                        $outData += ($line -split """")[0] + """" + (Get-ADDomain).DNSRoot + """;"
+                    
+                    } else {
+                        $outData += $line
+                    }
+                }
+                $outData | Out-File ($mofPath + ".tmp") 
 
                 try {
                     #.Old release, handle too much issue with import and causes fail on gpo import...
                     #$null = Start-Process "mofcomp.exe" -ArgumentList "-N:root\Policy",$mofPath -Wait -WindowStyle Hidden
                     #.New way of importing wmiFilter!
-                    $noSplash = mofcomp.exe -N:root\Policy $mofPath | Out-Null
+                    $noSplash = mofcomp.exe -N:root\Policy ($mofPath + ".tmp") | Out-Null
 
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": successfully added to the domain"
                 } Catch {
@@ -1062,6 +1083,8 @@ Function Import-WmiFilters
                     $Resultat = 1
                     $ResMess = "Some filter were not imported successfully."
                 }
+                
+                Remove-Item ($mofPath + ".tmp") -Force
 
                 #.Checking import status
                 $CheckWmiFtr = Get-ADObject -Filter { ObjectClass -eq 'msWMI-Som' } -Properties *
