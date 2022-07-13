@@ -353,29 +353,30 @@
     <ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden - Legacy,ROOTDN"/>
   </DelegationACEs>
 
+  <!-- ################################################################################################################################# -->
+  <!-- NEW SECTION (2022/07)                                                                                                             -->
+  <!-- This section create a reference table to be used through the scripts                                                              -->
+  <!-- For now, only the GPO parts use this dynamic logic to fillup the migration and the preference table.                              -->
+  <!-- ################################################################################################################################# -->
+  <Translation>
+    <wellKnownID objectClass="text"  translateFrom="%domain%"                     translateTo="AD2016"/>
+    <wellKnownID objectClass="text"  translateFrom="%domaindns%"                  translateTo="AD2016.LAB132"/>
+    <wellKnownID objectClass="group" translateFrom="%t0-managers%"                translateTo="G-S-T0_Managers"/>
+    <wellKnownID objectClass="group" translateFrom="%t0-localAdmin-servers%"      translateTo="L-S-T0_LocalAdmins_Servers"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-managers%"                translateTo="G-S-T1_Managers"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-administrators%"          translateTo="G-S-T1_Administrators"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-operators%"               translateTo="G-S-T1_Operators"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-localAdmin-servers%"      translateTo="L-S-T1_LocalAdmins_Servers"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-managers%"                translateTo="G-S-T2_Managers"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-administrators%"          translateTo="G-S-T2_Administrators"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-operators%"               translateTo="G-S-T2_Operators"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-localAdmin-workstations%" translateTo="L-S-T2_LocalAdmins_Workstations"/>
+    <wellKnownID objectClass="group" translateFrom="%tl-operators%"               translateTo="G-S-TL_Operators"/>
+    <wellKnownID objectClass="group" translateFrom="%tl-localAdmin-servers%"      translateTo="L-S-TL_LocalAdmins_Servers"/>
+    <wellKnownID objectClass="group" translateFrom="%tl-localAdmin-workstations%" translateTo="L-S-TL_LocalAdmins_Workstations"/>
+  </Translation>
+
   <GroupPolicies>
-    <!-- ################################################################################################################################# -->
-    <!-- The <translation> section ease the script to translate identities from the lab domain to the integration domain.                  -->
-    <!-- When a group policy contains a referal to an identity, such as a user or a group, you will have to match the originating ID to    -->
-    <!-- its ID in the target domain. This could be achieve through a GPO migration table or a rewriting of a XML preference file.         -->
-    <!--                                                                                                                                   -->
-    <!-- Options Class are as below:                                                                                                       -->
-    <!--  > When class object is USER...: the script will raise a call to new ID with Get-ADUser   and refer to the SID         attribute  -->
-    <!--  > When class object is GROUP..: the script will raise a call to new ID with Get-ADGroup  and refer to the SID         attribute  -->
-    <!--  > When class object is DOMAIN.: the script will raise a call to new ID with Get-ADDomain and refer to the NetBIOSName attribute  -->
-    <!--  > When class object is UNCPATH: the script will raise a call to new ID with Get-ADGroup  and refer to the DNSRoot     attribute  -->
-    <!--  > When class object is W.K.SID: the script will raise a call to new ID with Get-ADObject and refer to the NetBIOSNAme attribute  -->
-    <!-- ################################################################################################################################# -->
-    <Translation>
-      <MigTable Type="GlobalGroup" Destination="%G-S-TL_Operators%" NewDestination="G-S-TL_Operators"/>
-      <MigTable Type="LocalGroup" Destination="%L-S-TL_LocalAdmins_Servers%" NewDestination="L-S-TL_LocalAdmins_Servers"/>
-      <MigTable Type="UniversalGroup" Destination="%U-S-TL_Demo_Group%" NewDestination="U-S-TL_Demo_Group"/>
-      <MigTable Type="User" Destination="%adm001.tl%" NewDestination="adm001.tl"/>
-      <MigTable Type="Computer" Destination="%DemoCptr%" NewDestination="DemoCptr"/>
-      <MigTable Type="UNCPath" Destination="%domainDNS%" NewDestination="DomainDNS"/>
-      <MigTable Type="unknown" Destination="%freetext%" NewDestination="Texte Libre"/>
-    </Translation>
-    
     <!-- ################################################################################################################################# -->
     <!-- The <WmiFilter> section allows the script to import MOF files to the Group Policy WMI Filters Container.                          -->
     <!-- Once a WMI Filter has been imported, it could be attached to a GPO through this script with te <GpoFilter> reference.             -->
