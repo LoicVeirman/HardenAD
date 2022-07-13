@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Translation>
+    <!-- ##################################################################################################### -->
+    <!-- Each ID design a match for replacement. Using %...% will request the script to search for a           -->
+    <!-- reference in the TasksSequence_HardenAD.xml file (Settings/GPO/Translation)                           -->
+    <!-- For SID translation:                                                                                  -->
+    <!--    * %SID:ID=x% -> x is the object sAMAccountName to search for from within this file                 -->
+    <!--    * %SID:TX=y% -> y is the object sAMAccountName to search directly from the domain                  -->
+    <!--                                                                                                       -->
+    <!-- Note: when a match is not found for a %parameter%, the parameter will remain as is (including %)      -->
+    <!-- ##################################################################################################### -->
+
+    <MigTable>
+        <replace Destination="%G-S-TL_Operators%"            NewDestination="%tl-operators%"                    Type="LocalGroup"/>
+        <replace Destination="%DemoCptr%"                    NewDestination="CPTRTARGET01"                      Type="computer"/>
+        <replace Destination="%L-S-TL_LocalAdmins_Servers%"  NewDestination="%tl-localAdmin-servers%"           Type="LocalGroup"/>
+        <replace Destination="%U-S-TL_Demo_Group%"           NewDestination="U-S-TL_Demo_Group_%computername%"  Type="universalGroup"/>
+        <replace Destination="%adm001.tl%"                   NewDestination="ADMIN001-T1"                       Type="user"/>
+        <replace Destination="%freetext%"                    NewDestination="texte libre"                       Type="unknown"/>
+        <replace Destination="%domainDNS%"                   NewDestination="%domainDNS%"                         Type="uncPath"/>
+    </MigTable>
+
+    <Preferences>
+        <replace id="1" find="DEV\G_Deleg-Admin-Servers"                      replaceBy="%domain%\%t1-localAdmin-servers%"/>
+        <replace id="2" find="S-1-5-21-1034457809-3844690147-1337727313-2115" replaceBy="%SID:ID=1"/>
+        <replace id="3" find="DEV\G_DELEG-Admin-%Computername%"               replaceBy="%domain%\%t1-localAdmin-servers%_%computername%"/>        
+    </Preferences>
+    
+</Translation>

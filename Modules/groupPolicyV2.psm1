@@ -77,35 +77,69 @@ Function Convert-MigrationTable
 
     #.Once we have checked the GPO exists and there is no leaving trace of a previous run, we can start the translation.
     #.The whole translation process will refer to the TasksSequence.xml file to match a source ID to its target: a target is refered 
-    #.as a variable stored as %xxxx% - this is the value you should find in the XML file. 
+    #.as a variable stored as %xxxx% - this is the value you should find in the translation.XML file. 
     if ($resultCode)
     {
         #.Opening the migtable file to a XML variable - if failed, the function stop.
         $xmlData = Get-Content ($gpoPath + "\hardenad.migtable") -ErrorAction Stop
 
         #.Opening the xml data from the tasks sequence for translation then filtering to the needed data
-        $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)
-        $xmlObjs = $xmlFile.Settings.GroupPolicies.translation.migTable
+        $xmlRefs = ([xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)).Settings.Translation.wellKnownID
+        $xmlObjs = ([xml](Get-Content $gpoPath\translation.xml -ErrorAction Stop)).translation.migTable.replace
 
         #.Translating migration table
         foreach ($obj in $xmlObjs) {
+            $newDestination = $obj.NewDestination
+            #.Checking if referal is requiered
+            if ($NewDestination -match "%*%")
+            {
+                #. Referal requested, we will replace every occurence to its new value.
+                foreach ($ref in $xmlRefs)
+                {
+                    $newDestination = $newDestination -replace $ref.translateFrom,$ref.TranslateTo
+                }
+            }
+
             #.Translating
             switch ($obj.Type)
             {
-                "User"           { $xmlData = $xmlData -replace $obj.Destination,(Get-AdUser $obj.NewDestination).SID }
-                "Computer"       { $xmlData = $xmlData -replace $obj.Destination,(Get-AdComputer $obj.NewDestination).SID }
-                "LocalGroup"     { $xmlData = $xmlData -replace $obj.Destination,(Get-AdGroup $obj.NewDestination).SID }
-                "GlobalGroup"    { $xmlData = $xmlData -replace $obj.Destination,(Get-AdGroup $obj.NewDestination).SID }
-                "UniversalGroup" { $xmlData = $xmlData -replace $obj.Destination,(Get-AdGroup $obj.NewDestination).SID }
-                "UNCPath"        { 
-                                   #.The new path refer to the DNS domain name
-                                   if ($obj.newDestination -eq "domainDNS") 
-                                   { 
-                                    $xmlData = $xmlData -replace $obj.Destination,(Get-ADDomain).DNSRoot
-                                   }
-                                   #.Other ?
+                "User"           { 
+                                    Try { 
+                                            $xmlData = $xmlData -replace $obj.Destination,(Get-AdUser $NewDestination -ErrorAction stop).SID 
+                                    } Catch {
+                                        #.No replace
+                                    }
                                  }
-                "Unknown"        { $xmlData = $xmlData -replace $obj.Destination,$obj.NewDestination }
+                "Computer"       { 
+                                    Try {
+                                            $xmlData = $xmlData -replace $obj.Destination,(Get-AdComputer $NewDestination -ErrorAction stop).SID 
+                                    } Catch {
+                                        #.No replace
+                                    }
+                                 }
+                "LocalGroup"     { 
+                                    Try {
+                                            $xmlData = $xmlData -replace $obj.Destination,(Get-AdGroup $NewDestination -ErrorAction stop).SID 
+                                    } Catch {
+                                        #.No replace
+                                    }
+                                 }
+                "GlobalGroup"    { 
+                                    Try {
+                                            $xmlData = $xmlData -replace $obj.Destination,(Get-AdGroup $NewDestination -ErrorAction stop).SID 
+                                    } Catch {
+                                        #.Noreplace
+                                    }
+                                 }
+                "UniversalGroup" { 
+                                    Try {
+                                            $xmlData = $xmlData -replace $obj.Destination,(Get-AdGroup $NewDestination).SID 
+                                    } Catch {
+                                        #.No replace
+                                    }
+                                 }
+                "UNCPath"        { $xmlData = $xmlData -replace $obj.Destination,$newDestination }
+                "Unknown"        { $xmlData = $xmlData -replace $obj.Destination,$NewDestination }
             }
         }
 
@@ -115,6 +149,43 @@ Function Convert-MigrationTable
 
     ## Return translated xml
     return (New-Object -TypeName psobject -Property @{ ResultCode = $resultat ; ResultMesg = "" ; TaskExeLog = "" })
+}
+
+##################################################################
+## Convert-GpoPreferencesXml                                    ##
+## -------------------------                                    ##
+## This function will prepare the preferences.xml file for GPO  ##
+## import                                                       ##
+##                                                              ##
+## Version: 02.00.000                                           ##
+##  Author: contact@hardenad.net                                ##
+##################################################################
+Function Convert-GpoPreferencesXml
+{
+    <#
+        .SYNPOSIS
+        This function will replace the specified target in a preferences.xml file to the target one.
+
+        .DETAILS
+        GPO imported from a dev domain will contains unknown principals. To remediate this when restoring parameters,
+        this function search on %objectName% and replace it with the corresponding SID in the target domain.
+        The function will write the date to the same new file called and provide a backup at ir first run (preferences.xml.backup).
+
+        Note: this release is no more compliant with windows server 2008 R2 and younger systems.
+
+        .PARAMETER GpoName
+        GPO to be translated.
+
+        .NOTES
+        Version: 02.00
+        Author.: contact@hardenad.net  - MSSEC
+        Desc...: Function rewrite. Logging are no more used to ease the script analysis.
+    #>
+    Param(
+        [Parameter(mandatory=$true)]
+        [String]
+        $GpoName
+    )
 }
 
 Export-ModuleMember -Function * 
