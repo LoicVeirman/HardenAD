@@ -476,8 +476,10 @@ Function Install-LAPS
 
         .Notes
          Version: 01.00 -- contact@hardenad.net 
+		 Version: 01.01 -- contact@hardenad.net 
          
          history: 21.08.22 Script creation
+				  16.07.22 Update to use dynamic translation - removed debug log
     #>
     param(
         [Parameter(mandatory=$true,Position=0)]
@@ -486,37 +488,19 @@ Function Install-LAPS
         $SchemaOwnerMode
     )
 
-    ## Function Log Debug File
-    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
-    $dbgMess = @()
-
-    ## Start Debug Trace
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
-
-    ## Indicates caller and options used
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
     $result = 0
 
     ## When dealing with 2008R2, we need to import AD module first
     if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
     {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
-        
         Try   { 
                 Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
                 } 
         Catch {
                 $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
                 $result  = 2
                 $ResMess = "AD module not available."
                 }
-    } else {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
     }
 
     ## Check prerequesite: running user must be member of the Schema Admins group and running computer should be Schema Master owner.
@@ -531,38 +515,19 @@ Function Install-LAPS
     if ($SchemaOwnerMode -eq 'IgnoreDcIsSchameOwner')
     {
         $isSchemaOwn = $true
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Master owner...: $isSchemaOwn (enforced for bypass)"
-    } else {
-
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Master owner...: $isSchemaOwn"
     }
 
     if ($isSchemaAdm -and $isSchemaOwn)
     {
         ## User has suffisant right, the script will then proceed.
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Administrator..: True"
-
         ## First, we need to install the pShell add-ons to be able to update the schema.
-        $ExeCmd = ".\Inputs\LocalAdminPwdSolution\Binaries\LAPS.x64.msi"
-        $Params = "ADDLOCAL=Management.UI,Management.PS,Management.ADMX"
-
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: & msiexec /i $ExeCmd $Params /quiet /norestart"
-
-        Try {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: === begin === "
-
+		Try {
             Start-Process -FilePath "$env:systemroot\system32\msiexec.exe" `
                           -WorkingDirectory .\Inputs\LocalAdminPwdSolution\Binaries `
                           -ArgumentList '/i laps.x64.msi ADDLOCAL=Management.UI,Management.PS,Management.ADMX /quiet /norestart' `
                           -NoNewWindow `
                           -Wait
-            
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: === done! === "
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> installation is successfull."
-
         } Catch {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: === Error === "
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> installation failed!"
             $result  = 2
             $ResMess = "ERROR! the command line has failed!"
         }
@@ -570,14 +535,10 @@ Function Install-LAPS
         ## If the install is a success, then let's update the schema
         if ($result -eq 0)
         {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Proceding to schema extension"
             Try {
                 Import-Module AdmPwd.PS -ErrorAction Stop -WarningAction Stop
                 $null = Update-AdmPwdADSchema
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> schema extension is successfull"
-
             } Catch {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> schema extension failed (warning: .Net 4.0 or greater requiered)"
                 $result  = 1
                 $ResMess = "LAPS installed but the schema extension has failed (warning: .Net 4.0 or greater requiered)"
             }
@@ -585,31 +546,12 @@ Function Install-LAPS
                 $result  = 1
                 $ResMess = "The schema extension has been canceled"
         }
-
     } Else {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Administrator..: False"
         $result  = 2
         $ResMess = "The user is not a Schema Admins (group membership with recurse has failed)"
     }
 
     ## Exit
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
-            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
-            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
-        }
-    }
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
-    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
-
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 
@@ -633,8 +575,10 @@ Function Set-LapsPermissions
 
         .Notes
          Version: 01.00 -- contact@hardenad.net 
-         
+				  01.01 -- contact@hardenad.net 
+				  
          history: 21.11.27 Script creation
+				  22.07.16 Updated to use dynamic trnaslation. Removed log lines.
     #>
     param(
         [Parameter(mandatory=$true,Position=0)]
@@ -642,50 +586,24 @@ Function Set-LapsPermissions
         [String]
         $RunMode
     )
-
-    ## Function Log Debug File
-    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
-    $dbgMess = @()
-
-    ## Start Debug Trace
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
-
-    ## Indicates caller and options used
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter RUNMODE........: $RunMode"
     $result = 0
 
     ## When dealing with 2008R2, we need to import AD module first
     if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
     {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
-        
         Try   { 
                 Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
                 } 
         Catch {
                 $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
                 $result  = 2
                 $ResMess = "AD module not available."
                 }
-    } else {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
     }
 
     ## Check prerequesite: the ADMPWD.PS module has to be present. 
-    if ((Get-Module -ListAvailable -Name "AdmPwd.PS"))
+    if (-not(Get-Module -ListAvailable -Name "AdmPwd.PS"))
     {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> module admpwd.ps present.: True"
-    }
-    else
-    {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> module admpwd.ps present.: False"
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! The module AMDPWD.PS is missing on this system!" 
         $result   = 2
         $ResMess  = "AdmPwd.PS module missing."
     }
@@ -696,16 +614,13 @@ Function Set-LapsPermissions
         # - Default mode
         if ($RunMode -eq "DEFAULT")
         {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> START: DEFAULT MODE ACTIONS"
             #.Loading module
             Try 
             {
                 Import-Module AdmPwd.PS -ErrorAction Stop
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Module AdmPwd.PS loaded successfully."
             }
             Catch 
             {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---! Error! Module AdmPwd.PS failed to be loaded!"
                 $result   = 2
                 $ResMess  = "Failed to load module AdmPwd.PS."
             }
@@ -718,31 +633,24 @@ Function Set-LapsPermissions
                 {
                     $rootDN = (Get-ADDomain).DistinguishedName
                     Set-AdmPwdComputerSelfPermission -OrgUnit $rootDN -ErrorAction Stop | Out-Null
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Computer Self Permission set successfully on $rootDN"
                 }
                 Catch
                 {
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---! Error! Computer Self Permission set failed to be applied on $rootDN!"
                     $result   = 2
                     $ResMess  = "Failed to apply Computer Self Permission on all Organizational Units."
                 }
             }
-
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> END: DEFAULT MODE ACTIONS"
         }
         # - Custom mode
         Else
         {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> START: CUSTOM MODE ACTIONS"
             #.Loading module
             Try 
             {
                 Import-Module AdmPwd.PS -ErrorAction Stop
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Module AdmPwd.PS loaded successfully."
             }
             Catch 
             {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---! Error! Module AdmPwd.PS failed to be loaded!"
                 $result   = 2
                 $ResMess  = "Failed to load module AdmPwd.PS."
             }
@@ -753,9 +661,7 @@ Function Set-LapsPermissions
                 #.Get xml data
                 Try {
                     $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Loaded xml file .\Configs\TasksSequence_HardenAD.xml successfully"
                 } Catch {
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---! Error! Loading xml file .\Configs\TasksSequence_HardenAD.xml failed!" 
                     $ResMess = "Failed to load configuration file"
                     $result = 2
                 }
@@ -763,19 +669,21 @@ Function Set-LapsPermissions
             if ($result -ne 2)
             {
                 #.Granting SelfPermission
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> [START] ComputerSelfPermission"
+				$Translat = $cfgXml.Settings.Translation
                 $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdSelfPermission
                 foreach ($Granted in $Granting)
                 {
                     Try 
                     {
-                        $TargetOU = $Granted.Target -replace "RootDN",(Get-ADDomain).DistinguishedName
+                        $TargetOU = $Granted.Target
+						foreach ($transID in $translat.wellKnownID)
+						{
+							$TargetOU = $TargetOU -replace $TransID.translateFrom,$TransID.translateTo
+						}
                         Set-AdmPwdComputerSelfPermission -OrgUnit $TargetOU -ErrorAction Stop | Out-Null
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---> Computer Self Permission set successfully on $TargetOU"
                     }
                     Catch
                     {
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---! Error! Computer Self Permission set failed to be applied on $rootDN!"
                         $result   = 1
                         $ResMess  = "Failed to apply Permission on one or more OU."
                     }
@@ -784,68 +692,53 @@ Function Set-LapsPermissions
                 $NBname = (Get-ADDomain).netBiosName
 
                 #.Granting Password Reading Permission
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> [START] ReadPasswordPermission"
                 $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdPasswordReader
                 foreach ($Granted in $Granting)
                 {
                     Try 
                     {
-                        $TargetOU  = $Granted.Target -replace "RootDN",(Get-ADDomain).DistinguishedName
-                        $GrantedId = $NBname + "\" + $Granted.Id
+                        $TargetOU  = $Granted.Target
+						$GrantedId = $Granted.Id
+                        foreach ($transID in $translat.wellKnownID)
+						{
+							$TargetOU  = $TargetOU  -replace $TransID.translateFrom,$TransID.translateTo
+							$GrantedId = $GrantedId -replace $TransID.translateFrom,$TransID.translateTo
+						}
                         Set-AdmPwdReadPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---> Granted Read Password Permission to $GrantedId on $TargetOU successfully"
                     }
                     Catch
                     {
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---! Error! Granting Read Password Permission to $GrantedId on $TargetOU failed!"
                         $result   = 1
                         $ResMess  = "Failed to apply Permission on one or more OU."
                     }
                 }
 
                 #.Granting Password Reset Permission
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> [START] ResetPasswordPermission"
                 $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdPasswordReset
                 foreach ($Granted in $Granting)
                 {
                     Try 
                     {
-                        $TargetOU  = $Granted.Target -replace "RootDN",(Get-ADDomain).DistinguishedName
-                        $GrantedId = $NBname + "\" + $Granted.Id
+                        $TargetOU  = $Granted.Target
+						$GrantedId = $Granted.Id
+						foreach ($transID in $translat.wellKnownID)
+						{
+							$TargetOU  = $TargetOU  -replace $TransID.translateFrom,$TransID.translateTo
+							$GrantedId = $GrantedId -replace $TransID.translateFrom,$TransID.translateTo
+						}
                         Set-AdmPwdResetPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---> Granted Reset Password Permission to $GrantedId on $TargetOU successfully"
                     }
                     Catch
                     {
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---! Error! Granting Reset Password Permission to $GrantedId on $TargetOU failed!"
                         $result   = 1
                         $ResMess  = "Failed to apply Permission on one or more OU."
                     }
                 }
             }
-
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> END: CUSTOM MODE ACTIONS"
         }
     }
 
     ## Exit
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
-            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
-            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
-        }
-    }
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
-    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
-
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 
