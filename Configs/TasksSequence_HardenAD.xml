@@ -373,28 +373,51 @@
   <!-- NEW SECTION (2022/07)                                                                                                             -->
   <!-- This section create a reference table to be used through the scripts                                                              -->
   <!-- For now, only the GPO parts use this dynamic logic to fillup the migration and the preference table.                              -->
+  <!--    > WellKnownID..: used to replace a dynamic pattern in a name (group, user, path, gpo, ...)                                     -->
+  <!--    > Keyword......: used to shorten a word in a name (group, user, path, gpo, ...), helping in avoiding too long name in AD       -->
   <!-- ################################################################################################################################# -->
   <Translation>
-    <wellKnownID objectClass="text"  translateFrom="%RootDN%"					   translateTo="DC=AD2016,DC=LAB132"/>
-	<wellKnownID objectClass="text"  translateFrom="%domain%"                      translateTo="AD2016"/>
-    <wellKnownID objectClass="text"  translateFrom="%domaindns%"                   translateTo="AD2016.LAB132"/>
-    <wellKnownID objectClass="group" translateFrom="%t0-managers%"                 translateTo="G-S-T0_Managers"/>
-    <wellKnownID objectClass="group" translateFrom="%t0-localAdmin-servers%"       translateTo="L-S-T0_LocalAdmins_Servers"/>
-    <wellKnownID objectClass="group" translateFrom="%t1-managers%"                 translateTo="G-S-T1_Managers"/>
-    <wellKnownID objectClass="group" translateFrom="%t1-administrators%"           translateTo="G-S-T1_Administrators"/>
-    <wellKnownID objectClass="group" translateFrom="%t1-operators%"                translateTo="G-S-T1_Operators"/>
-    <wellKnownID objectClass="group" translateFrom="%t1-localAdmin-servers%"       translateTo="L-S-T1_LocalAdmins_Servers"/>
-    <wellKnownID objectClass="group" translateFrom="%t2-managers%"                 translateTo="G-S-T2_Managers"/>
-    <wellKnownID objectClass="group" translateFrom="%t2-administrators%"           translateTo="G-S-T2_Administrators"/>
-    <wellKnownID objectClass="group" translateFrom="%t2-operators%"                translateTo="G-S-T2_Operators"/>
-    <wellKnownID objectClass="group" translateFrom="%t2-localAdmin-workstations%"  translateTo="L-S-T2_LocalAdmins_Workstations"/>
-    <wellKnownID objectClass="group" translateFrom="%tl-operators%"                translateTo="G-S-TL_Operators"/>
-    <wellKnownID objectClass="group" translateFrom="%tl-localAdmin-servers%"       translateTo="L-S-TL_LocalAdmins_Servers"/>
-    <wellKnownID objectClass="group" translateFrom="%tl-localAdmin-workstations%"  translateTo="L-S-TL_LocalAdmins_Workstations"/>
-	<wellKnownID objectClass="group" translateFrom="%T1-LAPS-PasswordReset%"	   translateTo="L-S-T1-DELEG_LAPS_PwdReset"/>
-	<wellKnownID objectClass="group" translateFrom="%T1-LAPS-PasswordReader%"	   translateTo="L-S-T1-DELEG_LAPS_PwdRead"/>
-	<wellKnownID objectClass="group" translateFrom="%T2-LAPS-PasswordReset%"	   translateTo="L-S-T2-DELEG_LAPS_PwdReset"/>
-	<wellKnownID objectClass="group" translateFrom="%T2-LAPS-PasswordReader%"	   translateTo="L-S-T2-DELEG_LAPS_PwdRead"/>
+    <wellKnownID objectClass="text"  translateFrom="%RootDN%"					            translateTo="DC=AD2016,DC=LAB132"/>
+	  <wellKnownID objectClass="text"  translateFrom="%domain%"                     translateTo="AD2016"/>
+    <wellKnownID objectClass="text"  translateFrom="%domaindns%"                  translateTo="AD2016.LAB132"/>
+    <wellKnownID objectClass="group" translateFrom="%t0-managers%"                translateTo="G-S-T0_Managers"/>
+    <wellKnownID objectClass="group" translateFrom="%t0-localAdmin-servers%"      translateTo="L-S-T0_LocalAdmins_Servers"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-managers%"                translateTo="G-S-T1_Managers"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-administrators%"          translateTo="G-S-T1_Administrators"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-operators%"               translateTo="G-S-T1_Operators"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-localAdmin-servers%"      translateTo="L-S-T1_LocalAdmins_Servers"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-managers%"                translateTo="G-S-T2_Managers"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-administrators%"          translateTo="G-S-T2_Administrators"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-operators%"               translateTo="G-S-T2_Operators"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-localAdmin-workstations%" translateTo="L-S-T2_LocalAdmins_Workstations"/>
+    <wellKnownID objectClass="group" translateFrom="%tl-operators%"               translateTo="G-S-TL_Operators"/>
+    <wellKnownID objectClass="group" translateFrom="%tl-localAdmin-servers%"      translateTo="L-S-TL_LocalAdmins_Servers"/>
+    <wellKnownID objectClass="group" translateFrom="%tl-localAdmin-workstations%" translateTo="L-S-TL_LocalAdmins_Workstations"/>
+	  <wellKnownID objectClass="group" translateFrom="%T1-LAPS-PasswordReset%"	    translateTo="L-S-T1-DELEG_LAPS_PwdReset"/>
+	  <wellKnownID objectClass="group" translateFrom="%T1-LAPS-PasswordReader%"	    translateTo="L-S-T1-DELEG_LAPS_PwdRead"/>
+	  <wellKnownID objectClass="group" translateFrom="%T2-LAPS-PasswordReset%"	    translateTo="L-S-T2-DELEG_LAPS_PwdReset"/>
+	  <wellKnownID objectClass="group" translateFrom="%T2-LAPS-PasswordReader%"	    translateTo="L-S-T2-DELEG_LAPS_PwdRead"/>
+    
+    <Keyword LongName="servers"        ShortenName="Srv"/>
+    <Keyword LongName="server"         ShortenName="Srv"/>
+    <Keyword LongName="workstations"   ShortenName="Wks"/>
+    <Keyword LongName="workstation"    ShortenName="Wks"/>
+    <Keyword LongName="services"       ShortenName="Svc"/>
+    <Keyword LongName="service"        ShortenName="Svc"/>
+    <Keyword LongName="accounts"       ShortenName="Acct"/>
+    <Keyword LongName="account"        ShortenName="Acct"/>
+    <Keyword LongName="passwords"      ShortenName="Pwd"/>
+    <Keyword LongName="password"       ShortenName="Pwd"/>
+    <Keyword LongName="Firewalls"      ShortenName="Fwl"/>
+    <Keyword LongName="Firewall"       ShortenName="Fwl"/>
+    <Keyword LongName="security"       ShortenName="Secu"/>
+    <Keyword LongName="local"          ShortenName="Loc"/>
+    <Keyword LongName="administrators" ShortenName="Adm"/>
+    <Keyword LongName="administrator"  ShortenName="Adm"/>
+    <Keyword LongName="Operators"      ShortenName="Ope"/>
+    <Keyword LongName="Operator"       ShortenName="Ope"/>
+    <Keyword LongName="Managers"       ShortenName="Mgr"/>
+    <Keyword LongName="Manager"        ShortenName="Mgr"/>
   </Translation>
 
   <GroupPolicies>
@@ -418,12 +441,17 @@
     <!-- ################################################################################################################################# -->
     <!-- The <GPO> elements list the Group Policy added (or refreshed) to the target domain.                                               -->
     <!-- Each of this Group Policy is first generated with no data (if not existing), then data is imported from its backup folder.        -->
+    <!--   > BackupID...: refer to the unique ID of the backup folder                                                                      -->
+    <!--   > validation.: if set to  No, the GPO is created and overwrited from its backup. Yes will only link the GPO to its targets.     -->
     <!--   > Name.......: refer to the display name, as shown in the GUI                                                                   -->
     <!--   > Description: description label, as shown in the GUI.                                                                          -->
-    <!--   > validation.: if set to  No, the GPO is created and overwrited from its backup. Yes will only link the GPO to its targets.     -->
     <!--                                                                                                                                   -->
-    <!-- The script will identify the backup source with the <GpoBackup> attribute - this one should contains {} to be functional.         -->
-    <!--   > ID.........: the backup folder name for this GPO backup. The folder is located in .\Inputs\GroupPolicies.                     -->
+    <!-- The <GPOMODE> will identify the Tier perimeter (for group management) and mode to be applied.                                     -->
+    <!--   > Tier.......: Tier0, Tier1 or Tier2.                                                                                           -->
+    <!--   > Mode.......: APPLY, DENY or BOTH. Apply create a group that limit the application scope, whereas DENY enforce the application -->
+    <!--                  to everyone except the denied one. BOTH mix the two modes, enforcing application to only a scoped target group   -->
+    <!--                  with an exception scope (usefull for migration or testing purpose). If mode is ommited, the mode BOTH will be    -->
+    <!--                  used.                                                                                                            -->
     <!--                                                                                                                                   -->
     <!-- The <gpoDeny> ID attribute will set the specified identity with permission "Deny Execute" - you can se as many input as requiered.-->
     <!--   > ID......: use either sAMAccountName, object GUID or SID to identify the target identity to deny.                              -->
@@ -439,18 +467,31 @@
     <!-- The <GpoSecurityFilter> parameter tasks the script to set "authenticated users" as read only and add a security group as new      -->
     <!-- security filter extension.                                                                                                        -->
     <!-- ################################################################################################################################# -->
-    
+
+    <!-- GPO GROUP SETTINGS: used to generate APPLY and DENY Group Name. Use %tier% to mark the Tier localization in the new name          -->
+    <!--   > GpoName..: define the group name for applying or denying a group                                                              -->
+    <GlobalGpoSettings GroupName="G-S-%tier%-GPO_%GpoName%_%mode%" Tier0="T0" Tier1="T1" Tier2="T2">
+      <GpoTier0 OU="OU=GPO,OU=Groups Tier 0,OU=Administration,%rootDN%"/>
+      <GpoTier1 OU="OU=GPO,OU=Groups Tier 1,OU=Administration,%rootDN%"/>
+      <GpoTier2 OU="OU=GPO,OU=Groups Tier 2,OU=Administration,%rootDN%"/>
+    </GlobalGpoSettings>
+
     <!-- TEMPLATE
-	<GPO BackupID="{9A9AD00F-56D9-476C-9D65-CEAD0FB31B4F}"  Validation="Yes" Name="display name" Description="gpo description">
+	  <GPO BackupID="{9A9AD00F-56D9-476C-9D65-CEAD0FB31B4F}"  Validation="Yes" Name="display name" Description="gpo description">
 		<GpoFilter>WmiFilterName</GpoFilter>
 		<GpoLink Path="RootDN" Enabled="No" Enforced="No"/>
     </GPO>
-	-->
-	<GPO BackupID="{BDEAE713-340B-4ABD-ACDA-9660F55CAEDD}" Validation="No" Name="Security-Workstations_Local-Administrators" Description="GPO to manage the groups members of local administrators group on workstations.">
-		<GpoFilter WMI="Windows_Client_Only"/>
-		<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+	  -->
+	  <GPO BackupID="{BDEAE713-340B-4ABD-ACDA-9660F55CAEDD}" Validation="No" Name="Security-Workstations_Local-Administrators" Description="GPO to manage the groups members of local administrators group on workstations.">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Client_Only"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    
+	  <GPO BackupID="{BDEAE713-340B-4ABD-ACDA-9660F55CAEDD}" Validation="No" Name="Security-Servers_Local-Administrators" Description="GPO to manage the groups members of local administrators group on workstations.">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Client_Only"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>    
   </GroupPolicies>
 
   <Accounts>
@@ -700,15 +741,15 @@
   <LocalAdminPasswordSolution>
     <!-- ################################################################################################################################### -->
     <!-- The <LocalAdminPasswordSolution> is used to setup LAPS over an existing domain. 													 -->
-	<!-- By default, the model delegate permission to Tier 1 for servers and Tier 2 for workstations. All others are handled by Dom admins.  -->
+	  <!-- By default, the model delegate permission to Tier 1 for servers and Tier 2 for workstations. All others are handled by Dom admins.  -->
     <!--                                                                                                                                     -->
     <!-- SelfPermission: Add Write Permission to ms-Mcs-AdmPwdExiprationTime and ms-Mcs-AdmPwd attribute to SELF (i.e. the computer object). -->
-	<!-- PasswordReader: Offer the ability to read ms-Mcs-AdmPwd which contains the local user password                                      -->
-	<!-- PasswordReset.: Offer the ability to read and write ms-Mcs-AdmPwdExiprationTime and ms-Mcs-AdmPwd attribute						 -->
-	<!--                                                                                                                                     -->
-	<!-- The script now handles dynamic group mapping and will look at the <Translation> section of this document.							 -->
-	<!--                                                                                                                                     -->	
-	<!-- <AdmPwdSelfPermission>:                                                                                                             -->
+	  <!-- PasswordReader: Offer the ability to read ms-Mcs-AdmPwd which contains the local user password                                      -->
+	  <!-- PasswordReset.: Offer the ability to read and write ms-Mcs-AdmPwdExiprationTime and ms-Mcs-AdmPwd attribute						 -->
+	  <!--                                                                                                                                     -->
+	  <!-- The script now handles dynamic group mapping and will look at the <Translation> section of this document.							 -->
+	  <!--                                                                                                                                     -->	
+	  <!-- <AdmPwdSelfPermission>:                                                                                                             -->
     <!--    Target: target OU distinguished name with computer objects. use "RootDN" to dynamically specify the domain distanguished name.   -->
     <!--                                                                                                                                     -->
     <!-- <AdmPwdPasswordreader>:                                                                                                             -->
@@ -721,19 +762,19 @@
     <!-- ################################################################################################################################### -->
     <AdmPwdSelfPermission Target="OU=Servers,OU=Harden - Tier Legacy,%RootDN%"/>
     <AdmPwdSelfPermission Target="OU=Servers,OU=Harden - Tier 1 and 2,%RootDN%"/>
-	<AdmPwdSelfPermission Target="OU=Workstations,OU=Harden - Tier Legacy,%RootDN%"/>
-	<AdmPwdSelfPermission Target="OU=Workstations,OU=Harden - Tier 1 and 2,%RootDN%"/>
-	<AdmPwdSelfPermission Target="OU=PAW Tier 0,OU=Administration,%RootDN%"/>
-	<AdmPwdSelfPermission Target="OU=PAW Tier 1,OU=Administration,%RootDN%"/>
-	<AdmPwdSelfPermission Target="OU=PAW Tier 2,OU=Administration,%RootDN%"/>
-	<AdmPwdSelfPermission Target="OU=PAW Tier Legacy,OU=Administration,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden - Tier Legacy,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden - Tier 1 and 2,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=PAW Tier 0,OU=Administration,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=PAW Tier 1,OU=Administration,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=PAW Tier 2,OU=Administration,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=PAW Tier Legacy,OU=Administration,%RootDN%"/>
 	
-	<AdmPwdPasswordReader Target="OU=Servers,OU=Harden - Tier Legacy,%RootDN%"       Id="%domain%\%T1-LAPS-PasswordReader%"/>
+	  <AdmPwdPasswordReader Target="OU=Servers,OU=Harden - Tier Legacy,%RootDN%"       Id="%domain%\%T1-LAPS-PasswordReader%"/>
     <AdmPwdPasswordReader Target="OU=Servers,OU=Harden - Tier 1 and 2,%RootDN%"      Id="%domain%\%T1-LAPS-PasswordReader%"/>
     <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden - Tier Legacy,%RootDN%"  Id="%domain%\%T2-LAPS-PasswordReader%"/>
     <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden - Tier 1 and 2,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReader%"/>
     
-	<AdmPwdPasswordReset  Target="OU=Servers,OU=Harden - Tier Legacy,%RootDN%"       Id="%domain%\%T1-LAPS-PasswordReset%"/>
+	  <AdmPwdPasswordReset  Target="OU=Servers,OU=Harden - Tier Legacy,%RootDN%"       Id="%domain%\%T1-LAPS-PasswordReset%"/>
     <AdmPwdPasswordReset  Target="OU=Servers,OU=Harden - Tier 1 and 2,%RootDN%"      Id="%domain%\%T1-LAPS-PasswordReset%"/>
     <AdmPwdPasswordReset  Target="OU=Workstations,OU=Harden - Tier Legacy,%RootDN%"  Id="%domain%\%T2-LAPS-PasswordReset%"/>
     <AdmPwdPasswordReset  Target="OU=Workstations,OU=Harden - Tier 1 and 2,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReset%"/>	

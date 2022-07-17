@@ -228,7 +228,7 @@ $ColorsAndTexts = New-Object -TypeName psobject `
        
 
 #-Loading Header (yes, a bit of fun)
-#Clear-Host
+Clear-Host
 $LogoData = Get-Content (".\Configs\" + $SchedulrConfig.SchedulerSettings.ScriptHeader.Logo.file)
 $PriTxCol = $SchedulrConfig.SchedulerSettings.ScriptHeader.Logo.DefltColor
 

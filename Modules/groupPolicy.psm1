@@ -392,6 +392,10 @@ Function Import-WmiFilters
 ## New-GpoObject                                                ##
 ## -------------                                                ##
 ## This function will import a new gpo from a backup file.      ##
+## When a GPO is added, or replaced, it will look at the        ##
+## the creation of DENY Group and/or an APPLY Grou - the        ##
+## attribute "<GPO Mode=...>" is used as a referal. If ommited, ##
+## the script will deal a "deny and apply" mode.                ##
 ##                                                              ##
 ## Version: 02.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
@@ -477,7 +481,7 @@ Function New-GpoObject
             #.If no issue, time to import data, set deny mermission and, if needed, link the GPO
             if ($gpFlag)
             {
-                $null = Convert-MigrationTable -GpoName $gpBack 
+                $null = Convert-MigrationTable    -GpoName $gpBack 
                 $null = Convert-GpoPreferencesXml -GpoName $gpBack
 
                 #.Import backup
@@ -521,41 +525,82 @@ Function New-GpoObject
                     } 
                 }
 
-                #.Set Deny permission
+                #.Set Deny and apply permission
                 #.The if is only here for legacy compatibility with 2k8r2 and pShell 2.0.
-                if($GPO.GpoDeny)
+                if (-not($Gpo.GpoMode)) 
                 {
-                    foreach ($deniedID in $GPO.GpoDeny)
+                    $mode = "BOTH"
+                    $Tier = "tier0"
+                } else {
+                    $mode = $Gpo.GpoMode.Mode
+                    $Tier = $Gpo.GpoMode.Tier
+                }
+                
+                $GrpName = $xmlFile.Settings.GroupPolicies.GlobalGpoSettings.GroupName
+                $GrpName = ($GrpName -replace "%tier%",$xmlFile.Settings.GroupPolicies.GlobalGpoSettings.$Tier) -replace "%GpoName%",$GpName
+
+                #.Cheking if any translation is requiered
+                foreach ($translate in $xmlFile.Settings.Translation.wellKnownID)
+                {
+                    $GrpName = $GrpName -replace $translate.translateFrom,$translate.TranslateTo
+                }
+
+                #.Shrinking GroupName 
+                #.We use space as known separator. Each word will start with an uppercase.
+                #.At a final Step, keywords are reduced to abreviations. A dictionnary is involved.
+                #.Shorten words...
+                foreach ($keyword in $xmlFile.settings.Translation.Keyword)
+                {
+                    $GrpName = $GrpName -replace $keyword.longName,$keyword.shortenName     
+                }
+                #.Space
+                $NewGrpName = $null
+                foreach ($word in ($GrpName -split " "))
+                {
+                    $NewGrpName += $word.substring(0,1).toupper() +$word.substring(1)     
+                }
+                $SrcGrpName = $newGrpName
+
+                #.Guessing 
+                Switch ($Tier)
+                {
+                    "tier0" { $GrpPath = $xmlFile.Settings.GroupPolicies.GlobalGpoSettings.GpoTier0.OU }
+                    "tier1" { $GrpPath = $xmlFile.Settings.GroupPolicies.GlobalGpoSettings.GpoTier0.OU }
+                    "tier2" { $GrpPath = $xmlFile.Settings.GroupPolicies.GlobalGpoSettings.GpoTier0.OU }
+                }
+                
+                #.Cheking if any translation is requiered
+                foreach ($translate in $xmlFile.Settings.Translation.wellKnownID)
+                {
+                    $GrpPath = $GrpPath -replace $translate.translateFrom,$translate.TranslateTo
+                }
+
+                if ($mode -eq "BOTH" -or $mode -eq "DENY")
+                {
+                    $GrpName = $SrcGrpName -replace "%mode%","DENY"
+                    Try {
+                        $null = Get-ADGroup $GrpName -ErrorAction stop
+                        $notExist = $False
+                    } Catch {
+                        #.Expected when group is not existing
+                        $notExist = $true
+                    }
+                    if ($notExist)
                     {
-                        $targetID = ($deniedID.ID -replace '%domSid%',((Get-ADDomain).domainSID)) -replace '%SecPri%','S-1-5'
-                    
-                        $isSID = $false
-                        $isPRI = $false
-
-                        if ($targetID -match ((Get-ADDomain).domainSID))  
-                        { 
-                            $isSID = $true
-                            $DenyID = Get-ADObject -filter { objectsid -eq $targetID } -Properties samAccountName
-                            $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $DenyID.samAccountName
-                            $NBName = [System.Security.Principal.NTAccount]$NtAccount
-                        } 
-
-                        if ($targetID -match "S-1-5")
-                        {
-                            $isPRI = $true
-                            $sidAcc = new-object System.Security.Principal.SecurityIdentifier($targetID)
-                            $NBName = $sidAcc.Translate([System.Security.Principal.NTAccount])
-                        }
-        
-                        if ( -not ($isSID) -and -not ($isPRI))
-                        { 
-                            $DenyID = Get-ADObject -filter { SamAccountName -eq $targetID } -Properties samAccountName
-                            $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $DenyID.samAccountName
-                            $NBName = [System.Security.Principal.NTAccount]$NtAcct
-                        }
-
-                        #.Applying deny permission
                         Try {
+                            $null = New-ADGroup -Name $GrpName -Path $GrpPath -Description "DENY GPO: $GpName" -GroupCategory Security -GroupScope Global -ErrorAction SilentlyContinue
+                        } Catch {
+                            #.Failed Creation, set error code to Error
+                            $result = 1
+                            $errMess += " Error: failed to create GPO group $grpName"
+                        }
+                    }
+
+                    $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $GrpName
+                    $NBName = [System.Security.Principal.NTAccount]$NtAcct
+
+                    #.Applying deny permission
+                    Try {
                             $mygpo  = Get-GPO -Name $GpName
                             $adgpo  = [ADSI]("LDAP://CN=`{$($mygpo.Id.guid)`},CN=Policies,CN=System," + (Get-ADDomain).DistinguishedName)
                             $rule   = New-Object System.DirectoryServices.ActiveDirectoryAccessRule($NBName, "ExtendedRight", "Deny", [Guid]"edacfd8f-ffb3-11d1-b41d-00a0c968f939")
@@ -563,53 +608,46 @@ Function New-GpoObject
                             $acl = $adgpo.ObjectSecurity
                             $acl.AddAccessRule($rule)
                             $adgpo.CommitChanges()
-                        } Catch {
+                    } Catch {
                             $result = 1
                             $errMess += " Error: could not apply the deny permission on one or more GPO"
-                        }
                     }
                 }
+
                 #.v1.1: added Security Filter
-                if($GPO.GpoSecurityFilter)
+                if ($mode -eq "BOTH" -or $mode -eq "APPLY")
                 {
-                    #.adding new security filter permissions
-                    foreach ($SecurityFilter in $GPO.GpoSecurityFilter)
+                    $GrpName = $SrcGrpName -replace "%mode%","APPLY"
+
+                    Try {
+                        $null = Get-ADGroup $GrpName -ErrorAction stop
+                        $notExist = $False
+                    } Catch {
+                        #.Expected when group is not existing
+                        $notExist = $true
+                    }
+                    if ($notExist)
                     {
-                        $targetID = ($SecurityFilter.ID -replace '%domSid%',((Get-ADDomain).domainSID)) -replace '%SecPri%','S-1-5'
-                    
-                        $isSID = $false
-                        $isPRI = $false
-
-                        if ($targetID -match ((Get-ADDomain).domainSID))  
-                        { 
-                            $isSID = $true
-                            $SecuID = Get-ADObject -filter { objectsid -eq $targetID } -Properties samAccountName
-                            $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $SecuID.samAccountName
-                            $NBName = [System.Security.Principal.NTAccount]$NtAccount
-                        } 
-
-                        if ($targetID -match "S-1-5")
-                        {
-                            $isPRI = $true
-                            $sidAcc = new-object System.Security.Principal.SecurityIdentifier($targetID)
-                            $NBName = $sidAcc.Translate([System.Security.Principal.NTAccount])
-                        }
-        
-                        if ( -not ($isSID) -and -not ($isPRI))
-                        { 
-                            $SecuID = Get-ADObject -filter { SamAccountName -eq $targetID } -Properties samAccountName
-                            $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $SecuID.samAccountName
-                            $NBName = [System.Security.Principal.NTAccount]$NtAcct
-                        }
-
-                        #.Applying Security Filter
                         Try {
+                            $null = New-ADGroup -Name $GrpName -Path $GrpPath -Description "DENY GPO: $GpName" -GroupCategory Security -GroupScope Global -ErrorAction SilentlyContinue
+                        } Catch {
+                            #.Failed Creation, set error code to Error
+                            $result = 1
+                            $errMess += " Error: failed to create GPO group $grpName"
+                        }
+                    }
+
+                    #.adding new security filter permissions
+                    $NtAcct = (Get-ADDomain).NetBIOSName + "\" + $GrpName
+                    $NBName = [System.Security.Principal.NTAccount]$NtAcct
+
+                    #.Applying Security Filter
+                    Try {
                             #.Adding new Security Filter
                             Set-GPPermission -Name $gpName -PermissionLevel GpoApply -TargetName $NBName -TargetType Group -Confirm:$false
-                        } Catch {
+                    } Catch {
                             $result = 1
                             $errMess += " Error: could not apply the deny permission on one or more GPO"
-                        }
                     }
 
                     #.recover group name to adapt with AD running language
@@ -617,16 +655,15 @@ Function New-GpoObject
 
                     #.reset permission for Authenticated Users
                     Try {
-                        Set-GPPermission -Name $GpName -PermissionLevel GpoRead -TargetName $AuthUsers -TargetType Group -Confirm:$false -Replace
-                    }
-                    Catch {
+                            Set-GPPermission -Name $GpName -PermissionLevel GpoRead -TargetName $AuthUsers -TargetType Group -Confirm:$false -Replace
+                    } Catch {
                         $result = 1
                         $errMess += " Error: failed to rewrite S-1-5-11 from security filter list"
                     }
                 }
 
-                #.Linking to the target OU
-                if ($gpVali -eq "yes")
+                #.Linking to the target OU (in any case)
+                if ($gpVali -eq "yes" -or $gpVali -eq "no")
                 {
                     foreach ($gpLink in $GPO.GpoLink)
                     {
