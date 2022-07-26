@@ -6,8 +6,7 @@
 ## Version: 01.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function New-GpoObject
-{
+Function New-GpoObject {
     <#
         .Synopsis
          Add all GPOs from the TasksSequence_HardenAD.xml.
@@ -39,18 +38,19 @@ Function New-GpoObject
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller.............: " + (Get-PSCallStack)[1].Command
     
     ## When dealing with 2008R2, we need to import AD module first
-    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-    {
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         Try { 
             Import-Module ActiveDirectory
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-        } Catch {
+        }
+        Catch {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module."   
         }
         Try { 
             Import-Module GroupPolicy
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added GroupPolicy module."    
-        } Catch {
+        }
+        Catch {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add GroupPolicy module."   
         }
     }
@@ -61,10 +61,11 @@ Function New-GpoObject
 
     ## loading configuration file
     Try {
-        $xmlFile  = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
+        $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> TasksSequence_HardenAD.xml..: loaded successfully"
         $Result = 0
-    } Catch {
+    }
+    Catch {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> TasksSequence_HardenAD.xml..: error! load failed!"
         $Result = 2
     }
@@ -76,10 +77,8 @@ Function New-GpoObject
     ## Analyzing and processing
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Analyze begins"
 
-    if ($Result -ne 2)
-    {
-        foreach ($Gpo in $GpoData)
-        {
+    if ($Result -ne 2) {
+        foreach ($Gpo in $GpoData) {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> ========================"
         
             #.Recovering data
@@ -97,22 +96,23 @@ Function New-GpoObject
             #.Check if the GPO already exists
             $gpChek = Get-GPO -Name $gpName -ErrorAction SilentlyContinue
 
-            if ($gpChek)
-            {
+            if ($gpChek) {
                 #.GPO exists, so updating comment to keep a trace of gpContent rewriting.
                 #.Not working yet.
                 #(Get-GPO $gpChek.ID).Description += "`nGPO replaced by backup from HardenAD on " + (Get-Date -Format "yyyy/MM//dd at hh:mm:ss")
                 #.Set flag
                 $gpFlag = $true
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO exists.....: true"
-            } Else {
+            }
+            Else {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO exists.....: false"
                 #.Create empty GPO
                 Try {
                     $null = New-Gpo -Name $gpName -Comment $gpDesc -ErrorAction SilentlyContinue
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO creation...: success"
                     $gpFlag = $true
-                } Catch {
+                }
+                Catch {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO creation...: failed!"
                     $gpFlag = $false
                     $result = 1
@@ -121,14 +121,14 @@ Function New-GpoObject
             }
 
             #.If no issue, time to import data, set deny mermission and, if needed, link the GPO
-            if ($gpFlag)
-            {
+            if ($gpFlag) {
                 #.Import backup
                 try {
                     $null = Import-GPO -BackupId $gpBack -TargetName $gpName -MigrationTable $curDir\Inputs\GroupPolicies\translated.migtable -Path $curDir\Inputs\GroupPolicies -ErrorAction Stop
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO import.....: success"
                     $importFlag = $true
-                } Catch {
+                }
+                Catch {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO import.....: failed!"
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO import.....: [debug]  Import-GPO -BackupID '$gpBack' -TargetName $GpName -MigrationTable $curDir\Inputs\GroupPolicies\translated.migtable -Path $curDir\Inputs\GroupPolicies -ErrorAction Stop"
                     $result = 1
@@ -137,18 +137,16 @@ Function New-GpoObject
                 }
 
                 #.Assign Wmi Filter, if any
-                if ($importFlag)
-                {
+                if ($importFlag) {
                     #.check for filter data
                     $gpFilter = $Gpo.GpoFilter
-                    if ($gpFilter)
-                    {
+                    if ($gpFilter) {
                         #.Prepare data
                         $FilterName = $gpFilter.WMI
                         $DomainName = (Get-ADDomain).DnsRoot
                         $GpoRawData = Get-GPO -Name $gpName 
-                        $wmiFilter  = Get-ADObject -Filter { msWMI-Name -eq $FilterName } -ErrorAction SilentlyContinue
-                        $GpoDN      = "CN={" + $GpoRawData.Id + "},CN=Policies,CN=System," + (Get-ADDomain).DistinguishedName
+                        $wmiFilter = Get-ADObject -Filter { msWMI-Name -eq $FilterName } -ErrorAction SilentlyContinue
+                        $GpoDN = "CN={" + $GpoRawData.Id + "},CN=Policies,CN=System," + (Get-ADDomain).DistinguishedName
                         $wmiLinkVal = "[" + $DomainName + ";" + $wmiFilter.Name + ";0]"
 
                         #.log this
@@ -162,42 +160,41 @@ Function New-GpoObject
                         $hasFilter = (Get-ADObject $GpoDN -Properties gPCWQLFilter).gPCWQLFilter
 
                         Try {
-                            if ($hasFilter)
-                            {
+                            if ($hasFilter) {
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> WMI Filter.....: this GPO has a Filter in place"
-                                Set-ADObject $GpoDN -replace @{gPCWQLFilter=$wmiLinkVal}
+                                Set-ADObject $GpoDN -replace @{gPCWQLFilter = $wmiLinkVal }
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> WMI Filter.....: filter $FilterName applied (replace)"
-                            } else {
+                            }
+                            else {
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> WMI Filter.....: this GPO has no Filter in place"
-                                Set-ADObject $GpoDN -Add @{gPCWQLFilter=$wmiLinkVal}
+                                Set-ADObject $GpoDN -Add @{gPCWQLFilter = $wmiLinkVal }
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> WMI Filter.....: filter $FilterName applied (add)"
                             }
-                        } Catch {
-                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> WMI Filter.....: Error! Could not set the wmi filter!"
-                                $Result = 1
                         }
-                    } else {
+                        Catch {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> WMI Filter.....: Error! Could not set the wmi filter!"
+                            $Result = 1
+                        }
+                    }
+                    else {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> WMI Filter.....: none"
                     }
                 }
 
                 #.Set Deny permission
                 #.The if is only here for legacy compatibility with 2k8r2 and pShell 2.0.
-                if($GPO.GpoDeny)
-                {
-                    foreach ($deniedID in $GPO.GpoDeny)
-                    {
+                if ($GPO.GpoDeny) {
+                    foreach ($deniedID in $GPO.GpoDeny) {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........: " + $DeniedID.ID
                     
-                        $targetID = ($deniedID.ID -replace '%domSid%',((Get-ADDomain).domainSID)) -replace '%SecPri%','S-1-5'
+                        $targetID = ($deniedID.ID -replace '%domSid%', ((Get-ADDomain).domainSID)) -replace '%SecPri%', 'S-1-5'
                     
                         $isSID = $false
                         $isPRI = $false
 
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........: translated to $targetID" 
 
-                        if ($targetID -match ((Get-ADDomain).domainSID))  
-                        { 
+                        if ($targetID -match ((Get-ADDomain).domainSID)) { 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........: the specified ID is a SID"
                             $isSID = $true
                             $DenyID = Get-ADObject -filter { objectsid -eq $targetID } -Properties samAccountName
@@ -207,8 +204,7 @@ Function New-GpoObject
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........:  matched to $NBName"
                         } 
 
-                        if ($targetID -match "S-1-5")
-                        {
+                        if ($targetID -match "S-1-5") {
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........: the specified ID is a principal security"
                             $isPRI = $true
                             $sidAcc = new-object System.Security.Principal.SecurityIdentifier($targetID)
@@ -217,8 +213,7 @@ Function New-GpoObject
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........:  matched to $NBName"
                         }
         
-                        if ( -not ($isSID) -and -not ($isPRI))
-                        { 
+                        if ( -not ($isSID) -and -not ($isPRI)) { 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........: the specified ID is a samAccountName"
 
                             $DenyID = Get-ADObject -filter { SamAccountName -eq $targetID } -Properties samAccountName
@@ -232,17 +227,18 @@ Function New-GpoObject
                         Try {
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........: Start new ACL rule"
 
-                            $mygpo  = Get-GPO -Name $GpName
-                            $adgpo  = [ADSI]("LDAP://CN=`{$($mygpo.Id.guid)`},CN=Policies,CN=System," + (Get-ADDomain).DistinguishedName)
+                            $mygpo = Get-GPO -Name $GpName
+                            $adgpo = [ADSI]("LDAP://CN=`{$($mygpo.Id.guid)`},CN=Policies,CN=System," + (Get-ADDomain).DistinguishedName)
 
-                            $rule   = New-Object System.DirectoryServices.ActiveDirectoryAccessRule($NBName, "ExtendedRight", "Deny", [Guid]"edacfd8f-ffb3-11d1-b41d-00a0c968f939")
+                            $rule = New-Object System.DirectoryServices.ActiveDirectoryAccessRule($NBName, "ExtendedRight", "Deny", [Guid]"edacfd8f-ffb3-11d1-b41d-00a0c968f939")
         
                             $acl = $adgpo.ObjectSecurity
                             $acl.AddAccessRule($rule)
                             $adgpo.CommitChanges()
 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........: Deny Permission applied successfully"
-                        } Catch {
+                        }
+                        Catch {
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........: Deny Permission failed to be applied!"
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........: [DEBUG] ADGPO = [ADSI](LDAP://CN=`{" + $mygpo.Id.guid + "`},CN=Policies,CN=System," + (Get-ADDomain).DistinguishedName + ")"
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> DENY ID........: [DEBUG] RULE  = New-Object System.DirectoryServices.ActiveDirectoryAccessRule($NBName, ""ExtendedRight"", ""Deny"", [Guid]""edacfd8f-ffb3-11d1-b41d-00a0c968f939"")"
@@ -252,22 +248,19 @@ Function New-GpoObject
                     }
                 }
                 #.v1.1: added Security Filter
-                if($GPO.GpoSecurityFilter)
-                {
+                if ($GPO.GpoSecurityFilter) {
                     #.adding new security filter permissions
-                    foreach ($SecurityFilter in $GPO.GpoSecurityFilter)
-                    {
+                    foreach ($SecurityFilter in $GPO.GpoSecurityFilter) {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: " + $SecurityFilter.ID
                     
-                        $targetID = ($SecurityFilter.ID -replace '%domSid%',((Get-ADDomain).domainSID)) -replace '%SecPri%','S-1-5'
+                        $targetID = ($SecurityFilter.ID -replace '%domSid%', ((Get-ADDomain).domainSID)) -replace '%SecPri%', 'S-1-5'
                     
                         $isSID = $false
                         $isPRI = $false
 
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: translated to $targetID" 
 
-                        if ($targetID -match ((Get-ADDomain).domainSID))  
-                        { 
+                        if ($targetID -match ((Get-ADDomain).domainSID)) { 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: the specified ID is a SID"
                             $isSID = $true
                             $SecuID = Get-ADObject -filter { objectsid -eq $targetID } -Properties samAccountName
@@ -277,8 +270,7 @@ Function New-GpoObject
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> security filter:  matched to $NBName"
                         } 
 
-                        if ($targetID -match "S-1-5")
-                        {
+                        if ($targetID -match "S-1-5") {
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: the specified ID is a principal security"
                             $isPRI = $true
                             $sidAcc = new-object System.Security.Principal.SecurityIdentifier($targetID)
@@ -287,8 +279,7 @@ Function New-GpoObject
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER:  matched to $NBName"
                         }
         
-                        if ( -not ($isSID) -and -not ($isPRI))
-                        { 
+                        if ( -not ($isSID) -and -not ($isPRI)) { 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: the specified ID is a samAccountName"
 
                             $SecuID = Get-ADObject -filter { SamAccountName -eq $targetID } -Properties samAccountName
@@ -306,7 +297,8 @@ Function New-GpoObject
 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: successfully addedd $NBName with GpoApply permission"
 
-                        } Catch {
+                        }
+                        Catch {
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: failed to add $nbname as new security filter!"
                             $result = 1
                             $errMess += " Error: could not apply the deny permission on one or more GPO"
@@ -317,14 +309,14 @@ Function New-GpoObject
 
                     #.recover group name to adapt with AD running language
                     $AuthUsers = (Get-ADObject -LDAPFilter "(&(objectSID=S-1-5-11))" -Properties msDS-PrincipalName)."msDS-PrincipalName"
-                    $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 has been translated to $AuthUsers"
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 has been translated to $AuthUsers"
                     #.reset permission for Authenticated Users
                     Try {
                         Set-GPPermission -Name $GpName -PermissionLevel GpoRead -TargetName $AuthUsers -TargetType Group -Confirm:$false -Replace
-                        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 has been successfully set to read only and removed from security filter"
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 has been successfully set to read only and removed from security filter"
                     }
                     Catch {
-                        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 failed to be replaced with read only permission"
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> SECURITY FILTER: S-1-5-11 failed to be replaced with read only permission"
                         $result = 1
                         $errMess += " Error: failed to rewrite S-1-5-11 from security filter list"
                     }
@@ -332,21 +324,19 @@ Function New-GpoObject
                 }
 
                 #.Linking to the target OU
-                if ($gpVali -eq "yes")
-                {
-                    foreach ($gpLink in $GPO.GpoLink)
-                    {
-                       $gpPath = $gpLink.Path -replace 'RootDN',((Get-ADDomain).DistinguishedName)
+                if ($gpVali -eq "yes") {
+                    foreach ($gpLink in $GPO.GpoLink) {
+                        $gpPath = $gpLink.Path -replace 'RootDN', ((Get-ADDomain).DistinguishedName)
                         #.Test if already linked
                         $gpLinked = Get-ADObject -Filter { DistinguishedName -eq $gpPath } -Properties gpLink | Select-Object -ExpandProperty gpLink | Where-Object { $_ -Match ("LDAP://CN={" + (Get-Gpo -Name $gpName).ID + "},") }
-                        if ($gpLinked)
-                        {
+                        if ($gpLinked) {
                             Try {
                                 $null = Set-GPLink -Name $gpName -Target $gpPath -LinkEnabled $gpLink.Enabled -Enforced $gpLink.enforced -ErrorAction Stop
                             
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO LINK.......: Successfully updated link to $gpPath (Enabled: " + $gpLink.Enabled + ",Enforced: " + $gpLink.Enforced + ")"
 
-                            } Catch {
+                            }
+                            Catch {
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO LINK.......: Failed! Not linked to $gpPath"
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO LINK.......: [DEBUG] gpPath = """ + $gpLink.Path + """ -replace 'RootDN',(" + (Get-ADDomain).DistinguishedName + ")"
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO LINK.......: [DEBUG] gpPath = ""$gpPath"""
@@ -354,13 +344,15 @@ Function New-GpoObject
                                 $result = 1
                                 $errMess += " Error: could not link one or more GPO"
                             }
-                        } Else {
+                        }
+                        Else {
                             Try {
                                 $null = New-GPLink -Name $gpName -Target $gpPath -LinkEnabled $gpLink.Enabled -Enforced $gpLink.enforced -ErrorAction Stop
                             
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO LINK.......: Successfully linked to $gpPath (Enabled: " + $gpLink.Enabled + ",Enforced: " + $gpLink.Enforced + ")"
 
-                            } Catch {
+                            }
+                            Catch {
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO LINK.......: Failed! Not linked to $gpPath"
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO LINK.......: [DEBUG] gpPath = """ + $gpLink.Path + """ -replace 'RootDN',(" + (Get-ADDomain).DistinguishedName + ")"
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO LINK.......: [DEBUG] gpPath = ""$gpPath"""
@@ -370,13 +362,15 @@ Function New-GpoObject
                             }
                         }
                     }
-                } else {
+                }
+                else {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> GPO LINK.......: authorization not granted by the script (skipped)"
                 }
             }
         }
 
-    } Else {
+    }
+    Else {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> ERROR: operation canceled"
         $errMess = "Failed to load powerShell modules - canceled."
     }
@@ -386,11 +380,9 @@ Function New-GpoObject
     ##########
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -414,8 +406,7 @@ Function New-GpoObject
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Convert-MigrationTable
-{
+Function Convert-MigrationTable {
     <#
         .SYNPOSIS
             This function will replace the specified name in a .migTable file to the target one.
@@ -441,16 +432,16 @@ Function Convert-MigrationTable
     #>
 
     Param(
-        [Parameter(mandatory=$true)]
+        [Parameter(mandatory = $true)]
         [String]
         $ObjectToTranslate,
 
-        [Parameter(mandatory=$true)]
-        [ValidateSet('User','Group','Domain','UNCPath')]
+        [Parameter(mandatory = $true)]
+        [ValidateSet('User', 'Group', 'Domain', 'UNCPath')]
         [String]
         $ObjectCategory,
 
-        [Parameter(mandatory=$true)]
+        [Parameter(mandatory = $true)]
         $xmlData
     )
 
@@ -469,21 +460,21 @@ Function Convert-MigrationTable
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> parameter ObjectCategory......: $ObjectCategory"
 
     ## When dealing with 2008R2, we need to import AD module first
-    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-    {
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
         
-        Try   { 
-                Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-                } 
+        Try { 
+            Import-Module ActiveDirectory
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+        } 
         Catch {
-                $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
-                }
+            $noError = $false
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
+        }
         
-    } else {
+    }
+    else {
 
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
     }
@@ -491,34 +482,33 @@ Function Convert-MigrationTable
 
     ## Switch on category
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> Switching on ObjectCategory"
-    Switch ($ObjectCategory)
-    {
-        'User'    { $result = $xmlData -replace "%$ObjectToTranslate%",(Get-ADUser  $ObjectToTranslate).SID 
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new User.: " + (Get-ADUser  $ObjectToTranslate).SID 
-                  }
-        'Group'   { $result = $xmlData -replace "%$ObjectToTranslate%",(Get-ADGroup $ObjectToTranslate).SID 
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new Group: " + (Get-ADGroup $ObjectToTranslate).SID 
-                  }
-        'Domain'  { 
-                    Switch ($ObjectToTranslate)        
-                    {
-                        "Enterprise Admins"
-                        {
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: Special use case detected (Enterprise Admins)"
-                            $newObjectToTranslate = (Get-ADGroup ((Get-ADDomain).DomainSID.Value + "-519")).sAMAccountName
-                            $result = $xmlData -replace "%$ObjectToTranslate%",((Get-ADDomain).NetBIOSName + "\$newObjectToTranslate")
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new SName: " + (Get-ADDomain).NetBIOSName + "\$newObjectToTranslate"
-                        }
-                        Default
-                        {
-                            $result = $xmlData -replace "%$ObjectToTranslate%",((Get-ADDomain).NetBIOSName + "\$ObjectToTranslate")
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new SName: " + (Get-ADDomain).NetBIOSName + "\$ObjectToTranslate"
-                        }
-                    }
-                  }
-        'UNCPath' { $result = $xmlData -replace "%$ObjectToTranslate%",(Get-ADDomain).DNSRoot
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new UNCp.: " + (Get-ADDomain).DNSRoot
-                  }
+    Switch ($ObjectCategory) {
+        'User' {
+            $result = $xmlData -replace "%$ObjectToTranslate%", (Get-ADUser  $ObjectToTranslate).SID 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new User.: " + (Get-ADUser  $ObjectToTranslate).SID 
+        }
+        'Group' {
+            $result = $xmlData -replace "%$ObjectToTranslate%", (Get-ADGroup $ObjectToTranslate).SID 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new Group: " + (Get-ADGroup $ObjectToTranslate).SID 
+        }
+        'Domain' { 
+            Switch ($ObjectToTranslate) {
+                "Enterprise Admins" {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: Special use case detected (Enterprise Admins)"
+                    $newObjectToTranslate = (Get-ADGroup ((Get-ADDomain).DomainSID.Value + "-519")).sAMAccountName
+                    $result = $xmlData -replace "%$ObjectToTranslate%", ((Get-ADDomain).NetBIOSName + "\$newObjectToTranslate")
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new SName: " + (Get-ADDomain).NetBIOSName + "\$newObjectToTranslate"
+                }
+                Default {
+                    $result = $xmlData -replace "%$ObjectToTranslate%", ((Get-ADDomain).NetBIOSName + "\$ObjectToTranslate")
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new SName: " + (Get-ADDomain).NetBIOSName + "\$ObjectToTranslate"
+                }
+            }
+        }
+        'UNCPath' {
+            $result = $xmlData -replace "%$ObjectToTranslate%", (Get-ADDomain).DNSRoot
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> debug: new UNCp.: " + (Get-ADDomain).DNSRoot
+        }
     }
 
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> Switching done"
@@ -526,11 +516,9 @@ Function Convert-MigrationTable
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -554,8 +542,7 @@ Function Convert-MigrationTable
 ## Version: 01.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Update-PreferenceXML
-{
+Function Update-PreferenceXML {
     <#
         .SYNPOSIS
             This function will look after XML file in "preference" folder and replace any identified occurences.
@@ -575,216 +562,193 @@ Function Update-PreferenceXML
             Desc...: Added exception when SID is null in the source file.
     #>
 	
-	Param (
-        [Parameter(mandatory=$true)]
+    Param (
+        [Parameter(mandatory = $true)]
         [string]
         $SourcePrefTable
-	)
+    )
 	
-	## Function Log Debug File
-	$DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
-	$dbgMess = @()
+    ## Function Log Debug File
+    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+    $dbgMess = @()
 	
-	## Start Debug Trace
-	$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
-	$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
-	$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+    ## Start Debug Trace
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
 	
-	## Indicates caller and options used
-	$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller...............: " + (Get-PSCallStack)[1].Command
+    ## Indicates caller and options used
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller...............: " + (Get-PSCallStack)[1].Command
 	
-	## Ensure that a translation table is present
-	if (Test-Path .\inputs\GroupPolicies\$SourcePrefTable)
-	{
-		$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Reference base prefTable......: .\inputs\GroupPolicies\$SourcePrefTable is present."
-		$refTable = Get-Content .\inputs\GroupPolicies\$SourcePrefTable
-		$noError  = $true
-	}
-	else
-	{
-		$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Reference base prefTable......: .\inputs\GroupPolicies\$SourcePrefTable is missing!"
-		$noError = $false
-	}
+    ## Ensure that a translation table is present
+    if (Test-Path .\inputs\GroupPolicies\$SourcePrefTable) {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Reference base prefTable......: .\inputs\GroupPolicies\$SourcePrefTable is present."
+        $refTable = Get-Content .\inputs\GroupPolicies\$SourcePrefTable
+        $noError = $true
+    }
+    else {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Reference base prefTable......: .\inputs\GroupPolicies\$SourcePrefTable is missing!"
+        $noError = $false
+    }
 
     ## When dealing with 2008R2, we need to import AD module first
-    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-    {
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
         
-        Try   { 
-                Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-                } 
+        Try { 
+            Import-Module ActiveDirectory
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+        } 
         Catch {
-                $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
-                }
+            $noError = $false
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
+        }
         
-    } else {
+    }
+    else {
 
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
     }
 
 	
-	## if no error, generating in memeory a translation table
-	if ($noError)
-    {
+    ## if no error, generating in memeory a translation table
+    if ($noError) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> starting translation process..:"
-	    $newIDs = @()
-	    foreach ($line in $refTable)
-	    {
-		    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> Raw data: $line"
+        $newIDs = @()
+        foreach ($line in $refTable) {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> Raw data: $line"
 		
-            $rawData  = $line -Split ';'
-		    $newName  = $rawData[1] -replace ($rawData[1] -split '\\')[0],(Get-ADDomain).NetBIOSName
+            $rawData = $line -Split ';'
+            $newName = $rawData[1] -replace ($rawData[1] -split '\\')[0], (Get-ADDomain).NetBIOSName
 		
-            if ($rawData[2] -ne "")
-            {
-                switch ($rawData[0])
-		        {
-			        "Group" { $newSid = (Get-ADGroup -Identity ($rawData[1] -split "\\")[1]).SID }
-			        "User"  { $newSid = (Get-ADUser  -Identity ($rawData[1] -split "\\")[1]).SID }
-			        Default { $newSid = "" }
-		        }
+            if ($rawData[2] -ne "") {
+                switch ($rawData[0]) {
+                    "Group" { $newSid = (Get-ADGroup -Identity ($rawData[1] -split "\\")[1]).SID }
+                    "User" { $newSid = (Get-ADUser  -Identity ($rawData[1] -split "\\")[1]).SID }
+                    Default { $newSid = "" }
+                }
             }
-            else 
-            {
+            else {
                 $newSid = ""
             }
-		    $newIDs += ($line + ";$newName;$newSid") -replace "\\","\\"
+            $newIDs += ($line + ";$newName;$newSid") -replace "\\", "\\"
 
-		    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> New data: $line;$newName;$newSid"
-	    }
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> New data: $line;$newName;$newSid"
+        }
 	
-	    ## Begining to look at replacement...
+        ## Begining to look at replacement...
         ## This is a legacy code, written specifically to be compatible with PShell 2.0
-	    $BackupGPOs = Get-ChildItem .\inputs\GroupPolicies | Where-Object { $_.PSIsContainer -eq $true }
+        $BackupGPOs = Get-ChildItem .\inputs\GroupPolicies | Where-Object { $_.PSIsContainer -eq $true }
 
-	    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> Analyzing GPOs:"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------> Analyzing GPOs:"
 
-        foreach ($GPO in $BackupGPOs)
-	    {
-		    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---------> Dealing with GPO id " + $GPO.Name + ":"
+        foreach ($GPO in $BackupGPOs) {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---------> Dealing with GPO id " + $GPO.Name + ":"
 
-		    $Looking = ".\inputs\groupPolicies\" + $GPO.Name + "\DomainSysvol\GPO\Machine\Preferences"
+            $Looking = ".\inputs\groupPolicies\" + $GPO.Name + "\DomainSysvol\GPO\Machine\Preferences"
 
-		    if (Test-Path $Looking)
-		    {
-			    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------> Folder Machine Preferences is present: looking for XML..."
+            if (Test-Path $Looking) {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------> Folder Machine Preferences is present: looking for XML..."
 			
                 #$xmls = Get-ChildItem -Recurse -Path $Looking\*.xml
-			    $xmls = Get-ChildItem -Recurse -Path ($Looking) | where { $_.Name -like "*.xml" }
+                $xmls = Get-ChildItem -Recurse -Path ($Looking) | Where-Object { $_.Name -like "*.xml" }
 
-                if ($xmls)
-			    {
-				    foreach ($xml in $xmls)
-				    {
-					    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---------------> working on " + $xml.FullName
+                if ($xmls) {
+                    foreach ($xml in $xmls) {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---------------> working on " + $xml.FullName
 					
-					    $rawXML = Get-Content $xml.FullName
+                        $rawXML = Get-Content $xml.FullName
 
-                        foreach ($line in $newIDs)
-					    {
-						    $lineData = $line -split ";"
+                        foreach ($line in $newIDs) {
+                            $lineData = $line -split ";"
 						
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> replacing " + $lineData[1] + " with " +  $lineData[3] + " and " + $lineData[2] + " with " + $lineData[4]
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> replacing " + $lineData[1] + " with " + $lineData[3] + " and " + $lineData[2] + " with " + $lineData[4]
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> Before: " + $rawXML 
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> After.: " + (($rawXML -replace "\\","\\") -replace ($lineData[1]),($lineData[3])) -replace ($lineData[2]),($lineData[4])
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> After.: " + (($rawXML -replace "\\", "\\") -replace ($lineData[1]), ($lineData[3])) -replace ($lineData[2]), ($lineData[4])
 
                             #.The '\' is considered as an escapment character and need to be doubled. 
                             #.Once the conversion is done, you'll have to remove the double \\ added.
-                            $rawXML = (($rawXML -replace $lineData[1],$lineData[3]) -replace $lineData[2],$lineData[4]) -replace "\\\\","\"
+                            $rawXML = (($rawXML -replace $lineData[1], $lineData[3]) -replace $lineData[2], $lineData[4]) -replace "\\\\", "\"
 
-					    }
-					    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> rewriting file " + $xml.FullName
+                        }
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> rewriting file " + $xml.FullName
 					
                         Set-Content -Path $xml.FullName -Value $rawXML 
-				    }
-			    }
-			    else
-			    {
-				    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---------------> no XML found"
-			    }
-		    }
-		    else
-		    {
-			    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------> Folder Machine Preferences is not present"
-		    }
+                    }
+                }
+                else {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---------------> no XML found"
+                }
+            }
+            else {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------> Folder Machine Preferences is not present"
+            }
 		
-		    $Looking = ".\inputs\GroupPolicies\" + $GPO.Name + "\DomainSysvol\GPO\User\Preferences"
+            $Looking = ".\inputs\GroupPolicies\" + $GPO.Name + "\DomainSysvol\GPO\User\Preferences"
 
-		    if (Test-Path $Looking)
-		    {
-			    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------> Folder User Preferences is present: looking for XML..."
+            if (Test-Path $Looking) {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------> Folder User Preferences is present: looking for XML..."
 
-			    #$xmls = Get-ChildItem -Recurse -Path $Looking\*.xml
-                $xmls = Get-ChildItem -Recurse -Path ($Looking) | where { $_.Name -like "*.xml" }
+                #$xmls = Get-ChildItem -Recurse -Path $Looking\*.xml
+                $xmls = Get-ChildItem -Recurse -Path ($Looking) | Where-Object { $_.Name -like "*.xml" }
 
-			    if ($xmls)
-			    {
-				    foreach ($xml in $xmls)
-				    {
-					    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---------------> working on " + $xml.FullName
+                if ($xmls) {
+                    foreach ($xml in $xmls) {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---------------> working on " + $xml.FullName
 
-					    $rawXML = Get-Content $xml.FullName
+                        $rawXML = Get-Content $xml.FullName
 
-					    foreach ($line in $newIDs)
-					    {
-						    $lineData = $line -split ";"
+                        foreach ($line in $newIDs) {
+                            $lineData = $line -split ";"
 						
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> replacing " + $lineData[1] + " with " + $lineData[3] + " and " + $lineData[2] + " with " + $lineData[4]
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> Avant: " + $rawXML 
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> Apres: " + (($rawXML -replace "\\","\\") -replace $lineData[1],$lineData[3]) -replace $lineData[2],$lineData[4]
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> Apres: " + (($rawXML -replace "\\", "\\") -replace $lineData[1], $lineData[3]) -replace $lineData[2], $lineData[4]
 						
                             #.The '\' is considered as an escapment character and need to be doubled. 
                             #.Once the conversion is done, you'll have to remove the double \\ added.
-                            $rawXML = (($rawXML -replace $lineData[1],$lineData[3]) -replace $lineData[2],$lineData[4]) -replace "\\\\","\"
-					    }
+                            $rawXML = (($rawXML -replace $lineData[1], $lineData[3]) -replace $lineData[2], $lineData[4]) -replace "\\\\", "\"
+                        }
 
-					    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> rewriting file " + $xml.FullName
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------------> rewriting file " + $xml.FullName
 
                         Set-Content -Path $xml.FullName -Value $rawXML 
-				    }
-			    }
-			    else
-			    {
-				    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---------------> no XML found"
-			    }
-		    }
-		    else
-		    {
-			    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------> Folder User Preferences is not present"
-		    }
+                    }
+                }
+                else {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---------------> no XML found"
+                }
+            }
+            else {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "------------> Folder User Preferences is not present"
+            }
 		
-	    }
+        }
         $Result = 0
     }
-    Else 
-    {
-	    $Result = 2
+    Else {
+        $Result = 2
         $ResMess = "File missing"
     }
-	## Exit
-	$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
-	$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-	if (Test-Path .\Logs\Debug\$DbgFile)
-	{
-		$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept"
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+    ## Exit
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    if (Test-Path .\Logs\Debug\$DbgFile) {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept"
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
-	}
-	$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
-	$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
-	$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
-	$dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
-	$DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
+    }
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
 	
-	## Return translated xml
-	return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+    ## Return translated xml
+    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 
 ##################################################################
@@ -796,8 +760,7 @@ Function Update-PreferenceXML
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Publish-MigrationTable
-{
+Function Publish-MigrationTable {
     <#
         .SYNPOSIS
             This function generate the .migtable file to be used by GPO.
@@ -815,7 +778,7 @@ Function Publish-MigrationTable
     #>
 
     Param(
-        [Parameter(mandatory=$true)]
+        [Parameter(mandatory = $true)]
         [String]
         $SourceMigTable
     )
@@ -834,43 +797,41 @@ Function Publish-MigrationTable
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> parameter SourceMigTable.......: $SourceMigTable"
 
     ## When dealing with 2008R2, we need to import AD module first
-    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-    {
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
         
-        Try   { 
-                Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-                } 
+        Try { 
+            Import-Module ActiveDirectory
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+        } 
         Catch {
-                $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
-                }
+            $noError = $false
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
+        }
         
-    } else {
+    }
+    else {
 
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
     }
 
     ## Loading file
     $resultat = 0
-    if (Test-Path .\Inputs\GroupPolicies\$SourceMigTable)
-    {
+    if (Test-Path .\Inputs\GroupPolicies\$SourceMigTable) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> -------------------------------> Source File is present"
-        Try   {
-                $xmlData = Get-Content .\Inputs\GroupPolicies\$SourceMigTable -ErrorAction Stop
-                $LoadFile = $true
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> -------------------------------> Source File loaded to xmlData"
-              }
+        Try {
+            $xmlData = Get-Content .\Inputs\GroupPolicies\$SourceMigTable -ErrorAction Stop
+            $LoadFile = $true
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> -------------------------------> Source File loaded to xmlData"
+        }
         Catch {
-                $LoadFile = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> -------------------------------> Source File could not be loaeded!"
-                $resultat = 1
-              }
+            $LoadFile = $false
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> -------------------------------> Source File could not be loaeded!"
+            $resultat = 1
+        }
     }
-    else
-    {
+    else {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> -------------------------------! Source File is missing!"
         $LoadFile = $false
         $resultat = 2
@@ -880,25 +841,23 @@ Function Publish-MigrationTable
 
     ## Loading translation table
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Loading file...................: TasksSequence_HardenAD.xml"
-    Try   {
-            $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> -------------------------------> TasksSequence_HardenAD.xml loaded successfully"
-            $LoadXml = $true
-          }
+    Try {
+        $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> -------------------------------> TasksSequence_HardenAD.xml loaded successfully"
+        $LoadXml = $true
+    }
     Catch {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> -------------------------------! TasksSequence_HardenAD.xml could not be loaded!"
-            $LoadXml = $false
-            $resultat++
-          }
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> -------------------------------! TasksSequence_HardenAD.xml could not be loaded!"
+        $LoadXml = $false
+        $resultat++
+    }
 
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter LoadXml..............: $LoadXml"
 
     ## Translating
-    if ($LoadXml -and $LoadFile)
-    {
+    if ($LoadXml -and $LoadFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> [Begin migTable translation]"
-        foreach ($element in ($xmlFile.settings.GroupPolicies.translation.Object))
-        {
+        foreach ($element in ($xmlFile.settings.GroupPolicies.translation.Object)) {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Translating raw data....: [" + $element.class + "] " + $element.name 
 
             $obj = $element.name
@@ -915,23 +874,21 @@ Function Publish-MigrationTable
 
     ## Exporting
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Exporting file.................: begin"
-    try   {
-            $noEchoe  = $xmlData | Out-File .\Inputs\GroupPolicies\translated.migtable -Force 
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Exporting file.................: success"
-          }
+    try {
+        $null = $xmlData | Out-File .\Inputs\GroupPolicies\translated.migtable -Force 
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Exporting file.................: success"
+    }
     Catch {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Exporting file.................: failed!"
-            $resultat = 2
-          }
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Exporting file.................: failed!"
+        $resultat = 2
+    }
     
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Resultat"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -954,9 +911,8 @@ Function Publish-MigrationTable
 ## Version: 01.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Import-WmiFilters
-{
-        <#
+Function Import-WmiFilters {
+    <#
         .SYNPOSIS
             This function import OMF files to the domain and add requiered wmi filter.
 
@@ -975,7 +931,7 @@ Function Import-WmiFilters
     #>
 
     Param(
-        [Parameter(mandatory=$true)]
+        [Parameter(mandatory = $true)]
         [String]
         $sourceDomain
     )
@@ -993,20 +949,20 @@ Function Import-WmiFilters
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller................: " + (Get-PSCallStack)[1].Command
 
     ## When dealing with 2008R2, we need to import AD module first
-    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-    {
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.............: True"
         
-        Try   { 
-                Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> OS is 2008/R2, added AD module."    
-              } 
+        Try { 
+            Import-Module ActiveDirectory
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> OS is 2008/R2, added AD module."    
+        } 
         Catch {
-                $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> variable noError.........: $noError"
-                }
-    } else {
+            $noError = $false
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> variable noError.........: $noError"
+        }
+    }
+    else {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2..........: False"
     }
 
@@ -1016,30 +972,29 @@ Function Import-WmiFilters
 
     ## loading configuration file
     Try {
-        $xmlFile  = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
+        $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> TasksSequence_HardenAD.xml..: loaded successfully"
         $Resultat = 0
-    } Catch {
+    }
+    Catch {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> TasksSequence_HardenAD.xml..: error! load failed!"
         $Resultat = 2
         $ResMess = "could not load xml configuration file."
     }
 
-    if ($resultat -ne 2)
-    {
+    if ($resultat -ne 2) {
         ## Begin WMI filter importation
         $WmiFilters = $xmlFile.settings.groupPolicies.wmiFilters
         $CurrWmiFtr = Get-ADObject -Filter { ObjectClass -eq 'msWMI-Som' } -Properties *
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Number of WMI Filters found.: " + $WmiFilters.Filter.count
 
-        foreach ($filterData in $WmiFilters.filter)
-        {
+        foreach ($filterData in $WmiFilters.filter) {
             ## Check if already exists
             ## some interesting stuff: http://woshub.com/group-policy-filtering-using-wmi-filters/
-            if ($CurrWmiFtr.'msWMI-Name' -match $filterData.Name)
-            {
+            if ($CurrWmiFtr.'msWMI-Name' -match $filterData.Name) {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": already exists (no additionnal step)"
-            } else {
+            }
+            else {
                 ## Tips really usefull from the-wabbit: 
                 ## https://serverfault.com/questions/919297/importing-gpo-wmi-filter-mof-file
                 
@@ -1048,16 +1003,17 @@ Function Import-WmiFilters
                 $mofPath = $curDir + "\inputs\GroupPolicies\WmiFilters\" + $filterData.Source
 
                 #.Rewriting data to fetch to the new domain
-                (Get-Content $mofPath) -Replace $sourceDomain,((Get-ADDomain).DNSRoot) | Out-File $mofPath -Force
+                (Get-Content $mofPath) -Replace $sourceDomain, ((Get-ADDomain).DNSRoot) | Out-File $mofPath -Force
 
                 try {
                     #.Old release, handle too much issue with import and causes fail on gpo import...
                     #$null = Start-Process "mofcomp.exe" -ArgumentList "-N:root\Policy",$mofPath -Wait -WindowStyle Hidden
                     #.New way of importing wmiFilter!
-                    $noSplash = mofcomp.exe -N:root\Policy $mofPath | Out-Null
+                    $null = mofcomp.exe -N:root\Policy $mofPath
 
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": successfully added to the domain"
-                } Catch {
+                }
+                Catch {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": error! Could not add the filter!"
                     $Resultat = 1
                     $ResMess = "Some filter were not imported successfully."
@@ -1065,12 +1021,10 @@ Function Import-WmiFilters
 
                 #.Checking import status
                 $CheckWmiFtr = Get-ADObject -Filter { ObjectClass -eq 'msWMI-Som' } -Properties *
-                if ($CheckWmiFtr.'msWMI-Name' -match $filterData.Name)
-                {
+                if ($CheckWmiFtr.'msWMI-Name' -match $filterData.Name) {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": check OK - The wmi Filter is present."
                 }
-                Else
-                {
+                Else {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> " + $filterData.Name + ": !!ERROR!! Check is KO - The wmi Filter is not present!"
                     $Resultat = 1
                     $ResMess = "Some filter failed to be found when checking the import result."
@@ -1082,11 +1036,9 @@ Function Import-WmiFilters
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Resultat"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }

@@ -6,8 +6,8 @@
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Set-GpoCentralStore
-{
+
+Function Set-GpoCentralStore {
     <#
         .Synopsis
          Enable the Centralized GPO repository (aka Central Store), or ensure it is so.
@@ -39,35 +39,35 @@ Function Set-GpoCentralStore
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
     
     ## Test if already enabled
-    if (((Get-WMIObject win32_operatingsystem).name -like "*2008*"))
-    {
+    if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
         Import-Module ActiveDirectory
         $sysVolBasePath = ((net share | ? { $_ -like "SYSVOL*" }) -split " " | ? { $_ -ne "" })[1]
-    } else {
+    }
+    else {
         $sysVolBasePath = (Get-SmbShare SYSVOL).path
     }
 
     $domName = (Get-AdDomain).DNSRoot
 
-    if (Test-Path "$sysVolBasePath\$domName\Policies\PolicyDefinitions")
-    {
+    if (Test-Path "$sysVolBasePath\$domName\Policies\PolicyDefinitions") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is present"
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is already enabled"
         $result = 0
-    } else {
+    }
+    else {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is not enable yet"
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Robocopy C:\Windows\PolicyDefinitions $sysVolBasePath\$domName\Policies\PolicyDefinitions /MIR (start)"
 
         $NoEchoe = Robocopy "C:\Windows\PolicyDefinitions" "$sysVolBasePath\$domName\Policies\PolicyDefinitions" /MIR
             
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Robocopy C:\Windows\PolicyDefinitions $sysVolBasePath\$domName\Policies\PolicyDefinitions /MIR (finish)"
-        if ((Get-ChildItem "$sysVolBasePath\$domName\Policies\PolicyDefinitions" -Recurse).count -gt 10)
-        {
+        if ((Get-ChildItem "$sysVolBasePath\$domName\Policies\PolicyDefinitions" -Recurse).count -gt 10) {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Seems copying has worked."
             $result = 0
-        } else {
+        }
+        else {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying file."
-            $ResMess  = "Error while copying file to new location"
+            $ResMess = "Error while copying file to new location"
             $result = 2
         }
     }
@@ -75,11 +75,9 @@ Function Set-GpoCentralStore
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -101,8 +99,7 @@ Function Set-GpoCentralStore
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function New-ScheduleTasks
-{
+Function New-ScheduleTasks {
     <#
         .Synopsis
          Add Schedule Tasks as defined in TasksSequence_HardenAD.xml.
@@ -134,12 +131,12 @@ Function New-ScheduleTasks
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
     
     ## Check if OS is compliant
-    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-    {
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is compliant..........: NO - Windows 2008/R2 detected."
         $result = 2
         $ResMess = "2008 or 2008 R2: not compliant."
-    } else {
+    }
+    else {
         $result = 0
     }
 
@@ -147,26 +144,26 @@ Function New-ScheduleTasks
     Try {
         $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Load xml.................: .\Configs\TasksSequence_HardenAD.xml (success)"
-    } Catch {
+    }
+    Catch {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Load xml.................: .\Configs\TasksSequence_HardenAD.xml (failed)" 
         $result = 2
         $ResMess = "Failed to load configuration file"
     }
 
-    if ($result -ne 2)
-    {
+    if ($result -ne 2) {
         $SchXml = $cfgXml.settings.TaskSchedules
     
         ## Get tasks base dir
         $SchDir = $SchXml.BaseDir
 
         ## Check if the directory exists, else create it
-        if (-not(Test-Path $SchDir)) 
-        {
+        if (-not(Test-Path $SchDir)) {
             try {
                 $null = New-Item -Path $SchDir -ItemType Directory
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New dir....: $SchDir (success)" 
-            } Catch {
+            }
+            Catch {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New dir....: $SchDir (Failed!)" 
                 $result = 2
                 $ResMess = "Failed to create the Schedule tasks base directory"
@@ -174,8 +171,7 @@ Function New-ScheduleTasks
         }
 
         ## This section will be executed only if the base directory exists.
-        if ($result -ne 2)
-        {
+        if ($result -ne 2) {
             ## Import data from repo
             Robocopy.exe .\Inputs\ScheduleTasks\TasksSchedulesScripts $SchDir /MIR | Out-Null
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Repository (.\Inputs\ScheduleTasks\TasksSchedulesScripts) copied to $SchDir"
@@ -185,15 +181,14 @@ Function New-ScheduleTasks
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Existing scheduled tasks recovered from system"
 
             ## Parsing tasks and adding if needed
-            foreach ($task in $SchXml.SchedTask)
-            {
-                $TaskName   = $task.Name
-                $TaskBack   = $task.xml
-                $TaskDesc   = $task.SchedDsc
-                $TaskPath   = $task.SchedPth
-                $command    = $task.SchedCmd
+            foreach ($task in $SchXml.SchedTask) {
+                $TaskName = $task.Name
+                $TaskBack = $task.xml
+                $TaskDesc = $task.SchedDsc
+                $TaskPath = $task.SchedPth
+                $command = $task.SchedCmd
                 $Parameters = $task.SchedArg
-                $Directory  = $task.SchedDir -replace '%BaseDir%',$SchDir
+                $Directory = $task.SchedDir -replace '%BaseDir%', $SchDir
 
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Schedule tasks data: Name.......=$TaskName"
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Schedule tasks data: Backup.....=$TaskBack"
@@ -205,41 +200,42 @@ Function New-ScheduleTasks
 
                 ## rewriting xml backup file with specific values
                 $rawXml = Get-Content .\Inputs\ScheduleTasks\TasksSchedulesXml\$TaskBack
-                $rawXml = $rawXml -replace '%description%',$TaskDesc
-                $rawXml = $rawXml -replace '%command%',$command
-                $rawXml = $rawXml -replace '%arguments%',$Parameters
-                $rawXml = $rawXml -replace '%basePath%',$Directory
+                $rawXml = $rawXml -replace '%description%', $TaskDesc
+                $rawXml = $rawXml -replace '%command%', $command
+                $rawXml = $rawXml -replace '%arguments%', $Parameters
+                $rawXml = $rawXml -replace '%basePath%', $Directory
                 $rawXml | Out-File .\Inputs\ScheduleTasks\TasksSchedulesXml\_$TaskBack -Encoding unicode -Force
 
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Xml rewrited with customized value in .\Inputs\ScheduleTasks\TasksSchedulesXml\_$TaskBack"
 
                 ## Check if the tasks already exists
-                if ($CurSchTasks.TaskName -match $TaskName)
-                {
+                if ($CurSchTasks.TaskName -match $TaskName) {
                     $FlagExists = $true
-                } else {
+                }
+                else {
                     $FlagExists = $false
                 }
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Schedule tasks already exists: $FlagExists"
 
                 ## Importing schedule
-                Try   {
-                    if (-not($FlagExists))
-                    {
+                Try {
+                    if (-not($FlagExists)) {
                         $install = Register-ScheduledTask -TaskPath $TaskPath -TaskName $TaskName -Xml (Get-Content .\Inputs\ScheduleTasks\TasksSchedulesXml\_$TaskBack | Out-String) -Force
-                    } else {
-                        $install = @{State="Ready"}
+                    }
+                    else {
+                        $install = @{State = "Ready" }
                     }
 
-                    if ($install.State -eq "Ready") 
-                    { 
+                    if ($install.State -eq "Ready") { 
                         $result = 0 
-                    } else { 
+                    }
+                    else { 
                         $result = 1
                         $ResMess += "(failed to import: $TaskName)"
                     }
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Task Creation result: $install"
-                } Catch {
+                }
+                Catch {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Task Creation failed: probably because it already exists."
                     $result = 1
                     $ResMess += "(failed to import: $TaskName)"
@@ -248,19 +244,16 @@ Function New-ScheduleTasks
         }
     }
     ## return a warning if 2k8
-    if ($ResMess -eq "2008 or 2008 R2: not compliant.") 
-    {
+    if ($ResMess -eq "2008 or 2008 R2: not compliant.") {
         $result = 1
     }
 
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -282,8 +275,7 @@ Function New-ScheduleTasks
 ## Version: 01.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Set-LapsScripts
-{
+Function Set-LapsScripts {
     <#
         .Synopsis
          The deployment script needs to be update to fetch with the running domain.
@@ -300,7 +292,7 @@ Function Set-LapsScripts
                   21.11.21 Added admx/adml file to CentralStore repo
     #>
     param(
-        [Parameter(mandatory=$true,Position=0)]
+        [Parameter(mandatory = $true, Position = 0)]
         [String]
         $ScriptDir
     )
@@ -320,109 +312,106 @@ Function Set-LapsScripts
     $result = 0
 
     ## When dealing with 2008R2, we need to import AD module first
-    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-    {
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
         
-        Try   { 
-                Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-                } 
+        Try { 
+            Import-Module ActiveDirectory
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+        } 
         Catch {
-                $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
-                }
+            $noError = $false
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
+        }
         
-    } else {
+    }
+    else {
 
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
     }
 
 
     ## Get script local position
-    Switch -Regex ($ScriptDir)
-    {
+    Switch -Regex ($ScriptDir) {
         #.NETLOGON
         "NETLOGON" {
-            $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path refers to..: NETLOGON"
-            if (((Get-WMIObject win32_operatingsystem).name -like "*2008*"))
-            {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path refers to..: NETLOGON"
+            if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
                 $NetLogonD = (Get-WmiObject -Class Win32_Share -Filter "Name='NETLOGON'").Path
-            } else {
+            }
+            else {
                 $NetLogonD = (Get-SmbShare -Name NetLogon).Path
             }
-            $ScriptDir = $ScriptDir -replace "NETLOGON",$NetLogonD 
-            $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> the script files will be located to.: $ScriptDir"
+            $ScriptDir = $ScriptDir -replace "NETLOGON", $NetLogonD 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> the script files will be located to.: $ScriptDir"
         }
         #.SYSVOL
         "SYSVOL" {
-            $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path refers to..: SYSVOL"
-            if (((Get-WMIObject win32_operatingsystem).name -like "*2008*"))
-            {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path refers to..: SYSVOL"
+            if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
                 $sysVolD = (Get-WmiObject -Class Win32_Share -Filter "Name='SYSVOL'").Path
-            } else {
+            }
+            else {
                 $SysVolD = (Get-SmbShare -Name SYSVOL).Path
             }
-            $ScriptDir = $ScriptDir -replace "SYSVOL",$SysVolD 
-            $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> the script files will be located to.: $ScriptDir"
+            $ScriptDir = $ScriptDir -replace "SYSVOL", $SysVolD 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> the script files will be located to.: $ScriptDir"
         }
         #.UNC Path
         Default {
-            $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path refers to..: UNC PATH"
-            $ScriptDir = $ScriptDir -replace "RootDN",(Get-ADDomain).DistinguishedName
-            $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> the script files will be located to.: $ScriptDir"
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path refers to..: UNC PATH"
+            $ScriptDir = $ScriptDir -replace "RootDN", (Get-ADDomain).DistinguishedName
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> the script files will be located to.: $ScriptDir"
         }
     }
 
     ## Create repository directory if needed
-    if (-not(Test-Path $ScriptDir))
-    {
-        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path exists.....: False"
+    if (-not(Test-Path $ScriptDir)) {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path exists.....: False"
         Try {
             New-Item -Path $ScriptDir -ItemType Directory | Out-Null
-            $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path exists.....: created successfully"
-        } Catch {
-            $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path exists.....: Error! could not create the directory target!"
-            $result  = 2
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path exists.....: created successfully"
+        }
+        Catch {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path exists.....: Error! could not create the directory target!"
+            $result = 2
             $ResMess = "Error! could not create the directory target!"
         }
-    } Else {
-        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path exists.....: True"
+    }
+    Else {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> The target location path exists.....: True"
     }
 
     ## Duplicate file to the target destination
-    if ($result -ne 2)
-    {
+    if ($result -ne 2) {
         Robocopy.exe .\Inputs\LocalAdminPwdSolution\Binaries $ScriptDir /IS | Out-Null
-        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> binary files copied"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> binary files copied"
         Robocopy.exe .\Inputs\LocalAdminPwdSolution\LogonScripts $ScriptDir /IS | Out-Null
-        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> script files copied"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> script files copied"
     }
 
     ## Rewriting script file
-    foreach ($file in (Get-ChildItem -Path $ScriptDir | Where-Object { $_.Name -like "*.bat"}))
-    {
+    foreach ($file in (Get-ChildItem -Path $ScriptDir | Where-Object { $_.Name -like "*.bat" })) {
         $newFile = @()
         Try {
-            (Get-Content $file.fullName) -Replace '%RootDN%',(Get-ADDomain).DnsRoot | Set-Content $File.FullName 
-            $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> rewritten file " + $file.Name + " (success)"
+            (Get-Content $file.fullName) -Replace '%RootDN%', (Get-ADDomain).DnsRoot | Set-Content $File.FullName 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> rewritten file " + $file.Name + " (success)"
         }
         Catch {
-            $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> rewritten file " + $file.Name + " (failed!)"
-            $result   = 1
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> rewritten file " + $file.Name + " (failed!)"
+            $result = 1
             $ResMess += "(Failed to rewrite the file " + $file.name + ")"
         }
     }
 
     ## Deploying ADML and ADMX files to the Central Repository Store
-    if ($result -eq 0)
-    {
-        if (((Get-WMIObject win32_operatingsystem).name -like "*2008*"))
-        {
+    if ($result -eq 0) {
+        if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
             Import-Module ActiveDirectory
             $sysVolBasePath = ((net share | ? { $_ -like "SYSVOL*" }) -split " " | ? { $_ -ne "" })[1]
-        } else {
+        }
+        else {
             $sysVolBasePath = (Get-SmbShare SYSVOL).path
         }
 
@@ -430,19 +419,18 @@ Function Set-LapsScripts
         
         Robocopy.exe .\Inputs\LocalAdminPwdSolution\PolicyDefinitions $sysVolBasePath\$domName\Policies\PolicyDefinitions /s | Out-Null
         
-        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> PolicyDefinitions files copied."
-    } else {
-        $dbgMess  += (Get-Date -UFormat "%Y-%m-%d %T ") + "ERR ---> PolicyDefinitions files not copied due to a previous error!"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> PolicyDefinitions files copied."
+    }
+    else {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "ERR ---> PolicyDefinitions files not copied due to a previous error!"
     }
 
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -465,8 +453,7 @@ Function Set-LapsScripts
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Install-LAPS
-{
+Function Install-LAPS {
     <#
         .Synopsis
          To be deployed, LAPS need to update the AD Schema first.
@@ -480,8 +467,8 @@ Function Install-LAPS
          history: 21.08.22 Script creation
     #>
     param(
-        [Parameter(mandatory=$true,Position=0)]
-        [ValidateSet('ForceDcIsSchemaOwner','IgnoreDcIsSchemaOwner')]
+        [Parameter(mandatory = $true, Position = 0)]
+        [ValidateSet('ForceDcIsSchemaOwner', 'IgnoreDcIsSchemaOwner')]
         [String]
         $SchemaOwnerMode
     )
@@ -500,22 +487,22 @@ Function Install-LAPS
     $result = 0
 
     ## When dealing with 2008R2, we need to import AD module first
-    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-    {
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
         
-        Try   { 
-                Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-                } 
+        Try { 
+            Import-Module ActiveDirectory
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+        } 
         Catch {
-                $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
-                $result  = 2
-                $ResMess = "AD module not available."
-                }
-    } else {
+            $noError = $false
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
+            $result = 2
+            $ResMess = "AD module not available."
+        }
+    }
+    else {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
     }
 
@@ -528,17 +515,16 @@ Function Install-LAPS
 
 
     ## Check if a bypass has been requested for the schema master owner condition
-    if ($SchemaOwnerMode -eq 'IgnoreDcIsSchameOwner')
-    {
+    if ($SchemaOwnerMode -eq 'IgnoreDcIsSchameOwner') {
         $isSchemaOwn = $true
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Master owner...: $isSchemaOwn (enforced for bypass)"
-    } else {
+    }
+    else {
 
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Master owner...: $isSchemaOwn"
     }
 
-    if ($isSchemaAdm -and $isSchemaOwn)
-    {
+    if ($isSchemaAdm -and $isSchemaOwn) {
         ## User has suffisant right, the script will then proceed.
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Administrator..: True"
 
@@ -552,54 +538,55 @@ Function Install-LAPS
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: === begin === "
 
             Start-Process -FilePath "$env:systemroot\system32\msiexec.exe" `
-                          -WorkingDirectory .\Inputs\LocalAdminPwdSolution\Binaries `
-                          -ArgumentList '/i laps.x64.msi ADDLOCAL=Management.UI,Management.PS,Management.ADMX /quiet /norestart' `
-                          -NoNewWindow `
-                          -Wait
+                -WorkingDirectory .\Inputs\LocalAdminPwdSolution\Binaries `
+                -ArgumentList '/i laps.x64.msi ADDLOCAL=Management.UI,Management.PS,Management.ADMX /quiet /norestart' `
+                -NoNewWindow `
+                -Wait
             
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: === done! === "
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> installation is successfull."
 
-        } Catch {
+        }
+        Catch {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> command line: === Error === "
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> installation failed!"
-            $result  = 2
+            $result = 2
             $ResMess = "ERROR! the command line has failed!"
         }
         
         ## If the install is a success, then let's update the schema
-        if ($result -eq 0)
-        {
+        if ($result -eq 0) {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Proceding to schema extension"
             Try {
                 Import-Module AdmPwd.PS -ErrorAction Stop -WarningAction Stop
                 $null = Update-AdmPwdADSchema
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> schema extension is successfull"
 
-            } Catch {
+            }
+            Catch {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> schema extension failed (warning: .Net 4.0 or greater requiered)"
-                $result  = 1
+                $result = 1
                 $ResMess = "LAPS installed but the schema extension has failed (warning: .Net 4.0 or greater requiered)"
             }
-        } Else {
-                $result  = 1
-                $ResMess = "The schema extension has been canceled"
+        }
+        Else {
+            $result = 1
+            $ResMess = "The schema extension has been canceled"
         }
 
-    } Else {
+    }
+    Else {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is Schema Administrator..: False"
-        $result  = 2
+        $result = 2
         $ResMess = "The user is not a Schema Admins (group membership with recurse has failed)"
     }
 
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -622,8 +609,7 @@ Function Install-LAPS
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Set-LapsPermissions
-{
+Function Set-LapsPermissions {
     <#
         .Synopsis
          Once deployed, the LAPS engine requires some additional permission to properly work.
@@ -637,8 +623,8 @@ Function Set-LapsPermissions
          history: 21.11.27 Script creation
     #>
     param(
-        [Parameter(mandatory=$true,Position=0)]
-        [ValidateSet('DEFAULT','CUSTOM')]
+        [Parameter(mandatory = $true, Position = 0)]
+        [ValidateSet('DEFAULT', 'CUSTOM')]
         [String]
         $RunMode
     )
@@ -658,126 +644,110 @@ Function Set-LapsPermissions
     $result = 0
 
     ## When dealing with 2008R2, we need to import AD module first
-    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-    {
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
         
-        Try   { 
-                Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-                } 
+        Try { 
+            Import-Module ActiveDirectory
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+        } 
         Catch {
-                $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
-                $result  = 2
-                $ResMess = "AD module not available."
-                }
-    } else {
+            $noError = $false
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
+            $result = 2
+            $ResMess = "AD module not available."
+        }
+    }
+    else {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
     }
 
     ## Check prerequesite: the ADMPWD.PS module has to be present. 
-    if ((Get-Module -ListAvailable -Name "AdmPwd.PS"))
-    {
+    if ((Get-Module -ListAvailable -Name "AdmPwd.PS")) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> module admpwd.ps present.: True"
     }
-    else
-    {
+    else {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> module admpwd.ps present.: False"
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! The module AMDPWD.PS is missing on this system!" 
-        $result   = 2
-        $ResMess  = "AdmPwd.PS module missing."
+        $result = 2
+        $ResMess = "AdmPwd.PS module missing."
     }
     
     ## Begin permissions setup, if allowed to.
-    if ($result -ne 2)
-    {
+    if ($result -ne 2) {
         # - Default mode
-        if ($RunMode -eq "DEFAULT")
-        {
+        if ($RunMode -eq "DEFAULT") {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> START: DEFAULT MODE ACTIONS"
             #.Loading module
-            Try 
-            {
+            Try {
                 Import-Module AdmPwd.PS -ErrorAction Stop
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Module AdmPwd.PS loaded successfully."
             }
-            Catch 
-            {
+            Catch {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---! Error! Module AdmPwd.PS failed to be loaded!"
-                $result   = 2
-                $ResMess  = "Failed to load module AdmPwd.PS."
+                $result = 2
+                $ResMess = "Failed to load module AdmPwd.PS."
             }
 
             #.Adding permissions at the root level. This will be the only action.
             #.All permissions belong then to native object reader/writer, such as domain admins.
-            if ($result -ne 2)
-            {
-                Try 
-                {
+            if ($result -ne 2) {
+                Try {
                     $rootDN = (Get-ADDomain).DistinguishedName
                     Set-AdmPwdComputerSelfPermission -OrgUnit $rootDN -ErrorAction Stop | Out-Null
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Computer Self Permission set successfully on $rootDN"
                 }
-                Catch
-                {
+                Catch {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---! Error! Computer Self Permission set failed to be applied on $rootDN!"
-                    $result   = 2
-                    $ResMess  = "Failed to apply Computer Self Permission on all Organizational Units."
+                    $result = 2
+                    $ResMess = "Failed to apply Computer Self Permission on all Organizational Units."
                 }
             }
 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> END: DEFAULT MODE ACTIONS"
         }
         # - Custom mode
-        Else
-        {
+        Else {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> START: CUSTOM MODE ACTIONS"
             #.Loading module
-            Try 
-            {
+            Try {
                 Import-Module AdmPwd.PS -ErrorAction Stop
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Module AdmPwd.PS loaded successfully."
             }
-            Catch 
-            {
+            Catch {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---! Error! Module AdmPwd.PS failed to be loaded!"
-                $result   = 2
-                $ResMess  = "Failed to load module AdmPwd.PS."
+                $result = 2
+                $ResMess = "Failed to load module AdmPwd.PS."
             }
 
             #.If no critical issue, the following loop will proceed with fine delegation
-            if ($result -ne 2)
-            {
+            if ($result -ne 2) {
                 #.Get xml data
                 Try {
                     $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Loaded xml file .\Configs\TasksSequence_HardenAD.xml successfully"
-                } Catch {
+                }
+                Catch {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---! Error! Loading xml file .\Configs\TasksSequence_HardenAD.xml failed!" 
                     $ResMess = "Failed to load configuration file"
                     $result = 2
                 }
             }
-            if ($result -ne 2)
-            {
+            if ($result -ne 2) {
                 #.Granting SelfPermission
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> [START] ComputerSelfPermission"
                 $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdSelfPermission
-                foreach ($Granted in $Granting)
-                {
-                    Try 
-                    {
-                        $TargetOU = $Granted.Target -replace "RootDN",(Get-ADDomain).DistinguishedName
+                foreach ($Granted in $Granting) {
+                    Try {
+                        $TargetOU = $Granted.Target -replace "RootDN", (Get-ADDomain).DistinguishedName
                         Set-AdmPwdComputerSelfPermission -OrgUnit $TargetOU -ErrorAction Stop | Out-Null
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---> Computer Self Permission set successfully on $TargetOU"
                     }
-                    Catch
-                    {
+                    Catch {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---! Error! Computer Self Permission set failed to be applied on $rootDN!"
-                        $result   = 1
-                        $ResMess  = "Failed to apply Permission on one or more OU."
+                        $result = 1
+                        $ResMess = "Failed to apply Permission on one or more OU."
                     }
                 }
                 #.Getting Domain Netbios name
@@ -786,40 +756,34 @@ Function Set-LapsPermissions
                 #.Granting Password Reading Permission
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> [START] ReadPasswordPermission"
                 $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdPasswordReader
-                foreach ($Granted in $Granting)
-                {
-                    Try 
-                    {
-                        $TargetOU  = $Granted.Target -replace "RootDN",(Get-ADDomain).DistinguishedName
+                foreach ($Granted in $Granting) {
+                    Try {
+                        $TargetOU = $Granted.Target -replace "RootDN", (Get-ADDomain).DistinguishedName
                         $GrantedId = $NBname + "\" + $Granted.Id
                         Set-AdmPwdReadPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---> Granted Read Password Permission to $GrantedId on $TargetOU successfully"
                     }
-                    Catch
-                    {
+                    Catch {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---! Error! Granting Read Password Permission to $GrantedId on $TargetOU failed!"
-                        $result   = 1
-                        $ResMess  = "Failed to apply Permission on one or more OU."
+                        $result = 1
+                        $ResMess = "Failed to apply Permission on one or more OU."
                     }
                 }
 
                 #.Granting Password Reset Permission
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> [START] ResetPasswordPermission"
                 $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdPasswordReset
-                foreach ($Granted in $Granting)
-                {
-                    Try 
-                    {
-                        $TargetOU  = $Granted.Target -replace "RootDN",(Get-ADDomain).DistinguishedName
+                foreach ($Granted in $Granting) {
+                    Try {
+                        $TargetOU = $Granted.Target -replace "RootDN", (Get-ADDomain).DistinguishedName
                         $GrantedId = $NBname + "\" + $Granted.Id
                         Set-AdmPwdResetPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---> Granted Reset Password Permission to $GrantedId on $TargetOU successfully"
                     }
-                    Catch
-                    {
+                    Catch {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---! Error! Granting Reset Password Permission to $GrantedId on $TargetOU failed!"
-                        $result   = 1
-                        $ResMess  = "Failed to apply Permission on one or more OU."
+                        $result = 1
+                        $ResMess = "Failed to apply Permission on one or more OU."
                     }
                 }
             }
@@ -831,11 +795,9 @@ Function Set-LapsPermissions
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -857,8 +819,7 @@ Function Set-LapsPermissions
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Get-PingCastle
-{
+Function Get-PingCastle {
     <#
         .Synopsis
          This function Download the latest release and execute and audit with PingCastle.
@@ -873,16 +834,15 @@ Function Get-PingCastle
          history: 21.12.15 Script creation
     #>
     param(
-        [Parameter(mandatory=$false)]
+        [Parameter(mandatory = $false)]
         [String]
         $Arguments
     )
 
-        ## Default keepass password
-        if (-not($Arguments))
-        {
-            $Arguments = '--healthcheck --no-enum-limit  --level Full'
-        }
+    ## Default keepass password
+    if (-not($Arguments)) {
+        $Arguments = '--healthcheck --no-enum-limit  --level Full'
+    }
     
 
     ## Function Log Debug File
@@ -904,7 +864,7 @@ Function Get-PingCastle
     $test = Test-NetConnection
     
     switch ($test.PingSucceeded) {
-         'True'{
+        'True' {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Test Internet connectivity OK " 
            
             $repo = "vletoux/pingcastle"
@@ -938,14 +898,14 @@ Function Get-PingCastle
 
             $result = 0
 
-           }
-         'False' {
+        }
+        'False' {
 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Test Internet connectivity KO ;( " 
 
             $result = 1
 
-         }
+        }
         Default {}
     }
 
@@ -953,11 +913,9 @@ Function Get-PingCastle
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
-        {
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
