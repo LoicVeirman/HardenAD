@@ -555,13 +555,23 @@ Function New-GpoObject
                 #.Shorten words...
                 foreach ($keyword in $xmlFile.settings.Translation.Keyword)
                 {
-                    $GrpName = $GrpName -replace $keyword.longName,$keyword.shortenName     
+                    Try{
+                        $GrpName = $GrpName -replace $keyword.longName,$keyword.shortenName
+                    }
+                    catch {
+                        #To write
+                    }
                 }
                 #.Space
                 $NewGrpName = $null
                 foreach ($word in ($GrpName -split " "))
                 {
-                    $NewGrpName += $word.substring(0,1).toupper() +$word.substring(1)     
+                    try {
+                        $NewGrpName += $word.substring(0,1).toupper() +$word.substring(1)
+                    }
+                    catch {
+                        #To write
+                    }     
                 }
                 $SrcGrpName = $newGrpName
 
