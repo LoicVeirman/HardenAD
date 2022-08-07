@@ -490,11 +490,21 @@ Function New-GpoObject
 
                 #.Import backup
                 try {
-                    $null = Import-GPO -BackupId $gpBack -TargetName $gpName -MigrationTable $curDir\Inputs\GroupPolicies\$gpBack\translated.migtable -Path $curDir\Inputs\GroupPolicies -ErrorAction Stop
-                    $importFlag = $true
+                    # Case 1 : no translated.migtable
+                    $MigTableFile = "$curDir\Inputs\GroupPolicies\$gpBack\translated.migtable"
+                    if (-not(Test-Path $MigTableFile)){
+                        $null = Import-GPO -BackupId $gpBack -TargetName $gpName -Path $curDir\Inputs\GroupPolicies -ErrorAction Stop
+                        $importFlag = $true
+                    }
+                    # Case 2 : translated.migtable
+                    else {
+                        $null = Import-GPO -BackupId $gpBack -TargetName $gpName -MigrationTable $curDir\Inputs\GroupPolicies\$gpBack\translated.migtable -Path $curDir\Inputs\GroupPolicies -ErrorAction Stop
+                        $importFlag = $true
+                    }
                 } Catch {
                     $result = 1
-                    $errMess += " Failed to import at least one GPO."
+                    $errMess += " Failed to import at least one GPO : $Error[0]"
+                    $errMess += ""
                     $importFlag = $false
                 }
 
