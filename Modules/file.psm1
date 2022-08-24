@@ -94,6 +94,243 @@ Function Set-GpoCentralStore
 }
 
 ##################################################################
+## Remove-GPOsUnusedADMFiles                                    ##
+## -------------------                                          ##
+## This function will backup and remove useless ADM Files       ##
+##   (those matching with ADMX in Central Store)                ##
+##                                                              ##
+## Version: 01.00.000                                           ##
+##  Author: contact@hardenad.net                                ##
+##################################################################
+Function Remove-GPOsUnusedADMFiles {
+    param (
+        [parameter(Mandatory=$true,Position=0)] [ValidateSet("Simulate","Run")] $Action,
+        [parameter(Mandatory=$false,Position=1)][ValidateSet("Yes","No")] $FilterAdmFilesReplication="No",
+        [parameter(Mandatory=$false,Position=2)][string] $BackupDirectory,   # Directory where ADM Files will be copied. Script workingDirectory will be used if not specified 
+        [parameter(Mandatory=$false,Position=3)][string] $Domain   # Current domain if not specified
+    )
+
+    ## Function Log Debug File
+    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+    $dbgMess = @()
+
+    ## Start Debug Trace
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+
+    ## Indicates caller and options used
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
+
+    $ContinueProcess = $True  # boolean used to go to end of function if some test/prerequisite is not ok
+
+    # Check Domain argument
+    If($Domain){
+        Try { $DomainObj = Get-ADDomain $Domain }
+        Catch {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error getting the specified domain ($Domain) : $($_.Exception.Message)"
+            $ContinueProcess = $false
+            $ResMess = "Error getting the specified domain ($Domain)"
+            $Result = 2
+        }
+    }
+    Else {
+        Try { $DomainObj = Get-ADDomain  }
+        Catch {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error getting the current domain : $($_.Exception.Message)"
+            $ContinueProcess = $false
+            $ResMess = "Error getting the current domain"
+            $Result = 2
+        }
+    }
+    $DomainDns = $DomainObj.DNSRoot
+    $DomainDN = $DomainObj.DistinguishedName
+
+    # Check if Central Store Exists
+    If($ContinueProcess) {
+        $PoliciesFolder = "\\$DomainDns\SYSVOL\$DomainDns\Policies"
+        $CentralStorePath = "$PoliciesFolder\PolicyDefinitions"
+        If(!(Test-Path $CentralStorePath -PathType Container)) {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Central Store does not exist"
+            $ResMess = "Central Store does not exist : no action done"
+            $Result = 3
+            $ContinueProcess = $false
+        }
+    }
+
+    ### Backup GPOs ADM Files
+    If($ContinueProcess -and ($Action -like "Run")) {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Backup GPOs ADM Files"
+        # Build BackupDirectory
+        If($BackupDirectory) {
+            If(Test-Path $BackupDirectory -PathType Container) {
+                If( ($BackupDirectory.LastIndexOf("\") +1) -eq $BackupDirectory.Length) {$BackupDirectory = $BackupDirectory.Substring(0,$BackupDirectory.Length-1)}  # in case there is a backslash at the end
+                $BackupDirectory = "$BackupDirectory\$DomainDns"
+            }
+            Else {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! The backup directory specified ($BackupDirectory) does not exist"
+                $ContinueProcess = $false
+                $ResMess = "The backup directory specified ($BackupDirectory) does not exist"
+                $Result = 2
+            }
+        }
+        Else {
+            $WorkingDirectory = (Get-Location).Path
+            If(Test-Path "$WorkingDirectory\Backup-GPOsADMFiles"-PathType Container) {
+                $BackupDirectory = "$WorkingDirectory\Backup-GPOsADMFiles\$DomainDns"
+            }
+            Else {
+                $NewFolder = New-Item -Name "Backup-GPOsADMFiles" -Path $WorkingDirectory -ItemType Directory 
+                $BackupDirectory = $NewFolder.FullName
+                $BackupDirectory = "$BackupDirectory\$DomainDns"
+            }
+        }
+
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PoliciesFolder: $PoliciesFolder"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> BackupDirectory: $BackupDirectory"
+    
+        If($ContinueProcess) {
+            # ROBOCOPY ADM FILES
+            Invoke-Command -ScriptBlock {
+                Param ($SourceFolder,$DestFolder)
+                robocopy $SourceFolder $DestFolder *.adm /s /XD PolicyDefinitions
+            } -ArgumentList $PoliciesFolder,$BackupDirectory | Out-Null
+        }
+
+    }
+
+
+    ### Remove Unused ADM Files
+    If($ContinueProcess) {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Remove Unused ADM Files"
+        # First, index all admx files
+        $AdmxFiles = @()
+        Get-ChildItem -Path $CentralStorePath -Filter "*.admx" -File | ForEach-Object {
+            $AdmxFiles += $_.Name.Replace(".admx","")
+        }
+
+        # Parse all ADM Files, and remove if ADMX with same name is found
+        $AdmFilesSearch = $PoliciesFolder + "\*.adm"
+        [array]$AdmFiles = Get-ChildItem -Path $AdmFilesSearch -File -Recurse -ErrorAction SilentlyContinue -ErrorVariable FileErrors
+        If($FileErrors) {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Read Access Denied on some files. Please ensure all GPOs have Read for AuthenticatedUsers (or at least current user), and reRun script"
+            $ResMess = "Read Access Denied on some files : some ADM files may have been missed"
+            $Result = 1
+        }
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Nb ADM Files found: $($AdmFiles.Count)"
+        $NbFilesRemoved = 0
+        $NbErrors = 0
+        $TotalSizeRemoved = 0
+        $NbFilesLeft = 0
+        $AdmFiles | ForEach-Object {
+            $AdmFileName = $_.Name.Replace(".adm","")
+            $AdmFileSize = [int]$_.Length
+            $AdmFilePath = $_.FullName
+            If($AdmxFiles -contains $AdmFileName) {
+                If($Action -like "Run") {
+                    Try { 
+                        Remove-Item -Path $AdmFilePath -Force -Confirm:$false 
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> ADM File Removed: $AdmFilePath"
+                        $NbFilesRemoved ++
+                        $TotalSizeRemoved = $TotalSizeRemoved + $AdmFileSize  
+                    } 
+                    catch { 
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Remove failed for $AdmFilePath"  
+                        $NbErrors++
+                    }
+                }
+                Else {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> ADM File may be Removed: $AdmFilePath"
+                    $NbFilesRemoved ++
+                    $TotalSizeRemoved = $TotalSizeRemoved + $AdmFileSize  
+                }
+                
+            }
+            Else {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $AdmFilePath has no matching ADMX file. Please investigate."
+                $NbFilesLeft ++
+            }
+        }
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Nb ADM Files Removed: $NbFilesRemoved"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Total Size Removed: $([math]::Round($TotalSizeRemoved/(1024*1024))) MB"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Nb ADM Files Left: $NbFilesLeft"
+
+        If($NbErrors -eq 0) {
+            If($NbFilesLeft -gt 0) {
+                $ResMess = "Some ADM Files were not removed (no matching ADMX Files found). See logs for details"
+                $Result = 1
+            }
+            Else {
+                $ResMess = "All ADM Files have been removed (Matching ADMX Files found)"
+                $Result = 0            
+            }
+        }
+        Else {
+            $ResMess = "$NbErrors ADM Files removal failed. See logs for details"
+            $Result = 1
+        }
+
+    }
+    
+    ### Filter ADM File, to exclude from AD Replication
+    If($ContinueProcess -and ($FilterAdmFilesReplication -like "Yes") ) {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Filter ADM File (to exclude them from AD Replication)"
+        $dfsrSysvolAdPath = "CN=SYSVOL Share,CN=Content,CN=Domain System Volume,CN=DFSR-GlobalSettings,CN=System,$DomainDN"
+        $dfsrSysvol = Get-ADObject -Filter {DistinguishedName -like $dfsrSysvolAdPath} -Server $DomainDns -Properties msDFSR-FileFilter
+        If($dfsrSysvol) {
+            $CurrentFilter = $dfsrSysvol.'msDFSR-FileFilter'
+            If($CurrentFilter -like "*.ADM*") {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> ADM Filtering is already configured"
+            }
+            Else {
+                $NewFilter = $CurrentFilter + ",*.ADM"
+                If($Action -like "Run") {
+                    try {
+                        $dfsrSysvol | Set-ADObject -Replace @{'msDFSR-FileFilter'=$NewFilter} -Server $DomainDns
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> ADM Filter Enabled (msDFSR-FileFilter attribute updated)"
+                    }
+                    catch {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Update of msDFSR-FileFilter attribute failed: $($_.Exception.Message)"
+                        $ResMess = "Setting filter on ADM File Replication Failed"
+                        $Result = 2
+                    }
+                }
+                Else {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> ADM Filter may be Enabled (msDFSR-FileFilter attribute updated - Simulation)"
+                }
+            }
+        }
+        Else {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! SYSVOL Replication is not DFSR. No action done"
+            $ContinueProcess = $false
+            $ResMess = "SYSVOL Replication is not DFSR. No action done on replication filtering"
+            $Result = 1
+        }
+    }
+
+    ## Exit
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    if (Test-Path .\Logs\Debug\$DbgFile)
+    {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
+        {
+            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
+        }
+    }
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
+
+    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+
+}
+
+##################################################################
 ## New-ScheduleTasks                                            ##
 ## -----------------                                            ##
 ## This function will add a new schedule tasks from config file ##
