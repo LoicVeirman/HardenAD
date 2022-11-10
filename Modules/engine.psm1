@@ -6,8 +6,7 @@
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Import-Ini
-{
+Function Import-Ini {
     <# 
         .Synopsis
         return ini file content to as array.
@@ -26,38 +25,39 @@ Function Import-Ini
     ## Parameters 
     Param (
         # Path to the ini file
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [string]
         $FilePath
-        )
+    )
 
     ## Generate output variable container
     $ini = @{}
     
     ## Parse the file content and compare it with regular expression
-    if (!(Test-Path $FilePath)) 
-    { 
+    if (!(Test-Path $FilePath)) { 
         return $null 
         break 
     }
     
-    switch -regex -file $FilePath
-    {
+    switch -regex -file $FilePath {
         # Section
-        "^\[(.+)\]"     { $section = $matches[1]
-                          $ini[$section] = @{}
-                          $CommentCount = 0 
-                        }
+        "^\[(.+)\]" {
+            $section = $matches[1]
+            $ini[$section] = @{}
+            $CommentCount = 0 
+        }
         # Comment
-        "^(;.*)$"       { $value = $matches[1]
-                          $CommentCount = $CommentCount + 1
-                          $name = "Comment" + $CommentCount
-                          $ini[$section][$name] = $value 
-                        } 
+        "^(;.*)$" {
+            $value = $matches[1]
+            $CommentCount = $CommentCount + 1
+            $name = "Comment" + $CommentCount
+            $ini[$section][$name] = $value 
+        } 
         # Key
-        "(.+?)\s*=(.*)" { $name,$value = $matches[1..2] 
-                          $ini[$section][$name] = $value 
-                        }
+        "(.+?)\s*=(.*)" {
+            $name, $value = $matches[1..2] 
+            $ini[$section][$name] = $value 
+        }
     }    
         
     ## return value
