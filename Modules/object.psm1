@@ -517,92 +517,64 @@ Function Reset-GroupMembership {
         .Notes
          Version: 
             01.00 -- contact@hardenad.net 
-         
+			02.00 -- contact@hardenad.net 
          history: 
             01.00 -- Script creation
             01.01 -- Removed unecessary xmlSkeleton call. Added use case managment when a group is empty.
+			02.00 -- Removed logging data. Added Dynamic replacement for input data.
     #>
     param(
     )
-
-    ## Function Log Debug File
-    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
-    $dbgMess = @()
-
-    ## Start Debug Trace
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
-
-    ## Indicates caller and options used
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
-
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
-        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
-        $xmlLoaded = $true
-    }
-    Catch {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! FAILED loading xml skeleton file "
+        $xmlSkeleton = [xml](Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop)
+    		$cfgXml      = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)
+        $xmlLoaded   = $true
+    } Catch {
         $xmlLoaded = $false
     }    
 
     ## If xml loaded, begining check and create...
-    if ($xmlLoaded) {
-        ## Log loop start
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable XmlLoaded.......: $xmlLoaded"
-        
+    if ($xmlLoaded)
+    {
         ## Creating a variable to monitor failing tasks
         $noError = $true
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
         
         ## When dealing with 2008R2, we need to import AD module first
-        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
-        
-            Try { 
-                Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-            } 
+        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
+        {
+            Try   { 
+                    Import-Module ActiveDirectory
+                  } 
             Catch {
-                $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
-                $Result = 2
-            }
-        }
-        else {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
-        }
-
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Script Starts"
+                    $noError = $false
+                    $Result = 2
+                  }
+        } 
         
         ## recover XML data
-        #[xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
         $xmlGroups = $xmlSkeleton.Settings.DefaultMembers
-
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Found " + $xmlGroups.group.count + " group(s) to reset"
-        
+        $Translat  = $cfgXml.Settings.Translation
         ## Recover domain data
         $DomainSID = (Get-ADDomain).DomainSID
-
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Domain SID is $DomainSID"
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Loop begins"
 
         ## Reset loop
         foreach ($group in $xmlGroups.group) {
             #.Group identity
-            $GroupID = ($group.target -replace '%domainSid%', $DomainSID)
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---> Working on $GroupID"
+            $GroupID = ($group.target -replace '%domainSid%',$DomainSID)
 
             #.Create mandatory members list
             $mbrLists = @()
             foreach ($member in $group.Member) {
                 ## Convert %DomainSID% if needded
-                $mbrTranslated = $member -replace '%domainsid%', $DomainSID
-
+                $mbrTranslated = $member -replace '%domainsid%',$DomainSID
+				
+				## Dynamic replacement
+				foreach ($transID in $translat.wellKnownID)
+				{
+					$mbrTranslated = $mbrTranslated -replace $TransID.translateFrom,$TransID.translateTo
+				}
                 ## Double test to discover the object class and run the proper command
                 ##This is not a clean approach but... It works :)
                 $test = $false
@@ -637,37 +609,18 @@ Function Reset-GroupMembership {
                 ## Side Indicator: should not be in
                 if ($badID.SideIndicator -eq "<=") {
                     Remove-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---> Remove....: " + $badID.inputObject
                 }
                 ## Side Indicator: should be in
                 if ($badID.SideIndicator -eq "=>") {
                     Add-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- --- ---> add.......: " + $badID.inputObject
                 }
             }
         }
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> Loop is over"
     }
     
     $Result = 0
 
     ## Exit
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile) {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
-            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
-            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
-        }
-
-    }
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
-    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
-
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 

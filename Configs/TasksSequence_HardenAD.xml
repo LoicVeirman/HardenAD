@@ -1,64 +1,302 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Settings>
-  <!-- ##################################################################################################################################### -->
-  <!-- Revision: 2021/10/21 - contact@hardenad.net                                                                                     -->
-  <!-- ##################################################################################################################################### -->
+  <!-- ################################################################################################################################### -->
+  <!-- Revision: 2022/07/08 - contact@hardenad.net                                                                                         -->
+  <!-- ################################################################################################################################### -->
   <OrganizationalUnits>
     <!-- The section <ouTree> handle the base model for OU creation.                                                                       -->
     <!-- When calling the function [Set-OUTree], you need to add as parameter the "OU class" name of the tree structure you want to add.   -->
     <!-- This could also be used to manage new OU generation.                                                                              -->
     <ouTree>
-      <!-- CLASS: SMB-ADMIN-EN                                                                                                             -->
+      <!-- CLASS: HardenAD_ADMIN                                                                                                           -->
       <!-- This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtiion.                 -->
-      <OU Class="SMB-ADMIN-EN" Name="Administration" Description="Privileged accounts administrative OU">
+      <OU Class="HardenAD_ADMIN" Name="Administration" Description="Privileged accounts administrative OU">
         <ChildOU>
-          <Name>Admin Accounts</Name>
-          <Description>Admin Accounts Tier 1 and Tier 2</Description>
-        </ChildOU>
+			<Name>PAW Tier 0</Name>
+			<Description>Privilege Admin Worstations Tier 0</Description>
+		</ChildOU>
+       <ChildOU>
+			<Name>PAW Tier 1</Name>
+			<Description>Privilege Admin Worstations Tier 1</Description>
+		</ChildOU>
         <ChildOU>
-          <Name>Admin Accounts (Tier 0)</Name>
-          <Description>Admin Accounts Tier 0</Description>
-        </ChildOU>
+			<Name>PAW Tier 2</Name>
+			<Description>Privilege Admin Worstations Tier 2</Description>
+		</ChildOU>
         <ChildOU>
-          <Name>Service Accounts</Name>
-          <Description>Service Accounts</Description>
+			<Name>PAW Tier Legacy</Name>
+			<Description>Privilege Admin Worstations Tier Legacy</Description>
+		</ChildOU>
+		<ChildOU>
+          <Name>Groups Tier 0</Name>
+          <Description>Groups to manage Tier 0 objects</Description>
           <ChildOU>
-            <Name>AAD Sync</Name>
-            <Description>Azure AD synced service accounts</Description>
+            <Name>Deleg</Name>
+            <Description>Groups used to delegate permissions on AD objects</Description>
           </ChildOU>
           <ChildOU>
-            <Name>Disabled</Name>
-            <Description>Disabled Accounts</Description>
+            <Name>GPO</Name>
+            <Description>Groups used to allow or deny settings via Group Policies Objects</Description>
           </ChildOU>
-        </ChildOU>
-        <ChildOU>
-          <Name>Service Accounts (Tier 0)</Name>
-          <Description>High Privileges Service Accounts</Description>
-        </ChildOU>
-        <ChildOU>
-          <Name>Administration Groups</Name>
-          <Description>Administration Groups for Tier 1 and Tier 2</Description>
           <ChildOU>
-            <Name>AAD Sync</Name>
-            <Description>Azure AD synchronized groups</Description>
+            <Name>Local Admins</Name>
+            <Description>Groups used to grant a user being local administrator of a resource</Description>
           </ChildOU>
         </ChildOU>
         <ChildOU>
-          <Name>Administration Groups (Tier 0)</Name>
-          <Description>Administration Groups for Tier 0</Description>
+          <Name>Users Tier 0</Name>
+          <Description>Users to manage Tier 0 objects</Description>
         </ChildOU>
         <ChildOU>
-          <Name>Administration Servers</Name>
-          <Description>Administration Servers Tier 1 and Tier 2</Description>
+          <Name>Groups Tier 1</Name>
+          <Description>Groups to manage Tier 1 objects</Description>
+          <ChildOU>
+            <Name>Deleg</Name>
+            <Description>Groups used to delegate permissions on AD objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>GPO</Name>
+            <Description>Groups used to allow or deny settings via Group Policies Objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Local Admins</Name>
+            <Description>Groups used to grant a user being local administrator of a resource</Description>
+          </ChildOU>
         </ChildOU>
         <ChildOU>
-          <Name>Administration Servers (Tier 0)</Name>
-          <Description>Administration Servers for Tier 0</Description>
+          <Name>Users Tier 1</Name>
+          <Description>Users to manage Tier 1 objects</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Groups Tier 2</Name>
+          <Description>Groups to manage Tier 2 objects</Description>
+          <ChildOU>
+            <Name>Deleg</Name>
+            <Description>Groups used to delegate permissions on AD objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>GPO</Name>
+            <Description>Groups used to allow or deny settings via Group Policies Objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Local Admins</Name>
+            <Description>Groups used to grant a user being local administrator of a resource</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Users Tier 2</Name>
+          <Description>Groups to manage Tier 2 objects</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Groups Tier Legacy</Name>
+          <Description>Groups to manage Legacy objects</Description>
+          <ChildOU>
+            <Name>Deleg</Name>
+            <Description>Groups used to delegate permissions on AD objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>GPO</Name>
+            <Description>Groups used to allow or deny settings via Group Policies Objects</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Local Admins</Name>
+            <Description>Groups used to grant a user being local administrator of a resource</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Users Tier Legacy</Name>
+          <Description>Users to manage Legacy objects</Description>
         </ChildOU>
       </OU>
 
+      <!-- CLASS: HardenAD_PROD-T0                                                                                                         -->
+      <!-- This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtiion.                 -->
+      <OU Class="HardenAD_PROD-T0" Name="Harden - Tier 0" Description="Tier 0 resources">
+        <ChildOU>
+          <Name>Contacts</Name>
+          <Description>Contacts objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Groups</Name>
+          <Description>Groups objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Servers</Name>
+          <Description>Computer objects belonging to this Tier and acting as servers</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Services</Name>
+          <Description>Service accounts belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Service accounts synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled sevice accounts</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Users</Name>
+          <Description>User objects belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>User objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled user objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Workstations</Name>
+          <Description>Computer Objects belonging to this Tier and acting as clients</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+
+      </OU>
+
+      <!-- CLASS: HardenAD_PROD-T1and2                                                                                                     -->
+      <!-- This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtiion.                 -->
+      <OU Class="HardenAD_PROD-T1and2" Name="Harden - Tier 1 and 2" Description="Tier 1 and Tier 2 resources">
+        <ChildOU>
+          <Name>Contacts</Name>
+          <Description>Contacts objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Groups</Name>
+          <Description>Groups objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Servers</Name>
+          <Description>Computer objects belonging to this Tier and acting as servers</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Services</Name>
+          <Description>Service accounts belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Service accounts synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled sevice accounts</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Users</Name>
+          <Description>User objects belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>User objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled user objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Workstations</Name>
+          <Description>Computer Objects belonging to this Tier and acting as clients</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+
+      </OU>
+
+      <!-- CLASS: HardenAD_PROD-LEGACY                                                                                                     -->
+      <!-- This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtiion.                 -->
+      <OU Class="HardenAD_PROD-LEGACY" Name="Harden - Tier Legacy" Description="Legacy resources">
+        <ChildOU>
+          <Name>Contacts</Name>
+          <Description>Contacts objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Groups</Name>
+          <Description>Groups objects belonging to this Tier</Description>
+        </ChildOU>
+        <ChildOU>
+          <Name>Servers</Name>
+          <Description>Computer objects belonging to this Tier and acting as servers</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Services</Name>
+          <Description>Service accounts belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Service accounts synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled sevice accounts</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Users</Name>
+          <Description>User objects belonging to this Tier</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>User objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled user objects</Description>
+          </ChildOU>
+        </ChildOU>
+        <ChildOU>
+          <Name>Workstations</Name>
+          <Description>Computer Objects belonging to this Tier and acting as clients</Description>
+          <ChildOU>
+            <Name>AADSync</Name>
+            <Description>Computer objects synced with Azure AD</Description>
+          </ChildOU>
+          <ChildOU>
+            <Name>Disabled</Name>
+            <Description>Disabled computer objects</Description>
+          </ChildOU>
+        </ChildOU>
+
+      </OU>
+
       <!-- CLASS: PROVISIONNING-EN                                                                                                         -->
-      <!-- This class generate an OU tree used for provisionning objects in a default location. This is the English Edtiion.               -->
+      <!-- This class generate an OU tree used for provisionning objects in a default location. This is the English Edition.               -->
       <OU Class="PROVISIONNING-EN" Name="Provisionning" Description="New objects provisionning OU">
         <ChildOU>
           <Name>Users</Name>
@@ -73,38 +311,121 @@
     </ouTree>
   </OrganizationalUnits>
 
-  <GroupPolicies>
-    <!-- ################################################################################################################################# -->
-    <!-- The <translation> section ease the script to translate identities from the lab domain to the integration domain.                  -->
-    <!-- When a group policy contains a referal to an identity, such as a user or a group, you will have to match the originating ID to    -->
-    <!-- its ID in the target domain. This could be achieve through a GPO migration table or a rewriting of a XML preference file.         -->
-    <!--                                                                                                                                   -->
-    <!-- Options Class are as below:                                                                                                       -->
-    <!--  > When class object is USER...: the script will raise a call to new ID with Get-ADUser   and refer to the SID         attribute  -->
-    <!--  > When class object is GROUP..: the script will raise a call to new ID with Get-ADGroup  and refer to the SID         attribute  -->
-    <!--  > When class object is DOMAIN.: the script will raise a call to new ID with Get-ADDomain and refer to the NetBIOSName attribute  -->
-    <!--  > When class object is UNCPATH: the script will raise a call to new ID with Get-ADGroup  and refer to the DNSRoot     attribute  -->
-    <!--  > When class object is W.K.SID: the script will raise a call to new ID with Get-ADObject and refer to the NetBIOSNAme attribute  -->
-    <!-- ################################################################################################################################# -->
-    <Translation>
-      <Object Class="UNCPath" Name="DOMAIN_UNC_PATH"/>
-      <Object Class="Domain"  Name="G_Security–Disable UAC"/>
-      <Object Class="Domain"  Name="G_DELEG-Admin-Servers"/>
-      <Object Class="Domain"  Name="G_DELEG-Admin-Stations"/>
-      <Object Class="Domain"  Name="G_DELEG-Admin-%computername%"/>
-      <Object Class="Domain"  Name="G_Security-BitLocker-TPM with PIN"/>
-      <Object Class="Domain"  Name="G_Security-BitLocker-TPM only"/>
-      <Object Class="Domain"  Name="G_Security-Enable-Print Spooler Service"/>
-      <Object Class="Domain"  Name="G_Security-Restriction-Deny Login Tier 0"/>
-      <Object Class="Domain"  Name="G_Security-Firewall-Audit Only"/>
-      <Object Class="Domain"  Name="G_Security-Firewall-Enabled-Allow Local Rules"/>
-      <Object Class="Domain"  Name="G_Admins-Tier 0"/>
-      <Object Class="Domain"  Name="G_Admins-Tier 1"/>
-      <Object Class="Domain"  Name="G_Security-Deny-Restriction Login Tier 0"/>
-      <Object Class="Domain"  Name="G_LAPS-Password Manager"/>
-      <Object Class="Domain"  Name="Enterprise Admins"/>
-    </Translation>
+  <!-- ################################################################################################################################# -->
+  <!-- NEW SECTION (2022/07)                                                                                                             -->
+  <!-- This section push delegation ACL to designated OU                                                                                 -->
+  <!-- ################################################################################################################################# -->
+  <DelegationACEs>
+    <!-- Administration -->
+    <!-- Delegation for L-S-T1-DELEG_Group - Create and Delete (administration) -->
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="group" TargetDN="OU=Groups Tier 1,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="Group" ObjectType=""      TargetDN="OU=Groups Tier 1,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="group" TargetDN="OU=Groups Tier Legacy,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="Group" ObjectType=""      TargetDN="OU=Groups Tier Legacy,OU=Administration,ROOTDN"/>
+    <!-- Delegation for L-S-T2-DELEG_Group - Create and Delete (administration) -->
+    <ACL Trustee="L-S-T2-DELEG_Group - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="group" TargetDN="OU=Groups Tier 2,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Group - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="Group" ObjectType=""      TargetDN="OU=Groups Tier 2,OU=Administration,ROOTDN"/>
+    <!-- Delegation for L-S-T1-DELEG_User - Create and Delete (administration) -->
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="user"  TargetDN="OU=Users Tier 1,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user"  ObjectType=""      TargetDN="OU=Users Tier 1,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="user"  TargetDN="OU=Users Tier Legacy,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user"  ObjectType=""      TargetDN="OU=Users Tier Legacy,OU=Administration,ROOTDN"/>
+    <!-- Delegation for L-S-T1-DELEG_User - Create and Delete (administration) -->
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="user"  TargetDN="OU=Users Tier 2,OU=Administration,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user"  ObjectType=""      TargetDN="OU=Users Tier 2,OU=Administration,ROOTDN"/>
+    <!-- Production -->
+    <!-- Delegation for L-S-T1-DELEG_Computer - Create and Delete -->
+    <ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""         ObjectType="computer" TargetDN="OU=Servers,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType=""         TargetDN="OU=Servers,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""         ObjectType="computer" TargetDN="OU=Servers,OU=Harden - Tier Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Computer - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType=""         TargetDN="OU=Servers,OU=Harden - Tier Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T1-DELEG_User - Create and Delete -->
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""     ObjectType="user" TargetDN="OU=Services,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType=""     TargetDN="OU=Services,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""     ObjectType="user" TargetDN="OU=Services,OU=Harden - Tier Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_User - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType=""     TargetDN="OU=Services,OU=Harden - Tier Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T2-DELEG_Computer - Create and Delete -->
+    <ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""         ObjectType="computer" TargetDN="OU=Workstations,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType=""         TargetDN="OU=Workstations,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""         ObjectType="computer" TargetDN="OU=Workstations,OU=Harden - Tier Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Computer - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="computer" ObjectType=""         TargetDN="OU=Workstations,OU=Harden - Tier Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T1-DELEG_Group - Create and Delete -->
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="group" TargetDN="OU=Groups,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType=""      TargetDN="OU=Groups,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""      ObjectType="group" TargetDN="OU=Groups,OU=Harden - Tier Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType=""      TargetDN="OU=Groups,OU=Harden - Tier Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T2-DELEG_contact - Create and Delete -->
+    <ACL Trustee="L-S-T2-DELEG_Contact - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""        ObjectType="contact" TargetDN="OU=contacts,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Contact - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="contact" ObjectType=""        TargetDN="OU=Contacts,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Contact - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""        ObjectType="contact" TargetDN="OU=Contacts,OU=Harden - Tier Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Contact - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="contact" ObjectType=""        TargetDN="OU=Contacts,OU=Harden - Tier Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T2-DELEG_User - Create and Delete -->
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""     ObjectType="user" TargetDN="OU=Users,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType=""     TargetDN="OU=Users,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All"         InheritedObjects=""     ObjectType="user" TargetDN="OU=Users,OU=Harden - Tier Legacy,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_User - Create and Delete" Right="GenericAll"               RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType=""     TargetDN="OU=Users,OU=Harden - Tier Legacy,ROOTDN"/>
+    <!-- Delegation for L-S-T2-DELEG_Group - Manage Membership -->
+    <ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden - Tier 1 and 2,ROOTDN"/>
+    <ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden - Tier Legacy,ROOTDN"/>
+  </DelegationACEs>
 
+  <!-- ################################################################################################################################# -->
+  <!-- NEW SECTION (2022/07)                                                                                                             -->
+  <!-- This section create a reference table to be used through the scripts                                                              -->
+  <!-- For now, only the GPO parts use this dynamic logic to fillup the migration and the preference table.                              -->
+  <!--    > WellKnownID..: used to replace a dynamic pattern in a name (group, user, path, gpo, ...)                                     -->
+  <!--    > Keyword......: used to shorten a word in a name (group, user, path, gpo, ...), helping in avoiding too long name in AD       -->
+  <!-- ################################################################################################################################# -->
+  <Translation>
+    <wellKnownID objectClass="text"  translateFrom="%AuthenticatedUsers%"         translateTo="Authenticated Users"/>
+    <wellKnownID objectClass="text"  translateFrom="%Administrators%"             translateTo="Administrators"/>
+	  <wellKnownID objectClass="text"  translateFrom="%domain%"                     translateTo="FORMATION99"/>
+    <wellKnownID objectClass="text"  translateFrom="%domaindns%"                  translateTo="formation99.lan"/>
+    <wellKnownID objectClass="text"  translateFrom="%RemoteDesktopUsers%"         translateTo="Remote Desktop Users"/>
+    <wellKnownID objectClass="text"  translateFrom="%RootDN%"					            translateTo="DC=formation99,DC=lan"/>
+    <wellKnownID objectClass="text"  translateFrom="%Users%"					            translateTo="Users"/>
+    <wellKnownID objectClass="group" translateFrom="%t0-managers%"                translateTo="G-S-T0_Managers"/>
+    <wellKnownID objectClass="group" translateFrom="%t0-localAdmin-servers%"      translateTo="L-S-T0_LocalAdmins_Servers"/>
+    <wellKnownID objectClass="group" translateFrom="%t0-localAdmin-workstations%" translateTo="L-S-T0_LocalAdmins_Workstations"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-managers%"                translateTo="G-S-T1_Managers"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-administrators%"          translateTo="G-S-T1_Administrators"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-operators%"               translateTo="G-S-T1_Operators"/>
+    <wellKnownID objectClass="group" translateFrom="%t1-localAdmin-servers%"      translateTo="L-S-T1_LocalAdmins_Servers"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-managers%"                translateTo="G-S-T2_Managers"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-administrators%"          translateTo="G-S-T2_Administrators"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-operators%"               translateTo="G-S-T2_Operators"/>
+    <wellKnownID objectClass="group" translateFrom="%t2-localAdmin-workstations%" translateTo="L-S-T2_LocalAdmins_Workstations"/>
+    <wellKnownID objectClass="group" translateFrom="%tl-operators%"               translateTo="G-S-TL_Operators"/>
+    <wellKnownID objectClass="group" translateFrom="%tl-localAdmin-servers%"      translateTo="L-S-TL_LocalAdmins_Servers"/>
+    <wellKnownID objectClass="group" translateFrom="%tl-localAdmin-workstations%" translateTo="L-S-TL_LocalAdmins_Workstations"/>
+	  <wellKnownID objectClass="group" translateFrom="%T1-LAPS-PasswordReset%"	    translateTo="L-S-T1-DELEG_LAPS_PwdReset"/>
+	  <wellKnownID objectClass="group" translateFrom="%T1-LAPS-PasswordReader%"	    translateTo="L-S-T1-DELEG_LAPS_PwdRead"/>
+	  <wellKnownID objectClass="group" translateFrom="%T2-LAPS-PasswordReset%"	    translateTo="L-S-T2-DELEG_LAPS_PwdReset"/>
+	  <wellKnownID objectClass="group" translateFrom="%T2-LAPS-PasswordReader%"	    translateTo="L-S-T2-DELEG_LAPS_PwdRead"/>
+    
+    <Keyword LongName="servers"        ShortenName="Srv"/>
+    <Keyword LongName="server"         ShortenName="Srv"/>
+    <Keyword LongName="workstations"   ShortenName="Wks"/>
+    <Keyword LongName="workstation"    ShortenName="Wks"/>
+    <Keyword LongName="services"       ShortenName="Svc"/>
+    <Keyword LongName="service"        ShortenName="Svc"/>
+    <Keyword LongName="accounts"       ShortenName="Acct"/>
+    <Keyword LongName="account"        ShortenName="Acct"/>
+    <Keyword LongName="passwords"      ShortenName="Pwd"/>
+    <Keyword LongName="password"       ShortenName="Pwd"/>
+    <Keyword LongName="Firewalls"      ShortenName="Fwl"/>
+    <Keyword LongName="Firewall"       ShortenName="Fwl"/>
+    <Keyword LongName="security"       ShortenName="Secu"/>
+    <Keyword LongName="local"          ShortenName="Loc"/>
+    <Keyword LongName="administrators" ShortenName="Adm"/>
+    <Keyword LongName="administrator"  ShortenName="Adm"/>
+    <Keyword LongName="Operators"      ShortenName="Ope"/>
+    <Keyword LongName="Operator"       ShortenName="Ope"/>
+    <Keyword LongName="Managers"       ShortenName="Mgr"/>
+    <Keyword LongName="Manager"        ShortenName="Mgr"/>
+  </Translation>
+
+  <GroupPolicies>
     <!-- ################################################################################################################################# -->
     <!-- The <WmiFilter> section allows the script to import MOF files to the Group Policy WMI Filters Container.                          -->
     <!-- Once a WMI Filter has been imported, it could be attached to a GPO through this script with te <GpoFilter> reference.             -->
@@ -112,40 +433,30 @@
     <!-- Name refers to the display name, as shown in the GUI. Source refers to the source mof file to import.                             -->
     <!-- ################################################################################################################################# -->
     <WmiFilters>
-      <!-- OSx64.mof: wmi filter that allow a GPO to be apply only on 64 bits processor architecture.                                      -->
-      <Filter Name="OS is 64 bits" Source="OSx64.mof"/>
-
-      <!-- OSx86.mof: wmi filter that allow a GPO to be apply only on 32 bits processor architecture.                                      -->
-      <Filter Name="OS is 32 bits" Source="OSx86.mof"/>
-
-      <!-- ServersOnly.mof: wmi filter that detect system operating servers.                                                               -->
-      <Filter Name="Servers Only" Source="ServersOnly.mof"/>
-
-      <!-- WorkstationsOnly.mof: wmi filter that detect system operating clients.                                                          -->
-      <Filter Name="Workstations Only" Source="WorkstationsOnly.mof"/>
-
-      <!-- OSclientXPto8.1.mof: wmi filter that detect client OS with version number lower or equal to windows 8.1                         -->
-      <Filter Name="OS is less or equal to Windows 8.1" Source="OSclientXPto8.1.mof"/>
-      
-      <!-- OSclient10+.mof: wmi filter that detect client OS with version number greater or equal to windows 10                            -->
-      <Filter Name="OS is greater or equal to Windows 10" Source="OSclient10+.mof"/>
-
-      <!-- OSserver2003to2012r2.mof: wmi filter that detect server OS with version number lower or equal to windows Server 20212 R2        -->
-      <Filter Name="OS is less or equal to Windows Server 2012 R2" Source="OSserver2003to2012r2.mof"/>
-
-      <!-- OSserver2016+.mof: wmi filter that detect server OS with version number greater or equal to windows Server 2016                 -->
-      <Filter Name="OS is greater or equal to Windows Server 2016" Source="OSserver2016+.mof"/>
+      <Filter Name="Windows_X64_Only"                      Source="Windows_X64_Only.mof"                     />
+      <Filter Name="Windows_X86_Only"                      Source="Windows_X86_Only.mof"                     />
+      <Filter Name="Windows_Server_Only"                   Source="Windows_Server_Only.mof"                  />
+      <Filter Name="Windows_Server_2016_And_Newer_Only"    Source="Windows_Server_2016_And_Newer_Only.mof"   />
+      <Filter Name="Windows_Server_2012_R2_And_Older_Only" Source="Windows_Server_2012_R2_And_Older_Only.mof"/>
+      <Filter Name="Windows_Client_Only"                   Source="Windows_Client_Only.mof"                  />
+      <Filter Name="Windows_10_And_Newer_Only"             Source="Windows_10_And_Newer_Only.mof"            />
+      <Filter Name="Windows_8.1_And_Older_Only"            Source="Windows_8.1_And_Older_Only.mof"           />
     </WmiFilters>
 
     <!-- ################################################################################################################################# -->
     <!-- The <GPO> elements list the Group Policy added (or refreshed) to the target domain.                                               -->
     <!-- Each of this Group Policy is first generated with no data (if not existing), then data is imported from its backup folder.        -->
+    <!--   > BackupID...: refer to the unique ID of the backup folder                                                                      -->
+    <!--   > validation.: if set to  No, the GPO is created and overwrited from its backup. Yes will only link the GPO to its targets.     -->
     <!--   > Name.......: refer to the display name, as shown in the GUI                                                                   -->
     <!--   > Description: description label, as shown in the GUI.                                                                          -->
-    <!--   > validation.: if set to  No, the GPO is created and overwrited from its backup. Yes will also link the GPO to its targets.     -->
     <!--                                                                                                                                   -->
-    <!-- The script will identify the backup source with the <GpoBackup> attribute - this one should contains {} to be functional.         -->
-    <!--   > ID.........: the backup folder name for this GPO backup. The folder is located in .\Inputs\GroupPolicies.                     -->
+    <!-- The <GPOMODE> will identify the Tier perimeter (for group management) and mode to be applied.                                     -->
+    <!--   > Tier.......: Tier0, Tier1 or Tier2.                                                                                           -->
+    <!--   > Mode.......: APPLY, DENY or BOTH. Apply create a group that limit the application scope, whereas DENY enforce the application -->
+    <!--                  to everyone except the denied one. BOTH mix the two modes, enforcing application to only a scoped target group   -->
+    <!--                  with an exception scope (usefull for migration or testing purpose). If mode is ommited, the mode BOTH will be    -->
+    <!--                  used.                                                                                                            -->
     <!--                                                                                                                                   -->
     <!-- The <gpoDeny> ID attribute will set the specified identity with permission "Deny Execute" - you can se as many input as requiered.-->
     <!--   > ID......: use either sAMAccountName, object GUID or SID to identify the target identity to deny.                              -->
@@ -161,234 +472,271 @@
     <!-- The <GpoSecurityFilter> parameter tasks the script to set "authenticated users" as read only and add a security group as new      -->
     <!-- security filter extension.                                                                                                        -->
     <!-- ################################################################################################################################# -->
-    
-    <!-- LOGS -->
-    <GPO Name="Security - Audit (extended log)"
-         Description="Harden AD 2.1 - Enforce audit logging and extended audit logging."
-         Validation="Yes">
-      <GpoBackup ID="{9A9AD00F-56D9-476C-9D65-CEAD0FB31B4F}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+
+    <!-- GPO GROUP SETTINGS: used to generate APPLY and DENY Group Name. Use %tier% to mark the Tier localization in the new name          -->
+    <!--   > GpoName..: define the group name for applying or denying a group                                                              -->
+    <GlobalGpoSettings GroupName="G-S-%tier%-GPO_%GpoName%_%mode%" Tier0="T0" Tier1="T1" Tier2="T2">
+      <GpoTier0 OU="OU=GPO,OU=Groups Tier 0,OU=Administration,%rootDN%"/>
+      <GpoTier1 OU="OU=GPO,OU=Groups Tier 1,OU=Administration,%rootDN%"/>
+      <GpoTier2 OU="OU=GPO,OU=Groups Tier 2,OU=Administration,%rootDN%"/>
+    </GlobalGpoSettings>
+
+    <!-- TEMPLATE
+	  <GPO BackupID="{9A9AD00F-56D9-476C-9D65-CEAD0FB31B4F}"  Validation="Yes" Name="display name" Description="gpo description">
+		<GpoFilter>WmiFilterName</GpoFilter>
+		<GpoLink Path="RootDN" Enabled="No" Enforced="No"/>
     </GPO>
-    
-    <!-- UPDATES -->
-    <GPO Name="Security - Auto Update - Up to Win 8"
-         Description="Harden AD 2.1 - Setup Wsus Client for client up to Windows 8.1"
-         Validation="Yes">
-      <GpoBackup ID="{9EBAF070-546C-405B-842E-6CC59976CA58}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoFilter WMI="OS is less or equal to Windows 8.1"/>
+	  -->
+	  <GPO BackupID="{50BCE76B-CE52-4024-A118-6592D4D6C76D}" Validation="Yes" Name="HAD_Activate_NLA_for_RDP_All" Description="GPO to enable NLA for RDP access">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    
-    <GPO Name="Security - Auto Update - Win 10"
-         Description="Harden AD 2.1 - Setup Wsus Client for client equal to Windows 10 and above"
-         Validation="Yes">
-      <GpoBackup ID="{745F68A0-948D-4387-9A3D-DE1729081E17}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoFilter WMI="OS is greater or equal to Windows 10"/>
+	  <GPO BackupID="{A69848CE-0866-4B9F-8E2C-E8F747FFE643}" Validation="Yes" Name="HAD_Activate_RDP_All" Description="GPO to enable RDP">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    
-    <GPO Name="Security - Auto Update - Up to Win Srv 2012 R2"
-     Description="Harden AD 2.1 - Setup Wsus Client for server up to Windows server 2012 r2"
-     Validation="Yes">
-      <GpoBackup ID="{E78DDF6E-8096-4C1B-8C35-ED6DBCEC9DD7}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoFilter WMI="OS is less or equal to Windows Server 2012 R2"/>
+	  <GPO BackupID="{483EF314-0049-4E87-AAE4-2F7BD57880D5}" Validation="Yes" Name="HAD_Auto-Update_S1_Thu_0h_Srv" Description="GPO to update servers">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Server_Only"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    
-    <GPO Name="Security - Auto Update - Win Srv 2016"
-     Description="Harden AD 2.1 - Setup Wsus Client for server equal to Windows server 2016 and above"
-     Validation="Yes">
-      <GpoBackup ID="{A102457A-DD0D-456A-937F-FC2186D90A99}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoFilter WMI="OS is greater or equal to Windows Server 2016"/>
+	  <GPO BackupID="{8DCAF7F7-3337-4153-AB20-35DBC567DBE5}" Validation="Yes" Name="HAD_Auto-Update_S1_Thu_1h_Srv" Description="GPO to update servers">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Server_Only"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{EA431EAA-7D00-4ABA-9AB2-056E4D62B56F}" Validation="Yes" Name="HAD_Block_BloodHound_All" Description="GPO to block BloodHound tool (Netcease)">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{52819386-F865-4488-9344-5A965A244017}" Validation="Yes" Name="HAD_Block_Camera_On_Lockon_All" Description="Gpo to prevent enabling lock screen camera">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{5B716A6C-0A04-4E54-92F4-A35437E6A493}" Validation="Yes" Name="HAD_Block_Ms_3rd_Party_All" Description="Gpo to block third party Microsoft Windows components">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{5C9A26D9-2653-4445-B1F8-70AC55001AB4}" Validation="Yes" Name="HAD_Block_MSLive_Accounts_All" Description="GPO to block authentication with Microsoft Live accounts">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{FE441D8E-C34D-4447-9D98-790AC0F96781}" Validation="Yes" Name="HAD_Block-Anonymous_SAM-Enum_All" Description="GPO to block anonymous access and SAM enumeration">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{3DD11A05-4247-458C-8259-4DCD24B4FA95}" Validation="Yes" Name="HAD_Block_WinRM_All" Description="GPO to block WINRM">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{143D43A5-B198-4670-9A95-D3324FEB51B9}" Validation="Yes" Name="HAD_Logon_Cache_Wks" Description="GPO to configure session cache for workstations">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Client_Only"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{AEFF1D54-8DA7-4C43-8020-9C8F8782A5B8}" Validation="Yes" Name="HAD_Disable_NTLM1_LM_All" Description="GPO to disable LM and NTLMV1 protocol">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{B186130D-9C11-43CA-98BC-AC4FA17D3350}" Validation="Yes" Name="HAD_Configure_NTLMv2_128bits_All" Description="GPO to configure NTLM V2 128 bits encryption">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{14D52768-A2E5-44D4-AE6D-2358020C4FDD}" Validation="Yes" Name="HAD_Configure_SMB-Signing_All" Description="GPO to sign SMB communication">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{6A4055FA-342E-40F6-8288-76B1CBE1B8F0}" Validation="Yes" Name="HAD_Disable_LDAP-Bind-Simple_All" Description="GPO to disable LDAP Bind Simple">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{F02F69CE-DC45-4328-BCDC-06D068CAE2F1}" Validation="Yes" Name="HAD_Disable_LLMNR_All" Description="GPO to disable LLMNR">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{8CD36574-017F-4CA6-8A15-012C28F7A77E}" Validation="Yes" Name="HAD_Disable_LMHASH_All" Description="GPO to disable LMHASH">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{472BD4D4-11AE-467D-AA10-77A5140E7711}" Validation="Yes" Name="HAD_Disable_Allow-Game-DVR_Service_Wks" Description="GPO to disable AllowGameDVR service">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Client_Only"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{9BB7F0DF-C2A9-437C-B809-7C67983DA70A}" Validation="Yes" Name="HAD_Disable_SMBv1_All" Description="GPO to disable SMB V1 protocol">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{EE72E1FB-8097-4D3D-8991-641C6CC119E5}" Validation="Yes" Name="HAD_Disable_SSL2_SSL3_All" Description="GPO to disable SSL2 and SSL 3.0 protocol">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{C494C564-A2D6-4E25-9EE9-E5B8C020514B}" Validation="Yes" Name="HAD_Disable_Posix-Subsystem_All" Description="GPO do disable Posix subsystem">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{776E2476-4FFE-4871-BE77-06D4107365BA}" Validation="Yes" Name="HAD_Disable_Win11_Update_Wks" Description="GPO to disable Windows automatic update">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Client_Only"/>      
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{7DC13E05-B103-40DF-ACBA-F298BD4A3015}" Validation="Yes" Name="HAD_Enforce_Symbolic-Links_All" Description="GPO to enforce symbolic links">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{B4B92D69-F38A-4971-84AC-DFE918C15C4A}" Validation="Yes" Name="HAD_FIPS_Cryptography_All" Description="GPO to enable FIPS cryptography">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{8B32B75A-600F-4A46-A560-54D44608B65B}" Validation="Yes" Name="HAD_Firewall_Audit_Only_All" Description="GPO to configure Microsoft Firewall on audit mode">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{D7D2F975-F33E-4E90-B2C9-65A08DAD1025}" Validation="Yes" Name="HAD_Firewall_Block_Inbound_All" Description="GPO to enable Microsoft Firewall (inboud trafic)">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+	  <GPO BackupID="{F0D513AE-4996-456E-A79D-1E1323C47BE7}" Validation="Yes" Name="HAD_GPO_Refresh_Cycle_20min_All" Description="GPO to force group policy refresh interval to 20 minutes">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
 
-    <!-- BITLOCKER -->
-    <GPO Name="Security - BitLocker - TPM + PIN"
-         Description="Harden AD 2.1 - Enable Bitlocker cyphering with TPM using a 6 characters passcode"
-         Validation="Yes">
-      <GpoBackup ID="{2AFECC74-2288-40EA-BC76-A993ED620F51}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoSecurityFilter ID="G_Security-BitLocker-TPM with PIN"/>
+	  <GPO BackupID="{67E776A2-4A51-477F-9319-EC5D9341F4F6}" Validation="Yes" Name="HAD_Login_Restrictions_Paw" Description="GPO to manage who can open a session on a Paw">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
     </GPO>
-
-    <GPO Name="Security - BitLocker - TPM only"
-     Description="Harden AD 2.1 - Enable Bitlocker cyphering with TPM but without passcode"
-     Validation="Yes">
-      <GpoBackup ID="{30534199-3B5E-4BEE-9407-EB148D2D1708}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoSecurityFilter ID="G_Security-BitLocker-TPM only"/>
+  	<GPO BackupID="{A7B725E8-4D15-4592-B3EC-679A2D5B8F01}" Validation="Yes" Name="HAD_Login_Restrictions_T0_All" Description="GPO to manage who can open a session on a Tier 0 computers">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoLink Path="OU=Harden - Tier 0,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-  
-    <!-- SECURITY -->
-    <GPO Name="Security - BloodHound - Block NetCease"
-         Description="Harden AD 2.1 - Block net session enumration to mask identities using share on a domain (primary target localization with bloodhound)"
-         Validation="Yes">
-      <GpoBackup ID="{C88012D1-D1E0-4901-8B50-D004DACCCC8F}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+  	<GPO BackupID="{59821253-CDBD-4A92-965C-15F891F4741E}" Validation="Yes" Name="HAD_Login_Restrictions_T0_Paw" Description="GPO to manage who can open a session on a Tier 0 Paw">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="OU=PAW Tier 0,OU=Administration,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <GPO Name="Security - DC - Disable weak SSL protocols"
-     Description="Harden AD 2.1 - Disable SSLv2 and SSLv3 on windows systems"
-     Validation="Yes">
-      <GpoBackup ID="{084459A7-9FEA-45AC-959C-DFE1B07C42D7}"/>
-      <GpoLink Path="OU=Domain Controllers,RootDN" Enabled="No" Enforced="Yes"/>
+  	<GPO BackupID="{F556AEB8-C08B-4B3D-ACAA-F42EB46D5DDA}" Validation="Yes" Name="HAD_Login_Restrictions_T1_All" Description="GPO to manage who can open a session on T1 servers">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
     </GPO>
-
-    <GPO Name="Security - Disable LLMNR"
-         Description="Harden AD 2.1 - Disable Link-local Multicast Name Resolution on older systems"
-         Validation="Yes">
-      <GpoBackup ID="{E387DA7D-339F-4413-B9EE-A28D82DB0055}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+  	<GPO BackupID="{19B7644F-21D5-425C-99D1-81B59649BAA5}" Validation="Yes" Name="HAD_Login_Restrictions_T1_Paw" Description="GPO to manage who can open a session on Tier 1 Paw">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="OU=PAW Tier 1,OU=Administration,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <GPO Name="Security - Disable NTLM V1 et LM"
-         Description="Harden AD 2.1 - Enforce NTLMv2"
-         Validation="Yes">
-      <GpoBackup ID="{CBF66B43-ADE8-4042-89F5-584F8226D5EB}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+  	<GPO BackupID="{29328AD4-93D0-43AB-974F-FE4AC33D1E30}" Validation="Yes" Name="HAD_Login_Restrictions_T12_All" Description="GPO to manage who can open a session on workstations (Tier 2) and Tier 1 servers">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="OU=Harden - Tier 1 and 2,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <GPO Name="Security - Disable Server Print Spooler Service"
-         Description="Harden AD 2.1 - Enforce the Print Spooler service in a disabled state on all Server Systems"
-         Validation="Yes">
-      <GpoBackup ID="{0B69C7E6-095C-41CA-A18E-2E7F1A908BA6}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoDeny ID="G_Security-Enable-Print Spooler Service"/>
-      <GpoFilter WMI="Servers Only"/>
+  	<GPO BackupID="{41287CF3-810A-4104-9622-DA2FC940844F}" Validation="Yes" Name="HAD_Login_Restrictions_T2_All" Description="GPO to manage who can open a session on workstations (Tier 2)">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+    </GPO>    
+  	<GPO BackupID="{FC0409A6-4C0D-4071-97E4-A97D82C362A9}" Validation="Yes" Name="HAD_Login_Restrictions_T2_Paw" Description="GPO to manage who can open a session on Tier 2 Paw">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="OU=PAW Tier 2,OU=Administration,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <GPO Name="Security - Disable PrintNightmare"
-     Description="Harden AD 2.1 - Temporary rules to allow users to print once the Septembre Update has been applied"
-     Validation="Yes">
-      <GpoBackup ID="{B7F2938E-B878-4F99-AF89-FB228213387F}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
+  	<GPO BackupID="{DACA274C-0713-4E8A-A5EA-D655310EB2BC}" Validation="Yes" Name="HAD_Login_Restrictions_TLeg_All" Description="GPO to manage who can open a session on Tier Legacy computers">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="OU=Harden - Tier Legacy,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <GPO Name="Security - Disable Smbv1"
-         Description="Harden AD 2.1 - Enforce SMBv2 has minimum version"
-         Validation="Yes">
-      <GpoBackup ID="{4074C445-A6FC-4485-A38D-76243120F6AE}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+  	<GPO BackupID="{8BCA417B-0356-4AD5-898C-99363F4DFAB0}" Validation="Yes" Name="HAD_Login_Restrictions_TLeg_Paw" Description="GPO to manage who can open a session on Tier Legacy Paw">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="OU=PAW Tier Legacy,OU=Administration,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <GPO Name="Security - GPO Refresh Cycle - 20 minutes"
-       Description="Harden AD 2.1 - Enforce GPO cycle to 20 minutes instead of the default vaule (45 minutes)"
-       Validation="Yes">
-      <GpoBackup ID="{C41BEAD4-DAEE-4CE1-BDC0-F80C46273383}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+           
+  	<GPO BackupID="{C53332F8-73B7-488D-81F4-148F3D0C077A}" Validation="Yes" Name="HAD_Logs_ANSSI_All" Description="GPO to configure Windows audit log">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/> 
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <GPO Name="Security - IPv4 - Priority"
-         Description="Harden AD 2.1 - Enforce IPv4 priority over IPv6"
-         Validation="Yes">
-      <GpoBackup ID="{5153F4B0-7A7B-4FEF-9EA3-ECBC0E6F1C84}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+  	<GPO BackupID="{34C20D17-4EB8-48FF-AC29-F34441014A28}" Validation="Yes" Name="HAD_PowerShell_Logs_All" Description="GPO to enable PowerShell V5 logs">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    
-    <GPO Name="Security - PowerShell - Logs"
-         Description="Harden AD 2.1 - Enforce logging for all PowerShell commands"
-         Validation="Yes">
-      <GpoBackup ID="{048CE42F-1180-4910-BC7C-AFB383AF9599}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+  	<GPO BackupID="{F31780F6-6578-461B-96D9-79A2D4C648F2}" Validation="Yes" Name="HAD_Secure_NetLogon_All" Description="GPO to secure Netlogon (encryption and password change of computer accounts">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    
-    <GPO Name="Security - Restriction - Login - Tier 0"
-         Description="Harden AD 2.1 - Deny Login to Super Admins on Tier 1 and Tier 2 Systems"
-         Validation="Yes">
-      <GpoBackup ID="{E43715B3-FDB1-4C30-83A8-9FEA7087915E}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
-      <GpoDeny ID="%SecPri%-9"/>
-      <GpoDeny ID="G_Security-Deny-Restriction Login Tier 0"/>
+  	<GPO BackupID="{F0CB3701-497A-440F-ABBD-019FF8D26F9C}" Validation="Yes" Name="HAD_UAC_Enforced_All" Description="GPO to apply UAC to Builtin administrator account">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    
-    <GPO Name="Security - Deny Networking to Internet"
-         Description="Harden AD 2.1 - Set system Firewall to deny any traffic to non-local network"
-         Validation="Yes">
-      <GpoBackup ID="{02704F67-D7D2-482D-A236-ADABFA01AD66}"/>
-      <GpoLink Path="OU=Administration Servers (Tier 0),OU=Administration,RootDN" Enabled="Yes" Enforced="Yes"/>
+  	<GPO BackupID="{B3AD14F6-7688-44D0-AB76-DFF290D84D66}" Validation="Yes" Name="HAD_Win10_Auto_Update_Wks" Description="GPO to update Windows 10 computers with Windows Update for Business">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_10_And_Newer_Only"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    
-    <GPO Name="Security - Enforce Login Tier 0"
-         Description="Harden AD 2.1 - Restrict login to only Super Admins on Tier 0 systems"
-         Validation="Yes">
-      <GpoBackup ID="{62BF0208-E62E-4F1D-B68B-C50B8621D785}"/>
-      <GpoLink Path="OU=Administration Servers (Tier 0),OU=Administration,RootDN" Enabled="Yes" Enforced="Yes"/>
-      <GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes"/>
+  	<GPO BackupID="{858E0F6B-EF3A-4081-8130-D6EF79A8E75A}" Validation="Yes" Name="HAD_Win8_Auto_Update_Wks" Description="GPO to update Windows 7 and 8 computers">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_8.1_And_Older_Only"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
- 
-    <!-- FIREWALL -->
-    <GPO Name="Security - Firewall - Audit Only"
-         Description="Harden AD 2.1 - Setup Microsoft Firewall in audit mode (allow all, log everything)"
-         Validation="Yes">
-      <GpoBackup ID="{261EFA8D-4DEE-4C50-862B-F5070900AF7D}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoSecurityFilter ID="G_Security-Firewall-Audit Only"/>
+  	<GPO BackupID="{8B614881-5A7C-49DC-8163-EFF27184AF9F}" Validation="Yes" Name="HAD_Local-Admins_T0-Srv" Description="GPO to manage who are members of local administrators group on Tier 0 servers">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Server_Only"/>
+		  <GpoLink Path="OU=Harden - Tier 0,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <GPO Name="Security - Firewall - Enabled (Allow Local Rules)"
-     Description="Harden AD 2.1 - Setup Microsoft Firewall in active mode in addition to system local rules"
-     Validation="Yes">
-      <GpoBackup ID="{4522C9EB-CAA9-4A02-BFB3-50C4410E9AF9}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoSecurityFilter ID="G_Security-Firewall-Enabled-Allow Local Rules"/>
+  	<GPO BackupID="{CA7DDE19-26C4-42C9-B3BF-EDA26DBE30A2}" Validation="Yes" Name="HAD_Local-Admins_T0-Wks" Description="GPO to manage who are members of local administrators group on Tier 0 workstations">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Client_Only"/>
+		  <GpoLink Path="OU=Harden - Tier 0,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <!-- LAPS -->
-    <GPO Name="Security - Local Administrator Password Solution (x64)"
-         Description="Harden AD 2.1 - Deploy and Setup LAPS on x64 systems"
-         Validation="Yes">
-      <GpoBackup ID="{F12A75A8-49F4-4E95-9B91-2C21E6F279EA}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoDeny ID="%SecPri%-9"/>
-      <GpoFilter WMI="OS is 64 bits"/>
+  	<GPO BackupID="{8F931509-D88E-4C31-AE62-86770B006DBA}" Validation="Yes" Name="HAD_Local-Admins_T1-Srv" Description="GPO to manage who are members of local administrators group on Tier 1 servers">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Server_Only"/>
+		  <GpoLink Path="OU=Harden - Tier 1 and 2,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <GPO Name="Security - Local Administrator Password Solution (x86)"
-         Description="Harden AD 2.1 - Deploy and Setup LAPS on x86 systems"
-         Validation="Yes">
-      <GpoBackup ID="{788CDEC6-5396-4588-9F9E-DBEEB4331355}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="No"/>
-      <GpoDeny ID="%SecPri%-9"/>
-      <GpoFilter WMI="OS is 32 bits"/>
+	  <GPO BackupID="{906DD0F1-73BA-4594-B4D2-4D881D32496E}" Validation="Yes" Name="HAD_Local-Admins_T2-Wks" Description="GPO to manage who are local administrators on a Tier 2 workstations">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/> 
+      <GpoFilter WMI="Windows_Client_Only"/>
+		  <GpoLink Path="OU=Harden - Tier 1 and 2,RootDN" Enabled="Yes" Enforced="Yes"/>
+		  <GpoLink Path="OU=Computers,OU=Provisionning,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <!-- DELEGATION -->
-    <GPO Name="Security - Local Administrators - servers"
-         Description="Harden AD 2.1 -Deploy an specific group as  local admin on each system (dynamic group name)"
-         Validation="Yes">
-      <GpoBackup ID="{07EE5CB3-6DA0-4A3C-9218-E8A0E543D670}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
-      <GpoDeny ID="%SecPri%-9"/>
-      <GpoFilter WMI="Servers Only"/>
+  	<GPO BackupID="{0D861C4B-37F0-4B51-AF73-22C8B432D3E0}" Validation="Yes" Name="HAD_Local-Admins_TLeg-Wks" Description="GPO to manage who are local administrators on Tier Legacy workstations">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Client_Only"/>
+		  <GpoLink Path="OU=Harden - Tier Legacy,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <GPO Name="Security - Local Administrators - Stations"
-         Description="Harden AD 2.1 -Deploy an specific group as  local admin on each system (dynamic group name)"
-         Validation="Yes">
-      <GpoBackup ID="{6F9F9886-0CA1-4DE2-A27D-4FD327680D97}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
-      <GpoDeny ID="%SecPri%-9"/>
-      <GpoFilter WMI="Workstations Only"/>
+  	<GPO BackupID="{A4C7CFCD-81A4-4C32-B70B-A66E3F3F30F8}" Validation="Yes" Name="HAD_Local-Admins_TLeg_Srv" Description="GPO to manage who are local administrators on Tier Legacy servers">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Server_Only"/>
+		  <GpoLink Path="OU=Harden - Tier Legacy,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <!-- SCREENLOCK -->
-    <GPO Name="Security - Screenlock"
-         Description="Harden AD 2.1 - Enforce ScreenLock (20 minutes)"
-         Validation="Yes">
-      <GpoBackup ID="{88BFDC47-A52D-4BAE-BF95-565A962D280D}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+	  <GPO BackupID="{7DB87126-0B26-4F62-9618-C7246109A279}" Validation="Yes" Name="HAD_Clear_PageFile_Shutdown_All" Description="GPO to clear Pagefile at shutdown">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
-    <!-- ACCOUNT CONTROL -->
-    <GPO Name="Security – UAC"
-         Description="Harden AD 2.1 - Enforce User Account Control on system (except for Members of G_Security-Disable-UAC)"
-         Validation="Yes">
-      <GpoBackup ID="{3A8F18C5-A399-4B72-A64D-5711C502FFDF}"/>
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
-      <GpoDeny ID="G_Security-Disable UAC"/>
+  	<GPO BackupID="{D6B346F9-0FE1-4303-A064-0B4ABEB73A39}" Validation="Yes" Name="HAD_Configure_Screenlock_All" Description="GPO to lock inactive session automatically">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-
+  	<GPO BackupID="{8C391429-CEEE-4C5B-8D9D-BB44CC184694}" Validation="Yes" Name="HAD_Configure_Windows-Defender_All" Description="GPO to enable and configure Microsoft Defender">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+    </GPO>
+  	<GPO BackupID="{4FDEEE0E-A638-4C26-870E-872424AE3560}" Validation="Yes" Name="HAD_Disable_Print-Spooler_Service_Srv" Description="GPO to disable Print spooler">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Server_Only"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+  	<GPO BackupID="{D2AA6436-FF93-451F-B450-B12D2448E826}" Validation="Yes" Name="HAD_Disable_WDigest_All" Description="GPO to disable WDigest protocol">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+  	<GPO BackupID="{6FC4484D-102D-47DA-927F-0E1698F6E837}" Validation="Yes" Name="HAD_Enforce_UAC_All" Description="GPO to enable UAC">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+  	<GPO BackupID="{B5636A9F-C39D-4C75-9002-DA88B5ACB2E1}" Validation="Yes" Name="HAD_IPv4_Priority_All" Description="GPO to configure IPV4 as default IP protocol instead of IPV6">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+  	<GPO BackupID="{D00803F0-A729-407E-9BAD-32AC0E94EBE4}" Validation="Yes" Name="HAD_Local_Accounts_AllMembers" Description="GPO to enable and rename administrator local account and to disable and rename guest local account">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+		  <GpoLink Path="OU=Administration,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="OU=Harden - Tier 0,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="OU=Harden - Tier 1 and 2,RootDN" Enabled="Yes" Enforced="Yes"/>
+		  <GpoLink Path="Harden - Tier Legacy,RootDN" Enabled="Yes" Enforced="Yes"/>
+		  <GpoLink Path="OU=Computers,OU=Provisionning,RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
+  	<GPO BackupID="{1A8E1970-BB62-4263-986A-FA2FD7E042CF}" Validation="Yes" Name="HAD_Logon_No_Cache_Srv" Description="GPO to disable logon cache for server">
+		  <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows_Server_Only"/>
+		  <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
   </GroupPolicies>
 
   <Accounts>
@@ -402,23 +750,39 @@
     <!--   > sAMAccountName: the sAMAccountName of the account                                                                               -->
     <!--   > displayName...: the name displayed by the GUI                                                                                   -->
     <!--   > Description...: the description of the account                                                                                  -->
-    <!--   > Path..........: the distingsuihedName of the OU containing the account. you can use ROOTDN to efer to the domain DN             -->
+    <!--   > Path..........: the distingsuihedName of the OU containing the account. you can use ROOTDN to refer to the domain DN            -->
     <!-- ################################################################################################################################### -->
-    <!-- Fully Empowered Admin account                                                                                                       -->
-    <User DisplayName="SuperAdmin HARDENAD"
-          Surname="HARDENAD"
-          samAccountName="SA-HARDENAD"
-          GivenName="SuperAdmin"
-          Description="Super Administrateur HardenAD (Tier 0)"
-          Path="OU=Admin Accounts (Tier 0),OU=Administration,ROOTDN"/>
+    <!-- Tier 0 accounts - Manager -->
+    <User DisplayName="Loic VEIRMAN (T0M)" Surname="VEIRMAN" samAccountName="T0M-LVEIRMAN" GivenName="Loic" Description="Loic Veirman (Tier 0 Manager)" Path="OU=Users Tier 0,OU=Administration,ROOTDN"/>
 
-    <!-- Tier 1 admin account                                                                                                              -->
-    <User DisplayName="Admin HARDENAD"
-          Surname="HARDENAD"
-          samAccountName="A-HARDENAD"
-          GivenName="Admin"
-          Description="Administrateur HardenAD (Tier 1 et 2)"
-          Path="OU=Admin Accounts,OU=Administration,ROOTDN"/>
+    <!-- Tier 1 accounts - Managers -->
+    <User DisplayName="Sylvain VEIRMAN (T1M)" Surname="VEIRMAN" samAccountName="T1M-SVEIRMAN" GivenName="Sylvain" Description="Sylvain Veirman (Tier 1 Manager)" Path="OU=Users Tier 1,OU=Administration,ROOTDN"/>
+
+    <!-- Tier 1 accounts - Administrators -->
+    <User DisplayName="Jean-Paul VEIRMAN (T1A)" Surname="VEIRMAN" samAccountName="T1A-JPVEIRMAN" GivenName="Jean-Paul" Description="Jean-Paul Veirman (Tier 1 Administrator)" Path="OU=Users Tier 1,OU=Administration,ROOTDN"/>
+
+    <!-- Tier 1 accounts - Operators -->
+    <User DisplayName="Loic VEIRMAN (T1O)"      Surname="VEIRMAN" samAccountName="T1O-LVEIRMAN"  GivenName="Loic"      Description="Loic Veirman (Tier 0 Operator)"      Path="OU=Users Tier 1,OU=Administration,ROOTDN"/>
+    <User DisplayName="Sylvain VEIRMAN (T1O)"   Surname="VEIRMAN" samAccountName="T1O-SVEIRMAN"  GivenName="Sylvain"   Description="Sylvain Veirman (Tier 1 Operator)"   Path="OU=Users Tier 1,OU=Administration,ROOTDN"/>
+    <User DisplayName="Jean-Paul VEIRMAN (T1O)" Surname="VEIRMAN" samAccountName="T1O-JPVEIRMAN" GivenName="Jean-Paul" Description="Jean-Paul Veirman (Tier 1 Operator)" Path="OU=Users Tier 1,OU=Administration,ROOTDN"/>
+
+    <!-- Tier 2 accounts - Managers -->
+    <User DisplayName="Yolande VEIRMAN (T2M)" Surname="VEIRMAN" samAccountName="T2M-YVEIRMAN" GivenName="Yolande" Description="Yolande Veirman (Tier 2 Manager)" Path="OU=Users Tier 2,OU=Administration,ROOTDN"/>
+
+    <!-- Tier 2 accounts - Administrators -->
+	<User DisplayName="Chantal VEIRMAN (T2A)" Surname="VEIRMAN" samAccountName="T2A-CVEIRMAN" GivenName="Chantal" Description="Chantal Veirman (Tier 2 Adminstrator)" Path="OU=Users Tier 2,OU=Administration,ROOTDN"/>
+    
+	<!-- Tier 2 accounts - Operators -->
+    <User DisplayName="Loic VEIRMAN (T2O)"    Surname="VEIRMAN" samAccountName="T2O-LVEIRMAN" GivenName="Loic"    Description="Loic Veirman (Tier 2 Operator)"    Path="OU=Users Tier 2,OU=Administration,ROOTDN"/>
+    <User DisplayName="Yolande VEIRMAN (T2O)" Surname="VEIRMAN" samAccountName="T2O-YVEIRMAN" GivenName="Yolande" Description="Yolande Veirman (Tier 2 Operator)" Path="OU=Users Tier 2,OU=Administration,ROOTDN"/>
+	<User DisplayName="Chantal VEIRMAN (T2O)" Surname="VEIRMAN" samAccountName="T2O-CVEIRMAN" GivenName="Chantal" Description="Chantal Veirman (Tier 2 Operator)" Path="OU=Users Tier 2,OU=Administration,ROOTDN"/>
+
+	<!-- Tier Legacy accounts - Operators -->
+    <User DisplayName="Loic VEIRMAN (TLO)"      Surname="VEIRMAN" samAccountName="TLO-LVEIRMAN"  GivenName="Loic"      Description="Loic Veirman (Tier Legacy Operator)"      Path="OU=Users Tier Legacy,OU=Administration,ROOTDN"/>
+    <User DisplayName="Sylvain VEIRMAN (TLO)"   Surname="VEIRMAN" samAccountName="TLO-SVEIRMAN"  GivenName="Sylvain"   Description="Sylvain Veirman (Tier Legacy Operator)"   Path="OU=Users Tier Legacy,OU=Administration,ROOTDN"/>
+    <User DisplayName="Jean-Paul VEIRMAN (TLO)" Surname="VEIRMAN" samAccountName="TLO-JPVEIRMAN" GivenName="Jean-Paul" Description="Jean-Paul Veirman (Tier Legacy Operator)" Path="OU=Users Tier Legacy,OU=Administration,ROOTDN"/>
+    <User DisplayName="Yolande VEIRMAN (TLO)"   Surname="VEIRMAN" samAccountName="TLO-YVEIRMAN"  GivenName="Yolande"   Description="Yolande Veirman (Tier Legacy Operator)"   Path="OU=Users Tier Legacy,OU=Administration,ROOTDN"/>
+	<User DisplayName="Chantal VEIRMAN (TLO)"   Surname="VEIRMAN" samAccountName="TLO-CVEIRMAN"  GivenName="Chantal"   Description="Chantal Veirman (Tier Legacy Operator)"   Path="OU=Users Tier Legacy,OU=Administration,ROOTDN"/>
   </Accounts>
 
   <Groups>
@@ -434,104 +798,141 @@
     <!-- In a second time, all groups are populated with the <member> input.                                                                 -->
     <!--   > sAMAccountName: the sAMAccountName of the target member.                                                                        -->
     <!-- ################################################################################################################################### -->
-    <!-- G_ADMIN_TIER_0: equivalent to domain Admins-->
-    <Group name="G_Admins-Tier 0"
-           Path="OU=Administration Groups (Tier 0),OU=Administration,ROOTDN"
-           Description="Group for AD High Level management"
-           Scope="Global"
-           Category="Security">
-      <Member samAccountName="SA-HARDENAD"/>
-    </Group>
-    
-    <!-- G_ADMIN_TIER_1: identity to manage server and workstation -->
-    <Group name="G_Admins-Tier 1"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group for Workstation and Server Management"
-           Scope="Global"
-           Category="Security">
-      <Member samAccountName="A-HARDENAD"/>
-    </Group>
-    <!-- G_DELEG-Admin-Servers: Admin of all stations in the domain -->
-    <Group name="G_DELEG-Admin-Stations"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group providing local admin privilege on all stations in the domain"
-           Scope="Global"
-           Category="Security">
+    <!-- #### TIER 0 #### -->
+    <Group name="G-S-T0_Managers" Category="Security" Scope="Global" Description="Members of this group can see and manage all the Active Directory objects" Path="OU=Groups Tier 0,OU=Administration,ROOTDN">
+      <Member samAccountName="T0M-LVEIRMAN"/>
     </Group>
 
-    <!-- G_DELEG-Admin-Servers: Admin of all servers in the domain -->
-    <Group name="G_DELEG-Admin-Servers"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group providing local admin privilege on all servers in the domain"
-           Scope="Global"
-           Category="Security">
+    <Group name="L-S-T0_LocalAdmins_Servers" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=Local Admins,OU=Groups Tier 0,OU=Administration,ROOTDN">
+    </Group>
+    <Group name="L-S-T0_LocalAdmins_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=Local Admins,OU=Groups Tier 0,OU=Administration,ROOTDN">
     </Group>
 
-    <!-- G_LAPS-Password Manager: allow read and Reset to LAPS password -->
-    <Group name="G_LAPS-Password Manager"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group delegated to read and reset LAPS passwords"
-           Scope="Global"
-           Category="Security">
-      <Member samAccountName="A-HARDENAD"/>
+    <!-- #### TIER 1 #### -->
+	<Group name="G-S-T1_Managers" Category="Security" Scope="Global" Description="Members of this group can manage all Tier 1 ressources, including T1 admin users and groups" Path="OU=Groups Tier 1,OU=Administration,ROOTDN">
+      <Member samAccountName="T1M-SVEIRMAN"/>
     </Group>
 
-    <!-- G_Security-BitLocker-TPM with PIN: Add computers to setup with bitlocker, tpm and passcode -->
-    <Group name="G_Security-BitLocker-TPM with PIN"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Computers to setup with bitlocker, tpm and passcode"
-           Scope="Global"
-           Category="Security">
+    <Group name="G-S-T1_Administrators" Category="Security" Scope="Global" Description="Members of this group can manage all Tier 1 ressources, excluding T1 admin users and groups" Path="OU=Groups Tier 1,OU=Administration,ROOTDN">
+      <Member samAccountName="T1A-JPVEIRMAN"/>
     </Group>
 
-    <!-- G_Security-BitLocker-TPM only: Add computers to setup with bitlocker and tpm -->
-    <Group name="G_Security-BitLocker-TPM only"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Computers to setup with bitlocker, tpm but no passcode"
-           Scope="Global"
-           Category="Security">
+    <Group name="G-S-T1_Operators" Category="Security" Scope="Global" Description="Members of this group can operate on Tier 1 resources (login)" Path="OU=Groups Tier 1,OU=Administration,ROOTDN">
     </Group>
 
-    <!-- G_Security-Enable-Print Spooler Service: computers allowed to run the Print Spooler Service -->
-    <Group name="G_Security-Enable-Print Spooler Service"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group of Systems allowed to run the Print Spooler Services"
-           Scope="Global"
-           Category="Security">
+    <Group name="L-S-T1-DELEG_Group - Manage Membership" Category="Security" Scope="domainLocal" Description="Members of this group can add and remove members of tier 1 groups within productions OUs" Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN">
+      <Member samAccountName="T1O-LVEIRMAN"/>
+      <Member samAccountName="T1O-SVEIRMAN"/>
+      <Member samAccountName="T1O-JPVEIRMAN"/>
     </Group>
 
-    <!-- G_Security-Restriction-Login Tier 0: tier 0 admins -->
-    <Group name="G_Security-Deny-Restriction Login Tier 0"
-           Path="OU=Administration Groups (Tier 0),OU=Administration,ROOTDN"
-           Description="Group denying restriction to tier 0 account for system (dc promo, ...)"
-           Scope="Global"
-           Category="Security">
+    <Group name="L-S-T1-DELEG_Group - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete groups within productions OUs (Tier 1 and 2)" Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T1_Administrators"/>
+      <Member samAccountName="G-S-T1_Managers"/>
+    </Group>
+ 
+	<Group name="L-S-T1-DELEG_Group - Create and Delete (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete groups within Tier 1 Administration OU" Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T1_Managers"/>
     </Group>
 
-    <!-- G_Security–Disable UAC: disable UAC on systems or accounts -->
-    <Group name="G_Security-Disable UAC"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group used to disable UAC on systems"
-           Scope="Global"
-           Category="Security">
+    <Group name="L-S-T1-DELEG_User - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within productions OUs (Tier 1 and 2)" Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T1_Administrators"/>
+      <Member samAccountName="G-S-T1_Managers"/>
     </Group>
 
-    <!-- G_Security-Firewall-Audit Only: systems with firewall in audit mode -->
-    <Group name="G_Security-Firewall-Audit Only"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group used to enabled audit with MS firewall"
-           Scope="Global"
-           Category="Security">
+    <Group name="L-S-T1-DELEG_User - Create and Delete (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T1_Managers"/>
     </Group>
 
-    <!-- G_Security-Firewall-Enabled-Allow Local Rules: disable UAC on systems or accounts -->
-    <Group name="G_Security-Firewall-Enabled-Allow Local Rules"
-           Path="OU=Administration Groups,OU=Administration,ROOTDN"
-           Description="Group used to enable ms Firewall on system"
-           Scope="Global"
-           Category="Security">
+    <Group name="L-S-T1-DELEG_Computer - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete commputers within productions OUs (Tier 1 and 2)" Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T1_Administrators"/>
+      <Member samAccountName="G-S-T1_Managers"/>
     </Group>
 
+    <Group name="L-S-T1-DELEG_Contact - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete contact within productions OUs (Tier 1 and 2)" Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN">
+    </Group>
+
+    <Group name="L-S-T1_LocalAdmins_Servers" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=Local Admins,OU=Groups Tier 1,OU=Administration,ROOTDN">
+    </Group>
+
+    <Group name="L-S-T1-DELEG_LAPS_PwdRead" Category="Security" Scope="domainLocal" Description="Members of this group will be able to read LAPS password for workstations" Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T1_Operators"/>
+    </Group>
+
+    <Group name="L-S-T1-DELEG_LAPS_PwdReset" Category="Security" Scope="domainLocal" Description="Members of this group will be able to reset LAPS password for workstations" Path="OU=Deleg,OU=Groups Tier 1,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T1_Administrators"/>
+    </Group>
+
+    <!-- #### TIER 2 #### -->
+    <Group name="G-S-T2_Managers" Category="Security" Scope="Global" Description="Members of this group can manage all Tier 2 ressources, including T1 admin users and groups" Path="OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="T2M-YVEIRMAN"/>
+    </Group>
+
+    <Group name="G-S-T2_Administrators" Category="Security" Scope="Global" Description="Members of this group can manage all Tier 2 ressources, excluding T1 admin users and groups" Path="OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="T2A-CVEIRMAN"/>
+    </Group>
+
+    <Group name="G-S-T2_Operators" Category="Security" Scope="Global" Description="Members of this group can operate on Tier 2 resources (login)" Path="OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="T2O-LVEIRMAN"/>
+      <Member samAccountName="T2O-CVEIRMAN"/>
+      <Member samAccountName="T2O-YVEIRMAN"/>
+    </Group>
+
+    <Group name="L-S-T2-DELEG_Group - Manage Membership" Category="Security" Scope="domainLocal" Description="Members of this group can add and remove members of tier 1 groups within productions OUs" Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T2_Administrators"/>
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+
+    <Group name="L-S-T2-DELEG_Group - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete groups within productions OUs (Tier 1 and 2)" Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN">
+    </Group>
+
+    <Group name="L-S-T2-DELEG_Group - Create and Delete (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete groups within Tier 1 Administration OU" Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+
+    <Group name="L-S-T2-DELEG_User - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within productions OUs (Tier 1 and 2)" Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T2_Administrators"/>
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+
+    <Group name="L-S-T2-DELEG_User - Create and Delete (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+
+    <Group name="L-S-T2-DELEG_Computer - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete commputers within productions OUs (Tier 1 and 2)" Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T2_Administrators"/>
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+
+    <Group name="L-S-T2-DELEG_Contact - Create and Delete" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete contact within productions OUs (Tier 1 and 2)" Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T2_Administrators"/>
+      <Member samAccountName="G-S-T2_Managers"/>
+    </Group>
+
+    <Group name="L-S-T2_LocalAdmins_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=Local Admins,OU=Groups Tier 2,OU=Administration,ROOTDN">
+    </Group>
+
+    <Group name="L-S-T2-DELEG_LAPS_PwdRead" Category="Security" Scope="domainLocal" Description="Members of this group will be able to read LAPS password for workstations" Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T2_Operators"/>
+    </Group>
+
+    <Group name="L-S-T2-DELEG_LAPS_PwdReset" Category="Security" Scope="domainLocal" Description="Members of this group will be able to reset LAPS password for workstations" Path="OU=Deleg,OU=Groups Tier 2,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T2_Administrators"/>
+    </Group>
+
+    <!-- #### TIER LEGACY #### -->
+    <Group name="G-S-TL_Operators" Category="Security" Scope="Global" Description="Members of this group can operate on Tier Legacy resources (login)" Path="OU=Groups Tier Legacy,OU=Administration,ROOTDN">
+      <Member samAccountName="TLO-LVEIRMAN"/>
+      <Member samAccountName="TLO-CVEIRMAN"/>
+      <Member samAccountName="TLO-YVEIRMAN"/>
+      <Member samAccountName="TLO-SVEIRMAN"/>
+      <Member samAccountName="TLO-JPVEIRMAN"/>
+    </Group>
+
+    <Group name="L-S-TL_LocalAdmins_Servers" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=Local Admins,OU=Groups Tier Legacy,OU=Administration,ROOTDN">
+    </Group>
+    <Group name="L-S-TL_LocalAdmins_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=Local Admins,OU=Groups Tier Legacy,OU=Administration,ROOTDN">
+    </Group>  
   </Groups>
   
   <DefaultMembers>
@@ -546,22 +947,18 @@
       <Member>%DomainSID%-512</Member>
       <Member>%DomainSID%-519</Member>
     </Group>
-
     <!-- Domain Admins -->
     <Group Target="%DomainSID%-512">
       <Member>%DomainSID%-500</Member>
     </Group>
-    
     <!-- Enterprise Admins -->
     <Group Target="%DomainSID%-519">
-      <Member>G_Admins-Tier 0</Member>
+      <Member>%t0-Managers%</Member>
     </Group>
-    
     <!-- Protected Users -->
     <Group Target="%DomainSID%-525">
-      <Member>G_Admins-Tier 0</Member>
+      <Member>%t0-managers%</Member>
     </Group>
-    
   </DefaultMembers>
   
   <TaskSchedules BaseDir="C:\_ADM\TasksSchedulesScripts">
@@ -579,8 +976,7 @@
     <!--   > SchedPth..: The folder name where the task will be stored in the Tasks Scheduler console.                                       -->
     <!-- ################################################################################################################################### -->
     <!-- flushing Sensible groups with MCS-GroupsFlushing.ps1 -->
-    <SchedTask Name="MCS - Sensitive Groups Flushing"
-               Xml="MCS-GroupsFlushing.xml">
+    <SchedTask Name="MCS - Sensitive Groups Flushing" Xml="MCS-GroupsFlushing.xml">
       <SchedCmd>powershell.exe</SchedCmd>
       <SchedArg>-windowstyle hidden -file .\MCS-GroupsFlushing.ps1</SchedArg>
       <SchedDir>%BaseDir%\MCS-GroupsFlushing</SchedDir>
@@ -589,20 +985,18 @@
     </SchedTask>
   </TaskSchedules>
 
-  <Microsoft365>
-    <!-- ################################################################################################################################### -->
-    <!-- the <Microsoft365> section is used to manually generated Azure AD Connect synchronisation OU (if requested).                        -->
-    <!-- ################################################################################################################################### -->
-    <Target>OU=Computers,OU=Provisionning,ROOTDN</Target>
-    <Target>OU=Users,OU=Provisionning,ROOTDN</Target>
-  </Microsoft365>
-
   <LocalAdminPasswordSolution>
     <!-- ################################################################################################################################### -->
-    <!-- the <LocalAdminPasswordSolution> is used to setup LAPS over an existing domain. By default, the xml set it up with permission at    -->
-    <!-- the root level of the domain and let only the native object readers being able to access the ms-Mcs-AdmPwd attribute (read/write).  -->
+    <!-- The <LocalAdminPasswordSolution> is used to setup LAPS over an existing domain. 													 -->
+	  <!-- By default, the model delegate permission to Tier 1 for servers and Tier 2 for workstations. All others are handled by Dom admins.  -->
     <!--                                                                                                                                     -->
-    <!-- <AdmPwdSelfPermission>:                                                                                                             -->
+    <!-- SelfPermission: Add Write Permission to ms-Mcs-AdmPwdExiprationTime and ms-Mcs-AdmPwd attribute to SELF (i.e. the computer object). -->
+	  <!-- PasswordReader: Offer the ability to read ms-Mcs-AdmPwd which contains the local user password                                      -->
+	  <!-- PasswordReset.: Offer the ability to read and write ms-Mcs-AdmPwdExiprationTime and ms-Mcs-AdmPwd attribute						 -->
+	  <!--                                                                                                                                     -->
+	  <!-- The script now handles dynamic group mapping and will look at the <Translation> section of this document.							 -->
+	  <!--                                                                                                                                     -->	
+	  <!-- <AdmPwdSelfPermission>:                                                                                                             -->
     <!--    Target: target OU distinguished name with computer objects. use "RootDN" to dynamically specify the domain distanguished name.   -->
     <!--                                                                                                                                     -->
     <!-- <AdmPwdPasswordreader>:                                                                                                             -->
@@ -613,9 +1007,24 @@
     <!--    Target: target OU distinguished name with computer objects. use "RootDN" to dynamically specify the domain distanguished name.   -->
     <!--    Id....: Specific the group sAMAccountName to be granted with the password reset permission on the target OU.                     -->
     <!-- ################################################################################################################################### -->
-    <AdmPwdSelfPermission Target="RootDN"/>
-    <AdmPwdPasswordReader Target="RootDN" Id="G_LAPS-Password Manager"/>
-    <AdmPwdPasswordReset  Target="RootDN" Id="G_LAPS-Password Manager"/>
+    <AdmPwdSelfPermission Target="OU=Servers,OU=Harden - Tier Legacy,%RootDN%"/>
+    <AdmPwdSelfPermission Target="OU=Servers,OU=Harden - Tier 1 and 2,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden - Tier Legacy,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden - Tier 1 and 2,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=PAW Tier 0,OU=Administration,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=PAW Tier 1,OU=Administration,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=PAW Tier 2,OU=Administration,%RootDN%"/>
+	  <AdmPwdSelfPermission Target="OU=PAW Tier Legacy,OU=Administration,%RootDN%"/>
+	
+	  <AdmPwdPasswordReader Target="OU=Servers,OU=Harden - Tier Legacy,%RootDN%"       Id="%domain%\%T1-LAPS-PasswordReader%"/>
+    <AdmPwdPasswordReader Target="OU=Servers,OU=Harden - Tier 1 and 2,%RootDN%"      Id="%domain%\%T1-LAPS-PasswordReader%"/>
+    <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden - Tier Legacy,%RootDN%"  Id="%domain%\%T2-LAPS-PasswordReader%"/>
+    <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden - Tier 1 and 2,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReader%"/>
+    
+	  <AdmPwdPasswordReset  Target="OU=Servers,OU=Harden - Tier Legacy,%RootDN%"       Id="%domain%\%T1-LAPS-PasswordReset%"/>
+    <AdmPwdPasswordReset  Target="OU=Servers,OU=Harden - Tier 1 and 2,%RootDN%"      Id="%domain%\%T1-LAPS-PasswordReset%"/>
+    <AdmPwdPasswordReset  Target="OU=Workstations,OU=Harden - Tier Legacy,%RootDN%"  Id="%domain%\%T2-LAPS-PasswordReset%"/>
+    <AdmPwdPasswordReset  Target="OU=Workstations,OU=Harden - Tier 1 and 2,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReset%"/>	
   </LocalAdminPasswordSolution>
 
   <Sequence>
@@ -623,16 +1032,16 @@
     <!-- the <Sequence> section define the different tasks to iterate in "sequence" (can't resist to this one).                              -->
     <!-- To deal with highlight color in display, use the ` to initiate and end a color change in your string, then use one of the three     -->
     <!-- characters specified in value AltBaseHTxt(A,B, or C) to select your color: the color will switch back to normal at the next `.      -->
-    <!--			                                                                                                                               -->
+    <!--			                                                                                                                         -->
     <!-- The default highlight values are those one:                                                                                         -->
     <!--   > `[my text` : magenta                                                                                                            -->
     <!--   > `(my text` : yellow                                                                                                             -->
     <!--   > `{my text` : gray                                                                                                               -->
-    <!--			                                                                                                                               -->
+    <!--			                                                                                                                         -->
     <!-- Some special inputs are usefull to replace value dynamically :                                                                   	 -->
-    <!--	 > FileName   : replace with the value of this file                                                                                -->
-    <!--	 > RootDN     : replace with domain root DN                                                                                        -->
-    <!--			                                                                                                                               -->
+    <!--	 > FileName   : replace with the value of this file                                                                              -->
+    <!--	 > RootDN     : replace with domain root DN                                                                                      -->
+    <!--			                                                                                                                         -->
     <!-- Each task ID is executed in sequence, based on the Number vaue (ascending). Each Task ID use the following attributes:              -->
     <!--   > Number         : Define the squence order, the lowest will be run first.                                                        -->
     <!--   > Name           : ID task name as refered in the final log output.                                                               -->
@@ -642,12 +1051,34 @@
     <!--   > TaskEnabled    : YES or NO. When set to NO, the tasks is disabled and will not be applied.                                      -->
     <!-- ################################################################################################################################### -->
 
+    <!-- Upgrade Domain Functional Level                                                                                              -->
+    <Id Number="005" Name="Upgrade Domain Functional Level">
+      <CallingFunction>Set-ADFunctionalLevel</CallingFunction>
+      <!--Parameter: Specify Upgrade is applied to Domain (and not Forest)                                                                   -->
+      <UseParameters>Domain</UseParameters>
+      <!--Parameter: Target Functional Level. Possibe values: "2008R2","2012","2012R2","2016","Last"                                         -->
+      <UseParameters>Last</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>Upgrade `(DomainFunctionalLevel` </TaskDescription>
+    </Id>
+
+    <!-- Upgrade Forest Functional Level                                                                                              -->
+    <Id Number="006" Name="Upgrade Forest Functional Level">
+      <CallingFunction>Set-ADFunctionalLevel</CallingFunction>
+      <!--Parameter: Specify Upgrade is applied to Domain (and not Forest)                                                                   -->
+      <UseParameters>Forest</UseParameters>
+      <!--Parameter: Target Functional Level. Possibe values: "2008R2","2012","2012R2","2016","Last"                                         -->
+      <UseParameters>Last</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>Upgrade `(ForestFunctionalLevel` </TaskDescription>
+    </Id>
+    
     <!-- SET MS-DS-MACHINEACCOUNTQUOTA TO 0                                                                                                  -->
     <Id Number="010" Name="Restrict computer junction to the domain">
       <CallingFunction>Set-msDSMachineAccountQuota</CallingFunction>
       <!--Parameter: new ms-DS-MachineAccountQuota value                                                                                     -->
       <UseParameters>0</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(msDSMachineAccountQuota` to `(0` to restrict domain junction</TaskDescription>
     </Id>
 
@@ -655,7 +1086,7 @@
     <Id Number="020" Name="Activate Active Directory Recycle Bin">
       <CallingFunction>Set-ADRecycleBin</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>activate the `(AD Recycle Bin` optional feature</TaskDescription>
     </Id>
 
@@ -663,7 +1094,7 @@
     <Id Number="030" Name="Set Notify on every Site Links">
       <CallingFunction>Set-SiteLinkNotify</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(notify` on every `(Site Links</TaskDescription>
     </Id>
 
@@ -671,17 +1102,57 @@
     <Id Number="040" Name="Set GPO Central Store">
       <CallingFunction>Set-GpoCentralStore</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(GPO Central Store` and update `{adm` and `{admx` files</TaskDescription>
+    </Id>
+
+    <!-- REMOVE USELESS ADM FILES FROM GPOs (old format of administrative templates)                                                         -->
+    <Id Number="041" Name="Remove Useless ADM Files from GPOs">
+      <CallingFunction>Remove-GPOsUnusedADMFiles</CallingFunction>
+      <!--Parameter: Action (Simulate / Run)  -->
+      <UseParameters>Run</UseParameters>
+      <!--Parameter: Filter ADM Files Replication (Yes / No)  -->
+      <UseParameters>Yes</UseParameters>
+      <!--Parameter: ADM local Backup Directory  -->
+      <UseParameters>Outputs</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>Remove Useless ADM Files from GPOs</TaskDescription>
     </Id>
 
     <!-- GENERATE NEW ADMINISTRATION ORGANIZATIONAL UNIT                                                                                     -->
     <Id Number="050" Name="Set Administration Organizational Unit">
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
-      <UseParameters>SMB-ADMIN-EN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <UseParameters>HardenAD_ADMIN</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(Administration` organizational unit</TaskDescription>
+    </Id>
+
+    <!-- GENERATE NEW TIER 0 ORGANIZATIONAL UNIT                                                                                     -->
+    <Id Number="051" Name="Set Tier 0 Organizational Unit">
+      <CallingFunction>Set-TreeOU</CallingFunction>
+      <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
+      <UseParameters>HardenAD_PROD-T0</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>set `(Tier 0` organizational unit</TaskDescription>
+    </Id>
+
+    <!-- GENERATE NEW TIER 1 and 2 ORGANIZATIONAL UNIT                                                                                     -->
+    <Id Number="052" Name="Set Tier 1 and Tier 2 Organizational Unit">
+      <CallingFunction>Set-TreeOU</CallingFunction>
+      <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
+      <UseParameters>HardenAD_PROD-T1and2</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>set `(Tier 1 and Tier 2 combo` organizational unit</TaskDescription>
+    </Id>
+
+    <!-- GENERATE NEW LEGACY ORGANIZATIONAL UNIT                                                                                     -->
+    <Id Number="053" Name="Set Legacy Organizational Unit">
+      <CallingFunction>Set-TreeOU</CallingFunction>
+      <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
+      <UseParameters>HardenAD_PROD-LEGACY</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>set `(Tier Legacy` organizational unit</TaskDescription>
     </Id>
 
     <!-- GENERATE NEW DEFAULT OBJECTS LOCATION TREE                                                                                          -->
@@ -689,7 +1160,7 @@
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>PROVISIONNING-EN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(Provisionning` organizational unit</TaskDescription>
     </Id>
 
@@ -700,7 +1171,7 @@
       <UseParameters>User</UseParameters>
       <!--Parameter: OU distinguishedName. Use RootDN to automatically fill-in the domain name                                               -->
       <UseParameters>OU=users,OU=provisionning,RootDN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(user objects` default location</TaskDescription>
     </Id>
 
@@ -711,7 +1182,7 @@
       <UseParameters>Computer</UseParameters>
       <!--Parameter: OU distinguishedName. Use RootDN to automatically fill-in the domain name                                             -->
       <UseParameters>OU=computers,OU=provisionning,RootDN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(computer objects` default location</TaskDescription>
     </Id>
 
@@ -720,68 +1191,31 @@
       <CallingFunction>New-AdministrationAccounts</CallingFunction>
       <!-- Parameter: KeePass password for the kdbx database                                                                               -->
       <UseParameters>H4rd3n@D!!</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>create `(administration accounts` used by the tier model</TaskDescription>
     </Id>
 
-    <!-- GENERATE NEW ADMIN GOURPS ON WHICH THE DELEGATION MODEL WILL WORKS                                                                -->
+    <!-- GENERATE NEW ADMIN GROUPS ON WHICH THE DELEGATION MODEL WILL WORKS                                                                -->
     <Id Number="090" Name="Create administration groups">
       <CallingFunction>New-AdministrationGroups</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>create `(administration groups` used by the tier model</TaskDescription>
     </Id>
 
-    <!-- GENERATE MICROSOFT 365 SYNCING ORGANIZATIONAL UNITS: MANUAL INPUT                                                                 -->
-    <Id Number="100" Name="Create Microsoft 365 syncing Organizational Units">
-      <CallingFunction>New-M365OrganizationalUnits</CallingFunction>
-      <!--Parameter: Name of the OU to be generated                                                                                        -->
-      <UseParameters>Microsoft 365</UseParameters>
-      <!--Parameter: action mode. Manual refers to entries from Microsft365 | Target and Automatic mode will cross the OU tree and         -->
-      <!--           generate the sync OU each time it founds a user/computers/groups object within it.                                    -->
-      <UseParameters>Manual</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
-      <TaskDescription>create `(synchronization OUs` used by `[Azure AD Connect`</TaskDescription>
-    </Id>
-
-    <!-- GENERATE MICROSOFT 365 SYNCING ORGANIZATIONAL UNITS: AUTOMATIC INPUT                                                              -->
-    <Id Number="101" Name="Create Microsoft 365 syncing Organizational Units">
-      <CallingFunction>New-M365OrganizationalUnits</CallingFunction>
-      <!--Parameter: Name of the OU to be generated -->
-      <UseParameters>Microsoft 365</UseParameters>
-      <!--Parameter: action mode. Manual refers to entries from Microsft365 | Target and Automatic mode will cross the OU tree and         -->
-      <!--           the sync OU each time it founds a user/computers/groups object within it.                                             -->
-      <UseParameters>Automatic</UseParameters>
-      <!--Parameter: used in combination with automatic mode: set the base DN for analysis                                                 -->
-      <UseParameters>RootDN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
-      <TaskDescription>create `(synchronization OUs` used by `[Azure AD Connect`</TaskDescription>
-    </Id>
-
-    <!-- UPDATE THE MIGTABLE FILE TO REFLECT SOURCE/TARGET DOMAIN IDENTITIES                                                               -->
-    <Id Number="110" Name="Generate migration table for group policies">
-      <CallingFunction>Publish-MigrationTable</CallingFunction>
-      <!--Parameter: name of the migtable file to use as reference for translation                                                         -->
-      <UseParameters>dev.lab132.local.migtable</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
-      <TaskDescription>Generate `(migration table` used by import function when adding a `[group policy`</TaskDescription>
-    </Id>
-
-    <!-- GENERATE A TRANSLATION FILE FOR GPO PREFERENCE IMPORT                                                                             -->
-    <Id Number="120" Name="Generate translation table for group policies preferences">
-      <CallingFunction>Update-PreferenceXML</CallingFunction>
-      <!--Parameter: name of the preftable file to use as reference for translation                                                        -->
-      <UseParameters>dev.lab132.local.preftable</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
-      <TaskDescription>Update `(group policy xml preference files` with `[new SID values` according to the preferences migration table</TaskDescription>
+    <!-- ACEs DEPLOYMENT FOR DELEGATION MODEL                                                                                               -->
+    <Id Number="095" Name="Enforce delegation model through ACEs">
+      <CallingFunction>Push-DelegationModel</CallingFunction>
+      <UseParameters></UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>Enforce `(Delegation ACEs` used by the tier model</TaskDescription>
     </Id>
 
     <!-- IMPORT WMI FILTERS                                                                                                                -->
     <Id Number="125" Name="Import additional WMI Filters">
       <CallingFunction>Import-WmiFilters</CallingFunction>
-      <!--Parameter: name of the domain from which the mof file has been generated                                                         -->
-      <UseParameters>DEV.LAB132.LOCAL</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <UseParameters></UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Import `(WMI filter` to the domain</TaskDescription>
     </Id>
 
@@ -789,7 +1223,7 @@
     <Id Number="130" Name="Import new GPO or update existing ones">
       <CallingFunction>New-GpoObject</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Import or update `(group policy objects` to the domain and link them</TaskDescription>
     </Id>
 
@@ -800,7 +1234,7 @@
       <!-- Parameter: ForceDcIsSchemaOwner (default) will require that the running system is also the Schema Master owner                  -->
       <!--            IgnoreDcIsSchameOwner will remove this requierment (child domain, etc.)                                              -->
       <UseParameters>ForceDcIsSchemaOwner</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Update `(AD Schema` for `[LAPS` and add `(PShell add-on`</TaskDescription>
     </Id>
 
@@ -810,7 +1244,7 @@
       <!-- Parameter: CUSTOM : will teach the script to apply a fine-grained definition (refering to <LocalAdminPasswordSolution>)         -->
       <!--            DEFAULT: will apply permission at the root domain level and leave domain admins as the only allowed users.           -->
       <UseParameters>CUSTOM</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Set-up `(LAPS` permissions on the target domain</TaskDescription>
     </Id>
 
@@ -819,7 +1253,7 @@
       <CallingFunction>Set-LapsScripts</CallingFunction>
       <!-- Parameter: use NETLOGON or SYSVOL for a dynamic location. Else enter the UNC Path                                               -->
       <UseParameters>NETLOGON\LAPS</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Update `(LAPS Scripts` to match with the domain name</TaskDescription>
     </Id>
 
@@ -827,7 +1261,7 @@
     <Id Number="140" Name="Import schedule tasks on the running system">
       <CallingFunction>New-ScheduleTasks</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Import new `(schedule tasks` to the `[running system`</TaskDescription>
     </Id>
 
@@ -838,14 +1272,5 @@
       <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Reset `(groups's memberships` to the `[trusted list`</TaskDescription>
     </Id>
-
-    <!-- RUN AN AUDIT WITH PINGCASTLE                                                                                                             -->
-    <Id Number="160" Name="Download PingCastle - Audit ">
-      <CallingFunction>Get-PingCastle</CallingFunction>
-      <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
-      <TaskDescription>Download the latest `(PingCastle` release from `(Github` and run an Audit with parameter `[--healthcheck --no-enum-limit  --level Full`</TaskDescription>
-    </Id>
   </Sequence>
 </Settings>
-
