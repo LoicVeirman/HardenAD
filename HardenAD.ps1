@@ -37,9 +37,9 @@
 ###################################################################
 Param(
     #-Provide the tasks sequence file name (xml).
-    [Parameter(mandatory=$false,Position=0)]
+    [Parameter(mandatory = $false, Position = 0)]
     [String]
-    $TasksSequence="TasksSequence_HardenAD.xml"
+    $TasksSequence = "TasksSequence_HardenAD.xml"
 )
 
 ###################################################################
@@ -47,15 +47,14 @@ Param(
 ## ---------                                                     ##
 ## This part holds local function used by the sequencer only.    ##
 ###################################################################
-Function New-LogEntry
-{
+Function New-LogEntry {
     Param(
-        [Parameter(Mandatory=$true,Position=0)]
-        [ValidateSet("info","warning","debug","error")]
+        [Parameter(Mandatory = $true, Position = 0)]
+        [ValidateSet("info", "warning", "debug", "error")]
         [String]
         $LogLevel,
 
-        [Parameter(Mandatory=$true,Position=1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         $LogText
     )
     #-Variables
@@ -63,16 +62,14 @@ Function New-LogEntry
     #-Generate timestamp
     $Timstamp = Get-Date -Format "yyyy/MM/dd hh:mm:ss"
     #-Generate log level
-    Switch ($LogLevel)
-    {
-        "info"    { $Level = "INFO" }
+    Switch ($LogLevel) {
+        "info" { $Level = "INFO" }
         "warning" { $Level = "WARN" }
-        "debug"   { $Level = "DBUG" }
-        "error"   { $Level = "ERR!" }
+        "debug" { $Level = "DBUG" }
+        "error" { $Level = "ERR!" }
     }
     #-Format text (able to handle multiple line)
-    foreach ($entry in $LogText)
-    {
+    foreach ($entry in $LogText) {
         $Result += "$Timstamp`t[$Level]`t$entry"
     }
     #-Return result
@@ -91,82 +88,78 @@ Function New-LogEntry
 ## an array (@()); the function will then deal the parameter by  ##
 ## itself.                                                       ##
 ###################################################################
-$Block = {  param(   #-Name of the function to be executed
-                    [Parameter(Mandatory=$true,Position=0)]
-                    [String]
-                    $Command,
-                    #-Parameter set to be passed as argument to $command
-                    [Parameter(Mandatory=$true,Position=1)]
-                    $Parameters,
-                    #-Set the execution context in a specific path. 
-                    #-Needed to relocate the new pShell process at the same calling space to find modules, etc.
-                    [Parameter(Mandatory=$true,Position=2)]
-                    [String]
-                    $Location,
-                    #-Array of modules to be loaded for this function to run.
-                    [Parameter(Mandatory=$false,Position=3)]
-                    $mods
-                )
+$Block = { param(   #-Name of the function to be executed
+        [Parameter(Mandatory = $true, Position = 0)]
+        [String]
+        $Command,
+        #-Parameter set to be passed as argument to $command
+        [Parameter(Mandatory = $true, Position = 1)]
+        $Parameters,
+        #-Set the execution context in a specific path. 
+        #-Needed to relocate the new pShell process at the same calling space to find modules, etc.
+        [Parameter(Mandatory = $true, Position = 2)]
+        [String]
+        $Location,
+        #-Array of modules to be loaded for this function to run.
+        [Parameter(Mandatory = $false, Position = 3)]
+        $mods
+    )
     
-            #-Relocating the new pShell session to the same location as the calling script.
-            Push-Location $Location
+    #-Relocating the new pShell session to the same location as the calling script.
+    Push-Location $Location
 
-            #-Checking OS to handle pShell 2.0
-            if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-            {
-                $is2k8r2 = $true
-            } else {
-                $is2k8r2 = $false
+    #-Checking OS to handle pShell 2.0
+    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
+        $is2k8r2 = $true
+    }
+    else {
+        $is2k8r2 = $false
+    }
+
+    #-Loading modules, if needed.
+    Try { 
+        #-Module loading...
+        if ($is2k8r2) {
+            $null = $mods | ForEach-Object { Import-Module $_.fullName }
+        }
+        else {
+            $null = $mods | ForEach-Object { Import-Module $_ }
+        }
+    }
+    Catch { 
+        #-No module to be loaded.
+    }
+
+    #-Run the function
+    Try {
+        #-Checking for multiple parameters and OS...
+        #-More than 1 parameter but greater than 2008 R2
+        if ($Parameters.count -gt 1 -and -not ($is2k8r2)) {
+            $RunData = . $Command @Parameters | Select-Object -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
+        } 
+                    
+        #-More than 1 parameter and is 2008 R2
+        if ($Parameters.count -gt 1 -and $is2k8r2) {
+            #-pShell 2.0 is not able to translate the multiple useParameters inputs from the xml file.
+            # We rewrite the parameters in a more compliant way.
+            $tmpParam = @()
+            for ($i = 0 ; $i -lt $Parameters.count ; $i++) {
+                $tmpParam += $Parameters[$i]
             }
-
-            #-Loading modules, if needed.
-              Try   { 
-                    #-Module loading...
-                    if ($is2k8r2)
-                    {
-                        $null = $mods | foreach { Import-Module $_.fullName }
-                    } else {
-                        $null = $mods | foreach { Import-Module $_ }
-                    }
-                  }
-            Catch { 
-                    #-No module to be loaded.
-                  }
-
-            #-Run the function
-            Try   {
-                    #-Checking for multiple parameters and OS...
-					#-More than 1 parameter but greater than 2008 R2
-                    if ($Parameters.count -gt 1 -and -not ($is2k8r2)) 
-					{
-						$RunData = . $Command @Parameters | Select -ExcludeProperty PSComputerName,RunspaceId,PSShowComputerName
-					} 
+            $RunData = . $Command @TmpParam | Select-Object -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
+        }
                     
-                    #-More than 1 parameter and is 2008 R2
-                    if ($Parameters.count -gt 1 -and $is2k8r2) 
-					{
-						#-pShell 2.0 is not able to translate the multiple useParameters inputs from the xml file.
-                        # We rewrite the parmaters in a more compliant way.
-                        $tmpParam = @()
-                        for ($i = 0 ; $i -lt $Parameters.count ; $i++) 
-                        {
-                            $tmpParam += $Parameters[$i]
-                        }
-                        $RunData = . $Command @TmpParam | Select -ExcludeProperty PSComputerName,RunspaceId,PSShowComputerName
-					}
-                    
-                    #-1 parameter or less
-                    if ($Parameters.count -le 1) 
-                    {
-						$RunData = . $Command $Parameters | Select -ExcludeProperty PSComputerName,RunspaceId,PSShowComputerName
-					}
-                  }
-            Catch {
-                    $RunData = New-Object -TypeName psobject -Property @{ResultCode = 9 ; ResultMesg = "Error launching the function $command" ; TaskExeLog = "Error"}
-                  }
+        #-1 parameter or less
+        if ($Parameters.count -le 1) {
+            $RunData = . $Command $Parameters | Select-Object -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
+        }
+    }
+    Catch {
+        $RunData = New-Object -TypeName psobject -Property @{ResultCode = 9 ; ResultMesg = "Error launching the function $command" ; TaskExeLog = "Error" }
+    }
             
-            #.Return the result
-            $RunData
+    #.Return the result
+    $RunData
 
 }#.End ScriptBlock.
 
@@ -181,21 +174,28 @@ $Block = {  param(   #-Name of the function to be executed
 #-Setting backgroundcolor
 $Host.UI.RawUI.BackgroundColor = 'black'
 
+$pShellMajorVer = $PsVersionTable.PSVersion.Major
+
+if ($pShellMajorVer -eq 2) {
+    $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
+}
+
+cd $PSScriptRoot
+
 #-Loading modules
 # When dealing with 2008R2, we need to import AD module first
 if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
-    $scriptModules  = (Get-ChildItem .\Modules -Filter "*.psm1") | Select FullName
-} else {
-    $scriptModules  = (Get-ChildItem .\Modules -Filter "*.psm1").FullName
+    $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1") | Select-Object FullName
+}
+else {
+    $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1").FullName
 }
 
-
 #-Setting-up usefull variables
-$SchedulrConfig = [xml](get-content .\Configs\Configuration_HardenAD.xml)
+$SchedulrConfig = [xml](Get-Content .\Configs\Configuration_HardenAD.xml)
 $SchedulrLoging = @()
-$TasksSeqConfig = [xml](get-content .\Configs\$TasksSequence)
-$ScriptLocation = Get-Location                                     
-$pShellMajorVer = ((Get-Host).version -split '\.')[0]
+$TasksSeqConfig = [xml](Get-Content .\Configs\$TasksSequence)
+$ScriptLocation = Get-Location                                
 
 #-Setting up colors and texts scheme. 
 # To deal with highlight color in display, use the ` to initiate (or end) a color change in your string,
@@ -204,27 +204,27 @@ $pShellMajorVer = ((Get-Host).version -split '\.')[0]
 #
 # Example : "This is a `[marvelous` text!"
 $ColorsAndTexts = New-Object -TypeName psobject `
-                             -Property @{       PendingColor = "DarkGray"
-                                                RunningColor = "Cyan"
-                                                WarningColor = "Yellow"
-                                                FailureColor = "Red"
-                                                IgnoredColor = "cyan"
-                                                SuccessColor = "green"
-                                                BaseTxtColor = "white"
-                                                AltBaseHColA = "magenta"
-                                                AltBaseHColB = "yellow"
-                                                AltBaseHColC = "gray"
-                                                PendingText  = "pending"
-                                                RunningText  = "running"
-                                                WarningText  = "warning"
-                                                FailureText  = "failure"
-                                                SuccessText  = "success"
-                                                ignoredText  = "ignored"
-                                                FuncErrText  = "!ERROR!"
-                                                AltBaseHTxtA = "["
-                                                AltBaseHTxtB = "("
-                                                AltBaseHTxtC = "{"
-                                         }
+    -Property @{       PendingColor = "DarkGray"
+    RunningColor                    = "Cyan"
+    WarningColor                    = "Yellow"
+    FailureColor                    = "Red"
+    IgnoredColor                    = "cyan"
+    SuccessColor                    = "green"
+    BaseTxtColor                    = "white"
+    AltBaseHColA                    = "magenta"
+    AltBaseHColB                    = "yellow"
+    AltBaseHColC                    = "gray"
+    PendingText                     = "pending"
+    RunningText                     = "running"
+    WarningText                     = "warning"
+    FailureText                     = "failure"
+    SuccessText                     = "success"
+    ignoredText                     = "ignored"
+    FuncErrText                     = "!ERROR!"
+    AltBaseHTxtA                    = "["
+    AltBaseHTxtB                    = "("
+    AltBaseHTxtC                    = "{"
+}
        
 
 #-Loading Header (yes, a bit of fun)
@@ -234,8 +234,7 @@ $PriTxCol = $SchedulrConfig.SchedulerSettings.ScriptHeader.Logo.DefltColor
 
 $MaxLength = 0
 
-foreach ($line in $LogoData)
-{
+foreach ($line in $LogoData) {
     Write-Host $line -ForegroundColor $PriTxCol
     if ($line.length -gt $MaxLength) { $MaxLength = $line.Length }
 }
@@ -265,30 +264,27 @@ Write-Host "Description: " -ForegroundColor Gray -NoNewline ; Write-Host $ApDesc
 Write-Host "$SeparationLine" -ForegroundColor DarkGray
 #-Show me how nice you are ;)
 Start-Sleep -Seconds 2 
-#-Checking if all prerequesite are met
+#-Checking if all prerequisite are met
 $InitialPosition = $host.UI.RawUI.CursorPosition
 $FlagPreReq = $true
 Write-Host "-------------------------"
-Write-Host "Checking prerequesite:"
+Write-Host "Checking prerequisite:"
 $Linecount = 2
-$Prerequesites = $SchedulrConfig.SchedulerSettings.Prerequesites
-foreach ($Prerequesite in $Prerequesites.Directory)
-{
+$Prerequisites = $SchedulrConfig.SchedulerSettings.Prerequisites
+foreach ($Prerequisite in $Prerequisites.Directory) {
     $Linecount++
     #-Checking Folder
     Write-Host "Folder " -NoNewline -ForegroundColor DarkGray
-    Write-Host $Prerequesite.Name -NoNewline -ForegroundColor Gray
-    if (Test-Path (".\" + $Prerequesite.Name)) { Write-Host " is present" -ForegroundColor DarkGreen }
+    Write-Host $Prerequisite.Name -NoNewline -ForegroundColor Gray
+    if (Test-Path (".\" + $Prerequisite.Name)) { Write-Host " is present" -ForegroundColor DarkGreen }
     Else { Write-Host " is missing" -ForegroundColor DarkRed ; $FlagPreReq = $false }
     #-Checking files, if any.
-    if ($Prerequesite.File)
-    {
-        foreach ($file in $Prerequesite.File)
-        {
+    if ($Prerequisite.File) {
+        foreach ($file in $Prerequisite.File) {
             $Linecount++
             Write-Host "+ File " -NoNewline -ForegroundColor DarkGray
             Write-Host $File -NoNewline -ForegroundColor Gray
-            if (Test-Path (".\" + $Prerequesite.Name + "\" + $file)) { Write-Host " is present" -ForegroundColor DarkGreen }
+            if (Test-Path (".\" + $Prerequisite.Name + "\" + $file)) { Write-Host " is present" -ForegroundColor DarkGreen }
             Else { Write-Host " is missing" -ForegroundColor DarkRed ; $FlagPreReq = $false }
         }
     }
@@ -299,65 +295,64 @@ foreach ($Prerequesite in $Prerequesites.Directory)
 Write-Host "Sanity Check: " -NoNewline -ForegroundColor DarkGray
 Write-Host "Has the script already been ran? " -ForegroundColor Gray -NoNewline
 
-if (test-path .\Inputs\GroupPolicies\translated.migtable)
-{
+if (Test-Path ".\Inputs\GroupPolicies\translated.migtable") {
     #.We found a translated migtable. We open it as an xml file and then check if the destination is set to our domain.
-    $sanityXml = [xml](Get-Content .\Inputs\GroupPolicies\translated.migtable)
+    $sanityXml = [xml](Get-Content ".\Inputs\GroupPolicies\translated.migtable")
     $isCurrDom = $sanityXml.MigrationTable.Mapping[0].Destination -match (Get-ADDomain).NetBIOSName
     # - popping-up the result
-    Switch ($isCurrDom)
-    {
-        $true  { Write-Host "Yes" -ForegroundColor magenta
-                 Write-Host "Sanity Check: " -NoNewline -ForegroundColor DarkGray
-                 Write-Host "is it the same netbios dom name? " -ForegroundColor Gray -NoNewline
-                 Write-Host "Yes" -ForegroundColor Green
-               }
+    Switch ($isCurrDom) {
+        $true {
+            Write-Host "Yes" -ForegroundColor magenta
+            Write-Host "Sanity Check: " -NoNewline -ForegroundColor DarkGray
+            Write-Host "is it the same netbios dom name? " -ForegroundColor Gray -NoNewline
+            Write-Host "Yes" -ForegroundColor Green
+        }
         
-        $false { Write-Host "Yes" -ForegroundColor Yellow
-                 Write-Host "Sanity Check: " -NoNewline -ForegroundColor DarkGray
-                 Write-Host "is it the same netbios dom name? " -ForegroundColor Gray -NoNewline
-                 Write-Host "No" -ForegroundColor Red
-                 #.Force leaving as test failed    
-                 $FlagPreReq = $false 
-               }
+        $false {
+            Write-Host "Yes" -ForegroundColor Yellow
+            Write-Host "Sanity Check: " -NoNewline -ForegroundColor DarkGray
+            Write-Host "is it the same netbios dom name? " -ForegroundColor Gray -NoNewline
+            Write-Host "No" -ForegroundColor Red
+            #.Force leaving as test failed    
+            $FlagPreReq = $false 
+        }
     }
-} Else {
+}
+Else {
     #.Script never run
     Write-Host "No" -ForegroundColor Green
 }
 
-if ($FlagPreReq)
-{
-    Write-Host "All prerequesites are OK."    
+if ($FlagPreReq) {
+    Write-Host "All prerequisites are OK."    
     Write-Host "-------------------------"
 }
-Else 
-{
+Else {
     Write-Host "Some check have failed!" -ForegroundColor Red
     Write-Host "-------------------------"
     exit 1
 }
-#-Clearing prerequesites data 
+#-Clearing prerequisites data 
 Start-Sleep -Seconds 2
-$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X,$InitialPosition.Y
+$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
 For ($i = 1 ; $i -le ($Linecount + 2) ; $i++) { Write-Host "                                                                       " }
-$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X,$InitialPosition.Y
+$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
                                                      
 #-Loop begins!
 Start-Sleep -Seconds 2
 
 #-Using XML
 $Resume = @()
-$Tasks  = $TasksSeqConfig.Settings.Sequence.ID | Sort-Object number
-foreach ($task in $Tasks)
-{
+$Tasks = $TasksSeqConfig.Settings.Sequence.ID | Sort-Object number
+foreach ($task in $Tasks) {
     #-Update log
     $SchedulrLoging += New-LogEntry "Info" ("NEW TASK: " + $task.Name)
 
     #-Checking if a DSIagreement exists
     if ($task.TaskEnabled -eq 'Yes') { 
         $doNotRun = $false 
-    } else { 
+    }
+    else { 
         $doNotRun = $true 
     }
 
@@ -371,8 +366,7 @@ foreach ($task in $Tasks)
     #-Display the task description and managing color output
     $TextToDisplay = $task.TaskDescription -split '`'
 
-    foreach ($Section in $TextToDisplay)
-    {
+    foreach ($Section in $TextToDisplay) {
         #-Looking at the first character: if this one is one of the AltBaseHTxt, the applying special color scheme.
         $color = $ColorsAndTexts.BaseTxtColor
         if ($Section[0] -eq $ColorsAndTexts.AltBaseHTxtA) { $color = $ColorsAndTexts.AltBaseHColA }
@@ -382,7 +376,7 @@ foreach ($task in $Tasks)
         #-Output text. We use a regex expression to remove the highlightCar
         #-WARNING: the regex is built fitst to fetch with $ColorsAndTexts.
         [regex]$myRegex = "\" + $ColorsAndTexts.AltBaseHTxtA + "|\" + $ColorsAndTexts.AltBaseHTxtB + "|\" + $ColorsAndTexts.AltBaseHTxtC
-        Write-Host ($Section -replace $myRegex,"") -ForegroundColor $Color -NoNewline
+        Write-Host ($Section -replace $myRegex, "") -ForegroundColor $Color -NoNewline
     }
 
     #-Initiate waiting loop: isRunning will be the flag to keep the loop in a pending state, while charIndex will handle the new text to display.
@@ -391,17 +385,17 @@ foreach ($task in $Tasks)
     
     #-Cursor management
     # Update for bug #6: if not pShell 5 or greater, the escape char will be ignored. Time for flashy Dance... That's backward compatibility :)
-    if ($pShellMajorVer -ge 5) 
-    {
-        $esc        = [char]27
+    if ($pShellMajorVer -ge 5) {
+        $esc = [char]27
         $hideCursor = "$esc[?25l"
         $showCursor = "$esc[?25h"
-        $resetAll   = "$esc[0m" 
-    } else {
-        $esc        = $null
+        $resetAll = "$esc[0m" 
+    }
+    else {
+        $esc = $null
         $hideCursor = $null
         $showCursor = $null
-        $resetAll   = $null 
+        $resetAll = $null 
     }
 
     # Logging
@@ -409,17 +403,16 @@ foreach ($task in $Tasks)
     
     #-Run the job
     if (-not ($doNotRun)) { 
-        $job = Start-Job -ScriptBlock $Block -Name CurrentJob -ArgumentList $task.CallingFunction,$task.UseParameters,$ScriptLocation,$scriptModules
-    } else {
+        $job = Start-Job -ScriptBlock $Block -Name CurrentJob -ArgumentList $task.CallingFunction, $task.UseParameters, $ScriptLocation, $scriptModules
+    }
+    else {
         $isRunning = $false
     }
         
     #-Looping around while the jos is still performing its task
-    while ($isRunning) 
-    { 
+    while ($isRunning) { 
         #-Checking the current job status.
-        if ((Get-Job $job.Id).State -ne "Running")
-        { 
+        if ((Get-Job $job.Id).State -ne "Running") { 
             #-Flag down: exiting the loop.
             $isRunning = $false 
         } 
@@ -427,25 +420,23 @@ foreach ($task in $Tasks)
         #-First, moving to the next highlighted character
         $CharIndex++
         #-Second, managing the case when we face the end of the string
-        if ($CharIndex -ge [String]($ColorsAndTexts.RunningText).length) 
-        {
+        if ($CharIndex -ge [String]($ColorsAndTexts.RunningText).length) {
             #-Reinit the index to 0 (aka first character). 
             $CharIndex = 0
         }
         
         #-Managing the output
         #-First, lets relocate the cursor position to the line beginning
-        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X,$InitialPosition.Y
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
         
 
         #-Second, using a loop condition, let's rewrite
-        for ($ptr = 0 ; $ptr -lt ($ColorsAndTexts.RunningText).length ; $ptr++) 
-        { 
-            if ($CharIndex -eq $ptr) 
-            { 
+        for ($ptr = 0 ; $ptr -lt ($ColorsAndTexts.RunningText).length ; $ptr++) { 
+            if ($CharIndex -eq $ptr) { 
                 #-This character will be highlighted
                 Write-Host (${hideCursor} + ([string]($ColorsAndTexts.RunningText)[$ptr]).toUpper()) -ForegroundColor $ColorsAndTexts.RunningColor -NoNewline 
-            } else { 
+            }
+            else { 
                 #-This character is written as usual
                 Write-Host (${hideCursor} + ([string]($ColorsAndTexts.RunningText)[$ptr]).toLower()) -ForegroundColor $ColorsAndTexts.PendingColor -NoNewline 
             } 
@@ -458,20 +449,20 @@ foreach ($task in $Tasks)
     #-Grab the job result.
     if (-not ($doNotRun)) { 
         $result = Receive-Job $job.Id
-    } else {
-        $result = New-Object -TypeName psobject -Property @{Resultcode = 3}
+    }
+    else {
+        $result = New-Object -TypeName psobject -Property @{Resultcode = 3 }
     }
 
     #-Display result on screen
-    Switch ($result.ResultCode)
-    {
-        0       { $zText = $ColorsAndTexts.SuccessText ; $zColor = $ColorsAndTexts.SuccessColor }
-        1       { $zText = $ColorsAndTexts.WarningText ; $zColor = $ColorsAndTexts.WarningColor }
-        2       { $zText = $ColorsAndTexts.FailureText ; $zColor = $ColorsAndTexts.FailureColor }
-        3       { $zText = $ColorsAndTexts.IgnoredText ; $zColor = $ColorsAndTexts.IgnoredColor }
+    Switch ($result.ResultCode) {
+        0 { $zText = $ColorsAndTexts.SuccessText ; $zColor = $ColorsAndTexts.SuccessColor }
+        1 { $zText = $ColorsAndTexts.WarningText ; $zColor = $ColorsAndTexts.WarningColor }
+        2 { $zText = $ColorsAndTexts.FailureText ; $zColor = $ColorsAndTexts.FailureColor }
+        3 { $zText = $ColorsAndTexts.IgnoredText ; $zColor = $ColorsAndTexts.IgnoredColor }
         default { $zText = $ColorsAndTexts.FuncErrText ; $zColor = $ColorsAndTexts.FailureColor }
     }
-    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X,$InitialPosition.Y
+    $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
     Write-Host (${hideCursor} + [string]$zText) -ForegroundColor $zColor -NoNewline
     #-Remove the job from the queue
     if (-not ($doNotRun)) { 
@@ -482,10 +473,9 @@ foreach ($task in $Tasks)
     #-Keeping a resume to be displayed at the end and exported to the output folder
     $Resume += New-Object -TypeName psobject -Property @{ TaskID = $Task.Number ; TaskName = $task.Name ; TaskResult = $zText }
     #-Logging
-    $SchedulrLoging += New-LogEntry "debug" @(("--- ----: TaskID     = " + $Task.Number),("--- ----: TaskName   = " + $task.Name),"--- ----: TaskResult = $zText",("--- ----: Message    = " + $result.ResultMesg))
+    $SchedulrLoging += New-LogEntry "debug" @(("--- ----: TaskID     = " + $Task.Number), ("--- ----: TaskName   = " + $task.Name), "--- ----: TaskResult = $zText", ("--- ----: Message    = " + $result.ResultMesg))
     #-Extra logging when an error was faced.
-    if ($zText -eq $ColorsAndTexts.FuncErrText)
-    {
+    if ($zText -eq $ColorsAndTexts.FuncErrText) {
         $SchedulrLoging += New-LogEntry "error" "ERR FUNC: it seems that the called function is missing or is not properly returning its result!" 
         $SchedulrLoging += New-LogEntry "error" ("ERR FUNC: received result code: " + $result.ResultCode)
     }
@@ -501,23 +491,23 @@ Write-Host $csvName -ForegroundColor DarkGray -NoNewline
 Write-Host "..." -ForegroundColor Gray -NoNewline
 
 Try { 
-    $Resume | Select TaskId,TaskResult,TaskName | Sort-Object TaskID | Export-Csv .\Logs\$CsvName -Delimiter "`t" -Encoding Unicode -NoTypeInformation
+    $Resume | Select-Object TaskId, TaskResult, TaskName | Sort-Object TaskID | Export-Csv ".\Logs\$CsvName" -Delimiter "`t" -Encoding Unicode -NoTypeInformation
     Write-Host "success" -ForegroundColor Green
-    }
+}
 Catch {
     Write-Host "failure" -ForegroundColor red
-    }
+}
 
 Write-Host "Exporting logging to .\Logs\" -ForegroundColor Gray -NoNewline
 Write-Host $logName -ForegroundColor DarkGray -NoNewline
 Write-Host "..." -ForegroundColor Gray -NoNewline
 
 Try { 
-    $SchedulrLoging | Out-File .\Logs\$LogName 
+    $SchedulrLoging | Out-File ".\Logs\$LogName"
     Write-Host "success`n" -ForegroundColor Green
-    }
+}
 Catch {
     Write-Host "failure`n" -ForegroundColor red
-    }
+}
 
-$Resume | Select TaskId,TaskResult,TaskName | Sort-Object TaskID | Format-Table -AutoSize 
+$Resume | Select-Object TaskId, TaskResult, TaskName | Sort-Object TaskID | Format-Table -AutoSize 

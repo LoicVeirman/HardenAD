@@ -404,8 +404,7 @@ Function Import-WmiFilters
 ## Version: 02.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function New-GpoObject
-{
+Function New-GpoObject {
     <#
         .Synopsis
          Add all GPOs from the TasksSequence_HardenAD.xml.
@@ -509,18 +508,16 @@ Function New-GpoObject
                 }
 
                 #.Assign Wmi Filter, if any
-                if ($importFlag)
-                {
+                if ($importFlag) {
                     #.check for filter data
                     $gpFilter = $Gpo.GpoFilter
-                    if ($gpFilter)
-                    {
+                    if ($gpFilter) {
                         #.Prepare data
                         $FilterName = $gpFilter.WMI
                         $DomainName = (Get-ADDomain).DnsRoot
                         $GpoRawData = Get-GPO -Name $gpName 
-                        $wmiFilter  = Get-ADObject -Filter { msWMI-Name -eq $FilterName } -ErrorAction SilentlyContinue
-                        $GpoDN      = "CN={" + $GpoRawData.Id + "},CN=Policies,CN=System," + (Get-ADDomain).DistinguishedName
+                        $wmiFilter = Get-ADObject -Filter { msWMI-Name -eq $FilterName } -ErrorAction SilentlyContinue
+                        $GpoDN = "CN={" + $GpoRawData.Id + "},CN=Policies,CN=System," + (Get-ADDomain).DistinguishedName
                         $wmiLinkVal = "[" + $DomainName + ";" + $wmiFilter.Name + ";0]"
 
                         #.Check if there is already a value
@@ -694,15 +691,15 @@ Function New-GpoObject
                        $gpPath = $gpLink.Path -replace 'RootDN',((Get-ADDomain).DistinguishedName)
                         #.Test if already linked
                         $gpLinked = Get-ADObject -Filter { DistinguishedName -eq $gpPath } -Properties gpLink | Select-Object -ExpandProperty gpLink | Where-Object { $_ -Match ("LDAP://CN={" + (Get-Gpo -Name $gpName).ID + "},") }
-                        if ($gpLinked)
-                        {
+                        if ($gpLinked) {
                             Try {
                                 $null = Set-GPLink -Name $gpName -Target $gpPath -LinkEnabled $gpLink.Enabled -Enforced $gpLink.enforced -ErrorAction Stop
                             } Catch {
                                 $result = 1
                                 $errMess += " Error: could not link one or more GPO"
                             }
-                        } Else {
+                        }
+                        Else {
                             Try {
                                 $null = New-GPLink -Name $gpName -Target $gpPath -LinkEnabled $gpLink.Enabled -Enforced $gpLink.enforced -ErrorAction Stop
                             } Catch {
@@ -722,5 +719,6 @@ Function New-GpoObject
     ## Return function results
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ErrMess ; TaskExeLog = $ErrMess })
 }
+
 
 Export-ModuleMember -Function * 
