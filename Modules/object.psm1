@@ -7,7 +7,8 @@
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function New-AdministrationAccounts {
+Function New-AdministrationAccounts
+{
     <#
         .Synopsis
          Create Tier 0 and Tier 1/2 user accounts.
@@ -28,19 +29,21 @@ Function New-AdministrationAccounts {
             01.00 -- Script creation
     #>
     param(
-        [Parameter(mandatory = $false)]
+        [Parameter(mandatory=$false)]
         [String]
         $KeepassPwd
     )
 
     ## Default keepass password
-    if (-not($KeepassPwd)) {
+    if (-not($KeepassPwd))
+    {
         $KeepassPwd = 'H4rd3n@D!!'
     }
 
     ## Function dynamic OU path rewriting
-    Function Rewrite-OUPath ([String]$OUPath) {
-        $OUPath2 = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
+    Function Rewrite-OUPath ([String]$OUPath)
+    {
+        $OUPath2 = $OUPath -replace 'RootDN',(Get-ADDomain).DistinguishedName
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> [OUPath2]: new variable set with [OUPath] data and ROOTDN replaced. New value: $OUPath2"    
         return $OUPath2
     }
@@ -63,14 +66,14 @@ Function New-AdministrationAccounts {
         [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
-    }
-    Catch {
+    } Catch {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! FAILED loading xml skeleton file "
         $xmlLoaded = $false
     }    
 
     ## If xml loaded, begining check and create...
-    if ($xmlLoaded) {
+    if ($xmlLoaded)
+    {
         ## Log loop start
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable XmlLoaded.......: $xmlLoaded"
         
@@ -79,26 +82,27 @@ Function New-AdministrationAccounts {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
         
         ## When dealing with 2008R2, we need to import AD module first
-        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
+        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
+        {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
         
-            Try { 
-                Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-            } 
+            Try   { 
+                    Import-Module ActiveDirectory
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+                  } 
             Catch {
-                $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
-            }
-        }
-        else {
+                    $noError = $false
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
+                  }
+        } else {
 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
         }
 
         ## if Everything run smoothly, let's begin.
-        if ($noError) {
+        if ($noError)
+        {
             ## Getting root DNS name
             $DomainRootDN = (Get-ADDomain).DistinguishedName
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
@@ -108,35 +112,40 @@ Function New-AdministrationAccounts {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml data loaded (" + $xmlData.count + " account(s))"
 
             ## if we got data, begining creation loop
-            if ($xmlData) {
+            if ($xmlData)
+            {
                 #-Failing Creation index
                 $ErrIdx = 0
             
                 #-Reacling Keepass binaries to avoid issue with read-only permissions
-                $path = (Get-Location).Path + "\Tools\KeePass-2.48.1\"
+                $path   = (Get-Location).Path + "\Tools\KeePass-2.48.1\"
                 $pathdb = (Get-Location).Path + "\Outputs\"
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> binaries path=$path"
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> database path=$pathdb"
                 $GrpName = (Get-ADGroup -filter { Sid -eq "S-1-5-32-545" }).sAMAccountname
                 $AceUser = "BUILTIN\" + $GrpName
-                Try {
+                Try 
+                {
                     $acl = Get-Acl $path
-                    $ArgumentsList = $AceUser, 'FullControl', 'ContainerInherit, ObjectInherit', 'None', 'Allow'
+                    $ArgumentsList = $AceUser,,”FullControl”,”ContainerInherit,ObjectInherit”,”None”,”Allow”
                     $AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule -ArgumentList $ArgumentsList
                     $acl.SetAccessRule($AccessRule)
                     Set-Acl $path $acl
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $AceUser now has FULLCONTROL permission on $path"
                 }
-                Catch {
+                Catch
+                {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! $AceUser : FULLCONTROL permission on $path failed to be applied!"
                 }
-                Try {
+                Try
+                {
                     $acl = Get-Acl $pathdb
                     $acl.SetAccessRule($AccessRule)
                     Set-Acl $pathdb $acl 
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $AceUser now has FULLCONTROL permission on $pathdb"
                 }
-                Catch {
+                Catch
+                {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! $AceUser : FULLCONTROL permission on $pathdb failed to be applied!"
                 }
 
@@ -152,7 +161,8 @@ Function New-AdministrationAccounts {
                     $KpsFlag = $false
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! keepass binaries not found!"
                 }
-                if ($KpsFlag) {
+                if ($KpsFlag)
+                {
                     #-Opening database
                     Try {
                         $IoConnectionInfo.Path = $pathdb + "\HardenAD.kdbx"
@@ -167,35 +177,38 @@ Function New-AdministrationAccounts {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! keepass database not found!"
                     }
                 }
-                foreach ($account in $xmlData) {
+                foreach ($account in $xmlData)
+                {
                     #-Create a LDAP search filter
                     $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainDN)
                     $Searcher.Filter = "(&(ObjectClass=User)(sAMAccountName=" + $account.sAMAccountName + "))"
 
-                    if ($null -ne $Searcher.FindAll()) {
+                    if ($Searcher.FindAll() -ne $null)
+                    {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> === " + $account.DisplayName + " already exists"
 
-                    }
-                    Else {
+                    } Else {
                         ## Create User
-                        Try {
+                        Try 
+                        {
                             #-Generate a random password
                             $NewPwd = $null
-                            ((48..57) + (65..90) + (97..122) + 36 + 33) | Get-Random -Count 16 | ForEach-Object { $NewPwd += [char]$_ }
+                            ((48..57) + (65..90) + (97..122) + 36 + 33) | Get-Random -Count 16 | %{ $NewPwd += [char]$_ }
                             $SecPwd = ConvertTo-SecureString -AsPlainText $NewPwd -Force
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ Password generated"
 
                             #-Create new user object
                             New-ADUser -Name $account.DisplayName -AccountNotDelegated $true -AccountPassword $SecPwd -Description $account.description `
-                                -DisplayName $account.displayName -Enabled $true -GivenName $account.GivenName -SamAccountName $account.sAMAccountName `
-                                -Surname $account.surname -UserPrincipalName ($account.sAMAccountName + "@" + (Get-Addomain).DNSRoot) `
-                                -Path (Rewrite-OUPath $account.Path) -ErrorAction Stop
+                                       -DisplayName $account.displayName -Enabled $true -GivenName $account.GivenName -SamAccountName $account.sAMAccountName `
+                                       -Surname $account.surname -UserPrincipalName ($account.sAMAccountName + "@" + (Get-Addomain).DNSRoot) `
+                                       -Path (Rewrite-OUPath $account.Path) -ErrorAction Stop
 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ user created: " + $account.displayName
                         
                             #-Export Password
-                            if ($KpsFlag) {
+                            if ($KpsFlag)
+                            {
                                 Try {
                                     [KeePassLib.PwEntry]$KeePassEntry = (New-Object -TypeName 'KeePassLib.PwEntry'($true, $true))
                                     $KeePassEntry.Uuid = [KeePassLib.PwUuid]::New($true)
@@ -228,31 +241,32 @@ Function New-AdministrationAccounts {
                 }
                 
                 #-Success: no issue
-                if ($ErrIdx -eq 0) { 
+                if ($ErrIdx -eq 0) 
+                { 
                     $result = 0 
                     $ResMess = "no error"
                 }
                 #-Warning: some were not created and generate an error
-                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) { 
+                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) 
+                { 
                     $result = 1
                     $ResMess = "$ErrIdx out of " + $xmlData.count + " failed"
                 }
                 #-Error: none were created!
-                if ($ErrIdx -ge $xmlData.count) { 
+                if ($ErrIdx -ge $xmlData.count) 
+                { 
                     $result = 2
                     $ResMess = "error when creating accounts"
                 }
 
-            }
-            else {
+            } else {
      
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Warning: xmlData is empty!"
                 $result = 1
                 $ResMess = "No Data to deal with"
             }
 
-        }
-        else {
+        } else {
 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: could not proceed!"
             $result = 2
@@ -263,9 +277,11 @@ Function New-AdministrationAccounts {
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile) {
+    if (Test-Path .\Logs\Debug\$DbgFile)
+    {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
+        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*"))
+        {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -289,7 +305,8 @@ Function New-AdministrationAccounts {
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function New-AdministrationGroups {
+Function New-AdministrationGroups
+{
     <#
         .Synopsis
          Create Tier 0 and Tier 1/2 group objects.
@@ -310,8 +327,9 @@ Function New-AdministrationGroups {
     )
 
     ## Function dynamic OU path rewriting
-    Function Rewrite-OUPath ([String]$OUPath) {
-        $OUPath2 = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
+    Function Rewrite-OUPath ([String]$OUPath)
+    {
+        $OUPath2 = $OUPath -replace 'RootDN',(Get-ADDomain).DistinguishedName
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> [OUPath2]: new variable set with [OUPath] data and ROOTDN replaced. New value: $OUPath2"    
         return $OUPath2
     }
@@ -334,14 +352,14 @@ Function New-AdministrationGroups {
         [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
-    }
-    Catch {
+    } Catch {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! FAILED loading xml skeleton file "
         $xmlLoaded = $false
     }    
 
     ## If xml loaded, begining check and create...
-    if ($xmlLoaded) {
+    if ($xmlLoaded)
+    {
         ## Log loop start
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable XmlLoaded.......: $xmlLoaded"
         
@@ -350,26 +368,27 @@ Function New-AdministrationGroups {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
         
         ## When dealing with 2008R2, we need to import AD module first
-        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
+        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
+        {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
         
-            Try { 
-                Import-Module ActiveDirectory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-            } 
+            Try   { 
+                    Import-Module ActiveDirectory
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+                  } 
             Catch {
-                $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
-            }
-        }
-        else {
+                    $noError = $false
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
+                  }
+        } else {
 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
         }
 
         ## if Everything run smoothly, let's begin.
-        if ($noError) {
+        if ($noError)
+        {
             ## Getting root DNS name
             $DomainRootDN = (Get-ADDomain).DistinguishedName
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
@@ -379,29 +398,32 @@ Function New-AdministrationGroups {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: xml data loaded (" + $xmlData.count + " group(s))"
 
             ## if we got data, begining creation loop
-            if ($xmlData) {
+            if ($xmlData)
+            {
                 #-Failing Creation index
                 $ErrIdx = 0
                 
                 #.Begin object creation loop
-                foreach ($account in $xmlData) {
+                foreach ($account in $xmlData)
+                {
                     #-Create a LDAP search filter
                     $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainDN)
                     $Searcher.Filter = "(&(ObjectClass=Group)(sAMAccountName=" + $account.Name + "))"
 
                     #.Check if the object already exists
-                    if ($null -ne $Searcher.FindAll()) {
+                    if ($Searcher.FindAll() -ne $null)
+                    {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: === " + $account.Name + " already exists"
                         $AddUser = $true
 
-                    }
-                    Else {
+                    } Else {
                         ## Create Group
-                        Try {
+                        Try 
+                        {
                             #-Create new group object
                             New-ADGroup -Name $account.Name -Description $account.description -Path (Rewrite-OUPath $account.Path) `
-                                -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
+                                        -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ group created: " + $account.Name
                             $AddUser = $true
                         } 
@@ -415,61 +437,69 @@ Function New-AdministrationGroups {
                     #.Logging AddUser value
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter AddUser........: $AddUser"
                     #.Adding members to group, if any
-                    if ($AddUser) {
+                    if ($AddUser)
+                    {
                         #.Collection members forthis specific group
                         $members = $account.Member
                         #.create a collection object with all members
                         $MbrsList = @()
-                        foreach ($member in $members) {
+                        foreach ($member in $members)
+                        {
                             $MbrsList += $member.sAMAccountName
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ adding member: " + $member.SAMAccountName
                         }
                         #.Adding members
-                        Try {
-                            if ($members) {
+                        Try
+                        {
+                            if ($members) 
+                            {
                                 Add-ADGroupMember -Identity $account.Name -Members $MbrsList | Out-Null
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ all members added successfully."
                             }
-                            Else {
+                            Else
+                            {
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: === No members to add."
                             }
                         }
-                        Catch {
+                        Catch
+                        {
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! Failed to add new members!"
                             $ErrIdx++
                         }
                     }
-                    Else {
+                    Else
+                    {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! members could not be added! (" + $account.Name + ")"
                     }
                 }
                 
                 #-Success: no issue
-                if ($ErrIdx -eq 0) { 
+                if ($ErrIdx -eq 0) 
+                { 
                     $result = 0 
                     $ResMess = "no error"
                 }
                 #-Warning: some were not created and generate an error
-                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) { 
+                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) 
+                { 
                     $result = 1
                     $ResMess = "$ErrIdx out of " + $xmlData.count + " failed"
                 }
                 #-Error: none were created!
-                if ($ErrIdx -ge $xmlData.count) { 
+                if ($ErrIdx -ge $xmlData.count) 
+                { 
                     $result = 2
                     $ResMess = "error when creating accounts"
                 }
 
-            }
-            else {
+            } else {
      
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Warning: xmlData is empty!"
                 $result = 1
                 $ResMess = "No Data to deal with"
             }
 
-        }
-        else {
+        } else {
 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: could not proceed!"
             $result = 2
@@ -480,9 +510,11 @@ Function New-AdministrationGroups {
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile) {
+    if (Test-Path .\Logs\Debug\$DbgFile)
+    {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
+        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*"))
+        {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -506,7 +538,8 @@ Function New-AdministrationGroups {
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Reset-GroupMembership {
+Function Reset-GroupMembership
+{
     <#
         .Synopsis
          Reset group members to its factory default.
@@ -529,7 +562,7 @@ Function Reset-GroupMembership {
     ## Import xml file with OU build requierment
     Try { 
         $xmlSkeleton = [xml](Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop)
-    		$cfgXml      = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)
+		$cfgXml      = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)
         $xmlLoaded   = $true
     } Catch {
         $xmlLoaded = $false
@@ -560,13 +593,15 @@ Function Reset-GroupMembership {
         $DomainSID = (Get-ADDomain).DomainSID
 
         ## Reset loop
-        foreach ($group in $xmlGroups.group) {
+        foreach ($group in $xmlGroups.group)
+        {
             #.Group identity
             $GroupID = ($group.target -replace '%domainSid%',$DomainSID)
 
             #.Create mandatory members list
             $mbrLists = @()
-            foreach ($member in $group.Member) {
+            foreach ($member in $group.Member)
+            {
                 ## Convert %DomainSID% if needded
                 $mbrTranslated = $member -replace '%domainsid%',$DomainSID
 				
@@ -575,22 +610,22 @@ Function Reset-GroupMembership {
 				{
 					$mbrTranslated = $mbrTranslated -replace $TransID.translateFrom,$TransID.translateTo
 				}
+				
                 ## Double test to discover the object class and run the proper command
                 ##This is not a clean approach but... It works :)
                 $test = $false
                 try {
                     $mbrObj = Get-ADUser $mbrTranslated
                     $test = $true
-                }
-                Catch {
+                } Catch {
                     $test = $false
                 }
-                if (-not($test)) {
+                if (-not($test))
+                {
                     try {
                         $mbrObj = Get-ADGroup $mbrTranslated
                         $test = $true
-                    }
-                    Catch {
+                    } Catch {
                         $test = $false
                     }
                 }
@@ -605,13 +640,16 @@ Function Reset-GroupMembership {
             $MbrInIt += Get-ADGroupMember $groupTarget
 
             ## Cleaning group and adding missing users
-            foreach ($badID in (Compare-Object $MbrInIt $mbrLists)) {
+            foreach ($badID in (Compare-Object $MbrInIt $mbrLists))
+            {
                 ## Side Indicator: should not be in
-                if ($badID.SideIndicator -eq "<=") {
+                if ($badID.SideIndicator -eq "<=")
+                {
                     Remove-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
                 }
                 ## Side Indicator: should be in
-                if ($badID.SideIndicator -eq "=>") {
+                if ($badID.SideIndicator -eq "=>")
+                {
                     Add-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
                 }
             }
