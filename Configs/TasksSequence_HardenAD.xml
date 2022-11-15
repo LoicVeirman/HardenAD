@@ -1014,16 +1014,16 @@
     <!-- the <Sequence> section define the different tasks to iterate in "sequence" (can't resist to this one).                              -->
     <!-- To deal with highlight color in display, use the ` to initiate and end a color change in your string, then use one of the three     -->
     <!-- characters specified in value AltBaseHTxt(A,B, or C) to select your color: the color will switch back to normal at the next `.      -->
-    <!--			                                                                                                                         -->
+    <!--			                                                                                                                               -->
     <!-- The default highlight values are those one:                                                                                         -->
     <!--   > `[my text` : magenta                                                                                                            -->
     <!--   > `(my text` : yellow                                                                                                             -->
     <!--   > `{my text` : gray                                                                                                               -->
-    <!--			                                                                                                                         -->
+    <!--			                                                                                                                               -->
     <!-- Some special inputs are usefull to replace value dynamically :                                                                   	 -->
-    <!--	 > FileName   : replace with the value of this file                                                                              -->
-    <!--	 > RootDN     : replace with domain root DN                                                                                      -->
-    <!--			                                                                                                                         -->
+    <!--	 > FileName   : replace with the value of this file                                                                                -->
+    <!--	 > RootDN     : replace with domain root DN                                                                                        -->
+    <!--			                                                                                                                               -->
     <!-- Each task ID is executed in sequence, based on the Number vaue (ascending). Each Task ID use the following attributes:              -->
     <!--   > Number         : Define the squence order, the lowest will be run first.                                                        -->
     <!--   > Name           : ID task name as refered in the final log output.                                                               -->
@@ -1032,6 +1032,28 @@
     <!--                      Use on per parameter and sort them in sequence (your script should refer them using input ordering).           -->
     <!--   > TaskEnabled    : YES or NO. When set to NO, the tasks is disabled and will not be applied.                                      -->
     <!-- ################################################################################################################################### -->
+
+     <!-- Upgrade Domain Functional Level                                                                                                    -->
+    <Id Number="005" Name="Upgrade Domain Functional Level">
+      <CallingFunction>Set-ADFunctionalLevel</CallingFunction>
+      <!--Parameter: Specify Upgrade is applied to Domain (and not Forest)                                                                   -->
+      <UseParameters>Domain</UseParameters>
+      <!--Parameter: Target Functional Level. Possibe values: "2008R2","2012","2012R2","2016","Last"                                         -->
+      <UseParameters>Last</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>Upgrade `(DomainFunctionalLevel` </TaskDescription>
+    </Id>
+
+    <!-- Upgrade Forest Functional Level                                                                                                     -->
+    <Id Number="006" Name="Upgrade Forest Functional Level">
+      <CallingFunction>Set-ADFunctionalLevel</CallingFunction>
+      <!--Parameter: Specify Upgrade is applied to Domain (and not Forest)                                                                   -->
+      <UseParameters>Forest</UseParameters>
+      <!--Parameter: Target Functional Level. Possibe values: "2008R2","2012","2012R2","2016","Last"                                         -->
+      <UseParameters>Last</UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>Upgrade `(ForestFunctionalLevel` </TaskDescription>
+    </Id>
 
     <!-- SET MS-DS-MACHINEACCOUNTQUOTA TO 0                                                                                                  -->
     <Id Number="010" Name="Restrict computer junction to the domain">
@@ -1075,7 +1097,7 @@
       <TaskDescription>set `(Administration` organizational unit</TaskDescription>
     </Id>
 
-    <!-- GENERATE NEW TIER 0 ORGANIZATIONAL UNIT                                                                                     -->
+    <!-- GENERATE NEW TIER 0 ORGANIZATIONAL UNIT                                                                                             -->
     <Id Number="051" Name="Set Tier 0 Organizational Unit">
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
@@ -1084,7 +1106,7 @@
       <TaskDescription>set `(Tier 0` organizational unit</TaskDescription>
     </Id>
 
-    <!-- GENERATE NEW TIER 1 and 2 ORGANIZATIONAL UNIT                                                                                     -->
+    <!-- GENERATE NEW TIER 1 and 2 ORGANIZATIONAL UNIT                                                                                       -->
     <Id Number="052" Name="Set Tier 1 and Tier 2 Organizational Unit">
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
@@ -1093,7 +1115,7 @@
       <TaskDescription>set `(Tier 1 and Tier 2 combo` organizational unit</TaskDescription>
     </Id>
 
-    <!-- GENERATE NEW LEGACY ORGANIZATIONAL UNIT                                                                                     -->
+    <!-- GENERATE NEW LEGACY ORGANIZATIONAL UNIT                                                                                             -->
     <Id Number="053" Name="Set Legacy Organizational Unit">
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
@@ -1166,7 +1188,7 @@
       <TaskDescription>Import `(WMI filter` to the domain</TaskDescription>
     </Id>
 
-	<!-- LOC ADM TASK DEPLOYMENT SCRIPT UDATE                                                                                                      -->
+	<!-- LOC ADM TASK DEPLOYMENT SCRIPT UDATE                                                                                                -->
 	<Id Number="127" Name="Update Loca Adm Task deployment scripts">
 	  <CallingFunction>Set-LocAdmTaskScripts</CallingFunction>
 	  <UseParameters>SYSVOL\%domaindns%\scripts\LocAdmTask</UseParameters>
