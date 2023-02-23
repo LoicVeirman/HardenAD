@@ -1,4 +1,4 @@
-<img src="https://hardenad.net/wp-content/uploads/2021/12/Logo-HARDEN-AD-Horizontal-RVB@4x-300x86.png" width="150%" height="150%">
+<img src="https://hardenad.net/wp-content/uploads/2021/12/Logo-HARDEN-AD-Horizontal-RVB@4x-300x86.png" width="125%" height="125%">
 
 # HardenAD
 This is the version 2 of the Hardening Active Directory project by then Harden Community. 
