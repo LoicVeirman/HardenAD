@@ -51,7 +51,7 @@ Function Set-TreeOU {
                 $hrOUname += " | " + $hrOUs[$i] 
             }
             Try {
-                New-ADOrganizationalUnit -Name $OUObject.Name -Path $OUPath -Description $OUObject.Description -ErrorAction Stop
+                New-ADOrganizationalUnit -Name $OUObject.Name -Path $OUPath -Description $OUObject.Description -ProtectedFromAccidentalDeletion $false -ErrorAction Stop
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ $hrOUname (success)"
             } 
             Catch {
@@ -151,7 +151,7 @@ Function Set-TreeOU {
                         $hrOUname += " | " + $hrOUs[$i] 
                     }
                     Try {
-                        New-ADOrganizationalUnit -Name $xmlData.Name -Description $xmlData.Description -Path $DomainRootDN
+                        New-ADOrganizationalUnit -Name $xmlData.Name -Description $xmlData.Description -Path $DomainRootDN -ProtectedFromAccidentalDeletion $false
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ $hrOUname created"
                     }
                     Catch {
