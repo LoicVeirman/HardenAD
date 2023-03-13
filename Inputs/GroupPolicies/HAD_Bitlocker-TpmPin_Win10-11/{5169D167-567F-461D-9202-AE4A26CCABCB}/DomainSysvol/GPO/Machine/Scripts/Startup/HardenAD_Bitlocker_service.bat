@@ -1,0 +1,1 @@
+sc.exe start HADBL02

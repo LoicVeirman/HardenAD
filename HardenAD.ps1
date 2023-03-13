@@ -222,7 +222,7 @@ $ColorsAndTexts = New-Object -TypeName psobject `
        
 
 #-Loading Header (yes, a bit of fun)
-Clear-Host
+#Clear-Host
 $LogoData = Get-Content (".\Configs\" + $SchedulrConfig.SchedulerSettings.ScriptHeader.Logo.file)
 $PriTxCol = $SchedulrConfig.SchedulerSettings.ScriptHeader.Logo.DefltColor
 
@@ -485,7 +485,7 @@ Write-Host $csvName -ForegroundColor DarkGray -NoNewline
 Write-Host "..." -ForegroundColor Gray -NoNewline
 
 Try { 
-    $Resume | Select-Object TaskId, TaskResult, TaskName | Sort-Object TaskID | Export-Csv .\Logs\$CsvName -Delimiter "`t" -Encoding Unicode -NoTypeInformation
+    $Resume | Select TaskId, TaskResult, TaskName | Sort-Object TaskID | Export-Csv .\Logs\$CsvName -Delimiter "`t" -Encoding Unicode -NoTypeInformation
     Write-Host "success" -ForegroundColor Green
 }
 Catch {
@@ -504,4 +504,4 @@ Catch {
     Write-Host "failure`n" -ForegroundColor red
 }
 
-$Resume | Select-Object TaskId, TaskResult, TaskName | Sort-Object TaskID | Format-Table -AutoSize 
+$Resume | Select TaskId, TaskResult, TaskName | Sort-Object TaskID | Format-Table -AutoSize 

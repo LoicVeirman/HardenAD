@@ -60,7 +60,7 @@ Function New-AdministrationAccounts {
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
-        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD-2.9.5.xml") -ErrorAction Stop
+        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
     }
@@ -331,7 +331,7 @@ Function New-AdministrationGroups {
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
-        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD-2.9.5.xml") -ErrorAction Stop
+        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
     }
@@ -528,8 +528,8 @@ Function Reset-GroupMembership {
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
-        $xmlSkeleton = [xml](Get-Content (".\Configs\TasksSequence_HardenAD-2.9.5.xml") -ErrorAction Stop)
-        $cfgXml = [xml](Get-Content ".\Configs\TasksSequence_HardenAD-2.9.5.xml" -ErrorAction Stop)
+        $xmlSkeleton = [xml](Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop)
+        $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)
         $xmlLoaded = $true
     }
     Catch {
