@@ -478,7 +478,15 @@ Function New-GpoObject {
                     }
                     # Case 2 : translated.migtable
                     else {
-                        $null = Import-GPO -BackupId $gpBack -TargetName $gpName -MigrationTable $MigTableFile -Path $curDir\Inputs\GroupPolicies\$gpName -ErrorAction Stop
+                        try {
+                            Write-Host "translated mig"
+                            $null = Import-GPO -BackupId $gpBack -TargetName $gpName -MigrationTable $MigTableFile -Path $curDir\Inputs\GroupPolicies\$gpName -ErrorAction Stop
+                        }
+                        catch {
+                            Write-Host "Import-GPO -BackupId $gpBack -TargetName $gpName -MigrationTable $MigTableFile -Path $curDir\Inputs\GroupPolicies\$gpName -ErrorAction Stop" -ForegroundColor Yellow
+                            Write-Host $_.Exception.Message -ForegroundColor Magenta
+                            Pause
+                        }
                         $importFlag = $true
                     }
                 }
