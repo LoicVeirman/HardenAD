@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScheduledTasks clsid="{CC63F200-7309-4ba0-B154-A71CD118DBCC}">
+	<TaskV2 clsid="{D8896631-B747-47a7-84A6-C155337F3BC8}" name="HardenAD\HAD_Manage_Local_Administrators_Group" image="1" userContext="0" removePolicy="0" changed="2023-03-21 15:30:35" uid="{2CE63049-895B-4F96-AEB8-6CA1C0110146}">
+		<Properties action="R" name="HardenAD\HAD_Manage_Local_Administrators_Group" runAs="NT AUTHORITY\System" logonType="S4U">
+			<Task version="1.2">
+				<RegistrationInfo>
+					<Author>HARDEN\qma</Author>
+					<Description></Description>
+				</RegistrationInfo>
+				<Principals>
+					<Principal id="Author">
+						<UserId>NT AUTHORITY\System</UserId>
+						<LogonType>S4U</LogonType>
+						<RunLevel>HighestAvailable</RunLevel>
+					</Principal>
+				</Principals>
+				<Settings>
+					<IdleSettings>
+						<Duration>PT5M</Duration>
+						<WaitTimeout>PT1H</WaitTimeout>
+						<StopOnIdleEnd>false</StopOnIdleEnd>
+						<RestartOnIdle>false</RestartOnIdle>
+					</IdleSettings>
+					<MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+					<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+					<StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+					<AllowHardTerminate>false</AllowHardTerminate>
+					<AllowStartOnDemand>true</AllowStartOnDemand>
+					<Enabled>true</Enabled>
+					<Hidden>false</Hidden>
+					<ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+					<Priority>7</Priority>
+				</Settings>
+				<Triggers>
+					<EventTrigger>
+						<Enabled>true</Enabled>
+						<Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="Security"&gt;&lt;Select Path="Security"&gt;*[System[EventID=5139]]&lt;/Select&gt;&lt;Select Path="Security"&gt;*[System[EventID=4743]]&lt;/Select&gt;&lt;Select Path="Security"&gt;*[System[EventID=4742]]&lt;/Select&gt;&lt;Select Path="Security"&gt;*[System[EventID=4741]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription>
+						<ValueQueries>
+							<Value name="EventID">Event/System/EventID</Value>
+							<Value name="NewDN">Event/EventData/Data[@Name="NewObjectDN"]</Value>
+							<Value name="OldDN">Event/EventData/Data[@Name="OldObjectDN"]</Value>
+							<Value name="TargetPC">Event/EventData/Data[@Name="TargetUserName"]</Value>
+						</ValueQueries>
+					</EventTrigger>
+				</Triggers>
+				<Actions Context="Author">
+					<Exec>
+						<Command>powershell.exe</Command>
+						<Arguments>Start-HardenADLocalGroups -ComputerName '"$(TargetPC)"' -EventID $(EventID) -OldDN '"$(OldDN)"' -NewDN '"$(NewDN)"'</Arguments>
+					</Exec>
+				</Actions>
+			</Task>
+		</Properties>
+	</TaskV2>
+</ScheduledTasks>
+
