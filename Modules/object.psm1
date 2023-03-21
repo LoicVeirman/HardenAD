@@ -182,7 +182,11 @@ Function New-AdministrationAccounts {
                         Try {
                             #-Generate a random password
                             $NewPwd = $null
-                            ((48..57) + (65..90) + (97..122) + 36 + 33) | Get-Random -Count 16 | % { $NewPwd += [char]$_ }
+                            
+                            Add-Type -AssemblyName 'System.Web'
+                            $NewPwd = [System.Web.Security.Membership]::GeneratePassword(16, 3)
+
+                            # ((48..57) + (65..90) + (97..122) + 36 + 33) | Get-Random -Count 16 | ForEach-Object { $NewPwd += [char]$_ }
                             $SecPwd = ConvertTo-SecureString -AsPlainText $NewPwd -Force
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ Password generated"
 
