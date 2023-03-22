@@ -6,8 +6,7 @@
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
-Function Set-HardenACL 
-{ 
+Function Set-HardenACL { 
     <#
         .SYNOPSIS
         Function use to setup ACL for delegation purpose
@@ -71,55 +70,75 @@ Function Set-HardenACL
         $InheritedObjects,
     
         [Parameter(Position = 7  , Mandatory = $false, HelpMessage = "To which type of object the acl will apply")]
-        [ValidateSet("group","user","computer","contact","member")]
+        [ValidateSet("group", "user", "computer", "contact", "member")]
         [string]
-        $ObjectType
+        $ObjectType,
+        [Parameter(Position = 8, Mandatory = $false, HelpMessage = "Audit ACL")]
+        [switch]
+        $AuditSwitch
     )
-
     #.Move location to AD to simplify AD manipulation
     Push-Location AD:
-    try   {
-            $acl   = Get-Acl ("AD:\" + $targetDN)
-            $group = Get-ADGroup $trustee
-            $sid   = New-Object System.Security.Principal.SecurityIdentifier $($group.SID)
-            
-            if ($inheritedObjects -ne "" -and $Null -ne $inheritedObjects) 
-            {
-                switch ($inheritedObjects) 
-                {
-                    "group"    { $inheritanceguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 }
-                    "user"     { $inheritanceguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 }
-                    "computer" { $inheritanceguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
-                    "contact"  { $inheritanceguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
-                    "member"   { $inheritanceguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
-                }
-            } else {
-                
-                $inheritanceguid = New-Object Guid 00000000-0000-0000-0000-000000000000
+    try {            
+        if ($inheritedObjects -ne "" -and $Null -ne $inheritedObjects) {
+            switch ($inheritedObjects) {
+                "group" { $inheritanceguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 }
+                "user" { $inheritanceguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 }
+                "computer" { $inheritanceguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
+                "contact" { $inheritanceguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
+                "member" { $inheritanceguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
             }
+        }
+        else {
+            $inheritanceguid = New-Object Guid 00000000-0000-0000-0000-000000000000
+        }
 
-            if ($ObjectType -ne "" -and $Null -ne $ObjectType) 
-            {
-                switch ($ObjectType) 
-                {
-                    "group"    { $Objectguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 }
-                    "user"     { $Objectguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 }
-                    "computer" { $Objectguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
-                    "contact"  { $Objectguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
-                    "member"   { $Objectguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
-                }
-            } else {
-            
-                $Objectguid = New-Object Guid 00000000-0000-0000-0000-000000000000
+        if ($ObjectType -ne "" -and $Null -ne $ObjectType) {
+            switch ($ObjectType) {
+                "group" { $Objectguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 }
+                "user" { $Objectguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 }
+                "computer" { $Objectguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
+                "contact" { $Objectguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
+                "member" { $Objectguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
             }
+        }
+        else {
+            $Objectguid = New-Object Guid 00000000-0000-0000-0000-000000000000
+        }
 
-        $identity        = [System.Security.Principal.IdentityReference] $SID
-        $adRights        = [System.DirectoryServices.ActiveDirectoryRights] $right
-        $type            = [System.Security.AccessControl.AccessControlType] $rightType
-        $inheritanceType = [System.DirectoryServices.ActiveDirectorySecurityInheritance] $inheritance
-        $ace             = New-Object System.DirectoryServices.ActiveDirectoryAccessRule $identity, $adRights, $type, $Objectguid, $inheritanceType, $inheritanceguid
+        switch ($Trustee) {
+            ("Authenticated Users") { 
+                $SID = New-Object System.Security.Principal.SecurityIdentifier("S-1-5-11")
+            }
+            Default {
+                $group = Get-ADGroup $trustee
+                $SID = New-Object System.Security.Principal.SecurityIdentifier $($group.SID)
+            }
+        }
         
-        $acl.AddAccessRule($ace)
+        $identity = [System.Security.Principal.IdentityReference] $SID
+        $adRights = [System.DirectoryServices.ActiveDirectoryRights] $right
+        $inheritanceType = [System.DirectoryServices.ActiveDirectorySecurityInheritance] $inheritance
+
+
+        if ($AuditSwitch) {
+            $acl = Get-Acl ("AD:\" + $targetDN) -Audit
+
+            $type = [System.Security.AccessControl.AuditFlags] $rightType
+            $Parameters = $identity, $adRights, $type, $Objectguid, $inheritanceType, $inheritanceguid
+
+            $ace = New-Object System.DirectoryServices.ActiveDirectoryAuditRule($Parameters)
+            $acl.AddAuditRule($ace)
+        }
+        else {
+            $acl = Get-Acl ("AD:\" + $targetDN)
+            
+            $type = [System.Security.AccessControl.AccessControlType] $rightType
+            $Parameters = $identity, $adRights, $type, $Objectguid, $inheritanceType, $inheritanceguid
+            
+            $ace = New-Object System.DirectoryServices.ActiveDirectoryAccessRule($Parameters)
+            $acl.AddAccessRule($ace)
+        }
 
         Set-Acl -AclObject $acl -Path ("AD:\" + ($targetDN)) -ErrorAction SilentlyContinue
         
@@ -136,8 +155,7 @@ Function Set-HardenACL
     Return $Result
 }
 
-Function Push-DelegationModel
-{
+Function Push-DelegationModel {
     <#
         .SYNOPSIS
         Apply the delegation model to the domain.
@@ -172,14 +190,14 @@ Function Push-DelegationModel
         [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
-    } Catch {
+    }
+    Catch {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! FAILED loading xml skeleton file "
         $xmlLoaded = $false
     }    
 
     ## If xml loaded, begining check and create...
-    if ($xmlLoaded)
-    {
+    if ($xmlLoaded) {
         ## Log loop start
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable XmlLoaded.......: $xmlLoaded"
         
@@ -188,27 +206,26 @@ Function Push-DelegationModel
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
         
         ## When dealing with 2008R2, we need to import AD module first
-        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
-        {
+        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
         
-            Try   { 
-                    Import-Module ActiveDirectory
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-                  } 
+            Try { 
+                Import-Module ActiveDirectory
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+            } 
             Catch {
-                    $noError = $false
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
-                  }
-        } else {
+                $noError = $false
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
+            }
+        }
+        else {
 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: False"
         }
 
         ## if Everything run smoothly, let's begin.
-        if ($noError)
-        {
+        if ($noError) {
             ## Getting root DNS name
             $DomainRootDN = (Get-ADDomain).DistinguishedName
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
@@ -218,43 +235,64 @@ Function Push-DelegationModel
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: xml data loaded (" + $xmlData.count + " ACL(s))"
             
             ## if we got data, begining creation loop
-            if ($xmlData)
-            {
+            if ($xmlData) {
                 #-Failing Creation index
                 $ErrIdx = 0
                 
                 #.Begin object creation loop
-                foreach ($HADacl in $xmlData)
-                {
-                    Switch ($HADacl.InheritedObjects)
-                    {
-                        ""      { $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN",$DomainRootDN) `
-                                                          -Trustee          $HADacl.Trustee `
-                                                          -Right            $HADacl.Right`
-                                                          -RightType        $HADacl.RightType`
-                                                          -Inheritance      $HADacl.Inheritance`
-                                                          -ObjectType       $HADacl.ObjectType
-                                }
-                        Default { $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN",$DomainRootDN) `
-                                                          -Trustee          $HADacl.Trustee `
-                                                          -Right            $HADacl.Right`
-                                                          -RightType        $HADacl.RightType`
-                                                          -Inheritance      $HADacl.Inheritance`
-                                                          -InheritedObjects $HADacl.InheritedObjects
-                                }
+                foreach ($HADacl in $xmlData) {
+                    Switch ($HADacl.InheritedObjects) {
+                        "" {
+                            if ($HADacl.Audit) {
+                                Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                    -Trustee          $HADacl.Trustee `
+                                    -Right            $HADacl.Right`
+                                    -RightType        $HADacl.RightType`
+                                    -Inheritance      $HADacl.Inheritance`
+                                    -ObjectType       $HADacl.ObjectType `
+                                    -AuditSwitch
+                            }
+                            else {
+                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                    -Trustee          $HADacl.Trustee `
+                                    -Right            $HADacl.Right`
+                                    -RightType        $HADacl.RightType`
+                                    -Inheritance      $HADacl.Inheritance`
+                                    -ObjectType       $HADacl.ObjectType
+                            }
+                        }
+                        Default {
+                            if ($HADacl.Audit) {
+                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                    -Trustee          $HADacl.Trustee `
+                                    -Right            $HADacl.Right `
+                                    -RightType        $HADacl.RightType `
+                                    -Inheritance      $HADacl.Inheritance `
+                                    -InheritedObjects $HADacl.InheritedObjects `
+                                    -AuditSwitch
+                            }
+                            else {
+                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                    -Trustee          $HADacl.Trustee `
+                                    -Right            $HADacl.Right`
+                                    -RightType        $HADacl.RightType`
+                                    -Inheritance      $HADacl.Inheritance`
+                                    -InheritedObjects $HADacl.InheritedObjects
+                            }
+                        }
                     }
-                    if ($result)
-                    {
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ ACL added: TargetDN= " + ($HADacl.TargetDN -replace "RootDN",$DomainRootDN)
+                    if ($result) {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ ACL added: TargetDN= " + ($HADacl.TargetDN -replace "RootDN", $DomainRootDN)
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + $HADacl.Trustee
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                   Right= " + $HADacl.Right
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->               RightType= " + $HADacl.RightType
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->             Inheritance= " + $HADacl.Inheritance
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->        InheritedObjects= " + $HADacl.InheritedObjects
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->              ObjectType= " + $HADacl.ObjectType
-                    } Else {
+                    }
+                    Else {
                         $ErrIdx++
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! !!! ACL ERROR: TargetDN= " + ($HADacl.TargetDN -replace "RootDN",$DomainRootDN)
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! !!! ACL ERROR: TargetDN= " + ($HADacl.TargetDN -replace "RootDN", $DomainRootDN)
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!                 Trustee= " + $HADacl.Trustee
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!                   Right= " + $HADacl.Right
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!               RightType= " + $HADacl.RightType
@@ -265,31 +303,30 @@ Function Push-DelegationModel
                 }
 
                 #-Success: no issue
-                if ($ErrIdx -eq 0) 
-                { 
+                if ($ErrIdx -eq 0) { 
                     $result = 0 
                     $ResMess = "no error"
                 }
                 #-Warning: some were not created and generate an error
-                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) 
-                { 
+                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) { 
                     $result = 1
                     $ResMess = "$ErrIdx out of " + $xmlData.count + " failed"
                 }
                 #-Error: none were created!
-                if ($ErrIdx -ge $xmlData.count) 
-                { 
+                if ($ErrIdx -ge $xmlData.count) { 
                     $result = 2
                     $ResMess = "error when creating ACEs!"
                 }
 
-            } else {
+            }
+            else {
         
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Warning: xmlData is empty!"
                 $result = 1
                 $ResMess = "No Data to deal with"
             }
-        } else {
+        }
+        else {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: could not proceed!"
             $result = 2
             $ResMess = "prerequesite failure"
@@ -299,11 +336,9 @@ Function Push-DelegationModel
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*"))
-        {
+        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
