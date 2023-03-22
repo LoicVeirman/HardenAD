@@ -120,7 +120,6 @@ Function Set-HardenACL {
         $adRights = [System.DirectoryServices.ActiveDirectoryRights] $right
         $inheritanceType = [System.DirectoryServices.ActiveDirectorySecurityInheritance] $inheritance
 
-
         if ($AuditSwitch) {
             $acl = Get-Acl ("AD:\" + $targetDN) -Audit
 

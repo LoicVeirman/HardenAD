@@ -186,7 +186,7 @@ Function New-ScheduleTasks {
         $SchXml = $cfgXml.settings.TaskSchedules
     
         ## Get tasks base dir
-        $SchDir = $SchXml.BaseDir
+        $SchDir = $SchXml.BaseDir -replace "%Windir%", $env:windir
 
         ## Check if the directory exists, else create it
         if (-not(Test-Path $SchDir)) {

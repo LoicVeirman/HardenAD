@@ -814,25 +814,25 @@ Add the local administration AD group to the corresponding T0 system's integrate
 Add the local administration AD group to the corresponding T1 system's integrated administrator group">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoFilter WMI="Windows-Server_Supported_Members"/>
-      <GpoLink Path="OU=Servers,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{4B947060-F817-414E-B27B-DC7EFF171B6B}" Validation="Yes" Name="HAD_LocalAdmins_T1L" Description="Harden AD ===================
 Add the local administration AD group to the corresponding legacy server (T1L) system's integrated administrator group">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoFilter WMI="Windows-Server_Legacy_Members"/>
-      <GpoLink Path="OU=Servers,OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{DBB5A54A-4338-4D59-A25E-BD71CEBB86B2}" Validation="Yes" Name="HAD_LocalAdmins_T2" Description="Harden AD ===================
 Add the local administration AD group to the corresponding T2 system's integrated administrator group">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoFilter WMI="Windows-Client_Supported"/>
-      <GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{F6D93646-E7DB-49C1-9FDC-9B0840C54637}" Validation="Yes" Name="HAD_LocalAdmins_T2L" Description="Harden AD ===================
 Add the local administration AD group to the corresponding legacy workstation (T2L) system's integrated administrator group">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoFilter WMI="Windows-Client_Legacy"/>
-      <GpoLink Path="OU=Workstations,OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{4D5DF38A-161D-42AD-A29B-94309EDE3D0D}" Validation="Yes" Name="HAD_Local_Accounts_Config" Description="Harden AD ===================
 Enable and rename the local administrator account.
@@ -868,34 +868,36 @@ Blocks connections to tier 0 machines from other tier accounts">
 Blocks connections to tier 1 machines from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoFilter WMI="Windows-Server_Supported_Members"/>
-      <GpoLink Path="OU=Servers,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{DA57EB62-4947-4D5B-B2B8-C46DEEDE846B}" Validation="Yes" Name="HAD_LoginRestrictions_T1L" Description="Harden AD ===================
 Blocks connections to tier legacy servers from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoFilter WMI="Windows-Server_Legacy_Members"/>
-      <GpoLink Path="OU=Servers,OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{F074C00D-D8D6-48F9-A2F8-51F932C70D46}" Validation="Yes" Name="HAD_LoginRestrictions_T2" Description="Harden AD ===================
 Blocks connections to tier 2 machines from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoFilter WMI="Windows-Client_Supported"/>
-      <GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{61FA8970-A5E5-40C5-9726-CBB85CE7B12D}" Validation="Yes" Name="HAD_LoginRestrictions_T2L" Description="Harden AD ===================
 Blocks connections to tier legacy workstations from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoFilter WMI="Windows-Client_Legacy"/>
-      <GpoLink Path="OU=Workstations,OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{38C8D47E-E4F2-4DF2-8B60-BE9B3E53647D}" Validation="Yes" Name="HAD_Logon-Cache_0" Description="Harden AD ===================
 No login credentials cached from servers.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows-Server_All"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{BC9F44A0-7603-4223-AD48-9467B675086F}" Validation="Yes" Name="HAD_Logon-Cache_2" Description="Harden AD ===================
 Keeps two login credentials cached from servers.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoFilter WMI="Windows-Client"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{41D3950E-ACD2-4CD8-99B5-DE791765C727}" Validation="Yes" Name="HAD_MSLive-Accounts_Disabled" Description="Harden AD ===================
@@ -932,8 +934,7 @@ Enable Logs for PowerShell.">
 Disables the print spooler service on windows system.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoFilter WMI="Windows-Server_All"/>
-      <GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes"/>
-      <GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes"/>
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
     <GPO BackupID="{3A10AD30-D95C-42C4-AD45-C7E4CBFC2F2D}" Validation="Yes" Name="HAD_RDP_Disabled" Description="Harden AD ===================
 Disables the RDP service and prohibits RDP connections">
@@ -981,7 +982,7 @@ Configure SMB signing for clients.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    <GPO BackupID="{B4AF8F37-E7BA-4E16-AF25-6C7564EDF406}" Validation="Yes" Name="HAD_SMB1_Audit_Enabled" Description="Harden AD ===================
+    <!-- <GPO BackupID="{B4AF8F37-E7BA-4E16-AF25-6C7564EDF406}" Validation="Yes" Name="HAD_SMB1_Audit_Enabled" Description="Harden AD ===================
 Creates a scheduled task to audit SMBv1.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
@@ -1005,7 +1006,7 @@ Enables SMBv1.">
 Enables SMBv1 only for servers.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
-    </GPO>
+    </GPO> -->
     <GPO BackupID="{181A6227-DC22-4E7C-8EAE-DAC9DC2F43AD}" Validation="Yes" Name="HAD_SSL2_SSL3_Disabled" Description="Harden AD ===================
 Disables SSLv2 and SSLv3 on Windows systems.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
@@ -1287,7 +1288,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     </Group>
   </DefaultMembers>
 
-  <TaskSchedules BaseDir="C:\_ADM\TasksSchedulesScripts">
+  <TaskSchedules BaseDir="%Windir%\HardenAD\TasksSchedulesScripts">
     <!-- ################################################################################################################################### -->
     <!-- the <TaskSchedules> section define the sched. tasks to add to the running system and is called by the function New-ScheduleTasks.   -->
     <!-- The following parameters are expected:                                                                                              -->
