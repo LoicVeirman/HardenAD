@@ -20,42 +20,30 @@ $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
 $errCde = 0
 
 try {
-	$xmlRefs = ([xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)).Settings.Translation.wellKnownID | Where-Object { $_.ObjectClass -eq "group" }
+	$xmlConfig = ([xml](Get-Content "$PSScriptRoot\.\MCS-GroupsFlushing.xml")).Config.Group
 }
 catch {
 	$errCde++
 }
-$GroupsToFlush = @(
-	"%t0-localAdmin-servers%"
-	"%t1-localAdmin-servers%"
-	"%t1l-localAdmin-servers%"
-	"%t0-localAdmin-workstations%"
-	"%t2-localAdmin-workstations%"
-	"%t2l-localAdmin-workstations%"
-)
 
-$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Import groups data: found " + $GroupsToFlush.count + " group(s) to flush"
+$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Import groups data: found " + $xmlConfig + " group(s) to flush"
 
-foreach ($refs in $xmlRefs) {
-	if ($refs.translateFrom -in $GroupsToFlush) {
+foreach ($Group in $xmlConfig) {
+	$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $Group.Name + ": begin"
 
-		$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $refs.translateTo + ": begin"
-
-		try {
-			Set-ADGroup -Identity $refs.translateTo	-Clear member
-			$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $refs.translateTo + ": success"
-		}
-		catch {
-			$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $refs.translateTo + ": failed!"
-			$errCde++
-		}
-
-		$GroupsToFlushTranslated += $refs.translateTo
+	try {
+		Set-ADGroup -Identity $Group.Name -Clear member
+		$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $Group.Name + ": success"
+	}
+	catch {
+		$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $Group.Name + ": failed!"
+		$errCde++
 	}
 }
 
+
 $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "--> Group(s) flushing is over"
-$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "--> The process has failed for $errCde over " + $GroupsToFlush.count
+$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "--> The process has failed for $errCde over " + $xmlConfig
 $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "--> exporting log file to MCS-GroupsFlushing.log"
 $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "*** SCRIPT FINISH"
 $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "***"

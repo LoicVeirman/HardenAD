@@ -171,6 +171,58 @@ Function New-ScheduleTasks {
         $result = 0
     }
 
+    $TaskPath = "$PSScriptRoot\..\Inputs\ScheduleTasks\TasksSchedulesScripts\"
+    $TaskConfig = Get-ChildItem $TaskPath -Recurse | Where-Object { $_.extension -eq ".xml" }
+
+    if ($TaskConfig) {
+        $xmlRefs = ([xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)).Settings.Translation.wellKnownID
+        $xmlPref = ([xml](Get-Content ($gpoPath + "\translation.xml" ))).translation.Preferences.replace
+
+        foreach ($xmlObj in $TaskConfig) {
+            $backupXml = $xmlObj.DirectoryName + "\" + $xmlObj.name + ".backup"
+            if (-not(Test-Path $backupXml)) {
+                Copy-Item $xmlObj.FullName $backupXml
+            }
+            $xmlData = [system.io.file]::ReadAllText($backupXml)
+            foreach ($data in $xmlPref) {
+                $findValue = $data.find
+                $replValue = $data.replaceBy
+
+                if ($replValue -match "%*%") {
+                    switch -regex ($replValue) {
+                        "^%SID:ID=*" {
+                            $tmpDat = ($replValue -replace "%", "") -replace "SID:", ""
+                            $newRep = ($xmlPref | Where-Object { $_.ID -eq ($tmpDat -split "=")[1] }).replaceBy
+
+                            if ($newRep -match "%*%") {
+                                foreach ($ref in $xmlRefs) {
+                                    $newRep = $newRep -replace $ref.translateFrom, $ref.TranslateTo
+                                }
+                            }
+
+                            Try {
+                                $sAMAccountName = ($newRep -split "\\")[1]
+                                $newRep = (Get-ADObject -filter { sAMAccountName -eq $sAMAccountName } -Properties objectSID).objectSID.Value
+                            }
+                            Catch {
+                                #.No change
+                            }
+                            $xmlData = $xmlData -replace $findValue, $newRep
+                            break
+                        }
+                        
+                        Default {
+                            foreach ($ref in $xmlRefs) {
+                                $replValue = $replValue -replace $ref.translateFrom, $ref.TranslateTo
+                            }
+                            $xmlData = $xmlData -replace ($findValue -replace "\\", "\\"), $replValue
+                        }
+                    }
+                }
+            }
+            [system.io.file]::WriteAllLines($xmlObj.FullName, $xmlData)
+        }
+    }
     ## Get xml data
     Try {
         $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
