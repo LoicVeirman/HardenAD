@@ -148,7 +148,6 @@ Function New-ScheduleTasks {
     #>
     param(
     )
-
     ## Function Log Debug File
     $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
     $dbgMess = @()
@@ -172,28 +171,42 @@ Function New-ScheduleTasks {
     }
 
     $TaskPath = "$PSScriptRoot\..\Inputs\ScheduleTasks\TasksSchedulesScripts\"
-    $TaskConfig = Get-ChildItem $TaskPath -Recurse | Where-Object { $_.extension -eq ".xml" }
+    $TaskConfig = Get-ChildItem $TaskPath -Recurse | Where-Object { $_.extension -eq ".xml" -and $_.Name -ne "translation.xml" }
+    $TranslationXML = Get-ChildItem $TaskPath -Recurse | Where-Object { $_.Name -eq "translation.xml" }
 
     if ($TaskConfig) {
-        $xmlRefs = ([xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)).Settings.Translation.wellKnownID
-        $xmlPref = ([xml](Get-Content ($gpoPath + "\translation.xml" ))).translation.Preferences.replace
+
+
+        try {
+            $xmlRefs = ([xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)).Settings.Translation.wellKnownID
+        }
+        catch {
+            Write-Host "
+            
+            
+            
+            -----------------------------------------------------------------------------ok"
+            pause
+        }        
+        $xmlPref = ([xml](Get-Content ($TranslationXML))).translation.Preferences.replace
 
         foreach ($xmlObj in $TaskConfig) {
             $backupXml = $xmlObj.DirectoryName + "\" + $xmlObj.name + ".backup"
+
             if (-not(Test-Path $backupXml)) {
                 Copy-Item $xmlObj.FullName $backupXml
             }
+
+
             $xmlData = [system.io.file]::ReadAllText($backupXml)
             foreach ($data in $xmlPref) {
                 $findValue = $data.find
                 $replValue = $data.replaceBy
-
                 if ($replValue -match "%*%") {
                     switch -regex ($replValue) {
                         "^%SID:ID=*" {
                             $tmpDat = ($replValue -replace "%", "") -replace "SID:", ""
                             $newRep = ($xmlPref | Where-Object { $_.ID -eq ($tmpDat -split "=")[1] }).replaceBy
-
                             if ($newRep -match "%*%") {
                                 foreach ($ref in $xmlRefs) {
                                     $newRep = $newRep -replace $ref.translateFrom, $ref.TranslateTo
@@ -203,6 +216,7 @@ Function New-ScheduleTasks {
                             Try {
                                 $sAMAccountName = ($newRep -split "\\")[1]
                                 $newRep = (Get-ADObject -filter { sAMAccountName -eq $sAMAccountName } -Properties objectSID).objectSID.Value
+                                Write-host "bleu"
                             }
                             Catch {
                                 #.No change
@@ -213,6 +227,7 @@ Function New-ScheduleTasks {
                         
                         Default {
                             foreach ($ref in $xmlRefs) {
+                                Write-Host $ref
                                 $replValue = $replValue -replace $ref.translateFrom, $ref.TranslateTo
                             }
                             $xmlData = $xmlData -replace ($findValue -replace "\\", "\\"), $replValue
