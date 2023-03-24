@@ -47,10 +47,10 @@ foreach($drive in $drives){
             if ($WindowsVer -and !$TPMNotEnabled) {
                 $Error.Clear()
                 try{
-                    Initialize-Tpm -AllowClear -AllowPhysicalPresence -ErrorAction Error
+                    Initialize-Tpm -AllowClear -AllowPhysicalPresence -ErrorAction Stop
                     "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] TPM not enabled and correctly initialized" | Out-File -Append -FilePath $log_file
                 }catch{
-                    "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] TPM activation failed" | Out-File -Append -FilePath $log_file 
+                    "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] TPM activation failed: $($Error)" | Out-File -Append -FilePath $log_file 
                     exit  
                 }
             } else {
@@ -96,6 +96,7 @@ foreach($drive in $drives){
                             #Backup To AD
                             $Error.Clear()
                             try{
+                                $obj.KeyProtectorId
                                 Backup-BitLockerKeyProtector -MountPoint $BLV.MountPoint -KeyProtectorID $obj.KeyProtectorId
                                 "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Backup BitLocker Key Protector: SUCCESS" | Out-File -Append -FilePath $log_file
                             }
@@ -163,7 +164,7 @@ foreach($drive in $drives){
         {
             $Error.Clear()
             try{
-                Initialize-Tpm -AllowClear -AllowPhysicalPresence -ErrorAction Error
+                Initialize-Tpm -AllowClear -AllowPhysicalPresence -ErrorAction Stop
                 "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] TPM not enabled and correctly initialized" | Out-File -Append -FilePath $log_file
             }catch{
                 "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] TPM activation failed" | Out-File -Append -FilePath $log_file 
@@ -184,7 +185,7 @@ foreach($drive in $drives){
         }
         $Error.Clear()
         try{
-            Enable-BitLocker -MountPoint $drive.MountPoint -RecoveryPasswordProtector -ErrorAction Error
+            Enable-BitLocker -MountPoint $drive.MountPoint -RecoveryPasswordProtector -ErrorAction Stop
             Enable-BitLockerAutoUnlock -MountPoint $drive.MountPoint
             "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Enable Bitlocker for fixed data drives: SUCCESS" | Out-File -Append -FilePath $log_file
         }catch{

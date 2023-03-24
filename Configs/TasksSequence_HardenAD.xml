@@ -660,12 +660,12 @@ Setting up Windows Update on Windows 7/8 machines according to the recommendatio
       <GpoFilter WMI="Windows-Client"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    <!-- <GPO BackupID="{A6799028-B0CE-481D-A536-DDD8FBE4E07E}" Validation="Yes" Name="HAD_Bitlocker-TpmOnly_Win10-11" Description="Harden AD ===================
+    <GPO BackupID="{B547F05F-E600-48BA-92BB-8B9DB98570F0}" Validation="Yes" Name="HAD_Bitlocker-TpmOnly_Win10-11" Description="Harden AD ===================
 Enable BitLocker encryption with Trusted Platform Module.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoFilter WMI="Windows-Client"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
-    </GPO> -->
+    </GPO>
     <GPO BackupID="{5DB333BA-3F67-405A-868C-403DF01347A9}" Validation="Yes" Name="HAD_Bitlocker-TpmPin_Win10-11" Description="Harden AD ===================
 Enable BitLocker encryption with Trusted Platform Module. 6-digit PIN code required.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
@@ -909,6 +909,11 @@ Disables DNS Fallback functionality: NBT-NS.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
+    <GPO BackupID="{4753AF43-1FD0-4A59-A442-B79EE4E9A290}" Validation="Yes" Name="HAD_NTLM_Audit_Enabled" Description="Harden AD ===================
+Enable NTLM audit on Domain Controller.">
+      <GpoMode Mode="BOTH" Tier="Tier0"/>
+      <GpoLink Path="OU=Domain Controller,RootDN" Enabled="Yes" Enforced="Yes"/>
+    </GPO>
     <GPO BackupID="{5B9C9897-9806-4996-A3E6-10403FD271ED}" Validation="Yes" Name="HAD_NTLM1_LMx_Disabled" Description="Harden AD ===================
 Forces the use of NTLMv2 response. LM and NTLMv1 responses are refused.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
@@ -981,7 +986,7 @@ Configure SMB signing for clients.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
     </GPO>
-    <!-- <GPO BackupID="{B4AF8F37-E7BA-4E16-AF25-6C7564EDF406}" Validation="Yes" Name="HAD_SMB1_Audit_Enabled" Description="Harden AD ===================
+    <GPO BackupID="{B4AF8F37-E7BA-4E16-AF25-6C7564EDF406}" Validation="Yes" Name="HAD_SMB1_Audit_Enabled" Description="Harden AD ===================
 Creates a scheduled task to audit SMBv1.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
@@ -1005,7 +1010,7 @@ Enables SMBv1.">
 Enables SMBv1 only for servers.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes"/>
-    </GPO> -->
+    </GPO>
     <GPO BackupID="{181A6227-DC22-4E7C-8EAE-DAC9DC2F43AD}" Validation="Yes" Name="HAD_SSL2_SSL3_Disabled" Description="Harden AD ===================
 Disables SSLv2 and SSLv3 on Windows systems.">
       <GpoMode Mode="BOTH" Tier="Tier0"/>
@@ -1388,7 +1393,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <UseParameters>Domain</UseParameters>
       <!--Parameter: Target Functional Level. Possibe values: "2008R2","2012","2012R2","2016","Last"                                         -->
       <UseParameters>Last</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Upgrade `(DomainFunctionalLevel` </TaskDescription>
     </Id>
 
@@ -1399,7 +1404,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <UseParameters>Forest</UseParameters>
       <!--Parameter: Target Functional Level. Possibe values: "2008R2","2012","2012R2","2016","Last"                                         -->
       <UseParameters>Last</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Upgrade `(ForestFunctionalLevel` </TaskDescription>
     </Id>
 
@@ -1408,7 +1413,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <CallingFunction>Set-msDSMachineAccountQuota</CallingFunction>
       <!--Parameter: new ms-DS-MachineAccountQuota value                                                                                     -->
       <UseParameters>0</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(msDSMachineAccountQuota` to `(0` to restrict domain junction</TaskDescription>
     </Id>
 
@@ -1416,7 +1421,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     <Id Number="020" Name="Activate Active Directory Recycle Bin">
       <CallingFunction>Set-ADRecycleBin</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>activate the `(AD Recycle Bin` optional feature</TaskDescription>
     </Id>
 
@@ -1424,7 +1429,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     <Id Number="030" Name="Set Notify on every Site Links">
       <CallingFunction>Set-SiteLinkNotify</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(notify` on every `(Site Links</TaskDescription>
     </Id>
 
@@ -1432,7 +1437,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     <Id Number="040" Name="Set GPO Central Store">
       <CallingFunction>Set-GpoCentralStore</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(GPO Central Store` and update `{adm` and `{admx` files</TaskDescription>
     </Id>
 
@@ -1441,7 +1446,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>HardenAD_ADMIN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(Administration` organizational unit</TaskDescription>
     </Id>
 
@@ -1450,7 +1455,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>HardenAD_PROD-T0</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(Tier 0` organizational unit</TaskDescription>
     </Id>
 
@@ -1459,7 +1464,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>HardenAD_PROD-T1and2</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(Tier 1 and Tier 2 combo` organizational unit</TaskDescription>
     </Id>
 
@@ -1468,7 +1473,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>HardenAD_PROD-LEGACY</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(Tier Legacy` organizational unit</TaskDescription>
     </Id>
 
@@ -1477,7 +1482,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <CallingFunction>Set-TreeOU</CallingFunction>
       <!--Parameter: class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>PROVISIONNING-EN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(Provisioning` organizational unit</TaskDescription>
     </Id>
 
@@ -1488,7 +1493,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <UseParameters>User</UseParameters>
       <!--Parameter: OU distinguishedName. Use RootDN to automatically fill-in the domain name                                               -->
       <UseParameters>OU=users,OU=provisioning,RootDN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(user objects` default location</TaskDescription>
     </Id>
 
@@ -1499,7 +1504,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <UseParameters>Computer</UseParameters>
       <!--Parameter: OU distinguishedName. Use RootDN to automatically fill-in the domain name                                             -->
       <UseParameters>OU=computers,OU=provisioning,RootDN</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>set `(computer objects` default location</TaskDescription>
     </Id>
 
@@ -1508,7 +1513,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <CallingFunction>New-AdministrationAccounts</CallingFunction>
       <!-- Parameter: KeePass password for the kdbx database                                                                               -->
       <UseParameters>H4rd3n@D!!</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>create `(administration accounts` used by the tier model</TaskDescription>
     </Id>
 
@@ -1516,7 +1521,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     <Id Number="090" Name="Create administration groups">
       <CallingFunction>New-AdministrationGroups</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>create `(administration groups` used by the tier model</TaskDescription>
     </Id>
 
@@ -1524,7 +1529,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     <Id Number="095" Name="Enforce delegation model through ACEs">
       <CallingFunction>Push-DelegationModel</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Enforce `(Delegation ACEs` used by the tier model</TaskDescription>
     </Id>
 
@@ -1532,7 +1537,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     <Id Number="125" Name="Import additional WMI Filters">
       <CallingFunction>Import-WmiFilters</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Import `(WMI filter` to the domain</TaskDescription>
     </Id>
 
@@ -1540,7 +1545,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     <!-- <Id Number="127" Name="Update Loca Adm Task deployment scripts">
       <CallingFunction>Set-LocAdmTaskScripts</CallingFunction>
       <UseParameters>SYSVOL\%domaindns%\scripts\LocAdmTask</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Update `(LocAdmTask Scripts` to match with the domain name</TaskDescription>
     </Id> -->
 
@@ -1559,7 +1564,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <!-- Parameter: ForceDcIsSchemaOwner (default) will require that the running system is also the Schema Master owner                  -->
       <!--            IgnoreDcIsSchameOwner will remove this requierment (child domain, etc.)                                              -->
       <UseParameters>ForceDcIsSchemaOwner</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Update `(AD Schema` for `[LAPS` and add `(PShell add-on`</TaskDescription>
     </Id>
 
@@ -1569,7 +1574,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <!-- Parameter: CUSTOM : will teach the script to apply a fine-grained definition (refering to <LocalAdminPasswordSolution>)         -->
       <!--            DEFAULT: will apply permission at the root domain level and leave domain admins as the only allowed users.           -->
       <UseParameters>CUSTOM</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Set-up `(LAPS` permissions on the target domain</TaskDescription>
     </Id>
 
@@ -1578,7 +1583,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
       <CallingFunction>Set-LapsScripts</CallingFunction>
       <!-- Parameter: use NETLOGON or SYSVOL for a dynamic location. Else enter the UNC Path                                               -->
       <UseParameters>NETLOGON\LAPS</UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Update `(LAPS Scripts` to match with the domain name</TaskDescription>
     </Id>
 
@@ -1586,7 +1591,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     <!-- <Id Number="140" Name="Import schedule tasks on the running system">
       <CallingFunction>New-ScheduleTasks</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Import new `(schedule tasks` to the `[running system`</TaskDescription>
     </Id> -->
 
@@ -1594,7 +1599,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     <!-- <Id Number="150" Name="Reset Group Memberships">
       <CallingFunction>Reset-GroupMembership</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>No</TaskEnabled>
+      <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Reset `(groups's membeberships` to the `[trusted list`</TaskDescription>
     </Id> -->
   </Sequence>
