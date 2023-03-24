@@ -79,7 +79,7 @@ function Start-HardenADLocalGroups () {
     
     $Config = @{}
     $CustomParameters = @{}
-    $XMLConfigFile = "$PSScriptRoot\..\Configs\Config.xml"
+    $XMLConfigFile = [xml](Get-Content "$PSScriptRoot\..\Configs\Config.xml")
 
     $XMLConfigFile.Config.Keys | ForEach-Object {  
         $CustomParameters[$_.Name] = $_.Value 
