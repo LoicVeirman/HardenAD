@@ -32,7 +32,13 @@ foreach ($Group in $xmlConfig) {
     $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $Group.Name + ": begin"
 
     try {
-        Set-ADGroup -Identity $Group.Name -Clear member
+        $VerifiedGroup = Get-ADGroup -Identity $Group.Name
+    }
+    catch {
+        $errCde++
+    }
+    try {
+        Set-ADGroup -Identity $VerifiedGroup.DistinguishedName -Clear member
         $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $Group.Name + ": success"
     }
     catch {
