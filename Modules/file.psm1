@@ -148,6 +148,7 @@ Function New-ScheduleTasks {
     #>
     param(
     )
+
     ## Function Log Debug File
     $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
     $dbgMess = @()
@@ -170,74 +171,6 @@ Function New-ScheduleTasks {
         $result = 0
     }
 
-    $TaskPath = "$PSScriptRoot\..\Inputs\ScheduleTasks\TasksSchedulesScripts\"
-    $TaskConfig = Get-ChildItem $TaskPath -Recurse | Where-Object { $_.extension -eq ".xml" -and $_.Name -ne "translation.xml" }
-    $TranslationXML = Get-ChildItem $TaskPath -Recurse | Where-Object { $_.Name -eq "translation.xml" }
-
-    if ($TaskConfig) {
-
-
-        try {
-            $xmlRefs = ([xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)).Settings.Translation.wellKnownID
-        }
-        catch {
-            Write-Host "
-            
-            
-            
-            -----------------------------------------------------------------------------ok"
-            pause
-        }        
-        $xmlPref = ([xml](Get-Content ($TranslationXML))).translation.Preferences.replace
-
-        foreach ($xmlObj in $TaskConfig) {
-            $backupXml = $xmlObj.DirectoryName + "\" + $xmlObj.name + ".backup"
-
-            if (-not(Test-Path $backupXml)) {
-                Copy-Item $xmlObj.FullName $backupXml
-            }
-
-
-            $xmlData = [system.io.file]::ReadAllText($backupXml)
-            foreach ($data in $xmlPref) {
-                $findValue = $data.find
-                $replValue = $data.replaceBy
-                if ($replValue -match "%*%") {
-                    switch -regex ($replValue) {
-                        "^%SID:ID=*" {
-                            $tmpDat = ($replValue -replace "%", "") -replace "SID:", ""
-                            $newRep = ($xmlPref | Where-Object { $_.ID -eq ($tmpDat -split "=")[1] }).replaceBy
-                            if ($newRep -match "%*%") {
-                                foreach ($ref in $xmlRefs) {
-                                    $newRep = $newRep -replace $ref.translateFrom, $ref.TranslateTo
-                                }
-                            }
-
-                            Try {
-                                $sAMAccountName = ($newRep -split "\\")[1]
-                                $newRep = (Get-ADObject -filter { sAMAccountName -eq $sAMAccountName } -Properties objectSID).objectSID.Value
-                                Write-host "bleu"
-                            }
-                            Catch {
-                                #.No change
-                            }
-                            $xmlData = $xmlData -replace $findValue, $newRep
-                            break
-                        }
-                        
-                        Default {
-                            foreach ($ref in $xmlRefs) {
-                                Write-Host $ref
-                                $replValue = $replValue -replace $ref.translateFrom, $ref.TranslateTo
-                            }
-                            $xmlData = $xmlData -replace ($findValue -replace "\\", "\\"), $replValue
-                        }
-                    }
-                }
-            }
-            [system.io.file]::WriteAllLines($xmlObj.FullName, $xmlData)
-        }
-    }
     ## Get xml data
     Try {
         $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
@@ -253,7 +186,7 @@ Function New-ScheduleTasks {
         $SchXml = $cfgXml.settings.TaskSchedules
     
         ## Get tasks base dir
-        $SchDir = $SchXml.BaseDir -replace "%Windir%", $env:windir
+        $SchDir = $SchXml.BaseDir
 
         ## Check if the directory exists, else create it
         if (-not(Test-Path $SchDir)) {
@@ -364,7 +297,6 @@ Function New-ScheduleTasks {
 
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
-
 ##################################################################
 ## Set-LapsScripts                                              ##
 ## ---------------                                              ##
