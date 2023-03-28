@@ -100,7 +100,7 @@ Function New-AdministrationAccounts {
         ## if Everything run smoothly, let's begin.
         if ($noError) {
             ## Getting root DNS name
-            $DomainRootDN = (Get-ADDomain).DistinguishedName
+            $DomainDN = (Get-ADDomain).DistinguishedName
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
 
             ## Getting specified schema
@@ -172,7 +172,7 @@ Function New-AdministrationAccounts {
                     $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainDN)
                     $Searcher.Filter = "(&(ObjectClass=User)(sAMAccountName=" + $account.sAMAccountName + "))"
 
-                    if ($Searcher.FindAll() -ne $null) {
+                    if ($null -ne $Searcher.FindAll()) {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> === " + $account.DisplayName + " already exists"
 
@@ -375,7 +375,7 @@ Function New-AdministrationGroups {
         ## if Everything run smoothly, let's begin.
         if ($noError) {
             ## Getting root DNS name
-            $DomainRootDN = (Get-ADDomain).DistinguishedName
+            $DomainDN = (Get-ADDomain).DistinguishedName
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
 
             ## Getting specified schema
@@ -394,7 +394,7 @@ Function New-AdministrationGroups {
                     $Searcher.Filter = "(&(ObjectClass=Group)(sAMAccountName=" + $account.Name + "))"
 
                     #.Check if the object already exists
-                    if ($Searcher.FindAll() -ne $null) {
+                    if ($null -ne $Searcher.FindAll()) {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: === " + $account.Name + " already exists"
                         $AddUser = $true
