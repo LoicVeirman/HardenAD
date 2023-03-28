@@ -100,7 +100,7 @@ Function New-AdministrationAccounts {
         ## if Everything run smoothly, let's begin.
         if ($noError) {
             ## Getting root DNS name
-            $DomainDN = (Get-ADDomain).DistinguishedName
+            $DomainRootDN = (Get-ADDomain).DistinguishedName
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
 
             ## Getting specified schema
@@ -375,7 +375,7 @@ Function New-AdministrationGroups {
         ## if Everything run smoothly, let's begin.
         if ($noError) {
             ## Getting root DNS name
-            $DomainDN = (Get-ADDomain).DistinguishedName
+            $DomainRootDN = (Get-ADDomain).DistinguishedName
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
 
             ## Getting specified schema
