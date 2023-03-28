@@ -54,6 +54,6 @@ function Set-ConfigTable {
         $Log.Success("All information related to the OUs has been loaded")
     }
     catch {
-        $Log.Fatal(("An error occurred while loading the OUs.`{0}" -f $_.Exception.Message))
+        $Log.Fatal(("An error occurred while loading the OUs. {0}" -f $_.Exception.Message))
     }
 }
