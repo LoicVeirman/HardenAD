@@ -172,7 +172,7 @@ Function New-AdministrationAccounts {
                     $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainDN)
                     $Searcher.Filter = "(&(ObjectClass=User)(sAMAccountName=" + $account.sAMAccountName + "))"
 
-                    if ($null -ne $Searcher.FindAll()) {
+                    if ($Searcher.FindAll() -ne $null) {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> === " + $account.DisplayName + " already exists"
 
@@ -394,7 +394,7 @@ Function New-AdministrationGroups {
                     $Searcher.Filter = "(&(ObjectClass=Group)(sAMAccountName=" + $account.Name + "))"
 
                     #.Check if the object already exists
-                    if ($null -ne $Searcher.FindAll()) {
+                    if ($Searcher.FindAll() -ne $null) {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: === " + $account.Name + " already exists"
                         $AddUser = $true
