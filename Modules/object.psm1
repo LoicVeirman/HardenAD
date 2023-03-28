@@ -169,7 +169,7 @@ Function New-AdministrationAccounts {
                 }
                 foreach ($account in $xmlData) {
                     #-Create a LDAP search filter
-                    $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainDN)
+                    $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainRootDN)
                     $Searcher.Filter = "(&(ObjectClass=User)(sAMAccountName=" + $account.sAMAccountName + "))"
 
                     if ($Searcher.FindAll() -ne $null) {
@@ -390,7 +390,7 @@ Function New-AdministrationGroups {
                 #.Begin object creation loop
                 foreach ($account in $xmlData) {
                     #-Create a LDAP search filter
-                    $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainDN)
+                    $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainRootDN)
                     $Searcher.Filter = "(&(ObjectClass=Group)(sAMAccountName=" + $account.Name + "))"
 
                     #.Check if the object already exists
