@@ -76,12 +76,12 @@ function Get-Tiers {
     else {
         #Test si serveur ou workstation
         if ($Computer.OperatingSystem -like "*Server*") {
-            return "T1L"
             $Log.Info("{0} is T1-Legacy system." -f $Computer.Name)
+            return "T1L"
         }
         else {
-            return "T2L"
             $Log.Info("{0} is T2-Legacy system." -f $Computer.Name)
+            return "T2L"
         }
     }
     $Log.Error("{0}'s tier could not be determined" -f $Computer.Name)
