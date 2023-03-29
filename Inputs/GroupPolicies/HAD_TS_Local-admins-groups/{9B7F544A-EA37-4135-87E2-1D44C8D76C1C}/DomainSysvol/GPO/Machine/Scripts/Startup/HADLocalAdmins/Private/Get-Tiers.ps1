@@ -54,7 +54,9 @@ function Get-Tiers {
             -or ($Computer.OperatingSystem -like "*2022*")) {
 
         if ($Path -like "*$($Config["PROD_T0"].DistinguishedName)" `
-                -or $Path -like "*$($Config["PAW_T0"].DistinguishedName)") {
+                -or $Path -like "*$($Config["PAW"].DistinguishedName)" `
+                -or $Path -like "*$($Config["PAW_T0"].DistinguishedName)" `
+                -or $Path -like "*$($Config["PAW_T12L"].DistinguishedName)") {
             $Log.Info("{0} is a Tier-0 system." -f $Computer.Name)
             return "T0"
         }

@@ -17,13 +17,6 @@ function Move-LocalAdminGroup {
 
     $Log = [LoggerFactory]::CreateLogger()
     
-    $Tiers = @(
-        "T0"
-        "T1"
-        "T2"
-        "TLegacy"
-    )
-
     $ComputerName = ($OldDN.Split(",")[0]).Substring(($OldDN.Split(",")[0]).IndexOf("=") + 1)
 
     try {
@@ -37,16 +30,20 @@ function Move-LocalAdminGroup {
     $ComputerTier = Get-Tiers $Config $Computer
     $NewGroupLocation = $Config["LA_$ComputerTier"]
 
-    $OldDN = $OldDN.Substring($OldDN.IndexOf(",") + 1)
-    $NewDN = $NewDN.Substring($NewDN.IndexOf(",") + 1)
+    $OldDN = $OldDN.Substring($OldDN.IndexOf(",") + 1) 
+    $NewDN = $NewDN.Substring($NewDN.IndexOf(",") + 1) 
 
     if ($OldDN -ne $NewDN) {
-        foreach ($Tier in $Tiers) {
-            if ($OldDN -like "*$($Config["PROD_$Tier"])") {
-                $OldGroup = Get-ADGroup -Identity ("$($Config["NAMING"])" -replace "%ComputerName%", $ComputerName)
-            }
-        } 
         try {
+            $OldGroup = Get-ADGroup -Identity ("$($Config["NAMING"])" -replace "%ComputerName%", $Computer.Name)
+            $Log.Success(("{0} has been found." -f $OldGroup.Name))
+        }
+        catch {
+            $Log.Error("{0} cannot been found. {1}" -f $OldGroup.Name, $_.Exception.Message)
+        }        
+        
+        try {
+            Set-ADGroup -Identity $OldGroup -Clear member
             Move-ADObject -Identity $OldGroup.DistinguishedName -TargetPath $NewGroupLocation.DistinguishedName
             $Log.Success(("{0} has been moved to {1}." -f $OldGroup.Name, $NewGroupLocation.DistinguishedName))
         }

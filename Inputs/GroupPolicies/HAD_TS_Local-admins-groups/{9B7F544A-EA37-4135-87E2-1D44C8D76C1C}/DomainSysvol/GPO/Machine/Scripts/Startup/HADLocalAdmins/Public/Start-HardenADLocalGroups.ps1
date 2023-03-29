@@ -93,7 +93,7 @@ function Start-HardenADLocalGroups () {
     }
     catch {
         $Config["COMPUTERS"] = Get-ADComputer -Filter { Enabled -eq $true } -Properties *
-        $Log.Error(("Computer was not provided or is incorrect: {1}`nLoading all computers..." -f $ComputerName, $_.Exception.Message))
+        $Log.Warning(("Computer was not provided or is incorrect: {1}`nLoading all computers..." -f $ComputerName, $_.Exception.Message))
     }
    
     Set-ConfigTable $Config $CustomParameters
