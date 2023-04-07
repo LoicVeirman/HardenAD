@@ -60,10 +60,11 @@ function Start-HardenADLocalGroups () {
     )
 
     $ErrorActionPreference = "SilentlyContinue"
+    $LogPath = "$env:windir\Harden\Logs"
 
-    if (!(Test-Path "$env:windir\Harden\Logs")) {
+    if (!(Test-Path $LogPath)) {
         try {
-            New-Item -Path "$env:windir\Harden\Logs" -ItemType Directory -Force
+            New-Item -Path $LogPath -ItemType Directory -Force
         }
         catch {
             Write-Error -ErrorRecord $Error[0] `
@@ -71,10 +72,8 @@ function Start-HardenADLocalGroups () {
             exit
         }
     }
-
-    $Path = "$env:windir\Logs\Harden"
     
-    [LoggerFactory]::Initialize($Path)
+    [LoggerFactory]::Initialize($LogPath)
     $Log = [LoggerFactory]::CreateLogger()
     
     $Config = @{}
