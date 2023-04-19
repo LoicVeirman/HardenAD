@@ -315,10 +315,10 @@ Function Import-WmiFilters {
 
     if ($resultat -ne 2) {
         ## Begin WMI filter importation
-        $WmiFilters = $xmlFile.settings.groupPolicies.wmiFilters
+        $WmiFilters = $xmlFile.settings.groupPolicies.WmiFilters
         $CurrWmiFtr = Get-ADObject -Filter { ObjectClass -eq 'msWMI-Som' } -Properties *
 
-        foreach ($filterData in $WmiFilters.filter) {
+        foreach ($filterData in $WmiFilters.Filter) {
             ## Check if already exists
             ## some interesting stuff: http://woshub.com/group-policy-filtering-using-wmi-filters/
             if ($CurrWmiFtr.'msWMI-Name' -match $filterData.Name) {
