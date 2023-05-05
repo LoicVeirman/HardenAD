@@ -337,6 +337,66 @@ Start-Sleep -Seconds 2
 
 #-Using XML
 $Resume = @()
+
+
+#--- Updating Domain Name of Task Sequence file
+Add-Type -AssemblyName System.Windows.Forms
+# Check if the domain information is correct
+$dc = Get-ADDomainController -Discover 
+$domain = $dc.Domain
+$domain_parts = $domain.Split('.')
+$DN = $domain_parts[0]
+$DN_2 = $domain_parts[1]
+
+# Show RootDN information with a pop-up
+$popup_message = "Domain Name is : $domain `nDC= $DN `nDC= $DN_2 `nIs it correct ?"
+$popup_title = "Confirmation"
+$popup_options = "YesNo"
+$popup_choice = [System.Windows.Forms.MessageBox]::Show($popup_message, $popup_title, $popup_options)
+
+# If user click on "Yes" button
+if ($popup_choice -eq "Yes") {
+    [System.Windows.Forms.MessageBox]::Show("Informations validated !", "New domain information")
+    
+} else {
+    while ($true) {
+        # If user click on "No" button --> ask for domain name parts
+        $DN = Read-Host "Enter the NetBIOS domain name"
+        $DN_2 = Read-Host "enter the Top-Level Domain name"
+        $popup_message = "New informations : `nDC=$DN`nDC=$DN_2`nDC=$DN,DC=$DN_2`nDo you want to validate ?"
+        $popup_choice = [System.Windows.Forms.MessageBox]::Show($popup_message, $popup_title, $popup_options)
+        if ($popup_choice -eq "Yes") {
+            [System.Windows.Forms.MessageBox]::Show("Informations validated !", "New domain information")
+            break
+        }
+    }
+}
+
+# Locate the wellKnownID to update
+$wellKnownID_domain = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domain%"}
+$wellKnownID_domaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domaindns%"}
+$wellKnownID_RootDN = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%RootDN%"}
+
+# Updating Values
+$wellKnownID_domain.translateTo = "$DN"
+$wellKnownID_domaindns.translateTo = "$DN.$DN_2"
+$wellKnownID_RootDN.translateTo = "DC=$DN,DC=$DN_2"
+
+# Checking modifications
+$TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domain%"}
+$TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domaindns%"}
+$TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%RootDN%"}
+
+$ScriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+#Saving xml Task Sequence file
+$TasksSeqConfig.Save("$ScriptPath\Configs\$TasksSequence")
+#--- EXIT 
+
+
+
+
+
+
 $Tasks = $TasksSeqConfig.Settings.Sequence.ID | Sort-Object number
 foreach ($task in $Tasks) {
     #-Update log
