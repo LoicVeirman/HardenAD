@@ -287,18 +287,38 @@ Function Import-WmiFilters {
             Version: 02.01
             Author.: contact@hardenad.net
             Desc...: removed all debuf data.
+
+            Version: 02.02
+            Author.: contact@hardenad.net
+            Desc...: added debug log file.
     #>
 
     Param(
     )
 
+
+
+    ## Function Log Debug File
+    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+    $dbgMess = @()
+
+    ## Start Debug Trace
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+
+    ## Indicates caller and options used
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
+
+
     ## When dealing with 2008R2, we need to import AD module first
     if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         Try { 
             Import-Module ActiveDirectory
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
         } 
         Catch {
-            $noError = $false
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
         }
     }
     ## Get Current Location
@@ -307,16 +327,19 @@ Function Import-WmiFilters {
     ## loading configuration file
     Try {
         $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $Resultat = 0
     }
     Catch {
         $Resultat = 2
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! FAILED loading xml skeleton file "
     }
 
     if ($resultat -ne 2) {
         ## Begin WMI filter importation
         $WmiFilters = $xmlFile.settings.groupPolicies.WmiFilters
         $CurrWmiFtr = Get-ADObject -Filter { ObjectClass -eq 'msWMI-Som' } -Properties *
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Starting WMI Filter importation"
 
         foreach ($filterData in $WmiFilters.Filter) {
             ## Check if already exists
@@ -345,32 +368,56 @@ Function Import-WmiFilters {
                     }
                 }
                 $outData | Out-File ($mofPath + ".tmp") 
+                $Output = $mofPath + ".tmp"
 
                 try {
-                    $noSplash = mofcomp.exe -N:root\Policy ($mofPath + ".tmp") | Out-Null
+                    $noSplash = mofcomp.exe -N:root\Policy ($Output) | Out-Null
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> WMI Filter $Output  imported successfully."
 
                 }
                 Catch {
                     $Resultat = 1
+                    
                     $ResMess = "Some filter were not imported successfully."
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! WMI Filter $Output failed to be imported."
                 }
                 
-                Remove-Item ($mofPath + ".tmp") -Force
+                Remove-Item ($Output) -Force
 
                 #.Checking import status
                 $CheckWmiFtr = Get-ADObject -Filter { ObjectClass -eq 'msWMI-Som' } -Properties *
                 if ($CheckWmiFtr.'msWMI-Name' -match $filterData.Name) {
                     #. check OK - The wmi Filter is present.
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> WMI Filter " + $filterData.Name + " has been correctly found when checking the import result."
                 }
                 Else {
                     $Resultat = 1
                     $ResMess = "Some filter failed to be found when checking the import result."
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! WMI Filter " + $filterData.Name + " failed to be found when checking the import result."
                 }
             }
         }
     }
 
+
+
     ## Exit
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Resultat"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    if (Test-Path .\Logs\Debug\$DbgFile)
+    {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
+        {
+            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
+        }
+
+    }
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
     ## Return translated xml
     return (New-Object -TypeName psobject -Property @{ResultCode = $resultat ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
@@ -403,14 +450,29 @@ Function New-GpoObject {
             01.00 -- Script creation
             01.01 -- Added Security Filter option
             02.00 -- Uses new functions 2.0
+            02.01 -- Added Debug log
     #>
     param(
     )
+
+    ## Function Log Debug File
+    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+    $dbgMess = @()
+
+    ## Start Debug Trace
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+
+    ## Indicates caller and options used
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
 
     ## When dealing with 2008R2, we need to import AD module first
     if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
         Import-Module ActiveDirectory -ErrorAction Stop
         Import-Module GroupPolicy -ErrorAction Stop
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added GroupPolicy module."
     }
     
     ## Get Current Location
@@ -419,14 +481,17 @@ Function New-GpoObject {
     ## loading configuration file
     Try {
         $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $Result = 0
     }
     Catch {
         $Result = 2
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! FAILED loading xml skeleton file "
     }
     
     ## Recovering GPOs data
     $GpoData = $xmlFile.Settings.GroupPolicies.GPO
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Recovering GPOs data from xml file : success"
 
     ## Analyzing and processing
     if ($Result -ne 2) {
@@ -442,6 +507,7 @@ Function New-GpoObject {
             $gpChek = Get-GPO -Name $gpName -ErrorAction SilentlyContinue
 
             if ($gpChek) {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> GPO $gpName already exists."
                 #GPO Exists - Set flag according to the overwrite attribute.
                 if ($gpVali -eq "No") {   
                     $gpFlag = $true
@@ -453,12 +519,15 @@ Function New-GpoObject {
             }
             Else {
                 #.Create empty GPO
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Creating GPO $gpName"
                 Try {
                     $null = New-Gpo -Name $gpName -Comment $gpDesc -ErrorAction SilentlyContinue
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> GPO $gpName has been created."
                     $gpFlag = $true
                 }
                 Catch {
                     $gpFlag = $false
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error when creating GPO $gpName "
                     $result = 1
                 }
             }
@@ -482,11 +551,13 @@ Function New-GpoObject {
 
                         $importFlag = $true
                     }
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Datas of GPO $gpName has been imported."
                 }
                 Catch {
                     $result = 1
                     $errMess += " Failed to import at least one GPO : $Error[0]"
                     $errMess += ""
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Failed to import Datas of GPO $gpName"
                     $importFlag = $false
                 }
 
@@ -513,9 +584,11 @@ Function New-GpoObject {
                             else {
                                 Set-ADObject $GpoDN -Add @{gPCWQLFilter = $wmiLinkVal }
                             }
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> WMI Filter of GPO $gpName has been set."
                         }
                         Catch {
                             $Result = 1
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!Error while setting WMI Filter of GPO $gpName."
                         }
                     } 
                 }
@@ -593,6 +666,7 @@ Function New-GpoObject {
                             #.Failed Creation, set error code to Error
                             $result = 1
                             $errMess += " Error: failed to create GPO group $grpName"
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: failed to create GPO group $grpName"
                         }
                     }
 
@@ -608,10 +682,12 @@ Function New-GpoObject {
                         $acl = $adgpo.ObjectSecurity
                         $acl.AddAccessRule($rule)
                         $adgpo.CommitChanges()
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Deny permission has been applied on GPO $GpName"
                     }
                     Catch {
                         $result = 1
                         $errMess += " Error: could not apply the deny permission on one or more GPO"
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!Error while applying  Deny permission on GPO $GpName"
                     }
                 }
 
@@ -635,6 +711,7 @@ Function New-GpoObject {
                             #.Failed Creation, set error code to Error
                             $result = 1
                             $errMess += " Error: failed to create GPO group $grpName"
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: failed to create GPO group $grpName"
                         }
                     }
 
@@ -646,10 +723,12 @@ Function New-GpoObject {
                     Try {
                         #.Adding new Security Filter
                         Set-GPPermission -Name $gpName -PermissionLevel GpoApply -TargetName $NBName -TargetType Group -Confirm:$false
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Apply permission has been applied on $GpName"
                     }
                     Catch {
                         $result = 1
-                        $errMess += " Error: could not apply the deny permission on one or more GPO"
+                        $errMess += " Error: could not apply the apply permission on one or more GPO"
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while setting Apply permission on $GpName"
                     }
 
                     #.recover group name to adapt with AD running language
@@ -658,10 +737,12 @@ Function New-GpoObject {
                     #.reset permission for Authenticated Users
                     Try {
                         Set-GPPermission -Name $GpName -PermissionLevel GpoRead -TargetName $AuthUsers -TargetType Group -Confirm:$false -Replace
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Permission for authenticated users has been reset on $GpName"
                     }
                     Catch {
                         $result = 1
                         $errMess += " Error: failed to rewrite S-1-5-11 from security filter list"
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR while resetting Permission for authenticated on $GpName"
                     }
                 }
 
@@ -673,20 +754,24 @@ Function New-GpoObject {
                         $gpLinked = Get-ADObject -Filter { DistinguishedName -eq $gpPath } -Properties gpLink | Select-Object -ExpandProperty gpLink | Where-Object { $_ -Match ("LDAP://CN={" + (Get-Gpo -Name $gpName).ID + "},") }
                         if ($gpLinked) {
                             Try {
-                                $null = Set-GPLink -Name $gpName -Target $gpPath -LinkEnabled $gpLink.Enabled -Enforced $gpLink.enforced -ErrorAction Stop
+                                $null = Set-GPLink -Name $gpName -Target $gpPath -LinkEnabled $gpLink.Enabled -Enforced $gpLink.enforced -ErrorAction 
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> GPO $GpName has been linked to OU $gpPath"
                             }
                             Catch {
                                 $result = 1
                                 $errMess += " Error: could not link one or more GPO"
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR while linking GPO $GpName to OU $gpPath"
                             }
                         }
                         Else {
                             Try {
                                 $null = New-GPLink -Name $gpName -Target $gpPath -LinkEnabled $gpLink.Enabled -Enforced $gpLink.enforced -ErrorAction Stop
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> GPO $GpName has been linked to OU $gpPath"
                             }
                             Catch {
                                 $result = 1
                                 $errMess += " Error: could not link one or more GPO"
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR while linking GPO $GpName to OU $gpPath"
                             }
                         }
                     }
@@ -697,7 +782,26 @@ Function New-GpoObject {
     }
     Else {
         $errMess = "Failed to load powerShell modules - canceled."
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR while loading PowerShell modules"
     }
+
+    ## Exit
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $result"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    if (Test-Path .\Logs\Debug\$DbgFile)
+    {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*"))
+        {
+            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
+        }
+    }
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
 
     ## Return function results
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ErrMess ; TaskExeLog = $ErrMess })
