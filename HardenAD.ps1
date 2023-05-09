@@ -382,7 +382,7 @@ $wellKnownID_domain.translateTo = "$DN"
 $wellKnownID_domaindns.translateTo = "$DN.$DN_2"
 $wellKnownID_RootDN.translateTo = "DC=$DN,DC=$DN_2"
 
-# Checking modifications
+# Checking modifications (comment this section to disable visual information during script execution)
 $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domain%"}
 $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domaindns%"}
 $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%RootDN%"}
