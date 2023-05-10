@@ -845,6 +845,7 @@ Add the local administration AD group to the corresponding T1 system's integrate
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Servers-NoDC" />
       <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{4B947060-F817-414E-B27B-DC7EFF171B6B}" Validation="Yes" Name="HAD-LocalAdmins-T1L" Description="Harden AD ===================
 Add the local administration AD group to the corresponding legacy server (T1L) system's integrated administrator group">
@@ -857,6 +858,7 @@ Add the local administration AD group to the corresponding T2 system's integrate
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Clients" />
       <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{F6D93646-E7DB-49C1-9FDC-9B0840C54637}" Validation="Yes" Name="HAD-LocalAdmins-T2L" Description="Harden AD ===================
 Add the local administration AD group to the corresponding legacy workstation (T2L) system's integrated administrator group">
@@ -899,7 +901,8 @@ Blocks connections to tier 1 machines from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Servers-NoDC" />
       <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-    </GPO>
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+          </GPO>
     <GPO BackupID="{DA57EB62-4947-4D5B-B2B8-C46DEEDE846B}" Validation="Yes" Name="HAD-LoginRestrictions-T1L" Description="Harden AD ===================
 Blocks connections to tier legacy servers from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0" />
@@ -911,6 +914,7 @@ Blocks connections to tier 2 machines from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Clients" />
       <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{61FA8970-A5E5-40C5-9726-CBB85CE7B12D}" Validation="Yes" Name="HAD-LoginRestrictions-T2L" Description="Harden AD ===================
 Blocks connections to tier legacy workstations from other tier accounts">
@@ -978,12 +982,20 @@ Disables the RDP service and prohibits RDP connections">
     <GPO BackupID="{1BB7DBE3-5BDB-4959-AC11-5577497A0207}" Validation="Yes" Name="HAD-RDP-Enabled" Description="Harden AD ===================
 Enable the RDP service, set the firewall and allow RDP connections">
       <GpoMode Mode="BOTH" Tier="Tier0" />
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoFilter WMI="Windows-Supported-OS-Servers" />
+      <GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{6C86197E-8498-4E48-835B-054F00CA1EA3}" Validation="Yes" Name="HAD-RDP-NLA-Enabled" Description="Harden AD ===================
 Enable NLA for RDP connections.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoFilter WMI="Windows-Supported-OS-Servers" />
+      <GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{A10BD6F3-E157-46B1-AA07-D3ED1BC764BD}" Validation="Yes" Name="HAD-Remote-Assistance-Disabled" Description="Harden AD ===================
 Disable Windows remote assistance.">
