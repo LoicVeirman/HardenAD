@@ -34,27 +34,6 @@ if(!(Test-Path $reg_hadbitlocker)){
     $acl | Set-Acl -Path $req_habitlocker_valuepin
 }
 
-#CrÃ©ation du service
-if ($service_bitlocker.Length -ieq 0) {
-	$Error.Clear()
-	try{
-		sc.exe create $s_name start=auto binpath="$($hardenad_dir)\Bitlocker\$($s_name).exe"
-        "[$(Get-Date)][$($active_script_name)] Service creation $($s_name): SUCCESS" | Out-File -Append -FilePath $log_file
-	}
-	catch{
-		"[$(Get-Date)][$($active_script_name)] Get-service $($s_name): $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
-	}
-}else{
-    $Error.Clear()
-	try{
-        sc.exe start $service_name
-	    "[$(Get-Date)][$($active_script_name)] Start-service $($s_name): SUCCESS" | Out-File -Append -FilePath $log_file
-    }catch{
-        "[$(Get-Date)][$($active_script_name)] Start-service $($s_name): FAILED $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
-    }
-
-}
-
 if($(Get-ItemProperty -Path $req_habitlocker_valuepin | Select-Object -ExpandProperty 'ValuePIN') -eq $null){
     New-ItemProperty -Path $req_habitlocker_valuepin -Name "ValuePIN" -Value "0000" -PropertyType ExpandString
     "[$(Get-Date)][$($active_script_name)] ValuePIN regedit creation" | Out-File -Append -FilePath $log_file
@@ -83,6 +62,29 @@ if($(Get-ItemProperty -Path $req_habitlocker_status | Select-Object -ExpandPrope
     "[$(Get-Date)][$($active_script_name)] Status regedit updated " | Out-File -Append -FilePath $log_file
 }
 
+#Création du service
+if ($service_bitlocker.Length -ieq 0) {
+	$Error.Clear()
+	try{
+		sc.exe create $s_name start=auto binpath="$($hardenad_dir)\Bitlocker\$($s_name).exe"
+        Start-Sleep 2
+        sc.exe start $s_name
+        "[$(Get-Date)][$($active_script_name)] Service creation $($s_name): SUCCESS" | Out-File -Append -FilePath $log_file
+	}
+	catch{
+		"[$(Get-Date)][$($active_script_name)] Get-service $($s_name): $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
+	}
+}else{
+    $Error.Clear()
+	try{
+        sc.exe start $s_name
+	    "[$(Get-Date)][$($active_script_name)] Start-service $($s_name): SUCCESS" | Out-File -Append -FilePath $log_file
+    }catch{
+        "[$(Get-Date)][$($active_script_name)] Start-service $($s_name): FAILED $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
+    }
+
+}
+
 
 ################################################
 # INSTALLATION
@@ -98,15 +100,15 @@ if($(Get-ItemProperty -Path $req_habitlocker_status | Select-Object -ExpandPrope
     
     # check the volume status of all the drives
     if($pincode -ne "" -and $pincode -ne "9999" -and $pincode -ne "0000" -and $pincode.Length -ge 6 -and $pincode -match "^\d+$" -and $status -eq "PinCodeSetted"){
-        "[$(Get-Date)][$($active_script_name)] Valide code PIN and status" | Out-File -Append -FilePath $log_file
+        "[$(Get-Date)][$($active_script_name)] Valid code PIN and status" | Out-File -Append -FilePath $log_file
         foreach($drive in $drives){
             #Check if drive are encrypted
             if($drive.VolumeStatus -eq "FullyEncrypted" -or $drive.ProtectionStatus -eq "On"){
-                "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Bitlocker already enabled on drive" | Out-File -Append -FilePath $log_file
+                "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Bitlocker already enabled on drive" | Out-File -Append -FilePath $log_file
                 continue
             }
             else{
-                "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Bitlocker not enabled on drive" | Out-File -Append -FilePath $log_file
+                "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Bitlocker not enabled on drive" | Out-File -Append -FilePath $log_file
 
                 #system drive encryption state
                 $systemDrive = Get-BitLockerVolume -MountPoint $env:SystemDrive 
@@ -125,23 +127,20 @@ if($(Get-ItemProperty -Path $req_habitlocker_status | Select-Object -ExpandPrope
                 #check if the drive is the operating system drive or a fixed data drive
                 if ($drive.VolumeType -eq "OperatingSystem"){
 
-                    "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Drive is detected as the OperatingSystem" | Out-File -Append -FilePath $log_file
+                    "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Drive is detected as the OperatingSystem" | Out-File -Append -FilePath $log_file
 
                     #Step 1 - Check if TPM is enabled and initialise if required
                     if ($WindowsVer -and !$TPMNotEnabled) 
                     {
                         try{
-                            Initialize-Tpm -AllowClear -AllowPhysicalPresence -ErrorAction Stop
-                            "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] TPM not enabled and correctly initialized" | Out-File -Append -FilePath $log_file
+                            Initialize-Tpm -AllowClear -AllowPhysicalPresence -ErrorAction SilentlyContinue
+                            "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] TPM not enabled and correctly initialized" | Out-File -Append -FilePath $log_file
                         }catch{
-                            "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] TPM activation failed" | Out-File -Append -FilePath $log_file 
-                            "[$(Get-Date)][$($active_script_name)] End" | Out-File -Append -FilePath $log_file
-                            Set-ItemProperty -Path $req_habitlocker_valuepin -Name "ValuePIN" -Value "0000"
-                            Set-ItemProperty -Path $req_habitlocker_status -Name "Status" -Value Initialized
-                            exit
+                            "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Initialize TPM failed" | Out-File -Append -FilePath $log_file 
+                            exit  
                         }
                     } else {
-                        "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] TPM already enabled" | Out-File -Append -FilePath $log_file
+                        "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] TPM already enabled" | Out-File -Append -FilePath $log_file
                     }
 
                     #Step 2 - Check if BitLocker volume is provisioned and partition system drive for BitLocker if required
@@ -149,15 +148,12 @@ if($(Get-ItemProperty -Path $req_habitlocker_status | Select-Object -ExpandPrope
                     {
                         $Error.Clear()
                         try{
-                            Get-Service -Name defragsvc -ErrorAction Stop | Set-Service -Status Running -ErrorAction Stop
+                            Get-Service -Name defragsvc -ErrorAction Stop | Set-Service -Status Running -ErrorAction SilentlyContinue
                             BdeHdCfg -target $env:SystemDrive shrink -quiet
-                            "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] BitLocker volume is provisioned" | Out-File -Append -FilePath $log_file
+                            "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] BitLocker volume is provisioned" | Out-File -Append -FilePath $log_file
                         }
                         catch {
-                            "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Get-service defragsvc $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
-                            "[$(Get-Date)][$($active_script_name)] End" | Out-File -Append -FilePath $log_file
-                            Set-ItemProperty -Path $req_habitlocker_valuepin -Name "ValuePIN" -Value "0000"
-                            Set-ItemProperty -Path $req_habitlocker_status -Name "Status" -Value Initialized
+                            "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Get-service defragsvc $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
                             exit
                         }
                     }
@@ -169,16 +165,13 @@ if($(Get-ItemProperty -Path $req_habitlocker_status | Select-Object -ExpandPrope
                         $Error.Clear()
                         try{
                             Add-BitLockerKeyProtector -MountPoint $env:SystemDrive -Pin $PIN -TpmAndPinProtector -ErrorAction Stop
-                            "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Add Bitlocker Key Protector: SUCCESS" | Out-File -Append -FilePath $log_file
+                            "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Add Bitlocker Key Protector: SUCCESS" | Out-File -Append -FilePath $log_file
                         } catch {
-                            "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Add Bitlocker Key Protector: ERROR $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
-                            "[$(Get-Date)][$($active_script_name)] End" | Out-File -Append -FilePath $log_file
-                            Set-ItemProperty -Path $req_habitlocker_valuepin -Name "ValuePIN" -Value "0000"
-                            Set-ItemProperty -Path $req_habitlocker_status -Name "Status" -Value Initialized
-                            exit
+                            "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Add Bitlocker Key Protector: ERROR $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
                         }
                         $volumeStatus = Get-BitLockerVolume -MountPoint $drive.MountPoint
-                        "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Recheck value of Key Protector (Expected TpmPin): $($volumeStatus.KeyProtector)" | Out-File -Append -FilePath $log_file
+                        "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Recheck value of Volume Status (Expected TpmPin): $($volumeStatus.VolumeStatus)" | Out-File -Append -FilePath $log_file
+                        "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Recheck value of Key Protector (Expected TpmPin): $($volumeStatus.KeyProtector)" | Out-File -Append -FilePath $log_file
         
                         $BLVS = (Get-BitLockerVolume -MountPoint $drive.MountPoint | Where-Object {$_.KeyProtector | Where-Object {$_.KeyProtectorType -eq 'TpmPin'}})
                         if ($BLVS) {
@@ -189,14 +182,10 @@ if($(Get-ItemProperty -Path $req_habitlocker_status | Select-Object -ExpandPrope
                                     $Error.Clear()
                                     try{
                                         Backup-BitLockerKeyProtector -MountPoint $BLV.MountPoint -KeyProtectorID $obj.KeyProtectorId
-                                        "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Backup BitLocker Key Protector: SUCCESS" | Out-File -Append -FilePath $log_file
+                                        "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Backup BitLocker Key Protector: SUCCESS" | Out-File -Append -FilePath $log_file
                                     }
                                     catch {
-                                        "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Backup BitLocker Key Protector: ERROR $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
-                                        "[$(Get-Date)][$($active_script_name)] End" | Out-File -Append -FilePath $log_file
-                                        Set-ItemProperty -Path $req_habitlocker_valuepin -Name "ValuePIN" -Value "0000"
-                                        Set-ItemProperty -Path $req_habitlocker_status -Name "Status" -Value Initialized
-                                        exit
+                                        "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Backup BitLocker Key Protector: ERROR $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
                                     }
                                     #check device is joined to AAD
                                     $subKey = Get-Item "HKLM:/SYSTEM/CurrentControlSet/Control/CloudDomainJoin/JoinInfo"
@@ -212,41 +201,36 @@ if($(Get-ItemProperty -Path $req_habitlocker_status | Select-Object -ExpandPrope
                                         $Error.Clear()
                                         try{
                                             BackupToAAD-BitLockerKeyProtector -MountPoint $BLV.MountPoint -KeyProtectorID $obj.KeyProtectorId
-                                            "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Backup To ADD BitLocker Key Protector: SUCCESS" | Out-File -Append -FilePath $log_file
+                                            "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Backup To ADD BitLocker Key Protector: SUCCESS" | Out-File -Append -FilePath $log_file
                                         }
                                         catch {
-                                            "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Backup To ADD BitLocker Key Protector: ERROR $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
-                                            "[$(Get-Date)][$($active_script_name)] End" | Out-File -Append -FilePath $log_file
-                                            Set-ItemProperty -Path $req_habitlocker_valuepin -Name "ValuePIN" -Value "0000"
-                                            Set-ItemProperty -Path $req_habitlocker_status -Name "Status" -Value Initialized
-                                            exit
+                                            "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Backup To ADD BitLocker Key Protector: ERROR $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
                                         } 
                                     } 
                                 }
                             }
                             $Error.Clear()
                             try{
-                                Enable-BitLocker -MountPoint $drive.MountPoint -RecoveryPasswordProtector -ErrorAction Stop
+                                Enable-BitLocker -MountPoint $drive.MountPoint -RecoveryPasswordProtector -ErrorAction SilentlyContinue
                                 Set-ItemProperty -Path $req_habitlocker_valuepin -Name "ValuePIN" -Value "9999"
                                 Set-ItemProperty -Path $req_habitlocker_status -Name "Status" -Value BitlockerActivated
-                                "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Enable Bitlocker: SUCCESS" | Out-File -Append -FilePath $log_file
+                                "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Enable Bitlocker: SUCCESS" | Out-File -Append -FilePath $log_file
                             } catch {
-                                "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Enable Bitlocker: ERROR $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
-                                "[$(Get-Date)][$($active_script_name)] End" | Out-File -Append -FilePath $log_file
-                                exit
+                                "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Enable Bitlocker: ERROR $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
                             }
 
                         } else {
-                            "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Key Protector Type not contains TpmPin" | Out-File -Append -FilePath $log_file
+                            "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Key Protector Type not contains TpmPin" | Out-File -Append -FilePath $log_file
                         }
                     }
-                } else {
+                }
+                else {
                     "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Drive is not Operating System" | Out-File -Append -FilePath $log_file
                 }
             }
         }
     } else {
-        "[$(Get-Date)][$($active_script_name)] Invalide code PIN and status." | Out-File -Append -FilePath $log_file
+        "[$(Get-Date)][$($active_script_name)] Invalid code PIN and status. " | Out-File -Append -FilePath $log_file
     }
 
 
@@ -257,50 +241,37 @@ if($(Get-ItemProperty -Path $req_habitlocker_status | Select-Object -ExpandPrope
     $WindowsVer = Get-WmiObject -Query 'select * from Win32_OperatingSystem where (Version like "6.2%" or Version like "6.3%" or Version like "10.0%") and ProductType = "1"' -ErrorAction SilentlyContinue
     $TPMNotEnabled = Get-WmiObject win32_tpm -Namespace root\cimv2\security\microsofttpm | Where-Object {$_.IsEnabled_InitialValue -eq $false} -ErrorAction SilentlyContinue
     $BitLockerReadyDrive = Get-BitLockerVolume -MountPoint $drive.MountPoint -ErrorAction SilentlyContinue
-
     foreach($drive in $drives){
         #Check if drive are encrypted
         #$type equal 2 if drive type is Removable
         if ($drive.VolumeType -eq "Data" -and $systemDrive.VolumeStatus -eq "FullyEncrypted" -and ($type -ne "2" )){
-            "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Drive is detected as Data but not removable" | Out-File -Append -FilePath $log_file
+            "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Drive is detected as Data but not removable" | Out-File -Append -FilePath $log_file
 
             #Step 1 - Check if TPM is enabled and initialise if required
             if ($WindowsVer -and !$TPMNotEnabled) 
             {
-                try{
-                    Initialize-Tpm -AllowClear -AllowPhysicalPresence -ErrorAction Stop
-                    "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] TPM not enabled and correctly initialized" | Out-File -Append -FilePath $log_file
-                }catch{
-                    "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] TPM activation failed" | Out-File -Append -FilePath $log_file 
-                    "[$(Get-Date)][$($active_script_name)] End" | Out-File -Append -FilePath $log_file
-                    exit 
-                }
+                Initialize-Tpm -AllowClear -AllowPhysicalPresence -ErrorAction SilentlyContinue
             }
-
             #Step 2 - Check if BitLocker volume is provisioned and partition system drive for BitLocker if required
             if ($WindowsVer -and $TPMEnabled -and !$BitLockerReadyDrive){
                 $Error.Clear()
                 try{
-                    Get-Service -Name defragsvc -ErrorAction Stop | Set-Service -Status Running -ErrorAction Stop
+                    Get-Service -Name defragsvc -ErrorAction Stop | Set-Service -Status Running -ErrorAction SilentlyContinue
                     BdeHdCfg -target $drive.MountPoint shrink -quiet
-                    "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] BitLocker volume is provisioned" | Out-File -Append -FilePath $log_file
+                    "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] BitLocker volume is provisioned" | Out-File -Append -FilePath $log_file
                 }
                 catch {
-                    "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Get-service defragsvc $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
-                    "[$(Get-Date)][$($active_script_name)] End" | Out-File -Append -FilePath $log_file
-                    exit
+                    "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Get-service defragsvc $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
                 }
             }
             $Error.Clear()
             try{
-                Enable-BitLocker -MountPoint $drive.MountPoint -RecoveryPasswordProtector -ErrorAction Stop
+                Enable-BitLocker -MountPoint $drive.MountPoint -RecoveryPasswordProtector -ErrorAction SilentlyContinue
                 Enable-BitLockerAutoUnlock -MountPoint $drive.MountPoint
                 $f_del_reg_valuepin = $true
-                "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Enable Bitlocker for fixed data drives: SUCCESS" | Out-File -Append -FilePath $log_file
+                "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Enable Bitlocker for fixed data drives: SUCCESS" | Out-File -Append -FilePath $log_file
             }catch{
-                "[$(Get-Date)][$($active_script_name)][$($drive.MountPoint)] Enable Bitlocker for fixed data drives: ERROR $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
-                "[$(Get-Date)][$($active_script_name)] End" | Out-File -Append -FilePath $log_file
-                exit
+                "[$(Get-Date)][$($active_script_name)] [$($drive.MountPoint)] Enable Bitlocker for fixed data drives: ERROR $($Error[0].Exception.Message)" | Out-File -Append -FilePath $log_file
             }
         }
     }
