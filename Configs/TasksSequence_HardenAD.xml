@@ -542,10 +542,10 @@
       <Filter Name="Windows-10" Source="Windows-10.mof" />
       <Filter Name="Windows-11" Source="Windows-11.mof" />
       <Filter Name="Windows-2000-XP" Source="Windows-2000-XP.mof" />
-      <Filter Name="Windows-2003-2003R2" Source="Windows-2003-2003R2.mof" />
+      <Filter Name="Windows-2003-2003R2-NoDC" Source="Windows-2003-2003R2-NoDC.mof" />
       <Filter Name="Windows-2008-Vista-and-Newer" Source="Windows-2008-Vista-and-Newer.mof" />
-      <Filter Name="Windows-2008" Source="Windows-2008.mof" />
-      <Filter Name="Windows-2008R2" Source="Windows-2008R2.mof" />
+      <Filter Name="Windows-2008-NoDC" Source="Windows-2008-NoDC.mof" />
+      <Filter Name="Windows-2008R2-NoDC" Source="Windows-2008R2-NoDC.mof" />
       <Filter Name="Windows-2012-NoDC" Source="Windows-2012-NoDC.mof" />
       <Filter Name="Windows-2012" Source="Windows-2012.mof" />
       <Filter Name="Windows-2012R2-NoDC" Source="Windows-2012R2-NoDC.mof" />
@@ -726,6 +726,7 @@ Prevents the DC from generating its DNS entries in -tcp-msdsc.">
     <GPO BackupID="{F9DBA31A-45A6-42A2-B63C-4ED76AC5DB58}" Validation="Yes" Name="HAD-DistributedFileSystem-Disabled" Description="Harden AD ===================
 Disable the Windows DFS Namespace service.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
+      <GpoFilter WMI="Windows-OS-Servers" />
       <GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{5B274948-774F-4604-96AD-45D2CFDA0015}" Validation="Yes" Name="HAD-FIPS-Enabled" Description="Harden AD ===================
@@ -756,7 +757,6 @@ Disables IPv6.">
     <GPO BackupID="{960547AE-574B-4A5E-B238-7A6C0DD491D2}" Validation="Yes" Name="HAD-Kerberos-AES-Enabled" Description="Harden AD ===================
 Set the encryption types that Kerberos is allowed to use.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
-      <GpoFilter WMI="Windows-OS-Servers" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{614C4CD2-6F10-416C-90C4-BB1AB8703FA1}" Validation="Yes" Name="HAD-LAPS-Configuration" Description="Harden AD ===================
@@ -845,6 +845,7 @@ Add the local administration AD group to the corresponding T1 system's integrate
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Servers-NoDC" />
       <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{4B947060-F817-414E-B27B-DC7EFF171B6B}" Validation="Yes" Name="HAD-LocalAdmins-T1L" Description="Harden AD ===================
 Add the local administration AD group to the corresponding legacy server (T1L) system's integrated administrator group">
@@ -857,6 +858,7 @@ Add the local administration AD group to the corresponding T2 system's integrate
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Clients" />
       <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{F6D93646-E7DB-49C1-9FDC-9B0840C54637}" Validation="Yes" Name="HAD-LocalAdmins-T2L" Description="Harden AD ===================
 Add the local administration AD group to the corresponding legacy workstation (T2L) system's integrated administrator group">
@@ -899,7 +901,8 @@ Blocks connections to tier 1 machines from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Servers-NoDC" />
       <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-    </GPO>
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+          </GPO>
     <GPO BackupID="{DA57EB62-4947-4D5B-B2B8-C46DEEDE846B}" Validation="Yes" Name="HAD-LoginRestrictions-T1L" Description="Harden AD ===================
 Blocks connections to tier legacy servers from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0" />
@@ -911,6 +914,7 @@ Blocks connections to tier 2 machines from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Clients" />
       <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{61FA8970-A5E5-40C5-9726-CBB85CE7B12D}" Validation="Yes" Name="HAD-LoginRestrictions-T2L" Description="Harden AD ===================
 Blocks connections to tier legacy workstations from other tier accounts">
@@ -978,12 +982,20 @@ Disables the RDP service and prohibits RDP connections">
     <GPO BackupID="{1BB7DBE3-5BDB-4959-AC11-5577497A0207}" Validation="Yes" Name="HAD-RDP-Enabled" Description="Harden AD ===================
 Enable the RDP service, set the firewall and allow RDP connections">
       <GpoMode Mode="BOTH" Tier="Tier0" />
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoFilter WMI="Windows-Supported-OS-Servers" />
+      <GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{6C86197E-8498-4E48-835B-054F00CA1EA3}" Validation="Yes" Name="HAD-RDP-NLA-Enabled" Description="Harden AD ===================
 Enable NLA for RDP connections.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoFilter WMI="Windows-Supported-OS-Servers" />
+      <GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{A10BD6F3-E157-46B1-AA07-D3ED1BC764BD}" Validation="Yes" Name="HAD-Remote-Assistance-Disabled" Description="Harden AD ===================
 Disable Windows remote assistance.">
@@ -1094,7 +1106,7 @@ Blocks the upgrade to Windows 11.">
       <GpoFilter WMI="Windows-OS-Clients" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <GPO BackupID="{5E6D3D03-83C8-4690-9A1B-4B69440DE22C}" Validation="Yes" Name="HAD-WinRM-Basic-Auth-Disabled" Description="Harden AD ===================
+    <GPO BackupID="{AA0F3BCB-8435-4A58-A8F4-5D631039B623}" Validation="Yes" Name="HAD-WinRM-Basic-Digest-Auth-Disabled" Description="Harden AD ===================
 Disallows basic, unencrypted authentication for WinRM use.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
