@@ -317,56 +317,39 @@ Else {
     Write-Host "No" -ForegroundColor Green
 }
 
-if ($FlagPreReq) {
-    Write-Host "All prerequesites are OK."    
-    Write-Host "-------------------------"
-}
-Else {
-    Write-Host "Some check have failed!" -ForegroundColor Red
-    Write-Host "-------------------------"
-    exit 1
-}
-#-Clearing prerequesites data 
-Start-Sleep -Seconds 2
-$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
-For ($i = 1 ; $i -le ($Linecount + 2) ; $i++) { Write-Host "                                                                       " }
-$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
-                                                     
-#-Loop begins!
-Start-Sleep -Seconds 2
-
-#-Using XML
-$Resume = @()
-
-
 #--- Updating Domain Name of Task Sequence file
-Add-Type -AssemblyName System.Windows.Forms
+
 # Check if the domain information is correct
+Write-Host "-------------------------"
 $dc = Get-ADDomainController -Discover 
 $domain = $dc.Domain
 $domain_parts = $domain.Split('.')
 $DN = $domain_parts[0]
 $DN_2 = $domain_parts[1]
 
-# Show RootDN information with a pop-up
-$popup_message = "Domain Name is : $domain `nDC= $DN `nDC= $DN_2 `nIs it correct ?"
-$popup_title = "Confirmation"
-$popup_options = "YesNo"
-$popup_choice = [System.Windows.Forms.MessageBox]::Show($popup_message, $popup_title, $popup_options)
+# Show RootDN information with console messages
+Write-Warning "Domain Name is : $domain"
+Write-Warning "DC= $DN"
+Write-Warning "DC= $DN_2"
+$confirm_message = "Is the information correct? (Y/N)"
+$confirm_choice = Read-Host -Prompt $confirm_message
 
-# If user click on "Yes" button
-if ($popup_choice -eq "Yes") {
-    [System.Windows.Forms.MessageBox]::Show("Informations validated !", "New domain information")
+# If user answers "Y"
+if ($confirm_choice.ToLower() -eq "y") {
+    Write-Warning "Information validated!"
     
 } else {
     while ($true) {
-        # If user click on "No" button --> ask for domain name parts
+        # If user answers "N" --> ask for domain name parts
         $DN = Read-Host "Enter the NetBIOS domain name"
-        $DN_2 = Read-Host "enter the Top-Level Domain name"
-        $popup_message = "New informations : `nDC=$DN`nDC=$DN_2`nDC=$DN,DC=$DN_2`nDo you want to validate ?"
-        $popup_choice = [System.Windows.Forms.MessageBox]::Show($popup_message, $popup_title, $popup_options)
-        if ($popup_choice -eq "Yes") {
-            [System.Windows.Forms.MessageBox]::Show("Informations validated !", "New domain information")
+        $DN_2 = Read-Host "Enter the Top-Level Domain name"
+        Write-Warning "New informations :"
+        Write-Warning "DC=$DN"
+        Write-Warning "DC=$DN_2"
+        $confirm_message = "Do you want to validate? (y/n)"
+        $confirm_choice = Read-Host -Prompt $confirm_message
+        if ($confirm_choice.ToLower() -eq "y") {
+            Write-Warning "Information validated!"
             break
         }
     }
@@ -391,6 +374,30 @@ $ScriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 #Saving xml Task Sequence file
 $TasksSeqConfig.Save("$ScriptPath\Configs\$TasksSequence")
 #--- EXIT 
+
+
+if ($FlagPreReq) {
+    Write-Host "All prerequesites are OK."    
+    Write-Host "-------------------------"
+}
+Else {
+    Write-Host "Some check have failed!" -ForegroundColor Red
+    Write-Host "-------------------------"
+    exit 1
+}
+#-Clearing prerequesites data 
+Start-Sleep -Seconds 2
+$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
+For ($i = 1 ; $i -le ($Linecount + 2 + 7) ; $i++) { Write-Host "                                                                       " }
+$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
+                                                     
+#-Loop begins!
+Start-Sleep -Seconds 2
+
+#-Using XML
+$Resume = @()
+
+
 
 
 
