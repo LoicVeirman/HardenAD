@@ -62,11 +62,11 @@ if($(Get-ItemProperty -Path $req_habitlocker_status | Select-Object -ExpandPrope
     "[$(Get-Date)][$($active_script_name)] Status regedit updated " | Out-File -Append -FilePath $log_file
 }
 
-#Création du service
+#Crï¿½ation du service
 if ($service_bitlocker.Length -ieq 0) {
 	$Error.Clear()
 	try{
-		sc.exe create $s_name start=auto binpath="$($hardenad_dir)\Bitlocker\$($s_name).exe"
+		sc.exe create $s_name start=auto binpath="$($hardenad_dir)\BitLocker-TPMandPIN\$($s_name).exe"
         Start-Sleep 2
         sc.exe start $s_name
         "[$(Get-Date)][$($active_script_name)] Service creation $($s_name): SUCCESS" | Out-File -Append -FilePath $log_file
