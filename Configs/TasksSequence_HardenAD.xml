@@ -694,7 +694,7 @@ Setting up Windows Update on Windows 10/11 machines according to the recommendat
 Setting up Windows Update on Windows 7/8 machines according to the recommendations">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Legacy-OS-Clients" />
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{B547F05F-E600-48BA-92BB-8B9DB98570F0}" Validation="Yes" Name="HAD-Bitlocker-TpmOnly-Win10-11" Description="Harden AD ===================
 Enable BitLocker encryption with Trusted Platform Module.">
@@ -702,11 +702,12 @@ Enable BitLocker encryption with Trusted Platform Module.">
       <GpoFilter WMI="Windows-Supported-OS-Clients" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <GPO BackupID="{5DB333BA-3F67-405A-868C-403DF01347A9}" Validation="Yes" Name="HAD-Bitlocker-TpmPin-Win10-11" Description="Harden AD ===================
+    <GPO BackupID="{C1325B52-6705-47B9-BDE8-0C47BE25EF6A}" Validation="Yes" Name="HAD-Bitlocker-TpmPin-Win10-11" Description="Harden AD ===================
 Enable BitLocker encryption with Trusted Platform Module. 6-digit PIN code required.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Clients" />
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+      <GpoLink Path="OU=Users,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{651CC04C-B863-4346-B90F-7D97B42020BC}" Validation="Yes" Name="HAD-BloodHound-Mitigation" Description="Harden AD ===================
 Disable Net Session enumeration - Bloodhound / NetCease.">
@@ -726,7 +727,7 @@ Prevents the DC from generating its DNS entries in -tcp-msdsc.">
     <GPO BackupID="{F9DBA31A-45A6-42A2-B63C-4ED76AC5DB58}" Validation="Yes" Name="HAD-DistributedFileSystem-Disabled" Description="Harden AD ===================
 Disable the Windows DFS Namespace service.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
-      <GpoFilter WMI="Windows-OS-Servers" />
+      <GpoFilter WMI="Windows-Legacy-OS-Servers" />
       <GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{5B274948-774F-4604-96AD-45D2CFDA0015}" Validation="Yes" Name="HAD-FIPS-Enabled" Description="Harden AD ===================
@@ -1013,7 +1014,7 @@ Secure Netlogon service.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <GPO BackupID="{11947EF3-D542-4811-A6AC-9F28E79B36D7}" Validation="Yes" Name="HAD-Security-Logs" Description="Harden AD ===================
+    <GPO BackupID="{6549EB97-68C9-4946-B03B-D413E6995CB9}" Validation="Yes" Name="HAD-Security-Logs" Description="Harden AD ===================
 Configures security logs based on ANSSI recommendations.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
@@ -1108,6 +1109,11 @@ Blocks the upgrade to Windows 11.">
     </GPO>
     <GPO BackupID="{AA0F3BCB-8435-4A58-A8F4-5D631039B623}" Validation="Yes" Name="HAD-WinRM-Basic-Digest-Auth-Disabled" Description="Harden AD ===================
 Disallows basic, unencrypted authentication for WinRM use.">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+    </GPO>
+    <GPO BackupID="{C79D8C30-10FD-4C5E-A2EE-5CFE50A0DA3D}" Validation="Yes" Name="HAD-WebProxyAutoDiscovery-Disabled" Description="Harden AD ===================
+Disable Web Proxy Auto-Discovery Protocol.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
@@ -1321,6 +1327,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
 
     <!-- #### TIER LEGACY #### -->
     <Group name="G-S-T1L_Operators" Category="Security" Scope="Global" Description="Members of this group can operate on Tier Legacy server resources (login)" Path="OU=GroupsT1L,OU=_Administration,ROOTDN">
+      <Member samAccountName="T2LO-AHARDEN" />
     </Group>
 
     <Group name="L-S-T1L" Category="Security" Scope="domainLocal" Description="Members of this group are part of Legacy servers' administrative assets" Path="OU=GroupsT1L,OU=_Administration,ROOTDN">
@@ -1331,6 +1338,7 @@ Disallows basic, unencrypted authentication for WinRM use.">
     </Group>
 
     <Group name="G-S-T2L_Operators" Category="Security" Scope="Global" Description="Members of this group can operate on Tier Legacy resources (login)" Path="OU=GroupsT2L,OU=_Administration,ROOTDN">
+      <Member samAccountName="T2LO-AHARDEN" />
     </Group>
 
     <Group name="L-S-T2L" Category="Security" Scope="domainLocal" Description="Members of this group are part of Legacy servers' administrative assets" Path="OU=GroupsT2L,OU=_Administration,ROOTDN">
