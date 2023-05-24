@@ -322,15 +322,28 @@ Else {
 # Check if the domain information is correct
 Write-Host "-------------------------"
 $dc = Get-ADDomainController -Discover 
-$domain = $dc.Domain
-$domain_parts = $domain.Split('.')
-$DN = $domain_parts[0]
+$Domaindns = $dc.Domain
+$domain_parts = $Domaindns.Split('.')
+$taille = $domain_parts.Count
+
+
+$DN_1 = $domain_parts[0]
 $DN_2 = $domain_parts[1]
 
+$domainNetbios = Get-ADDomain
+$netbiosName = $domainNetbios.NetBIOSName
+
 # Show RootDN information with console messages
-Write-Warning "Domain Name is : $domain"
-Write-Warning "DC= $DN"
-Write-Warning "DC= $DN_2"
+Write-Warning "Domain DNS is : $Domaindns"
+Write-Warning "NetBIOS Name is : $netbiosName"
+Write-Warning "DC=$DN_1"
+Write-Warning "DC=$DN_2"
+
+if($taille -eq 3) {
+    $DN_3 = $domain_parts[2]
+    Write-Warning "DC=$DN_3"
+}
+
 $confirm_message = "Is the information correct? (Y/N)"
 $confirm_choice = Read-Host -Prompt $confirm_message
 
@@ -341,11 +354,28 @@ if ($confirm_choice.ToLower() -eq "y") {
 } else {
     while ($true) {
         # If user answers "N" --> ask for domain name parts
-        $DN = Read-Host "Enter the NetBIOS domain name"
-        $DN_2 = Read-Host "Enter the Top-Level Domain name"
+        $domainNetbios = Read-Host "Enter the NetBIOS domain name"
+        $Domaindns = Read-Host "Enter the Domain DNS"
+
+        $domain_parts = $Domaindns.Split('.')
+        $taille = $domain_parts.Count
+
+
+        $DN_1 = $domain_parts[0]
+        $DN_2 = $domain_parts[1]
+
+        if($taille -eq 3) {
+            $DN_3 = $domain_parts[2]
+        }
+
         Write-Warning "New informations :"
-        Write-Warning "DC=$DN"
+        Write-Warning "NetBIOS Name : $domainNetbios"
+        Write-Warning "Domain DNS : $Domaindns" 
+        Write-Warning "DC=$DN_1"
         Write-Warning "DC=$DN_2"
+        if($taille -eq 3) {
+            Write-Warning "DC=$DN_3"
+        }
         $confirm_message = "Do you want to validate? (y/n)"
         $confirm_choice = Read-Host -Prompt $confirm_message
         if ($confirm_choice.ToLower() -eq "y") {
@@ -355,15 +385,18 @@ if ($confirm_choice.ToLower() -eq "y") {
     }
 }
 
+
 # Locate the wellKnownID to update
 $wellKnownID_domain = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domain%"}
 $wellKnownID_domaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domaindns%"}
 $wellKnownID_RootDN = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%RootDN%"}
 
 # Updating Values
-$wellKnownID_domain.translateTo = "$DN"
-$wellKnownID_domaindns.translateTo = "$DN.$DN_2"
-$wellKnownID_RootDN.translateTo = "DC=$DN,DC=$DN_2"
+$wellKnownID_domain.translateTo = "$domainNetbios"
+$wellKnownID_domaindns.translateTo = "$Domaindns"
+if($taille -eq 3) { $wellKnownID_RootDN.translateTo = "DC=$DN_1,DC=$DN_2,DC=$DN_3" }
+else {$wellKnownID_RootDN.translateTo = "DC=$DN_1,DC=$DN_2"}
+
 
 # Checking modifications (comment this section to disable visual information during script execution)
 $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domain%"}
@@ -373,7 +406,7 @@ $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "
 $ScriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 #Saving xml Task Sequence file
 $TasksSeqConfig.Save("$ScriptPath\Configs\$TasksSequence")
-#--- EXIT 
+#--- EXIT
 
 
 if ($FlagPreReq) {
@@ -388,7 +421,7 @@ Else {
 #-Clearing prerequesites data 
 Start-Sleep -Seconds 2
 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
-For ($i = 1 ; $i -le ($Linecount + 2 + 8) ; $i++) { Write-Host "                                                                       " }
+For ($i = 1 ; $i -le ($Linecount + 2 + 14) ; $i++) { Write-Host "                                                                       " }
 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
                                                      
 #-Loop begins!
