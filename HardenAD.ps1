@@ -354,7 +354,7 @@ if ($confirm_choice.ToLower() -eq "y") {
 } else {
     while ($true) {
         # If user answers "N" --> ask for domain name parts
-        $domainNetbios = Read-Host "Enter the NetBIOS domain name"
+        $netbiosName = Read-Host "Enter the NetBIOS domain name"
         $Domaindns = Read-Host "Enter the Domain DNS"
 
         $domain_parts = $Domaindns.Split('.')
@@ -369,7 +369,7 @@ if ($confirm_choice.ToLower() -eq "y") {
         }
 
         Write-Warning "New informations :"
-        Write-Warning "NetBIOS Name : $domainNetbios"
+        Write-Warning "NetBIOS Name : $netbiosName"
         Write-Warning "Domain DNS : $Domaindns" 
         Write-Warning "DC=$DN_1"
         Write-Warning "DC=$DN_2"
@@ -392,7 +392,7 @@ $wellKnownID_domaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | wher
 $wellKnownID_RootDN = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%RootDN%"}
 
 # Updating Values
-$wellKnownID_domain.translateTo = "$domainNetbios"
+$wellKnownID_domain.translateTo = "$netbiosName"
 $wellKnownID_domaindns.translateTo = "$Domaindns"
 if($taille -eq 3) { $wellKnownID_RootDN.translateTo = "DC=$DN_1,DC=$DN_2,DC=$DN_3" }
 else {$wellKnownID_RootDN.translateTo = "DC=$DN_1,DC=$DN_2"}
