@@ -541,6 +541,7 @@ Function New-GpoObject {
             }
             Else {
                 #.Create empty GPO
+                Write-DebugMessage " "
                 Write-DebugMessage "---> Creating GPO $gpName"
                 Try {
                     $null = New-Gpo -Name $gpName -Comment $gpDesc -ErrorAction SilentlyContinue
@@ -558,19 +559,23 @@ Function New-GpoObject {
             if ($gpFlag) {
                 $null = Convert-MigrationTable    -GpoName "$gpName\$gpBack"
                 $null = Convert-GpoPreferencesXml -GpoName "$gpName\$gpBack"
+                Write-DebugMessage "---> Trying to import datas of GPO $gpName :"
 
                 #.Import backup
                 try {
                     # Case 1 : no translated.migtable
                     $MigTableFile = "$curDir\Inputs\GroupPolicies\$gpName\$gpBack\translated.migtable"
                     if (-not(Test-Path $MigTableFile)) {
+                        Write-DebugMessage "---> Importing datas of GPO without translated.migtable"
                         $null = Import-GPO -BackupId $gpBack -TargetName $gpName -Path $curDir\Inputs\GroupPolicies\$gpName -ErrorAction Stop
+                        Write-DebugMessage "---> Success"
                         $importFlag = $true
                     }
                     # Case 2 : translated.migtable
                     else {
+                        Write-DebugMessage "---> Importing datas of GPO with translated.migtable"
                         $null = Import-GPO -BackupId $gpBack -TargetName $gpName -MigrationTable $MigTableFile -Path $curDir\Inputs\GroupPolicies\$gpName -ErrorAction Stop
-
+                        Write-DebugMessage "---> Success"
                         $importFlag = $true
                     }
                     Write-DebugMessage "---> Datas of GPO $gpName has been imported."
