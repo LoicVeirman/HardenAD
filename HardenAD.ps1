@@ -317,95 +317,13 @@ Else {
     Write-Host "No" -ForegroundColor Green
 }
 
-#--- Updating Domain Name of Task Sequence file
+#--- Updating Translations of Task Sequence file
 
 # Check if the domain information is correct
 Write-Host "-------------------------"
-$dc = Get-ADDomainController -Discover 
-$Domaindns = $dc.Domain
-$domain_parts = $Domaindns.Split('.')
-$taille = $domain_parts.Count
-
-
-$DN_1 = $domain_parts[0]
-$DN_2 = $domain_parts[1]
-
-$domainNetbios = Get-ADDomain
-$netbiosName = $domainNetbios.NetBIOSName
-
-# Show RootDN information with console messages
-Write-Warning "Domain DNS is : $Domaindns"
-Write-Warning "NetBIOS Name is : $netbiosName"
-Write-Warning "DC=$DN_1"
-Write-Warning "DC=$DN_2"
-
-if($taille -eq 3) {
-    $DN_3 = $domain_parts[2]
-    Write-Warning "DC=$DN_3"
-}
-
-$confirm_message = "Is the information correct? (Y/N)"
-$confirm_choice = Read-Host -Prompt $confirm_message
-
-# If user answers "Y"
-if ($confirm_choice.ToLower() -eq "y") {
-    Write-Warning "Information validated!"
-    
-} else {
-    while ($true) {
-        # If user answers "N" --> ask for domain name parts
-        $netbiosName = Read-Host "Enter the NetBIOS domain name"
-        $Domaindns = Read-Host "Enter the Domain DNS"
-
-        $domain_parts = $Domaindns.Split('.')
-        $taille = $domain_parts.Count
-
-
-        $DN_1 = $domain_parts[0]
-        $DN_2 = $domain_parts[1]
-
-        if($taille -eq 3) {
-            $DN_3 = $domain_parts[2]
-        }
-
-        Write-Warning "New informations :"
-        Write-Warning "NetBIOS Name : $netbiosName"
-        Write-Warning "Domain DNS : $Domaindns" 
-        Write-Warning "DC=$DN_1"
-        Write-Warning "DC=$DN_2"
-        if($taille -eq 3) {
-            Write-Warning "DC=$DN_3"
-        }
-        $confirm_message = "Do you want to validate? (y/n)"
-        $confirm_choice = Read-Host -Prompt $confirm_message
-        if ($confirm_choice.ToLower() -eq "y") {
-            Write-Warning "Information validated!"
-            break
-        }
-    }
-}
-
-
-# Locate the wellKnownID to update
-$wellKnownID_domain = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domain%"}
-$wellKnownID_domaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domaindns%"}
-$wellKnownID_RootDN = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%RootDN%"}
-
-# Updating Values
-$wellKnownID_domain.translateTo = "$netbiosName"
-$wellKnownID_domaindns.translateTo = "$Domaindns"
-if($taille -eq 3) { $wellKnownID_RootDN.translateTo = "DC=$DN_1,DC=$DN_2,DC=$DN_3" }
-else {$wellKnownID_RootDN.translateTo = "DC=$DN_1,DC=$DN_2"}
-
-
-# Checking modifications (comment this section to disable visual information during script execution)
-$TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domain%"}
-$TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domaindns%"}
-$TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%RootDN%"}
-
-$ScriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-#Saving xml Task Sequence file
-$TasksSeqConfig.Save("$ScriptPath\Configs\$TasksSequence")
+Import-Module -Name "$PSScriptRoot\Modules\translation.psm1"
+$TasksSeqConfigLocation = Split-Path -Parent $MyInvocation.MyCommand.Path
+Set-Translation -TasksSequence $TasksSequence -ScriptPath $TasksSeqConfigLocation
 #--- EXIT
 
 
