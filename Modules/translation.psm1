@@ -57,14 +57,14 @@ function Set-Translation {
     # Show RootDN information with console messages
     Write-Warning "Domain DNS is : $Domaindns"
     Write-Warning "NetBIOS Name is : $netbiosName"
-    Write-Warning "DC=$DN_1"
-    Write-Warning "DC=$DN_2"
 
+
+    $DistinguishedName = "DC=$DN_1,DC=$DN_2"
     if($taille -eq 3) {
         $DN_3 = $domain_parts[2]
-        Write-Warning "DC=$DN_3"
+        $DistinguishedName = "DC=$DN_1,DC=$DN_2,DC=$DN_3"
     }
-
+    Write-Warning "Distinguished Name : $DistinguishedName"
     $confirm_message = "Is the information correct? (Y/N)"
     $confirm_choice = Read-Host -Prompt $confirm_message
     # Validating information :
@@ -92,11 +92,12 @@ function Set-Translation {
             Write-Warning "New informations :"
             Write-Warning "NetBIOS Name : $netbiosName"
             Write-Warning "Domain DNS : $Domaindns" 
-            Write-Warning "DC=$DN_1"
-            Write-Warning "DC=$DN_2"
+            
+            $DistinguishedName = "DC=$DN_1,DC=$DN_2"
             if($taille -eq 3) {
-                Write-Warning "DC=$DN_3"
+                $DistinguishedName = "DC=$DN_1,DC=$DN_2,DC=$DN_3"
             }
+            Write-Warning "Distinguished Name : $DistinguishedName"
             $confirm_message = "Do you want to validate? (y/n)"
             $confirm_choice = Read-Host -Prompt $confirm_message
             if ($confirm_choice.ToLower() -eq "y") {
@@ -149,8 +150,7 @@ function Set-Translation {
     # ..Domain values
     $wellKnownID_domain.translateTo = "$netbiosName"
     $wellKnownID_domaindns.translateTo = "$Domaindns"
-    if($taille -eq 3) { $wellKnownID_RootDN.translateTo = "DC=$DN_1,DC=$DN_2,DC=$DN_3" }
-    else {$wellKnownID_RootDN.translateTo = "DC=$DN_1,DC=$DN_2"}
+    $wellKnownID_RootDN.translateTo = $DistinguishedName
     
     # ..Group values
     $wellKnownID_AU.translateTo = "$authenticatedUsers_"
