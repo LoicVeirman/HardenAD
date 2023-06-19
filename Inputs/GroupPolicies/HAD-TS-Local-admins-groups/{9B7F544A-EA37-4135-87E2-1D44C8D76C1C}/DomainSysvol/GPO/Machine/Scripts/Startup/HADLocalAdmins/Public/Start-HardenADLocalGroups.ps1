@@ -60,7 +60,7 @@ function Start-HardenADLocalGroups () {
     )
 
     $ErrorActionPreference = "SilentlyContinue"
-    $LogPath = "$env:windir\Harden\Logs"
+    $LogPath = "$env:windir\HardenAD\Logs"
 
     if (!(Test-Path $LogPath)) {
         try {
