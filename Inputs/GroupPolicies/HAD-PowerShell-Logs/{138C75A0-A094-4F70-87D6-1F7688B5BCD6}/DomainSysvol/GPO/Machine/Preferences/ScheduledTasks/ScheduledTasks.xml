@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScheduledTasks clsid="{CC63F200-7309-4ba0-B154-A71CD118DBCC}">
+	<TaskV2 clsid="{D8896631-B747-47a7-84A6-C155337F3BC8}" name="HardenAD\HAD_Delete_Powershell_Logs" image="2" changed="2023-08-10 14:22:52" uid="{26B91C95-DF5A-4510-BADE-6555D8745423}">
+		<Properties action="U" name="HardenAD\HAD_Delete_Powershell_Logs" runAs="NT AUTHORITY\System" logonType="S4U">
+			<Task version="1.2">
+				<RegistrationInfo>
+					<Author>HARDEN\Administrator</Author>
+					<Description>Delete powershell log files older than 7 days</Description>
+				</RegistrationInfo>
+				<Principals>
+					<Principal id="Author">
+						<UserId>NT AUTHORITY\System</UserId>
+						<LogonType>S4U</LogonType>
+						<RunLevel>HighestAvailable</RunLevel>
+					</Principal>
+				</Principals>
+				<Settings>
+					<IdleSettings>
+						<Duration>PT5M</Duration>
+						<WaitTimeout>PT1H</WaitTimeout>
+						<StopOnIdleEnd>false</StopOnIdleEnd>
+						<RestartOnIdle>false</RestartOnIdle>
+					</IdleSettings>
+					<MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+					<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+					<StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+					<AllowHardTerminate>false</AllowHardTerminate>
+					<AllowStartOnDemand>true</AllowStartOnDemand>
+					<Enabled>true</Enabled>
+					<Hidden>false</Hidden>
+					<ExecutionTimeLimit>PT1H</ExecutionTimeLimit>
+					<Priority>7</Priority>
+				</Settings>
+				<Triggers>
+					<CalendarTrigger>
+						<StartBoundary>2023-08-11T19:15:00</StartBoundary>
+						<Enabled>true</Enabled>
+						<ScheduleByWeek>
+							<WeeksInterval>1</WeeksInterval>
+							<DaysOfWeek>
+								<Monday/>
+							</DaysOfWeek>
+						</ScheduleByWeek>
+						<ExecutionTimeLimit>PT30M</ExecutionTimeLimit>
+					</CalendarTrigger>
+				</Triggers>
+				<Actions Context="Author">
+					<Exec>
+						<Command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</Command>
+						<Arguments>-File "C:\Windows\HardenAD\ScheduledTasks\HAD_Delete_Powershell_Logs\HAD_Delete_Powershell_Logs.ps1" -ExecutionPolicy Bypass</Arguments>
+					</Exec>
+				</Actions>
+			</Task>
+		</Properties>
+	</TaskV2>
+</ScheduledTasks>
