@@ -20,7 +20,7 @@ Function Set-GpoCentralStore {
                   01.01 -- contact@hardenad.net 
          
          history: 19.08.31 Script creation
-                  21.06.06 REmoved parameter DesiredState
+                  21.06.06 Removed parameter DesiredState
     #>
     param(
     )
@@ -73,7 +73,8 @@ Function Set-GpoCentralStore {
 
     ## Installation of custom or external ADMX/ADML
     $ADMXFiles = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions -File
-    $ADMLFiles = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\en-US -File
+    $ADMLFiles_US = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\en-US -File
+    $ADMLFiles_FR = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\fr-FR -File
     $GPOCentralStore = "$sysVolBasePath\$domName\Policies\PolicyDefinitions"
 
     if (Test-Path $GPOCentralStore) {
@@ -89,7 +90,7 @@ Function Set-GpoCentralStore {
                 $result = 2
             }
         }
-        foreach ($ADMLFile in $ADMLFiles) {
+        foreach ($ADMLFile in $ADMLFiles_US) {
             try {
                 Copy-Item $ADMLFile.FullName -Destination "$GPOCentralStore\en-US" -Force
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMLFile.Name) has been copied to central store"
@@ -100,7 +101,31 @@ Function Set-GpoCentralStore {
                 $ResMess = "Error while copying $($ADMLFile.Name) to new location"
                 $result = 2
             }
-        }       
+        }
+        
+        if (!(Test-Path "$GPOCentralStore\fr-FR")) {
+            try {
+                $null = New-Item -Path "$GPOCentralStore\fr-FR" -ItemType Directory
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New directory : $GPOCentralStore\fr-FR (success)" 
+            }
+            Catch {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New directory : $GPOCentralStore\fr-FR (Failed!)" 
+                $result = 2
+            }
+        }
+        
+        foreach ($ADMLFile in $ADMLFiles_FR) {
+            try {
+                Copy-Item $ADMLFile.FullName -Destination "$GPOCentralStore\fr-FR" -Force
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMLFile.Name) has been copied to central store"
+                $result = 0
+            }
+            catch {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($ADMLFile.Name)."
+                $ResMess = "Error while copying $($ADMLFile.Name) to new location"
+                $result = 2
+            }
+        }  
     }
 
     ## Exit

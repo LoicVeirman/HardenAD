@@ -1,4 +1,13 @@
-﻿function Get-GroupNameFromSID {
+﻿##################################################################
+## Set-Translation                                              ##
+## -------------------                                          ##
+## This function will set the translation in TaskSequence.xml   ##
+##                                                              ##
+## Version: 01.00.000                                           ##
+##  Author: contact@hardenad.net                                ##
+##################################################################
+
+function Get-GroupNameFromSID {
     param (
         [Parameter(Mandatory = $true)]
         [string]$GroupSID
