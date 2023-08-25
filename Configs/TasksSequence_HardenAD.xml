@@ -583,6 +583,7 @@
       <Filter Name="Windows-x64-NoDC" Source="Windows-x64-NoDC.mof" />
       <Filter Name="Windows-x86" Source="Windows-x86.mof" />
       <Filter Name="Windows-x86-NoDC" Source="Windows-x86-NoDC.mof" />
+      <Filter Name="Windows-PDC" Source="Windows-PDC.mof" />
     </WmiFilters>
 
     <!--
@@ -977,6 +978,19 @@ Disables the print spooler service on windows system.">
       <GpoFilter WMI="Windows-OS-Servers" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
+
+    <GPO BackupID="{AA731818-2050-4EE5-A0A1-088E75A458D8}" Validation="Yes" Name="HAD-Reset-KRBTGT-Password" Description="Harden AD ===================
+Reset the password of the krbtgt account every 30 days">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
+      <GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" /> 
+      <GpoFilter WMI="Windows-PDC" />
+    </GPO>
+
+
+
+
+
+
     <GPO BackupID="{3A10AD30-D95C-42C4-AD45-C7E4CBFC2F2D}" Validation="Yes" Name="HAD-RDP-Disabled" Description="Harden AD ===================
 Disables the RDP service and prohibits RDP connections">
       <GpoMode Mode="BOTH" Tier="Tier0" />
