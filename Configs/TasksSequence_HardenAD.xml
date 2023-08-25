@@ -16,6 +16,10 @@
       is the English Edtiion.                 -->
       <OU Class="HardenAD_ADMIN" Name="_Administration" Description="Privileged accounts administrative OU">
         <ChildOU>
+          <Name>UserAccess</Name>
+          <Description>First User Node Privilege Admin Worstations</Description>
+        </ChildOU>
+        <ChildOU>
           <Name>PawAccess</Name>
           <Description>First Node Privilege Admin Worstations</Description>
         </ChildOU>
@@ -579,6 +583,7 @@
       <Filter Name="Windows-x64-NoDC" Source="Windows-x64-NoDC.mof" />
       <Filter Name="Windows-x86" Source="Windows-x86.mof" />
       <Filter Name="Windows-x86-NoDC" Source="Windows-x86-NoDC.mof" />
+      <Filter Name="Windows-PDC" Source="Windows-PDC.mof" />
     </WmiFilters>
 
     <!--
@@ -813,17 +818,17 @@ Disables LMHASH.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <GPO BackupID="{2778E818-F47E-4A4C-B2EE-708C5A870FDC}" Validation="Yes" Name="HAD-LocalAdmins-Paw" Description="Harden AD ===================
+    <GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7A}" Validation="Yes" Name="HAD-LocalAdmins-Paw" Description="Harden AD ===================
 Add the local administration AD group to the corresponding PAW's integrated administrator group">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="OU=PawAccess,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <GPO BackupID="{F4080F7A-83AD-4A81-A127-C94C69F14D08}" Validation="Yes" Name="HAD-LocalAdmins-PawT0" Description="Harden AD ===================
+    <GPO BackupID="{ACFA486C-3622-43DC-8554-5702351A7EF6}" Validation="Yes" Name="HAD-LocalAdmins-PawT0" Description="Harden AD ===================
 Add the local administration AD group to the corresponding T0 PAW's integrated administrator group">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="OU=PawT0,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <GPO BackupID="{25682D74-5A17-4589-A19C-C14704ECFA42}" Validation="Yes" Name="HAD-LocalAdmins-PawT12L" Description="Harden AD ===================
+    <GPO BackupID="{43E44692-0CCF-412B-97A0-CFBDD4F4B2DA}" Validation="Yes" Name="HAD-LocalAdmins-PawT12L" Description="Harden AD ===================
 Add the local administration AD group to the corresponding T12L PAW's integrated administrator group">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="OU=PawT12L,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
@@ -902,7 +907,6 @@ Blocks connections to tier 1 machines from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Servers-NoDC" />
       <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
           </GPO>
     <GPO BackupID="{DA57EB62-4947-4D5B-B2B8-C46DEEDE846B}" Validation="Yes" Name="HAD-LoginRestrictions-T1L" Description="Harden AD ===================
 Blocks connections to tier legacy servers from other tier accounts">
@@ -915,7 +919,6 @@ Blocks connections to tier 2 machines from other tier accounts">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-Supported-OS-Clients" />
       <GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-      <GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{61FA8970-A5E5-40C5-9726-CBB85CE7B12D}" Validation="Yes" Name="HAD-LoginRestrictions-T2L" Description="Harden AD ===================
 Blocks connections to tier legacy workstations from other tier accounts">
@@ -964,7 +967,7 @@ Empty the pagefile.sys on each shutdown.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <GPO BackupID="{64A1C268-27C7-4343-B236-9E3BF2862578}" Validation="Yes" Name="HAD-PowerShell-Logs" Description="Harden AD ===================
+    <GPO BackupID="{9BC7A0A1-5911-4505-8800-A5A12C837301}" Validation="Yes" Name="HAD-PowerShell-Logs" Description="Harden AD ===================
 Enable Logs for PowerShell.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
@@ -975,6 +978,19 @@ Disables the print spooler service on windows system.">
       <GpoFilter WMI="Windows-OS-Servers" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
+
+    <GPO BackupID="{AA731818-2050-4EE5-A0A1-088E75A458D8}" Validation="Yes" Name="HAD-Reset-KRBTGT-Password" Description="Harden AD ===================
+Reset the password of the krbtgt account every 30 days">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
+      <GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" /> 
+      <GpoFilter WMI="Windows-PDC" />
+    </GPO>
+
+
+
+
+
+
     <GPO BackupID="{3A10AD30-D95C-42C4-AD45-C7E4CBFC2F2D}" Validation="Yes" Name="HAD-RDP-Disabled" Description="Harden AD ===================
 Disables the RDP service and prohibits RDP connections">
       <GpoMode Mode="BOTH" Tier="Tier0" />
@@ -1014,7 +1030,7 @@ Secure Netlogon service.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <GPO BackupID="{6549EB97-68C9-4946-B03B-D413E6995CB9}" Validation="Yes" Name="HAD-Security-Logs" Description="Harden AD ===================
+    <GPO BackupID="{57559440-1A69-4B88-954D-67CFBDAC90B1}" Validation="Yes" Name="HAD-Security-Logs" Description="Harden AD ===================
 Configures security logs based on ANSSI recommendations.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
@@ -1022,7 +1038,6 @@ Configures security logs based on ANSSI recommendations.">
     <GPO BackupID="{25F951CC-245B-4CB6-8138-F9F38CD3CB78}" Validation="Yes" Name="HAD-Smart-Card-Required" Description="Harden AD ===================
 Force the use of Windows Hello for smartcards.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{6930963C-6F98-4496-93B9-09511AF49681}" Validation="Yes" Name="HAD-SMB-Signing-Configuration" Description="Harden AD ===================
 Configure SMB signing for clients.">
@@ -1051,7 +1066,6 @@ Disables SMBv1.">
 Enables SMBv1.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-2008-Vista-and-Newer" />
-      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{0532EF52-A725-4E26-9A8C-45C3E2E07324}" Validation="Yes" Name="HAD-SMB1-Server-Only-Enabled" Description="Harden AD ===================
 Enables SMBv1 only for servers.">
@@ -1063,6 +1077,10 @@ Enables SMBv1 only for servers.">
 Disables SSLv2 and SSLv3 on Windows systems.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+    </GPO>
+    <GPO BackupID="{1FB916B9-F453-4342-8636-1523DC68F698}" Validation="Yes" Name="HAD-SSL2-SSL3-Enabled" Description="Harden AD ===================
+Configure default search provider.">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
     </GPO>
     <GPO BackupID="{6697D7EB-62A0-4474-A4FE-5376411CE853}" Validation="Yes" Name="HAD-Svc-Browser-Disabled" Description="Harden AD ===================
 Disable the Windows Browser service.">
@@ -1122,6 +1140,37 @@ Configure default search provider.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoFilter WMI="Windows-x64-NoDC" />
       <GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+    </GPO>
+
+  <GPO BackupID="{37624146-725D-4C9D-812A-64980DEA40B4}" Validation="Yes" Name="HAD-LDAP-Audit-Disabled" Description="Harden AD ===================
+Configure default search provider.">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
+    </GPO>
+  
+  <GPO BackupID="{5C8FC2E1-4D88-4DE1-ABAC-EADDFAB774EC}" Validation="Yes" Name="HAD-TLS-1_0-Disabled" Description="Harden AD ===================
+Configure default search provider.">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+    </GPO>
+  <GPO BackupID="{A3A7B599-37C0-484F-9560-8ED89D0B4C16}" Validation="Yes" Name="HAD-TLS-1_0-Enabled" Description="Harden AD ===================
+Configure default search provider.">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
+    </GPO>
+  <GPO BackupID="{E00C5E60-64BD-43AD-840F-CB1AFC59E264}" Validation="Yes" Name="HAD-TLS-1_1-Disabled" Description="Harden AD ===================
+Configure default search provider.">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
+    </GPO>
+  <GPO BackupID="{AFD12E92-B9D1-4139-9C5A-E8BD5C5B71A8}" Validation="Yes" Name="HAD-TLS-1_1-Enabled" Description="Harden AD ===================
+Configure default search provider.">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
+    </GPO>
+  <GPO BackupID="{DC5E5873-959B-422A-9FC5-2D88576ED9AB}" Validation="Yes" Name="HAD-TLS-1_2-Disabled" Description="Harden AD ===================
+Configure default search provider.">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
+    </GPO>
+  <GPO BackupID="{CBEE8835-3DB2-42E7-9497-9C1B70710342}" Validation="Yes" Name="HAD-TLS-1_2-Enabled" Description="Harden AD ===================
+Configure default search provider.">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
     </GPO>
   </GroupPolicies>
 
@@ -1195,6 +1244,7 @@ Configure default search provider.">
     </Group>
 
     <Group name="G-S-T0_Operators" Category="Security" Scope="Global" Description="Members of this group can operate on Tier 0 resources (login)" Path="OU=GroupsT0,OU=_Administration,ROOTDN">
+      <Member samAccountName="T0O-AHARDEN" />
     </Group>
 
     <Group name="L-S-T0" Category="Security" Scope="domainLocal" Description="Members of this group are part of Tier 0 administrative assets" Path="OU=GroupsT0,OU=_Administration,ROOTDN">
@@ -1333,7 +1383,7 @@ Configure default search provider.">
 
     <!-- #### TIER LEGACY #### -->
     <Group name="G-S-T1L_Operators" Category="Security" Scope="Global" Description="Members of this group can operate on Tier Legacy server resources (login)" Path="OU=GroupsT1L,OU=_Administration,ROOTDN">
-      <Member samAccountName="T2LO-AHARDEN" />
+      <Member samAccountName="T1LO-AHARDEN" />
     </Group>
 
     <Group name="L-S-T1L" Category="Security" Scope="domainLocal" Description="Members of this group are part of Legacy servers' administrative assets" Path="OU=GroupsT1L,OU=_Administration,ROOTDN">

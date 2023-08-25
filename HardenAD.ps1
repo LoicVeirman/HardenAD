@@ -317,14 +317,29 @@ Else {
     Write-Host "No" -ForegroundColor Green
 }
 
-#--- Updating Translations of Task Sequence file
 
+
+#--- Updating Translations of Task Sequence file
 # Check if the domain information is correct
 Write-Host "-------------------------"
-Import-Module -Name "$PSScriptRoot\Modules\translation.psm1"
-$TasksSeqConfigLocation = Split-Path -Parent $MyInvocation.MyCommand.Path
-Set-Translation -TasksSequence $TasksSequence -ScriptPath $TasksSeqConfigLocation
+# Check if the domain controller is the PDC emulator (Otherwise, the script will fail to import GPOs)
+$domainController_PDC = Get-ADDomainController -Discover -Service PrimaryDC
+if ($domainController_PDC.Name -eq $env:COMPUTERNAME) {
+    Import-Module -Name "$PSScriptRoot\Modules\translation.psm1"
+    $TasksSeqConfigLocation = Split-Path -Parent $MyInvocation.MyCommand.Path
+    Set-Translation -TasksSequence $TasksSequence -ScriptPath $TasksSeqConfigLocation
+} else {
+    Write-Warning "This domain controller is not the PDC emulator."
+    Write-Warning "You need tu update manually the values in the node 'translation' of the Task_sequence file."
+}
 #--- EXIT
+
+
+
+
+
+
+
 
 
 if ($FlagPreReq) {
@@ -347,10 +362,6 @@ Start-Sleep -Seconds 2
 
 #-Using XML
 $Resume = @()
-
-
-
-
 
 
 
