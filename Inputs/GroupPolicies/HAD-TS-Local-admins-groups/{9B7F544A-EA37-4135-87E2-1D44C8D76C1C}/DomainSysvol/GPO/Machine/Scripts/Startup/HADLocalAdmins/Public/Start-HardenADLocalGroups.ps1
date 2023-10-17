@@ -60,7 +60,7 @@ function Start-HardenADLocalGroups () {
     )
 
     $ErrorActionPreference = "SilentlyContinue"
-    $LogPath = "$env:windir\Harden\Logs"
+    $LogPath = "$env:windir\HardenAD\Logs"
 
     if (!(Test-Path $LogPath)) {
         try {
@@ -102,14 +102,16 @@ function Start-HardenADLocalGroups () {
 
         if (!$Config["TBC_T0"]) {
             $Config["TBC_T0"] = New-ADOrganizationalUnit -Name "TBC" -Path $Config["LA_T0"] -PassThru
-            $Config["TBC_T0_SRV"] = New-ADOrganizationalUnit -Name "Servers" -Path $Config["TBC_T0"] -PassThru
-            $Config["TBC_T0_WKS"] = New-ADOrganizationalUnit -Name "Workstations" -Path $Config["TBC_T0"] -PassThru
+            #$Config["TBC_T0_SRV"] = New-ADOrganizationalUnit -Name "Servers" -Path $Config["TBC_T0"] -PassThru
+            #$Config["TBC_T0_WKS"] = New-ADOrganizationalUnit -Name "Workstations" -Path $Config["TBC_T0"] -PassThru
             $Log.Success("To be classified OUs has been created in Local Admins OUs.")
         }
+        <#
         else {
             $Config["TBC_T0_SRV"] = Get-ADOrganizationalUnit -SearchBase $Config["TBC_T0"] -Filter { Name -eq "Servers" }
             $Config["TBC_T0_WKS"] = Get-ADOrganizationalUnit -SearchBase $Config["TBC_T0"] -Filter { Name -eq "Workstations" }
         }
+        #>
     }
     catch [Microsoft.ActiveDirectory.Management.ADException] {
     }

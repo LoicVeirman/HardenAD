@@ -45,35 +45,29 @@ function Get-Tiers {
         continue
     }
 
-    if (($Computer.OperatingSystem -like "*Windows 8.1*") `
-            -or ($Computer.OperatingSystem -like "*Windows 10*") `
-            -or ($Computer.OperatingSystem -like "*Windows 11*") `
-            -or ($Computer.OperatingSystem -like "*2012*") `
-            -or ($Computer.OperatingSystem -like "*2016*") `
-            -or ($Computer.OperatingSystem -like "*2019*") `
-            -or ($Computer.OperatingSystem -like "*2022*")) {
 
-        if ($Path -like "*$($Config["PROD_T0"].DistinguishedName)" `
-                -or $Path -like "*$($Config["PAW"].DistinguishedName)" `
-                -or $Path -like "*$($Config["PAW_T0"].DistinguishedName)" `
-                -or $Path -like "*$($Config["PAW_T12L"].DistinguishedName)") {
-            $Log.Info("{0} is a Tier-0 system." -f $Computer.Name)
-            return "T0"
-        }
-        if ($Path -like "*$($Config["PROD_T1"].DistinguishedName)") {
-            $Log.Info("{0} is Tier-1 server." -f $Computer.Name)
-            return "T1"
-        }
-        if ($Path -like "*$($Config["PROD_T2"].DistinguishedName)") {
-            $Log.Info("{0} is Tier-2 Workstation." -f $Computer.Name)
-            return "T2"    
-        }
-        if ($Computer.OperatingSystem -like "*Server*") {
-            return "Tbc_Svr"
-        }
-        return "Tbc_Wks"
+    #On check l'ou en P0
+    if ($Path -like "*$($Config["PROD_T0"].DistinguishedName)" `
+            -or $Path -like "*$($Config["PAW"].DistinguishedName)" `
+            -or $Path -like "*$($Config["PAW_T0"].DistinguishedName)" `
+            -or $Path -like "*$($Config["PAW_T12L"].DistinguishedName)") {
+        $Log.Info("{0} is a Tier-0 system." -f $Computer.Name)
+
+
+        return "T0"
     }
-    else {
+
+    elseif ($Path -like "*$($Config["PROD_T1"].DistinguishedName)") {
+        $Log.Info("{0} is Tier-1 server." -f $Computer.Name)
+        return "T1"
+    }
+
+    elseif ($Path -like "*$($Config["PROD_T2"].DistinguishedName)") {
+        $Log.Info("{0} is Tier-2 Workstation." -f $Computer.Name)
+        return "T2"    
+    }
+
+    elseif ($Path -like "*$($Config["PROD_TLegacy"].DistinguishedName)") {
         #Test si serveur ou workstation
         if ($Computer.OperatingSystem -like "*Server*") {
             $Log.Info("{0} is T1-Legacy system." -f $Computer.Name)
@@ -82,7 +76,38 @@ function Get-Tiers {
         else {
             $Log.Info("{0} is T2-Legacy system." -f $Computer.Name)
             return "T2L"
+        }   
+    }
+
+    # On check l'OS en P1 si rien n'a été trouvé précédemment
+
+    if (($Computer.OperatingSystem -like "*Windows 10*") `
+            -or ($Computer.OperatingSystem -like "*Windows 11*") `
+            -or ($Computer.OperatingSystem -like "*2012*") `
+            -or ($Computer.OperatingSystem -like "*2016*") `
+            -or ($Computer.OperatingSystem -like "*2019*") `
+            -or ($Computer.OperatingSystem -like "*2022*")) {
+
+                if ($Computer.OperatingSystem -like "*Server*") {
+                    $Log.Info("{0} is T1-Server." -f $Computer.Name)
+                    return "T1"
+                }
+                else{
+                    $Log.Info("{0} is T2-Workstation." -f $Computer.Name)
+                    return "T2"
+                }
+
+    }
+    else {
+        if ($Computer.OperatingSystem -like "*Server*") {
+            $Log.Info("{0} is T1-Legacy system." -f $Computer.Name)
+            return "T1L"
         }
+        else {
+            $Log.Info("{0} is T2-Legacy system." -f $Computer.Name)
+            return "T2L"
+        }   
+        
     }
     $Log.Error("{0}'s tier could not be determined" -f $Computer.Name)
     return "Tbc"

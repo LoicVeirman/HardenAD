@@ -1,0 +1,64 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+
+<!--  (c) 2006 Microsoft Corporation  --><policyDefinitions
+    xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    revision="1.0"
+    schemaVersion="1.0"
+    >
+  <policyNamespaces>
+    <target
+        namespace="Microsoft.Policies.SAM"
+        prefix="SAM"
+        />
+    <using
+        namespace="Microsoft.Policies.Windows"
+        prefix="windows"
+        />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0"/>
+  <categories>
+    <category
+        displayName="$(string.SecurityAccountManager)"
+        name="SAM"
+        >
+      <parentCategory ref="windows:System"/>
+    </category>
+  </categories>
+  <policies>
+    <policy
+        class="Machine"
+        displayName="$(string.SamNGCKeyROCAValidation)"
+        explainText="$(string.SamNGCKeyROCAValidation_explain)"
+        key="Software\Microsoft\Windows\CurrentVersion\Policies\System\SAM"
+        name="SamNGCKeyROCAValidation"
+        presentation="$(presentation.SamNGCKeyROCAValidation)"
+        >
+      <parentCategory ref="SAM"/>
+      <supportedOn ref="windows:SUPPORTED_WindowsVista"/>
+      <elements>
+        <enum
+            id="SamNGCKeyROCAValidation_Settings"
+            valueName="SamNGCKeyROCAValidation"
+            >
+          <item displayName="$(string.SamNGCKeyROCAValidationNone)">
+            <value>
+              <decimal value="0"/>
+            </value>
+          </item>
+          <item displayName="$(string.SamNGCKeyROCAValidationAudit)">
+            <value>
+              <decimal value="1"/>
+            </value>
+          </item>
+          <item displayName="$(string.SamNGCKeyROCAValidationBlock)">
+            <value>
+              <decimal value="2"/>
+            </value>
+          </item>
+        </enum>
+      </elements>
+    </policy>
+  </policies>
+</policyDefinitions>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>SAM Settings</displayName>
+  <description>Configuration settings for the Security Account Manager</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">Security Account Manager</string>
+      <string id="SamNGCKeyROCAValidation">Configure validation of ROCA-vulnerable WHfB keys during authentication</string>
+      <string id="SamNGCKeyROCAValidationNone">Ignore ROCA-vulnerable WHfB keys</string>
+      <string id="SamNGCKeyROCAValidationAudit">Audit ROCA-vulnerable WHfB keys on use</string>
+      <string id="SamNGCKeyROCAValidationBlock">Block ROCA-vulnerable WHfB keys on use</string>
+      <string id="SamNGCKeyROCAValidation_explain">This policy setting allows you to configure how domain controllers handle Windows Hello for Business (WHfB) keys that are vulnerable to the "Return of Coppersmith's attack" (ROCA) vulnerability.
+
+For more information on the ROCA vulnerability, please see:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+If you enable this policy setting the following options are supported:
+
+Ignore: during authentication the domain controller will not probe any WHfB keys for the ROCA vulnerability.
+
+Audit: during authentication the domain controller will emit audit events for WHfB keys that are subject to the ROCA vulnerability (authentications will still succeed).
+
+Block: during authentication the domain controller will block the use of WHfB keys that are subject to the ROCA vulnerability (authentications will fail).
+
+This setting only takes effect on domain controllers.
+
+If not configured, domain controllers will default to using their local configuration. The default local configuration is Audit.
+
+A reboot is not required for changes to this setting to take effect.
+
+Note: to avoid unexpected disruptions this setting should not be set to Block until appropriate mitigations have been performed, for example patching of vulnerable TPMs.
+
+More information is available at https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Options for handling ROCA-vulnerable WHfB keys:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -34,11 +34,11 @@ function Get-Connectivity{
 ################################################
 # VARIABLES
 ################################################
-$ErrorActionPreference = ‘Continue’
+$ErrorActionPreference = ï¿½Continueï¿½
 $reg_hadbitlocker = "HKLM:\SOFTWARE\HADBitLocker"
 $req_habitlocker_valuepin = "$reg_hadbitlocker\ValuePIN"
 $req_habitlocker_status = "$reg_hadbitlocker\Status"
-$log_file = "$env:USERPROFILE\AppData\Local\Temp\HadBitLockerLogs.txt"
+$log_file = "$env:SystemDrive\Windows\HardenAD\Logs\BitLockerLogs_Status.txt"
 $status = (Get-ItemProperty -Path $req_habitlocker_status -Name "Status").status
 $pincode = (Get-ItemProperty -Path $req_habitlocker_valuepin -Name "ValuePIN").ValuePIN
 $hardenad_dir = "$env:SystemDrive\Windows\HardenAD"
@@ -86,7 +86,7 @@ if($status -eq "Initialized" -and $pincode -eq "0000" -and $s_status -eq "Runnin
         $label = New-Object System.Windows.Forms.Label
         $label.Location = New-Object System.Drawing.Point(10,20)
         $label.Size = New-Object System.Drawing.Size(380,100)
-        $label.Text = "Pour des raisons de sécurité, votre poste de travail va être chiffré.`nDe ce fait, vous allez devoir choisir un code PIN d'au moins 6 caractères.`nCe code PIN vous sera demandé (après plusieurs redémarrages) à l'allumage de votre poste.`nVotre code PIN ne peut contenir que les chiffres de 0 à 9.`nVotre poste redémarrera automatiquement après le renseignement du code PIN, veuillez sauvegarder vos données avant de confirmer votre code PIN."
+        $label.Text = "Pour des raisons de sï¿½curitï¿½, votre poste de travail va ï¿½tre chiffrï¿½.`nDe ce fait, vous allez devoir choisir un code PIN d'au moins 6 caractï¿½res.`nCe code PIN vous sera demandï¿½ (aprï¿½s plusieurs redï¿½marrages) ï¿½ l'allumage de votre poste.`nVotre code PIN ne peut contenir que les chiffres de 0 ï¿½ 9.`nVotre poste redï¿½marrera automatiquement aprï¿½s le renseignement du code PIN, veuillez sauvegarder vos donnï¿½es avant de confirmer votre code PIN."
         $form.Controls.Add($label)
 
         $label = ""
@@ -148,22 +148,22 @@ if($status -eq "Initialized" -and $pincode -eq "0000" -and $s_status -eq "Runnin
                 }else{
                     "[$(Get-Date)][$($active_script_name)] Code PIN setted but not conform" | Out-File -Append -FilePath $log_file
                     Add-Type -AssemblyName PresentationFramework
-                    $msgBoxInput = [System.Windows.MessageBox]::Show("Votre code PIN est inférieur à 6 caractères ou votre code PIN ne contient pas uniquement des chiffres entre 0 et 9.`nVeuillez renseigner un code PIN valide.","Attention !",'OK','Error')
+                    $msgBoxInput = [System.Windows.MessageBox]::Show("Votre code PIN est infï¿½rieur ï¿½ 6 caractï¿½res ou votre code PIN ne contient pas uniquement des chiffres entre 0 et 9.`nVeuillez renseigner un code PIN valide.","Attention !",'OK','Error')
                 }
             }elseif($s_status -ne "Running"){
-                "[$(Get-Date)][$($active_script_name)] Le service HADBLO02 n'est pas démarré" | Out-File -Append -FilePath $log_file
+                "[$(Get-Date)][$($active_script_name)] Le service HADBLO02 n'est pas dï¿½marrï¿½" | Out-File -Append -FilePath $log_file
                 Add-Type -AssemblyName PresentationFramework
-                $msgBoxInput = [System.Windows.MessageBox]::Show("Une erreur est survenue.`nLe service HADBLO02 n'est pas démarré.`nVeuillez redémarrer votre poste pour réessayer.","Attention !",'OK','Error')
+                $msgBoxInput = [System.Windows.MessageBox]::Show("Une erreur est survenue.`nLe service HADBLO02 n'est pas dï¿½marrï¿½.`nVeuillez redï¿½marrer votre poste pour rï¿½essayer.","Attention !",'OK','Error')
                 "[$(Get-Date)][$($active_script_name)] END" | Out-File -Append -FilePath $log_file
                 exit
             }elseif(!$(Get-Connectivity)){
-                "[$(Get-Date)][$($active_script_name)] Le poste n'est pas connecté au domaine. Veuillez le reconnecter et reessayer." | Out-File -Append -FilePath $log_file
+                "[$(Get-Date)][$($active_script_name)] Le poste n'est pas connectï¿½ au domaine. Veuillez le reconnecter et reessayer." | Out-File -Append -FilePath $log_file
                 Add-Type -AssemblyName PresentationFramework
-                $msgBoxInput = [System.Windows.MessageBox]::Show("Le poste de travail n'est pas connecté au domaine`nVeuillez vérifier votre connexion VPN si vous êtes à distance.","Attention !",'OK','Error')
+                $msgBoxInput = [System.Windows.MessageBox]::Show("Le poste de travail n'est pas connectï¿½ au domaine`nVeuillez vï¿½rifier votre connexion VPN si vous ï¿½tes ï¿½ distance.","Attention !",'OK','Error')
             }else{
                 "[$(Get-Date)][$($active_script_name)] Votre code PIN ne correspond pas ou est nul. Veuillez renseigner un code PIN valide." | Out-File -Append -FilePath $log_file
                 Add-Type -AssemblyName PresentationFramework
-                $msgBoxInput = [System.Windows.MessageBox]::Show("Les code PIN renseignés ne sont pas identiques ou sont nuls`nVeuillez renseigner un code PIN valide.","Attention !",'OK','Error')
+                $msgBoxInput = [System.Windows.MessageBox]::Show("Les code PIN renseignï¿½s ne sont pas identiques ou sont nuls`nVeuillez renseigner un code PIN valide.","Attention !",'OK','Error')
             }
 
         }elseif($result -eq [System.Windows.Forms.DialogResult]::Cancel){
