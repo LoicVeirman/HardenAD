@@ -1,3 +1,11 @@
+[CmdletBinding()]
+param (
+    [Parameter(
+    )]
+    [switch]
+    $Pin
+)
+
 enum DiskType {
     Fixed
     OS
@@ -13,7 +21,7 @@ class HADDrive {
     [string] $DiskType
     [string] $VolumeType
 
-    HADDrive([Microsoft.BitLocker.Structures.BitLockerVolume] $Volume) {
+    HADDrive($Volume) {
         # $this.BLV = $Volume
         $this.MountPoint = $Volume.MountPoint
         $this.EncryptionStatus = $Volume.VolumeStatus
@@ -32,19 +40,11 @@ class HADDrive {
             $this.DiskType = [DiskType]::OS
         }
         else {
-            [uint32] $_VolumeType = (Get-WmiObject Win32_Volume | Where-Object { $_.DriveLetter -eq $this.MountPoint }).DriveType
-            [System.IO.DriveType] $_DriveInfo = (([System.IO.DriveInfo]::new($this.MountPoint)).DriveType)
-        
-            if ($_VolumeType -eq 3 -and $_DriveInfo -eq "Fixed") {
-                $this.DiskType = [DiskType]::Fixed
-            }
-            elseif ($_VolumeType -eq 2 -and $_DriveInfo -eq "Removable") {
+            if (($Global:Array | Where-Object { $_.DriveLetter -eq $this.MountPoint }).BusType -eq "USB") {
                 $this.DiskType = [DiskType]::Removable
             }
             else {
-                Write-host "hell"
-                ### BAD TYPE
-                exit
+                $this.DiskType = [DiskType]::Fixed
             }
         }
     }
@@ -73,16 +73,50 @@ class HADDrive {
 
     [void] EnableBitlocker() {
         switch ($this.DiskType) {
-            "OS" { 
+            "OS" {
+                write-host "Hello"
                 Add-BitLockerKeyProtector -MountPoint $this.MountPoint -TpmProtector
                 Enable-BitLocker -MountPoint $this.MountPoint -RecoveryPasswordProtector -SkipHardwareTest
             }
-            "Fixed" {  }
-            "Removable" {  }
+            "Fixed" { 
+                if ((Get-BitLockerVolume -MountPoint $env:SystemDrive).VolumeType -eq "FullyDecripted") {
+                    continue
+                }
+                Enable-BitLocker -MountPoint $this.MountPoint -RecoveryPasswordProtector -SkipHardwareTest
+                Enable-BitLockerAutoUnlock -MountPoint $this.MountPoint
+            }
+            "Removable" { 
+                Enable-BitLocker -MountPoint $this.MountPoint -PasswordProtector (ConvertTo-SecureString -AsPlainText "Root123/*-" -Force)
+                Enable-BitLockerAutoUnlock
+            }
             Default {}
         }
     }
 }
+
+function Get-DiskLetterAndType {
+    $Partitions = Get-CimInstance Win32_DiskPartition
+    $PhysicalDisks = Get-PhysicalDisk
+    
+    $Global:Array = @()
+    
+    foreach ($Partition in $Partitions) {
+        $Corresp = Get-CimInstance -Query "ASSOCIATORS OF `
+        {Win32_DiskPartition.DeviceID='$($Partition.DeviceID)'} `
+        WHERE AssocClass=Win32_LogicalDiskToPartition"
+        $Regex = $Partition.Name -match "(\d+)"
+        $PhysicalDiskNr = $Matches[0]
+    
+        foreach ($C in $Corresp) {
+            $Global:Array += [PSCustomObject]@{
+                DriveLetter = $C.DeviceID
+                BusType     = ($PhysicalDisks | Where-Object { $_.DeviceID -eq $PhysicalDiskNr }).BusType
+            }
+        }
+    }
+}
+
+Get-DiskLetterAndType
 
 $BLVolumes = Get-BitLockerVolume | Where-Object { $_.VolumeStatus -eq "FullyDecrypted" }
 
