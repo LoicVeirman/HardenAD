@@ -1,4 +1,31 @@
 using module ..\Classes\Logger.psm1
+function Test-NumLock {
+    [CmdletBinding()]
+    param (
+        [Parameter(
+            Mandatory
+        )]
+        [System.Windows.Forms.Form]
+        $Form
+    )
+
+    $ConfirmationStatus = $Form.Controls["ConfirmationStatus"]
+
+    while ($Form.Visible) {
+        if (!([System.Windows.Forms.Control]::IsKeyLocked("NumLock"))) {
+            $Form.Invoke([ScriptBlock] {
+                    $ConfirmationStatus.Text = "Warning: Num. Lock isn't activated."
+                })
+        }
+        else {
+            $Form.Invoke([ScriptBlock] {
+                    $ConfirmationStatus.Text = ""
+                })
+        }
+        Start-Sleep -Milliseconds 500
+    }
+    
+}
 function Get-PIN {
 
     [LogMessage]::Initialize("$env:SystemRoot\Logs\HardenAD\Bitlocker")
@@ -39,19 +66,19 @@ function Get-PIN {
         $RulesLabel.Location = [System.Drawing.Point]::new(20, 20)
         $RulesLabel.Size = [System.Drawing.Size]::new(360, 100)
         $RulesLabel.Text = "In line with your company's security policy, your disk will be encrypted and protected by a PIN code.
-    You will be asked for this PIN code when you start up your workstation. 
+You will be asked for this PIN code when you start up your workstation. 
         
-    Please choose your PIN code, which must meet the following requirements:"
+Please choose your PIN code, which must meet the following requirements:"
     
         $ComplexityLabel = [System.Windows.Forms.Label]::new()
         $ComplexityLabel.Location = [System.Drawing.Point]::new(40, 120)
         $ComplexityLabel.Size = [System.Drawing.Size]::new(360, 50)
         $ComplexityLabel.Text = "- 6 digits minimum
-    - Do not use the same number 6 times"
+- Do not use the same number 6 times"
     
         $PinLabel = [System.Windows.Forms.Label]::new()
         $PinLabel.Location = [System.Drawing.Point]::new(20, 180)
-        $PinLabel.Size = [System.Drawing.Size]::new(340, 20)
+        $PinLabel.Size = [System.Drawing.Size]::new(360, 20)
         $PinLabel.Text = "PIN : "
     
         $PinInit = [System.Windows.Forms.MaskedTextBox]::new() 
@@ -61,7 +88,7 @@ function Get-PIN {
     
         $ConfirmedPinLabel = [System.Windows.Forms.Label]::new()
         $ConfirmedPinLabel.Location = [System.Drawing.Point]::new(20, 230)
-        $ConfirmedPinLabel.Size = [System.Drawing.Size]::new(340, 20)
+        $ConfirmedPinLabel.Size = [System.Drawing.Size]::new(360, 20)
         $ConfirmedPinLabel.Text = "Confirm PIN : "
     
         $PinConfirm = [System.Windows.Forms.MaskedTextBox]::new() 
@@ -77,14 +104,8 @@ function Get-PIN {
         $Form.AcceptButton = $SubmitButton
     
         $ConfirmationStatus = [System.Windows.Forms.StatusBar]::new()
-    
-        if (!([System.Windows.Forms.Control]::IsKeyLocked("NumLock"))) {
-            $ConfirmationStatus.Text = "Warning : Num. Lock isn't activated."
-        }
-        else {
-            $ConfirmationStatus.Text = ""
-        }
-    
+        $ConfirmationStatus.Name = "ConfirmationStatus"
+
         $Form.Controls.Add($RulesLabel)
         $Form.Controls.Add($ComplexityLabel)
         $Form.Controls.Add($PinLabel)
@@ -94,7 +115,30 @@ function Get-PIN {
         $Form.Controls.Add($SubmitButton)
         $Form.Controls.Add($ConfirmationStatus)
     
-        $Form.Add_Shown({ $PinInit.Select() })
+        $Form.Add_Shown({ 
+                $PinInit.Select()
+                $Job = Start-Job -ScriptBlock {
+                    param (
+                        [System.Windows.Forms.Form]
+                        $Form
+                    )
+                    Test-NumLock -Form $Form
+                } -ArgumentList $Form
+        
+                Register-ObjectEvent -InputObject $Job -EventName StateChanged -Action {
+                    if ($Event.SourceEventArgs.NewState -eq "Completed") {
+                        $Job | Remove-Job -Force
+                    }
+                }
+            })
+
+        # $Form.Add_Load(
+        #     {
+        #         Start-Job -ScriptBlock {
+        #             Test-NumLock $Form
+        #         }
+        #     }
+        # )
         
         $SubmitButton.Add_Click(
             {
