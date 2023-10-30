@@ -114,13 +114,12 @@ class HADDrive {
                         $Log.Error(("Unable to get a volume for {0}: {1}." -f $this.MountPoint, $_.Exception.Message))
                     }
                     [bool] $isOSEncrypted = $BLV.VolumeStatus -ne [Microsoft.BitLocker.Structures.BitLockerVolumeStatus]::FullyDecrypted
-
                     $Log.Info(("{0} is {1}" -f $this.MountPoint, $BLV.VolumeStatus))
 
                     if ($isOSEncrypted) {
                         try {
                             $null = Enable-BitLocker -MountPoint $this.MountPoint -RecoveryPasswordProtector -SkipHardwareTest -Verbose:$false
-                            $Log.Success(("{0} has been encrypted successfully."))
+                            $Log.Success(("{0} has been encrypted successfully." -f $this.MountPoint))
                         }
                         catch {
                             $Log.Fatal(("An error occured while encrypting {0}: {1}." -f $this.MountPoint, $_.Exception.Message))                        

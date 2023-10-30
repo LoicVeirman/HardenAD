@@ -33,10 +33,13 @@ function Compare-DiskToLogical {
         $PhysicalDiskNr = $Matches[0]
     
         foreach ($C in $Corresp) {
+            $Type = ($PhysicalDisks | Where-Object { $_.DeviceID -eq $PhysicalDiskNr }).BusType
             $Global:Array += [PSCustomObject]@{
                 DriveLetter = $C.DeviceID
-                BusType     = ($PhysicalDisks | Where-Object { $_.DeviceID -eq $PhysicalDiskNr }).BusType
+                BusType     = $Type
             }
+
+            $Log.Info(("{0} is detected as {1} device." -f $C.DeviceID, $Type))
         }
     }
 }

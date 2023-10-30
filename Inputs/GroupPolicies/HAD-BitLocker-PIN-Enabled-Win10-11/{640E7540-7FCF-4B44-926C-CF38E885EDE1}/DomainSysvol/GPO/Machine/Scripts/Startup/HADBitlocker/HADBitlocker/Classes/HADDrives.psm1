@@ -119,7 +119,7 @@ class HADDrive {
                     if ($isOSEncrypted) {
                         try {
                             $null = Enable-BitLocker -MountPoint $this.MountPoint -RecoveryPasswordProtector -SkipHardwareTest -Verbose:$false
-                            $Log.Success(("{0} has been encrypted successfully."))
+                            $Log.Success(("{0} has been encrypted successfully." -f $this.MountPoint))
                         }
                         catch {
                             $Log.Fatal(("An error occured while encrypting {0}: {1}." -f $this.MountPoint, $_.Exception.Message))                        
