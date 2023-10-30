@@ -1,27 +1,27 @@
 using module ..\Classes\Logger.psm1
 function Get-PIN {
 
-    [LogMessage]::Initialize("$env:SystemRoot\Logs\HardenAD\Bitlocker")
-    $Log = [LogMessage]::NewLogs()
+    # [LogMessage]::Initialize("$env:SystemRoot\Logs\HardenAD\Bitlocker")
+    # $Log = [LogMessage]::NewLogs()
 
     try {
         Add-Type -AssemblyName System.Windows.Forms
         Add-Type -AssemblyName System.Drawing
         Add-Type -Name Window -Namespace Console -MemberDefinition '
-    [DllImport("Kernel32.dll")]
-    public static extern IntPtr GetConsoleWindow();
+[DllImport("Kernel32.dll")]
+public static extern IntPtr GetConsoleWindow();
         
-    [DllImport("user32.dll")]
-    public static extern bool ShowWindow(IntPtr hWnd, Int32 nCmdShow);
+[DllImport("user32.dll")]
+public static extern bool ShowWindow(IntPtr hWnd, Int32 nCmdShow);
     '
-        $Log.Success("All assemblies have been added.")
+        # $Log.Success("All assemblies have been added.")
     }
     catch {
-        $Log.Fatal(("At least one assembly could not be loaded: {0}." -f $_.Exception.Message))
+        # $Log.Fatal(("At least one assembly could not be loaded: {0}." -f $_.Exception.Message))
     }
 
     try {
-        $Log.Info("Starting the popup insterface.")
+        # $Log.Info("Starting the popup insterface.")
         $ConsolePtr = [Console.Window]::GetConsoleWindow()
         $null = [Console.Window]::ShowWindow($ConsolePtr, 0)
     
@@ -136,6 +136,6 @@ Please choose your PIN code, which must meet the following requirements:"
         }
     }
     catch {
-        $Log.Fatal(("An error occurred when displaying the user interface to change the PIN: {0}." -f $_.Exception.Message))
+        # $Log.Fatal(("An error occurred when displaying the user interface to change the PIN: {0}." -f $_.Exception.Message))
     }
 }
