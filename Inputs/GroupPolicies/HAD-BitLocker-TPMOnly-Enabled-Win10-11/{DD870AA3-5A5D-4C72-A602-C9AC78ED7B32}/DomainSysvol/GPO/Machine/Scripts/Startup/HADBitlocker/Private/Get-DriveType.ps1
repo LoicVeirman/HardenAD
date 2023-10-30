@@ -14,7 +14,7 @@ function Get-DriveType {
         return [Microsoft.BitLocker.Structures.BitLockerVolumeType]::OperatingSystem
     }
     else {
-        if (($Global:Array | Where-Object { $_.DriveLetter -eq $this.MountPoint }).BusType -eq "USB") {
+        if (($Global:Array | Where-Object { $_.DriveLetter -eq $Volume.MountPoint }).BusType -eq "USB") {
             return [System.IO.DriveType]::Removable
         }
         else {

@@ -35,6 +35,7 @@ function Start-HADEncryption {
         switch (Get-DriveType $Volume) {
         ([Microsoft.BitLocker.Structures.BitLockerVolumeType]::OperatingSystem) {
                 if ($OS) {
+                    $Log.Info(("Starting OS encryption for {0}." -f $Volume.MountPoint))
                     if ($PIN) {
                         $ScriptBlock = {
                             . "$env:ProgramFiles\HADBitlocker\Public\Get-PIN.ps1"
@@ -61,11 +62,13 @@ function Start-HADEncryption {
             }
         ([System.IO.DriveType]::Fixed) {
                 if ($Fixed) {
+                    $Log.Info(("Starting fixed encryption for {0}." -f $Volume.MountPoint))
                     [HADFixedDrive]::new($Volume)
                 }
             }
         ([System.IO.DriveType]::Removable) {
                 if ($USB) {
+                    $Log.Info(("Starting USB encryption for {0}." -f $Volume.MountPoint))
                     [HADRemovableDrive]::new($Volume)
                 }
             }
