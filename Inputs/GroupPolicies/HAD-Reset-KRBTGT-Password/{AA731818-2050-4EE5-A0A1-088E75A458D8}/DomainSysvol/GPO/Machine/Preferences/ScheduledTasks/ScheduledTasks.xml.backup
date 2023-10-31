@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScheduledTasks clsid="{CC63F200-7309-4ba0-B154-A71CD118DBCC}">
+	<TaskV2 clsid="{D8896631-B747-47a7-84A6-C155337F3BC8}" name="HAD-Reset-KRBTGT-Password" image="2" changed="2023-08-24 15:18:32" uid="{0A589D2F-24CD-4D03-B9E2-02D6ECD7CC18}" userContext="0" removePolicy="0">
+		<Properties action="U" name="HardenAD\HAD-Reset-KRBTGT-Password" runAs="NT AUTHORITY\System" logonType="S4U">
+			<Task version="1.2">
+				<RegistrationInfo>
+					<Author>HARDEN\Administrator</Author>
+					<Description>Reset the password of the krbtgt account every 30 days</Description>
+				</RegistrationInfo>
+				<Principals>
+					<Principal id="Author">
+						<UserId>NT AUTHORITY\System</UserId>
+						<LogonType>S4U</LogonType>
+						<RunLevel>HighestAvailable</RunLevel>
+					</Principal>
+				</Principals>
+				<Settings>
+					<IdleSettings>
+						<Duration>PT10M</Duration>
+						<WaitTimeout>PT1H</WaitTimeout>
+						<StopOnIdleEnd>true</StopOnIdleEnd>
+						<RestartOnIdle>false</RestartOnIdle>
+					</IdleSettings>
+					<MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+					<DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+					<StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+					<AllowHardTerminate>true</AllowHardTerminate>
+					<AllowStartOnDemand>true</AllowStartOnDemand>
+					<Enabled>true</Enabled>
+					<Hidden>false</Hidden>
+					<ExecutionTimeLimit>PT1H</ExecutionTimeLimit>
+					<Priority>7</Priority>
+				</Settings>
+				<Triggers>
+					<CalendarTrigger>
+						<StartBoundary>2023-07-31T16:00:00Z</StartBoundary>
+						<Enabled>true</Enabled>
+						<ScheduleByMonth>
+							<DaysOfMonth>
+								<Day>1</Day>
+							</DaysOfMonth>
+							<Months>
+								<January></January>
+								<February></February>
+								<March></March>
+								<April></April>
+								<May></May>
+								<June></June>
+								<July></July>
+								<August></August>
+								<September></September>
+								<October></October>
+								<November></November>
+								<December></December>
+							</Months>
+						</ScheduleByMonth>
+					</CalendarTrigger>
+				</Triggers>
+				<Actions Context="Author">
+					<Exec>
+						<Command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</Command>
+						<Arguments>-File "C:\Windows\HardenAD\ScheduledTasks\HAD_Reset_KRBTGT_Password\HAD-Reset-KRBTGT-Password.ps1" -ExecutionPolicy Bypass</Arguments>
+					</Exec>
+				</Actions>
+			</Task>
+		</Properties>
+	</TaskV2>
+</ScheduledTasks>
