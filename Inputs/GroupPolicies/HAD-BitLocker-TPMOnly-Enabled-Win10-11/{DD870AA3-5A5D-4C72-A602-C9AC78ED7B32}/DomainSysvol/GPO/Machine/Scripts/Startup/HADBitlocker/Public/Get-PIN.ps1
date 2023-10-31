@@ -1,4 +1,31 @@
 using module ..\Classes\Logger.psm1
+function Test-NumLock {
+    [CmdletBinding()]
+    param (
+        [Parameter(
+            Mandatory
+        )]
+        [System.Windows.Forms.Form]
+        $Form
+    )
+
+    $ConfirmationStatus = $Form.Controls["ConfirmationStatus"]
+
+    while ($Form.Visible) {
+        if (!([System.Windows.Forms.Control]::IsKeyLocked("NumLock"))) {
+            $Form.Invoke([ScriptBlock] {
+                    $ConfirmationStatus.Text = "Warning: Num. Lock isn't activated."
+                })
+        }
+        else {
+            $Form.Invoke([ScriptBlock] {
+                    $ConfirmationStatus.Text = ""
+                })
+        }
+        Start-Sleep -Milliseconds 500
+    }
+    
+}
 function Get-PIN {
 
     # [LogMessage]::Initialize("$env:SystemRoot\Logs\HardenAD\Bitlocker")
@@ -51,7 +78,7 @@ Please choose your PIN code, which must meet the following requirements:"
     
         $PinLabel = [System.Windows.Forms.Label]::new()
         $PinLabel.Location = [System.Drawing.Point]::new(20, 180)
-        $PinLabel.Size = [System.Drawing.Size]::new(340, 20)
+        $PinLabel.Size = [System.Drawing.Size]::new(360, 20)
         $PinLabel.Text = "PIN : "
     
         $PinInit = [System.Windows.Forms.MaskedTextBox]::new() 
@@ -61,7 +88,7 @@ Please choose your PIN code, which must meet the following requirements:"
     
         $ConfirmedPinLabel = [System.Windows.Forms.Label]::new()
         $ConfirmedPinLabel.Location = [System.Drawing.Point]::new(20, 230)
-        $ConfirmedPinLabel.Size = [System.Drawing.Size]::new(340, 20)
+        $ConfirmedPinLabel.Size = [System.Drawing.Size]::new(360, 20)
         $ConfirmedPinLabel.Text = "Confirm PIN : "
     
         $PinConfirm = [System.Windows.Forms.MaskedTextBox]::new() 
@@ -77,14 +104,8 @@ Please choose your PIN code, which must meet the following requirements:"
         $Form.AcceptButton = $SubmitButton
     
         $ConfirmationStatus = [System.Windows.Forms.StatusBar]::new()
-    
-        if (!([System.Windows.Forms.Control]::IsKeyLocked("NumLock"))) {
-            $ConfirmationStatus.Text = "Warning : Num. Lock isn't activated."
-        }
-        else {
-            $ConfirmationStatus.Text = ""
-        }
-    
+        $ConfirmationStatus.Name = "ConfirmationStatus"
+
         $Form.Controls.Add($RulesLabel)
         $Form.Controls.Add($ComplexityLabel)
         $Form.Controls.Add($PinLabel)
@@ -94,7 +115,30 @@ Please choose your PIN code, which must meet the following requirements:"
         $Form.Controls.Add($SubmitButton)
         $Form.Controls.Add($ConfirmationStatus)
     
-        $Form.Add_Shown({ $PinInit.Select() })
+        $Form.Add_Shown({ 
+                $PinInit.Select()
+                $Job = Start-Job -ScriptBlock {
+                    param (
+                        [System.Windows.Forms.Form]
+                        $Form
+                    )
+                    Test-NumLock -Form $Form
+                } -ArgumentList $Form
+        
+                Register-ObjectEvent -InputObject $Job -EventName StateChanged -Action {
+                    if ($Event.SourceEventArgs.NewState -eq "Completed") {
+                        $Job | Remove-Job -Force
+                    }
+                }
+            })
+
+        # $Form.Add_Load(
+        #     {
+        #         Start-Job -ScriptBlock {
+        #             Test-NumLock $Form
+        #         }
+        #     }
+        # )
         
         $SubmitButton.Add_Click(
             {
