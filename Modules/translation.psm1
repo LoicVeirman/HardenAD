@@ -10,7 +10,7 @@
 function Get-GroupNameFromSID {
     param (
         [Parameter(Mandatory = $true)]
-        [string]$GroupSID
+        [string] $GroupSID
     )
 
     try {
@@ -23,7 +23,8 @@ function Get-GroupNameFromSID {
 
         if ($groupName) {
             return $groupName
-        } else {
+        }
+        else {
             return "The group with SID '$GroupSID' was not found."
         }
     }
@@ -69,7 +70,7 @@ function Set-Translation {
 
 
     $DistinguishedName = "DC=$DN_1,DC=$DN_2"
-    if($taille -eq 3) {
+    if ($taille -eq 3) {
         $DN_3 = $domain_parts[2]
         $DistinguishedName = "DC=$DN_1,DC=$DN_2,DC=$DN_3"
     }
@@ -81,7 +82,8 @@ function Set-Translation {
     if ($confirm_choice.ToLower() -eq "y") {
         Write-Warning "Information validated!"
         
-    } else {
+    }
+    else {
         while ($true) {
             # If user answers "N" --> ask for domain name parts
             $netbiosName = Read-Host "Enter the NetBIOS domain name"
@@ -94,7 +96,7 @@ function Set-Translation {
             $DN_1 = $domain_parts[0]
             $DN_2 = $domain_parts[1]
 
-            if($taille -eq 3) {
+            if ($taille -eq 3) {
                 $DN_3 = $domain_parts[2]
             }
 
@@ -103,7 +105,7 @@ function Set-Translation {
             Write-Warning "Domain DNS : $Domaindns" 
             
             $DistinguishedName = "DC=$DN_1,DC=$DN_2"
-            if($taille -eq 3) {
+            if ($taille -eq 3) {
                 $DistinguishedName = "DC=$DN_1,DC=$DN_2,DC=$DN_3"
             }
             Write-Warning "Distinguished Name : $DistinguishedName"
@@ -142,18 +144,18 @@ function Set-Translation {
 
 
     # Locate the nodes to update in taskSequence File
-    $wellKnownID_domain = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domain%"}
-    $wellKnownID_domaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%domaindns%"}
-    $wellKnownID_RootDN = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%RootDN%"}
+    $wellKnownID_domain = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%domain%" }
+    $wellKnownID_domaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%domaindns%" }
+    $wellKnownID_RootDN = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootDN%" }
 
-    $wellKnownID_AU = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%AuthenticatedUsers%"}
-    $wellKnownID_Adm = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%Administrators%"}
-    $wellKnownID_EA = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%EnterpriseAdmins%"}
-    $group_EA = $TasksSeqConfig.Settings.Groups.Group | where {$_.name -eq "Enterprise Admins"}
-    $wellKnownID_domainAdm = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%DomainAdmins%"}
-    $wellKnownID_SchemaAdm = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%SchemaAdmins%"}
-    $wellKnownID_RDP = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%RemoteDesktopUsers%"}
-    $wellKnownID_Users = $TasksSeqConfig.Settings.Translation.wellKnownID | where {$_.translateFrom -eq "%Users%"}
+    $wellKnownID_AU = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%AuthenticatedUsers%" }
+    $wellKnownID_Adm = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Administrators%" }
+    $wellKnownID_EA = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%EnterpriseAdmins%" }
+    $group_EA = $TasksSeqConfig.Settings.Groups.Group | Where-Object { $_.Name -eq "Enterprise Admins" }
+    $wellKnownID_domainAdm = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%DomainAdmins%" }
+    $wellKnownID_SchemaAdm = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%SchemaAdmins%" }
+    $wellKnownID_RDP = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RemoteDesktopUsers%" }
+    $wellKnownID_Users = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Users%" }
 
     # Updating Values :
     # ..Domain values
@@ -165,7 +167,7 @@ function Set-Translation {
     $wellKnownID_AU.translateTo = "$authenticatedUsers_"
     $wellKnownID_Adm.translateTo = "$administrators_"
     $wellKnownID_EA.translateTo = "$enterpriseAdmins_"
-    $group_EA.name = "$enterpriseAdmins_"
+    $group_EA.Name = "$enterpriseAdmins_"
     $wellKnownID_domainAdm.translateTo = "$domainAdmins_"
     $wellKnownID_SchemaAdm.translateTo = "$schemaAdmins_"
     $wellKnownID_RDP.translateTo = "$RDUsers_"
