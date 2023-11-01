@@ -17,27 +17,33 @@ $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
 $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** SCRIPT STARTS"
 $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
 
-$groups = import-csv .\MCS-GroupsFlushing.csv
 $errCde = 0
 
-$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Import groups data: found " + $groups.count + " group(s) to flush"
+try {
+	$xmlConfig = ([xml](Get-Content "$PSScriptRoot\.\MCS-GroupsFlushing.xml")).Config.Group
+}
+catch {
+	$errCde++
+}
 
-foreach ($group in $groups)
-{
-	$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $group.sAMAccountName + ": begin"
-	
-	Try { 
-		Set-ADGroup -Identity $group.sAMAccountName	-clear member
-		$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $group.sAMAccountName + ": success"
-	} 
-	Catch {
-		$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $group.sAMAccountName + ": failed!"
+$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Import groups data: found " + $xmlConfig + " group(s) to flush"
+
+foreach ($Group in $xmlConfig) {
+	$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $Group.Name + ": begin"
+
+	try {
+		Set-ADGroup -Identity $Group.Name -Clear member
+		$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $Group.Name + ": success"
+	}
+	catch {
+		$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "Flushing group " + $Group.Name + ": failed!"
 		$errCde++
 	}
 }
 
+
 $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "--> Group(s) flushing is over"
-$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "--> The process has failed for $errCde over " + $groups.count
+$Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "--> The process has failed for $errCde over " + $xmlConfig
 $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "--> exporting log file to MCS-GroupsFlushing.log"
 $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "*** SCRIPT FINISH"
 $Log += (Get-Date -UFormat "%Y-%m-%d %T ") + "***"

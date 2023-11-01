@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Paramètres KDC</displayName>
+  <description>Paramètres de configuration pour le centre de distribution de clés Kerberos.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">Utiliser l’ordre de recherche dans la forêt</string>
+      <string id="forestsearch_explain">Ce paramètre de stratégie définit la liste des forêts de confiance interrogées par le centre de distribution de clés (KDC) lorsque celui-ci essaie de résoudre des noms principaux de services (noms SPN) en deux parties.
+
+Si vous activez ce paramètre de stratégie, le centre de distribution de clés effectue ses recherches dans les forêts de cette liste s’il ne parvient pas à résoudre un nom SPN en deux parties dans la forêt locale. La recherche est basée sur un catalogue global ou sur les suffixes de noms. Dès qu’il trouve une correspondance, le centre de distribution de clés renvoie un ticket de référence au client pour le domaine approprié.
+
+Si vous désactivez ce paramètre de stratégie ou ne le configurez pas, le centre de distribution de clés n’essaie pas de résoudre le nom SPN en analysant le contenu des forêts répertoriées. S’il n’est pas en mesure de résoudre le nom, l’authentification NTLM peut être appliquée.
+
+Pour assurer un comportement cohérent, veillez à ce que ce paramètre de stratégie soit pris en charge et défini de façon identique sur tous les contrôleurs de domaine au sein du domaine.</string>
+      <string id="emitlili">Fournir des informations sur les ouvertures de session précédentes sur les ordinateurs clients</string>
+      <string id="emitlili_explain">Ce paramètre de stratégie détermine si le contrôleur de domaine fournit des informations sur des ouvertures de session précédentes aux ordinateurs clients.
+
+Si vous activez ce paramètre de stratégie, le contrôleur de domaine ne fournit pas les messages d’information relatifs aux ouvertures de session précédentes.
+
+Pour tirer parti de cette fonction, il est nécessaire d’activer également le paramètre de stratégie « Afficher les informations sur les ouvertures de session précédentes au cours d’une ouverture de session utilisateur » situé au niveau du nœud Options d’ouverture de session Windows sous Composants Windows.
+
+Si vous désactivez ce paramètre de stratégie ou ne le configurez pas, le contrôleur de domaine fournit des informations sur les ouvertures de session précédentes uniquement si le paramètre de stratégie « Afficher les informations sur les ouvertures de session précédentes au cours d’une ouverture de session utilisateur » est activé.
+
+Remarque : pour que des informations sur les ouvertures de session précédentes soient fournies, le niveau fonctionnel du domaine doit être Windows Server 2008. Dans les domaines dont le niveau fonctionnel de domaine est Windows Server 2003, Windows 2000 natif ou Windows 2000 mixte, les contrôleurs de domaine ne peuvent pas fournir des informations sur les ouvertures de session précédentes, et l’activation de ce paramètre de stratégie n’a aucun effet.
+
+</string>
+      <string id="CbacAndArmor">Prise en charge du contrôleur de domaine Kerberos pour les revendications, l’authentification composée et le blindage Kerberos</string>
+      <string id="CbacAndArmor_explain">Ce paramètre de stratégie vous permet de configurer un contrôleur de domaine pour prendre en charge les revendications et l’authentification composée pour le contrôle d’accès dynamique et le blindage Kerberos à l’aide de l’authentification Kerberos.
+
+Si vous activez ce paramètre de stratégie, les ordinateurs clients qui prennent en charge les revendications et l’authentification composée pour le contrôle d’accès dynamique et sont compatibles avec le blindage Kerberos utilisent cette fonctionnalité pour les messages d’authentification Kerberos. Cette stratégie doit être appliquée à tous les contrôleurs de domaine pour garantir son application cohérente dans le domaine. 
+
+Si vous désactivez ou ne configurez pas ce paramètre de stratégie, le contrôleur de domaine ne prend pas en charge les revendications, l’authentification composée ou le blindage.
+
+Si vous choisissez l’option « 
+
+Non pris en charge », le contrôleur de domaine ne prend pas en charge les revendications, l’authentification composée ou le blindage, ce qui correspond au comportement par défaut pour les contrôleurs de domaine exécutant Windows Server 2008 R2 ou un système d’exploitation antérieur.
+
+Remarque : pour que les options suivantes de cette stratégie de contrôleur de domaine Kerberos soient effectives, la stratégie de groupe Prise en charge du client Kerberos pour les revendications, l’authentification composée et le blindage Kerberos doit être activée sur les systèmes pris en charge. Si le paramètre de stratégie Kerberos n’est pas activé, les messages d’authentification Kerberos n’utilisent pas ces fonctionnalités. 
+
+Si vous choisissez l’option
+« Pris en charge », le contrôleur de domaine prend en charge les revendications, l’authentification composée et le blindage Kerberos. Le contrôleur de domaine annonce aux ordinateurs clients Kerberos que le domaine prend en charge les revendications et l’authentification composée pour le contrôle d’accès dynamique et le blindage Kerberos.
+
+Exigences au niveau fonctionnel du domaine Pour les options « Toujours fournir des revendications » et « Rejeter les demandes d’authentification non blindées », quand le niveau fonctionnel du domaine est Windows Server 2008 R2 ou version antérieure, les contrôleurs de domaine se comportent comme si l’option « Pris en charge » était sélectionnée. Quand le niveau fonctionnel du domaine est Windows Server 2012, le contrôleur de domaine annonce aux ordinateurs clients Kerberos que le domaine prend en charge les revendications et l’authentification composée pour le contrôle d’accès dynamique et le blindage Kerberos, et :
+    - Si vous choisissez l’option « Toujours fournir des revendications», il renvoie toujours des revendications pour les comptes et il prend en charge le comportement RFC pour l’annonce FAST (Flexible Authentication Secure Tunneling).
+   - Si vous choisissez l’option « Rejeter les demandes d’authentification non blindées », il rejette les messages Kerberos non blindés.
+
+Attention : lorsque l’option « Rejeter les demandes d’authentification non blindées » est sélectionnée, les ordinateurs clients qui ne prennent pas en charge le blindage Kerberos ne peuvent pas s’authentifier auprès du contrôleur de domaine.
+
+Pour garantir l’efficacité de cette fonctionnalité, déployez suffisamment de contrôleurs de domaine qui prennent en charge les revendications et l’authentification composée pour le contrôle d’accès dynamique et qui prennent en charge le blindage Kerberos pour la gestion des demandes d’authentification. Le déploiement d’un nombre insuffisant de contrôleurs de domaine prenant en charge cette stratégie conduit à des échecs d’authentification dès lors que le contrôle d’accès dynamique ou le blindage Kerberos est requis (c’est-à-dire quand l’option « Pris en charge » est activée).
+
+Impact sur les performances du contrôleur de domaine lorsque ce paramètre de stratégie est activé :
+   - La découverte de fonctionnalités de domaine Kerberos sécurisée est requise, ce qui augmente le nombre d’échanges de messages.
+   - Les revendications et l’authentification composée pour le contrôle d’accès dynamique augmentent la taille et la complexité des données dans le message, ce qui conduit à prolonger le temps de traitement et à augmenter la taille de ticket du service Kerberos.
+   - Le blindage Kerberos chiffre entièrement les messages Kerberos et signe les erreurs Kerberos, ce qui accroît la durée de traitement mais ne modifie pas la taille de ticket du service.
+</string>
+      <string id="NoCbacAndArmor">Non pris en charge</string>
+      <string id="MixModeCbacAndArmor">Pris en charge</string>
+      <string id="FullModeCbacAndArmor">Toujours fournir des revendications</string>
+      <string id="FullModeCbacAndRequireArmor">Rejeter les demandes d’authentification non blindées</string>
+      <string id="TicketSizeThreshold">Avertissement pour cause de tickets Kerberos volumineux</string>
+      <string id="TicketSizeThreshold_explain">Ce paramètre de stratégie vous permet de configurer la taille à partir de laquelle les tickets Kerberos déclenchent l’événement d’avertissement émis durant l’authentification Kerberos. Les avertissements de taille de ticket sont consignés dans le journal système.
+
+Si vous activez ce paramètre de stratégie, vous pouvez définir le seuil au-dessus duquel les avertissements sont signalés pour les tickets Kerberos. Si vous définissez un seuil trop élevé, des échecs d’authentification peuvent se produire, même si aucun événement d’avertissement n’est consigné dans le journal.  Si vous définissez un seuil trop bas, le journal contiendra trop de tickets pour que leur analyse soit intéressante. Cette valeur doit être égale à celle définie pour la stratégie Kerberos « Définir la taille maximale de mémoire tampon de jeton de contexte SSPI Kerberos » ou à la valeur MaxTokenSize la plus petite utilisée dans votre environnement si vous n’effectuez pas la configuration avec la stratégie de groupe.
+      
+Si vous désactivez ce paramètre de stratégie ou ne le configurez pas, la valeur de seuil par défaut est 12 000 octets, ce qui correspond à la taille maximale de jeton Kerberos (MaxTokenSize) par défaut pour Windows 7, Windows Server 2008 R2 et versions antérieures.
+
+</string>
+      <string id="RequestCompoundId">Demander l’authentification composée</string>
+      <string id="RequestCompoundId_explain">Ce paramètre de stratégie vous permet de configurer un contrôleur de domaine pour qu’il demande l’authentification composée.
+
+Remarque : pour qu’un contrôleur de domaine demande l’authentification composée, la stratégie « Prise en charge du contrôleur de domaine Kerberos pour les revendications, l’authentification composée et le blindage Kerberos » doit être configurée et activée. 
+
+Si vous activez ce paramètre de stratégie, les contrôleurs de domaine demandent l’authentification composée. Le ticket de service renvoyé contient l’authentification composée uniquement quand le compte est configuré de manière explicite. Cette stratégie doit être appliquée à tous les contrôleurs de domaine pour garantir son application cohérente dans le domaine. 
+
+Si vous désactivez ce paramètre de stratégie ou si vous ne le configurez pas, les contrôleurs de domaine renvoient des tickets de service qui contiennent l’authentification composée chaque fois que le client envoie une demande d’authentification composée, quelle que soit la configuration du compte.
+
+</string>
+      <string id="PKINITFreshness">Prise en charge du contrôleur de domaine Kerberos pour l’extension d’actualisation de PKInit</string>
+      <string id="PKINITFreshness_explain">La prise en charge de l’extension d’actualisation de PKInit nécessite le niveau fonctionnel du domaine (DFL) Windows Server 2016. Si le domaine du contrôleur de domaine n’est pas au DFL Windows Server 2016 ou supérieur, cette stratégie ne s’applique pas.
+
+Ce paramètre de stratégie vous permet de configurer un contrôleur de domaine (DC) pour prendre en charge l’extension d’actualisation de PKInit.
+
+Si vous activez ce paramètre de stratégie, les options suivantes sont prises en charge :
+
+Pris en charge : l’extension d’actualisation de PKInit est prise en charge à la demande. Les clients Kerberos s’authentifiant avec succès auprès de l’extension d’actualisation de PKInit obtiennent le SID d’identité de clé public actualisé.
+
+Obligatoire : l’extension d’actualisation de PKInit est requise pour la réussite de l’authentification. Les clients Kerberos qui ne prennent pas en charge l’extension d’actualisation de PKInit échouent toujours lorsqu’ils utilisent des informations d’identification de clé publique.
+
+Si vous désactivez ce paramètre de stratégie ou si vous ne le configurez pas, le contrôleur de domaine ne propose jamais l’extension d’actualisation de PKInit et accepte les demandes d’authentification valides sans vérifier l’actualisation. Les utilisateurs ne reçoivent jamais le SID d’identité de clé publique actualisé.
+</string>
+      <string id="NoPKINITFreshness">Désactivé</string>
+      <string id="SupportPKINITFreshness">Pris en charge</string>
+      <string id="RequirePKINITFreshness">Obligatoire</string>
+      <string id="PKINITHashAlgorithmConfiguration">Configurer des algorithmes de hachage pour l’ouverture de session de certificat</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Ce paramètre de stratégie contrôle les algorithmes de hachage ou de somme de contrôle utilisés par le client Kerberos lors de l’authentification de certificat.
+
+Si vous activez cette stratégie, vous pouvez configurer l’un des quatre états pour chaque algorithme :
+
+– « Par défaut » définit l’algorithme sur l’état recommandé.
+
+– « Pris en charge » active l’utilisation de l’algorithme. L’activation des algorithmes qui ont été désactivés par défaut peut réduire votre sécurité.
+
+– « Audité » active l’utilisation de l’algorithme et signale un événement (ID 309) chaque fois qu’il est utilisé. Cet état permet de vérifier que l’algorithme n’est pas utilisé et qu’il peut être désactivé en toute sécurité.
+
+– « Non pris en charge » désactive l’utilisation de l’algorithme. Cet état est destiné aux algorithmes considérés comme non sécurisés.
+
+Si vous désactivez ou ne configurez pas cette stratégie, chaque algorithme suppose l’état « Par défaut ».
+Pour plus d’informations sur les algorithmes de hachage et de somme de contrôle pris en charge par le client Windows Kerberos et leurs états par défaut, consultez https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Événements générés par cette configuration : 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Par défaut</string>
+      <string id="PKINITHashAlgorithm_Supported">Pris en charge</string>
+      <string id="PKINITHashAlgorithm_Audited">Audité</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Non pris en charge</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Mode :</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Forêts à interroger</label>
+        </textBox>
+        <text>Syntaxe :</text>
+        <text>Entrez la liste des forêts dans lesquelles effectuer une recherche lorsque cette stratégie est activée.</text>
+        <text>Utilisez le format de nom de domaine complet.</text>
+        <text>Séparez les entrées de recherche par un point-virgule « ; ».</text>
+        <text>Détails :</text>
+        <text>Il n’est pas nécessaire d’ajouter la forêt actuelle à la liste, car l’ordre de recherche des forêts se base d’abord sur le catalogue global, puis sur la liste des forêts dans l’ordre indiqué.</text>
+        <text>Il n’est pas nécessaire de répertorier séparément tous les domaines de la forêt.</text>
+        <text>Si une forêt approuvée figure dans la liste, la recherche s’appliquera à tous les domaines de cette forêt.</text>
+        <text>Pour de meilleures performances, répertoriez les forêts dans l’ordre de probabilité de réussite.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Options de revendications, d’authentification composée pour le contrôle d’accès dynamique et de blindage Kerberos :</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Seuil de taille de ticket</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">Options d’extension d’actualisation de PKInit :</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

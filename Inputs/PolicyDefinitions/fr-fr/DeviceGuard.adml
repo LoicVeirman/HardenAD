@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2015 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Microsoft Windows Device Guard</displayName>
+  <description>Windows Device Guard Security</description>
+  <resources>
+    <stringTable>
+      <string id="DeviceGuard">Device Guard</string>
+      <string id="VirtualizationBasedSecurity">Activer la sécurité basée sur la virtualisation</string>
+      <string id="VirtualizationBasedSecurityHelp">Indique si la sécurité basée sur la virtualisation est activée.
+
+La sécurité basée sur la virtualisation utilise l’hyperviseur Windows pour prendre en charge les services de sécurité. La sécurité basée sur la virtualisation nécessite le démarrage sécurisé et peut éventuellement être activée avec l’utilisation de protections DMA. Les protections DMA nécessitent une prise en charge matérielle et ne seront activées que sur les appareils correctement configurés.
+
+Protection basée sur la virtualisation de l’intégrité du code
+
+Ce paramètre active la protection basée sur la virtualisation de l’intégrité du code en mode noyau. Lorsque cette option est activée, les protections de mémoire en mode noyau sont appliquées et le chemin de validation de l’intégrité du code est protégé par la fonctionnalité de sécurité basée sur la virtualisation.
+
+L’option « Désactivé » désactive la protection basée sur la virtualisation de l’intégrité du code à distance si elle était précédemment activée avec l’option « Activé sans verrou ».
+
+L’option « Activé avec le verrou UEFI » garantit que la protection basée sur la virtualisation de l’intégrité du code ne peut pas être désactivée à distance. Pour désactiver la fonctionnalité, vous devez définir le stratégie de groupe sur « Désactivé » et supprimer la fonctionnalité de sécurité de chaque ordinateur, avec un utilisateur présent physiquement, afin d’effacer la configuration persistante dans UEFI.
+
+L’option « Activé sans verrou » permet de désactiver à distance la protection basée sur la virtualisation de l’intégrité du code à l’aide de stratégie de groupe.
+
+L’option « Non configuré » laisse le paramètre de stratégie non défini. La stratégie de groupe n’écrit pas le paramètre de stratégie dans le registre et n’a donc aucun impact sur les ordinateurs ou les utilisateurs. S’il existe un paramètre actuel dans le registre, il ne sera pas modifié.
+
+L’option « Exiger la table des attributs de mémoire UEFI » active uniquement la protection basée sur la virtualisation de l’intégrité du code sur les appareils prenant en charge le microprogramme UEFI pour la table des attributs de mémoire. Les périphériques sans la table des attributs de mémoire UEFI peuvent avoir un microprogramme incompatible avec la protection basée sur la virtualisation de l’intégrité du code, ce qui dans certains cas peut entraîner des incidents, des pertes de données ou une incompatibilité avec certaines cartes de plug-in. Si vous ne configurez pas cette option, les appareils ciblés doivent être testés pour garantir la compatibilité.
+
+Avertissement : tous les pilotes du système doivent être compatibles avec cette fonctionnalité, sinon le système risque de se bloquer. Assurez-vous que ce paramètre de stratégie est déployé uniquement sur les ordinateurs qui sont connus pour être compatibles.
+
+Credential Guard
+
+Ce paramètre permet aux utilisateurs d’activer Credential Guard avec une sécurité basée sur la virtualisation pour protéger les informations d’identification.
+
+Pour Windows 11 21H2 et les versions antérieures, l’option « Désactivé » désactive Credential Guard à distance si elle était précédemment activée avec l’option « Activé sans verrou ». Pour les versions ultérieures, l’option « Désactivé » désactive Credential Guard à distance si elle a été précédemment activée avec l’option « Activé sans verrou » ou si elle était « Non configurée ».
+
+L’option « Activé avec le verrou UEFI » garantit que Credential Guard ne peut pas être désactivé à distance. Pour désactiver la fonctionnalité, vous devez définir le stratégie de groupe sur « Désactivé » et supprimer la fonctionnalité de sécurité de chaque ordinateur, avec un utilisateur présent physiquement, afin d’effacer la configuration persistante dans UEFI.
+
+L’option « Activé sans verrou » permet de désactiver Credential Guard à distance à l’aide de stratégie de groupe. Les appareils qui utilisent ce paramètre doivent exécuter au moins Windows 10 (version 1511).
+
+Pour Windows 11 21H2 et les versions antérieures, l’option « Non configuré » laisse le paramètre de stratégie non défini. stratégie de groupe n’écrit pas le paramètre de stratégie dans le Registre et n’a donc aucun impact sur les ordinateurs ou les utilisateurs. S’il existe un paramètre actuel dans le Registre, il ne sera pas modifié. Pour les versions ultérieures, s’il n’existe aucun paramètre actuel dans le Registre, l’option « Non configuré » active Credential Guard sans verrou UEFI.
+
+Lancement sécurisé
+
+Ce paramètre définit la configuration du lancement sécurisé pour sécuriser la chaîne de démarrage.
+
+Le paramètre « Non configuré » est la valeur par défaut et autorise la configuration de la fonctionnalité par les utilisateurs administratifs.
+
+L’option « Activé » active le lancement sécurisé sur le matériel pris en charge.
+
+L’option « Désactivé » désactive le lancement sécurisé, quelle que soit la prise en charge matérielle.
+
+Protection de pile appliquée par le matériel en mode noyau
+
+Ce paramètre active la protection de pile appliquée par le matériel pour le code en mode noyau. Lorsque cette fonctionnalité de sécurité est activée, les piles de données en mode noyau sont renforcées avec des piles de cliché instantané matérielles, qui stockent les cibles d’adresse de retour prévues pour garantir que le flux de contrôle du programme n’est pas falsifié.
+
+Cette fonctionnalité de sécurité a les prérequis suivants :
+1) Le matériel du processeur prend en charge les piles de clichés instantanés matérielles.
+2) La protection basée sur la virtualisation de l’intégrité du code est activée.
+
+Si l’une des conditions préalables n’est pas remplie, cette fonctionnalité n’est pas activée, même si une option « Activé » est sélectionnée pour cette fonctionnalité. Notez que la sélection d’une option « Activé » pour cette fonctionnalité n’active pas automatiquement la protection basée sur la virtualisation de l’intégrité du code, qui doit être effectuée séparément.
+
+Les appareils qui activent cette fonctionnalité de sécurité doivent exécuter au moins Windows 11 (version 22H2).
+
+L’option « Désactivé » désactive la protection des piles appliquée par le matériel en mode noyau.
+
+L’option « Activé en mode audit » active la protection de pile appliquée par le matériel en mode d’audit en mode noyau, où les violations de pile de cliché instantané ne sont pas irrécupérables et sont consignées dans le journal des événements système.
+
+L’option « Activé en mode d’application » active la protection de pile appliquée par le matériel en mode noyau en mode d’application, où les violations de pile de cliché instantané sont irrécupérables.
+
+L’option « Non configuré » laisse le paramètre de stratégie non défini. stratégie de groupe n’écrit pas le paramètre de stratégie dans le Registre et n’a donc aucun impact sur les ordinateurs ou les utilisateurs. S’il existe un paramètre actuel dans le Registre, il ne sera pas modifié.
+
+Avertissement : tous les pilotes du système doivent être compatibles avec cette fonctionnalité de sécurité, sinon le système risque de se bloquer en mode d’application. Le mode Audit peut être utilisé pour détecter des pilotes incompatibles. Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?LinkId=2162953.
+      </string>
+      <string id="SecureBoot">Démarrage sécurisé</string>
+      <string id="SecureBootAndDmaProtection">Démarrage sécurisé et protection contre les DMA</string>
+      <string id="Disabled">Désactivé</string>
+      <string id="Enabled">Activé</string>
+      <string id="EnabledWithoutLock">Activé sans verrouillage</string>
+      <string id="EnabledWithUefiLock">Activé avec le verrouillage UEFI</string>
+      <string id="EnabledAudit">Activé en mode audit</string>
+      <string id="EnabledEnforcement">Activé en mode de mise en conformité</string>
+      <string id="NotConfigured">Non configuré</string>
+      <string id="ConfigCIPolicy">Déployer le Contrôle d'application Windows Defender</string>
+      <string id="ConfigCIPolicyHelp">Déployer le contrôle d’application Windows Defender
+
+Ce paramètre de stratégie vous permet de déployer une stratégie d’intégrité du code sur un ordinateur pour contrôler ce qui est autorisé à s’exécuter sur cet ordinateur.
+
+Si vous déployez une stratégie d’intégrité du code, Windows restreindra ce qui peut s’exécuter en mode noyau et sur Windows Desktop en fonction de la stratégie. Pour activer cette stratégie, l’ordinateur doit être redémarré.
+
+Le chemin d’accès au fichier doit être un chemin UNC (par exemple, \\ServerName\ShareName\SIPolicy.p7b) ou un chemin d’accès valide localement (par exemple, C:\FolderName\SIPolicy.p7b). Le compte d’ordinateur local (LOCAL SYSTEM) doit disposer de l’autorisation d’accès au fichier de stratégie.
+
+Si vous utilisez une stratégie signée et protégée, la désactivation de ce paramètre de stratégie ne supprime pas la fonctionnalité de l’ordinateur. Au lieu de cela, vous devez :
+
+ 1) d’abord mettre à jour la stratégie vers une stratégie non protégée, puis désactiver le paramètre, ou
+ 2) désactiver le paramètre, puis supprimer la stratégie de chaque ordinateur, avec un utilisateur physiquement présent.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="VirtualizationBasedSecurity">
+        <dropdownList refId="RequirePlatformSecurityFeaturesDrop" defaultItem="1">Sélectionner le niveau de sécurité de plateforme :</dropdownList>
+        <dropdownList refId="HypervisorEnforcedCodeIntegrityDrop" defaultItem="3">Protection basée sur la virtualisation de l’intégrité du code :</dropdownList>
+        <checkBox refId="CheckboxMAT">Demander la table des attributs de mémoire UEFI</checkBox>
+        <dropdownList refId="CredentialIsolationDrop" defaultItem="3">Configuration Credential Guard :</dropdownList>
+        <dropdownList refId="SystemGuardDrop" defaultItem="2">Configuration du Lancement sécurisé :</dropdownList>
+        <dropdownList refId="KernelShadowStacksDrop" defaultItem="3">Protection de la pile appliquée par le matériel en mode noyau :</dropdownList>
+      </presentation>
+      <presentation id="ConfigCIPolicy">
+        <textBox refId="ConfigCIPolicyFilePathText">
+          <label>Chemin d'accès aux fichiers de stratégie d'intégrité du code :</label>
+        </textBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

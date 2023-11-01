@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScheduledTasks clsid="{CC63F200-7309-4ba0-B154-A71CD118DBCC}">
+	<TaskV2 clsid="{D8896631-B747-47a7-84A6-C155337F3BC8}" name="HardenAD\HAD_TS-PDC_Flush-admin-groups" image="2" changed="2023-03-30 10:21:10" uid="{47ADB0AE-8615-4AB6-B3BE-0F6EC4649C7A}">
+		<Properties action="U" name="HardenAD\HAD_TS-PDC_Flush-admin-groups" runAs="NT AUTHORITY\System" logonType="S4U">
+			<Task version="1.2">
+				<RegistrationInfo>
+					<Author>HARDEN\HArdenAD</Author>
+					<Description></Description>
+				</RegistrationInfo>
+				<Principals>
+					<Principal id="Author">
+						<UserId>NT AUTHORITY\System</UserId>
+						<LogonType>S4U</LogonType>
+						<RunLevel>HighestAvailable</RunLevel>
+					</Principal>
+				</Principals>
+				<Settings>
+					<IdleSettings>
+						<Duration>PT10M</Duration>
+						<WaitTimeout>PT1H</WaitTimeout>
+						<StopOnIdleEnd>true</StopOnIdleEnd>
+						<RestartOnIdle>false</RestartOnIdle>
+					</IdleSettings>
+					<MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+					<DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+					<StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+					<AllowHardTerminate>true</AllowHardTerminate>
+					<AllowStartOnDemand>true</AllowStartOnDemand>
+					<Enabled>true</Enabled>
+					<Hidden>false</Hidden>
+					<ExecutionTimeLimit>P3D</ExecutionTimeLimit>
+					<Priority>7</Priority>
+				</Settings>
+				<Triggers>
+					<CalendarTrigger>
+						<StartBoundary>2023-03-30T23:00:00</StartBoundary>
+						<Enabled>true</Enabled>
+						<ScheduleByDay>
+							<DaysInterval>1</DaysInterval>
+						</ScheduleByDay>
+					</CalendarTrigger>
+				</Triggers>
+				<Actions Context="Author">
+					<Exec>
+						<Command>powershell.exe</Command>
+						<Arguments>-windowstyle hidden %windir%\HardenAD\ScheduledTasks\HAD_TS-PDC_Flush-admin-groups\HAD_Flush-groups.ps1</Arguments>
+					</Exec>
+				</Actions>
+			</Task>
+		</Properties>
+	</TaskV2>
+</ScheduledTasks>
+
