@@ -21,8 +21,10 @@ function Start-HADEncryption {
 
     [LogMessage]::Initialize("$env:SystemRoot\Logs\HardenAD\Bitlocker")
     $Log = [LogMessage]::NewLogs()
-    
-    Compare-DiskToLogical
+
+    if (!(Test-ComputerSecureChannel)) {
+        $Log.Fatal("Domain is not reachable.")
+    }
 
     try {
         $BLVolumes = Get-BitLockerVolume | Where-Object { $_.VolumeStatus -eq "FullyDecrypted" }
@@ -31,6 +33,9 @@ function Start-HADEncryption {
     catch {
         $Log.Fatal(("Unable to list any BitLocker volume: {0}." -f $_.Exception.Message))
     }
+
+    Compare-DiskToLogical
+
     foreach ($Volume in $BLVolumes) {
         switch (Get-DriveType $Volume) {
         ([Microsoft.BitLocker.Structures.BitLockerVolumeType]::OperatingSystem) {
