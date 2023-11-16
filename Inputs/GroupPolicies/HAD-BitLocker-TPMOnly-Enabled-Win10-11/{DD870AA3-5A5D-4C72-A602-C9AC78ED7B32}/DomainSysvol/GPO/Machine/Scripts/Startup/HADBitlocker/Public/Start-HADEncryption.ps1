@@ -19,10 +19,12 @@ function Start-HADEncryption {
         $USB
     )
 
-    [LogMessage]::Initialize("$env:SystemRoot\Logs\HardenAD\Bitlocker")
+    [LogMessage]::Initialize("$env:SystemRoot\Logs\HardenAD\Bitlocker", "Bitlocker")
     $Log = [LogMessage]::NewLogs()
-    
-    Compare-DiskToLogical
+
+    if (!(Test-ComputerSecureChannel)) {
+        $Log.Fatal("Domain is not reachable.")
+    }
 
     try {
         $BLVolumes = Get-BitLockerVolume | Where-Object { $_.VolumeStatus -eq "FullyDecrypted" }
@@ -31,6 +33,9 @@ function Start-HADEncryption {
     catch {
         $Log.Fatal(("Unable to list any BitLocker volume: {0}." -f $_.Exception.Message))
     }
+
+    Compare-DiskToLogical
+
     foreach ($Volume in $BLVolumes) {
         switch (Get-DriveType $Volume) {
         ([Microsoft.BitLocker.Structures.BitLockerVolumeType]::OperatingSystem) {
@@ -49,27 +54,27 @@ function Start-HADEncryption {
                             $Log.Fatal(("The PIN could not be defined: {0}." -f $_.Exception.Message))
                         }
                         if ($Matches[0]) {
-                            [HADOSDrive]::new($Volume, $Matches[0])
+                            $null = [HADOSDrive]::new($Volume, $Matches[0])
                         }
                         else {
                             $Log.Fatal(("No PIN detected. Exiting... {0}" -f $_.Exception.Message))
                         }
                     }
                     else {
-                        [HADOSDrive]::new($Volume)
+                        $null = [HADOSDrive]::new($Volume)
                     }
                 }
             }
         ([System.IO.DriveType]::Fixed) {
                 if ($Fixed) {
                     $Log.Info(("Starting fixed encryption for {0}." -f $Volume.MountPoint))
-                    [HADFixedDrive]::new($Volume)
+                    $null = [HADFixedDrive]::new($Volume)
                 }
             }
         ([System.IO.DriveType]::Removable) {
                 if ($USB) {
                     $Log.Info(("Starting USB encryption for {0}." -f $Volume.MountPoint))
-                    [HADRemovableDrive]::new($Volume)
+                    $null = [HADRemovableDrive]::new($Volume)
                 }
             }
             Default {}

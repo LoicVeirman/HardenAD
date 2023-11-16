@@ -28,21 +28,21 @@ class HADDrive {
 
         try {
             $isSystemSupported = ([System.Environment]::OSVersion.Version -ge ([System.Version] "6.2.9200"))
-            $Log.Success(("The OS version [{0}] is compatible with BitLocker encryption." -f [System.Environment]::OSVersion.Version))
+            $Log.Info(("The OS version [{0}] is compatible with BitLocker encryption." -f [System.Environment]::OSVersion.Version))
         }
         catch {
             $Log.Fatal(("An error occured while collecting OS version: {0}." -f $_.Exception.Message))                
         }        
         try {
             $isSystemAWorkstation = ((Get-WmiObject -Class Win32_OperatingSystem | Where-Object { $_.PSComputerName -eq $env:COMPUTERNAME }).ProductType -eq 1)
-            $Log.Success("The computer is a workstation, continue.")
+            $Log.Info("The computer is a workstation, continue.")
         }
         catch {
             $Log.Fatal(("An error occured while collecting the computer type."))        
         }        
         try {
             $isVolumeInitializedForProtection = (Get-WmiObject -Class Win32_EncryptableVolume -Namespace 'root\cimv2\Security\MicrosoftVolumeEncryption' -Filter "DriveLetter=`"$($this.MountPoint)`"").IsVolumeInitializedForProtection
-            $Log.Success(("{0} is initialized for protection" -f $this.MountPoint))
+            $Log.Info(("{0} is initialized for protection" -f $this.MountPoint))
         }
         catch {
             $Log.Fatal(("An error occured while collecting informations about volume encryption status: {0}." -f $_.Exception.Message))        
