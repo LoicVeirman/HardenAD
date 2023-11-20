@@ -125,35 +125,36 @@
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <Sequence>
-      <!-- ################################################################################################################################### -->
-      <!-- the <Sequence> section define the different tasks to iterate in "sequence" (can't resist to this one).                              -->
-      <!-- To deal with highlight color in display, use the ` to initiate and end a color change in your string, then use one of the three     -->
-      <!-- characters specified in value AltBaseHTxt(A,B, or C) to select your color: the color will switch back to normal at the next `.      -->
-      <!--			                                                                                                                               -->
-      <!-- The default highlight values are those one:                                                                                         -->
-      <!--   > `[my text` : magenta                                                                                                            -->
-      <!--   > `(my text` : yellow                                                                                                             -->
-      <!--   > `{my text` : gray                                                                                                               -->
-      <!--			                                                                                                                               -->
-      <!-- Some special inputs are usefull to replace value dynamically :                                                                   	 -->
-      <!--	 > FileName   : replace with the value of this file                                                                                -->
-      <!--	 > RootDN     : replace with domain root DN                                                                                        -->
-      <!--			                                                                                                                               -->
-      <!-- Each task ID is executed in sequence, based on the Number vaue (ascending). Each Task ID use the following attributes:              -->
-      <!--   > Number         : Define the squence order, the lowest will be run first.                                                        -->
-      <!--   > Name           : ID task name as refered in the final log output.                                                               -->
-      <!--   > CallingFunction: Name of the function to be called from one of the .psm1 files present in the modules directory.                -->
-      <!--   > UseParameters  : Mandatory (but could be empty). Specify parameter to pass as argument to CallingFunction.                      -->
-      <!--                      Use on per parameter and sort them in sequence (your script should refer them using input ordering).           -->
-      <!--   > TaskEnabled    : YES or NO. When set to NO, the tasks is disabled and will not be applied.                                      -->
-      <!-- ################################################################################################################################### -->
-      <Id Number="130" Name="Import new GPO or update existing ones">
-        <CallingFunction>New-GpoObject</CallingFunction>
-        <UseParameters>
-        </UseParameters>
-        <TaskEnabled>Yes</TaskEnabled>
-        <TaskDescription>Import or update `(group policy objects` to the domain and link them</TaskDescription>
-      </Id>
-    </Sequence>
-  </Settings>
+  </GroupPolicies>
+  <Sequence>
+    <!-- ################################################################################################################################### -->
+    <!-- the <Sequence> section define the different tasks to iterate in "sequence" (can't resist to this one).                              -->
+    <!-- To deal with highlight color in display, use the ` to initiate and end a color change in your string, then use one of the three     -->
+    <!-- characters specified in value AltBaseHTxt(A,B, or C) to select your color: the color will switch back to normal at the next `.      -->
+    <!--			                                                                                                                               -->
+    <!-- The default highlight values are those one:                                                                                         -->
+    <!--   > `[my text` : magenta                                                                                                            -->
+    <!--   > `(my text` : yellow                                                                                                             -->
+    <!--   > `{my text` : gray                                                                                                               -->
+    <!--			                                                                                                                               -->
+    <!-- Some special inputs are usefull to replace value dynamically :                                                                   	 -->
+    <!--	 > FileName   : replace with the value of this file                                                                                -->
+    <!--	 > RootDN     : replace with domain root DN                                                                                        -->
+    <!--			                                                                                                                               -->
+    <!-- Each task ID is executed in sequence, based on the Number vaue (ascending). Each Task ID use the following attributes:              -->
+    <!--   > Number         : Define the squence order, the lowest will be run first.                                                        -->
+    <!--   > Name           : ID task name as refered in the final log output.                                                               -->
+    <!--   > CallingFunction: Name of the function to be called from one of the .psm1 files present in the modules directory.                -->
+    <!--   > UseParameters  : Mandatory (but could be empty). Specify parameter to pass as argument to CallingFunction.                      -->
+    <!--                      Use on per parameter and sort them in sequence (your script should refer them using input ordering).           -->
+    <!--   > TaskEnabled    : YES or NO. When set to NO, the tasks is disabled and will not be applied.                                      -->
+    <!-- ################################################################################################################################### -->
+    <Id Number="130" Name="Import new GPO or update existing ones">
+      <CallingFunction>New-GpoObject</CallingFunction>
+      <UseParameters>
+      </UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>Import or update `(group policy objects` to the domain and link them</TaskDescription>
+    </Id>
+  </Sequence>
+</Settings>
