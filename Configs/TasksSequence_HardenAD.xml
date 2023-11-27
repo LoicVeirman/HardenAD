@@ -423,17 +423,12 @@
     <wellKnownID objectClass="text" translateFrom="%SchemaAdmins%" translateTo="Schema Admins" />
     <wellKnownID objectClass="text" translateFrom="%DnsAdmins%" translateTo="DnsAdmins" />
     <wellKnownID objectClass="text" translateFrom="%RemoteDesktopUsers%" translateTo="Remote Desktop Users" />
-
-
-    <wellKnownID objectClass="text" translateFrom="%NetBios%" translateTo="HARDEN" />
-    <wellKnownID objectClass="text" translateFrom="%domaindns%" translateTo="harden.lab" />
-    <wellKnownID objectClass="text" translateFrom="%DN%" translateTo="DC=harden,DC=lab" />
-
-    <wellKnownID objectClass="text" translateFrom="%RootNetBios%" translateTo="" />
-    <wellKnownID objectClass="text" translateFrom="%Rootdomaindns%" translateTo="" />
-    <wellKnownID objectClass="text" translateFrom="%RootDN%" translateTo="" />
-
-
+    <wellKnownID objectClass="text" translateFrom="%NetBios%" translateTo="EM" />
+    <wellKnownID objectClass="text" translateFrom="%domaindns%" translateTo="em.oswald.com" />
+    <wellKnownID objectClass="text" translateFrom="%DN%" translateTo="DC=em,DC=oswald,DC=com" />
+    <wellKnownID objectClass="text" translateFrom="%RootNetBios%" translateTo="OZ" />
+    <wellKnownID objectClass="text" translateFrom="%Rootdomaindns%" translateTo="oswald.com" />
+    <wellKnownID objectClass="text" translateFrom="%RootDN%" translateTo="DC=oswald,DC=com" />
     <wellKnownID objectClass="text" translateFrom="%Users%" translateTo="Users" />
     <wellKnownID objectClass="group" translateFrom="%t0-global%" translateTo="L-S-T0" />
     <wellKnownID objectClass="group" translateFrom="%t1-global%" translateTo="L-S-T1" />
@@ -1134,9 +1129,6 @@ Blocks anonymous access to SAM database.">
     </Group>
     <Group name="L-S-T0_PawT12L_Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the T1, T2 and TLegacy administration stations" Path="OU=Logon,OU=GroupsT0,OU=_Administration,ROOTDN">
     </Group>
-    <Group name="Enterprise Admins" Category="Security" Scope="Global" Description="Members of this group will be able to connect to the T1, T2 and TLegacy administration stations" Path="OU=Logon,OU=GroupsT0,OU=_Administration,ROOTDN">
-      <Member samAccountName="G-S-T0_Managers" />
-    </Group>
     <Group name="G-S-T0_Operators" Category="Security" Scope="Global" Description="Members of this group can operate on Tier 0 resources (login)" Path="OU=GroupsT0,OU=Administration,ROOTDN">
       <Member samAccountName="T0O-AHARDEN" />
     </Group>
@@ -1382,7 +1374,7 @@ Blocks anonymous access to SAM database.">
       <!--Parameter:
       Target Functional Level. Possibe values: "2008R2","2012","2012R2","2016","Last"                                         -->
       <UseParameters>Last</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Upgrade `(DomainFunctionalLevel` </TaskDescription>
     </Id>
     <!-- Upgrade Forest Functional Level                                                                                                     -->
@@ -1394,7 +1386,7 @@ Blocks anonymous access to SAM database.">
       <!--Parameter:
       Target Functional Level. Possibe values: "2008R2","2012","2012R2","2016","Last"                                         -->
       <UseParameters>Last</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Upgrade `(ForestFunctionalLevel` </TaskDescription>
     </Id>
     <!-- SET MS-DS-MACHINEACCOUNTQUOTA TO 0                                                                                                  -->
@@ -1403,7 +1395,7 @@ Blocks anonymous access to SAM database.">
       <!--Parameter:
       new ms-DS-MachineAccountQuota value                                                                                     -->
       <UseParameters>0</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>set `(msDSMachineAccountQuota` to `(0` to restrict domain junction</TaskDescription>
     </Id>
     <!-- ENABLE THE AD RECYCLE BIN                                                                                                           -->
@@ -1411,7 +1403,7 @@ Blocks anonymous access to SAM database.">
       <CallingFunction>Set-ADRecycleBin</CallingFunction>
       <UseParameters>
       </UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>activate the `(AD Recycle Bin` optional feature</TaskDescription>
     </Id>
     <!-- CONFIGURE ALL AD SITE LINKS WITH THE NOTIFY OPTIONS                                                                                 -->
@@ -1419,7 +1411,7 @@ Blocks anonymous access to SAM database.">
       <CallingFunction>Set-SiteLinkNotify</CallingFunction>
       <UseParameters>
       </UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>set `(notify` on every `(Site Links</TaskDescription>
     </Id>
     <!-- ACTIVATE THE GPO CENTRAL STORE                                                                                                      -->
@@ -1427,7 +1419,7 @@ Blocks anonymous access to SAM database.">
       <CallingFunction>Set-GpoCentralStore</CallingFunction>
       <UseParameters>
       </UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>set `(GPO Central Store` and update `{adm` and `{admx` files</TaskDescription>
     </Id>
     <!-- GENERATE NEW ADMINISTRATION ORGANIZATIONAL UNIT                                                                                     -->
@@ -1472,7 +1464,7 @@ Blocks anonymous access to SAM database.">
       <!--Parameter:
       class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>PROVISIONNING-EN</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>set `(Provisioning` organizational unit</TaskDescription>
     </Id>
     <!-- RELOCATE NEW USER/GROUP OBJECT LOCATION                                                                                             -->
@@ -1484,7 +1476,7 @@ Blocks anonymous access to SAM database.">
       <!--Parameter:
       OU distinguishedName. Use RootDN to automatically fill-in the domain name                                               -->
       <UseParameters>OU=users,OU=provisioning,RootDN</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>set `(user objects` default location</TaskDescription>
     </Id>
     <!-- RELOCATE NEW COMPUTER OBJECT LOCATION                                                                                             -->
@@ -1496,7 +1488,7 @@ Blocks anonymous access to SAM database.">
       <!--Parameter:
       OU distinguishedName. Use RootDN to automatically fill-in the domain name                                             -->
       <UseParameters>OU=computers,OU=provisioning,RootDN</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>set `(computer objects` default location</TaskDescription>
     </Id>
     <!-- GENERATE NEW ADMIN ACCOUNTS ON WHICH THE DELEGATION MODEL WILL WORKS                                                              -->
@@ -1520,7 +1512,7 @@ Blocks anonymous access to SAM database.">
       <CallingFunction>Push-DelegationModel</CallingFunction>
       <UseParameters>
       </UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Enforce `(Delegation ACEs` used by the tier model</TaskDescription>
     </Id>
     <!-- IMPORT WMI FILTERS                                                                                                                -->
@@ -1528,14 +1520,14 @@ Blocks anonymous access to SAM database.">
       <CallingFunction>Import-WmiFilters</CallingFunction>
       <UseParameters>
       </UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Import `(WMI filter` to the domain</TaskDescription>
     </Id>
     <!-- LOC ADM TASK DEPLOYMENT SCRIPT UDATE                                                                                                -->
     <!-- <Id Number="127" Name="Update Loca Adm Task deployment scripts">
       <CallingFunction>Set-LocAdmTaskScripts</CallingFunction>
       <UseParameters>SYSVOL\%domaindns%\scripts\LocAdmTask</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Update `(LocAdmTask Scripts` to match with the domain name</TaskDescription>
     </Id> -->
     <!-- IMPORT GPOs                                                                                                                       -->
@@ -1543,7 +1535,7 @@ Blocks anonymous access to SAM database.">
       <CallingFunction>New-GpoObject</CallingFunction>
       <UseParameters>
       </UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Import or update `(group policy objects` to the domain and link them</TaskDescription>
     </Id>
     <!-- LAPS SCHEMA UPDATE AND POWERSHELL TOOLING DEPLOYMENT                                                                              -->
@@ -1554,7 +1546,7 @@ Blocks anonymous access to SAM database.">
       the Schema Master owner                  -->
       <!--            IgnoreDcIsSchameOwner will remove this requierment (child domain, etc.)                                              -->
       <UseParameters>ForceDcIsSchemaOwner</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Update `(AD Schema` for `[LAPS` and add `(PShell add-on`</TaskDescription>
     </Id>
     <!-- LAPS PERMISSIONS DEPLOYMENT OVER THE DOMAIN                                                                                       -->
@@ -1565,7 +1557,7 @@ Blocks anonymous access to SAM database.">
       <!--            DEFAULT: will apply permission at the root domain level and leave domain admins as the
       only allowed users.           -->
       <UseParameters>CUSTOM</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Set-up `(LAPS` permissions on the target domain</TaskDescription>
     </Id>
     <!-- LAPS DEPLOYMENT SCRIPT UDATE                                                                                                      -->
@@ -1573,21 +1565,21 @@ Blocks anonymous access to SAM database.">
       <CallingFunction>Set-LapsScripts</CallingFunction>
       <!-- Parameter: use NETLOGON or SYSVOL for a dynamic location. Else enter the UNC Path                                               -->
       <UseParameters>NETLOGON\LAPS</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Update `(LAPS Scripts` to match with the domain name</TaskDescription>
     </Id>
     <!-- IMPORT SCHEDULE TASKS                                                                                                             -->
     <!-- <Id Number="140" Name="Import schedule tasks on the running system">
       <CallingFunction>New-ScheduleTasks</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Import new `(schedule tasks` to the `[running system`</TaskDescription>
     </Id> -->
     <!-- RESET SENSIBLE GROUPS                                                                                                             -->
     <!-- <Id Number="150" Name="Reset Group Memberships">
       <CallingFunction>Reset-GroupMembership</CallingFunction>
       <UseParameters></UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>Reset `(groups's membeberships` to the `[trusted list`</TaskDescription>
     </Id> -->
   </Sequence>

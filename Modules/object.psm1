@@ -416,6 +416,17 @@ Function New-AdministrationGroups {
                             $AddUser = $false
                         }
                     }
+
+                    if ($account.Name -like "*0*" -and $account.Name -like "*Manager*") {
+                        [string] $EnterpriseAdmin = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { 
+                                $_.translateFrom -eq "%EnterpriseAdmins%" 
+                            }).translateTo
+
+                        $EA_rootDomain = Get-ADGroup -Identity $EnterpriseAdmin -Server (Get-ADForest).RootDomain
+                        $GST0Manager = Get-ADGroup -Identity $account.Name
+                        Add-ADGroupMember -Identity $EA_rootDomain -Members $GST0Manager -Server (Get-ADForest).RootDomain
+                    }
+
                     #.Logging AddUser value
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter AddUser........: $AddUser"
                     #.Adding members to group, if any
@@ -471,7 +482,6 @@ Function New-AdministrationGroups {
                 $result = 1
                 $ResMess = "No Data to deal with"
             }
-
         }
         else {
 

@@ -336,17 +336,12 @@ else {
 }
 #--- EXIT
 
-
-
-
-
-
-
-
-
 if ($FlagPreReq) {
     Write-Host "All prerequesites are OK."    
     Write-Host "-------------------------"
+
+    # Reload the config file
+    $TasksSeqConfig = [xml](get-content .\Configs\$TasksSequence)
 }
 Else {
     Write-Host "Some check have failed!" -ForegroundColor Red
