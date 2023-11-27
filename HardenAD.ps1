@@ -328,9 +328,11 @@ if ($domainController_PDC.Name -eq $env:COMPUTERNAME) {
     Import-Module -Name "$PSScriptRoot\Modules\translation.psm1"
     $TasksSeqConfigLocation = Split-Path -Parent $MyInvocation.MyCommand.Path
     Set-Translation -TasksSequence $TasksSequence -ScriptPath $TasksSeqConfigLocation
-} else {
+}
+else {
     Write-Warning "This domain controller is not the PDC emulator."
     Write-Warning "You need tu update manually the values in the node 'translation' of the Task_sequence file."
+    Exit
 }
 #--- EXIT
 

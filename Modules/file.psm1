@@ -337,7 +337,7 @@ Function Set-LapsScripts {
         
         .Description
          The deployment script needs to be update to fetch with the running domain. 
-         The script will be overwritten and replace %RootDN% by the domain FQDN.
+         The script will be overwritten and replace %DN% by the domain FQDN.
 
         .Notes
          Version: 01.00 -- contact@hardenad.net 
@@ -450,7 +450,7 @@ Function Set-LapsScripts {
     foreach ($file in (Get-ChildItem -Path $ScriptDir | Where-Object { $_.Name -like "*.bat" })) {
         $newFile = @()
         Try {
-            (Get-Content $file.fullName) -Replace '%RootDN%', (Get-ADDomain).DnsRoot | Set-Content $File.FullName 
+            (Get-Content $file.fullName) -Replace '%DN%', (Get-ADDomain).DnsRoot | Set-Content $File.FullName 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> rewritten file " + $file.Name + " (success)"
         }
         Catch {
@@ -887,7 +887,7 @@ Function Set-LocAdmTaskScripts {
         
         .Description
          The deployment script needs to be update to fetch with the running domain. 
-         The script will be overwritten and replace %RootDN% by the domain FQDN.
+         The script will be overwritten and replace %DN% by the domain FQDN.
 
         .Notes
          Version: 01.00 -- contact@hardenad.net 

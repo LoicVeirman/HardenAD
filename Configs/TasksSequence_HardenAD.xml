@@ -423,9 +423,17 @@
     <wellKnownID objectClass="text" translateFrom="%SchemaAdmins%" translateTo="Schema Admins" />
     <wellKnownID objectClass="text" translateFrom="%DnsAdmins%" translateTo="DnsAdmins" />
     <wellKnownID objectClass="text" translateFrom="%RemoteDesktopUsers%" translateTo="Remote Desktop Users" />
-    <wellKnownID objectClass="text" translateFrom="%domain%" translateTo="HARDEN" />
+
+
+    <wellKnownID objectClass="text" translateFrom="%NetBios%" translateTo="HARDEN" />
     <wellKnownID objectClass="text" translateFrom="%domaindns%" translateTo="harden.lab" />
-    <wellKnownID objectClass="text" translateFrom="%RootDN%" translateTo="DC=harden,DC=lab" />
+    <wellKnownID objectClass="text" translateFrom="%DN%" translateTo="DC=harden,DC=lab" />
+
+    <wellKnownID objectClass="text" translateFrom="%RootNetBios%" translateTo="" />
+    <wellKnownID objectClass="text" translateFrom="%Rootdomaindns%" translateTo="" />
+    <wellKnownID objectClass="text" translateFrom="%RootDN%" translateTo="" />
+
+
     <wellKnownID objectClass="text" translateFrom="%Users%" translateTo="Users" />
     <wellKnownID objectClass="group" translateFrom="%t0-global%" translateTo="L-S-T0" />
     <wellKnownID objectClass="group" translateFrom="%t1-global%" translateTo="L-S-T1" />
@@ -615,9 +623,9 @@
     <!-- GPO GROUP SETTINGS: used to generate APPLY and DENY Group Name. Use %tier% to mark the Tier localization in the new name          -->
     <!--   > GpoName..: define the group name for applying or denying a group                                                              -->
     <GlobalGpoSettings GroupName="G-S-%tier%-GPO_%GpoName%_%mode%" Tier0="T0" Tier1="T1" Tier2="T2">
-      <GpoTier0 OU="OU=GPO,OU=GroupsT0,OU=_Administration,%rootDN%" />
-      <GpoTier1 OU="OU=GPO,OU=GroupsT1,OU=_Administration,%rootDN%" />
-      <GpoTier2 OU="OU=GPO,OU=GroupsT2,OU=_Administration,%rootDN%" />
+      <GpoTier0 OU="OU=GPO,OU=GroupsT0,OU=_Administration,%DN%" />
+      <GpoTier1 OU="OU=GPO,OU=GroupsT1,OU=_Administration,%DN%" />
+      <GpoTier2 OU="OU=GPO,OU=GroupsT2,OU=_Administration,%DN%" />
     </GlobalGpoSettings>
     <!-- TEMPLATE
 	  <GPO BackupID="{9A9AD00F-56D9-476C-9D65-CEAD0FB31B4F}" Validation="Yes" Name="display name" Description="gpo description">
@@ -1327,21 +1335,21 @@ Blocks anonymous access to SAM database.">
     on the target OU.                     -->
     <!--
     ################################################################################################################################### -->
-    <AdmPwdSelfPermission Target="OU=Servers,OU=Harden_TL,%RootDN%" />
-    <AdmPwdSelfPermission Target="OU=Servers,OU=Harden_T12,%RootDN%" />
-    <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_TL,%RootDN%" />
-    <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_T12,%RootDN%" />
-    <AdmPwdSelfPermission Target="OU=PawAccess,OU=_Administration,%RootDN%" />
-    <AdmPwdSelfPermission Target="OU=PawT0,OU=_Administration,%RootDN%" />
-    <AdmPwdSelfPermission Target="OU=PawT12L,OU=_Administration,%RootDN%" />
-    <AdmPwdPasswordReader Target="OU=Servers,OU=Harden_TL,%RootDN%" Id="%domain%\%T1-LAPS-PasswordReader%" />
-    <AdmPwdPasswordReader Target="OU=Servers,OU=Harden_T12,%RootDN%" Id="%domain%\%T1-LAPS-PasswordReader%" />
-    <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_TL,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReader%" />
-    <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_T12,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReader%" />
-    <AdmPwdPasswordReset Target="OU=Servers,OU=Harden_TL,%RootDN%" Id="%domain%\%T1-LAPS-PasswordReset%" />
-    <AdmPwdPasswordReset Target="OU=Servers,OU=Harden_T12,%RootDN%" Id="%domain%\%T1-LAPS-PasswordReset%" />
-    <AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_TL,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReset%" />
-    <AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_T12,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReset%" />
+    <AdmPwdSelfPermission Target="OU=Servers,OU=Harden_TL,%DN%" />
+    <AdmPwdSelfPermission Target="OU=Servers,OU=Harden_T12,%DN%" />
+    <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_TL,%DN%" />
+    <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_T12,%DN%" />
+    <AdmPwdSelfPermission Target="OU=PawAccess,OU=_Administration,%DN%" />
+    <AdmPwdSelfPermission Target="OU=PawT0,OU=_Administration,%DN%" />
+    <AdmPwdSelfPermission Target="OU=PawT12L,OU=_Administration,%DN%" />
+    <AdmPwdPasswordReader Target="OU=Servers,OU=Harden_TL,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReader%" />
+    <AdmPwdPasswordReader Target="OU=Servers,OU=Harden_T12,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReader%" />
+    <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_TL,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReader%" />
+    <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_T12,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReader%" />
+    <AdmPwdPasswordReset Target="OU=Servers,OU=Harden_TL,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReset%" />
+    <AdmPwdPasswordReset Target="OU=Servers,OU=Harden_T12,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReset%" />
+    <AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_TL,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReset%" />
+    <AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_T12,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReset%" />
   </LocalAdminPasswordSolution>
   <Sequence>
     <!-- ################################################################################################################################### -->
