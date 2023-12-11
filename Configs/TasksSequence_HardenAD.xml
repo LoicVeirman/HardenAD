@@ -423,9 +423,9 @@
     <wellKnownID objectClass="text" translateFrom="%SchemaAdmins%" translateTo="Schema Admins" />
     <wellKnownID objectClass="text" translateFrom="%DnsAdmins%" translateTo="DnsAdmins" />
     <wellKnownID objectClass="text" translateFrom="%RemoteDesktopUsers%" translateTo="Remote Desktop Users" />
-    <wellKnownID objectClass="text" translateFrom="%NetBios%" translateTo="EM" />
-    <wellKnownID objectClass="text" translateFrom="%domaindns%" translateTo="em.oswald.com" />
-    <wellKnownID objectClass="text" translateFrom="%DN%" translateTo="DC=em,DC=oswald,DC=com" />
+    <wellKnownID objectClass="text" translateFrom="%NetBios%" translateTo="MITARD" />
+    <wellKnownID objectClass="text" translateFrom="%domaindns%" translateTo="mit.em.oswald.com" />
+    <wellKnownID objectClass="text" translateFrom="%DN%" translateTo="DC=mit,DC=em,DC=oswald,DC=com" />
     <wellKnownID objectClass="text" translateFrom="%RootNetBios%" translateTo="OZ" />
     <wellKnownID objectClass="text" translateFrom="%Rootdomaindns%" translateTo="oswald.com" />
     <wellKnownID objectClass="text" translateFrom="%RootDN%" translateTo="DC=oswald,DC=com" />
@@ -1428,7 +1428,7 @@ Blocks anonymous access to SAM database.">
       <!--Parameter:
       class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>HardenAD_ADMIN</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>set `(Administration` organizational unit</TaskDescription>
     </Id>
     <!-- GENERATE NEW TIER 0 ORGANIZATIONAL UNIT                                                                                             -->
@@ -1437,7 +1437,7 @@ Blocks anonymous access to SAM database.">
       <!--Parameter:
       class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>HardenAD_PROD-T0</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>set `(Tier 0` organizational unit</TaskDescription>
     </Id>
     <!-- GENERATE NEW TIER 1 and 2 ORGANIZATIONAL UNIT                                                                                       -->
@@ -1446,7 +1446,7 @@ Blocks anonymous access to SAM database.">
       <!--Parameter:
       class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>HardenAD_PROD-T1and2</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>set `(Tier 1 and Tier 2 combo` organizational unit</TaskDescription>
     </Id>
     <!-- GENERATE NEW LEGACY ORGANIZATIONAL UNIT                                                                                             -->
@@ -1455,7 +1455,7 @@ Blocks anonymous access to SAM database.">
       <!--Parameter:
       class name from OrganizationalUnits | ouTree in this document                                                           -->
       <UseParameters>HardenAD_PROD-LEGACY</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>set `(Tier Legacy` organizational unit</TaskDescription>
     </Id>
     <!-- GENERATE NEW DEFAULT OBJECTS LOCATION TREE                                                                                          -->
@@ -1496,7 +1496,7 @@ Blocks anonymous access to SAM database.">
       <CallingFunction>New-AdministrationAccounts</CallingFunction>
       <!-- Parameter: KeePass password for the kdbx database                                                                               -->
       <UseParameters>H4rd3n@D!!</UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
+      <TaskEnabled>No</TaskEnabled>
       <TaskDescription>create `(administration accounts` used by the tier model</TaskDescription>
     </Id>
     <!-- GENERATE NEW ADMIN GROUPS ON WHICH THE DELEGATION MODEL WILL WORKS                                                                -->
@@ -1506,6 +1506,13 @@ Blocks anonymous access to SAM database.">
       </UseParameters>
       <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>create `(administration groups` used by the tier model</TaskDescription>
+    </Id>
+    <Id Number="091" Name="Cross integration of Admin groups">
+      <CallingFunction>Add-GroupsOverDomain</CallingFunction>
+      <UseParameters>
+      </UseParameters>
+      <TaskEnabled>Yes</TaskEnabled>
+      <TaskDescription>Cross integration of `(administration groups` used by the tier model</TaskDescription>
     </Id>
     <!-- ACEs DEPLOYMENT FOR DELEGATION MODEL                                                                                               -->
     <Id Number="095" Name="Enforce delegation model through ACEs">
