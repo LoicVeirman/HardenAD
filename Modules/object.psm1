@@ -676,10 +676,10 @@ function Add-SourceToDestGrps {
     
             $Src_LSTX = Get-ADGroup -Filter { Name -eq $LookupLSTX } -SearchBase $Src_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Src_Domain.DNSRoot
             $Dest_LSTX = Get-ADGroup -Filter { Name -eq $LookupLSTX } -SearchBase $Dest_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Dest_Domain.DNSRoot
-    
+
             $Src_GSGroups = Get-ADGroup -Filter { Name -like $LookupGS } -SearchBase $Src_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Src_Domain.DNSRoot
             $Dest_GSGroups = Get-ADGroup -Filter { Name -like $LookupGS } -SearchBase $Dest_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Dest_Domain.DNSRoot
-    
+
             if ($Src_LSTX -and $Dest_GSGroups) {
                 $Dest_GSGroups | ForEach-Object {
                     try {
