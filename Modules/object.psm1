@@ -804,27 +804,29 @@ function Add-GroupsOverDomain {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! Harden AD don't seems to be deployed on ($($Domain))!"
             }
         }
-        for ($i = 0; $i -lt $ValidDomains.Count; $i++) {
+        if ($ValidDomains.Count -gt 1) {
+            for ($i = 0; $i -lt $ValidDomains.Count; $i++) {
 
-            Add-ManagerToEA -SrcDomain $ValidDomains[$i]
-
-            for ($j = $i + 1; $j -lt $ValidDomains.Count; $j++) {
-                # Write-Host "$($ValidDomains[$i]) with $($ValidDomains[$j])"
-                # Cross ajout des groupes aux bons endroits
-                $res = Add-SourceToDestGrps -SrcDomDns $ValidDomains[$i] -DestDomDns $ValidDomains[$j]
-                if ($res.Count -eq 0) {
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ The cross integration worked as expected!"
-                    $ResMess = "Cross integration works successfully."
-                    $Result = 0
-                }
-                else {
-                    foreach ($value in $res) {
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! cross integration has encountered an error with: ($($Value))!"
+                Add-ManagerToEA -SrcDomain $ValidDomains[$i]
+    
+                for ($j = $i + 1; $j -lt $ValidDomains.Count; $j++) {
+                    # Write-Host "$($ValidDomains[$i]) with $($ValidDomains[$j])"
+                    # Cross ajout des groupes aux bons endroits
+                    $res = Add-SourceToDestGrps -SrcDomDns $ValidDomains[$i] -DestDomDns $ValidDomains[$j]
+                    if ($res.Count -eq 0) {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ The cross integration worked as expected!"
+                        $ResMess = "Cross integration works successfully."
+                        $Result = 0
                     }
-                    $ResMess = "An error occured with at least one domain."
-                    $Result = 2
+                    else {
+                        foreach ($value in $res) {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! cross integration has encountered an error with: ($($Value))!"
+                        }
+                        $ResMess = "An error occured with at least one domain."
+                        $Result = 2
+                    }
                 }
-            }
+            }    
         }
     }
 
