@@ -722,9 +722,9 @@ Function Set-LapsPermissions {
                     Catch {
                         $result = 1
                         $ResMess = "Failed to apply Permission on one or more OU."
-                        Write-Host $_.Exception.Message
-                        Write-Host $TargetOU
-                        Pause
+                        # Write-Host $_.Exception.Message
+                        # Write-Host $TargetOU
+                        # Pause
                     }
                 }
                 #.Getting Domain Netbios name
