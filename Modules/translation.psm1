@@ -77,17 +77,17 @@ function Set-Translation {
         )
 
         if ($isChild -in ("yes", "y")) {
-            [string] $RootT0ManagerName = "G-S-T0_Managers"
+            # [string] $RootT0ManagerName = "G-S-T0_Managers"
 
-            do {
-                $RootGST0_Manager = Get-ADGroup $RootT0ManagerName -Server $Forest.RootDomain
-                if (!$RootGST0_Manager) {
-                    $RootT0ManagerName = Read-Host -Prompt "What is the name of root domain T0 manager group?"
-                }
-            }
-            until (
-                $null -ne $RootGST0_Manager
-            )
+            # do {
+            #     $RootGST0_Manager = Get-ADGroup $RootT0ManagerName -Server $Forest.RootDomain
+            #     if (!$RootGST0_Manager) {
+            #         $RootT0ManagerName = Read-Host -Prompt "What is the name of root domain T0 manager group?"
+            #     }
+            # }
+            # until (
+            #     $null -ne $RootGST0_Manager
+            # )
 
             $RootDomain = Get-ADDomain -Identity $Forest.RootDomain
 
