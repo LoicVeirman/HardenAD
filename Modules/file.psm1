@@ -543,10 +543,13 @@ Function Install-LAPS {
             $ResMess = "AD module not available."
         }
     }
+    ## Load Task sequence
+    [xml] $xmlSkeleton = Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml"
+    $RootDomainDns = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Rootdomaindns%" }).translateTo
 
     ## Check prerequesite: running user must be member of the Schema Admins group and running computer should be Schema Master owner.
     $CurrentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-    $isSchemaAdm = Get-ADGroupMember -Recursive ((Get-ADDomain).DomainSID.value + "-518") | Where-Object { $_.SID -eq $CurrentUser.User }
+    $isSchemaAdm = Get-ADGroupMember -Recursive ((Get-ADDomain -Server $RootDomainDns).DomainSID.value + "-518") -Server $RootDomainDns | Where-Object { $_.SID -eq $CurrentUser.User }
 
     $CurrentCptr = $env:COMPUTERNAME
     $isSchemaOwn = (Get-ADForest).SchemaMaster -eq ($currentCptr + "." + (Get-ADDomain).DnsRoot)
@@ -643,8 +646,17 @@ Function Set-LapsPermissions {
 
     ## Check prerequesite: the ADMPWD.PS module has to be present. 
     if (-not(Get-Module -ListAvailable -Name "AdmPwd.PS")) {
-        $result = 2
-        $ResMess = "AdmPwd.PS module missing."
+        try {
+            Start-Process -FilePath "$env:systemroot\system32\msiexec.exe" `
+                -WorkingDirectory .\Inputs\LocalAdminPwdSolution\Binaries `
+                -ArgumentList '/i laps.x64.msi ADDLOCAL=Management.UI,Management.PS,Management.ADMX /quiet /norestart' `
+                -NoNewWindow `
+                -Wait
+        }
+        catch {
+            $result = 2
+            $ResMess = "AdmPwd.PS module missing."
+        }
     }
     
     ## Begin permissions setup, if allowed to.
@@ -710,9 +722,9 @@ Function Set-LapsPermissions {
                     Catch {
                         $result = 1
                         $ResMess = "Failed to apply Permission on one or more OU."
-                        Write-Host $_.Exception.Message
-                        Write-Host $TargetOU
-                        Pause
+                        # Write-Host $_.Exception.Message
+                        # Write-Host $TargetOU
+                        # Pause
                     }
                 }
                 #.Getting Domain Netbios name

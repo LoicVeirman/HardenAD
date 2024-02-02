@@ -417,17 +417,6 @@ Function New-AdministrationGroups {
                         }
                     }
 
-                    # Add T0 Manager into Enterprise Admins
-                    # if ($account.Name -like "*0*" -and $account.Name -like "*Manager*") {
-                    #     [string] $EnterpriseAdmin = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { 
-                    #             $_.translateFrom -eq "%EnterpriseAdmins%" 
-                    #         }).translateTo
-
-                    #     $EA_rootDomain = Get-ADGroup -Identity $EnterpriseAdmin -Server (Get-ADForest).RootDomain
-                    #     $GST0Manager = Get-ADGroup -Identity $account.Name
-                    #     Add-ADGroupMember -Identity $EA_rootDomain -Members $GST0Manager -Server (Get-ADForest).RootDomain
-                    # }
-
                     #.Logging AddUser value
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter AddUser........: $AddUser"
                     #.Adding members to group, if any
@@ -682,34 +671,39 @@ function Add-SourceToDestGrps {
 
         $Src_GroupsOU = Get-ADOrganizationalUnit -Filter { Name -eq $LookupGroupOU } -SearchBase $Src_AdministrationOU.DistinguishedName -Server $Src_Domain.DNSRoot
         $Dest_GroupsOU = Get-ADOrganizationalUnit -Filter { Name -eq $LookupGroupOU } -SearchBase $Dest_AdministrationOU.DistinguishedName -Server $Dest_Domain.DNSRoot
+      
         if ($Src_GroupsOU -and $Dest_GroupsOU) {
     
             $Src_LSTX = Get-ADGroup -Filter { Name -eq $LookupLSTX } -SearchBase $Src_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Src_Domain.DNSRoot
             $Dest_LSTX = Get-ADGroup -Filter { Name -eq $LookupLSTX } -SearchBase $Dest_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Dest_Domain.DNSRoot
-    
+
             $Src_GSGroups = Get-ADGroup -Filter { Name -like $LookupGS } -SearchBase $Src_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Src_Domain.DNSRoot
             $Dest_GSGroups = Get-ADGroup -Filter { Name -like $LookupGS } -SearchBase $Dest_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Dest_Domain.DNSRoot
-    
+
             if ($Src_LSTX -and $Dest_GSGroups) {
                 $Dest_GSGroups | ForEach-Object {
-                    Write-Host "Adding $($_) to $($Src_LSTX) :" -ForegroundColor Magenta
                     try {
                         Add-ADGroupMember -Identity $Src_LSTX -Members $_
+                        # Write-Host "$($_) has been added to $($Src_LSTX)" -ForegroundColor Magenta
                     }
                     catch {
-                        $res += "$($Src_LSTX.DistinguishedName): $($_.Exception.Error)"
+                        # Write-Host "From Dest to Src: $($_.Exception.Message)"
+                        $res += "$($Src_LSTX.DistinguishedName): $($_.Exception.Message)"
+                        # Pause
                     } 
                 }
             }
     
             if ( $Dest_LSTX -and $Src_GSGroups) {
                 $Src_GSGroups | ForEach-Object {
-                    Write-Host "Adding $($_) to $($Dest_LSTX) :" -ForegroundColor Magenta
                     try {
                         Add-ADGroupMember -Identity $Dest_LSTX -Members $_
+                        # Write-Host "$($_) has been added to $($Dest_LSTX)" -ForegroundColor Cyan
                     }
                     catch {
-                        $res += "$($Dest_LSTX.DistinguishedName): $($_.Exception.Error)"
+                        # Write-Host "Error adding $($_) to $($Dest_LSTX): $($_.Exception.Message)"
+                        $res += "$($Dest_LSTX.DistinguishedName): $($_.Exception.Message)"
+                        # Pause
                     }
                 }
             }
@@ -720,7 +714,47 @@ function Add-SourceToDestGrps {
 }
 
 ##################################################################
-## Cross-AddingGroupsOverDomain                                 ##
+## Add-SourceToDestGrps                                         ##
+## ---------------------                                        ##
+## This function is used to cross groups between two            ##
+## domains.                                                     ##
+##                                                              ##
+## Version: 01.00.000                                           ##
+##  Author: contact@hardenad.net                                ##
+##################################################################
+
+function Add-ManagerToEA {
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [string]
+        $SrcDomain
+    )
+
+    [xml] $xmlSkeleton = Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml"
+    [string] $EAName = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%EnterpriseAdmins%" }).translateTo
+    $RootDomainDns = (Get-ADForest).RootDomain
+    $RootEA = Get-ADGroup -Identity $EAName -Server $RootDomainDns
+
+    $GST0Man = Get-ADGroup -Identity "G-S-T0_Managers" -Server $SrcDomain
+
+    Add-ADGroupMember -Identity $RootEA -Members $GST0Man
+
+    # Add T0 Manager into Enterprise Admins
+    # if ($account.Name -like "*0*" -and $account.Name -like "*Manager*") {
+    #     [string] $EnterpriseAdmin = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { 
+    #             $_.translateFrom -eq "%EnterpriseAdmins%" 
+    #         }).translateTo
+
+    #     $EA_rootDomain = Get-ADGroup -Identity $EnterpriseAdmin -Server (Get-ADForest).RootDomain
+    #     $GST0Manager = Get-ADGroup -Identity $account.Name
+    #     Add-ADGroupMember -Identity $EA_rootDomain -Members $GST0Manager -Server (Get-ADForest).RootDomain
+    # }
+              
+}
+
+##################################################################
+## Add-GroupsOverDomain                                         ##
 ## ---------------------                                        ##
 ## This function is used to determine which domain              ##
 ## will be available for cross integration.                     ##
@@ -756,7 +790,7 @@ function Add-GroupsOverDomain {
         # Détecter où Harden AD à été déployé et quels AD sont joignables.
         foreach ($Domain in $AllDomains) {
             try {
-                $res = (Get-ADGroup -Filter { Name -eq "G-S-T0_Managers" } -Server $Domain)
+                $res = [bool](Get-ADGroup -Filter { Name -eq "G-S-T0_Managers" } -Server $Domain)
             }
             catch [Microsoft.ActiveDirectory.Management.ADServerDownException] {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! ($($Domain)) could not be joined!"
@@ -770,24 +804,29 @@ function Add-GroupsOverDomain {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! Harden AD don't seems to be deployed on ($($Domain))!"
             }
         }
-        for ($i = 0; $i -lt $ValidDomains.Count; $i++) {
-            for ($j = $i + 1; $j -lt $ValidDomains.Count; $j++) {
-                Write-Host "$($ValidDomains[$i]) with $($ValidDomains[$j])"
-                # Cross ajout des groupes aux bons endroits
-                $res = Add-SourceToDestGrps -SrcDomDns $ValidDomains[$i] -DestDomDns $ValidDomains[$j]
-                if ($res.Count -eq 0) {
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ The cross integration worked as expected!"
-                    $ResMess = "Cross integration works successfully."
-                    $Result = 0
-                }
-                else {
-                    foreach ($value in $res) {
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! cross integration has encountered an error with: ($($Value))!"
+        if ($ValidDomains.Count -gt 1) {
+            for ($i = 0; $i -lt $ValidDomains.Count; $i++) {
+
+                Add-ManagerToEA -SrcDomain $ValidDomains[$i]
+    
+                for ($j = $i + 1; $j -lt $ValidDomains.Count; $j++) {
+                    # Write-Host "$($ValidDomains[$i]) with $($ValidDomains[$j])"
+                    # Cross ajout des groupes aux bons endroits
+                    $res = Add-SourceToDestGrps -SrcDomDns $ValidDomains[$i] -DestDomDns $ValidDomains[$j]
+                    if ($res.Count -eq 0) {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ The cross integration worked as expected!"
+                        $ResMess = "Cross integration works successfully."
+                        $Result = 0
                     }
-                    $ResMess = "An error occured with at least one domain."
-                    $Result = 2
+                    else {
+                        foreach ($value in $res) {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! cross integration has encountered an error with: ($($Value))!"
+                        }
+                        $ResMess = "An error occured with at least one domain."
+                        $Result = 2
+                    }
                 }
-            }
+            }    
         }
     }
 
