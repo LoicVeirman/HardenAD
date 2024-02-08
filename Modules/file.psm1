@@ -76,21 +76,22 @@ Function Set-GpoCentralStore {
     # $ADMXFiles = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions -File
     # $ADMLFiles_US = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\en-US -File
     # $ADMLFiles_FR = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\fr-FR -File
-    $GPOCentralStore = "$sysVolBasePath\$domName\Policies\PolicyDefinitions"
+    $GPOCentralStore = "$sysVolBasePath\$domName\Policies"
 
     if (Test-Path $GPOCentralStore) {
         try {
-            Rename-Item $GPOCentralStore -NewName "PolicyDefinitions-old"
+            Move-Item -Path "$GPOCentralStore\PolicyDefinitions" -Destination "$GPOCentralStore\PolicyDefinitions-old" -Recurse -Force
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinition has been renamed to PolicyDefinition-old"
             $result = 0
         }
         catch {
+            $global:err = "Erreur in Renaming"
             $dbgMess += (Get-Date -UFormat "% Y-%m-%d %T ") + "---! Error while renaming PolicyDefinition."
             $ResMess = "Error while renaming PolicyDefinition to PolicyDefinition-old"
             $result = 2
         }
         try {
-            Copy-Item $HardenPolicyDefinition.FullName -Destination "$sysVolBasePath\$domName\Policies" -Recurse
+            Copy-Item $HardenPolicyDefinition.FullName -Destination "$sysVolBasePath\$domName\Policies" -Recurse -Force
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinition has been copied to $sysVolBasePath\$domName\Policies"
             $result = 0
         }
