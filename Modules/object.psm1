@@ -777,12 +777,12 @@ function Add-GroupsOverDomain {
     ## Indicates caller and options used
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
 
-
+    $result = 0
 
     $Forest = Get-ADForest
 
     if ($Forest.Domains.Count -eq 1 -and $Forest.Domains -eq $Forest.RootDomain) {
-        # Do nothing
+        $result = 0
     }
     else {
         $AllDomains = $Forest.Domains
