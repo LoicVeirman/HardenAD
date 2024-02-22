@@ -466,6 +466,7 @@ Function New-GpoObject {
             01.01 -- Added Security Filter option
             02.00 -- Uses new functions 2.0
             02.01 -- Added Debug log
+            02.02 -- Fixed bug that let unvalited GPO being imported anyway
     #>
     param(
     )
@@ -528,16 +529,19 @@ Function New-GpoObject {
             #.Check if the GPO already exists
             $gpChek = Get-GPO -Name $gpName -ErrorAction SilentlyContinue
 
-            if ($gpChek) {
-                Write-DebugMessage "---> GPO $gpName already exists."
-                #GPO Exists - Set flag according to the overwrite attribute.
-                if ($gpVali -eq "No") {   
-                    $gpFlag = $true
-                }
-                Else {
-                    $gpFlag = $false
-                    $result = 0
-                }
+            if ($gpChek -or $gpVali -eq "No") 
+			{
+                if ($gpChek) 
+				{
+					Write-DebugMessage "---> GPO $gpName already exists."
+				}
+				if ($gpVali -eq "No")
+				{
+					Write-DebugMessage "---> GPO $gpName is set to not be imported (validation=No)."
+				}
+				#GPO Exists - Set flag according to the overwrite attribute.
+				$gpFlag = $false
+				$result = 0
             }
             Else {
                 #.Create empty GPO
