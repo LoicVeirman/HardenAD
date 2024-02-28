@@ -11,8 +11,9 @@ class LogMessage {
     static [string] $LogDirectory
     static $Logs = @{}
     static [string] $Global
+    static [string] $Name
 
-    static [void] Initialize([string] $LogDirectory) {
+    static [void] Initialize([string] $LogDirectory, [string] $LogName) {
         if (!(Test-Path $LogDirectory)) {
             try {
                 New-Item -Path $LogDirectory -ItemType Directory -Force -Confirm:$false
@@ -24,6 +25,7 @@ class LogMessage {
         }
 
         [LogMessage]::LogDirectory = $LogDirectory
+        [LogMessage]::Name = $LogName
         [LogMessage]::Global = $LogDirectory + "\Global.log"
     }
 
@@ -81,7 +83,7 @@ class Log {
             }
             Default { throw "Invalid log level: $_" }
         }
-        Out-File -FilePath $this.LogPath -Append -InputObject $FormattedLog
+        # Out-File -FilePath $this.LogPath -Append -InputObject $FormattedLog
         Out-File -FilePath $this.Globalpath -Append -InputObject $FormattedLog
     }
 

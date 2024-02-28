@@ -243,7 +243,7 @@ Function Push-DelegationModel {
                     Switch ($HADacl.InheritedObjects) {
                         "" {
                             if ($HADacl.Audit) {
-                                Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
                                     -Trustee          $HADacl.Trustee `
                                     -Right            $HADacl.Right`
                                     -RightType        $HADacl.RightType`

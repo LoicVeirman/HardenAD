@@ -72,65 +72,87 @@ Function Set-GpoCentralStore {
     }
 
     ## Installation of custom or external ADMX/ADML
-    $ADMXFiles = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions -File
-    $ADMLFiles_US = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\en-US -File
-    $ADMLFiles_FR = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\fr-FR -File
-    $GPOCentralStore = "$sysVolBasePath\$domName\Policies\PolicyDefinitions"
+    $HardenPolicyDefinition = Get-Item $PSScriptRoot\..\Inputs\PolicyDefinitions
+    # $ADMXFiles = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions -File
+    # $ADMLFiles_US = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\en-US -File
+    # $ADMLFiles_FR = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\fr-FR -File
+    $GPOCentralStore = "$sysVolBasePath\$domName\Policies"
 
     if (Test-Path $GPOCentralStore) {
-        foreach ($ADMXFile in $ADMXFiles) {
-            try {
-                Copy-Item $ADMXFile.FullName -Destination $GPOCentralStore -Force
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMXFile.Name) has been copied to central store"
-                $result = 0
-            }
-            catch {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($ADMXFile.Name)."
-                $ResMess = "Error while copying $($ADMXFile.Name) to new location"
-                $result = 2
-            }
+        try {
+            Move-Item -Path "$GPOCentralStore\PolicyDefinitions" -Destination "$GPOCentralStore\PolicyDefinitions-old" -Recurse -Force
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinition has been renamed to PolicyDefinition-old"
+            $result = 0
         }
-        foreach ($ADMLFile in $ADMLFiles_US) {
-            try {
-                Copy-Item $ADMLFile.FullName -Destination "$GPOCentralStore\en-US" -Force
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMLFile.Name) has been copied to central store"
-                $result = 0
-            }
-            catch {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($ADMLFile.Name)."
-                $ResMess = "Error while copying $($ADMLFile.Name) to new location"
-                $result = 2
-            }
+        catch {
+            $global:err = "Erreur in Renaming"
+            $dbgMess += (Get-Date -UFormat "% Y-%m-%d %T ") + "---! Error while renaming PolicyDefinition."
+            $ResMess = "Error while renaming PolicyDefinition to PolicyDefinition-old"
+            $result = 2
         }
+        try {
+            Copy-Item $HardenPolicyDefinition.FullName -Destination "$sysVolBasePath\$domName\Policies" -Recurse -Force
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinition has been copied to $sysVolBasePath\$domName\Policies"
+            $result = 0
+        }
+        catch {
+            $dbgMess += (Get-Date -UFormat "% Y-%m-%d %T ") + "---! Error while copying $($HardenPolicyDefinition.Name)."
+            $ResMess = "Error while copying PolicyDefinition to $sysVolBasePath\$domName\Policies"
+            $result = 2
+        }
+        # foreach ($ADMXFile in $ADMXFiles) {
+        #     try {
+        #         Copy-Item $ADMXFile.FullName -Destination $GPOCentralStore -Force
+        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMXFile.Name) has been copied to central store"
+        #         $result = 0
+        #     }
+        #     catch {
+        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($ADMXFile.Name)."
+        #         $ResMess = "Error while copying $($ADMXFile.Name) to new location"
+        #         $result = 2
+        #     }
+        # }
+        # foreach ($ADMLFile in $ADMLFiles_US) {
+        #     try {
+        #         Copy-Item $ADMLFile.FullName -Destination "$GPOCentralStore\en-US" -Force
+        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMLFile.Name) has been copied to central store"
+        #         $result = 0
+        #     }
+        #     catch {
+        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($ADMLFile.Name)."
+        #         $ResMess = "Error while copying $($ADMLFile.Name) to new location"
+        #         $result = 2
+        #     }
+        # }
         
-        if (!(Test-Path "$GPOCentralStore\fr-FR")) {
-            try {
-                $null = New-Item -Path "$GPOCentralStore\fr-FR" -ItemType Directory
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New directory : $GPOCentralStore\fr-FR (success)" 
-            }
-            Catch {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New directory : $GPOCentralStore\fr-FR (Failed!)" 
-                $result = 2
-            }
-        }
+        # if (!(Test-Path "$GPOCentralStore\fr-FR")) {
+        #     try {
+        #         $null = New-Item -Path "$GPOCentralStore\fr-FR" -ItemType Directory
+        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New directory : $GPOCentralStore\fr-FR (success)" 
+        #     }
+        #     Catch {
+        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New directory : $GPOCentralStore\fr-FR (Failed!)" 
+        #         $result = 2
+        #     }
+        # }
         
-        foreach ($ADMLFile in $ADMLFiles_FR) {
-            try {
-                Copy-Item $ADMLFile.FullName -Destination "$GPOCentralStore\fr-FR" -Force
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMLFile.Name) has been copied to central store"
-                $result = 0
-            }
-            catch {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($ADMLFile.Name)."
-                $ResMess = "Error while copying $($ADMLFile.Name) to new location"
-                $result = 2
-            }
-        }  
+        # foreach ($ADMLFile in $ADMLFiles_FR) {
+        #     try {
+        #         Copy-Item $ADMLFile.FullName -Destination "$GPOCentralStore\fr-FR" -Force
+        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMLFile.Name) has been copied to central store"
+        #         $result = 0
+        #     }
+        #     catch {
+        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($ADMLFile.Name)."
+        #         $ResMess = "Error while copying $($ADMLFile.Name) to new location"
+        #         $result = 2
+        #     }
+        # }  
     }
 
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | INIT  ROTATIVE  LOG "
     if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
         if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
@@ -138,7 +160,7 @@ Function Set-GpoCentralStore {
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
     }
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | STOP  ROTATIVE  LOG "
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
@@ -306,7 +328,7 @@ Function New-ScheduleTasks {
 
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | INIT  ROTATIVE  LOG "
     if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
         if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
@@ -314,7 +336,7 @@ Function New-ScheduleTasks {
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
     }
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | STOP  ROTATIVE  LOG "
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
@@ -337,7 +359,7 @@ Function Set-LapsScripts {
         
         .Description
          The deployment script needs to be update to fetch with the running domain. 
-         The script will be overwritten and replace %RootDN% by the domain FQDN.
+         The script will be overwritten and replace %DN% by the domain FQDN.
 
         .Notes
          Version: 01.00 -- contact@hardenad.net 
@@ -450,7 +472,7 @@ Function Set-LapsScripts {
     foreach ($file in (Get-ChildItem -Path $ScriptDir | Where-Object { $_.Name -like "*.bat" })) {
         $newFile = @()
         Try {
-            (Get-Content $file.fullName) -Replace '%RootDN%', (Get-ADDomain).DnsRoot | Set-Content $File.FullName 
+            (Get-Content $file.fullName) -Replace '%DN%', (Get-ADDomain).DnsRoot | Set-Content $File.FullName 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> rewritten file " + $file.Name + " (success)"
         }
         Catch {
@@ -482,7 +504,7 @@ Function Set-LapsScripts {
 
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | INIT  ROTATIVE  LOG "
     if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
         if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
@@ -490,7 +512,7 @@ Function Set-LapsScripts {
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
     }
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | STOP  ROTATIVE  LOG "
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
@@ -543,10 +565,13 @@ Function Install-LAPS {
             $ResMess = "AD module not available."
         }
     }
+    ## Load Task sequence
+    [xml] $xmlSkeleton = Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml"
+    $RootDomainDns = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Rootdomaindns%" }).translateTo
 
     ## Check prerequesite: running user must be member of the Schema Admins group and running computer should be Schema Master owner.
     $CurrentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-    $isSchemaAdm = Get-ADGroupMember -Recursive ((Get-ADDomain).DomainSID.value + "-518") | Where-Object { $_.SID -eq $CurrentUser.User }
+    $isSchemaAdm = Get-ADGroupMember -Recursive ((Get-ADDomain -Server $RootDomainDns).DomainSID.value + "-518") -Server $RootDomainDns | Where-Object { $_.SID -eq $CurrentUser.User }
 
     $CurrentCptr = $env:COMPUTERNAME
     $isSchemaOwn = (Get-ADForest).SchemaMaster -eq ($currentCptr + "." + (Get-ADDomain).DnsRoot)
@@ -643,8 +668,17 @@ Function Set-LapsPermissions {
 
     ## Check prerequesite: the ADMPWD.PS module has to be present. 
     if (-not(Get-Module -ListAvailable -Name "AdmPwd.PS")) {
-        $result = 2
-        $ResMess = "AdmPwd.PS module missing."
+        try {
+            Start-Process -FilePath "$env:systemroot\system32\msiexec.exe" `
+                -WorkingDirectory .\Inputs\LocalAdminPwdSolution\Binaries `
+                -ArgumentList '/i laps.x64.msi ADDLOCAL=Management.UI,Management.PS,Management.ADMX /quiet /norestart' `
+                -NoNewWindow `
+                -Wait
+        }
+        catch {
+            $result = 2
+            $ResMess = "AdmPwd.PS module missing."
+        }
     }
     
     ## Begin permissions setup, if allowed to.
@@ -710,9 +744,9 @@ Function Set-LapsPermissions {
                     Catch {
                         $result = 1
                         $ResMess = "Failed to apply Permission on one or more OU."
-                        Write-Host $_.Exception.Message
-                        Write-Host $TargetOU
-                        Pause
+                        # Write-Host $_.Exception.Message
+                        # Write-Host $TargetOU
+                        # Pause
                     }
                 }
                 #.Getting Domain Netbios name
@@ -851,7 +885,7 @@ Function Get-PingCastle {
         }
         'False' {
 
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Test Internet connectivity KO ;( " 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Test Internet connectivity KO ; ( " 
 
             $result = 1
 
@@ -861,8 +895,8 @@ Function Get-PingCastle {
 
 
     ## Exit
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "% Y-%m-%d %T ") + "---> function return RESULT: $Result"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | INIT  ROTATIVE  LOG "
     if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
         if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
@@ -870,7 +904,7 @@ Function Get-PingCastle {
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
     }
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | STOP  ROTATIVE  LOG "
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
@@ -887,7 +921,7 @@ Function Set-LocAdmTaskScripts {
         
         .Description
          The deployment script needs to be update to fetch with the running domain. 
-         The script will be overwritten and replace %RootDN% by the domain FQDN.
+         The script will be overwritten and replace %DN% by the domain FQDN.
 
         .Notes
          Version: 01.00 -- contact@hardenad.net 
@@ -998,7 +1032,7 @@ Function Set-LocAdmTaskScripts {
 
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | INIT  ROTATIVE  LOG "
     if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
         if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
@@ -1006,7 +1040,7 @@ Function Set-LocAdmTaskScripts {
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
     }
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | STOP  ROTATIVE  LOG "
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")

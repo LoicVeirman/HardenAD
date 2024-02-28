@@ -423,12 +423,9 @@
     <wellKnownID objectClass="text" translateFrom="%SchemaAdmins%" translateTo="Schema Admins" />
     <wellKnownID objectClass="text" translateFrom="%DnsAdmins%" translateTo="DnsAdmins" />
     <wellKnownID objectClass="text" translateFrom="%RemoteDesktopUsers%" translateTo="Remote Desktop Users" />
-    <wellKnownID objectClass="text" translateFrom="%NetBios%" translateTo="OZ" />
-    <wellKnownID objectClass="text" translateFrom="%domaindns%" translateTo="oswald.com" />
-    <wellKnownID objectClass="text" translateFrom="%DN%" translateTo="DC=oswald,DC=com" />
-    <wellKnownID objectClass="text" translateFrom="%RootNetBios%" translateTo="OZ" />
-    <wellKnownID objectClass="text" translateFrom="%Rootdomaindns%" translateTo="oswald.com" />
-    <wellKnownID objectClass="text" translateFrom="%RootDN%" translateTo="DC=oswald,DC=com" />
+    <wellKnownID objectClass="text" translateFrom="%domain%" translateTo="HARDEN" />
+    <wellKnownID objectClass="text" translateFrom="%domaindns%" translateTo="harden.lab" />
+    <wellKnownID objectClass="text" translateFrom="%RootDN%" translateTo="DC=harden,DC=lab" />
     <wellKnownID objectClass="text" translateFrom="%Users%" translateTo="Users" />
     <wellKnownID objectClass="group" translateFrom="%t0-global%" translateTo="L-S-T0" />
     <wellKnownID objectClass="group" translateFrom="%t1-global%" translateTo="L-S-T1" />
@@ -617,10 +614,10 @@
     <!-- ################################################################################################################################# -->
     <!-- GPO GROUP SETTINGS: used to generate APPLY and DENY Group Name. Use %tier% to mark the Tier localization in the new name          -->
     <!--   > GpoName..: define the group name for applying or denying a group                                                              -->
-    <GlobalGpoSettings GroupName="L-S-%tier%-GPO_%GpoName%_%mode%" Tier0="T0" Tier1="T1" Tier2="T2">
-      <GpoTier0 OU="OU=GPO,OU=GroupsT0,OU=_Administration,%DN%" />
-      <GpoTier1 OU="OU=GPO,OU=GroupsT1,OU=_Administration,%DN%" />
-      <GpoTier2 OU="OU=GPO,OU=GroupsT2,OU=_Administration,%DN%" />
+    <GlobalGpoSettings GroupName="G-S-%tier%-GPO_%GpoName%_%mode%" Tier0="T0" Tier1="T1" Tier2="T2">
+      <GpoTier0 OU="OU=GPO,OU=GroupsT0,OU=_Administration,%rootDN%" />
+      <GpoTier1 OU="OU=GPO,OU=GroupsT1,OU=_Administration,%rootDN%" />
+      <GpoTier2 OU="OU=GPO,OU=GroupsT2,OU=_Administration,%rootDN%" />
     </GlobalGpoSettings>
     <!-- TEMPLATE
 	  <GPO BackupID="{9A9AD00F-56D9-476C-9D65-CEAD0FB31B4F}" Validation="Yes" Name="display name" Description="gpo description">
@@ -702,6 +699,7 @@ Blocks anonymous access to SAM database.">
     </GPO>
     <GPO BackupID="{43B72F81-55EE-4E7E-890B-7B738677B14A}" Validation="Yes" Name="HAD-DCLocaltor-Configuration" Description="Harden AD =================== Prevents the DC from generating its DNS entries in -tcp-msdsc.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
+      <GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{F9DBA31A-45A6-42A2-B63C-4ED76AC5DB58}" Validation="Yes" Name="HAD-DistributedFileSystem-Disabled" Description="Harden AD =================== Disable the Windows DFS Namespace service.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
@@ -906,11 +904,11 @@ Blocks anonymous access to SAM database.">
       <GpoFilter WMI="Windows-OS-Servers" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <!-- <GPO BackupID="{AA731818-2050-4EE5-A0A1-088E75A458D8}" Validation="Yes" Name="HAD-Reset-KRBTGT-Password" Description="Harden AD =================== Reset the password of the krbtgt account every 30 days">
+    <GPO BackupID="{AA731818-2050-4EE5-A0A1-088E75A458D8}" Validation="Yes" Name="HAD-Reset-KRBTGT-Password" Description="Harden AD =================== Reset the password of the krbtgt account every 30 days">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
       <GpoFilter WMI="Windows-PDC" />
-    </GPO> -->
+    </GPO>
     <GPO BackupID="{3A10AD30-D95C-42C4-AD45-C7E4CBFC2F2D}" Validation="Yes" Name="HAD-RDP-Disabled" Description="Harden AD =================== Disables the RDP service and prohibits RDP connections">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
@@ -983,7 +981,7 @@ Blocks anonymous access to SAM database.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
-    <GPO BackupID="{1FB916B9-F453-4342-8636-1523DC68F698}" Validation="Yes" Name="HAD-SSL2-SSL3-Enabled" Description="Harden AD =================== Enables SSLv2 and SSLv3 on Windows systems.">
+    <GPO BackupID="{1FB916B9-F453-4342-8636-1523DC68F698}" Validation="Yes" Name="HAD-SSL2-SSL3-Enabled" Description="Harden AD =================== Configure default search provider.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
     </GPO>
     <GPO BackupID="{6697D7EB-62A0-4474-A4FE-5376411CE853}" Validation="Yes" Name="HAD-Svc-Browser-Disabled" Description="Harden AD =================== Disable the Windows Browser service.">
@@ -1002,7 +1000,6 @@ Blocks anonymous access to SAM database.">
     </GPO>
     <GPO BackupID="{A8C72199-7FB0-4234-A737-4E5843814F1E}" Validation="Yes" Name="HAD-TS-PDC-Flush-admin-groups" Description="Harden AD =================== Import the Group flushing script and create the associated scheduled task.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
-      <GpoFilter WMI="Windows-PDC" />
       <GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{E8BF7E49-1AB8-430E-A215-E36E83FFD59F}" Validation="Yes" Name="HAD-UAC-Enabled" Description="Harden AD =================== Enables UAC's approval mode for all administrators.">
@@ -1015,6 +1012,11 @@ Blocks anonymous access to SAM database.">
     </GPO>
     <GPO BackupID="{5E8614C4-055C-48F4-B2DB-639997ECAE42}" Validation="Yes" Name="HAD-Windows-Defender-Config" Description="Harden AD =================== Configures Windows Defender.">
       <GpoMode Mode="BOTH" Tier="Tier0" />
+      <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+    </GPO>
+    <GPO BackupID="{9B819B43-927F-4C12-BCBA-6264DB932E11}" Validation="Yes" Name="HAD-Windows11-Update-Blocked" Description="Harden AD =================== Blocks the upgrade to Windows 11.">
+      <GpoMode Mode="BOTH" Tier="Tier0" />
+      <GpoFilter WMI="Windows-OS-Clients" />
       <GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
     </GPO>
     <GPO BackupID="{AA0F3BCB-8435-4A58-A8F4-5D631039B623}" Validation="Yes" Name="HAD-WinRM-Basic-Digest-Auth-Disabled" Description="Harden AD =================== Disallows basic, unencrypted authentication for WinRM use.">
@@ -1123,6 +1125,23 @@ Blocks anonymous access to SAM database.">
       <Member samAccountName="L-S-T0" />
     </Group>
     <Group name="L-S-T0_PawT12L_Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the T1, T2 and TLegacy administration stations" Path="OU=Logon,OU=GroupsT0,OU=_Administration,ROOTDN">
+    </Group>
+    <Group name="Enterprise Admins" Category="Security" Scope="Global" Description="Members of this group will be able to connect to the T1, T2 and TLegacy administration stations" Path="OU=Logon,OU=GroupsT0,OU=_Administration,ROOTDN">
+      <Member samAccountName="G-S-T0_Managers" />
+    </Group>
+    <Group name="G-S-T0_Operators" Category="Security" Scope="Global" Description="Members of this group can operate on Tier 0 resources (login)" Path="OU=GroupsT0,OU=Administration,ROOTDN">
+      <Member samAccountName="T0O-AHARDEN" />
+    </Group>
+    <Group name="L-S-T0" Category="Security" Scope="domainLocal" Description="Members of this group are part of Tier 0 administrative assets" Path="OU=GroupsT0,OU=Administration,ROOTDN">
+      <Member samAccountName="G-S-T0_Managers" />
+      <Member samAccountName="G-S-T0_Operators" />
+    </Group>
+    <Group name="L-S-T0_PawAccess_Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the first level administration stations" Path="OU=Logon,OU=GroupsT0,OU=Administration,ROOTDN">
+    </Group>
+    <Group name="L-S-T0_PawT0_Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the T0 administration stations" Path="OU=Logon,OU=GroupsT0,OU=Administration,ROOTDN">
+      <Member samAccountName="L-S-T0" />
+    </Group>
+    <Group name="L-S-T0_PawT12L_Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the T1, T2 and TLegacy administration stations" Path="OU=Logon,OU=GroupsT0,OU=Administration,ROOTDN">
     </Group>
     <!-- #### TIER 1 #### -->
     <Group name="G-S-T1_Managers" Category="Security" Scope="Global" Description="Members of this group can manage all Tier 1 ressources, including T1 admin users and groups" Path="OU=GroupsT1,OU=_Administration,ROOTDN">
@@ -1308,21 +1327,21 @@ Blocks anonymous access to SAM database.">
     on the target OU.                     -->
     <!--
     ################################################################################################################################### -->
-    <AdmPwdSelfPermission Target="OU=Servers,OU=Harden_TL,%DN%" />
-    <AdmPwdSelfPermission Target="OU=Servers,OU=Harden_T12,%DN%" />
-    <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_TL,%DN%" />
-    <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_T12,%DN%" />
-    <AdmPwdSelfPermission Target="OU=PawAccess,OU=_Administration,%DN%" />
-    <AdmPwdSelfPermission Target="OU=PawT0,OU=_Administration,%DN%" />
-    <AdmPwdSelfPermission Target="OU=PawT12L,OU=_Administration,%DN%" />
-    <AdmPwdPasswordReader Target="OU=Servers,OU=Harden_TL,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReader%" />
-    <AdmPwdPasswordReader Target="OU=Servers,OU=Harden_T12,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReader%" />
-    <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_TL,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReader%" />
-    <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_T12,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReader%" />
-    <AdmPwdPasswordReset Target="OU=Servers,OU=Harden_TL,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReset%" />
-    <AdmPwdPasswordReset Target="OU=Servers,OU=Harden_T12,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReset%" />
-    <AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_TL,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReset%" />
-    <AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_T12,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReset%" />
+    <AdmPwdSelfPermission Target="OU=Servers,OU=Harden_TL,%RootDN%" />
+    <AdmPwdSelfPermission Target="OU=Servers,OU=Harden_T12,%RootDN%" />
+    <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_TL,%RootDN%" />
+    <AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_T12,%RootDN%" />
+    <AdmPwdSelfPermission Target="OU=PawAccess,OU=_Administration,%RootDN%" />
+    <AdmPwdSelfPermission Target="OU=PawT0,OU=_Administration,%RootDN%" />
+    <AdmPwdSelfPermission Target="OU=PawT12L,OU=_Administration,%RootDN%" />
+    <AdmPwdPasswordReader Target="OU=Servers,OU=Harden_TL,%RootDN%" Id="%domain%\%T1-LAPS-PasswordReader%" />
+    <AdmPwdPasswordReader Target="OU=Servers,OU=Harden_T12,%RootDN%" Id="%domain%\%T1-LAPS-PasswordReader%" />
+    <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_TL,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReader%" />
+    <AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_T12,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReader%" />
+    <AdmPwdPasswordReset Target="OU=Servers,OU=Harden_TL,%RootDN%" Id="%domain%\%T1-LAPS-PasswordReset%" />
+    <AdmPwdPasswordReset Target="OU=Servers,OU=Harden_T12,%RootDN%" Id="%domain%\%T1-LAPS-PasswordReset%" />
+    <AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_TL,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReset%" />
+    <AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_T12,%RootDN%" Id="%domain%\%T2-LAPS-PasswordReset%" />
   </LocalAdminPasswordSolution>
   <Sequence>
     <!-- ################################################################################################################################### -->
@@ -1563,12 +1582,5 @@ Blocks anonymous access to SAM database.">
       <TaskEnabled>Yes</TaskEnabled>
       <TaskDescription>Reset `(groups's membeberships` to the `[trusted list`</TaskDescription>
     </Id> -->
-    <Id Number="160" Name="Cross integration of Admin groups">
-      <CallingFunction>Add-GroupsOverDomain</CallingFunction>
-      <UseParameters>
-      </UseParameters>
-      <TaskEnabled>Yes</TaskEnabled>
-      <TaskDescription>Cross integration of `(administration groups` used by the tier model</TaskDescription>
-    </Id>
   </Sequence>
 </Settings>

@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScheduledTasks clsid="{CC63F200-7309-4ba0-B154-A71CD118DBCC}"><TaskV2 clsid="{D8896631-B747-47a7-84A6-C155337F3BC8}" name="HardenAD\HAD BitLocker Encryption with PIN" image="1" changed="2023-10-24 08:42:39" uid="{ADD8AE0B-963A-4844-B1AC-06BECC5595CB}" userContext="0" removePolicy="1"><Properties action="R" name="HardenAD\HAD BitLocker Encryption with PIN" runAs="NT AUTHORITY\System" logonType="S4U"><Task version="1.2"><RegistrationInfo><Author>HARDEN\vagrant</Author><Description>This task encrypts the workstation's fixed disks (OS and DATA). Encryption is based on the TPM chip and a PIN requested from the user.</Description></RegistrationInfo><Principals><Principal id="Author"><UserId>NT AUTHORITY\System</UserId><LogonType>S4U</LogonType><RunLevel>HighestAvailable</RunLevel></Principal></Principals><Settings><IdleSettings><Duration>PT5M</Duration><WaitTimeout>PT1H</WaitTimeout><StopOnIdleEnd>false</StopOnIdleEnd><RestartOnIdle>false</RestartOnIdle></IdleSettings><MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy><DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries><StopIfGoingOnBatteries>false</StopIfGoingOnBatteries><AllowHardTerminate>false</AllowHardTerminate><StartWhenAvailable>true</StartWhenAvailable><AllowStartOnDemand>true</AllowStartOnDemand><Enabled>true</Enabled><Hidden>false</Hidden><ExecutionTimeLimit>PT0S</ExecutionTimeLimit><Priority>7</Priority><RestartOnFailure><Interval>PT1M</Interval><Count>3</Count></RestartOnFailure></Settings><Triggers><LogonTrigger><Enabled>true</Enabled></LogonTrigger></Triggers><Actions Context="Author"><Exec><Command>powershell.exe</Command><Arguments>Start-HADEncryption -OS -PIN -Fixed</Arguments></Exec></Actions></Task></Properties></TaskV2>
+<ScheduledTasks clsid="{CC63F200-7309-4ba0-B154-A71CD118DBCC}">
+    <TaskV2 clsid="{D8896631-B747-47a7-84A6-C155337F3BC8}" name="HardenAD\HAD BitLocker Encryption with PIN" image="1" changed="2023-10-24 08:42:39" uid="{ADD8AE0B-963A-4844-B1AC-06BECC5595CB}" userContext="0" removePolicy="1">
+        <Properties action="R" name="HardenAD\HAD BitLocker Encryption with PIN" runAs="NT AUTHORITY\System" logonType="S4U">
+            <Task version="1.2">
+                <RegistrationInfo>
+                    <Author>HARDEN\vagrant</Author>
+                    <Description>This task encrypts the workstation's fixed disks (OS and DATA). Encryption is based on the TPM chip and a PIN requested from the user.</Description>
+                </RegistrationInfo>
+                <Principals>
+                    <Principal id="Author">
+                        <UserId>NT AUTHORITY\System</UserId>
+                        <LogonType>S4U</LogonType>
+                        <RunLevel>HighestAvailable</RunLevel>
+                    </Principal>
+                </Principals>
+                <Settings>
+                    <IdleSettings>
+                        <Duration>PT5M</Duration>
+                        <WaitTimeout>PT1H</WaitTimeout>
+                        <StopOnIdleEnd>false</StopOnIdleEnd>
+                        <RestartOnIdle>false</RestartOnIdle>
+                    </IdleSettings>
+                    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+                    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+                    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+                    <AllowHardTerminate>false</AllowHardTerminate>
+                    <StartWhenAvailable>true</StartWhenAvailable>
+                    <AllowStartOnDemand>true</AllowStartOnDemand>
+                    <Enabled>true</Enabled>
+                    <Hidden>false</Hidden>
+                    <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+                    <Priority>7</Priority>
+                    <RestartOnFailure>
+                        <Interval>PT1M</Interval>
+                        <Count>3</Count>
+                    </RestartOnFailure>
+                </Settings>
+                <Triggers>
+                    <LogonTrigger>
+                        <Enabled>true</Enabled>
+                    </LogonTrigger>
+                </Triggers>
+                <Actions Context="Author">
+                    <Exec>
+                        <Command>powershell.exe</Command>
+                        <Arguments>-NoLogo -NonInteractive -ExecutionPolicy Bypass Start-HADEncryption -OS -PIN -Fixed</Arguments>
+                    </Exec>
+                </Actions>
+            </Task>
+        </Properties>
+    </TaskV2>
 </ScheduledTasks>
-
-
