@@ -27,9 +27,12 @@
  |        |         |               |      a different domain.    |
  +--------+---------+---------------+-----------------------------+
  |07/07/22|02.00.004| Loic.Veirman  | #5 - Update to reflect new  |
- |        |         |               |      release 2.9.0.          |
+ |        |         |               |      release 2.9.0.         |
  +--------+---------+---------------+-----------------------------+
-
+ |22/02/24|02.01.000| Loic.Veirman  | #6 - Add function to ensure |
+ |        |         |               | that the xml file keeps it  |
+ |        |         |               | human's readable touch.     |
+ +--------+---------+---------------+-----------------------------+
 ###################################################################>
 
 ###################################################################
@@ -47,6 +50,19 @@ Param(
 ## ---------                                                     ##
 ## This part holds local function used by the sequencer only.    ##
 ###################################################################
+function Format-XML ([xml]$xml, $indent=1)
+{
+    $StringWriter = New-Object System.IO.StringWriter
+    $XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
+    $xmlWriter.Formatting = “indented”
+    $xmlWriter.Indentation = $Indent
+    $xmlWriter.IndentChar = "`t"
+    $xml.WriteContentTo($XmlWriter)
+    $XmlWriter.Flush()
+    $StringWriter.Flush()
+    return $StringWriter.ToString()
+}
+
 Function New-LogEntry {
     Param(
         [Parameter(Mandatory = $true, Position = 0)]
@@ -183,7 +199,6 @@ else {
     $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1").FullName
 }
 
-
 #-Setting-up usefull variables
 $SchedulrConfig = [xml](get-content .\Configs\Configuration_HardenAD.xml)
 $SchedulrLoging = @()
@@ -219,7 +234,6 @@ $ColorsAndTexts = New-Object -TypeName psobject `
     AltBaseHTxtB                    = "("
     AltBaseHTxtC                    = "{"
 }
-       
 
 #-Loading Header (yes, a bit of fun)
 #Clear-Host
@@ -264,7 +278,9 @@ $FlagPreReq = $true
 Write-Host "-------------------------"
 Write-Host "Checking prerequesite:"
 $Linecount = 2
+
 $Prerequesites = $SchedulrConfig.SchedulerSettings.Prerequesites
+
 foreach ($Prerequesite in $Prerequesites.Directory) {
     $Linecount++
     #-Checking Folder
@@ -317,8 +333,6 @@ Else {
     Write-Host "No" -ForegroundColor Green
 }
 
-
-
 #--- Updating Translations of Task Sequence file
 # Check if the domain information is correct
 Write-Host "-------------------------"
@@ -359,9 +373,6 @@ Start-Sleep -Seconds 2
 
 #-Using XML
 $Resume = @()
-
-
-
 
 $Tasks = $TasksSeqConfig.Settings.Sequence.ID | Sort-Object number
 foreach ($task in $Tasks) {

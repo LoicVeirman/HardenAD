@@ -1,7 +1,7 @@
 ﻿##################################################################
-## Set-Translation                                              ##
+## Get-GroupNameFromSID                                         ##
 ## -------------------                                          ##
-## This function will set the translation in TaskSequence.xml   ##
+## This function will return a group name form a SID            ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
@@ -42,6 +42,14 @@ function Get-GroupNameFromSID {
     }
 }
 
+##################################################################
+## Set-Translation                                              ##
+## ---------------                                              ##
+## This function will set the translation in TaskSequence.xml   ##
+##                                                              ##
+## Version: 01.01.000                                           ##
+##    Note: added XML formating function                        ##
+##################################################################
 function Set-Translation {
     param (
         [Parameter(Mandatory = $true)]
@@ -54,7 +62,21 @@ function Set-Translation {
         [switch]$Child
     )
 
-    $TasksSeqConfig = [xml](get-content $ScriptPath\Configs\$TasksSequence)
+    function Format-XML ([xml]$xml, $indent=1)
+    {
+        $StringWriter = New-Object System.IO.StringWriter
+        $XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
+        $xmlWriter.Formatting = “indented”
+        $xmlWriter.Indentation = $Indent
+        $xmlWriter.IndentChar = "`t"
+        $xml.WriteContentTo($XmlWriter)
+        $XmlWriter.Flush()
+        $StringWriter.Flush()
+        return $StringWriter.ToString()
+    }
+
+    $xmlFileFullName = convert-path $ScriptPath\Configs\$TasksSequence
+    $TasksSeqConfig  = [xml](get-content $ScriptPath\Configs\$TasksSequence)
 
     $Domain = Get-ADDomain
     $Forest = Get-ADForest
@@ -219,8 +241,7 @@ function Set-Translation {
     $wellKnownID_RDP.translateTo = "$RDUsers_"
     $wellKnownID_Users.translateTo = "$users_"
 
-
-    #Saving xml Task Sequence file
-    $TasksSeqConfig.Save("$ScriptPath\Configs\$TasksSequence")
-
+    #.Saving file and keeping formating with tab...
+    Format-XML $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
 }
+
