@@ -192,7 +192,7 @@ Function Push-DelegationModel {
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
-        $xmlSkeleton = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop -Encoding utf8)
+        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
     }
@@ -235,7 +235,7 @@ Function Push-DelegationModel {
             $DomainRootDN = (Get-ADDomain).DistinguishedName
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
 
-            ## Getting specified schema
+            ## Getting specified schema for ACL
             $xmlData = $xmlSkeleton.settings.DelegationACEs.ACL
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: xml data loaded (" + $xmlData.count + " ACL(s))"
             
@@ -249,7 +249,7 @@ Function Push-DelegationModel {
                     Switch ($HADacl.InheritedObjects) {
                         "" {
                             if ($HADacl.Audit) {
-                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
                                     -Trustee          $HADacl.Trustee `
                                     -Right            $HADacl.Right`
                                     -RightType        $HADacl.RightType`
@@ -306,6 +306,40 @@ Function Push-DelegationModel {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!              ObjectType= " + $HADacl.ObjectType
                     }
                 }
+
+            }
+            else {
+        
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Warning: xmlData is empty!"
+                $result = 1
+                $ResMess = "No Data to deal with"
+            }
+
+            ## Getting specified schema for SDDL
+            $xmlData = $xmlSkeleton.settings.DelegationACEs.SDDL
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: xml data loaded (" + $xmlData.count + " SDDL(s))"
+
+            ## if we got data, begining creation loop
+            if ($xmlData) {
+                #.Begin object creation loop
+                foreach ($HADacl in $xmlData) {
+                    # Custom Rights
+                    $result = Set-HardenSDDL -TargetDN ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) -Trustee $HADacl.Trustee -CustomAccessRule $HADacl.CustomAccessRule
+
+                    if ($result) {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ Cus. Rule: TargetDN= " + $HADacl.TargetDN
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + $HADacl.Trustee
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                   Right= " + $HADacl.CustomAccessRule
+                        }
+                    Else {
+                            $ErrIdx++
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! Cus. Rule addition failed!"
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! Cus. Rule: TargetDN= " + $HADacl.TargetDN
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + $HADacl.Trustee
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                   Right= " + $HADacl.CustomAccessRule
+                        }
+                }
+              
 
                 #-Success: no issue
                 if ($ErrIdx -eq 0) { 
