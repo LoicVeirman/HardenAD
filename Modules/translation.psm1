@@ -217,9 +217,9 @@ function Set-Translation {
     $users_SID              = "S-1-5-32-545"
 
     # Specific admins group of a domain
-    $enterpriseAdmins_SID = $RootDomainSID + "-519"
-    $domainAdmins_SID     = $domainSID     + "-512"
-    $schemaAdmins_SID     = $RootDomainSID + "-518"
+    $enterpriseAdmins_SID = "$($RootDomainSID)-519"
+    $domainAdmins_SID     = "$($domainSID)-512"
+    $schemaAdmins_SID     = "$($RootDomainSID)-518"
 
     # Get group names from SID
     $authenticatedUsers_ = Get-GroupNameFromSID -GroupSID $authenticatedUsers_SID
