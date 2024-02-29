@@ -34,12 +34,14 @@ Function New-AdministrationAccounts {
     )
 
     ## Default keepass password
-    if (-not($KeepassPwd)) {
+    if (-not($KeepassPwd)) 
+    {
         $KeepassPwd = 'H4rd3n@D!!'
     }
 
     ## Function dynamic OU path rewriting
-    Function Rewrite-OUPath ([String]$OUPath) {
+    Function Rewrite-OUPath ([String]$OUPath) 
+    {
         $OUPath2 = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> [OUPath2]: new variable set with [OUPath] data and ROOTDN replaced. New value: $OUPath2"    
         return $OUPath2
@@ -60,7 +62,7 @@ Function New-AdministrationAccounts {
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
-        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
+        $xmlSkeleton = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8 -ErrorAction Stop)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
     }
@@ -70,7 +72,8 @@ Function New-AdministrationAccounts {
     }    
 
     ## If xml loaded, begining check and create...
-    if ($xmlLoaded) {
+    if ($xmlLoaded) 
+    {
         ## Log loop start
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable XmlLoaded.......: $xmlLoaded"
         
@@ -79,7 +82,8 @@ Function New-AdministrationAccounts {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
         
         ## When dealing with 2008R2, we need to import AD module first
-        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
+        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") 
+        {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> is windows 2008/R2.......: True"
         
             Try { 
@@ -98,7 +102,8 @@ Function New-AdministrationAccounts {
         }
 
         ## if Everything run smoothly, let's begin.
-        if ($noError) {
+        if ($noError) 
+        {
             ## Getting root DNS name
             $DomainRootDN = (Get-ADDomain).DistinguishedName
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
@@ -108,17 +113,18 @@ Function New-AdministrationAccounts {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml data loaded (" + $xmlData.count + " account(s))"
 
             ## if we got data, begining creation loop
-            if ($xmlData) {
+            if ($xmlData) 
+            {
                 #-Failing Creation index
                 $ErrIdx = 0
             
                 #-Reacling Keepass binaries to avoid issue with read-only permissions
-                $path = (Get-Location).Path + "\Tools\KeePass-2.48.1\"
-                $pathdb = (Get-Location).Path + "\Outputs\"
+                $path     = (Get-Location).Path + "\Tools\KeePass-2.48.1\"
+                $pathdb   = (Get-Location).Path + "\Outputs\"
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> binaries path=$path"
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> database path=$pathdb"
-                $GrpName = (Get-ADGroup -filter { Sid -eq "S-1-5-32-545" }).sAMAccountname
-                $AceUser = "BUILTIN\" + $GrpName
+                $GrpName  = (Get-ADGroup -filter { Sid -eq "S-1-5-32-545" }).sAMAccountname
+                $AceUser  = "BUILTIN\" + $GrpName
                 Try {
                     $acl = Get-Acl $path
                     $ArgumentsList = $AceUser, , "FullControl", "ContainerInherit,ObjectInherit", "None", "Allow"
@@ -152,7 +158,8 @@ Function New-AdministrationAccounts {
                     $KpsFlag = $false
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! keepass binaries not found!"
                 }
-                if ($KpsFlag) {
+                if ($KpsFlag)
+                {
                     #-Opening database
                     Try {
                         $IoConnectionInfo.Path = $pathdb + "\HardenAD.kdbx"
@@ -167,12 +174,14 @@ Function New-AdministrationAccounts {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! keepass database not found!"
                     }
                 }
-                foreach ($account in $xmlData) {
+                foreach ($account in $xmlData) 
+                {
                     #-Create a LDAP search filter
                     $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainRootDN)
                     $Searcher.Filter = "(&(ObjectClass=User)(sAMAccountName=" + $account.sAMAccountName + "))"
 
-                    if ($Searcher.FindAll() -ne $null) {
+                    if ($Searcher.FindAll() -ne $null) 
+                    {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> === " + $account.DisplayName + " already exists"
 
@@ -199,7 +208,8 @@ Function New-AdministrationAccounts {
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ user created: " + $account.displayName
                         
                             #-Export Password
-                            if ($KpsFlag) {
+                            if ($KpsFlag) 
+                            {
                                 Try {
                                     [KeePassLib.PwEntry]$KeePassEntry = (New-Object -TypeName 'KeePassLib.PwEntry'($true, $true))
                                     $KeePassEntry.Uuid = [KeePassLib.PwUuid]::New($true)
@@ -232,17 +242,20 @@ Function New-AdministrationAccounts {
                 }
                 
                 #-Success: no issue
-                if ($ErrIdx -eq 0) { 
+                if ($ErrIdx -eq 0) 
+                { 
                     $result = 0 
                     $ResMess = "no error"
                 }
                 #-Warning: some were not created and generate an error
-                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) { 
+                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) 
+                { 
                     $result = 1
                     $ResMess = "$ErrIdx out of " + $xmlData.count + " failed"
                 }
                 #-Error: none were created!
-                if ($ErrIdx -ge $xmlData.count) { 
+                if ($ErrIdx -ge $xmlData.count) 
+                { 
                     $result = 2
                     $ResMess = "error when creating accounts"
                 }
@@ -267,9 +280,11 @@ Function New-AdministrationAccounts {
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile) {
+    if (Test-Path .\Logs\Debug\$DbgFile)
+    {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
+        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*")) 
+        {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -314,7 +329,8 @@ Function New-AdministrationGroups {
     )
 
     ## Function dynamic OU path rewriting
-    Function Rewrite-OUPath ([String]$OUPath) {
+    Function Rewrite-OUPath ([String]$OUPath) 
+    {
         $OUPath2 = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> [OUPath2]: new variable set with [OUPath] data and ROOTDN replaced. New value: $OUPath2"    
         return $OUPath2
@@ -335,7 +351,7 @@ Function New-AdministrationGroups {
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
-        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
+        $xmlSkeleton = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8 -ErrorAction Stop)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
     }
@@ -379,11 +395,13 @@ Function New-AdministrationGroups {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
 
             ## Getting specified schema
-            $xmlData = $xmlSkeleton.settings.groups.group
+            $xmlData  = @()
+            $xmlData += $xmlSkeleton.settings.groups.group
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: xml data loaded (" + $xmlData.count + " group(s))"
 
             ## if we got data, begining creation loop
-            if ($xmlData) {
+            if ($xmlData) 
+            {
                 #-Failing Creation index
                 $ErrIdx = 0
                 
@@ -394,18 +412,18 @@ Function New-AdministrationGroups {
                     $Searcher.Filter = "(&(ObjectClass=Group)(sAMAccountName=" + $account.Name + "))"
 
                     #.Check if the object already exists
-                    if ($Searcher.FindAll() -ne $null) {
+                    if ($Searcher.FindAll() -ne $null) 
+                    {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: === " + $account.Name + " already exists"
                         $AddUser = $true
-
                     }
-                    Else {
+                    Else 
+                    {
                         ## Create Group
                         Try {
                             #-Create new group object
-                            New-ADGroup -Name $account.Name -Description $account.description -Path (Rewrite-OUPath $account.Path) `
-                                -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
+                            New-ADGroup -Name $account.Name -Description $account.description -Path (Rewrite-OUPath $account.Path) -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ group created: " + $account.Name
                             $AddUser = $true
                         } 
@@ -420,22 +438,26 @@ Function New-AdministrationGroups {
                     #.Logging AddUser value
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter AddUser........: $AddUser"
                     #.Adding members to group, if any
-                    if ($AddUser) {
+                    if ($AddUser) 
+                    {
                         #.Collection members forthis specific group
                         $members = $account.Member
                         #.create a collection object with all members
                         $MbrsList = @()
-                        foreach ($member in $members) {
+                        foreach ($member in $members) 
+                        {
                             $MbrsList += $member.sAMAccountName
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ adding member: " + $member.SAMAccountName
                         }
                         #.Adding members
                         Try {
-                            if ($members) {
+                            if ($members) 
+                            {
                                 Add-ADGroupMember -Identity $account.Name -Members $MbrsList | Out-Null
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ all members added successfully."
                             }
-                            Else {
+                            Else 
+                            {
                                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: === No members to add."
                             }
                         }
@@ -450,21 +472,23 @@ Function New-AdministrationGroups {
                 }
                 
                 #-Success: no issue
-                if ($ErrIdx -eq 0) { 
+                if ($ErrIdx -eq 0) 
+                { 
                     $result = 0 
                     $ResMess = "no error"
                 }
                 #-Warning: some were not created and generate an error
-                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) { 
+                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) 
+                { 
                     $result = 1
                     $ResMess = "$ErrIdx out of " + $xmlData.count + " failed"
                 }
                 #-Error: none were created!
-                if ($ErrIdx -ge $xmlData.count) { 
+                if ($ErrIdx -ge $xmlData.count) 
+                { 
                     $result = 2
                     $ResMess = "error when creating accounts"
                 }
-
             }
             else {
      
@@ -484,9 +508,11 @@ Function New-AdministrationGroups {
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile) {
+    if (Test-Path .\Logs\Debug\$DbgFile) 
+    {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
+        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*")) 
+        {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
             $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
@@ -529,24 +555,26 @@ Function Reset-GroupMembership {
     #>
     param(
     )
+    $Result = 0
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
-        $xmlSkeleton = [xml](Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop)
-        $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)
-        $xmlLoaded = $true
+        $xmlSkeleton = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop -Encoding utf8)
+        $xmlLoaded   = $true
     }
     Catch {
         $xmlLoaded = $false
-    }    
+    }
 
     ## If xml loaded, begining check and create...
-    if ($xmlLoaded) {
+    if ($xmlLoaded) 
+    {
         ## Creating a variable to monitor failing tasks
         $noError = $true
         
         ## When dealing with 2008R2, we need to import AD module first
-        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
+        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") 
+        {
             Try { 
                 Import-Module ActiveDirectory
             } 
@@ -556,74 +584,84 @@ Function Reset-GroupMembership {
             }
         } 
         
-        ## recover XML data
-        $xmlGroups = $xmlSkeleton.Settings.DefaultMembers
-        $Translat = $cfgXml.Settings.Translation
-        ## Recover domain data
-        $DomainSID = (Get-ADDomain).DomainSID
+        if ($noError)
+        {
+            ## recover XML data
+            $xmlGroups = $xmlSkeleton.Settings.DefaultMembers
+            $Translat  = $xmlSkeleton.Settings.Translation
 
-        ## Reset loop
-        foreach ($group in $xmlGroups.group) {
-            #.Group identity
-            $GroupID = ($group.target -replace '%domainSid%', $DomainSID)
+            ## Recover domain data
+            $DomainSID = (Get-ADDomain).DomainSID
 
-            #.Create mandatory members list
-            $mbrLists = @()
-            foreach ($member in $group.Member) {
-                ## Convert %DomainSID% if needded
-                $mbrTranslated = $member -replace '%domainsid%', $DomainSID
-				
-                ## Dynamic replacement
-                foreach ($transID in $translat.wellKnownID) {
-                    $mbrTranslated = $mbrTranslated -replace $TransID.translateFrom, $TransID.translateTo
-                }
-				
-                ## Double test to discover the object class and run the proper command
-                ##This is not a clean approach but... It works :)
-                $test = $false
-                try {
-                    $mbrObj = Get-ADUser $mbrTranslated
-                    $test = $true
-                }
-                Catch {
+            ## Reset loop
+            foreach ($group in $xmlGroups.group) 
+            {
+                #.Group identity
+                $GroupID = $group.target -replace '%domainSid%', $DomainSID
+
+                #.Create mandatory members list
+                $mbrLists = @()
+                foreach ($member in $group.Member) 
+                {
+                    ## Convert %DomainSID% if needded
+                    $mbrTranslated = $member -replace '%domainsid%', $DomainSID
+                    
+                    ## Dynamic replacement
+                    foreach ($transID in $translat.wellKnownID) 
+                    {
+                        $mbrTranslated = $mbrTranslated -replace $TransID.translateFrom, $TransID.translateTo
+                    }
+                    
+                    ## Double test to discover the object class and run the proper command
+                    ##This is not a clean approach but... It works :)
                     $test = $false
-                }
-                if (-not($test)) {
                     try {
-                        $mbrObj = Get-ADGroup $mbrTranslated
+                        $mbrObj = Get-ADUser $mbrTranslated
                         $test = $true
                     }
                     Catch {
                         $test = $false
                     }
-                }
-                ## Adding object to a table for a futur comparison with existing members
-                $mbrLists += $mbrObj
-            }
-            ## Get the Group Object
-            $groupTarget = Get-ADGroup $GroupID
+                    if (-not($test)) 
+                    {
+                        try {
+                            $mbrObj = Get-ADGroup $mbrTranslated
+                            $test = $true
+                        }
+                        Catch {
+                            $test = $false
+                        }
+                    }
 
-            ## Get the Group members
-            $MbrInIt = @()
-            $MbrInIt += Get-ADGroupMember $groupTarget
-
-            ## Cleaning group and adding missing users
-            foreach ($badID in (Compare-Object $MbrInIt $mbrLists)) {
-                ## Side Indicator: should not be in
-                if ($badID.SideIndicator -eq "<=") {
-                    Remove-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
+                    ## Adding object to a table for a futur comparison with existing members
+                    $mbrLists += $mbrObj
                 }
-                ## Side Indicator: should be in
-                if ($badID.SideIndicator -eq "=>") {
-                    Add-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
+
+                ## Get the Group Object
+                $groupTarget = Get-ADGroup $GroupID
+
+                ## Get the Group members
+                $MbrInIt = @()
+                $MbrInIt += Get-ADGroupMember $groupTarget
+
+                ## Cleaning group and adding missing users
+                foreach ($badID in (Compare-Object $MbrInIt $mbrLists)) 
+                {
+                    ## Side Indicator: should not be in
+                    if ($badID.SideIndicator -eq "<=") 
+                    {
+                        Remove-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
+                    }
+                    ## Side Indicator: should be in
+                    if ($badID.SideIndicator -eq "=>") 
+                    {
+                        Add-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
+                    }
                 }
             }
         }
     }
-    
-    $Result = 0
-
-    ## Exit
+    #.Exit
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 
@@ -633,96 +671,122 @@ Function Reset-GroupMembership {
 ## This function is used to cross groups between two            ##
 ## domains.                                                     ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 02.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
+## History:                                                     ##
+## 02.00.000: update thole script to use dynamic data.          ##
 ##################################################################
-
 function Add-SourceToDestGrps {
     param (
-        # Parameter help description
-        [Parameter(
-            Mandatory
-        )]
+        [Parameter(Mandatory)]
         [string]
         $SrcDomDns,
-        # Parameter help description
-        [Parameter(
-            Mandatory
-        )]
+        
+        [Parameter(Mandatory)]
         [string]
         $DestDomDns
     )
 
     $res = @()
 
-    $Src_Domain = Get-ADDomain -Server $SrcDomDns
+    #.Loading the configuration xml file
+    $xmlSkeleton    = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
+    
+    #.Retrieving dynamic data...
+    [string]$OUadmin = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm%" }).translateTo
+    [string]$OUtier0 = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm-Groups-T0%" }).translateTo
+    [string]$OUtier1 = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm-Groups-T1%" }).translateTo
+    [string]$OUtier2 = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm-Groups-T2%" }).translateTo
+    [string]$OUt1Leg = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm-Groups-T1L%"}).translateTo
+    [string]$OUt2Leg = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm-Groups-T2L%"}).translateTo
+    [string]$GrpGlob = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%prefix-global%" }).translateTo
+    [string]$GrpDloc = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%prefix-DomLoc%" }).translateTo
+    [string]$T0      = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%isT0%"    }).translateTo
+    [string]$T1      = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%isT1%"    }).translateTo
+    [string]$T2      = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%isT2%"    }).translateTo
+    [string]$T1L     = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%isT1Leg%" }).translateTo
+    [string]$T2L     = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%isT2Leg%" }).translateTo
+
+    #.Getting domain details
+    $Src_Domain  = Get-ADDomain -Server $SrcDomDns
     $Dest_Domain = Get-ADDomain -Server $DestDomDns
 
-    $Src_AdministrationOU = Get-ADOrganizationalUnit -Filter { Name -like "*Administration*" } -Server $Src_Domain.DNSRoot
-    $Dest_AdministrationOU = Get-ADOrganizationalUnit -Filter { Name -like "*Administration*" } -Server $Dest_Domain.DNSRoot
+    #.Filtering on administration OU to avoid false positive and speed-up the script execution time
+    $Src_AdministrationOU  = Get-ADOrganizationalUnit -Filter { Name -like "*$OUadmin*" } -Server $Src_Domain.DNSRoot
+    $Dest_AdministrationOU = Get-ADOrganizationalUnit -Filter { Name -like "*$OUAdmin*" } -Server $Dest_Domain.DNSRoot
 
-    
-    foreach ($Tier in @("T0", "T1", "T2", "T12", "TL", "T1L", "T2L")) {
-        $Src_GSGroups = $null
+    #.Creating array for matching purpose
+    $arrTier = @($t0,$T1,$T2,$T1L,$T2L)
+    $arrOUph = @($OUtier0,$OUtier1,$OUtier2,$OUt1Leg,$OUt2Leg)
+
+    #.Looping accross tiers
+    #foreach ($Tier in @($T0, $T1, $T2, $T1L, $T2L)) 
+    for ($i = 0 ; $i -lt $arrTier.count ; $i++)
+    {
+        #.Flushing groups data
+        $Src_GSGroups  = $null
         $Dest_GSGroups = $null
-        $LookupLSTX = "L-S-$Tier"
-        $LookupGS = "G-S-$Tier*"
-        $LookupGroupOU = "Groups$Tier"
 
-        $Src_GroupsOU = Get-ADOrganizationalUnit -Filter { Name -eq $LookupGroupOU } -SearchBase $Src_AdministrationOU.DistinguishedName -Server $Src_Domain.DNSRoot
+        #.Building Lookup structure
+        $LookupLSTX    = "$GrpDloc$($arrTier[$i])"
+        $LookupGS      = "$GrpGlob$($arrTier[$i])"
+        $LookupGroupOU = $arrOUph[$i]
+
+        #.Finding objects
+        $Src_GroupsOU  = Get-ADOrganizationalUnit -Filter { Name -eq $LookupGroupOU } -SearchBase $Src_AdministrationOU.DistinguishedName  -Server $Src_Domain.DNSRoot
         $Dest_GroupsOU = Get-ADOrganizationalUnit -Filter { Name -eq $LookupGroupOU } -SearchBase $Dest_AdministrationOU.DistinguishedName -Server $Dest_Domain.DNSRoot
       
-        if ($Src_GroupsOU -and $Dest_GroupsOU) {
-    
-            $Src_LSTX = Get-ADGroup -Filter { Name -eq $LookupLSTX } -SearchBase $Src_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Src_Domain.DNSRoot
+        #.Filling-up group membership
+        if ($Src_GroupsOU -and $Dest_GroupsOU) 
+        {
+            #.Find source and destination domain local groups 
+            $Src_LSTX  = Get-ADGroup -Filter { Name -eq $LookupLSTX } -SearchBase $Src_GroupsOU.DistinguishedName  -SearchScope OneLevel -Server $Src_Domain.DNSRoot
             $Dest_LSTX = Get-ADGroup -Filter { Name -eq $LookupLSTX } -SearchBase $Dest_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Dest_Domain.DNSRoot
 
-            $Src_GSGroups = Get-ADGroup -Filter { Name -like $LookupGS } -SearchBase $Src_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Src_Domain.DNSRoot
+            #.Find source and destination global groups
+            $Src_GSGroups  = Get-ADGroup -Filter { Name -like $LookupGS } -SearchBase $Src_GroupsOU.DistinguishedName  -SearchScope OneLevel -Server $Src_Domain.DNSRoot
             $Dest_GSGroups = Get-ADGroup -Filter { Name -like $LookupGS } -SearchBase $Dest_GroupsOU.DistinguishedName -SearchScope OneLevel -Server $Dest_Domain.DNSRoot
 
-            if ($Src_LSTX -and $Dest_GSGroups) {
+            if ($Src_LSTX -and $Dest_GSGroups) 
+            {
                 $Dest_GSGroups | ForEach-Object {
                     try {
                         Add-ADGroupMember -Identity $Src_LSTX -Members $_
-                        # Write-Host "$($_) has been added to $($Src_LSTX)" -ForegroundColor Magenta
-                    }
+                    } 
                     catch {
-                        # Write-Host "From Dest to Src: $($_.Exception.Message)"
                         $res += "$($Src_LSTX.DistinguishedName): $($_.Exception.Message)"
-                        # Pause
                     } 
                 }
             }
-    
-            if ( $Dest_LSTX -and $Src_GSGroups) {
+
+            if ( $Dest_LSTX -and $Src_GSGroups) 
+            {
                 $Src_GSGroups | ForEach-Object {
                     try {
                         Add-ADGroupMember -Identity $Dest_LSTX -Members $_
-                        # Write-Host "$($_) has been added to $($Dest_LSTX)" -ForegroundColor Cyan
                     }
                     catch {
-                        # Write-Host "Error adding $($_) to $($Dest_LSTX): $($_.Exception.Message)"
                         $res += "$($Dest_LSTX.DistinguishedName): $($_.Exception.Message)"
-                        # Pause
                     }
                 }
             }
-    
         }
     }
     return $res
 }
 
 ##################################################################
-## Add-SourceToDestGrps                                         ##
-## ---------------------                                        ##
-## This function is used to cross groups between two            ##
-## domains.                                                     ##
+## Add-ManagerToEA                                              ##
+## ---------------                                              ##
+## This function is used to add T0 manager to the Enterprise    ##
+## Admins group.                                                ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 01.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
+## History:                                                     ##
+## 01.01.000: replaced the static group name for T0 Manager by  ##
+##            a dynamic querie to the Translation section.      ##
 ##################################################################
-
 function Add-ManagerToEA {
     [CmdletBinding()]
     param (
@@ -730,27 +794,28 @@ function Add-ManagerToEA {
         [string]
         $SrcDomain
     )
+    #.Loading the configuration xml file
+    $xmlSkeleton    = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
+    
+    #.Retrieving Enterprise Admins group name and Tier 0 Managers group name
+    [string]$EAName = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%EnterpriseAdmins%" }).translateTo
+    [string]$T0Mngr = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%t0-managers%" }).translateTo
+    
+    #.Getting domain objects to ensure that we query the Root Domain in a multi domain environment.
+    $RootDomainDns  = (Get-ADForest).RootDomain
+    $RootEA         = Get-ADGroup -Identity $EAName -Server $RootDomainDns
+    $GST0Man        = Get-ADGroup -Identity $T0Mngr -Server $SrcDomain
 
-    [xml] $xmlSkeleton = Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml"
-    [string] $EAName = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%EnterpriseAdmins%" }).translateTo
-    $RootDomainDns = (Get-ADForest).RootDomain
-    $RootEA = Get-ADGroup -Identity $EAName -Server $RootDomainDns
-
-    $GST0Man = Get-ADGroup -Identity "G-S-T0_Managers" -Server $SrcDomain
-
-    Add-ADGroupMember -Identity $RootEA -Members $GST0Man
-
-    # Add T0 Manager into Enterprise Admins
-    # if ($account.Name -like "*0*" -and $account.Name -like "*Manager*") {
-    #     [string] $EnterpriseAdmin = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { 
-    #             $_.translateFrom -eq "%EnterpriseAdmins%" 
-    #         }).translateTo
-
-    #     $EA_rootDomain = Get-ADGroup -Identity $EnterpriseAdmin -Server (Get-ADForest).RootDomain
-    #     $GST0Manager = Get-ADGroup -Identity $account.Name
-    #     Add-ADGroupMember -Identity $EA_rootDomain -Members $GST0Manager -Server (Get-ADForest).RootDomain
-    # }
-              
+    #.Adding the group Tier 0 Managers to the Group Enterprise Admins
+    Try {
+        Add-ADGroupMember -Identity $RootEA -Members $GST0Man              
+        $result = 0
+    }
+    Catch {
+        $result = 2
+    }
+    #.Return result
+    return $result
 }
 
 ##################################################################
@@ -759,10 +824,12 @@ function Add-ManagerToEA {
 ## This function is used to determine which domain              ##
 ## will be available for cross integration.                     ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 01.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
+## History:                                                     ##
+## 01.01.0000: replaced the static group name for T0 Manager by ##
+##            a dynamic querie to the Translation section.      ##
 ##################################################################
-
 function Add-GroupsOverDomain {
     # Vérifier qu'il y a plusieurs domaine dans la forêt
 
@@ -777,6 +844,20 @@ function Add-GroupsOverDomain {
     ## Indicates caller and options used
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
 
+    #.Loading the configuration xml file
+    Try {
+        $xmlSkeleton    = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Successfuly loaded TasksSequence_HardenAD.xml to memory" + (Get-PSCallStack)[1].Command
+    } Catch {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! !!! Error: could not load TasksSequence_HardenAD.xml file!" + (Get-PSCallStack)[1].Command
+    }
+
+    #.Retrieving Enterprise Admins group name and Tier 0 Managers group name
+    [string]$T0Mngr = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%t0-managers%" }).translateTo
+    
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Tier 0 Manager group name: $T0Mngr" + (Get-PSCallStack)[1].Command
+
+    #.Initialize result value.
     $result = 0
 
     $Forest = Get-ADForest
@@ -785,12 +866,12 @@ function Add-GroupsOverDomain {
         $result = 0
     }
     else {
-        $AllDomains = $Forest.Domains
+        $AllDomains   = $Forest.Domains
         $ValidDomains = @()
         # Détecter où Harden AD à été déployé et quels AD sont joignables.
         foreach ($Domain in $AllDomains) {
             try {
-                $res = [bool](Get-ADGroup -Filter { Name -eq "G-S-T0_Managers" } -Server $Domain)
+                $res = [bool](Get-ADGroup -Filter { Name -eq $T0Mngr } -Server $Domain)
             }
             catch [Microsoft.ActiveDirectory.Management.ADServerDownException] {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! ($($Domain)) could not be joined!"
@@ -810,7 +891,6 @@ function Add-GroupsOverDomain {
                 Add-ManagerToEA -SrcDomain $ValidDomains[$i]
     
                 for ($j = $i + 1; $j -lt $ValidDomains.Count; $j++) {
-                    # Write-Host "$($ValidDomains[$i]) with $($ValidDomains[$j])"
                     # Cross ajout des groupes aux bons endroits
                     $res = Add-SourceToDestGrps -SrcDomDns $ValidDomains[$i] -DestDomDns $ValidDomains[$j]
                     if ($res.Count -eq 0) {
@@ -848,6 +928,5 @@ function Add-GroupsOverDomain {
 
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
-
 
 Export-ModuleMember -Function *

@@ -1,8 +1,7 @@
 ##################################################################
-## Set-AdminOU                                                  ##
-## -----------                                                  ##
-## This function will create the Administration Organizational  ##
-## unit.                                                        ##
+## Set-TreeOU                                                   ##
+## ----------                                                   ##
+## This function will create the tree Organizational Unit.      ##
 ##                                                              ##
 ## Version: 01.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
@@ -267,9 +266,9 @@ Function New-M365OrganizationalUnits
     function Search-OU ($OUPath)
     {
         #.Search for objects in OU
-        $ObjectU= Get-ADUser -Filter * -SearchBase $OUPath -SearchScope OneLevel
+        $ObjectU = Get-ADUser     -Filter * -SearchBase $OUPath -SearchScope OneLevel
         $ObjectC = Get-ADComputer -Filter * -SearchBase $OUPath -SearchScope OneLevel
-        $ObjectG = Get-ADGroup -Filter * -SearchBase $OUPath -SearchScope OneLevel
+        $ObjectG = Get-ADGroup    -Filter * -SearchBase $OUPath -SearchScope OneLevel
 
         #.if objects found, create the m365 org. unit
         if ($ObjectU -or $ObjectC -or $ObjectG)
@@ -335,7 +334,7 @@ Function New-M365OrganizationalUnits
     ## Import xml file with OU build requierment
     Try 
     { 
-        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
+        $xmlSkeleton = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8 -ErrorAction Stop)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
     } 

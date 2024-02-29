@@ -200,9 +200,9 @@ else {
 }
 
 #-Setting-up usefull variables
-$SchedulrConfig = [xml](get-content .\Configs\Configuration_HardenAD.xml)
+$SchedulrConfig = [xml](get-content .\Configs\Configuration_HardenAD.xml -Encoding utf8)
 $SchedulrLoging = @()
-$TasksSeqConfig = [xml](get-content .\Configs\$TasksSequence)
+$TasksSeqConfig = [xml](get-content .\Configs\$TasksSequence -Encoding utf8)
 $ScriptLocation = Get-Location                                     
 $pShellMajorVer = ((Get-Host).version -split '\.')[0]
 

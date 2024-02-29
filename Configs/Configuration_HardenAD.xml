@@ -1,36 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <SchedulerSettings>
-	<!--This section is used to track the versionning only and has no use for the script.   -->
-	<!-- Version History :                                                                  -->
-	<!--   01.00.000 - initial design                                                       -->
-	<!--   01.00.001 - Some files have been renamed. <Directory> section have been updated. -->
-	<!--   01.00.002 - Updated Version to 02.01.000.                                        -->
-	<!--   01.01.000 - Updated Version to 02.09.000 with new features.                      -->
+	<!--
+		This section is used to track the versionning only and has no use for the script.
+		Version History :
+			01.00.000 - initial design
+			01.00.001 - Some files have been renamed. <Directory> section have been updated.
+			01.00.002 - Updated Version to 02.01.000.
+			01.01.000 - Updated Version to 02.09.000 with new features.
+			01.02.000 - added new dependancies check.
+	-->
 	<Version>01.01.000</Version>
 	<Author>HadenAD Community (contact@hardenAD.net)</Author>
 	<Licence>GNU GPL3</Licence>
-	<!--This section will be used by the script to display a banner when the script is run. -->
+	<!--
+		This section will be used by the script to display a banner when the script is run. 
+	-->
 	<ScriptHeader>
 		<Logo>
-			<!-- You can safely adapt the logo to fetch your needs. The file should be placed   -->
-			<!-- within the Configs folder (same level as this xml file).                       -->
+			<!-- 
+				You can safely adapt the logo to fetch your needs. The file should be placed within the Configs folder (same level as this xml file).
+			-->
 			<DefltColor>DarkCyan</DefltColor>
 			<File>Logo_Harden.txt</File>
 		</Logo>
 		<Cartridge>
-			<!--This section will be written under the header. Keep it smaller the the header   -->
-			<!-- max larger (remove 4 to adjust with border)                                    -->
+			<!--
+				This section will be written under the header. Keep it smaller the the header max larger (remove 4 to adjust with border)
+			-->
 			<Name>HardenAD Community Edition</Name>
 			<Version>02.09.005</Version>
 			<Author>HardenAD Community - contact@hardenad.net</Author>
-			<Contributor>Harden Community - contact@harden.world</Contributor>
+			<Contributor></Contributor>
 			<Licence>GNU GPL 3: feel free to use, reuse, modify and share. Selling this product is not allowed.</Licence>
 			<Description>improve the security of your directory in minutes!</Description>
 			<BorderChar>=</BorderChar>
 		</Cartridge>
 	</ScriptHeader>
 	<Prerequesites>
-		<!--Do not modifiy: this section is used to ensure that the script start safely.      -->
+		<!--
+			Do not modifiy: this section is used to ensure that the script start safely.
+		-->
 		<Directory name="Configs">
 			<File>Configuration_HardenAD.xml</File>
 			<File>Configuration_HardenAD.xsd</File>
@@ -38,11 +47,8 @@
 			<File>TasksSequence_HardenAD.xsd</File>
 			<File>logo_harden.txt</File>
 		</Directory>
-		<!--Directory name="Inputs"/>
-		<Directory name="Inputs\GroupPolicies">
-			<File>dev.lab132.local.migtable</File>
-			<File>dev.lab132.local.preftable</File>
-    </Directory-->
+		<Directory name="Inputs"/>
+		<Directory name="Inputs\GroupPolicies"/>
 		<Directory name="Inputs\GroupPolicies\WmiFilters"/>
 		<Directory name="Inputs\LocalAdminPwdSolution"/>
 		<Directory name="Inputs\LocalAdminPwdSolution\Binaries">
@@ -53,21 +59,68 @@
 			<File>deploy-laps_x64.bat</File>
 			<File>deploy-laps_x86.bat</File>
 		</Directory>
+		<Directory name="Inputs\LocalAdminPwdSolution\PolicyDefinitions">
+			<File>AdmPwd.admx</File>
+		</Directory>
+		<Directory name="Inputs\LocalAdminPwdSolution\PolicyDefinitions\en-US">
+			<File>AdmPwd.adml</File>
+		</Directory>
+		<Directory name="Inputs\PolicyDefinitions"/>
 		<Directory name="Inputs\ScheduleTasks"/>
+		<Directory name="Inputs\ScheduleTasks\TasksSchedulesScripts"/>
+		<Directory name="Inputs\ScheduleTasks\TasksSchedulesScripts\MCS-GroupsFlushing">
+			<File>MCS-GroupsFlushing.ps1</File>
+			<File>translation.xml</File>
+		</Directory>
+		<Directory name="Inputs\ScheduleTasks\TasksSchedulesScripts\MCS-GroupsFlushing\Config">
+			<File>MCS-GroupsFlushing.xml</File>
+		</Directory>
+		<Directory name="Inputs\ScheduleTasks\TasksSchedulesXml">
+			<File>_MCS-GroupsFlushing.xml</File>
+			<File>MCS-GroupsFlushing.xml</File>
+		</Directory>
 		<Directory name="Logs"/>
 		<Directory name="Logs\Debug"/>
 		<Directory name="Modules">
+			<File>accessControlList.psm1</File>
 			<File>domain.psm1</File>
 			<File>engine.psm1</File>
 			<File>file.psm1</File>
 			<File>groupPolicy.psm1</File>
 			<File>object.psm1</File>
 			<File>organizationalUnit.psm1</File>
+			<File>translation.psm1</File>
 		</Directory>
-		<Directory NAME="Outputs"/>
+		<Directory NAME="Outputs">
+			<File>HardenAD.kdbx</File>
+		</Directory>
 		<Directory name="Tools"/>
+		<Directory name="Tools\Clean-ADComputerACL">
+			<File>Clean-ADComputerACL.ps1</File>
+		</Directory>
+		<Directory name="Tools\Import-AdminAccounts">
+			<File>config.xml</File>
+			<File>Import-HADadminAccounts.ps1</File>
+		</Directory>
 		<Directory name="Tools\KeePass-2.48.1">
+			<File>KeePass.chm</File>
+			<File>KeePass.config.xml</File>
 			<File>KeePass.exe</File>
+			<File>KeePass.exe.config</File>
+			<File>KeePass.XmlSerializers.dll</File>
+			<File>KeePassLibC32.dll</File>
+			<File>KeePassLibC64.dll</File>
+			<File>ShInstUtil.exe</File>
+		</Directory>
+		<Directory name="Tools\KeePass-2.48.1\XLS">
+			<File>KDBX_Common.xsl</File>
+			<File>KDBX_DetailsFull_HTML.xsl</File>
+			<File>KDBX_DetailsLight_HTML.xsl</File>
+			<File>KDBX_PasswordsOnly_TXT.xsl</File>
+			<File>KDBX_Tabular_HTML.xsl</File>
+		</Directory>
+		<Directory name="Tools\Reset-ADComputerACLandOwner">
+			<File>Reset-ADComputerACLandOwner</File>
 		</Directory>
 	</Prerequesites>
 </SchedulerSettings>

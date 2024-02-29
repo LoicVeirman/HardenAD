@@ -82,11 +82,11 @@ Function Set-HardenACL {
     try {            
         if ($inheritedObjects -ne "" -and $Null -ne $inheritedObjects) {
             switch ($inheritedObjects) {
-                "group" { $inheritanceguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 }
-                "user" { $inheritanceguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 }
+                "group"    { $inheritanceguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 }
+                "user"     { $inheritanceguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 }
                 "computer" { $inheritanceguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
-                "contact" { $inheritanceguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
-                "member" { $inheritanceguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
+                "contact"  { $inheritanceguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
+                "member"   { $inheritanceguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
             }
         }
         else {
@@ -95,11 +95,11 @@ Function Set-HardenACL {
 
         if ($ObjectType -ne "" -and $Null -ne $ObjectType) {
             switch ($ObjectType) {
-                "group" { $Objectguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 }
-                "user" { $Objectguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 }
+                "group"    { $Objectguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 }
+                "user"     { $Objectguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 }
                 "computer" { $Objectguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
-                "contact" { $Objectguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
-                "member" { $Objectguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
+                "contact"  { $Objectguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
+                "member"   { $Objectguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
             }
         }
         else {
@@ -141,11 +141,9 @@ Function Set-HardenACL {
 
         Set-Acl -AclObject $acl -Path ("AD:\" + ($targetDN)) -ErrorAction SilentlyContinue
         
-        #Write-Log -Type "ACTION" -Level "Global" -String "Giving $adRights to $trustee on $targetDN." -ModuleName $ModuleName -G_debug $G_debug
         $Result = $true
     }
     catch {
-        #Write-Log -Type "ERROR" -Level "Global" -String "Error giving $adRights to $trustee on $targetDN. : $($Error[0].exception.message)" -ModuleName $ModuleName -G_debug $G_debug
         $Result = $False
     }
     #.Reset location 
@@ -154,6 +152,14 @@ Function Set-HardenACL {
     Return $Result
 }
 
+##################################################################
+## Push-DelegationModel                                         ##
+## --------------------                                         ##
+## This function will push ACL on a domain                      ##
+##                                                              ##
+## Version: 01.00.000                                           ##
+##  Author: Constantin Hager                                    ##
+##################################################################
 Function Push-DelegationModel {
     <#
         .SYNOPSIS
@@ -186,7 +192,7 @@ Function Push-DelegationModel {
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
-        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
+        $xmlSkeleton = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop -Encoding utf8)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
     }
@@ -351,4 +357,161 @@ Function Push-DelegationModel {
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 
+##################################################################
+## New-ADDGuidMap                                               ##
+## --------------                                               ##
+## This function will return Standard Right guid map            ##
+##                                                              ##
+## Version: 01.00.000                                           ##
+##  Author: Constantin Hager                                    ##
+##################################################################
+function New-ADDGuidMap
+{
+    <#
+        .SYNOPSIS
+            Creates a guid map for the delegation part
+        .DESCRIPTION
+            Creates a guid map for the delegation part
+        .EXAMPLE
+            PS C:\> New-ADDGuidMap
+        .OUTPUTS
+            Hashtable
+        .NOTES
+            Author: Constantin Hager
+            Date: 06.08.2019
+    #>
+    $rootdse = Get-ADRootDSE
+    $guidmap = @{ }
+    $GuidMapParams = @{
+        SearchBase = ($rootdse.SchemaNamingContext)
+        LDAPFilter = "(schemaidguid=*)"
+        Properties = ("lDAPDisplayName", "schemaIDGUID")
+    }
+    Get-ADObject @GuidMapParams | ForEach-Object { $guidmap[$_.lDAPDisplayName] = [System.GUID]$_.schemaIDGUID }
+    return $guidmap
+}
+
+##################################################################
+## New-ADDExtendedRightMap                                      ##
+## -----------------------                                      ##
+## This function will return extendedRight guid map             ##
+##                                                              ##
+## Version: 01.00.000                                           ##
+##  Author: contact@hardenad.net                                ##
+##################################################################
+function New-ADDExtendedRightMap
+{
+    <#
+        .SYNOPSIS
+            Creates a extended rights map for the delegation part
+        .DESCRIPTION
+            Creates a extended rights map for the delegation part
+        .EXAMPLE
+            PS C:\> New-ADDExtendedRightsMap
+        .NOTES
+            Author: Constantin Hager
+            Date: 06.08.2019
+    #>
+    $rootdse = Get-ADRootDSE
+    $ExtendedMapParams = @{
+        SearchBase = ($rootdse.ConfigurationNamingContext)
+        LDAPFilter = "(&(objectclass=controlAccessRight)(rightsguid=*))"
+        Properties = ("displayName", "rightsGuid")
+    }
+    $extendedrightsmap = @{ }
+    Get-ADObject @ExtendedMapParams | ForEach-Object { $extendedrightsmap[$_.displayName] = [System.GUID]$_.rightsGuid }
+    return $extendedrightsmap
+}
+
+##################################################################
+## Set-HardenSDDL                                               ##
+## --------------                                               ##
+## This function will push custom ACL on a target               ##
+##                                                              ##
+## Version: 01.00.000                                           ##
+##  Author: contact@hardenad.net                                ##
+##################################################################
+Function Set-HardenSDDL {
+    <#
+        .SYNOPSIS
+        Function use to setup ACL for delegation purpose - Custom Rules
+
+        .DESCRIPTION
+        This function will add custom rules to delegate fine tune rulset (ExtendRight). 
+        Accepted value:
+        > Computer_DomJoin: allow to join a system upon an existing computer object within the target OU.  
+
+        .PARAMETER TargetDN
+        DN of the object on whoch we put the ACL.
+
+        .PARAMETER Trustee
+        Name of the group which will be pushed in through SDDL.
+
+        .PARAMETER CustomAccessRule
+        Which delegation ruleset to apply to the TargetDN.
+
+        .NOTES
+        Version 01.00 - 2024/02/27
+    #>
+    param(
+        [Parameter(Position = 1 , Mandatory = $true, HelpMessage = "DN of the object on which we put the ACL")]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $TargetDN,
+    
+        [Parameter(Position = 2 , Mandatory = $true, HelpMessage = "Name of the group which will inherit the ACL granting")]
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $Trustee,
+
+        [Parameter(Position = 3 , Mandatory = $true, HelpMessage = "Right(s) to give with the ACL")]
+        [ValidateNotNullOrEmpty()]
+        [ValidateSet("Computer_DomJoin")]
+        [string]
+        $CustomAccessRule
+    )   
+
+    #.Guid mappings
+    $GuidMap = New-ADDGuidMap
+    $ExtendedRight = New-ADDExtendedRightMap
+
+    #.Getting the TargetDN's ACL 
+    $acl = Get-Acl -Path "AD:\$TargetDN" 
+
+    Switch ($CustomAccessRule)
+    {
+        "Computer_DomJoin"
+        {
+            #.Convert Trustee to NT Account.
+            $TrusteeSID = (Get-ADGroup $Trustee).SID
+
+            #.Reset password
+            $Acee = New-Object DirectoryServices.ActiveDirectoryAccessRule $TrusteeSID, "ExtendedRight", "Allow", $ExtendedRight["reset password"], "Descendents", $GuidMap["computer"]
+            $acl.AddAccessRule($Acee)
+
+            #.Write DNS HostName
+            $Acee = New-Object DirectoryServices.ActiveDirectoryAccessRule $TrusteeSID, "ExtendedRight", "Allow", $ExtendedRight["Validated write to DNS host name"], "Descendents", $GuidMap["computer"]
+            $acl.AddAccessRule($Acee)
+
+            #.Write SPN
+            $Acee = New-Object DirectoryServices.ActiveDirectoryAccessRule $TrusteeSID, "ExtendedRight", "Allow", $ExtendedRight["Validated write to service principal name"], "Descendents", $GuidMap["computer"]
+            $acl.AddAccessRule($Acee)
+
+            #.Write Account Restriction
+            $Acee = New-Object DirectoryServices.ActiveDirectoryAccessRule $TrusteeSID, "ExtendedRight", "Allow", $ExtendedRight["Account Restrictions"], "Descendents", $GuidMap["computer"]
+            $acl.AddAccessRule($Acee)
+        }
+    }    
+
+    try {
+        $null = Set-ACL -Path "AD:\$TargetDN" -AclObject $acl -ErrorAction STOP
+        $Result = $true
+    }
+    catch {
+        $Result = $false
+    }
+
+    #.Return result
+    Return $Result
+}
 Export-ModuleMember -Function *

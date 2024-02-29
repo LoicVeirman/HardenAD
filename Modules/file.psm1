@@ -73,9 +73,6 @@ Function Set-GpoCentralStore {
 
     ## Installation of custom or external ADMX/ADML
     $HardenPolicyDefinition = Get-Item $PSScriptRoot\..\Inputs\PolicyDefinitions
-    # $ADMXFiles = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions -File
-    # $ADMLFiles_US = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\en-US -File
-    # $ADMLFiles_FR = Get-ChildItem $PSScriptRoot\..\Inputs\PolicyDefinitions\fr-FR -File
     $GPOCentralStore = "$sysVolBasePath\$domName\Policies"
 
     if (Test-Path $GPOCentralStore) {
@@ -85,7 +82,7 @@ Function Set-GpoCentralStore {
             $result = 0
         }
         catch {
-            $global:err = "Erreur in Renaming"
+            $global:err = "Error in Renaming"
             $dbgMess += (Get-Date -UFormat "% Y-%m-%d %T ") + "---! Error while renaming PolicyDefinition."
             $ResMess = "Error while renaming PolicyDefinition to PolicyDefinition-old"
             $result = 2
@@ -100,54 +97,6 @@ Function Set-GpoCentralStore {
             $ResMess = "Error while copying PolicyDefinition to $sysVolBasePath\$domName\Policies"
             $result = 2
         }
-        # foreach ($ADMXFile in $ADMXFiles) {
-        #     try {
-        #         Copy-Item $ADMXFile.FullName -Destination $GPOCentralStore -Force
-        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMXFile.Name) has been copied to central store"
-        #         $result = 0
-        #     }
-        #     catch {
-        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($ADMXFile.Name)."
-        #         $ResMess = "Error while copying $($ADMXFile.Name) to new location"
-        #         $result = 2
-        #     }
-        # }
-        # foreach ($ADMLFile in $ADMLFiles_US) {
-        #     try {
-        #         Copy-Item $ADMLFile.FullName -Destination "$GPOCentralStore\en-US" -Force
-        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMLFile.Name) has been copied to central store"
-        #         $result = 0
-        #     }
-        #     catch {
-        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($ADMLFile.Name)."
-        #         $ResMess = "Error while copying $($ADMLFile.Name) to new location"
-        #         $result = 2
-        #     }
-        # }
-        
-        # if (!(Test-Path "$GPOCentralStore\fr-FR")) {
-        #     try {
-        #         $null = New-Item -Path "$GPOCentralStore\fr-FR" -ItemType Directory
-        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New directory : $GPOCentralStore\fr-FR (success)" 
-        #     }
-        #     Catch {
-        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New directory : $GPOCentralStore\fr-FR (Failed!)" 
-        #         $result = 2
-        #     }
-        # }
-        
-        # foreach ($ADMLFile in $ADMLFiles_FR) {
-        #     try {
-        #         Copy-Item $ADMLFile.FullName -Destination "$GPOCentralStore\fr-FR" -Force
-        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $($ADMLFile.Name) has been copied to central store"
-        #         $result = 0
-        #     }
-        #     catch {
-        #         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($ADMLFile.Name)."
-        #         $ResMess = "Error while copying $($ADMLFile.Name) to new location"
-        #         $result = 2
-        #     }
-        # }  
     }
 
     ## Exit
@@ -220,7 +169,7 @@ Function New-ScheduleTasks {
 
     ## Get xml data
     Try {
-        $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
+        $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Load xml.................: .\Configs\TasksSequence_HardenAD.xml (success)"
     }
     Catch {
@@ -566,7 +515,7 @@ Function Install-LAPS {
         }
     }
     ## Load Task sequence
-    [xml] $xmlSkeleton = Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml"
+    $xmlSkeleton   = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
     $RootDomainDns = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Rootdomaindns%" }).translateTo
 
     ## Check prerequesite: running user must be member of the Schema Admins group and running computer should be Schema Master owner.
@@ -575,7 +524,6 @@ Function Install-LAPS {
 
     $CurrentCptr = $env:COMPUTERNAME
     $isSchemaOwn = (Get-ADForest).SchemaMaster -eq ($currentCptr + "." + (Get-ADDomain).DnsRoot)
-
 
     ## Check if a bypass has been requested for the schema master owner condition
     if ($SchemaOwnerMode -eq 'IgnoreDcIsSchameOwner') {
@@ -722,7 +670,7 @@ Function Set-LapsPermissions {
             if ($result -ne 2) {
                 #.Get xml data
                 Try {
-                    $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
+                    $cfgXml = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
                 }
                 Catch {
                     $ResMess = "Failed to load configuration file"
@@ -914,6 +862,14 @@ Function Get-PingCastle {
 
 }
 
+##################################################################
+## Set-LocalAdmTaskScripts                                      ##
+## -----------------------                                      ##
+## This function will setup everything to let the schedule task ##
+## manage the local admin groups.                               ##
+## Version: 01.00.000                                           ##
+##  Author: contact@hardenad.net                                ##
+##################################################################
 Function Set-LocAdmTaskScripts {
     <#
         .Synopsis
@@ -952,7 +908,7 @@ Function Set-LocAdmTaskScripts {
 
     ## loading configuration file
     Try {
-        $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
+        $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
         $Result = 0
     }
     Catch {

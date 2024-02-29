@@ -1,3 +1,11 @@
+##################################################################
+## Writ-DebugMessage                                            ##
+## -----------------                                            ##
+## This function will format the log output for debug           ##
+##                                                              ##
+## Version: 02.00.000                                           ##
+##  Author: contact@hardenad.net                                ##
+##################################################################
 function Write-DebugMessage {
     [CmdletBinding()]
     param (
@@ -93,13 +101,13 @@ Function Convert-MigrationTable {
     #.as a variable stored as %xxxx% - this is the value you should find in the translation.XML file. 
     if ($resultCode) {
         # Opening the migtable file to a text format - if failed, the function stop.
-        $xmlData = Get-Content ($gpoPath + "\hardenad.migtable") -ErrorAction Stop
+        $xmlData = Get-Content ($gpoPath + "\hardenad.migtable") -ErrorAction Stop -Encoding utf8
 
         #.Opening the xml data from the tasks sequence for translation then filtering to the needed data
         $xmlRefs = ([xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)).Settings.Translation.wellKnownID
         
         # Opening the migtable file to a XML format - if failed, the function stop.
-        $xmlObjs = ([xml](Get-Content ($gpoPath + "\hardenad.migtable") -ErrorAction Stop)).MigrationTable.mapping
+        $xmlObjs = ([xml](Get-Content ($gpoPath + "\hardenad.migtable") -ErrorAction Stop -Encoding utf8)).MigrationTable.mapping
 
         #.Translating migration
         # Update each entry of the Harden.migtable file (XML file)
@@ -211,8 +219,8 @@ Function Convert-GpoPreferencesXml {
 
     if ($gciPath) {
         #.Loading translation data
-        $xmlRefs = ([xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop)).Settings.Translation.wellKnownID
-        $xmlPref = ([xml](Get-Content ($gpoPath + "\translation.xml" ))).translation.Preferences.replace
+        $xmlRefs = ([xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop -Encoding utf8)).Settings.Translation.wellKnownID
+        $xmlPref = ([xml](Get-Content ($gpoPath + "\translation.xml" ) -Encoding utf8)).translation.Preferences.replace
 
         ForEach ($xmlObj in $gciPath) {
             $backupXml = $xmlObj.DirectoryName + "\" + $xmlObj.name + ".backup"
@@ -311,8 +319,6 @@ Function Import-WmiFilters {
     Param(
     )
 
-
-
     ## Function Log Debug File
     $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
     $dbgMess = @()
@@ -341,7 +347,7 @@ Function Import-WmiFilters {
     
     ## loading configuration file
     Try {
-        $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
+        $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $Resultat = 0
     }
@@ -503,7 +509,7 @@ Function New-GpoObject {
 
     ## loading configuration file
     Try {
-        $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml)
+        $xmlFile = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
         Write-DebugMessage "---> xml skeleton file........: loaded successfully"
         $Result = 0
     }

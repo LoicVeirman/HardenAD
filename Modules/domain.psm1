@@ -447,9 +447,6 @@ Function Set-DefaultObjectLocation
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 
-
-
-
 ##################################################################
 ## Set-ADFunctionalLevel                                        ##
 ## ---------------------------                                  ##
