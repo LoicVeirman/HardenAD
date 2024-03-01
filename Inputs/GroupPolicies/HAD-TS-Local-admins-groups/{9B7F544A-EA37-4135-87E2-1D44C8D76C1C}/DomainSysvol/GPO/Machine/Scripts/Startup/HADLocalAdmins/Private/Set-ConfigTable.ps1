@@ -45,6 +45,8 @@ function Set-ConfigTable {
         $Config["PROD_T1"] = Get-ADOrganizationalUnit $CustomParameters["Production OU for T1 members"]
         $Config["PROD_T2"] = Get-ADOrganizationalUnit $CustomParameters["Production OU for T2 members"]
         $Config["PROD_TLegacy"] = Get-ADOrganizationalUnit $CustomParameters["Production OU for TLegacy members"]
+        $Config["PROD_T1L"] = Get-ADOrganizationalUnit $CustomParameters["Production OU for T1L members"]
+        $Config["PROD_T2L"] = Get-ADOrganizationalUnit $CustomParameters["Production OU for T2L members"]
 
        
         $Config["PAW"] = Get-ADOrganizationalUnit $CustomParameters["PAW OU"]

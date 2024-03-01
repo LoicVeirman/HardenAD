@@ -47,37 +47,27 @@ function Get-Tiers {
 
 
     #On check l'ou en P0
-    if ($Path -like "*$($Config["PROD_T0"].DistinguishedName)" `
-            -or $Path -like "*$($Config["PAW"].DistinguishedName)" `
-            -or $Path -like "*$($Config["PAW_T0"].DistinguishedName)" `
-            -or $Path -like "*$($Config["PAW_T12L"].DistinguishedName)") {
-        $Log.Info("{0} is a Tier-0 system." -f $Computer.Name)
-
-
-        return "T0"
+    if ($Path -like "*$($Config["PROD_T2L"].DistinguishedName)") {
+        $Log.Info("{0} is a T1-Legacy system." -f $Computer.Name)
+        return "T2L"
     }
-
+    elseif ($Path -like "*$($Config["PROD_T1L"].DistinguishedName)") {
+        $Log.Info("{0} is T1-Legacy system." -f $Computer.Name)
+        return "T1L"
+    }
     elseif ($Path -like "*$($Config["PROD_T1"].DistinguishedName)") {
         $Log.Info("{0} is Tier-1 server." -f $Computer.Name)
         return "T1"
     }
-
     elseif ($Path -like "*$($Config["PROD_T2"].DistinguishedName)") {
         $Log.Info("{0} is Tier-2 Workstation." -f $Computer.Name)
         return "T2"    
     }
-
-    elseif ($Path -like "*$($Config["PROD_TLegacy"].DistinguishedName)") {
-        #Test si serveur ou workstation
-        if ($Computer.OperatingSystem -like "*Server*") {
-            $Log.Info("{0} is T1-Legacy system." -f $Computer.Name)
-            return "T1L"
-        }
-        else {
-            $Log.Info("{0} is T2-Legacy system." -f $Computer.Name)
-            return "T2L"
-        }   
-    }
+    else {
+        #.Default value is T0.
+        $Log.Info("{0} is T2-Legacy system." -f $Computer.Name)
+        return "T0"
+    }   
 
     # On check l'OS en P1 si rien n'a été trouvé précédemment
 

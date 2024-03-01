@@ -37,14 +37,6 @@ function New-LocalAdminGroup {
         if ($Tier -eq "Tbc") {
             $Path = $Config["TBC_T0"].DistinguishedName
         }
-        <#
-        elseif ($Tier -eq "Tbc_Svr") {
-            $Path = $Config["TBC_T0_SRV"].DistinguishedName
-        }
-        elseif ($Tier -eq "Tbc_Wks") {
-            $Path = $Config["TBC_T0_WKS"].DistinguishedName
-        }
-        #>
         
         try {
             New-ADGroup -Name $GroupName -Path $Path -GroupCategory Security -GroupScope DomainLocal -Description $Description
