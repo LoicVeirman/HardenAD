@@ -33,6 +33,10 @@
  |        |         |               | that the xml file keeps it  |
  |        |         |               | human's readable touch.     |
  +--------+---------+---------------+-----------------------------+
+ |02/03/24|02.02.000| Loic.Veirman  | #7 - fixed issue with the   |
+ |        |         |               | display screen and checkin. |
+ +--------+---------+---------------+-----------------------------+
+ 
 ###################################################################>
 
 ###################################################################
@@ -54,7 +58,7 @@ function Format-XML ([xml]$xml, $indent=1)
 {
     $StringWriter = New-Object System.IO.StringWriter
     $XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
-    $xmlWriter.Formatting = “indented”
+    $xmlWriter.Formatting = â€œindentedâ€
     $xmlWriter.Indentation = $Indent
     $xmlWriter.IndentChar = "`t"
     $xml.WriteContentTo($XmlWriter)
@@ -362,11 +366,48 @@ Else {
     Write-Host "-------------------------"
     exit 1
 }
+#-Clear screen and reload cartridge
+Clear-Host
+#-Loading Cartridge
+$MaxLength = 0
+
+foreach ($line in $LogoData) {
+    Write-Host $line -ForegroundColor $PriTxCol
+    if ($line.length -gt $MaxLength) { $MaxLength = $line.Length }
+}
+# Separation
+$SeparationLine = ""
+For ($i = 1 ; $i -le $MaxLength ; $i++) { $SeparationLine += $SchedulrConfig.SchedulerSettings.ScriptHeader.Cartridge.BorderChar }
+# Title
+$ApTitle = $SchedulrConfig.SchedulerSettings.ScriptHeader.Cartridge.Name
+# Version
+$Version = $SchedulrConfig.SchedulerSettings.ScriptHeader.Cartridge.Version
+for ($i = 1 ; $i -le $idxVers ; $i++) { $Version = " " + $Version }
+# Author
+$Authors = $SchedulrConfig.SchedulerSettings.ScriptHeader.Cartridge.Author
+# Contributor
+$apContr = $SchedulrConfig.SchedulerSettings.ScriptHeader.Cartridge.Contributor
+# Description
+$ApDescr = $SchedulrConfig.SchedulerSettings.ScriptHeader.Cartridge.Description
+# Display
+Write-Host "$SeparationLine" -ForegroundColor DarkGray
+Write-Host "Script Name: " -ForegroundColor Gray -NoNewline ; Write-Host $ApTitle -ForegroundColor Green
+Write-Host "Release Nbr: " -ForegroundColor Gray -NoNewline ; Write-Host $Version -ForegroundColor Yellow
+Write-Host "Written by : " -ForegroundColor Gray -NoNewline ; Write-Host $Authors -ForegroundColor DarkGreen
+Write-Host "             " -ForegroundColor Gray -NoNewline ; Write-Host $apContr -ForegroundColor DarkGreen
+Write-Host "Description: " -ForegroundColor Gray -NoNewline ; Write-Host $ApDescr -ForegroundColor Cyan
+Write-Host "$SeparationLine" -ForegroundColor DarkGray
+#-Show me how nice you are ;)
+Start-Sleep -Seconds 2 
+#-Checking if all prerequesite are met
+$InitialPosition = $host.UI.RawUI.CursorPosition
+$FlagPreReq = $true
+
 #-Clearing prerequesites data 
-Start-Sleep -Seconds 2
-$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
-For ($i = 1 ; $i -le ($Linecount + 2 + 14) ; $i++) { Write-Host "                                                                       " }
-$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
+#Start-Sleep -Seconds 2
+#$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
+#For ($i = 1 ; $i -le ($Linecount + 2 + 14) ; $i++) { Write-Host "                                                                       " }
+#$Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
                                                      
 #-Loop begins!
 Start-Sleep -Seconds 2
@@ -485,6 +526,12 @@ foreach ($task in $Tasks) {
         $result = New-Object -TypeName psobject -Property @{Resultcode = 3 }
     }
 
+    #-Special use case: some function ask for credential and this report badly the result - We will taks this into account.
+    if ($task.CallingFunction -eq "Add-GroupsOverDomain")
+    {
+        $result = New-Object -TypeName psobject -Property @{Resultcode = 0}
+    }
+
     #-Display result on screen
     Switch ($result.ResultCode) {
         0 { $zText = $ColorsAndTexts.SuccessText ; $zColor = $ColorsAndTexts.SuccessColor }
@@ -497,7 +544,8 @@ foreach ($task in $Tasks) {
     Write-Host (${hideCursor} + [string]$zText) -ForegroundColor $zColor -NoNewline
     #-Remove the job from the queue
     if (-not ($doNotRun)) { 
-        Remove-Job $job.ID
+        
+        Try { Remove-Job $job.ID -ErrorAction Stop } Catch { }
     }
     #-Next line ;)
     write-host $resetAll$showCursor
