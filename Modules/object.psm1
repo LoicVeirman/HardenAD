@@ -106,11 +106,16 @@ Function New-AdministrationAccounts {
         {
             ## Getting root DNS name
             $DomainRootDN = (Get-ADDomain).DistinguishedName
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
+            $dbgMess     += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
 
             ## Getting specified schema
-            $xmlData = $xmlSkeleton.settings.accounts.user
+            $xmlData  = $xmlSkeleton.settings.accounts.user
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml data loaded (" + $xmlData.count + " account(s))"
+
+            ## Getting Password Parameter Settings
+            $xmlParam  = Select-Xml $xmlSkeleton -XPath "//*/Translation/wellKnownID[@objectClass='param']" | Select-Object -ExpandProperty "Node"
+            $pwdLength = ($xmlParam | Where-Object { $_.translateFrom -eq '%pwdLength%' }).translateTo
+            $pwdNANC   = ($xmlParam | Where-Object { $_.translateFrom -eq '%pwdNonAlphaNumChar%' }).translateTo
 
             ## if we got data, begining creation loop
             if ($xmlData) 
@@ -180,7 +185,7 @@ Function New-AdministrationAccounts {
                     $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainRootDN)
                     $Searcher.Filter = "(&(ObjectClass=User)(sAMAccountName=" + $account.sAMAccountName + "))"
 
-                    if ($Searcher.FindAll() -ne $null) 
+                    if ($null -ne $Searcher.FindAll()) 
                     {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> === " + $account.DisplayName + " already exists"
@@ -193,17 +198,16 @@ Function New-AdministrationAccounts {
                             $NewPwd = $null
                             
                             Add-Type -AssemblyName 'System.Web'
-                            $NewPwd = [System.Web.Security.Membership]::GeneratePassword(16, 3)
 
-                            # ((48..57) + (65..90) + (97..122) + 36 + 33) | Get-Random -Count 16 | ForEach-Object { $NewPwd += [char]$_ }
-                            $SecPwd = ConvertTo-SecureString -AsPlainText $NewPwd -Force
+                            $NewPwd   = [System.Web.Security.Membership]::GeneratePassword($pwdLength, $pwdNANC)
+                            $SecPwd   = ConvertTo-SecureString -AsPlainText $NewPwd -Force
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ Password generated"
 
                             #-Create new user object
-                            New-ADUser -Name $account.DisplayName -AccountNotDelegated $true -AccountPassword $SecPwd -Description $account.description `
-                                -DisplayName $account.displayName -Enabled $true -GivenName $account.GivenName -SamAccountName $account.sAMAccountName `
-                                -Surname $account.surname -UserPrincipalName ($account.sAMAccountName + "@" + (Get-Addomain).DNSRoot) `
-                                -Path (Rewrite-OUPath $account.Path) -ErrorAction Stop
+                            New-ADUser  -Name $account.DisplayName -AccountNotDelegated $true -AccountPassword $SecPwd -Description $account.description `
+                                        -DisplayName $account.displayName -Enabled $true -GivenName $account.GivenName -SamAccountName $account.sAMAccountName `
+                                        -Surname $account.surname -UserPrincipalName ($account.sAMAccountName + "@" + (Get-Addomain).DNSRoot) `
+                                        -Path (Rewrite-OUPath $account.Path) -ErrorAction Stop
 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ user created: " + $account.displayName
                         
