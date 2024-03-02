@@ -365,7 +365,7 @@ Else {
 #-Clearing prerequesites data 
 Start-Sleep -Seconds 2
 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
-For ($i = 1 ; $i -le ($Linecount + 2 + 14) ; $i++) { Write-Host "                                                                       " }
+For ($i = 1 ; $i -le ($Linecount + 2 + 14) ; $i++) { Write-Host "                                                                                           " }
 $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
                                                      
 #-Loop begins!
