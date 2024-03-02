@@ -108,7 +108,7 @@ function Set-Translation {
         $isChild = $null
         While ($null -eq $isChild)
         {
-            $key = $Host.UI.RawUI.ReadKey("NoEcho")
+            $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
             
             Switch ($key.VirtualKeyCode)
             {
