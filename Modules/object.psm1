@@ -675,10 +675,13 @@ Function Reset-GroupMembership {
 ## This function is used to cross groups between two            ##
 ## domains.                                                     ##
 ##                                                              ##
-## Version: 02.00.000                                           ##
+## Version: 02.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ## History:                                                     ##
 ## 02.00.000: update thole script to use dynamic data.          ##
+##                                                              ##
+## 02.01.0000: fixed issue with cross domain group creation.    ##
+##                                                              ##
 ##################################################################
 function Add-SourceToDestGrps {
     param (
@@ -688,13 +691,16 @@ function Add-SourceToDestGrps {
         
         [Parameter(Mandatory)]
         [string]
-        $DestDomDns
+        $DestDomDns,
+
+        [Parameter(Mandatory)]
+        $Cred
     )
 
     $res = @()
 
     #.Loading the configuration xml file
-    $xmlSkeleton    = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
+    $xmlSkeleton    = [xml](Get-Content ".\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
     
     #.Retrieving dynamic data...
     [string]$OUadmin = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm%" }).translateTo
@@ -716,8 +722,8 @@ function Add-SourceToDestGrps {
     $Dest_Domain = Get-ADDomain -Server $DestDomDns
 
     #.Filtering on administration OU to avoid false positive and speed-up the script execution time
-    $Src_AdministrationOU  = Get-ADOrganizationalUnit -Filter { Name -like "*$OUadmin*" } -Server $Src_Domain.DNSRoot
-    $Dest_AdministrationOU = Get-ADOrganizationalUnit -Filter { Name -like "*$OUAdmin*" } -Server $Dest_Domain.DNSRoot
+    $Src_AdministrationOU  = Get-ADOrganizationalUnit -Filter { Name -eq $OUadmin } -Server $Src_Domain.DNSRoot
+    $Dest_AdministrationOU = Get-ADOrganizationalUnit -Filter { Name -eq $OUAdmin } -Server $Dest_Domain.DNSRoot
 
     #.Creating array for matching purpose
     $arrTier = @($t0,$T1,$T2,$T1L,$T2L)
@@ -733,7 +739,7 @@ function Add-SourceToDestGrps {
 
         #.Building Lookup structure
         $LookupLSTX    = "$GrpDloc$($arrTier[$i])"
-        $LookupGS      = "$GrpGlob$($arrTier[$i])"
+        $LookupGS      = "$GrpGlob$($arrTier[$i])*"
         $LookupGroupOU = $arrOUph[$i]
 
         #.Finding objects
@@ -767,7 +773,7 @@ function Add-SourceToDestGrps {
             {
                 $Src_GSGroups | ForEach-Object {
                     try {
-                        Add-ADGroupMember -Identity $Dest_LSTX -Members $_
+                        Get-ADGroup $Dest_LSTX -Server $DestDomDns -Credential $Cred | Add-ADGroupMember -Members (Get-ADGroup $_ -Server $SrcDomDns) 
                     }
                     catch {
                         $res += "$($Dest_LSTX.DistinguishedName): $($_.Exception.Message)"
@@ -785,34 +791,39 @@ function Add-SourceToDestGrps {
 ## This function is used to add T0 manager to the Enterprise    ##
 ## Admins group.                                                ##
 ##                                                              ##
-## Version: 01.01.000                                           ##
+## Version: 01.02.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ## History:                                                     ##
 ## 01.01.000: replaced the static group name for T0 Manager by  ##
 ##            a dynamic querie to the Translation section.      ##
+##                                                              ##
+## 01.02.0000: fixed issue with cross domain group creation.    ##
+##                                                              ##
 ##################################################################
 function Add-ManagerToEA {
     [CmdletBinding()]
     param (
         [Parameter()]
         [string]
-        $SrcDomain
+        $SrcDomain,
+
+        $Cred
     )
     #.Loading the configuration xml file
-    $xmlSkeleton    = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
+    $xmlSkeleton = [xml](Get-Content ".\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
     
-    #.Retrieving Enterprise Admins group name and Tier 0 Managers group name
-    [string]$EAName = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%EnterpriseAdmins%" }).translateTo
-    [string]$T0Mngr = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%t0-managers%" }).translateTo
-    
+    #.Retrieving Enterprise Admins group name, Tier 0 Managers group name and RootDomainDNS
+    [string]$EAName        = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%EnterpriseAdmins%" }).translateTo
+    [string]$T0Mngr        = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%t0-managers%" }).translateTo
+
     #.Getting domain objects to ensure that we query the Root Domain in a multi domain environment.
     $RootDomainDns  = (Get-ADForest).RootDomain
-    $RootEA         = Get-ADGroup -Identity $EAName -Server $RootDomainDns
-    $GST0Man        = Get-ADGroup -Identity $T0Mngr -Server $SrcDomain
+    $RootEA         = Get-ADGroup -Identity $EAName -Server $RootDomainDns -ErrorAction Stop
+    $GST0Man        = Get-ADGroup -Identity $T0Mngr -Server $SrcDomain     -ErrorAction Stop
 
     #.Adding the group Tier 0 Managers to the Group Enterprise Admins
     Try {
-        Add-ADGroupMember -Identity $RootEA -Members $GST0Man              
+        Get-ADGroup $RootEA.DistinguishedName -Server $RootDomainDns -Credential $Cred | Add-ADGroupMember -Members (Get-ADGroup $GST0Man -Server $SrcDomain)
         $result = 0
     }
     Catch {
@@ -828,14 +839,17 @@ function Add-ManagerToEA {
 ## This function is used to determine which domain              ##
 ## will be available for cross integration.                     ##
 ##                                                              ##
-## Version: 01.01.000                                           ##
+## Version: 01.02.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ## History:                                                     ##
 ## 01.01.0000: replaced the static group name for T0 Manager by ##
 ##            a dynamic querie to the Translation section.      ##
+##                                                              ##
+## 01.02.0000: fixed issue with cross domain group creation.    ##
+##                                                              ##
 ##################################################################
 function Add-GroupsOverDomain {
-    # Vérifier qu'il y a plusieurs domaine dans la forêt
+    # VÃ©rifier qu'il y a plusieurs domaine dans la forÃªt
 
     $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
     $dbgMess = @()
@@ -850,7 +864,7 @@ function Add-GroupsOverDomain {
 
     #.Loading the configuration xml file
     Try {
-        $xmlSkeleton    = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
+        $xmlSkeleton = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Successfuly loaded TasksSequence_HardenAD.xml to memory" + (Get-PSCallStack)[1].Command
     } Catch {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! !!! Error: could not load TasksSequence_HardenAD.xml file!" + (Get-PSCallStack)[1].Command
@@ -872,7 +886,10 @@ function Add-GroupsOverDomain {
     else {
         $AllDomains   = $Forest.Domains
         $ValidDomains = @()
-        # Détecter où Harden AD à été déployé et quels AD sont joignables.
+
+        #.Ask for EA Admin cred.
+        $EAadmin = Get-Credential -Message "Provide a Tier 0 Manager account from $RootDomainDns"
+
         foreach ($Domain in $AllDomains) {
             try {
                 $res = [bool](Get-ADGroup -Filter { Name -eq $T0Mngr } -Server $Domain)
@@ -892,11 +909,11 @@ function Add-GroupsOverDomain {
         if ($ValidDomains.Count -gt 1) {
             for ($i = 0; $i -lt $ValidDomains.Count; $i++) {
 
-                Add-ManagerToEA -SrcDomain $ValidDomains[$i]
+                Add-ManagerToEA -SrcDomain $ValidDomains[$i] -Cred $EAadmin
     
                 for ($j = $i + 1; $j -lt $ValidDomains.Count; $j++) {
                     # Cross ajout des groupes aux bons endroits
-                    $res = Add-SourceToDestGrps -SrcDomDns $ValidDomains[$i] -DestDomDns $ValidDomains[$j]
+                    $res = Add-SourceToDestGrps -SrcDomDns $ValidDomains[$i] -DestDomDns $ValidDomains[$j] -Cred $EAadmin
                     if ($res.Count -eq 0) {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ The cross integration worked as expected!"
                         $ResMess = "Cross integration works successfully."
