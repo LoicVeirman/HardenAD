@@ -117,6 +117,9 @@ Function New-AdministrationAccounts {
             $pwdLength = ($xmlParam | Where-Object { $_.translateFrom -eq '%pwdLength%' }).translateTo
             $pwdNANC   = ($xmlParam | Where-Object { $_.translateFrom -eq '%pwdNonAlphaNumChar%' }).translateTo
 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Password Length.......................: $pwdLength"
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Number of non alpha numeric characters: $pwdNANC"
+
             ## if we got data, begining creation loop
             if ($xmlData) 
             {
@@ -185,7 +188,7 @@ Function New-AdministrationAccounts {
                     $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainRootDN)
                     $Searcher.Filter = "(&(ObjectClass=User)(sAMAccountName=" + $account.sAMAccountName + "))"
 
-                    if ($null -ne $Searcher.FindAll()) 
+                    if ($Searcher.FindAll() -ne $null) 
                     {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> === " + $account.DisplayName + " already exists"
