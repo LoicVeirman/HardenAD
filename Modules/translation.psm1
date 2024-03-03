@@ -156,7 +156,7 @@ function Set-Translation {
         $isOK = $null
         While ($null -eq $isOK)
         {
-            $key = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+            $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
             
             Switch ($key.VirtualKeyCode)
             {
@@ -195,7 +195,7 @@ function Set-Translation {
                 Write-Warning ""
                 Write-Warning "Are those informations correct? (Y/N)"                
                 
-                $key = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+                $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
                     
                 if ($key.VirtualKeyCode -eq 89) { $isOK = $true }
             }
