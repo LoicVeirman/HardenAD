@@ -40,7 +40,7 @@ Function New-AdministrationAccounts {
     }
 
     ## Function dynamic OU path rewriting
-    Function Rewrite-OUPath ([String]$OUPath) 
+    Function Convert-OUPath ([String]$OUPath) 
     {
         $OUPath2 = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> [OUPath2]: new variable set with [OUPath] data and ROOTDN replaced. New value: $OUPath2"    
@@ -188,7 +188,7 @@ Function New-AdministrationAccounts {
                     $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainRootDN)
                     $Searcher.Filter = "(&(ObjectClass=User)(sAMAccountName=" + $account.sAMAccountName + "))"
 
-                    if ($Searcher.FindAll() -ne $null) 
+                    if ($null -ne $Searcher.FindAll()) 
                     {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> === " + $account.DisplayName + " already exists"
@@ -210,7 +210,7 @@ Function New-AdministrationAccounts {
                             New-ADUser  -Name $account.DisplayName -AccountNotDelegated $true -AccountPassword $SecPwd -Description $account.description `
                                         -DisplayName $account.displayName -Enabled $true -GivenName $account.GivenName -SamAccountName $account.sAMAccountName `
                                         -Surname $account.surname -UserPrincipalName ($account.sAMAccountName + "@" + (Get-Addomain).DNSRoot) `
-                                        -Path (Rewrite-OUPath $account.Path) -ErrorAction Stop
+                                        -Path (Convert-OUPath $account.Path) -ErrorAction Stop
 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ user created: " + $account.displayName
                         
@@ -335,14 +335,6 @@ Function New-AdministrationGroups {
     param(
     )
 
-    ## Function dynamic OU path rewriting
-    Function Rewrite-OUPath ([String]$OUPath) 
-    {
-        $OUPath2 = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> [OUPath2]: new variable set with [OUPath] data and ROOTDN replaced. New value: $OUPath2"    
-        return $OUPath2
-    }
-
     ## Function Log Debug File
     $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
     $dbgMess = @()
@@ -419,7 +411,7 @@ Function New-AdministrationGroups {
                     $Searcher.Filter = "(&(ObjectClass=Group)(sAMAccountName=" + $account.Name + "))"
 
                     #.Check if the object already exists
-                    if ($Searcher.FindAll() -ne $null) 
+                    if ($null -ne $Searcher.FindAll()) 
                     {
                         ## Account is Present
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: === " + $account.Name + " already exists"
@@ -430,7 +422,7 @@ Function New-AdministrationGroups {
                         ## Create Group
                         Try {
                             #-Create new group object
-                            New-ADGroup -Name $account.Name -Description $account.description -Path (Rewrite-OUPath $account.Path) -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
+                            New-ADGroup -Name $account.Name -Description $account.description -Path (Convert-OUPath $account.Path) -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ group created: " + $account.Name
                             $AddUser = $true
                         } 

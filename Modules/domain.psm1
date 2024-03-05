@@ -159,7 +159,7 @@ Function Set-ADRecycleBin
         
         Try 
         {
-            $NoEchoe = Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target (Get-ADForest).Name -WarningAction SilentlyContinue -Confirm:$false
+            Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target (Get-ADForest).Name -WarningAction SilentlyContinue -Confirm:$false | Out-Null
 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target " + (Get-ADForest).Name + ' -WarningAction SilentlyContinue -Confirm:$false'
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Active Directory Recycle Bin is enabled"
@@ -278,7 +278,7 @@ Function Set-SiteLinkNotify
             {
                 try
                 {
-                    $NoEchoe = Set-ADReplicationSiteLink $RepSiteLink -Replace @{'Options'=1} -WarningAction SilentlyContinue
+                    Set-ADReplicationSiteLink $RepSiteLink -Replace @{'Options'=1} -WarningAction SilentlyContinue | Out-Null
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Urgent Replication Options is now enabled with value " + (Get-ADReplicationSiteLink $RepSiteLink.Name -Properties *).options + " for " + $RepSiteLink.Name
                     $Result = 1
                 }
@@ -558,7 +558,8 @@ Function Set-ADFunctionalLevel
                     $intTargetOSVersion = [int](($OSlevelAndVersion[$TargetLevel]).Substring(0,($OSlevelAndVersion[$TargetLevel]).IndexOf(".")+2).Replace(".",""))
                     If($intOSVersion -lt $intTargetOSVersion) { 
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OperatingSystem of '$DCName' is '$($_.OperatingSystem)', which is too low for target Domain Level ($($OSlevelAndVersion[$TargetLevel]))" 
-                        $blnPreRequisitesOK = $false
+                        #Unused variable
+                        #$blnPreRequisitesOK = $false
                     }
                 }
             }
@@ -687,8 +688,9 @@ Function Set-ADFunctionalLevel
                             $DChostName = $_.HostName
                             $FLNb = (Get-ADObject -Identity $DomainDN -Properties msDS-Behavior-Version -Server $DChostName).'msDS-Behavior-Version'
                             If($FLNb -ne $FLRefNb) {
-                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! WARNING! Domain Functional not replicated on $DChostName" 
-                                $Result = 1
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! WARNING! Domain Functional not replicated on $DChostName"
+                                #Unused variable 
+                                #$Result = 1
                             }
                         }
                     }

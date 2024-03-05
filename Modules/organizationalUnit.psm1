@@ -66,7 +66,7 @@ Function Set-TreeOU
         if ($OUOBject.ChildOU)
         {
             $newPath = "OU=" + $OUObject.Name + "," + $OUPath
-            $OUObject.ChildOU | foreach { $dbgMess += CreateOU $_ $newPath }
+            $OUObject.ChildOU | ForEach-Object { $dbgMess += CreateOU $_ $newPath }
         }
         ## Return logs
         return $dbgMess
