@@ -32,22 +32,22 @@ try { New-EventLog -LogName Application -Source "HardenAD" } Catch { }
 $DAsid  = [String](Get-ADDomain).DomainSID.Value + "-512"
 $DAName = (Get-ADGroup $DAsid).Name
 
-$EAsid  = [String](Get-ADDomain).DomainSID.Value + "-519"
-$EAName = (Get-ADGroup $EAsid).Name
+#$EAsid  = [String](Get-ADDomain).DomainSID.Value + "-519"
+#$EAName = (Get-ADGroup $EAsid).Name
 
-$ASsid  = "S-1-5-32-544"
-$ASName = (Get-ADGroup $ASsid).Name
+#$ASsid  = "S-1-5-32-544"
+#$ASName = (Get-ADGroup $ASsid).Name
 
 
 # Collect AD infos
-$Domain   = Get-ADDomain | select -ExpandProperty NetBIOSName
+#$Domain   = Get-ADDomain | select -ExpandProperty NetBIOSName
 $Computer = Get-ADComputer $Computer -Properties nTSecurityDescriptor
  
 # Store Info
-$Computer | foreach {
+$Computer | ForEach-Object {
     $DistinguishedName    = $_.DistinguishedName
-    $GroupCategory        = $_.GroupCategory
-    $GroupScope           = $_.GroupScope
+    #$GroupCategory        = $_.GroupCategory
+    #$GroupScope           = $_.GroupScope
     $Name                 = $_.Name
     $ObjectClass          = $_.ObjectClass
     $ObjectGUID           = $_.ObjectGUID
@@ -70,7 +70,7 @@ $Computer | foreach {
 }
 
 # Computers
-$Array | foreach {
+$Array | ForEach-Object {
     
     # Current  Computer
     $SamAccountName = $_.SamAccountName
@@ -102,7 +102,7 @@ $Array | foreach {
     $SchemaNamingContext       = (Get-ADRootDSE).schemaNamingContext
     $DefaultSecurityDescriptor = Get-ADObject -Identity "CN=Computer,$SchemaNamingContext" -Properties defaultSecurityDescriptor | Select-Object -ExpandProperty defaultSecurityDescriptor
 
-    $DescriptionMessage = "Resetting SDDL for computer $SamAccountName"
+    #$DescriptionMessage = "Resetting SDDL for computer $SamAccountName"
 
     $ADObj = Get-ADComputer -Identity $SamAccountName -Properties nTSecurityDescriptor -ErrorVariable GetADObjError
 

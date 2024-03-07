@@ -32,14 +32,14 @@ $ASName = (Get-ADGroup $ASsid).Name
 
 
 # Collect AD infos
-$Domain = Get-ADDomain -Server $TargetDomain | select -ExpandProperty NetBIOSName
+$Domain = Get-ADDomain -Server $TargetDomain | Select-Object -ExpandProperty NetBIOSName
 $AllComputers = Get-ADComputer -Server $TargetDomain -Filter * -Properties nTSecurityDescriptor
  
 # Store Info
-$AllComputers | foreach {
+$AllComputers | ForEach-Object {
     $DistinguishedName    = $_.DistinguishedName
-    $GroupCategory        = $_.GroupCategory
-    $GroupScope           = $_.GroupScope
+    #$GroupCategory        = $_.GroupCategory
+    #$GroupScope           = $_.GroupScope
     $Name                 = $_.Name
     $ObjectClass          = $_.ObjectClass
     $ObjectGUID           = $_.ObjectGUID
@@ -86,7 +86,7 @@ Write-Host " needs to be fixed." -ForegroundColor Gray
 $color = "white"
 
 # Computers
-$NoGood | foreach {
+$NoGood | ForEach-Object {
     # switching color
     if ($color -eq "darkgray") { $color = "gray" ; $succol = "green" } else { $color = "darkgray" ; $succol = "green" }    
     # Current  Computer
@@ -119,7 +119,8 @@ $NoGood | foreach {
     $SchemaNamingContext       = (Get-ADRootDSE -Server $TargetDomain).schemaNamingContext
     $DefaultSecurityDescriptor = Get-ADObject -Identity "CN=Computer,$SchemaNamingContext" -Properties defaultSecurityDescriptor -Server $TargetDomain | Select-Object -ExpandProperty defaultSecurityDescriptor
 
-    $DescriptionMessage = "Resetting SDDL for computer $SamAccountName"
+    #Unused variable
+    #$DescriptionMessage = "Resetting SDDL for computer $SamAccountName"
 
     Write-Host $SamAccountName        -NoNewline -ForegroundColor $color
     Write-Host "`tResetting SDDL of " -NoNewline -ForegroundColor $color
