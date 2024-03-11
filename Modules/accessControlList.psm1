@@ -518,7 +518,11 @@ Function Set-HardenSDDL {
         {
             #.Convert Trustee to NT Account.
             $TrusteeSID = (Get-ADGroup $Trustee).SID
-
+ 
+            #.Read all properties
+            $Acee = New-Object DirectoryServices.ActiveDirectoryAccessRule $TrusteeSID, "ReadProperty,WriteProperty, GenericExecute", "Allow", $([GUID]::Empty), "All", $([GUID]::Empty)
+            $acl.AddAccessRule($Acee)
+            
             #.Reset password
             $Acee = New-Object DirectoryServices.ActiveDirectoryAccessRule $TrusteeSID, "ExtendedRight", "Allow", $ExtendedRight["reset password"], "Descendents", $GuidMap["computer"]
             $acl.AddAccessRule($Acee)
