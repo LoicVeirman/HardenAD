@@ -45,11 +45,11 @@ $HADFil = Convert-Path '..\..\Configs\TasksSequence_HardenAD.xml'
 
 $HADxml = [xml](Get-Content $HADFil -Encoding UTF8)
 
-#.Load Section for accounts
-$ACCnode = Select-Xml $HADxml -XPath "//*/Accounts" | Select-Object -ExpandProperty "Node"
+#.Load Section for accounts // UNUSED
+#$ACCnode = Select-Xml $HADxml -XPath "//*/Accounts" | Select-Object -ExpandProperty "Node"
 
-#.Load section for groups
-$GRPnode = Select-Xml $HADxml -XPath "//*/Groups"   | Select-Object -ExpandProperty "Node"
+#.Load section for groups // UNUSED
+#$GRPnode = Select-Xml $HADxml -XPath "//*/Groups"   | Select-Object -ExpandProperty "Node"
 
 #.Parsing elements to add or modify
 $Accounts = Import-Csv .\admins.csv -Delimiter ";" -Encoding UTF8
@@ -87,7 +87,7 @@ foreach ($Account in $Accounts)
     }
 
     #.Building Tier 0 Manager account
-    if ($Account.T0M -ne '' -and $Account.T0M -ne $null)
+    if ($Account.T0M -ne '' -and $null -ne $Account.T0M)
     {
         #.refresh data
         $Description = $DescData
@@ -147,7 +147,7 @@ foreach ($Account in $Accounts)
     }
 
     #.Building Tier 0 Operator account
-    if ($Account.T0O -ne '' -and $Account.T0O -ne $null)
+    if ($Account.T0O -ne '' -and $null -ne $Account.T0O)
     {
         #.refresh data
         $Description = $DescData
@@ -207,7 +207,7 @@ foreach ($Account in $Accounts)
     }
 
     #.Building Tier 1 Manager account
-    if ($Account.T1M -ne '' -and $Account.T1M -ne $null)
+    if ($Account.T1M -ne '' -and $null -ne $Account.T1M)
     {
         #.refresh data
         $Description = $DescData
@@ -267,7 +267,7 @@ foreach ($Account in $Accounts)
     }
 
     #.Building Tier 1 Administrator account
-    if ($Account.T1A -ne '' -and $Account.T1A -ne $null)
+    if ($Account.T1A -ne '' -and $null -ne $Account.T1A)
     {
         #.refresh data
         $Description = $DescData
@@ -327,7 +327,7 @@ foreach ($Account in $Accounts)
     }
 
     #.Building Tier 1 Operator account
-    if ($Account.T1O -ne '' -and $Account.T1O -ne $null)
+    if ($Account.T1O -ne '' -and $null -ne $Account.T1A)
     {
         #.refresh data
         $Description = $DescData
@@ -387,7 +387,7 @@ foreach ($Account in $Accounts)
     }
 
     #.Building Tier 2 Manager account
-    if ($Account.T2M -ne '' -and $Account.T2M -ne $null)
+    if ($Account.T2M -ne '' -and $null -ne $Account.T2M)
     {
         #.refresh data
         $Description = $DescData
@@ -447,7 +447,7 @@ foreach ($Account in $Accounts)
     }
 
     #.Building Tier 2 Administrator account
-    if ($Account.T2A -ne '' -and $Account.T2A -ne $null)
+    if ($Account.T2A -ne '' -and $null -ne $Account.T2M)
     {
         #.refresh data
         $Description = $DescData
@@ -507,7 +507,7 @@ foreach ($Account in $Accounts)
     }
 
     #.Building Tier 2 Operator account
-    if ($Account.T2O -ne '' -and $Account.T2O -ne $null)
+    if ($Account.T2O -ne '' -and $null -ne $Account.T2O)
     {
         #.refresh data
         $Description = $DescData
@@ -567,7 +567,7 @@ foreach ($Account in $Accounts)
     }
 
     #.Building Tier 1 Legacy Operator account
-    if ($Account.L1O -ne '' -and $Account.L1O -ne $null)
+    if ($Account.L1O -ne '' -and $null -ne $Account.L1O)
     {
         #.refresh data
         $Description = $DescData
@@ -627,7 +627,7 @@ foreach ($Account in $Accounts)
     }
 
     #.Building Tier 2 Legacy Operator account
-    if ($Account.L2O -ne '' -and $Account.L2O -ne $null)
+    if ($Account.L2O -ne '' -and $null -ne $Account.L2O)
     {
         #.refresh data
         $Description = $DescData

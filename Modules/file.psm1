@@ -57,7 +57,7 @@ Function Set-GpoCentralStore {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is not enable yet"
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Robocopy C:\Windows\PolicyDefinitions $sysVolBasePath\$domName\Policies\PolicyDefinitions /MIR (start)"
 
-        $NoEchoe = Robocopy "C:\Windows\PolicyDefinitions" "$sysVolBasePath\$domName\Policies\PolicyDefinitions" /MIR
+        Robocopy "C:\Windows\PolicyDefinitions" "$sysVolBasePath\$domName\Policies\PolicyDefinitions" /MIR | Out-Null
             
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Robocopy C:\Windows\PolicyDefinitions $sysVolBasePath\$domName\Policies\PolicyDefinitions /MIR (finish)"
         if ((Get-ChildItem "$sysVolBasePath\$domName\Policies\PolicyDefinitions" -Recurse).count -gt 10) {
@@ -82,7 +82,8 @@ Function Set-GpoCentralStore {
             $result = 0
         }
         catch {
-            $global:err = "Error in Renaming"
+            #Unused variable
+            #$global:err = "Error in Renaming"
             $dbgMess += (Get-Date -UFormat "% Y-%m-%d %T ") + "---! Error while renaming PolicyDefinition."
             $ResMess = "Error while renaming PolicyDefinition to PolicyDefinition-old"
             $result = 2
@@ -419,7 +420,8 @@ Function Set-LapsScripts {
 
     ## Rewriting script file
     foreach ($file in (Get-ChildItem -Path $ScriptDir | Where-Object { $_.Name -like "*.bat" })) {
-        $newFile = @()
+        #Unused variable
+        #$newFile = @()
         Try {
             (Get-Content $file.fullName) -Replace '%DN%', (Get-ADDomain).DnsRoot | Set-Content $File.FullName 
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--- ---> rewritten file " + $file.Name + " (success)"
@@ -435,7 +437,7 @@ Function Set-LapsScripts {
     if ($result -eq 0) {
         if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
             Import-Module ActiveDirectory
-            $sysVolBasePath = ((net share | ? { $_ -like "SYSVOL*" }) -split " " | ? { $_ -ne "" })[1]
+            $sysVolBasePath = ((net share | Where-Object { $_ -like "SYSVOL*" }) -split " " | Where-Object { $_ -ne "" })[1]
         }
         else {
             $sysVolBasePath = (Get-SmbShare SYSVOL).path
@@ -509,7 +511,8 @@ Function Install-LAPS {
             Import-Module ActiveDirectory
         } 
         Catch {
-            $noError = $false
+            #Unused variable
+            #$noError = $false
             $result = 2
             $ResMess = "AD module not available."
         }
@@ -608,7 +611,8 @@ Function Set-LapsPermissions {
             Import-Module ActiveDirectory
         } 
         Catch {
-            $noError = $false
+            #Unused variable
+            #$noError = $false
             $result = 2
             $ResMess = "AD module not available."
         }
@@ -698,7 +702,8 @@ Function Set-LapsPermissions {
                     }
                 }
                 #.Getting Domain Netbios name
-                $NBname = (Get-ADDomain).netBiosName
+                #Unused variable
+                #$NBname = (Get-ADDomain).netBiosName
 
                 #.Granting Password Reading Permission
                 $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdPasswordReader
@@ -791,7 +796,8 @@ Function Get-PingCastle {
 
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Test Internet connectivity  " 
 
-    $OriginalProgressPreference = $Global:ProgressPreference
+    ##Unused variable
+    ##$OriginalProgressPreference = $Global:ProgressPreference
     $Global:ProgressPreference = 'SilentlyContinue'
     $test = Test-NetConnection
     

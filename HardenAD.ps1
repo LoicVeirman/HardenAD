@@ -140,10 +140,10 @@ $Block = { param(   #-Name of the function to be executed
     Try { 
         #-Module loading...
         if ($is2k8r2) {
-            $null = $mods | foreach { Import-Module $_.fullName }
+            $null = $mods | ForEach-Object { Import-Module $_.fullName }
         }
         else {
-            $null = $mods | foreach { Import-Module $_ }
+            $null = $mods | ForEach-Object { Import-Module $_ }
         }
     }
     Catch { 
@@ -155,7 +155,7 @@ $Block = { param(   #-Name of the function to be executed
         #-Checking for multiple parameters and OS...
         #-More than 1 parameter but greater than 2008 R2
         if ($Parameters.count -gt 1 -and -not ($is2k8r2)) {
-            $RunData = . $Command @Parameters | Select -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
+            $RunData = . $Command @Parameters | Select-Object -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
         } 
                     
         #-More than 1 parameter and is 2008 R2
@@ -166,12 +166,12 @@ $Block = { param(   #-Name of the function to be executed
             for ($i = 0 ; $i -lt $Parameters.count ; $i++) {
                 $tmpParam += $Parameters[$i]
             }
-            $RunData = . $Command @TmpParam | Select -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
+            $RunData = . $Command @TmpParam | Select-Object -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
         }
                     
         #-1 parameter or less
         if ($Parameters.count -le 1) {
-            $RunData = . $Command $Parameters | Select -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
+            $RunData = . $Command $Parameters | Select-Object -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
         }
     }
     Catch {
@@ -197,7 +197,7 @@ $Host.UI.RawUI.BackgroundColor = 'black'
 #-Loading modules
 # When dealing with 2008R2, we need to import AD module first
 if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
-    $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1") | Select FullName
+    $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1") | Select-Object FullName
 }
 else {
     $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1").FullName
@@ -570,7 +570,7 @@ Write-Host $csvName -ForegroundColor DarkGray -NoNewline
 Write-Host "..." -ForegroundColor Gray -NoNewline
 
 Try { 
-    $Resume | Select TaskId, TaskResult, TaskName | Sort-Object TaskID | Export-Csv .\Logs\$CsvName -Delimiter "`t" -Encoding Unicode -NoTypeInformation
+    $Resume | Select-Object TaskId, TaskResult, TaskName | Sort-Object TaskID | Export-Csv .\Logs\$CsvName -Delimiter "`t" -Encoding Unicode -NoTypeInformation
     Write-Host "success" -ForegroundColor Green
 }
 Catch {
@@ -589,4 +589,4 @@ Catch {
     Write-Host "failure`n" -ForegroundColor red
 }
 
-$Resume | Select TaskId, TaskResult, TaskName | Sort-Object TaskID | Format-Table -AutoSize 
+$Resume | Select-Object TaskId, TaskResult, TaskName | Sort-Object TaskID | Format-Table -AutoSize 

@@ -392,7 +392,7 @@ Function Import-WmiFilters {
                 $Output = $mofPath + ".tmp"
 
                 try {
-                    $noSplash = mofcomp.exe -N:root\Policy ($Output) | Out-Null
+                    mofcomp.exe -N:root\Policy ($Output) | Out-Null
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> WMI Filter $Output  imported successfully."
 
                 }
