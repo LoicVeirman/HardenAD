@@ -223,6 +223,7 @@ $ColorsAndTexts = New-Object -TypeName psobject `
     FailureColor                    = "Red"
     IgnoredColor                    = "cyan"
     SuccessColor                    = "green"
+    DisabledColor                   = "yellow"
     BaseTxtColor                    = "white"
     AltBaseHColA                    = "magenta"
     AltBaseHColB                    = "yellow"
@@ -234,6 +235,7 @@ $ColorsAndTexts = New-Object -TypeName psobject `
     SuccessText                     = "success"
     ignoredText                     = "ignored"
     FuncErrText                     = "!ERROR!"
+    DisabledText                    = "disable"
     AltBaseHTxtA                    = "["
     AltBaseHTxtB                    = "("
     AltBaseHTxtC                    = "{"
@@ -534,10 +536,11 @@ foreach ($task in $Tasks) {
 
     #-Display result on screen
     Switch ($result.ResultCode) {
-        0 { $zText = $ColorsAndTexts.SuccessText ; $zColor = $ColorsAndTexts.SuccessColor }
-        1 { $zText = $ColorsAndTexts.WarningText ; $zColor = $ColorsAndTexts.WarningColor }
-        2 { $zText = $ColorsAndTexts.FailureText ; $zColor = $ColorsAndTexts.FailureColor }
-        3 { $zText = $ColorsAndTexts.IgnoredText ; $zColor = $ColorsAndTexts.IgnoredColor }
+        0 { $zText = $ColorsAndTexts.SuccessText  ; $zColor = $ColorsAndTexts.SuccessColor  }
+        1 { $zText = $ColorsAndTexts.WarningText  ; $zColor = $ColorsAndTexts.WarningColor  }
+        2 { $zText = $ColorsAndTexts.FailureText  ; $zColor = $ColorsAndTexts.FailureColor  }
+        3 { $zText = $ColorsAndTexts.IgnoredText  ; $zColor = $ColorsAndTexts.IgnoredColor  }
+        4 { $zText = $ColorsAndTexts.DisabledText ; $zColor = $ColorsAndTexts.DisabledColor }
         default { $zText = $ColorsAndTexts.FuncErrText ; $zColor = $ColorsAndTexts.FailureColor }
     }
     $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
