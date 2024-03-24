@@ -226,7 +226,7 @@ $ColorsAndTexts = New-Object -TypeName psobject `
     DisabledColor                   = "yellow"
     BaseTxtColor                    = "white"
     AltBaseHColA                    = "magenta"
-    AltBaseHColB                    = "yellow"
+    AltBaseHColB                    = "darkgray"
     AltBaseHColC                    = "gray"
     PendingText                     = "pending"
     RunningText                     = "running"
@@ -525,7 +525,7 @@ foreach ($task in $Tasks) {
         $result = Receive-Job $job.Id
     }
     else {
-        $result = New-Object -TypeName psobject -Property @{Resultcode = 3 }
+        $result = New-Object -TypeName psobject -Property @{Resultcode = 4 }
     }
 
     #-Special use case: some function ask for credential and this report badly the result - We will taks this into account.
