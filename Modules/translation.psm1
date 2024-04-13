@@ -49,7 +49,7 @@ function Get-GroupNameFromSID {
 ## Version: 01.01.000                                           ##
 ##    Note: added XML formating function                        ##
 ##################################################################
-function Set-Translation {
+function Set-TranslationOld {
     param (
         [Parameter(Mandatory = $true)]
         [string]$TasksSequence,
