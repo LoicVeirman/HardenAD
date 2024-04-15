@@ -11,16 +11,52 @@
 
     Remember: this tool is free and you are not allowed to resell it to customers. 
 
-    .PARAMETER NoConfirmationForSingleDomain
+    .PARAMETER NoConfirmationForRootDomain
     This parameter teach the script to automatically validate a confirmation request. Only used when working in a root domain of a forest.
 
-    .EXAMPLE
-    Running the script in interactive mode:
-    PS> Hardenad.ps1
+    .PARAMETER EnableTask
+    This parameter will modify the script and enable all or specific task on demand. You can use it in combination with -DisableTask.
+    Note: this parameter will force the script to exit once the modification is done.
+
+    .PARAMETER DisableTask
+    This parameter will modify the script and disable all or specific task on demand. You can use it in combination with -EnableTask.
+    Note: This parameter superseed -EnableTask.
+    Note: this parameter will force the script to exit once the modification is done.
 
     .EXAMPLE
-    Running the script in non-interactive mode in the root forest domain:
-    PS> Hardenad.ps1 -NoConfirmationForSingleDomain
+    HardenAD.ps1
+    
+    Runs the script in interactive mode.
+
+    .EXAMPLE
+    HardenAD.ps1 -NoConfirmationForSingleDomain
+    
+    Runs the script in non-interactive mode in the root forest domain only.
+
+    .EXAMPLE
+    HardenAD.ps1 -EnableTask All
+    
+    Enable all tasks in the file TasksSequence_HardenAD.xml.
+
+    .EXAMPLE
+    HardenAD.ps1 -disableTask All
+    
+    Disable all tasks in the file TasksSequence_HardenAD.xml.
+
+    .EXAMPLE
+    HardenAD.ps1 -EnableTask All -Disable 'Activate Active Directory Recycle Bin','Create administration accounts'
+    
+    Enable all tasks by default, then disable 'Activate Active Directory Recycle Bin' and 'Create administration accounts' in the file TasksSequence_HardenAD.xml.
+
+    .EXAMPLE
+    HardenAD.ps1 -EnableTask 'Activate Active Directory Recycle Bin','Create administration accounts'
+    
+    Enable 'Activate Active Directory Recycle Bin' and 'Create administration accounts' in the file TasksSequence_HardenAD.xml.
+
+    .EXAMPLE
+    HardenAD.ps1 -DisableTask 'Activate Active Directory Recycle Bin','Create administration accounts'
+    
+    Disable 'Activate Active Directory Recycle Bin' and 'Create administration accounts' in the file TasksSequence_HardenAD.xml.
 
     .NOTES
     Version 01.00.000 - Script creation.
@@ -36,11 +72,25 @@
     Version 03.00.000 - Script sanitization. The parameter TasksSequence has been removed. 
                         The Help section has been completed. Version are now embedded within the configuration_HardenAD.xml file.
                         The script as some easter eggs when interacting with you, that's just to make you smiling once at least ;)
-                        A new parameter has been added: it will enforce validtion when running in a single forest/domain.
+                        A new parameter to bypass the validation step when running in a single forest/domain: -NoConfirmationForRootDomain.
+                        Two new parameters have been added to manage the task sequence from the script: -TaskEnable and -TaskDisable (combinable).
 #>
+[CmdletBinding(DefaultParameterSetName = 'RUN')]
 Param(
+    [Parameter(ParameterSetName = 'RUN')]
+    [Parameter(Position=0)]
     [switch]
-    $NoConfirmationForSingleDomain
+    $NoConfirmationForRootDomain,
+
+    [Parameter(ParameterSetName = 'TASK')]
+    [ValidateSet('All','Activate Active Directory Recycle Bin','Create administration accounts','Create administration groups','Default computer location on creation','Default user location on creation','Enforce delegation model through ACEs','Import additional WMI Filters','Import new GPO or update existing ones','Restrict computer junction to the domain','Set Administration Organizational Unit','Set GPO Central Store','Set Legacy Organizational Unit','Set Notify on every Site Links','Set Provisioning Organizational Unit','Set Tier 0 Organizational Unit','Set Tier 1 and Tier 2 Organizational Unit','Setup LAPS permissions over the domain','Update Ad schema for LAPS and deploy PShell tools','Update LAPS deployment scripts','Upgrade Domain Functional Level','Upgrade Forest Functional Level')]
+    [Array]
+    $EnableTask,
+
+    [Parameter(ParameterSetName = 'TASK')]
+    [ValidateSet('All','Activate Active Directory Recycle Bin','Create administration accounts','Create administration groups','Default computer location on creation','Default user location on creation','Enforce delegation model through ACEs','Import additional WMI Filters','Import new GPO or update existing ones','Restrict computer junction to the domain','Set Administration Organizational Unit','Set GPO Central Store','Set Legacy Organizational Unit','Set Notify on every Site Links','Set Provisioning Organizational Unit','Set Tier 0 Organizational Unit','Set Tier 1 and Tier 2 Organizational Unit','Setup LAPS permissions over the domain','Update Ad schema for LAPS and deploy PShell tools','Update LAPS deployment scripts','Upgrade Domain Functional Level','Upgrade Forest Functional Level')]
+    [Array]
+    $DisableTask
 )
 
 <#
@@ -138,27 +188,17 @@ function Set-Translation
     $ForestDNS     = $Domain.Forest
 
     # Prompting for running domain information.
-    Write-Host "Current forest ................: "  -ForegroundColor Gray -NoNewline
-    Write-host $ForestDNS                           -ForegroundColor Yellow
-    Write-Host "Current domain ................: "  -ForegroundColor Gray -NoNewline
-    Write-Host $DomainDNS                           -ForegroundColor Yellow
-    Write-Host "Current NetBIOS................: "  -ForegroundColor Gray -NoNewline
-    Write-Host $DomainNetBios                       -ForegroundColor Yellow
-    Write-Host "Current DistinguishedName......: "  -ForegroundColor Gray -NoNewline
-    Write-Host $DN                                  -ForegroundColor Yellow
+    Write-Host "Current forest ................: "  -ForegroundColor Gray -NoNewline ; Write-host $ForestDNS     -ForegroundColor Yellow
+    Write-Host "Current domain ................: "  -ForegroundColor Gray -NoNewline ; Write-Host $DomainDNS     -ForegroundColor Yellow
+    Write-Host "Current NetBIOS................: "  -ForegroundColor Gray -NoNewline ; Write-Host $DomainNetBios -ForegroundColor Yellow
+    Write-Host "Current DistinguishedName......: "  -ForegroundColor Gray -NoNewline ; Write-Host $DN            -ForegroundColor Yellow
 
     # If not the same as the forest, will ask for confirmation.
     if ($DomainDNS -ne $ForestDNS) 
     {
         Write-Host ""
-        Write-Host "Your domain is a child domain of $($ForestDNS)!" -ForegroundColor White -BackgroundColor Red -NoNewline
-        Write-Host " Is it expected? " -ForegroundColor White -BackgroundColor Red -NoNewline
-        Write-Host "["                 -ForegroundColor White -BackgroundColor Red -NoNewline
-        Write-Host "Y"                 -ForegroundColor White -BackgroundColor Red -NoNewline
-        Write-Host "/"                 -ForegroundColor White -BackgroundColor Red -NoNewline
-        Write-Host "N"                 -ForegroundColor White -BackgroundColor Red -NoNewline
-        Write-Host "]"                 -ForegroundColor White -BackgroundColor Red -NoNewline
-        Write-Host " "                 -NoNewline
+        Write-Host "Your domain is a child domain of $($ForestDNS)! Is it expected?" -ForegroundColor White -BackgroundColor Red -NoNewline
+        Write-Host " [Y/N] " -NoNewline
         
         # Waiting key input. If not Y, then leaves.
         $isChild = $null
@@ -167,10 +207,10 @@ function Set-Translation
             $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
             if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13)
             {
-                Write-Host "Expected, so you say..." -ForegroundColor Green
+                Write-Host "Expected, so you say...`n" -ForegroundColor Green
                 $isChild = $true
             } Else {
-                Write-Host "Unexpected? Long day, isn't it..." -ForegroundColor Red
+                Write-Host "Unexpected? Do, or do not. But there there is no try.`n" -ForegroundColor Red
                 $isChild = $false
             }
         }
@@ -184,10 +224,11 @@ function Set-Translation
             $RootDomainDNS     = $RootDomain.DNSRoot
             $RootDomainNetBios = $RootDomain.NetBIOSName
             $RootDN            = $RootDomain.DistinguishedName
-            $RootDomainSID     = $RootDomain.DomainSID
+            $RootDomainSID     = $RootDomain.DomainSID.value
 
             # Disable FFL Upgrade
             ($TasksSeqConfig.Settings.Sequence.Id | Where-Object { $_.Number -eq "006" }).TaskEnabled = "No"
+            
             # Disable LAPS Schema update
             ($TasksSeqConfig.Settings.Sequence.Id | Where-Object { $_.Number -eq "134" }).TaskEnabled = "No"
         
@@ -199,75 +240,71 @@ function Set-Translation
             $RootDomainSID     = $DomainSID
         }
 
-        Write-Host "Root Domain............: " -ForegroundColor Gray -NoNewline
-        Write-Host $RootDomainDNS              -ForegroundColor Yellow
-        Write-Host "Root NetBIOS...........: " -ForegroundColor Gray -NoNewline
-        Write-Host $RootDomainNetBios          -ForegroundColor Yellow
-        Write-Host "Root DistinguishedName.: " -ForegroundColor Gray -NoNewline
-        Write-Host $RootDN                     -ForegroundColor Yellow
+        Write-Host "Root Domain............: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainDNS     -ForegroundColor Yellow
+        Write-Host "Root NetBIOS...........: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainNetBios -ForegroundColor Yellow
+        Write-Host "Root DistinguishedName.: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDN            -ForegroundColor Yellow
     
         # Validating result and opening to a manual input if needed.
-        Write-Host "`nAre those informations correct? (Y/N) " -ForegroundColor Yellow -NoNewline
+        Write-Host "`nAre those informations correct? " -ForegroundColor Yellow -NoNewline
+        Write-Host "[Y/N] " -NoNewline
         
-        # Waiting key input and deal with Y,y, ESC, return and Q.
+        # Waiting key input and deal with Y and return.
         $isOK = $null
         While ($null -eq $isOK)
         {
             $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
             if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13)
             {
-                # Y or y
-                Write-Host "Glad you'll agree with it!" -ForegroundColor Green
+                Write-Host "Glad you'll agree with it!`n" -ForegroundColor Green
                 $isOK = $true
             } Else {
-                Write-Host "'Kay... You're too old for this sh**t, Roger?" -ForegroundColor Red
+                Write-Host "'Kay... You're too old for this sh**t, Roger?`n" -ForegroundColor Red
                 $isOK = $false
             }
         }
 
-        # If Yes, then we continue. Else we ask for new values.
-        if ($isOK) 
+        # We ask for new values if nedded, else we start.
+        if (-not $isOK) 
         {
-            Write-Host "Information validated." -ForegroundColor Green
-        } else {
-            $isOK = $null
-            while (-not ($isOK))
-            {
-                # If user answers "N" --> ask for domain name parts
-                $netbiosName = Read-Host "Enter the NetBIOS domain name.."
-                $Domaindns   = Read-Host "Enter the Domain DNS..........."
-    
-                #.Checking if the domain is reachable.
-                Try {
-                    $DistinguishedName = Get-ADDomain -Server $DomainDNS -ErrorAction Stop
-                } Catch {
-                    $DistinguishedName = $null
-                    # Force leaving                    
-                    $isOK = $false
-                }
+            # Ask for domain name parts
+            $netbiosName = Read-Host "Enter the Root NetBIOS domain name.."
+            $Domaindns   = Read-Host "Enter the Root Domain DNS..........."
 
-                Write-Host "New values:"            -ForegroundColor Magenta
-                Write-Host "NetBIOS Name........: " -ForegroundColor Gray -NoNewline
-                Write-Host $netbiosName             -ForegroundColor Yellow
-                Write-Host "Domain DNS..........: " -ForegroundColor Gray -NoNewline
-                Write-Host $Domaindns               -ForegroundColor Yellow
-                Write-Host "Distinguished Name..: " -ForegroundColor Gray -NoNewline
-                Write-Host $DistinguishedName       -ForegroundColor Yellow
-                Write-Host "`nAre those informations correct? (Y/N) " -ForegroundColor Magenta
+            # Checking if the domain is reachable.
+            Try {
+                $DistinguishedName = Get-ADDomain -Server $DomainDNS -ErrorAction Stop
+                $RootDomainSID     = (Get-ADDomain -Server $DomainDNS -ErrorAction Stop).DomainSID.value
+            } Catch {
+                $DistinguishedName = $null
+                # Force leaving                    
+                $isOK = $false
+            }
+
+            Write-Host "`nNew values:"            -ForegroundColor Magenta
+            Write-Host "Root NetBIOS Name........: " -ForegroundColor Gray -NoNewline ; Write-Host $netbiosName       -ForegroundColor Yellow
+            Write-Host "Root Domain DNS..........: " -ForegroundColor Gray -NoNewline ; Write-Host $Domaindns         -ForegroundColor Yellow
+            Write-Host "Root Distinguished Name..: " -ForegroundColor Gray -NoNewline ; Write-Host $DistinguishedName -ForegroundColor Yellow
+            Write-Host "Root Domain SID..........: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainSID     -ForegroundColor Yellow
+            Write-Host "`nAre those informations correct? " -ForegroundColor Magenta -NoNewline
+            Write-Host "(Y/N) " -NoNewline
+            
+            $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
                 
-                $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
-                    
-                if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) { $isOK = $true }
+            if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) 
+            {  
+                $isOK = $true 
+            } Else {
+                $isOK = $false
             }
+        }
 
-            # If no issue, then script will continue. Else it exits with code 2
-            if ($isOK) 
-            { 
-                Write-Host "`nInformation validated.`n" -ForegroundColor Green 
-            } else { 
-                Write-Host "`nInstallation canceled.`n" -ForegroundColor red
-                Exit 2 
-            }
+        # If no issue, then script will continue. Else it exits with code 2
+        if ($isOK) 
+        { 
+            Write-Host "Information validated.`n" -ForegroundColor Green 
+        } else { 
+            Write-Host "Installation canceled... Help me, Obi-Wan Kenobi. You're my only hope!`n" -ForegroundColor red
+            Exit 2 
         }
     } else {
         # Not a child, setting up root domain value with current domain
@@ -277,25 +314,19 @@ function Set-Translation
         $RootDomainSID     = $DomainSID
 
         # Prompting for confirmation, if needed (default value)
-        if (-not $NoConfirmationForSingleDomain)
+        if (-not $NoConfirmationForRootDomain)
         {
-            Write-Host ""
-            Write-Host "Do you want to continue? " -ForegroundColor White -NoNewline
-            Write-Host "["                 -ForegroundColor White -NoNewline
-            Write-Host "Y"                 -ForegroundColor Gray  -NoNewline
-            Write-Host ","                 -ForegroundColor White -NoNewline
-            Write-Host "N"                 -ForegroundColor Gray  -NoNewline
-            Write-Host "]"                 -ForegroundColor White -NoNewline
-            Write-Host " "                 -NoNewline
+            Write-Host "`nDo you want to continue with those values? " -ForegroundColor Yellow -NoNewline
+            Write-Host "[Y/N] " -NoNewline
             
             # Waiting key input. If not Y, then leaves.
             $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
             if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13)
             {
-                Write-Host "Going on!" -ForegroundColor Green
+                Write-Host "Going on... Or: nearly 'Just Secured', I should say." -ForegroundColor Green
             } else {
                 # Just leaving
-                Write-Host "After all, tomorrow is another day..." -ForegroundColor Red
+                Write-Host "Ok, canceling... I find your lack of faith disturbing." -ForegroundColor Red
                 Exit 0
             }
         }
@@ -345,7 +376,7 @@ function Set-Translation
     # Updating Values :
     # ..Domain values
     $wellKnownID_Netbios.translateTo   = $DomainNetBios
-    $wellKnownID_domaindns.translateTo = $DomainDNS
+    $wellKnownID_domaindns.translateTo = [string]$DomainDNS
     $wellKnownID_DN.translateTo        = $DN
 
     # ..RootDomain value
@@ -367,7 +398,7 @@ function Set-Translation
     $historyLastRun.System        = $env:COMPUTERNAME
     $historyLastRun.isPDCemulator = [string]$isPDC
     $historyDomains.Root          = $RootDomainDNS
-    $historyDomains.Domain        = $DomainDNS
+    $historyDomains.Domain        = [string]$DomainDNS
     $historyScript.SourcePath     = [string]((Get-Location).Path)
 
     # Saving file and keeping formating with tab...    
@@ -454,6 +485,93 @@ $Block = {
         
         # Return the result
         $RunData
+}
+
+<#
+    MANAGE TASKS SEQUENCE
+    ---------------------
+    Script routing to update the tasks sequence before runing the main script.
+    The script will forcefully exit at the end of this section to let you review the modification (or bring manually some)
+    Denying a task will overide enabling it...
+#>
+# Loading xml and readiness for backup...
+if ($EnableTask -or $DisableTask)
+{
+    $TasksSeqConfig  = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
+    $xmlFileFullName = (resolve-path .\Configs\TasksSequence_HardenAD.xml).Path
+}
+
+# When someone wan't me to perform...
+if ($EnableTask)
+{
+    # Dealing with the "all" case: we build the array list
+    if ($EnableTask -eq 'All')
+    {
+        $tmpArray = Select-Xml $TasksSeqConfig -XPath "//Sequence/Id" | Select-Object -ExpandProperty "Node"
+        $outArray = @() 
+        $tmpArray.Name | ForEach-Object { $outArray += $_ }
+    } Else {
+        $outArray = $EnableTask | Where-Object { $_ -ne 'All' }
+    }
+
+    # Array is ready, let's go to modify...
+    ForEach ($Task in $outArray)
+    {
+        $taskNode = Select-Xml $TasksSeqConfig -XPath "//Sequence/Id[@Name='$Task']" | Select-Object -ExpandProperty "Node"
+        $taskNode.TaskEnabled = "Yes"
+    }
+
+    # Saving file...
+    Format-XML $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
+
+    # Prepare output
+    $ActionMade = "enable"
+}
+
+# When someone don't wan't me to perform...
+if ($DisableTask)
+{
+    # Dealing with the "all" case: we build the array list
+    if ($DisableTask -eq 'All')
+    {
+        $tmpArray = Select-Xml $TasksSeqConfig -XPath "//Sequence/Id" | Select-Object -ExpandProperty "Node"
+        $outArray = @()
+        $tmpArray.Name | ForEach-Object { $outArray += $_ }
+    } Else {
+        $outArray = $DisableTask | Where-Object { $_ -ne 'All' }
+    }
+
+    # Array is ready, let's go to modify...
+    ForEach ($Task in $outArray)
+    {
+        $taskNode = Select-Xml $TasksSeqConfig -XPath "//Sequence/Id[@Name='$Task']" | Select-Object -ExpandProperty "Node"
+        $taskNode.TaskEnabled = "No"
+    }
+
+    # Saving file...
+    Format-XML $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
+
+    # Prepare output
+    $ActionMade = "disable"
+}
+
+# Exiting if modification were made for review.
+if ($EnableTask -or $DisableTask)
+{
+    Write-Host "The script have " -ForegroundColor Yellow -NoNewline
+    Write-Host $ActionMade        -ForegroundColor Cyan   -NoNewline
+    Write-Host " the selected task(s). Please find below a quick resume of the new values:" -ForegroundColor Yellow
+
+    # Reload file to ensure that we display the real file value, not the momory ones.
+    $TasksSeqConfig  = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
+
+    # Display
+    $tasks = Select-Xml $TasksSeqConfig -XPath "//Sequence/Id" | Select-Object -ExpandProperty "Node"
+    $tasks | Select-Object Number, Name, TaskEnabled | Sort-Object Number | Format-Table Number,Name,TaskEnabled -AutoSize
+
+    # Exist
+    Write-Host "`nScript's done.`n" -ForegroundColor Green
+    Exit 0
 }
 
 <#
@@ -647,7 +765,7 @@ Set-Translation
 
 if ($FlagPreReq) 
 {
-    Write-Host "`nAll prerequesites are OK.`n" -ForegroundColor Green
+    Write-Host "All prerequesites are OK.`n" -ForegroundColor Green
 
     # Reload the config file
     $TasksSeqConfig = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
