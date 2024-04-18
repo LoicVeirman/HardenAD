@@ -18,9 +18,11 @@ Function Set-GpoCentralStore {
         .Notes
          Version: 01.00 -- contact@hardenad.net 
                   01.01 -- contact@hardenad.net 
+                  01.02 -- contact@hardenad.net
          
          history: 19.08.31 Script creation
                   21.06.06 Removed parameter DesiredState
+                  24.04.18 Added bugFix for error https://learn.microsoft.com/en-us/troubleshoot/windows-server/group-policy/winstoreui-conflict-with-windows-10-1151-admx-file
     #>
     param(
     )
@@ -37,68 +39,101 @@ Function Set-GpoCentralStore {
     ## Indicates caller and options used
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
     
-    ## Test if already enabled
-    if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
+    ## Getting existing Sysvol base path
+    if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) 
+    {
         Import-Module ActiveDirectory
         $sysVolBasePath = ((net share | Where-Object { $_ -like "SYSVOL*" }) -split " " | Where-Object { $_ -ne "" })[1]
-    }
-    else {
+    } else {
         $sysVolBasePath = (Get-SmbShare SYSVOL).path
     }
 
+    # Getting domain name
     $domName = (Get-AdDomain).DNSRoot
 
-    if (Test-Path "$sysVolBasePath\$domName\Policies\PolicyDefinitions") {
+    # Testing if the path is as expected (i.e. centralStore)
+    if (Test-Path "$sysVolBasePath\$domName\Policies\PolicyDefinitions") 
+    {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is present"
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is already enabled"
         $result = 0
-    }
-    else {
+    } else {
+        # We need to enable the central store
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is not enable yet"
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Robocopy C:\Windows\PolicyDefinitions $sysVolBasePath\$domName\Policies\PolicyDefinitions /MIR (start)"
 
         $NoEchoe = Robocopy "C:\Windows\PolicyDefinitions" "$sysVolBasePath\$domName\Policies\PolicyDefinitions" /MIR
             
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Robocopy C:\Windows\PolicyDefinitions $sysVolBasePath\$domName\Policies\PolicyDefinitions /MIR (finish)"
-        if ((Get-ChildItem "$sysVolBasePath\$domName\Policies\PolicyDefinitions" -Recurse).count -gt 10) {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Seems copying has worked."
+
+        # Test if copies sounds good.
+        $SourceItemsCount = (Get-ChildItem "C:\Windows\PolicyDefinitions" -File -Recurse).count
+        $TargetItemsCount = (Get-ChildItem "$sysVolBasePath\$domName\Policies\PolicyDefinitions" -File -Recurse).count
+        
+        if ($TargetItemsCount -eq $SourceItemsCount) 
+        {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> file copy as worked as expected ($TargetItemsCount files found in the CentralStore - same as the source repository)."
             $result = 0
         }
         else {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying file."
-            $ResMess = "Error while copying file to new location"
-            $result = 2
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying file: found $TargetITemsCount files in the centralStore but there is $SourceItemsCount files in c:\Windows\PolicyDefinitions."
+            $ResMess = "Error while copying files to new location (warning)"
+            $result = 1
         }
     }
 
-    ## Installation of custom or external ADMX/ADML
+    # Upgrading existing CentralStore to the latest version.
     $HardenPolicyDefinition = Get-Item $PSScriptRoot\..\Inputs\PolicyDefinitions
     $GPOCentralStore = "$sysVolBasePath\$domName\Policies"
 
-    if (Test-Path $GPOCentralStore) {
+    if (Test-Path $GPOCentralStore) 
+    {
+        # Rename the current repository
+        $UniqueId = (Get-Date -Format yyyy-MM-yy_HHmmss)
         try {
-            Move-Item -Path "$GPOCentralStore\PolicyDefinitions" -Destination "$GPOCentralStore\PolicyDefinitions-old" -Recurse -Force
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinition has been renamed to PolicyDefinition-old"
+            Rename-Item "$GPOCentralStore\PolicyDefinitions" "$GPOCentralStore\PolicyDefinitions-$UniqueId" -ErrorAction SilentlyContinue
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinitions has been renamed to PolicyDefinition-$UniqueID"
             $result = 0
         }
         catch {
-            $global:err = "Error in Renaming"
-            $dbgMess += (Get-Date -UFormat "% Y-%m-%d %T ") + "---! Error while renaming PolicyDefinition."
-            $ResMess = "Error while renaming PolicyDefinition to PolicyDefinition-old"
-            $result = 2
+            $global:err = "Error in Renaming the current repository."
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while renaming PolicyDefinitions folder."
+            $ResMess = "Error while renaming PolicyDefinition to PolicyDefinition-$UniqueId"
+            $result = 1
         }
-        try {
-            Copy-Item $HardenPolicyDefinition.FullName -Destination "$sysVolBasePath\$domName\Policies" -Recurse -Force
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinition has been copied to $sysVolBasePath\$domName\Policies"
-            $result = 0
+        
+        # Update the central with the latest repository release
+        if ($result -eq 0)
+        {
+            try {
+                Copy-Item $HardenPolicyDefinition.FullName -Destination "$sysVolBasePath\$domName\Policies" -Recurse -Force -ErrorAction SilentlyContinue
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinition has been copied to $sysVolBasePath\$domName\Policies"
+                $result = 0
+            }
+            catch {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($HardenPolicyDefinition.Name)."
+                $ResMess = "Error while copying PolicyDefinition to $sysVolBasePath\$domName\Policies"
+                $result = 2
+            }
         }
-        catch {
-            $dbgMess += (Get-Date -UFormat "% Y-%m-%d %T ") + "---! Error while copying $($HardenPolicyDefinition.Name)."
-            $ResMess = "Error while copying PolicyDefinition to $sysVolBasePath\$domName\Policies"
-            $result = 2
-        }
-    }
 
+        # Add to the CentralStore any admx/adml file missing from the previous one (existing will not be overwriten).
+        # Robocopy options: /E to recurse subdirs, inclunding empty ones, /XC to exclude overwriting file with a different size, XN to exclude overwriting file newer than the repo, XO to exclude overwrting file older than the repo.
+        $NoEchoe = Robocopy "$GPOCentralStore\PolicyDefinitions-$UniqueId" "$GPOCentralStore\PolicyDefinitions" /E /XC /XN /XO
+
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinitions has been updated from any directory/files missing from PolicyDefinition-$UniqueID"
+    }
+    ## Fix for https://learn.microsoft.com/en-us/troubleshoot/windows-server/group-policy/winstoreui-conflict-with-windows-10-1151-admx-file
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> ### BUGFIX: winstoreui error message in GPMC"
+
+    Try {
+        $bugFix = Get-ChildItem $GPOCentralStore\PolicyDefinitions -File -Filter "winstoreui.adm?" -Recurse
+        $bugFix | Remove-Item -Force -Confirm:$false -ErrorAction Stop
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Found $($bugFix.count) winstoreui.admx/l file(s) and removed them successfully from the central store"
+    } Catch {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Found $($bugFix.count) winstoreui.admx/l file(s) to remove from central store but failed to delete them!"
+    }
+        
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | INIT  ROTATIVE  LOG "
@@ -843,7 +878,7 @@ Function Get-PingCastle {
 
 
     ## Exit
-    $dbgMess += (Get-Date -UFormat "% Y-%m-%d %T ") + "---> function return RESULT: $Result"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | INIT  ROTATIVE  LOG "
     if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 

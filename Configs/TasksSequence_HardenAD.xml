@@ -825,7 +825,7 @@
 		<!-- 
 			DC SCHEDULED TASKS 
 		-->
-		<GPO BackupID="{9B7F544A-EA37-4135-87E2-1D44C8D76C1C}" Validation="Yes" Name="HAD-TS-Local-admins-groups" Description="--- Harden AD --- &quot; ,&quot; Import the HADLocalAdmins module and create the associated scheduled task.">
+		<GPO BackupID="{5ABE73CF-29C5-406B-8820-BB458D040A2E}" Validation="Yes" Name="HAD-TS-Local-admins-groups" Description="--- Harden AD --- &quot; ,&quot; Import the HADLocalAdmins module and create the associated scheduled task.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
@@ -881,7 +881,6 @@
 		</GPO>
 		<GPO BackupID="{AACD614B-7C19-4C6A-99AA-0CD91BADEC0E}" Validation="Yes" Name="HAD-SMB1-Client-Only-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1 only for clients.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoFilter WMI="Windows-2008-Vista-and-Newer" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{78001DDD-6357-4EAA-A645-1311F6E59411}" Validation="Yes" Name="HAD-SMB1-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables SMBv1.">
@@ -891,12 +890,15 @@
 		</GPO>
 		<GPO BackupID="{D552CA4B-C9E9-455A-9821-924E890676C0}" Validation="Yes" Name="HAD-SMB1-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoFilter WMI="Windows-2008-Vista-and-Newer" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{0532EF52-A725-4E26-9A8C-45C3E2E07324}" Validation="Yes" Name="HAD-SMB1-Server-Only-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1 only for servers.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoFilter WMI="Windows-2008-Vista-and-Newer" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{2D9C0297-0579-46AB-89FC-91F3297B190B}" Validation="Yes" Name="HAD-UNC-Hardened-Path" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1 only for servers.">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			TLS AND SSL HARDENING 
@@ -1209,13 +1211,18 @@
 	<DefaultMembers>
 		<!--
 			The <DefaultMembers> Section list strictely allowed members of a specified group.
+			
 			When the script call the function "Reset-GroupMembership", the function will use this data to leave only mandatory identity.
-				> Member: either a SID or a sAMAccountName. Use %domainSID% to dynamically replace it by the domain SID.
+			> Member: either a SID or a sAMAccountName. Use %domainSID% to dynamically replace it by the domain SID.
+
+			A Group Target can be asked to perform any ot the follwing actions through the parameter AllowedTo:
+			> AddOnly: (default) If any of the specified members is missing, then the object will be added.
+			> Enforce: When used, the script drops all of the group members and add only the ones specified here.
 		-->
 		<!-- 
 			Builtin\Administrators 
 		-->
-		<Group Target="S-1-5-32-544">
+		<Group Target="S-1-5-32-544" AllowedTo="AddOnly">
 			<Member>%DomainSID%-500</Member>
 			<Member>%DomainSID%-512</Member>
 			<Member>%DomainSID%-519</Member>
@@ -1223,19 +1230,19 @@
 		<!-- 
 			Domain Admins 
 		-->
-		<Group Target="%DomainSID%-512">
+		<Group Target="%DomainSID%-512" AllowedTo="AddOnly">
 			<Member>%DomainSID%-500</Member>
 		</Group>
 		<!-- 
 			Enterprise Admins 
 		-->
-		<Group Target="%DomainSID%-519">
+		<Group Target="%DomainSID%-519" AllowedTo="AddOnly">
 			<Member>%t0-Managers%</Member>
 		</Group>
 		<!-- 
 			Protected Users 
 		-->
-		<Group Target="%DomainSID%-525">
+		<Group Target="%DomainSID%-525" AllowedTo="AddOnly">
 			<Member>%t0-managers%</Member>
 		</Group>
 	</DefaultMembers>
@@ -1389,7 +1396,7 @@
 			<UseParameters>
 			</UseParameters>
 			<TaskEnabled>No</TaskEnabled>
-			<TaskDescription>set `(GPO Central Store` and update `{adm` and `{admx` files</TaskDescription>
+			<TaskDescription>set `(GPO Central Store` and `(update adm and admx` files</TaskDescription>
 		</Id>
 		<!-- 
 			GENERATE NEW ADMINISTRATION ORGANIZATIONAL UNIT
@@ -1485,6 +1492,15 @@
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>Enforce `(Delegation ACEs` used by the tier model</TaskDescription>
 		</Id>
+		<!--
+			FILE CUSTOMIZATION BEFORE GPO IMPORT
+		-->
+		<Id Number="100" Name="Prepare GPO files before GPO import">
+			<CallingFunction>Set-TSLocalAdminGroups</CallingFunction>
+			<UseParameters>{5ABE73CF-29C5-406B-8820-BB458D040A2E}</UseParameters>
+			<TaskEnabled>No</TaskEnabled>
+			<TaskDescription>Prepare `(GPO Backup file {5ABE73CF-29C5-406B-8820-BB458D040A2E}` name `(Configuration.xml` before GPO importation</TaskDescription>
+		</Id>
 		<!-- 
 			IMPORT WMI FILTERS
 		-->
@@ -1534,12 +1550,20 @@
 			<TaskDescription>Update `(LAPS Scripts` to match with the domain name</TaskDescription>
 		</Id>
 		<!-- 
+			UPDATE SENSIBLE GROUPS
+		-->
+		<Id Number="150" Name="Reset HAD Protected Groups Memberships">
+			<CallingFunction>Reset-GroupMembership</CallingFunction>
+			<UseParameters></UseParameters>
+			<TaskEnabled>No</TaskEnabled>
+			<TaskDescription>Update `(groups's membeberships` to match the `[trusted list`</TaskDescription>
+		</Id>
+		<!-- 
 			CROSS INTEGRATION OF ADMIN GROUPS
 		-->
 		<Id Number="160" Name="Cross integration of Admin groups">
 			<CallingFunction>Add-GroupsOverDomain</CallingFunction>
-			<UseParameters>
-			</UseParameters>
+			<UseParameters></UseParameters>
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>Cross integration of `(administration groups` used by the tier model</TaskDescription>
 		</Id>

@@ -83,12 +83,12 @@ Param(
     $NoConfirmationForRootDomain,
 
     [Parameter(ParameterSetName = 'TASK')]
-    [ValidateSet('All','Activate Active Directory Recycle Bin','Create administration accounts','Create administration groups','Default computer location on creation','Default user location on creation','Enforce delegation model through ACEs','Import additional WMI Filters','Import new GPO or update existing ones','Restrict computer junction to the domain','Set Administration Organizational Unit','Set GPO Central Store','Set Legacy Organizational Unit','Set Notify on every Site Links','Set Provisioning Organizational Unit','Set Tier 0 Organizational Unit','Set Tier 1 and Tier 2 Organizational Unit','Setup LAPS permissions over the domain','Update Ad schema for LAPS and deploy PShell tools','Update LAPS deployment scripts','Upgrade Domain Functional Level','Upgrade Forest Functional Level')]
+    [ValidateSet('All','Activate Active Directory Recycle Bin','Create administration accounts','Create administration groups','Default computer location on creation','Default user location on creation','Enforce delegation model through ACEs','Import additional WMI Filters','Import new GPO or update existing ones','Restrict computer junction to the domain','Reset HAD Protected Groups Memberships','Set Administration Organizational Unit','Set GPO Central Store','Set Legacy Organizational Unit','Set Notify on every Site Links','Set Provisioning Organizational Unit','Set Tier 0 Organizational Unit','Set Tier 1 and Tier 2 Organizational Unit','Setup LAPS permissions over the domain','Update Ad schema for LAPS and deploy PShell tools','Update LAPS deployment scripts','Upgrade Domain Functional Level','Upgrade Forest Functional Level')]
     [Array]
     $EnableTask,
 
     [Parameter(ParameterSetName = 'TASK')]
-    [ValidateSet('All','Activate Active Directory Recycle Bin','Create administration accounts','Create administration groups','Default computer location on creation','Default user location on creation','Enforce delegation model through ACEs','Import additional WMI Filters','Import new GPO or update existing ones','Restrict computer junction to the domain','Set Administration Organizational Unit','Set GPO Central Store','Set Legacy Organizational Unit','Set Notify on every Site Links','Set Provisioning Organizational Unit','Set Tier 0 Organizational Unit','Set Tier 1 and Tier 2 Organizational Unit','Setup LAPS permissions over the domain','Update Ad schema for LAPS and deploy PShell tools','Update LAPS deployment scripts','Upgrade Domain Functional Level','Upgrade Forest Functional Level')]
+    [ValidateSet('All','Activate Active Directory Recycle Bin','Create administration accounts','Create administration groups','Default computer location on creation','Default user location on creation','Enforce delegation model through ACEs','Import additional WMI Filters','Import new GPO or update existing ones','Reset HAD Protected Groups Memberships','Restrict computer junction to the domain','Set Administration Organizational Unit','Set GPO Central Store','Set Legacy Organizational Unit','Set Notify on every Site Links','Set Provisioning Organizational Unit','Set Tier 0 Organizational Unit','Set Tier 1 and Tier 2 Organizational Unit','Setup LAPS permissions over the domain','Update Ad schema for LAPS and deploy PShell tools','Update LAPS deployment scripts','Upgrade Domain Functional Level','Upgrade Forest Functional Level')]
     [Array]
     $DisableTask
 )
@@ -352,6 +352,13 @@ function Set-Translation
     $domainAdmins_       = Get-GroupNameFromSID -GroupSID $domainAdmins_SID
     $schemaAdmins_       = Get-GroupNameFromSID -GroupSID $schemaAdmins_SID
 
+    # Exit from script if Enterprise Admins is empty
+	if ($enterpriseAdmins_ -eq "" -or $isnull -eq $enterpriseAdmins_)
+	{
+		Write-host "`nInstallation cancelled! You blew-up the process: the Enterprise Admins group is unreachable...`n" -ForegroundColor red
+		Exit 1
+	}
+
     # Locate the nodes to update in taskSequence File
     $wellKnownID_AU            = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%AuthenticatedUsers%" }
     $wellKnownID_Adm           = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Administrators%" }
@@ -612,7 +619,7 @@ $ColorsAndTexts = New-Object -TypeName psobject -Property @{    PendingColor = "
                                                                 FailureColor = "Red"
                                                                 IgnoredColor = "cyan"
                                                                 SuccessColor = "green"
-                                                                DisabledColor= "yellow"
+                                                                DisabledColor= "gray"
                                                                 BaseTxtColor = "white"
                                                                 AltBaseHColA = "magenta"
                                                                 AltBaseHColB = "darkgray"

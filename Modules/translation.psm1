@@ -30,13 +30,7 @@ function Get-GroupNameFromSID {
     catch {
         Write-Host "An error occurred while searching for the group with SID '$GroupSID'."
         $inputValid = $false
-        while (-not $inputValid) {
-            $userInput = Read-Host "Please enter the group name manually:"
-            $confirmation = Read-Host "Confirm that '$userInput' is the group name. (y/n)"
-            if ($confirmation.ToLower() -eq "y") {
-                $inputValid = $true
-            }
-        }
+        $userInput  = $null
         return $userInput
     }
 }

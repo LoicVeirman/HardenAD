@@ -67,7 +67,7 @@ Function New-AdministrationAccounts {
         $xmlLoaded = $true
     }
     Catch {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! FAILED loading xml skeleton file "
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! FAILED loading xml skeleton file "
         $xmlLoaded = $false
     }    
 
@@ -92,7 +92,7 @@ Function New-AdministrationAccounts {
             } 
             Catch {
                 $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! ERROR! OS is 2008/R2, but the script could not add AD module." 
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
             }
         }
@@ -142,7 +142,7 @@ Function New-AdministrationAccounts {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $AceUser now has FULLCONTROL permission on $path"
                 }
                 Catch {
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! $AceUser : FULLCONTROL permission on $path failed to be applied!"
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! ERROR! $AceUser : FULLCONTROL permission on $path failed to be applied!"
                 }
                 Try {
                     $acl = Get-Acl $pathdb
@@ -151,7 +151,7 @@ Function New-AdministrationAccounts {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> $AceUser now has FULLCONTROL permission on $pathdb"
                 }
                 Catch {
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! $AceUser : FULLCONTROL permission on $pathdb failed to be applied!"
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! ERROR! $AceUser : FULLCONTROL permission on $pathdb failed to be applied!"
                 }
 
                 #-Loading Keepass Binaries
@@ -164,7 +164,7 @@ Function New-AdministrationAccounts {
                 }
                 Catch {
                     $KpsFlag = $false
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! keepass binaries not found!"
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! keepass binaries not found!"
                 }
                 if ($KpsFlag)
                 {
@@ -179,7 +179,7 @@ Function New-AdministrationAccounts {
                     }
                     Catch {
                         $KpsFlag = $false
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! keepass database not found!"
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! keepass database not found!"
                     }
                 }
                 foreach ($account in $xmlData) 
@@ -230,7 +230,7 @@ Function New-AdministrationAccounts {
                                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->     password stored in keepass database successfully."
                                 }
                                 Catch {
-                                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!     ERROR: password could not be stored in the keepass database!"
+                                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!!     ERROR: password could not be stored in the keepass database!"
                                     ($NewPwd + "`t" + $account.DisplayName) | Out-File .\Outputs\AccountsPassword.txt -Append
                                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->     password stored in text file as fallback solution."
                                 }
@@ -270,7 +270,7 @@ Function New-AdministrationAccounts {
             }
             else {
      
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Warning: xmlData is empty!"
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! Warning: xmlData is empty!"
                 $result = 1
                 $ResMess = "No Data to deal with"
             }
@@ -278,7 +278,7 @@ Function New-AdministrationAccounts {
         }
         else {
 
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: could not proceed!"
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! Error: could not proceed!"
             $result = 2
             $ResMess = "prerequesite failure"
         }   
@@ -363,7 +363,7 @@ Function New-AdministrationGroups {
         $xmlLoaded = $true
     }
     Catch {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! FAILED loading xml skeleton file "
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! FAILED loading xml skeleton file "
         $xmlLoaded = $false
     }    
 
@@ -386,7 +386,7 @@ Function New-AdministrationGroups {
             } 
             Catch {
                 $noError = $false
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module." 
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! ERROR! OS is 2008/R2, but the script could not add AD module." 
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> variable noError.........: $noError"
             }
         }
@@ -499,14 +499,14 @@ Function New-AdministrationGroups {
             }
             else {
      
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Warning: xmlData is empty!"
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! Warning: xmlData is empty!"
                 $result = 1
                 $ResMess = "No Data to deal with"
             }
         }
         else {
 
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: could not proceed!"
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! Error: could not proceed!"
             $result = 2
             $ResMess = "prerequesite failure"
         }   
@@ -538,39 +538,56 @@ Function New-AdministrationGroups {
 ## Reset-GroupMembership                                        ##
 ## ---------------------                                        ##
 ## This function will reset group members and only keeps        ##
-## mandatory objects in it                                      ##
+## mandatory objects in it (from section <DefaultMembers>)      ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 03.00.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Reset-GroupMembership {
     <#
         .Synopsis
-         Reset group members to its factory default.
+         Reset or update group members, based on <DefaultMembers> input.
         
         .Description
-         The TasksSequence_HardenAD.xmpl file contains the mandatory members of each groups to flush. 
+         The TasksSequence_HardenAD.xmpl file contains the mandatory members of each groups to flush/update. 
         
         .Notes
          Version: 
             01.00 -- contact@hardenad.net 
 			02.00 -- contact@hardenad.net 
+            03.00 -- contact@hardenad.net
          history: 
             01.00 -- Script creation
             01.01 -- Removed unecessary xmlSkeleton call. Added use case managment when a group is empty.
 			02.00 -- Removed logging data. Added Dynamic replacement for input data.
+            03.00 -- Added call management per group to update or replace. Logging is back, too.
     #>
     param(
     )
+
+    ## Function Log Debug File
+    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+    $dbgMess = @()
+
+    ## Start Debug Trace
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+
+    ## Indicates caller and options used
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command    
+
     $Result = 0
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
         $xmlSkeleton = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -ErrorAction Stop -Encoding utf8)
         $xmlLoaded   = $true
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> XML Skeleton loaded successfully (TasksSequence_HardenAD.xml)"
     }
     Catch {
         $xmlLoaded = $false
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! Error: XML Skeleton could not be loaded (TasksSequence_HardenAD.xml)"
     }
 
     ## If xml loaded, begining check and create...
@@ -588,6 +605,7 @@ Function Reset-GroupMembership {
             Catch {
                 $noError = $false
                 $Result = 2
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! Error: could not load the ActiveDirectory module on a 2k8 system"
             }
         } 
         
@@ -597,14 +615,24 @@ Function Reset-GroupMembership {
             $xmlGroups = $xmlSkeleton.Settings.DefaultMembers
             $Translat  = $xmlSkeleton.Settings.Translation
 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New parameter: xmlGroups (xmlSkeleton.Settings.DefaultMembers)"
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New parameter: Translat  (xmlSkeleton.Settings.Translation   )"
+
             ## Recover domain data
             $DomainSID = (Get-ADDomain).DomainSID
+
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New parameter: DomainSID=$DomainSID"
 
             ## Reset loop
             foreach ($group in $xmlGroups.group) 
             {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> WORKING ON: $($group.target)"
                 #.Group identity
                 $GroupID = $group.target -replace '%domainSid%', $DomainSID
+                $Action  = $group.AllowedTo
+
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- --> GroupID is...: '$GroupID'"
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- --> AllowedTo....: $Action"
 
                 #.Create mandatory members list
                 $mbrLists = @()
@@ -622,53 +650,110 @@ Function Reset-GroupMembership {
                     ## Double test to discover the object class and run the proper command
                     ##This is not a clean approach but... It works :)
                     $test = $false
+                    # is user ?
                     try {
                         $mbrObj = Get-ADUser $mbrTranslated
                         $test = $true
-                    }
-                    Catch {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- --> Allowed user.....: $($mbrObj.samAccountName)"
+                    } Catch {
                         $test = $false
                     }
+                    
+                    # is group ?
                     if (-not($test)) 
                     {
                         try {
                             $mbrObj = Get-ADGroup $mbrTranslated
                             $test = $true
-                        }
-                        Catch {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- --> Allowed group....: $($mbrObj.samAccountName)"
+                        } Catch {
                             $test = $false
                         }
                     }
 
                     ## Adding object to a table for a futur comparison with existing members
-                    $mbrLists += $mbrObj
+                    if ($test)
+                    {
+                        $mbrLists += $mbrObj
+                    }
                 }
 
                 ## Get the Group Object
-                $groupTarget = Get-ADGroup $GroupID
+                Try {
+                    $groupTarget = Get-ADGroup $GroupID -ErrorAction SilentlyContinue
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- --> Retrieved group members from $($groupTarget) and analyzing them..."
+                    $isOK = $true
+                } Catch {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- !!! ERROR: $groupID could not be found in the domain!"
+                    $Result = 1
+                    $isOK = $false
+                }
 
                 ## Get the Group members
-                $MbrInIt = @()
-                $MbrInIt += Get-ADGroupMember $groupTarget
-
-                ## Cleaning group and adding missing users
-                foreach ($badID in (Compare-Object $MbrInIt $mbrLists)) 
+                if ($isOK)
                 {
-                    ## Side Indicator: should not be in
-                    if ($badID.SideIndicator -eq "<=") 
+                    $MbrInIt = @()
+                    $MbrInIt += Get-ADGroupMember $groupTarget
+
+                    ## Cleaning group and adding missing users
+                    foreach ($badID in (Compare-Object $MbrInIt $mbrLists -IncludeEqual)) 
                     {
-                        Remove-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
-                    }
-                    ## Side Indicator: should be in
-                    if ($badID.SideIndicator -eq "=>") 
-                    {
-                        Add-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
+                        ## Side Indicator: should not be in
+                        if ($badID.SideIndicator -eq "<=" -and $Action -eq 'Enforce') 
+                        {
+                            # Action allow to remove an unwanted member
+                            Try {
+                                Remove-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- <<< REMOVED: $($badID.InputObject)"
+                            } Catch {
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- !!! ERROR..: $($badID.InputObject) could not be removed from group!"
+                                $Result = 1
+                            }
+                        }
+                        ## Side Indicator: should be in
+                        if ($badID.SideIndicator -eq "=>") 
+                        {
+                            # Well, dude, get in :)
+                            Try {
+                                Add-ADGroupMember -Identity $groupID -Members $badID.InputObject -Confirm:$false
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- >>> ADDED..: $($badID.InputObject)"
+                            } Catch {
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- !!! ERROR..: $($badID.InputObject) could not be added to group!"
+                                $Result = 1
+                            }
+                        }
+                        ## Side Indicator: allowed to be in
+                        if ($badID.SideIndicator -eq "==")
+                        {
+                            # Just a trapping for the log
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- === KEEP...: $($badID.InputObject)"
+                        }
+
                     }
                 }
             }
         }
     }
+
     #.Exit
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+    if (Test-Path .\Logs\Debug\$DbgFile)
+    {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
+        if (-not((Get-WMIObject win32_operatingsystem).name -like "*2008*")) 
+        {
+            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
+        }
+
+    }
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
+
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 
@@ -870,7 +955,7 @@ function Add-GroupsOverDomain {
         $xmlSkeleton = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Successfuly loaded TasksSequence_HardenAD.xml to memory" + (Get-PSCallStack)[1].Command
     } Catch {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! !!! Error: could not load TasksSequence_HardenAD.xml file!" + (Get-PSCallStack)[1].Command
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! !!! Error: could not load TasksSequence_HardenAD.xml file!" + (Get-PSCallStack)[1].Command
     }
 
     #.Retrieving Enterprise Admins group name and Tier 0 Managers group name
