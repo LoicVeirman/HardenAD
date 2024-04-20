@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>SAM-inställningar</displayName>
+  <description>Konfigurationsinställningar för Hanterare för kontosäkerhet</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">Hanterare för kontosäkerhet (SAM)</string>
+      <string id="SamNGCKeyROCAValidation">Konfigurera validering av ROCA-sårbara WHfB-nycklar vid autentisering</string>
+      <string id="SamNGCKeyROCAValidationNone">Ignorera ROCA-sårbara WHfB-nycklar</string>
+      <string id="SamNGCKeyROCAValidationAudit">Granska ROCA-sårbara WHfB-nycklar vid användning</string>
+      <string id="SamNGCKeyROCAValidationBlock">Blockera ROCA-sårbara WHfB-nycklar vid användning</string>
+      <string id="SamNGCKeyROCAValidation_explain">Med denna policyinställning kan du hantera hur domänkontrollanter hanterar nycklar i Windows Hello for Business (WHfB) som är sårbara för "Return of Coppersmith's attack" (ROCA).
+
+Mer information om ROCA-sårbarheten finns här:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+Om du aktiverar den här policyinställningen fås stöd för följande alternativ:
+
+Ignorera: under autentiseringen kommer domänkontrollanten inte att avsöka några WHfB-nycklar för ROCA-sårbarheten.
+
+Granskning: under autentiseringen kommer domänkontrollanten att sända ut ljud för WHfB-nycklar är sårbara för ROCA (autentiseringar kommer ändå att lyckas).
+
+Blockera: under autentiseringen kommer domänkontrollanten att blockera användningen av WHfB-nycklar som är sårbara för ROCA (autentiseringar kommer att misslyckas).
+
+Denna inställning påverkar enbart domänkontrollanter.
+
+Om den inte konfigureras kommer domänkontrollanterna att som standard använda sin lokala konfiguration. Den lokala standardinställningen är Granska.
+
+En omstart krävs inte för att ändringarna ska få effekt.
+
+Obs! för att undvika oväntade störningar bör denna inställning inte konfigureras till Blockera förrän lämpliga åtgärder genomförts, till exempel korrigering av sårbara TPMer.
+
+Mer information finns tillgänglig på https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Alternativ för hantering av ROCA-sårbara WHfB-nycklar:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

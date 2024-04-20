@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>immettere qui il nome visualizzato</displayName>
+  <description>immettere qui la descrizione</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">Workstation LANMAN</string>
+      <string id="Pol_CipherSuiteOrder_Name">Ordine dei pacchetti di crittografia</string>
+      <string id="Pol_CipherSuiteOrder_Help">Questa impostazione dei criteri determina i pacchetti di crittografia utilizzati dal client SMB.
+
+Se si abilita questa impostazione dei criteri, ai pacchetti di crittografia viene assegnata una priorità in base all'ordine specificato.
+
+Se si abilita questa impostazione dei criteri e non si specifica almeno un pacchetto di crittografia supportato oppure se si disabilita o non si configura questa impostazione dei criteri, verrà utilizzato l'ordine dei pacchetti di crittografia predefinito.
+
+Pacchetti di crittografia SMB 3.11:
+
+AES_128_GCM
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+Pacchetti di crittografia SMB 3.0 e 3.02:
+
+AES_128_CCM
+
+Come modificare questa impostazione:
+
+Disporre i pacchetti di crittografia desiderati nella casella di modifica, un pacchetto di crittografia per riga, in ordine di preferenza decrescente, con il pacchetto di crittografia preferito all'inizio. Rimuovere gli eventuali pacchetti di crittografia che non si desidera utilizzare.
+
+Nota: quando si configura questa impostazione di sicurezza, le modifiche diventeranno effettive solo dopo il riavvio di Windows.</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">Abilita gli accessi guest non sicuri</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">Questa impostazione dei criteri determina se il client SMB consente gli accessi guest non sicuri a un server SMB.
+
+Se si abilita o non si configura questa impostazione dei criteri, il client SMB consente gli accessi guest non sicuri.
+
+Se si disabilita questa impostazione dei criteri, il client SMB rifiuta gli accessi guest non sicuri.
+
+Gli accessi guest non sicuri vengono usati dai file server per consentire l'accesso non autenticato alle cartelle condivise. Pur essendo inconsueti in un ambiente aziendale, gli accessi guest non sicuri vengono usati di frequente dai dispositivi NAS (Network Attached Storage) consumer che operano come file server. I file server Windows richiedono l'autenticazione e non usano gli accessi guest non sicuri per impostazione predefinita. Perché gli accessi guest non sicuri non sono autenticati, importanti funzionalità di sicurezza come la firma SMB e la crittografia SMB sono disabilitate. Di conseguenza, i client che consentono gli accessi guest non sicuri sono vulnerabili a un'ampia gamma di attacchi man-in-the-middle che possono comportare la perdita di dati, il danneggiamento dei dati e l'esposizione a malware. Inoltre, eventuali dati scritti in un file server usando un accesso guest non sicuro sono potenzialmente accessibili a tutti gli utenti della rete. Microsoft consiglia di disabilitare gli accessi guest non sicuri e di configurare i file server in modo da richiedere l'accesso autenticato."
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">Disponibilità dei file offline nelle condivisioni con disponibilità continua</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        Questa impostazione dei criteri determina il comportamento dei file offline nei client che si connettono a una condivisione SMB in cui è abilitato il flag Disponibilità continua.
+
+        Se si abilita questa impostazione dei criteri, l'opzione "Sempre disponibile/i offline" verrà visualizzata nel menu di Esplora file in un computer Windows durante la connessione a una condivisione abilitata per Disponibilità continua. Sarà anche possibile aggiungere file nelle condivisioni abilitate per Disponibilità continua usando la memorizzazione nella cache sul lato client.
+
+        Se si disabilita o non si configura questa impostazione dei criteri, Windows impedirà l'uso dei file offline con le condivisioni abilitate per Disponibilità continua.
+
+        Nota: Microsoft sconsiglia di abilitare questo criterio di gruppo. L'uso di Disponibilità continua con i file offline determinerà tempi di transizione molto lunghi tra gli stati online e offline.
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">Memorizzazione nella cache degli handle nelle condivisioni Disponibilità continua</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        Questa impostazione dei criteri determina il comportamento della memorizzazione nella cache degli handle SMB per i client che si connettono a una condivisione SMB in cui è abilitato il flag Disponibilità continua.
+
+        Se si abilita questa impostazione dei criteri, il client SMB consentirà handle memorizzati nella cache per i file in condivisioni Disponibilità continua. Questo può migliorare le prestazioni quando si accede ripetutamente a numerosi file di dati non strutturati in condivisioni Disponibilità continua in esecuzione in File di Microsoft Azure.
+
+        Se si disabilita o non si configura questa impostazione dei criteri, Windows impedirà l'uso di handle memorizzati nella cache per i file aperti tramite condivisioni Disponibilità continua.
+
+        Nota: questo criterio non ha effetto in caso di connessione a condivisioni File server di scalabilità orizzontale fornite da un sistema Windows Server. Microsoft sconsiglia di abilitare questo criterio per i client che si connettono regolarmente a file ospitati in un cluster di failover di Windows con il ruolo File server per uso generale, perché questo può influire negativamente sui tempi di failover e aumentare l'uso della memoria e della CPU.
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Almeno Windows Server 2022 o Windows 11</string>
+      <string id="Pol_EnableCompressedTraffic_Name">Usa compressione SMB per impostazione predefinita</string>
+      <string id="Pol_EnableCompressedTraffic_Help">Questo criterio controlla se il client SMB usa la compressione del traffico per impostazione predefinita.
+
+Se abiliti questa impostazione dei criteri, il client SMB tenterà di comprimere il traffico per impostazione predefinita quando è abilitata la compressione SMB.
+
+Se disabiliti o non configuri questa impostazione dei criteri, il client SMB non tenterà di comprimere il traffico per impostazione predefinita. Tuttavia, la compressione del traffico può essere richiesta in altro modo. Vedi le note di seguito.
+
+Nota: questo criterio viene combinato con le proprietà per condivisione e per handle di file, tramite cui è possibile richiedere la compressione del traffico. Inoltre, il server SMB deve supportare e abilitare la compressione. Ad esempio, se questo criterio viene disabilitato o non configurato, il client SMB potrebbe comunque eseguire una compressione se una condivisione del server SMB richiede una compressione. Se si tratta di un errore indesiderato e vuoi disabilitare completamente la compressione, configura invece i criteri 'Disabilitare compressione SMB' associati.
+      </string>
+      <string id="Pol_DisableCompression_Name">Disabilita compressione SMB</string>
+      <string id="Pol_DisableCompression_Help">Questo criterio controlla se il client SMB disabiliterà (impedirà completamente) la compressione del traffico.
+
+Se si abilita questa impostazione dei criteri, il client SMB non comprimerà mai i dati, indipendentemente da altri criteri, ad esempio i criteri 'Usa compressione SMB per impostazione predefinita' o la proprietà per condivisione.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il client SMB potrebbe comprimere il traffico ,a seconda di una combinazione di altri criteri e condizioni.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>Pacchetti di crittografia:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

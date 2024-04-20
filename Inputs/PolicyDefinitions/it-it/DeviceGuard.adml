@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2015 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Microsoft Windows Device Guard</displayName>
+  <description>Sicurezza di Windows Device Guard</description>
+  <resources>
+    <stringTable>
+      <string id="DeviceGuard">Device Guard</string>
+      <string id="VirtualizationBasedSecurity">Attiva sicurezza basata su virtualizzazione</string>
+      <string id="VirtualizationBasedSecurityHelp">Specifica se la sicurezza basata su virtualizzazione è abilitata.
+
+La sicurezza basata su virtualizzazione usa Windows Hypervisor per fornire supporto per i servizi di sicurezza. La sicurezza basata su virtualizzazione richiede l'avvio protetto e facoltativamente può essere abilitata con l'uso di protezioni DMA. Le protezioni DMA richiedono il supporto hardware e verranno abilitate solo nei dispositivi configurati correttamente.
+
+Protezione basata sulla virtualizzazione dell'integrità del codice
+
+Questa impostazione abilita la protezione basata sulla virtualizzazione dell'integrità del codice in modalità kernel. Quando questa opzione è abilitata, vengono applicate le protezioni della memoria in modalità kernel e il percorso di convalida dell'integrità del codice è protetto dalla funzionalità Sicurezza basata su virtualizzazione.
+
+L'opzione "Disabilitato" disattiva la protezione basata sulla virtualizzazione dell'integrità del codice in modalità remota se è stata attivata in precedenza con l'opzione "Abilitato senza blocco".
+
+L'opzione "Abilitato con blocco UEFI" assicura che la protezione basata su virtualizzazione dell'integrità del codice non possa essere disabilitata in remoto. Per disabilitare la funzionalità, è necessario impostare il Criteri di gruppo su "Disabilitato" e rimuovere la funzionalità di sicurezza da ogni computer, con un utente fisicamente presente, per cancellare la configurazione persistente in UEFI.
+
+L'opzione "Abilitato senza blocco" consente di disabilitare in remoto la protezione basata su virtualizzazione dell'integrità del codice tramite Criteri di gruppo.
+
+L'opzione "Non configurato" lascia indefinita l'impostazione dei criteri. Criteri di gruppo non scrive l'impostazione dei criteri nel Registro di sistema, pertanto non ha alcun impatto su computer o utenti. Se nel Registro di sistema è presente un'impostazione corrente, non verrà modificata.
+
+L'opzione "Richiedi tabella attributi di memoria UEFI" abiliterà solo la protezione basata sulla virtualizzazione dell'integrità del codice nei dispositivi con supporto del firmware UEFI per la tabella degli attributi di memoria. I dispositivi senza la tabella degli attributi di memoria UEFI potrebbero avere firmware incompatibile con la protezione basata sulla virtualizzazione dell'integrità del codice che in alcuni casi può causare arresti anomali, perdita di dati o incompatibilità con determinate schede plug-in. Se non si imposta questa opzione, i dispositivi di destinazione devono essere testati per garantire la compatibilità.
+
+Avviso: tutti i driver del sistema devono essere compatibili con questa funzionalità oppure il sistema potrebbe arrestarsi in modo anomalo. Verificare che questa impostazione dei criteri sia distribuita solo in computer noti come compatibili.
+
+Credential Guard
+
+Questa impostazione consente agli utenti di attivare Credential Guard con sicurezza basata sulla virtualizzazione per proteggere le credenziali.
+
+Per Windows 11 21H2 e versioni precedenti, l'opzione "Disabilitato" disattiva Credential Guard in remoto se è stato attivato in precedenza con l'opzione "Abilitato senza blocco". Per le versioni successive, l'opzione "Disabilitato" disattiva Credential Guard in modalità remota se è stata attivata in precedenza con l'opzione "Abilitato senza blocco" o se è "Non configurato".
+
+L'opzione "Abilitato con blocco UEFI" assicura che Credential Guard non possa essere disabilitato in remoto. Per disabilitare la funzionalità, è necessario impostare il Criteri di gruppo su "Disabilitato" e rimuovere la funzionalità di sicurezza da ogni computer, con un utente fisicamente presente, per cancellare la configurazione persistente in UEFI.
+
+L'opzione "Abilitato senza blocco" consente di disabilitare Credential Guard in remoto usando Criteri di gruppo. I dispositivi che usano questa impostazione devono eseguire almeno Windows 10 (versione 1511).
+
+Per Windows 11 21H2 e versioni precedenti, l'opzione "Non configurato" lascia l'impostazione dei criteri non definita. Criteri di gruppo non scrive l'impostazione dei criteri nel Registro di sistema, pertanto non ha alcun impatto su computer o utenti. Se nel Registro di sistema è presente un'impostazione corrente, non verrà modificata. Per le versioni successive, se nel Registro di sistema non è presente alcuna impostazione corrente, l'opzione "Non configurato" abiliterà Credential Guard senza blocco UEFI.
+
+Avvio sicuro
+
+Questa impostazione consente di impostare la configurazione di Avvio sicuro per proteggere la catena di avvio.
+
+L'impostazione predefinita è "Non configurato" e consente agli utenti amministratori di configurare la funzionalità.
+
+L'opzione "Abilitato" attiva Avvio protetto su hardware supportato.
+
+L'opzione "Disabilitato" disattiva Avvio sicuro, indipendentemente dal supporto hardware.
+
+Protezione dello stack applicata dall'hardware in modalità kernel
+
+Questa impostazione abilita protezione dello stack applicata dall'hardware per il codice in modalità kernel. Quando questa funzionalità di sicurezza è abilitata, gli stack di dati in modalità kernel vengono sottoposti a protezione avanzata con stack shadow basati su hardware, che archiviano le destinazioni degli indirizzi mittente previsti per garantire che il flusso di controllo del programma non venga manomesso.
+
+Questa funzionalità di sicurezza presenta i prerequisiti seguenti:
+1) L'hardware della CPU supporta shadow stack basati su hardware.
+2) La protezione basata sulla virtualizzazione dell'integrità del codice è abilitata.
+
+Se uno dei prerequisiti non viene soddisfatto, questa funzionalità non verrà abilitata, anche se per questa funzionalità è selezionata un'opzione "Abilitata". Si noti che la selezione di un'opzione "Abilitata" per questa funzionalità non abiliterà automaticamente la protezione basata sulla virtualizzazione dell'integrità del codice, che deve essere eseguita separatamente.
+
+I dispositivi che abilitano questa funzionalità di sicurezza devono eseguire almeno Windows 11 (versione 22H2).
+
+L'opzione "Disabilitato" disattiva la protezione dello stack applicata dall'hardware in modalità kernel.
+
+L'opzione "Abilitato in modalità di controllo" abilita la protezione dello stack applicata dall'hardware in modalità kernel in modalità di controllo, in cui le violazioni dello stack shadow non sono irreversibili e verranno registrate nel registro eventi di sistema.
+
+L'opzione "Abilitato in modalità di imposizione" abilita la protezione dello stack applicata dall'hardware in modalità kernel in modalità imposizione, in cui le violazioni dello stack shadow sono irreversibili.
+
+L'opzione "Non configurato" lascia indefinita l'impostazione dei criteri. Criteri di gruppo non scrive l'impostazione dei criteri nel Registro di sistema, pertanto non ha alcun impatto su computer o utenti. Se nel Registro di sistema è presente un'impostazione corrente, non verrà modificata.
+
+Avviso: tutti i driver del sistema devono essere compatibili con questa funzionalità di sicurezza oppure il sistema potrebbe arrestarsi in modalità di imposizione. È possibile usare la modalità di controllo per individuare driver incompatibili. Per altre informazioni, vedere https://go.microsoft.com/fwlink/?LinkId=2162953.
+      </string>
+      <string id="SecureBoot">Avvio protetto</string>
+      <string id="SecureBootAndDmaProtection">Avvio protetto e protezione DMA</string>
+      <string id="Disabled">Disabilitata</string>
+      <string id="Enabled">Abilitata</string>
+      <string id="EnabledWithoutLock">Abilitato senza blocco</string>
+      <string id="EnabledWithUefiLock">Abilitato con blocco UEFI</string>
+      <string id="EnabledAudit">Abilitato in modalità di controllo</string>
+      <string id="EnabledEnforcement">Abilitato in modalità di imposizione</string>
+      <string id="NotConfigured">Non configurato</string>
+      <string id="ConfigCIPolicy">Distribuisci Controllo di applicazioni di Windows Defender</string>
+      <string id="ConfigCIPolicyHelp">Distribuisci Windows Defender controllo applicazione
+
+Questa impostazione dei criteri consente di distribuire un criterio di integrità del codice in un computer per controllare gli elementi autorizzati all'esecuzione in tale computer.
+
+Se si distribuisce un criterio di integrità del codice, Windows limiterà gli elementi eseguibili sia in modalità kernel che in Windows Desktop in base ai criteri. Per abilitare questo criterio, è necessario riavviare il computer.
+
+Il percorso del file deve essere un percorso UNC ( ad esempio, \\NomeServer\NomeCondivisione\SIPolicy.p7b) o un percorso valido localmente (ad esempio, C:\NomeCartella\SIPolicy.p7b).  L'account computer locale (LOCAL SYSTEM) deve disporre dell'autorizzazione di accesso al file dei criteri.
+
+Se si utilizza un criterio firmato e protetto, la disabilitazione di questa impostazione dei criteri non rimuove la funzionalità dal computer. In alternativa, è necessario:
+
+1) aggiornare prima il criterio a un criterio non protetto e quindi disabilitare l'impostazione oppure
+   2) disabilitare l'impostazione e quindi rimuovere i criteri da ogni computer, con un utente fisicamente presente.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="VirtualizationBasedSecurity">
+        <dropdownList refId="RequirePlatformSecurityFeaturesDrop" defaultItem="1">Seleziona il livello di sicurezza della piattaforma:</dropdownList>
+        <dropdownList refId="HypervisorEnforcedCodeIntegrityDrop" defaultItem="3">Protezione basata su virtualizzazione dell'integrità del codice:</dropdownList>
+        <checkBox refId="CheckboxMAT">Richiedi tabella attributi di memoria UEFI</checkBox>
+        <dropdownList refId="CredentialIsolationDrop" defaultItem="3">Configurazione di Credential Guard:</dropdownList>
+        <dropdownList refId="SystemGuardDrop" defaultItem="2">Configurazione di Avvio protetto:</dropdownList>
+        <dropdownList refId="KernelShadowStacksDrop" defaultItem="3">Protezione stack applicata dall'hardware in modalità kernel:</dropdownList>
+      </presentation>
+      <presentation id="ConfigCIPolicy">
+        <textBox refId="ConfigCIPolicyFilePathText">
+          <label>Percorso del file di criteri di integrità del codice:</label>
+        </textBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

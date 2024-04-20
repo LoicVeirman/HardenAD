@@ -1,0 +1,132 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>Grupprincipmall för klientmiljöinställningar i DirectAccess</displayName>
+  <description>Den här admx-filen beskriver principmallar för NCA-klientkomponenter i DirectAccess</description>
+  <resources>
+    <stringTable>
+      <string id="NCA">Klientmiljöinställningar i DirectAccess</string>
+      <string id="NCA_Help">Det här är grupprincipmallen för klientmiljöinställningar i DirectAccess. Mer information finns i distributionsguiden för DirectAccess.</string>
+      <string id="SupportEmail">E-postadress till support</string>
+      <string id="SupportEmail_Help">Anger vilken e-postadress som ska användas när loggfilerna som genereras av NCA ska skickas till nätverksadministratörer. 
+
+När användaren skickar loggfilerna till administratören används standardklienten för e-post för att öppna ett nytt meddelande med e-postadressen för support i fältet Till: och de genererade loggfilerna bifogade som en HTML-fil. Användaren kan granska meddelandet och lägga till ytterligare information innan meddelandet skickas.
+
+</string>
+      <string id="FriendlyName">Eget namn</string>
+      <string id="FriendlyName_Help">Anger den sträng som visas för DirectAccess-anslutningen när användaren klickar på ikonen Nätverk i meddelandefältet. Du kan till exempel skriva Contoso Internetåtkomst för DirectAccess-klienterna inom Contoso Corporation.
+
+Om den här inställningen inte konfigureras visas strängen Företagsanslutning för DirectAccess-anslutningen.
+
+</string>
+      <string id="ShowUI">Användargränssnitt</string>
+      <string id="ShowUI_Help">Anger om DirectAccess-anslutningen ska visas när användaren klickar på ikonen Nätverk i meddelandefältet.
+
+Inaktivera inställningen för att inte förvirra användaren om du bara använder DirectAccess för att fjärrhantera DirectAccess-klientdatorer från intranätet och inte tillhandahåller sömlös Internetåtkomst. 
+
+Om den här inställningen inte konfigureras visas DirectAccess-anslutningen.
+
+</string>
+      <string id="PassiveMode">Passivt läge i DirectAccess</string>
+      <string id="PassiveMode_Help">Anger om NCA-tjänsten ska köras i passivt läge eller inte.
+
+Inaktivera inställningen om du vill att NCA ska söka aktivt hela tiden. Om inställningen inte är konfigurerad är NCA-sökning aktiv som standard.
+
+</string>
+      <string id="LocalNamesOn">Tillåtet att prioritera lokala namn</string>
+      <string id="LocalNamesOn_Help">Anger om användaren kan välja att ansluta och koppla från för DirectAccess-anslutningen när användaren klickar på ikonen Nätverk i meddelandefältet.
+
+Om användaren klickar på Koppla från tas DirectAccess-reglerna bort från NRPT-tabellen (Name Resolution Policy Table) och DirectAccess-klientdatorn använder sin ordinarie namnmatchning i den nuvarande nätverkskonfigurationen, inklusive att skicka alla DNS-frågor till det lokala intranätet eller Internet DNS-servrar. Observera att NCA inte tar bort befintliga IPsec-tunnlar och det går fortfarande att ansluta till intranätsresurser via DirectAccess-servern genom att ange IPv6-adresserna i stället för namnen.
+
+Möjligheten att koppla från gör att användarna kan ange icke bestämda namn med en etikett (som PRINTSVR) för lokala resurser när det finns en anslutning till ett annat intranät och för tillfällig åtkomst till resurser i intranätet när identifieringen av nätverksplatsen inte har kunnat fastställa att DirectAccess-klienten är ansluten till sitt eget intranät.
+
+Användaren klickar på Anslut för att återställa DirectAccess-reglerna i NRPT-tabellen och återuppta normala funktioner för DirectAccess.
+
+Obs! 
+Om DirectAccess-klienten är ansluten till intranätet och har fastställt sin nätverksplats korrekt har alternativet Koppla från ingen effekt eftersom reglerna för DirectAccess redan har tagits bort från NRPT.
+
+Om den här inställningen inte är konfigurerad kan användarna inte ansluta eller koppla från.
+
+</string>
+      <string id="DTEs">Ändpunkter för IPsec-tunnel</string>
+      <string id="DTEs_Help">Anger IPv6-adresserna för ändpunkterna i IPsec-tunnlarna som möjliggör DirectAccess. NCA försöker få åtkomst till de resurser som anges i inställningen Företagsresurser genom dessa konfigurerade tunneländpunkter. 
+
+Som standard använder NCA samma DirectAccess-server som används för DirectAccess-klientdatorns anslutning. För standardkonfigurationer av DirectAccess finns det vanligen två tunneländpunkter för IPsec: en för infrastrukturtunneln och en för intranättunneln. En ändpunkt ska konfigureras för varje tunnel. 
+	  
+Varje post består av texten PING: följt av IPv6-adressen för en IPsec-tunnels ändpunkt. Exempel: PING:2002:836b:1::836b:1.
+
+Du måste konfigurera den här inställningen för att få fullständig NCA-funktionalitet.
+
+</string>
+      <string id="CorporateResources">Företagsresurser</string>
+      <string id="CorporateResources_Help">Anger vilka resurser i intranätet som normalt ska vara tillgängliga för DirectAccess-klienter. Varje post är en sträng som identifierar resursens typ och plats. 
+
+Varje sträng kan vara en av följande typer:
+	  
+–  Ett DNS-namn eller en IPv6-adress som pingas av NCA. Syntaxen är PING: följt av ett fullständigt kvalificerat domännamn (FQDN) som utläses till en IPv6-adress eller en IPv6-adress. Exempel: PING:myserver.corp.contoso.com eller PING:2002:836b:1::1. 
+ 
+Obs! 
+
+Vi rekommenderar att du använder FQDN:er i stället för IPv6-adresser så ofta som möjligt.
+
+Viktigt 
+
+Minst en av posterna måste vara en PING:-resurs.
+
+–	En URL (Uniform Resource Locator) som NCA skickar via en HTTP-begäran (Hypertext Transfer Protocol). Innehållet på webbsidan spelar ingen roll. Syntaxen är HTTP: följt av en webbadress. Värddelen av webbadressen måste utläsas till IPv6-adressen för en webbserver eller innehålla en IPv6-adress. Exempel: HTTP:http://myserver.corp.contoso.com/ eller HTTP:http://2002:836b:1::1/.
+
+–	En UNC-sökväg (Universal Naming Convention) till en fil som NCA kontrollerar om den finns. Innehållet i filen spelar ingen roll. Syntaxen är FILE: följt av en UNC-sökväg. ComputerName-delen av UNC-sökvägen måste utläsas till en IPv6-adress eller innehålla en IPv6-adress. Exempel: FILE:\\myserver\myshare\test.txt eller FILE:\\2002:836b:1::1\myshare\test.txt.
+
+Du måste konfigurera den här inställningen för att få fullständig NCA-funktionalitet.
+
+</string>
+
+      <string id="CustomCommands">Anpassade kommandon</string>
+      <string id="CustomCommands_Help">Anger kommandon som har konfigurerats av administratören för anpassad loggning. Dessa kommandon körs utöver standardloggkommandona.</string>
+
+    </stringTable>
+    
+    <presentationTable>
+      <presentation id="POL_08EF8AE6_3960_4852_93B5_3E068D6C2E6B">
+        <textBox refId="TXT_60660913_5491_4D50_AF96_770639FF243D">
+          <label>Felsökningsportal</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="SupportEmail">
+        <textBox refId="SupportEmail_Control">
+          <label>E-postadress till support</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="FriendlyName">
+        <textBox refId="FriendlyName_Control">
+          <label>Eget namn</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="LocalNamesOn"/>
+      <presentation id="ShowUI"/>
+      <presentation id="CorporateResources">
+        <listBox refId="CorporateResources_Control">Företagsresurser</listBox>
+      </presentation>
+      <presentation id="PortalName">
+        <textBox refId="PortalName_Control">
+          <label>Portalnamn</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="DTEs">
+        <listBox refId="DTEs_Control">DTE:er</listBox>
+      </presentation>
+      <presentation id="PassiveMode"/>
+      <presentation id="CoporatePortalSite">
+        <textBox refId="CoporatePortalSite_Control">
+          <label>Företagsportal – webbadress</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="CustomCommands">
+        <listBox refId="CustomCommands_Control">Anpassade kommandon</listBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

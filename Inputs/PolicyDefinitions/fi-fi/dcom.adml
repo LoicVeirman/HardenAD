@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>kirjoita näyttönimi tähän</displayName>
+  <description>kirjoita kuvaus tähän</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">Distributed COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Salli paikalliset poikkeukset aktivointisuojauksen tarkistuksessa</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Antaa sinun määrittää, että paikalliset tietokoneen järjestelmänvalvojat voivat tehdä lisäyksiä Aktivointisuojauksen tarkistuksen poikkeukset -luetteloon.
+
+Jos otat tämän käytäntöasetuksen käyttöön ja DCOM ei löydä DCOM-palvelimen sovellustunnuksen (appid) eksplisiittistä merkintää Aktivointisuojauksen tarkistuksen poikkeukset -käytännöstä (jos se on käytössä), DCOM etsii merkintää paikallisesti määritetystä luettelosta.
+
+Jos poistat tämän käytäntöasetuksen käytöstä, DCOM ei etsi paikallisesti määritetystä DCOMin aktivoinnin suojaustarkistusten poikkeusluettelosta.
+
+Jos et määritä tätä käytäntöasetusta, DCOM etsii paikallisesti määritetystä luettelosta vain silloin, kun Aktivointisuojauksen tarkistuksen poikkeukset -käytäntöä ei ole määritetty.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Määritä aktivointisuojauksen tarkistuksen poikkeukset</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Tämän asetuksen avulla voidaan tarkastella ja muokata luetteloa DCOM-palvelinten appid-tunnuksista, joita ei huomioida DCOM-aktivointisuojauksen tarkistuksessa.  DCOM käyttää kahta tällaista luetteloa. Toinen niistä määritetään ryhmäkäytännön avulla ja toinen paikallisten järjestelmänvalvojien toimesta.  DCOM ei huomioi toista luetteloa, kun tämä käytäntöasetus on määritetty, paitsi jos Salli paikalliset poikkeukset aktivointisuojauksen tarkistuksessa -käytäntö on käytössä.
+
+Tähän käytäntöön lisätyt DCOM-palvelinten appid-tunnukset täytyy luetella käyttäen aaltosulkeita.  Esimerkiksi: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}.  DCOM lisää virheellisesti muodostetut appid-tunnukset luetteloon tarkistamatta niiden oikeellisuutta.
+
+Jos otat tämän käytännön käyttöön, voit tarkastella ja muuttaa ryhmäkäytäntöasetuksissa määritettyä luetteloa DCOM-aktivointisuojauksen tarkistuksen poikkeuksista. Jos lisäät appid-tunnuksen tähän luetteloon ja asetat arvoksi 1, DCOM ei pakota aktivointisuojauksen tarkistusta tälle DCOM-palvelimelle.   Jos lisäät appid-tunnuksen tähän luetteloon ja asetat sen arvoksi 0, DCOM pakottaa aktivointisuojauksen tarkistuksen tälle DCOM-palvelimelle riippumatta paikallisista asetuksista.
+
+Jos tämä käytäntöasetus poistetaan käytöstä, ryhmäkäytännön määrittämä poikkeusluettelo poistetaan ja paikallisen järjestelmänvalvojan määrittämä luettelo otetaan käyttöön.
+
+Jos tätä käytäntöasetusta ei määritetä, paikallisen järjestelmänvalvojan määrittämä luettelo otetaan käyttöön.
+
+Huomautuksia:
+
+DCOM-aktivointisuojauksen tarkistus suoritetaan DCOM-palvelinprosessin käynnistämisen jälkeen, mutta ennen kuin objektin aktivointipyyntö on välitetty palvelinprosessille.   Tämä käyttötarkistus suoritetaan DCOM-palvelimen käynnistysoikeuksien suojauskuvausta vasten, mikäli se on olemassa. Muutoin se suoritetaan määritettyjä oletusarvoja vasten.
+
+Jos DCOM-palvelimen käynnistysoikeuksia on estetty, tämä saattaa aiheuttaa sen, että objektin aktivoinnit, jotka käyttäjät ovat onnistuneet aiemmin suorittamaan DCOM-palvelimen ollessa käynnissä, saattavat nyt epäonnistua.   Tässä tilanteessa on aiheellista korjata DCOM-palvelimen käynnistysoikeudet määrittämällä ne uudelleen, mutta tätä käytäntöasetusta voidaan käyttää tilapäisenä apuna sovellusten yhteensopivuuden varmistamiseksi.
+
+Tähän poikkeusluetteloon lisätyt DCOM-palvelimet huomioidaan vain, jos niiden käynnistysoikeudet eivät sisällä nimenomaisia Salli- tai Estä-asetuksia.  Huomioi myös, että tähän luetteloon lisätyt DCOM-palvelinten appid-tunnusten poikkeukset huomioidaan sekä 32- että 64-bittisissä palvelimen versioissa.</string>
+      <string id="DCOMAppCompatPolicies">Sovellusten yhteensopivuusasetukset</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Kirjoita DCOM-palvelimen appid-tunnukset liitettynä yhteen jonkin alla luotellun toiminnon arvon kanssa.</text>
+        <text>Appid-tunnuksien täytyy sisältää aaltosulkeet.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Lisää DCOM-palvelimet poikkeusluetteloon tai poista ne siitä: </listBox>
+        <text> </text>
+        <text>Arvot:</text>
+        <text>0 = Määritetty appid-tunnus huomioidaan aktivointisuojauksen tarkistuksessa</text>
+        <text>1 = Määritettyä appid-tunnusta ei huomioida aktivointisuojauksen tarkistuksessa</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

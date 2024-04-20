@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (c) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>NetworkProvider</displayName>
+  <description>Principdefinitioner för Multiple UNC Provider</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_NetworkProvider">Nätverksprovider</string>
+      <string id="Pol_HardenedPaths">Härdade UNC-sökvägar</string>
+      <string id="Pol_HardenedPaths_Explain">Den här principinställningen konfigurerar skyddad åtkomst till UNC-sökvägar.
+
+Om du aktiverar principen tillåter Windows endast åtkomst till de UNC-sökvägar som angetts efter att ytterligare säkerhetskrav uppfyllts.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_HardenedPaths">
+        <text>Ange härdade nätverkssökvägar.
+Ange en fullständig UNC-sökväg i namnfältet för varje nätverksresurs.
+Om du vill skydda all åtkomst till en resurs med ett visst namn, oavsett serverns namn, anger du servernamnet som en asterisk (*). Exempel: "\\*\NETLOGON".
+Om du vill skydda all åtkomst till alla resurser på en server kan du utelämna resursnamnsdelen i UNC-sökvägen. Exempel: "\\SERVER".
+
+Ange ett eller flera av följande alternativ i värdefältet, avgränsade med kommatecken:
+    RequireMutualAuthentication=1: Ömsesidig autentisering mellan klienten och servern krävs för att se till att klienten ansluter till rätt server.
+    RequireIntegrity=1: I kommunikationen mellan klienten och servern måste en integritetskontroll göras för att förhindra datamanipulation.
+    RequirePrivacy=1: Kommunikationen mellan klienten och servern måste krypteras för att förhindra att obehöriga kommer åt känsliga data.</text>
+        <listBox refId="Pol_HardenedPaths">Härdade UNC-sökvägar:</listBox>
+        <text> </text>
+        <text>Du bör kräva att både integritetskontroll och ömsesidig autentisering används för alla UNC-sökvägar som har körbara program, skriptfiler eller filer som reglerar säkerhetsprinciper.
+
+Överväg att förvara filer som inte kräver integritets- eller sekretesshantering i andra resurser än de som kräver det för att få bästa prestanda.
+
+Mer information om hur du konfigurerar Windows-datorer för att öka säkerheten vid åtkomst av specifika UNC-sökvägar finns på http://support.microsoft.com/kb/3000483.</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

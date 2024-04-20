@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Windows 服務原則</displayName>
+  <description>Windows 服務原則</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">指定選用之元件安裝和元件修復的相關設定</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+這個原則設定會指定網路位置，用於修復損毀的作業系統以及啟用已經移除其裝載檔案的選用功能。
+
+如果您啟用這個原則設定並指定新的位置，修復損毀的作業系統以及啟用已經移除其裝載檔案的選用功能時，就會使用這個位置中的檔案。您必須在 [其他來源檔案路徑] 方塊中輸入新位置的完整路徑。您可以指定多個位置，但請使用分號隔開每一個路徑。
+
+網路位置可以是資料夾或 WIM 檔案。如果它是一個 WIM 檔案，則位置最前面應該加上「wim:」並包含用於 WIM 檔案中的映像索引。例如 "wim:\\server\share\install.wim:3"。
+
+如果您停用或未設定這個原則設定，或者在這個原則設定所指定的位置中找不到必要的欄位，則如果電腦的原則設定允許，就會從 Windows Update 下載檔案。
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>其他來源檔案路徑</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">不要從 Windows Update 下載裝載</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">直接連絡 Windows Update 下載修復內容，而不是從 Windows Server Update Services (WSUS)</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

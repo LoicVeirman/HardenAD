@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Tjänsten ActiveX Installer</displayName>
+  <description>Installerar ActiveX-kontroller från godkända installationsplatser</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">Tjänsten ActiveX Installer</string>
+      <string id="AxISURLZonePolicies">Upprätta en princip för installation av ActiveX-kontroller på webbplatser i zonen Betrodda platser</string>        
+      <string id="AxISURLZonePolicies_explain">Den här principinställningen kontrollerar installationen av ActiveX-kontroller på webbplatser i zonen Betrodda platser. 
+
+Om du aktiverar den här principinställningen installeras ActiveX-kontroller enligt de inställningar som har definierats i principinställningen. 
+      
+Om du inaktiverar eller inte konfigurerar principinställningen tillfrågas användaren innan ActiveX-kontroller installeras. 
+
+Om HTTPS-protokoll används på den betrodda webbplatsen kan principinställningen även kontrollera hur tjänsten ActiveX Installer svarar på certifikatfel. Som standard måste alla HTTPS-anslutningar ange ett servercertifikat som godkänns av alla verifieringskriterier. Om du vill lita på en webbplats fast du vet att den har ett certifikatfel kan du markera de certifikatfel som du vill ignorera. 
+    
+Obs! Den här principinställningen gäller för alla webbplatser i zonen Betrodda platser.
+
+</string>
+      <string id="TrustedZoneDisabled">Installera inte</string>
+      <string id="TrustedZonePrompt">Fråga användaren</string>
+      <string id="TrustedZoneSilentInstall">Installera obevakat</string>
+      <string id="ApprovedActiveXInstallSites">Godkända installationsplatser för ActiveX-kontroller</string>
+      <string id="ApprovedActiveXInstallSites_explain">Den här principinställningen avgör vilka installationsplatser för ActiveX-kontroller som standardanvändare i organisationen kan använda när de vill installera ActiveX-kontroller på sina datorer. När den här inställningen har aktiverats kan administratören skapa en lista över godkända installationsplatser för ActiveX, angivna efter värdadress. 
+
+Om du aktiverar den här inställningen kan administratören skapa en lista över godkända installationsplatser för ActiveX, angivna efter värdadress. 
+      
+Om du inaktiverar eller inte konfigurerar den här principinställningen måste användaren ange administrativa autentiseringsuppgifter innan ActiveX-kontroller kan installeras. 
+
+Obs! Jokertecken kan inte användas i värdadressen.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Installationsprincip för ActiveX-kontroll signerad av en betrodd utfärdare</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Installationsprincip för signerad ActiveX-kontroll</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Installationsprincip för osignerad ActiveX-kontroll</dropdownList>
+        <text>Tillåt anslutning till betrodda webbplatser som har följande servercertifikatfel.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Okänd certifikatutfärdare</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Ogiltigt certifikatnamn</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Datumet för certifikatverifiering har förfallit</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Felaktig certifikatanvändning</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">Värd-URL:er</listBox>
+        <text>Innehåller principer för värd-URL:n.</text>
+        <text>Till exempel  </text>
+        <text>Värdnamn: http://activex.microsoft.com</text>
+        <text>Värde: 2,1,0,0</text>
+        <text>Värdet för varje värd-URL är fyra inställningar i CSV-format.</text>
+        <text>Vilket representerar "TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy</text>
+        <text>De tre värdena till vänster i principen styr installationen av ActiveX-kontroller baserat på deras signatur.</text>
+        <text>De kan vara en av följande.</text>
+        <text>0: ActiveX-kontroll installeras inte</text>
+        <text>1: Uppmana användaren att installera ActiveX-kontroll</text>
+        <text>2: ActiveX-kontroll installeras utan varningar</text>
+        <text>Kontroller som har signerats av certifikat i listan över betrodda utgivare installeras utan varning  </text>
+        <text>Installation utan varningar för osignerade kontroller stöds inte</text>
+        <text></text>
+        <text>Värdet längst till höger i principen är en flagga (bitmask)</text>
+        <text>Flaggorna används för att ignorera https-certifikatfel.</text>
+        <text>Standardvärdet är 0.</text>
+        <text>Vilket innebär att https-anslutningarna måste klara alla säkerhetskontroller</text>
+        <text></text>
+        <text>Använd kombinationen av följande värden</text>
+        <text>för att ignorera ogiltiga certifikatfel</text>
+        <text>0x00000100  Ignorera okänd CA</text>
+        <text>0x00001000  Ignorera ogiltigt CN</text>
+        <text>0x00002000  Ignorera ogiltigt certifikatdatum</text>
+        <text>0x00000200  Ignorera felaktig certifikatanvändning</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

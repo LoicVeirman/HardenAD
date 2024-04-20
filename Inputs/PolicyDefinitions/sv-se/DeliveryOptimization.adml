@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0">
+  <displayName>Grupprincip för Leveransoptimering</displayName>
+  <description>I den här filen beskrivs grupprincipinställningar för Leveransoptimering</description>
+  <resources>
+    <stringTable>
+      <string id="DeliveryOptimizationCat">Leveransoptimering</string>
+      <string id="DownloadMode">Nedladdningsläge</string>
+      <string id="DownloadMode_Help">Anger den nedladdningsmetod som Leveransoptimering kan använda för nedladdning av Windows-uppdateringar, appar och appuppdateringar.
+
+Följande lista visar de värden som stöds:
+
+0=Endast HTTP, ingen peering.
+
+1=HTTP blandat med peering bakom samma NAT.
+
+2=HTTP blandat med peering i en privat grupp. Peering sker som standard på enheter på samma Active Directory-plats (om sådan finns) eller samma domän. När detta väljs sker peering mellan olika NAT. Om du vill skapa en egen grupp använder du grupp-ID tillsammans med läge 2.
+
+3=HTTP blandat med Internet-peering. 
+
+99=Enkelt nedladdningsläge utan peering. Leveransoptimering gör endast nedladdning med HTTP och försöker inte kontakta molntjänster för Leveransoptimering.
+
+100=Förbigå. Windows 10: Använd inte Leveransoptimering utan använd BITS i stället. Windows 11: Inaktuellt, använd enkelt läge i stället.</string>
+      <string id="DownloadMode_CdnOnly">Endast HTTP (0)</string>
+      <string id="DownloadMode_Lan">LAN (1)</string>
+      <string id="DownloadMode_Group">Grupp (2)</string>
+      <string id="DownloadMode_Internet">Internet (3)</string>
+      <string id="DownloadMode_Simple">Enkel (99)</string>
+      <string id="DownloadMode_Bypass">Förbigå (100)</string>
+      <string id="GroupId">Grupp-ID</string>
+      <string id="GroupId_Help">Grupp-ID:t måste anges som ett GUID. Den här principen definierar ett godtyckligt grupp-ID som enheten tillhör.
+
+Använd det om du behöver skapa en enda grupp för lokal nätverks-peering för förgreningar som är på olika domäner eller som inte är på samma LAN.
+
+Obs! Detta är en bästa möjliga-optimering och du kan inte förlita dig på den vid autentisering av identiteter.</string>
+      <string id="MaxCacheSize">Max. cachestorlek (i procent)</string>
+      <string id="MaxCacheSize_Help">Anger den maximala cachestorlek som Leveransoptimering använder, som en procentandel av tillgängligt diskutrymme (1-100).</string>
+      <string id="AbsoluteMaxCacheSize">Absolut max. cachestorlek (i GB)</string>
+      <string id="AbsoluteMaxCacheSize_Help">Anger den maximala storlek i GB för Leveransoptimering-cache.
+
+Den här principen åsidosätter principen DOMaxCacheSize.
+
+Värdet 0 (noll) innebär "obegränsad" cache; Leveransoptimering tömmer cachen när enheten får ont om diskutrymme.</string>
+      <string id="MaxCacheAge">Maximal cacheålder (i sekunder)</string>
+      <string id="MaxCacheAge_Help">Anger den längsta tid (i sekunder) som varje fil hålls kvar i Leveransoptimering-cachen efter slutförd nedladdning.
+
+Värdet 0 (noll) innebär "obegränsat"; Leveransoptimering håller kvar filerna i cachen längre så att de är tillgängliga för uppladdning till andra enheter (så länge inte cachestorleken överskrids).</string>
+      <string id="MonthlyUploadDataCap">Datauppladdningsgräns per månad (i GB)</string>
+      <string id="MonthlyUploadDataCap_Help">Anger den maximala storlek i GB som Leveransoptimering tillåts ladda upp till Internet-peers varje månad.
+
+Värdet 0 (noll) innebär "obegränsat". Det finns ingen uppladdningsgräns per månad om 0 anges.</string>
+      <string id="MinBackgroundQos">Lägsta QoS för bakgrundsnedladdning (i kB/s)</string>
+      <string id="MinBackgroundQos_Help">Anger den lägsta nedladdnings-QoS (tjänstkvalitet eller hastighet i kB/s) för bakgrundsnedladdning.
+
+Den här principen påverkar blandningen av peering och HTTP-källor. Leveransoptimering kompletterar nedladdningen från HTTP-källan för att nå det angivna lägsta QoS-värdet.</string>
+      <string id="ModifyCacheDrive">Ändra cacheplats</string>
+      <string id="ModifyCacheDrive_Help">Anger den enhet som Leveransoptimering ska använda för cache.
+
+%SystemDrive% används som standard för cache. Enhetens placering kan anges med miljövariabler, en enhetsbeteckning eller en fullständig sökväg.</string>
+      <string id="MaxBackgroundDownloadBandwidth">Maximal bandbredd för bakgrundsnedladdning (i kB/s)</string>
+      <string id="MaxBackgroundDownloadBandwidth_Help">Anger den maximala bandbredd för bakgrundsnedladdning (i kB/s) som enheten kan använda bland all samtidig nedladdning via Leveransoptimering.
+
+Standardvärdet 0 (noll) innebär att Leveransoptimering justeras dynamiskt till att använda den tillgängliga bandbredden för nedladdning.
+      </string>
+      <string id="MaxForegroundDownloadBandwidth">Maximal bandbredd för förgrundsnedladdning (i kB/s)</string>
+      <string id="MaxForegroundDownloadBandwidth_Help">Anger den maximala bandbredd för förgrundsnedladdning (i kB/s) som enheten kan använda bland all samtidig nedladdning via Leveransoptimering.
+
+Standardvärdet 0 (noll) innebär att Leveransoptimering justeras dynamiskt till att använda den tillgängliga bandbredden för nedladdning.
+      </string>
+      <string id="PercentageMaxBackgroundBandwidth">Maximal bandbredd för bakgrundsnedladdning (i procent)</string>
+      <string id="PercentageMaxBackgroundBandwidth_Help">Anger den maximala bandbredd för bakgrundsnedladdning som Leveransoptimering kan använda bland all samtidig nedladdning (som en procentandel av den tillgängliga bandbredden för nedladdning).
+
+Standardvärdet 0 (noll) innebär att Leveransoptimering justeras dynamiskt till att använda den tillgängliga bandbredden för bakgrundsnedladdning.</string>
+      <string id="PercentageMaxForegroundBandwidth">Maximal bandbredd för förgrundsnedladdning (i procent)</string>
+      <string id="PercentageMaxForegroundBandwidth_Help">Anger den maximala bandbredd för förgrundsnedladdning som Leveransoptimering kan använda bland all samtidig nedladdning (som en procentandel av den tillgängliga bandbredden för nedladdning).
+
+Standardvärdet 0 (noll) innebär att Leveransoptimering justeras dynamiskt till att använda den tillgängliga bandbredden för förgrundsnedladdning.</string>
+      <string id="MinFileSizeToCache">Minsta innehållsfilstorlek för att använda peer-cachelagring (i MB)</string>
+      <string id="MinFileSizeToCache_Help">Anger den minsta innehållsfilstorleken i MB som krävs för att använda peer-cachelagring.
+
+Rekommenderade värden: 1 MB till 100000 MB.</string>
+      <string id="AllowVPNPeerCaching">Aktivera peer-cachelagring när enheten ansluter via VPN</string>
+      <string id="AllowVPNPeerCaching_Help">Ange "true" om du vill att enheten ska kunna använda peer-cachelagring när den är ansluten via VPN till domännätverket.
+
+Det innebär att enheten kan ladda ned från och ladda upp till andra domännätverk, antingen i VPN eller företagets domännätverk.</string>
+      <string id="MinRAMAllowedToPeer">Minsta RAM-kapacitet för att använda peer-cachelagring (i GB)</string>
+      <string id="MinRAMAllowedToPeer_Help">Anger den minsta RAM-storleken i GB som krävs för att använda peer-cachelagring.
+
+Om storleken till exempel anges till 1 GB så tillåts enheter med 1 GB eller mer tillgängligt RAM att använda peer-cachelagring.
+
+Rekommenderade värden: 1 GB till 4 GB.</string>
+      <string id="MinDiskSizeAllowedToPeer">Minsta diskstorlek för att använda peer-cachelagring (i GB)</string>
+      <string id="MinDiskSizeAllowedToPeer_Help">Anger den minsta diskstorleken (i GB) som krävs för att enheten ska kunna använda peer-cachelagring. Molntjänstens standardvärde används.
+
+Rekommenderade värden: 64 GB till 256 GB.
+
+Obs! Om DOModifyCacheDrive-principen har angetts gäller diskstorlekskontrollen den nya arbetskatalogen som angetts i den här principen.</string>
+      <string id="MinBatteryPercentageAllowedToUpload">Tillåt uppladdningar från enheten vid batteridrift under angiven batterinivå (i procent)</string>
+      <string id="MinBatteryPercentageAllowedToUpload_Help">Ange ett värde mellan 1 och 100 (i procent) för att tillåta att enheten laddar upp data till LAN och grupp-peers vid batteridrift.
+
+Det rekommenderade värdet för att tillåta uppladdningar vid batteridrift är 40 (för 40 %). Enheten kan ladda ned från peers vid batteridrift oavsett den här principen.
+
+Värdet 0 innebär "obegränsat". Molntjänstens standardvärde används.</string>
+      <string id="CacheHost">Cacheserverns värdnamn</string>
+      <string id="CacheHost_Help">Med den här principen kan du ange en eller flera Microsoft-Ansluten cache servrar som ska användas av dina klienter.
+
+Ett eller flera värden kan läggas till som fullständiga domännamn (FQDN) eller IP-adresser. Om du vill lägga till flera värden avgränsar du varje FQDN eller IP-adress med kommatecken.
+      </string>
+      <string id="CacheHostSource">Källa för cacheserverns värdnamn</string>
+      <string id="CacheHostSource_Help">Med den här principen kan du ange hur dina klienter kan identifiera Microsofts Anslutna cacheservrar dynamiskt.
+
+Tillgängliga alternativ är:
+
+0 = Inaktivera DNS-SD.
+
+1 = DHCP-alternativ 235.
+
+2 = Framtvinga DHCP-alternativ 235.
+
+Om den här principen inte konfigureras försöker klienten automatiskt hitta en cacheserver med DNS-SD. Om värdet är satt till 0 kommer klienten inte att använda DNS-SD för att automatiskt hitta en cacheserver. Om värdet är satt till 1 eller 2 frågar klienten efter alternativ-ID 235 för DHCP och använder det returnerade värdet som cacheserverns värdnamn. Alternativ 2 åsidosätter principen för cacheserverns värdnamn om den har konfigurerats.</string>
+      <string id="CacheHostSource_DHCP">DHCP-alternativ 235</string>
+      <string id="CacheHostSource_DHCP_Force">Framtvinga DHCP-alternativ 235</string>
+      <string id="GroupIdSource">Välj källa för grupp-ID:n</string>
+      <string id="GroupIdSource_Help">Ställ in den här principen om du vill begränsa peer-urvalet till en specifik källa.
+
+Tillgängliga alternativ:
+
+1 = AD-plats.
+
+2 = SID för autentiserad domän.
+
+3 = Alternativ-ID för DHCP.
+
+4 = DNS-suffix.
+
+5 = ID för AAD-klient.
+
+När du har ställt in principen tilldelas grupp-ID:t automatiskt från den valda källan. Den här principen ignoreras om GroupID-principen och anges.
+
+Alternativen i den här principen gäller endast nedladdningsläget Grupp (2) Den här principen har alltså ingen verkan om Grupp (2) inte används som nedladdningsläge.
+
+För alternativ 3 (Alternativ-ID för DHCP) efterfrågar klienten alternativ-ID 234 för DHCP och använder sedan det returnerade GUID-värdet som grupp-ID.</string>
+      <string id="GroupIdSource_Unset">Ej angivet (0)</string>
+      <string id="GroupIdSource_AD">AD-plats (1)</string>
+      <string id="GroupIdSource_SID">SID för autentiserad domän (2)</string>
+      <string id="GroupIdSource_DHCP">Alternativ-ID för DHCP (3)</string>
+      <string id="GroupIdSource_DNS">DNS-suffix (4)</string>
+      <string id="GroupIdSource_AAD">ID för AAD-klient (5)</string>
+      <string id="DelayBackgroundDownloadFromHttp">Fördröj bakgrundsnedladdning från http (i sek)</string>
+      <string id="DelayBackgroundDownloadFromHttp_Help">Med den här principen kan du fördröja användningen av en HTTP-källa i bakgrundsnedladdningar som tillåts använda P2P.
+
+När den maximala fördröjningen har nåtts återupptas nedladdningen från HTTP. Då laddas antingen hela lasten ned eller de byte som inte kunde laddas ned från peer-källor.
+
+Observera att en nedladdning som väntar på peer-källor ser ut som att den har fastnat för slutanvändaren.
+
+Rekommenderat värde: 3600 (1 timme).</string>
+      <string id="DelayForegroundDownloadFromHttp">Fördröj förgrundsnedladdning från http (i sek)</string>
+      <string id="DelayForegroundDownloadFromHttp_Help">Med den här principen kan du fördröja användningen av en HTTP-källa i förgrundsnedladdningar (interaktiva nedladdningar) som tillåts använda P2P.
+
+När den maximala fördröjningen har nåtts återupptas nedladdningen från HTTP. Då laddas antingen hela lasten ned eller de byte som inte kunde laddas ned från peer-källor.
+
+Observera att en nedladdning som väntar på peer-källor ser ut som att den har fastnat för slutanvändaren.
+
+Rekommenderat värde: 60 (1 minut).</string>
+      <string id="DelayCacheServerFallbackBackground">Fördröj växling från cacheserver för bakgrundsnedladdning (i sekunder)</string>
+      <string id="DelayCacheServerFallbackBackground_Help">Ange den här principen om du vill fördröja växlingen från cacheservern till HTTP-källan för en bakgrundsnedladdning med X sekunder.
+
+Obs! Om du anger den här principen för att fördröja bakgrundsnedladdning från http tillämpas den först (för att tillåta nedladdning från peers först).</string>
+      <string id="DelayCacheServerFallbackForeground">Fördröj växling från cacheserver för förgrundsnedladdning (i sekunder)</string>
+      <string id="DelayCacheServerFallbackForeground_Help">Ange den här principen om du vill fördröja växlingen från cacheservern till HTTP-källan för en förgrundsnedladdning med X sekunder.
+
+Obs! Om du anger den här principen för att fördröja förgrundsnedladdning från http tillämpas den först (för att tillåta nedladdning från peers först).</string>
+      <string id="RestrictPeerSelectionBy">Välj metod för att begränsa peer-urval</string>
+      <string id="RestrictPeerSelectionBy_Help">Ange den här principen om du vill begränsa peer-urvalet via det valda alternativet.
+
+Tillgängliga alternativ är:
+0 = NAT.
+1 = nätmask.
+2 = lokal identifiering (DNS-SD).
+
+Standardvärdet har ändrats från 0 (ingen begränsning) till 1 (begränsa till under nätet).
+
+Dessa alternativ gäller för både nedladdnings läge (LAN) och grupp (2).</string>
+      <string id="RestrictPeerSelectionBy_None">NAT</string>
+      <string id="RestrictPeerSelectionBy_Subnet">Undernät</string>
+      <string id="RestrictPeerSelectionBy_LinkLocal">Lokal identifiering</string>
+      <string id="SetHoursToLimitBackgroundDownloadBandwidth">Ange arbetstiden för att begränsa bandbredden för bakgrundsnedladdning</string>
+      <string id="SetHoursToLimitBackgroundDownloadBandwidth_Help">Anger den maximala bandbredd för bakgrundsnedladdning som Leveransoptimering kan använda under och efter arbetstid bland all samtidig nedladdning (som en procentandel av den tillgängliga bandbredden för nedladdning).</string>
+      <string id="SetHoursToLimitForegroundDownloadBandwidth">Ange arbetstiden för att begränsa bandbredden för förgrundsnedladdning</string>
+      <string id="SetHoursToLimitForegroundDownloadBandwidth_Help">Anger den maximala bandbredd för förgrundsnedladdning som Leveransoptimering kan använda under och efter arbetstid bland all samtidig nedladdning (som en procentandel av den tillgängliga bandbredden för nedladdning).</string>
+      <string id="Time1AM">01:00</string>
+      <string id="Time1PM">13:00</string>
+      <string id="Time2AM">02:00</string>
+      <string id="Time2PM">14:00</string>
+      <string id="Time3AM">03:00</string>
+      <string id="Time3PM">15:00</string>
+      <string id="Time4AM">04:00</string>
+      <string id="Time4PM">16:00</string>
+      <string id="Time5AM">05:00</string>
+      <string id="Time5PM">17:00</string>
+      <string id="Time6AM">06:00</string>
+      <string id="Time6PM">18:00</string>
+      <string id="Time7AM">07:00</string>
+      <string id="Time7PM">19:00</string>
+      <string id="Time8AM">08:00</string>
+      <string id="Time8PM">20:00</string>
+      <string id="Time9AM">09:00</string>
+      <string id="Time9PM">21:00</string>
+      <string id="Time10AM">10:00</string>
+      <string id="Time10PM">22:00</string>
+      <string id="Time11AM">11:00</string>
+      <string id="Time11PM">23:00</string>
+      <string id="Time12AM">00:00</string>
+      <string id="Time12PM">12:00</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DownloadMode">
+        <dropdownList defaultItem="1" noSort="true" refId="DownloadMode">Nedladdningsläge:</dropdownList>
+      </presentation>
+      <presentation id="GroupId">
+        <textBox refId="GroupId">
+          <label>Grupp-ID:</label>
+        </textBox>
+      </presentation>
+      <presentation id="MaxCacheSize">
+        <decimalTextBox defaultValue="20" refId="MaxCacheSize">Max. cachestorlek (procentandel):</decimalTextBox>
+        <text>Standardvärdet är 20%</text>
+      </presentation>
+      <presentation id="AbsoluteMaxCacheSize">
+        <decimalTextBox defaultValue="10" refId="AbsoluteMaxCacheSize">Absolut max. cachestorlek (i GB):</decimalTextBox>
+        <text>Standardvärdet är 10 GB</text>
+      </presentation>
+      <presentation id="MaxCacheAge">
+        <decimalTextBox defaultValue="604800" refId="MaxCacheAge">Maximal cacheålder (i sekunder):</decimalTextBox>
+        <text>Standardvärdet är 7 dagar</text>
+      </presentation>
+      <presentation id="MonthlyUploadDataCap">
+        <decimalTextBox defaultValue="5120" refId="MonthlyUploadDataCap">Datauppladdningsgräns per månad (i GB):</decimalTextBox>
+        <text>Standardvärdet är 5 TB</text>
+      </presentation>
+      <presentation id="MinBackgroundQos">
+        <decimalTextBox defaultValue="20480" refId="MinBackgroundQos">Lägsta QoS för bakgrundsnedladdning (i kB/s):</decimalTextBox>
+        <text>Standardvärdet är 20 MB/s</text>
+      </presentation>
+      <presentation id="ModifyCacheDrive">
+        <textBox refId="ModifyCacheDrive">
+          <label>Ändra cacheplats:</label>
+        </textBox>
+      </presentation>
+      <presentation id="MaxBackgroundDownloadBandwidth">
+        <decimalTextBox defaultValue="0" refId="MaxBackgroundDownloadBandwidth">Maximal bandbredd för bakgrundsnedladdning (i kB/s):</decimalTextBox>
+        <text>Standardvärdet är 0 (obegränsat)</text>
+      </presentation>
+      <presentation id="MaxForegroundDownloadBandwidth">
+        <decimalTextBox defaultValue="0" refId="MaxForegroundDownloadBandwidth">Maximal bandbredd för förgrundsnedladdning (i kB/s):</decimalTextBox>
+        <text>Standardvärdet är 0 (obegränsat)</text>
+      </presentation>
+      <presentation id="PercentageMaxBackgroundBandwidth">
+        <decimalTextBox defaultValue="0" refId="PercentageMaxBackgroundBandwidth">Maximal bandbredd för bakgrundsnedladdning (i procent):</decimalTextBox>
+        <text>Standardvärdet är 0 (obegränsat)</text>
+      </presentation>
+      <presentation id="PercentageMaxForegroundBandwidth">
+        <decimalTextBox defaultValue="0" refId="PercentageMaxForegroundBandwidth">Maximal bandbredd för förgrundsnedladdning (i procent):</decimalTextBox>
+        <text>Standardvärdet är 0 (obegränsat)</text>
+      </presentation>
+      <presentation id="MinFileSizeToCache">
+        <decimalTextBox defaultValue="100" refId="MinFileSizeToCache">Minsta innehållsfilstorlek för att använda peer-cachelagring (i MB):</decimalTextBox>
+        <text>Standardvärdet är 100 MB</text>
+      </presentation>
+      <presentation id="AllowVPNPeerCaching">
+        <checkBox defaultChecked="false" refId="AllowVPNPeerCaching">Aktivera peer-cachelagring när enheten ansluter via VPN</checkBox>
+      </presentation>
+      <presentation id="MinRAMAllowedToPeer">
+        <decimalTextBox defaultValue="4" refId="MinRAMAllowedToPeer">Minsta RAM-kapacitet för att använda peer-cachelagring (i GB):</decimalTextBox>
+        <text>Standardvärdet är 4 GB</text>
+      </presentation>
+      <presentation id="MinDiskSizeAllowedToPeer">
+        <decimalTextBox defaultValue="32" refId="MinDiskSizeAllowedToPeer">Minsta diskstorlek för att använda peer-cachelagring (i GB):</decimalTextBox>
+        <text>Standardvärdet är 32 GB</text>
+      </presentation>
+      <presentation id="MinBatteryPercentageAllowedToUpload">
+        <decimalTextBox defaultValue="0" refId="MinBatteryPercentageAllowedToUpload">Lägsta batterinivå (i procent):</decimalTextBox>
+        <text>Standardvärdet är 0 (obegränsat)</text>
+      </presentation>
+      <presentation id="CacheHost">
+        <textBox refId="CacheHost">
+          <label>Cacheserver:</label>
+        </textBox>
+      </presentation>
+      <presentation id="CacheHostSource">
+        <dropdownList defaultItem="0" noSort="true" refId="CacheHostSource">Källa för cacheserverns värdnamn:</dropdownList>
+      </presentation>
+      <presentation id="GroupIdSource">
+        <dropdownList defaultItem="0" noSort="true" refId="GroupIdSource">Källa för grupp-ID:</dropdownList>
+      </presentation>
+      <presentation id="DelayBackgroundDownloadFromHttp">
+        <decimalTextBox defaultValue="0" refId="DelayBackgroundDownloadFromHttp">Fördröj bakgrundsnedladdning från http (i sek):</decimalTextBox>
+        <text>Standardvärdet är 0 (ingen fördröjning)</text>
+      </presentation>
+      <presentation id="DelayForegroundDownloadFromHttp">
+        <decimalTextBox defaultValue="0" refId="DelayForegroundDownloadFromHttp">Fördröj förgrundsnedladdning från http (i sek):</decimalTextBox>
+        <text>Standardvärdet är 0 (ingen fördröjning)</text>
+      </presentation>
+      <presentation id="DelayCacheServerFallbackBackground">
+        <decimalTextBox defaultValue="0" refId="DelayCacheServerFallbackBackground">Fördröj växling från cacheserver för bakgrundsnedladdning (i sek):</decimalTextBox>
+        <text>Standardvärdet är 0 (ingen fördröjning)</text>
+      </presentation>
+      <presentation id="DelayCacheServerFallbackForeground">
+        <decimalTextBox defaultValue="0" refId="DelayCacheServerFallbackForeground">Fördröj växling från cacheserver för förgrundsnedladdning (i sek):</decimalTextBox>
+        <text>Standardvärdet är 0 (ingen fördröjning)</text>
+      </presentation>
+      <presentation id="RestrictPeerSelectionBy">
+        <dropdownList defaultItem="1" noSort="true" refId="RestrictPeerSelectionBy">Begränsa peer-urvalet med:</dropdownList>
+      </presentation>
+      <presentation id="SetHoursToLimitBackgroundDownloadBandwidth">
+        <text/>
+        <text>Ange arbetstiden för att begränsa bandbredden för bakgrundsnedladdning:</text>
+        <dropdownList defaultItem="8" noSort="true" refId="SetHoursToLimitBackgroundDownloadBandwidthFrom">Från:</dropdownList>
+        <dropdownList defaultItem="17" noSort="true" refId="SetHoursToLimitBackgroundDownloadBandwidthTo">Till:</dropdownList>
+        <text/>
+        <text>Maximal bandbredd (i procent) för bakgrundsnedladdning under arbetstid:</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitBackgroundDownloadBandwidthIn"/>
+        <text>Standardvärdet är 0 (obegränsat)</text>
+        <text/>
+        <text>Maximal bandbredd (i procent) för bakgrundsnedladdning efter arbetstid:</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitBackgroundDownloadBandwidthOut"/>
+        <text>Standardvärdet är 0 (obegränsat)</text>
+      </presentation>
+      <presentation id="SetHoursToLimitForegroundDownloadBandwidth">
+        <text/>
+        <text>Ange arbetstiden för att begränsa bandbredden för förgrundsnedladdning:</text>
+        <dropdownList defaultItem="8" noSort="true" refId="SetHoursToLimitForegroundDownloadBandwidthFrom">Från:</dropdownList>
+        <dropdownList defaultItem="17" noSort="true" refId="SetHoursToLimitForegroundDownloadBandwidthTo">Till:</dropdownList>
+        <text/>
+        <text>Maximal bandbredd (i procent) för förgrundsnedladdning under arbetstid:</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitForegroundDownloadBandwidthIn"/>
+        <text>Standardvärdet är 0 (obegränsat)</text>
+        <text/>
+        <text>Maximal bandbredd (i procent) för förgrundsnedladdning efter arbetstid:</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitForegroundDownloadBandwidthOut"/>
+        <text>Standardvärdet är 0 (obegränsat)</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

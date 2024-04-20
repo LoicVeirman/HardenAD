@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Criteri di Manutenzione pacchetti Windows</displayName>
+  <description>Criteri di Manutenzione pacchetti Windows</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">Specifica le impostazioni per l'installazione e il ripristino dei componenti facoltativi</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+Questa impostazione dei criteri consente di specificare i percorsi di rete che verranno utilizzati per il ripristino dei sistemi operativi danneggiati e per l'abilitazione delle funzionalità facoltative da cui sono stati rimossi i relativi file di payload.
+
+Se si abilita questa impostazione dei criteri e si specifica il nuovo percorso, i file in quel percorso verranno utilizzati per il ripristino dei sistemi operativi danneggiati e per l'abilitazione delle funzionalità facoltative da cui sono stati rimossi i relativi file di payload. È necessario immettere il percorso completo della nuova posizione nella casella di testo ""Percorso del file di origine alternativo"". È possibile specificare più percorsi separandoli con un punto e virgola. 
+
+Il percorso di rete può essere una cartella o un file WIM. Se si tratta di un file WIM, è necessario specificare il percorso aggiungendovi il prefisso "wim:" e includere l'indice dell'immagine da utilizzare nel file WIM. Ad esempio: "wim:\\server\share\install.wim:3".
+
+Se si disabilita o non si configura questa impostazione dei criteri o se non è possibile trovare i file nei percorsi specificati in questa impostazione dei criteri, i file verranno scaricati da Windows Update, se questa operazione è consentita dalle impostazioni dei criteri per il computer in uso.
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>Percorso alternativo del file di origine</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">Non tentare mai di scaricare i file di payload da Windows Update</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">Scarica il contenuto di ripristino e le funzionalità facoltative direttamente da Windows Update invece che da Windows Server Update Services (WSUS)</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

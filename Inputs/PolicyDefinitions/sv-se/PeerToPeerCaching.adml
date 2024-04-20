@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+    <displayName>BranchCache</displayName>
+    <description>BranchCache gör det möjligt för klienter att säkert hämta innehåll från avdelningskontor istället för att behöva hämta det från servern som är värd för innehållet. Beroende på distributionsläge kan innehållet hämtas från andra klienter på avdelningskontoret eller från en server för värdhanterad cache på avdelningskontoret. En klient måste vara auktoriserad av servern för att hämta innehåll från avdelningen. Användande av BranchCache minskar kostnaden för WAN-länken (Wide Area Network) som ansluter avdelningskontoret till datacentret eller huvudkontoren och ökar hämtningshastigheter för innehåll som redan har hämtats till avdelningskontoret.
+    
+    </description>
+
+    <resources>
+        <stringTable>
+            <!-- Supported Platforms -->
+            <string id="SUPPORTED_Windows7OrBITS4">Minst Windows 7 eller Windows Server 2008 R2*</string>
+            <!-- Supported Platforms -->
+
+            <string id="WBC_Cat">BranchCache</string>
+
+            <string id="WBC_Enable">Aktivera BranchCache</string>
+
+            <string id="WBC_Enable_Help">Den här principinställningen anger om du har aktiverat BranchCache på de klientdatorer där principen tillämpas. Utöver den här principinställningen måste du ange om klientdatorerna är i värdbaserat eller distribuerat cacheläge. Det gör du genom att konfigurera en av de här principinställningarna:
+
+– Ange distribuerat cacheläge för BranchCache
+
+– Ange värdbaserat cacheläge för BranchCache
+
+– Konfigurera servrar för värdhanterad cache
+
+Principkonfiguration
+
+Välj ett av följande:
+
+– Inte konfigurerad. Om du väljer den här inställningen tillämpas inte BranchCache-inställningarna på klientdatorer med hjälp av den här principen. När klientdatorer är domänmedlemmar men du inte vill aktivera BranchCache på alla klientdatorer, kan du välja Ej konfigurerad i inställningen för domängrupprincipen. Sedan kan du aktivera BranchCache på enskilda klientdatorer genom att konfigurera den lokala datorprincipen. Eftersom du inte har konfigurerat inställningen för domängrupprincipen skriver den inte över inställningen som du valt på de enskilda klientdatorer där du vill aktivera BranchCache.
+
+– Aktiverad. När du har gjort det här valet aktiveras BranchCache på alla klientdatorer där principen används. Om du t.ex. aktiverar den här principen i domängrupprincipen aktiveras BranchCache på alla de klientdatorer för domänmedlemmar som principen gäller för.
+
+– Inaktiverad. När du gjort det här valet inaktiveras BranchCache på alla klientdatorer där principen används.
+
+* Den här principinställningen stöds på datorer som kör Windows Vista Business, Enterprise och Ultimate-versioner med installerad BITS 4.0 (Background Intelligent Transfer Service 4.0).
+            
+            </string>
+
+            <string id="WBC_Cache_Percent">Ange procentsats av diskutrymme som ska användas för cachelagring av klientdatorer</string>
+
+            <string id="WBC_Cache_Percent_Help">Den här principinställningen anger standardprocentsatsen av det totala diskutrymmet som tilldelas cachelagringen för BranchCache på klientdatorer.
+
+Om du aktiverar den här principinställningen kan du konfigurera det procentuella diskutrymmet som allokeras för cachelagringen.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen är cachelagringen inställd på fem procent av det totala diskutrymmet på klientdatorn.
+
+Principkonfiguration
+
+Välj något av följande:
+
+– Ej konfigurerad. När du har gjort det här valet tillämpas inte inställningarna för BranchCache-cachelagring för klientdatorer av den här principen. När klientdatorer är domänmedlemmar men du inte vill konfigurera en inställning för BranchCache-cachelagring för klientdatorer på alla klientdatorer, kan du välja Ej konfigurerad i inställningen för domängrupprincipen. Sedan kan du aktivera inställningar för BranchCache-cachelagring för klientdatorer på enskilda klientdatorer genom att konfigurera den lokala datorprincipen. Eftersom du inte har konfigurerat inställningen för domängrupprincipen skriver den inte över den inställning för klientdatorers cachelagring som du använder på de enskilda klientdatorerna.
+
+– Aktiverad. När du har gjort det här valet aktiveras inställningen för BranchCache-cachelagring för klientdatorer på alla klientdatorer där den här principen tillämpas. Om du t.ex. har aktiverat "Ange procentsats av diskutrymme som ska användas för cachelagring i klientdatorer" i domängrupprincipen, aktiveras BranchCache-inställningen för cachelagring för klientdatorer som du angett på alla domänmedlemmars klientdatorer där principen tillämpas.
+
+– Inaktiverad. När du har gjort det här valet använder BranchCache-klientdatorerna standardinställningen för klientdatorers cachelagring, d.v.s. fem procent av det totala diskutrymmet på klientdatorn.
+
+När du har aktiverat den här inställningen kan du även välja och konfigurera följande alternativ:
+
+– Ange procentsats av det totala diskutrymmet som tilldelas cachelagringen. Anger ett heltal som utgör procentsatsen av klientdatorns totala diskutrymme som används för BranchCache-cachelagring.
+
+* Den här principinställningen stöds på datorer som kör Windows Vista Business, Enterprise och Ultimate-versioner med installerad BITS 4.0 (Background Intelligent Transfer Service 4.0).
+            
+            </string>
+
+            <string id="WBC_HostedCache_Location">Ange värdbaserat cacheläge för BranchCache</string>
+
+            <string id="WBC_HostedCache_Location_Help">Den här principinställningen anger om du har aktiverat det värdbaserade cacheläget för BranchCache på de klientdatorer där principen tillämpas. Utöver den här principen måste du använda principen "Aktivera BranchCache" för att aktivera BranchCache på klientdatorer.
+
+När du har konfigurerat en klientdator som en klient för värdbaserat cacheläge kan cachelagrat innehåll hämtas från avdelningskontorets server för värdhanterad cache. När klienten för värdbaserad cache hämtat innehåll från en innehållsserver kan klienten dessutom överföra innehåll till servern för värdhanterad cache, så att andra klienter för värdbaserad cache på avdelningskontoret kan få tillgång till det.
+
+Principkonfiguration
+
+Välj något av följande:
+
+– Ej konfigurerad. Om du väljer den här inställningen tillämpas inte BranchCache-inställningarna på klientdatorer med hjälp av den här principen. När klientdatorer är domänmedlemmar men du inte vill aktivera BranchCache på alla klientdatorer, kan du välja Ej konfigurerad i inställningen för domängrupprincipen. Sedan kan du aktivera BranchCache på enskilda klientdatorer genom att konfigurera den lokala datorprincipen. Eftersom du inte har konfigurerat inställningen för domängrupprincipen skriver den inte över inställningen som du valt på de enskilda klientdatorer där du vill aktivera BranchCache.
+
+– Aktiverad. När du har gjort det här valet aktiveras det värdbaserade cacheläget för BranchCache på alla klientdatorer där den här principen tillämpas. Om du t.ex. har aktiverat den här principen i domängrupprincipen aktiveras det värdbaserade cacheläget för BranchCache på alla de domänmedlemmars klientdatorer som principen gäller för.
+
+– Inaktiverad. När du har gjort det här valet inaktiveras det värdbaserade cacheläget för BranchCache på alla klientdatorer där den här principen tillämpas.
+
+När du har aktiverat den här inställningen kan du även välja och konfigurera följande alternativ:
+
+– Ange namnet på servern för värdhanterad cache. Anger datornamnet på servern för värdhanterad cache. Eftersom namnet på servern för värdhanterad cache också anges i det certifikat som registrerats för denna, måste namnet som du anger överensstämma med namnet på den server för värdhanterad cache som anges i serverns certifikat. 
+
+Klienter för värdbaserad cache måste lita på det servercertifikat som utfärdats till servern för värdhanterad cache. Se till att certifikatet, som utfärdats av en certifikatsutfärdare, installeras i certifikatarkivet över betrodda rotcertifikatsutfärdare på alla klientdatorer med värdbaserad cachelagring.
+
+* Den här principinställningen stöds på datorer som kör Windows Vista Business, Enterprise och Ultimate-versioner med installerad BITS 4.0 (Background Intelligent Transfer Service 4.0).
+            
+            </string>
+
+            <string id="WBC_Distributed_Enable">Ange distribuerat cacheläge för BranchCache</string>
+
+            <string id="WBC_Distributed_Enable_Help">Den här principinställningen anger om du har aktiverat distribuerat cacheläge för BranchCache på de klientdatorer där principen tillämpas. Utöver den här principen måste du använda principen "Aktivera BranchCache" för att aktivera BranchCache på klientdatorer.
+
+Klientdatorer i distribuerat cacheläge hämtar innehåll från huvudkontorets servrar som aktiverats med BranchCache, lagrar innehållet lokalt och visar innehållet för andra BranchCache-klienter i distribuerat cacheläge på avdelningskontoret.
+
+Principkonfiguration
+
+Välj något av följande:
+
+– Ej konfigurerad. Om du väljer den här inställningen tillämpas inte BranchCache-inställningarna på klientdatorer med hjälp av den här principen. När klientdatorer är domänmedlemmar men du inte vill aktivera BranchCache på alla klientdatorer, kan du välja Ej konfigurerad i inställningen för domängrupprincipen. Sedan kan du aktivera BranchCache på enskilda klientdatorer genom att konfigurera den lokala datorprincipen. Eftersom du inte har konfigurerat inställningen för domängrupprincipen skriver den inte över inställningen som du valt på de enskilda klientdatorer där du vill aktivera BranchCache.
+
+– Aktiverad. När du har gjort det här valet aktiveras distribuerat cacheläge för BranchCache på alla klientdatorer där den här principen tillämpas. Om du t.ex. har aktiverat den här principen i domängrupprincipen aktiveras distribuerat cacheläge för BranchCache på alla domänmedlemmars klientdatorer som principen gäller för.
+
+– Inaktiverad. När du har gjort det här valet inaktiveras det distribuerade cacheläget för BranchCache på alla klientdatorer där den här principen tillämpas.
+
+* Den här principinställningen stöds på datorer som kör Windows Vista Business, Enterprise och Ultimate-versioner med installerad BITS 4.0 (Background Intelligent Transfer Service 4.0).
+            
+            </string>
+
+            <string id="WBC_SMB_Enable">Konfigurera BranchCache för nätverksfiler</string>
+
+            <string id="WBC_SMB_Enable_Help">Den här principinställningen används bara om du har distribuerat en eller flera BranchCache-aktiverade filservrar på huvudkontoret. Principinställningen anger när klientdatorer på olika avdelningskontor börjar lagra innehåll från filservrar baserat på nätverksfördröjning – eller försening – som sker när klienterna hämtat innehåll från huvudkontoret över en WAN-länk (Wide Area Network-länk).  När du konfigurerar ett värde för den här inställningen, d.v.s. nätverkets högsta tillåtna fördröjningsvärde för överföring innan cachelagring påbörjas, cachelagrar inte klienter innehåll förrän nätverksfördröjningen når ett visst värde. När nätverksfördröjningen överstiger det här värdet börjar klienter cachelagra innehåll efter att de har hämtat det från filservrarna.
+
+Principkonfiguration
+
+Välj något av följande:
+
+– Ej konfigurerad. När du har gjort det här valet tillämpas inte fördröjningsinställningarna för BranchCache på klientdatorer av den här principen. När klientdatorer är domänmedlemmar men du inte vill konfigurera en fördröjningsinställning för BranchCache-cachelagring för klientdatorer på alla klientdatorer, kan du välja Ej konfigurerad i inställningen för domängrupprincipen. Sedan kan du aktivera fördröjningsinställningar för BranchCache-cachelagring för klientdatorer på enskilda klientdatorer genom att konfigurera den lokala datorprincipen. Eftersom du inte har konfigurerat inställningen för domängrupprincipen skriver den inte över fördröjningsinställningen som du använder på de enskilda klientdatorerna.
+
+– Aktiverad. När du har gjort det här valet aktiveras BranchCache-inställningen för högsta fördröjningsvärde för överföring på alla klientdatorer där den här principen tillämpas. Om du t.ex. har aktiverat "Konfigurera BranchCache för nätverksfiler" i domängrupprincipen aktiveras fördröjningsinställningen för BranchCache som du angett i principen på alla domänmedlemmars klientdatorer där principen tillämpas.
+
+– Inaktiverad. När du har gjort det här valet använder klientdatorer med BranchCache standardinställningen med en fördröjning på 80 millisekunder.
+
+När du har aktiverat den här principinställningen kan du även välja och konfigurera följande alternativ:
+
+– Ange nätverkets högsta fördröjningsvärde för överföring (i millisekunder) innan cachelagring påbörjas. Anger hur lång tid det tar, i millisekunder, innan klientdatorer med BranchCache börjar cachelagra innehåll lokalt.
+            
+            </string>
+
+            <string id="WBC_HostedCacheDiscovery_Enable">Aktivera Automatisk identifiering av värdbaserad cache via tjänstens anslutningspunkt</string>
+
+            <string id="WBC_HostedCacheDiscovery_Enable_Help">Principinställningen anger om klientdatorer ska försöka konfigurera värdbaserat cacheläge automatiskt genom att söka efter servrar för värdhanterad cache som publicerar tjänstanslutningspunkter associerade med klientens aktuella Active Directory-plats.  Om du aktiverar den här principinställningen letar de klientdatorer, som principinställningen tillämpas på, efter servrar för värdhanterad cache med hjälp av Active Directory. Datorerna föredrar både servrarna och det värdbaserade cacheläget framför den manuella BranchCache-konfigurationen eller den BranchCache-konfiguration som sker via andra grupprinciper.
+
+Om du aktiverar den här principinställningen utöver "Aktivera BranchCache" försöker BranchCache-klienter identifiera servrar för värdhanterad cache på det lokala avdelningskontoret.  Om klientdatorerna upptäcker servrar för värdhanterad cache aktiveras det värdbaserade cacheläget.  Om de inte upptäcker servrar för värdhanterad cache aktiveras inte det värdbaserade cacheläget. Klienten använder då vilken annan konfiguration som helst som angetts manuellt eller via grupprincipen.
+
+När den här principinställningen tillämpas utför klientdatorn antingen automatisk identifiering av servrar för värdhanterad cache eller inte, beroende på följande omständigheter:
+
+Om inga andra lägesbaserade principinställningar för BranchCache tillämpas utför klientdatorn automatiskt identifiering av servrar för värdhanterad cache. Om en eller flera servrar för värdhanterad cache hittas konfigureras klientdatorn för värdbaserat cacheläge.
+
+Om principinställningen "Ange distribuerat cacheläge för BranchCache" tillämpas utöver den här principen utför klientdatorn automatiskt identifiering av servrar för värdhanterad cache. Om en eller flera servrar för värdhanterad cache hittas, konfigureras klientdatorn enbart för värdbaserat cacheläge.
+
+Om principinställningen "Ange värdbaserat cacheläge för BranchCache" tillämpas utför inte klientdatorn automatiskt identifiering av värdbaserad cache. Detta gäller också då principinställningen "Konfigurera servrar för värdhanterad cache" tillämpas.
+
+Den här principinställningen gäller bara klientdatorer som kör minst Windows 8.  Den här principen påverkar inte datorer som kör Windows 7 eller Windows Vista.  
+
+Om du inaktiverar eller låter bli att konfigurera den här inställningen försöker inte klienten upptäcka servrar för värdhanterad cache via tjänstens anslutningspunkt.
+
+Principkonfiguration
+
+Välj något av följande:
+
+– Ej konfigurerad. Om du väljer den här inställningen tillämpas inte BranchCache-inställningar på klientdatorer av den här principinställningen. Klientdatorer utför inte identifiering av servrar för värdhanterad cache.
+
+– Aktiverad. När du har gjort det här valet tillämpas principinställningen på klientdatorer, som utför automatisk identifiering av servrar för värdhanterad cache och som har konfigurerats som klienter i värdbaserat cacheläge.
+
+– Inaktiverad. När du har gjort det här valet tillämpas inte principen på klientdatorer.
+            
+            </string>
+
+            <string id="WBC_HostedCache_MultipleServers">Konfigurera servrar för värdhanterad cache</string>
+
+            <string id="WBC_HostedCache_MultipleServers_Help">Den här principinställningen anger om du har konfigurerat klientdatorer för användning i värdbaserat cacheläge. Den tillhandahåller datornamnet för de servrar för värdhanterad cache som är tillgängliga för klientdatorer.  Ett värdbaserat cacheläge gör det möjligt för klientdatorerna i avdelningskontoren att hämta innehåll från en eller flera servrar för värdhanterad cache som installerats på samma kontor.  Du kan använda den här inställningen om du vill konfigurera de klientdatorer automatiskt som konfigurerats för värdbaserat cacheläge med datornamnen på de servrar för värdhanterad cache som finns på avdelningskontoret.
+
+Om du aktiverar den här principinställningen och anger giltiga datornamn på servrar för värdhanterad cache aktiveras det värdbaserade cacheläget för alla klientdatorer där principinställningen tillämpas. Du måste också aktivera principinställningen "Aktivera BranchCache" för att den här principinställningen ska börja gälla.
+
+Den här principinställningen gäller bara klientdatorer som kör minst Windows 8.  Den här principen påverkar inte datorer som kör Windows 7 eller Windows Vista.  För de klientdatorer där den här principinställningen tillämpas, utöver "Ange värdbaserat cacheläge för BranchCache", används de servrar för värdhanterad cache som anges i principinställningen, och inte den server för värdhanterad cache som konfigureras i principinställningen "Ange värdbaserat cacheläge för BranchCache".
+
+Om du inte konfigurerar, eller om du inaktiverar, den här principinställningen fungerar fortfarande de klientdatorer som konfigurerats med värdbaserat cacheläge.
+
+Principkonfiguration
+
+Välj något av följande:
+
+– Ej konfigurerad. Om du väljer den här inställningen tillämpas inte BranchCache-inställningar på klientdatorer av den här principinställningen.
+
+– Aktiverad. När du har gjort det här valet tillämpas principinställningen på klientdatorer som konfigurerats som klienter i värdbaserat cacheläge. De använder de servrar för värdhanterad cache som du anger i "Servrar för värdhanterad cache".
+
+– Inaktiverad. När du har gjort det här valet tillämpas inte principen på klientdatorer.
+
+När du har aktiverat den här inställningen kan du även välja och konfigurera följande alternativ:
+
+– Servrar för värdhanterad cache. Om du vill lägga till datornamn för servrar för värdhanterad cache i den här principinställningen klickar du på Aktiverad och sedan på Visa. Dialogrutan Visa innehåll öppnas. Klicka på Värde. Ange sedan datornamnen för servrarna för värdhanterad cache.
+            
+            </string>
+
+            <string id="WBC_Downgrading">Konfigurera BranchCache-versionsupport för klienter</string>
+
+            <string id="WBC_Downgrading_Help">Den här principinställningen anger om klientdatorer som klarar av BranchCache också fungerar i nedgraderat läge så att de fortfarande är kompatibla med tidigare versioner av BranchCache.  Om klientdatorer inte använder samma version av BranchCache kan cachelagringseffektiviteten minska, eftersom de klientdatorer som använder olika versioner av BranchCache kanske lagrar cachedata i format som inte är kompatibla med varandra.
+
+Om du aktiverar den här principinställningen använder alla klienter den version av BranchCache som du anger i "Välj någon av följande versioner".
+
+Om du inte konfigurerar den här inställningen använder alla klienter den version av BranchCache som överensstämmer med operativsystemet.
+
+Principkonfiguration
+
+Välj något av följande:
+
+– Ej konfigurerad. När du har gjort det här valet tillämpas inte principinställningen på klientdatorer. Klientdatorer kör den version av BranchCache som ingår i operativsystemet.
+
+– Aktiverad. När du har gjort det här valet tillämpas principinställningen på klientdatorer baserat på värdet av alternativinställningen "Välj någon av följande versioner" som du angett.
+
+– Inaktiverad. När du har gjort det här valet tillämpas inte principinställningen på klientdatorer. Klientdatorer kör den version av BranchCache som ingår i operativsystemet.
+
+När du har aktiverat den här inställningen kan du även välja och konfigurera följande alternativ:
+
+Välj någon av följande versioner
+
+– Windows Vista med installerad BITS 4.0, Windows 7 eller Windows Server 2008 R2. Om du väljer den här versionen kör senare versioner av Windows den version av BranchCache som ingår i just det operativsystemet istället för den senare versionen av BranchCache.
+
+– Windows 8. Om du väljer den här versionen kör Windows 8 den version av BranchCache som ingår i operativsystemet.
+            
+            </string>
+
+            <string id="WBC_Downgrading_Version_Win7">Windows Vista med installerad BITS 4.0, Windows 7 eller Windows Server 2008 R2</string>
+            <string id="WBC_Downgrading_Version_Win8">Windows 8</string>
+
+            <string id="WBC_Cache_MaxAge">Ställ in hur gamla segmenten får vara i datacachen</string>
+
+            <string id="WBC_Cache_MaxAge_Help">Den här principinställningen anger standardtiden i dagar som segmenten är giltiga i datacachen för BranchCache på klientdatorer.
+
+Om du aktiverar den här principinställningen kan du konfigurera hur gamla segmenten får vara i datacachen.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen anges tiden till 28 dagar.
+
+Principkonfiguration
+
+Välj något av följande:
+
+– Ej konfigurerad. När du har gjort det här valet tillämpas inte inställningar för BranchCache-klientdatorers cachelagringstid på klientdatorer av den här principen. När klientdatorer är domänmedlemmar men du inte vill konfigurera en inställning för BranchCache-klientdatorers cachelagringstid på alla klientdatorer kan du välja Ej konfigurerad i inställningen för domängrupprincipen. Sedan kan du aktivera inställningar för BranchCache-klientdatorers cachelagringstid på enskilda klientdatorer genom att konfigurera den lokala datorprincipen. Eftersom du inte har konfigurerat inställningen för domängrupprincipen skriver den inte över inställningen för klientdatorers cachelagringstid som du använder på de enskilda klientdatorerna.
+
+– Aktiverad. När du har gjort det här valet aktiveras inställningen för BranchCache-klientdatorns cachelagringstid på alla klientdatorer där den här principen tillämpas. Om du t.ex. har aktiverat den här principinställningen i domängrupprincipen aktiveras BranchCache-klientdatorns cachelagringstid som du angett i principen på alla domänmedlemmars klientdatorer där principen tillämpas.
+
+– Inaktiverad. När du har gjort det här valet använder klientdatorerna för BranchCache standardinställningen för klientdatorers cachelagringstid, d.v.s. 28 dagar.
+
+När du har aktiverat den här inställningen kan du även välja och konfigurera följande alternativ:
+
+– Ange hur många dagar som segmenten är giltiga i datacachen.
+            
+            </string>
+
+        </stringTable>
+
+        <presentationTable>
+            <presentation id="WBC_Cache_Size_Exact_Presentation">
+                <decimalTextBox refId="WBC_Cache_Size_Exact_dctxtbox" defaultValue="10485760" spinStep="10485760">
+                </decimalTextBox>
+            </presentation>
+
+            <presentation id="WBC_Cache_Size_Percent_Presentation">
+                <text>Ange procentsatsen av det totala diskutrymmet som tilldelats cachelagringen</text>
+                <decimalTextBox refId="WBC_Cache_Size_Percent_dctxtbox" defaultValue="5" spinStep="5">
+                </decimalTextBox>
+            </presentation>
+
+            <presentation id="WBC_Cache_Location_TextBox">
+                <textBox refId="WBC_Cache_TextBox">
+                    <label>Ange plats för cache på klientdatorn</label>
+                </textBox>
+            </presentation>
+
+            <presentation id="WBC_Hosted_Cache_Location_TextBox">
+                <textBox refId="WBC_Cache_TextBox">
+                    <label>Anger namnet på servern för värdhanterad cache</label>
+                </textBox>
+            </presentation>
+
+            <presentation id="WBC_SMB_DecimalTextBox">
+              <text>Ange nätverkets högsta fördröjningsvärde för överföring (i millisekunder) innan cachelagring påbörjas</text>  
+              <decimalTextBox refId="WBC_SMBLatency_DecimalTextBox" defaultValue="80" spinStep="20">
+                </decimalTextBox>
+            </presentation>
+
+            <presentation id="WBC_MultipleServers">
+              <text>Servrar för värdhanterad cache</text>  
+              <listBox refId="WBC_MultipleServers_Listbox"/>
+            </presentation>
+
+            <presentation id="WBC_Downgrading_VersionSelection">
+              <dropdownList refId="Downgrading_Version" noSort="true" defaultItem="0">Välj bland följande versioner:</dropdownList>
+            </presentation>
+
+            <presentation id="WBC_Cache_MaxAge_Presentation">
+                <text>Ange hur många dagar som segmenten är giltiga i datacachen</text>
+                <decimalTextBox refId="WBC_Cache_MaxAge_dctxtbox" defaultValue="28" spinStep="5">
+                </decimalTextBox>
+            </presentation>
+
+        </presentationTable>
+    </resources>
+</policyDefinitionResources>

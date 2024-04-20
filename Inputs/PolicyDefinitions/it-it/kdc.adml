@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Impostazioni KDC</displayName>
+  <description>Impostazioni di configurazione per il Centro distribuzione chiavi Kerberos.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">Usa ordine di ricerca nella foresta</string>
+      <string id="forestsearch_explain">Questa impostazione dei criteri definisce l'elenco delle foreste trusting in cui il Centro distribuzione chiavi esegue la ricerca durante il tentativo di risolvere i nomi di entità servizio (SPN) in due parti.
+
+Se si abilita questa impostazione dei criteri, il Centro distribuzione chiavi eseguirà la ricerca nelle foreste incluse in questo elenco nel caso non sia possibile risolvere un nome di entità servizio (SPN) in due parti nella foresta locale. La ricerca nella foresta viene eseguita utilizzando un catalogo globale o suggerimenti per i suffissi di nome. Se viene trovata una corrispondenza, il Centro distribuzione chiavi restituirà un ticket di riferimento al client per il dominio appropriato.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il Centro distribuzione chiavi non eseguirà la ricerca nelle foreste elencate per risolvere il nome di entità servizio. Se il Centro distribuzione chiavi non è in grado di risolvere il nome di entità servizio a causa dell'impossibilità di trovare il nome, potrebbe essere utilizzata l'autenticazione NTLM.
+
+Per garantire un comportamento coerente, è necessario che questa impostazione dei criteri sia supportata e impostata in modo identico in tutti i controller di dominio del dominio.</string>
+      <string id="emitlili">Fornisci informazioni sugli accessi precedenti ai computer client</string>
+      <string id="emitlili_explain">Questa impostazione dei criteri stabilisce se il controller di dominio fornisce informazioni sugli accessi precedenti ai computer client.
+
+Se si abilita questa impostazione dei criteri, il controller di dominio visualizzerà il messaggio di informazioni sugli accessi precedenti.
+
+Affinché questa funzionalità possa essere utilizzata da Accesso a Windows, è inoltre necessario che sia abilitata l'impostazione dei criteri "Visualizza informazioni sugli accessi precedenti durante l'accesso dell'utente" disponibile nel nodo Opzioni di accesso a Windows in Componenti di Windows.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il controller di dominio fornirà le informazioni sugli accessi precedenti solo se l'opzione "Visualizza informazioni sugli accessi precedenti durante l'accesso dell'utente" è abilitata.
+
+Nota: le informazioni sugli accessi precedenti vengono fornite solo se il livello di funzionalità del dominio è Windows Server 2008. Nei domini con un livello di funzionalità Windows Server 2003, Windows 2000 originale o Windows 2000 misto i controller di dominio non possono fornire informazioni sugli accessi precedenti e l'abilitazione di questa impostazione dei criteri non produce alcun effetto.
+
+</string>
+      <string id="CbacAndArmor">Supporto KDC per attestazioni, autenticazione composta e blindatura Kerberos</string>
+      <string id="CbacAndArmor_explain">Questa impostazione dei criteri consente di configurare un controller di dominio per il supporto delle attestazioni e dell'autenticazione composta per il controllo dinamico degli accessi e la blindatura Kerberos tramite l'autenticazione Kerberos.
+
+Se si abilita questa impostazione dei criteri, i computer client che supportano le attestazioni e l'autenticazione composta per il controllo dinamico degli accessi e sono in grado di riconoscere la blindatura Kerberos utilizzeranno questa funzionalità per i messaggi di autenticazione Kerberos. È consigliabile applicare questa impostazione dei criteri a tutti i controller di dominio per garantire un'applicazione coerente nel dominio.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il controller di dominio non supporterà le attestazioni, l'autenticazione composta o la blindatura.
+
+Se si configura l'opzione "Non supportato", il controller di dominio non supporterà le attestazioni, l'autenticazione composta o la blindatura. Questo è il comportamento predefinito per i controller di dominio che eseguono i sistemi operativi Windows Server 2008 R2 o versioni precedenti.
+
+Nota: per rendere effettive le opzioni seguenti di questo criterio KDC, è necessario abilitare il Criterio di gruppo Kerberos "Supporto client Kerberos per attestazioni, autenticazione composta e blindatura Kerberos" in tutti i sistemi supportati. Se non si abilita l'impostazione dei criteri Kerberos, queste funzionalità non verranno utilizzate per i messaggi di autenticazione Kerberos.
+
+Se si configura l'opzione "Supportato", il controller di dominio supporterà le attestazioni, l'autenticazione composta e la blindatura Kerberos. Il controller di dominio annuncia ai computer client Kerberos il supporto nel dominio delle attestazioni e dell'autenticazione composta per il controllo dinamico degli accessi e la blindatura Kerberos.
+
+Requisiti a livello di funzionalità del dominio
+Per le opzioni "Fornisci sempre attestazioni" e "Errore per richieste di autenticazione non blindate", se il livello di funzionalità del dominio è impostato su Windows Server 2008 R2 o versioni precedenti, il comportamento dei controller di dominio è uguale a quello che si verifica quando è selezionata l'opzione "Supportato".
+
+Se il livello di funzionalità del dominio è impostato su Windows Server 2012, il controller di dominio annuncia ai computer client Kerberos il supporto nel dominio delle attestazioni e dell'autenticazione composta per il controllo dinamico degli accessi e la blindatura Kerberos. Inoltre:
+   - Se si imposta l'opzione "Fornisci sempre attestazioni", il controller di dominio restituirà sempre le attestazioni per gli account e supporterà il comportamento RFC per l'annuncio FAST (Flexible Authentication Secure Tunneling).
+   - Se si imposta l'opzione "Errore per richieste di autenticazione non blindate", il controller di dominio rifiuterà i messaggi Kerberos non blindati.
+
+Avviso: se si imposta "Errore per richieste di autenticazione non blindate", l'autenticazione dei computer client che non supportano la blindatura Kerberos avrà esito negativo per il controller di dominio.
+
+Per assicurarsi che questa funzionalità abbia effetto, distribuire un numero sufficiente di controller che supportano le attestazioni e l'autenticazione composta per il controllo dinamico degli accessi e che riconoscono la blindatura Kerberos per gestire le richieste di autenticazione. La presenza di un numero insufficiente di controller di dominio per il supporto di questa impostazione dei criteri causerà errori di autenticazione in caso di richieste di controllo dinamico degli accessi o blindatura Kerberos (ossia, se l'opzione "Supportato" è abilitata).
+
+Effetti sulle prestazioni dei controller di dominio dell'abilitazione di questa impostazione dei criteri:
+   - È richiesta l'individuazione sicura delle capacità del dominio con conseguenti scambi di messaggi aggiuntivi.
+   - Le attestazioni e l'autenticazione composta per il controllo dinamico degli accessi comportano un aumento delle dimensioni e della complessità dei dati nel messaggio, con conseguente incremento dei tempi di elaborazione e delle dimensioni dei ticket di servizio Kerberos.
+   - La blindatura Kerberos esegue la crittografia completa dei messaggi Kerberos e firma gli errori Kerberos, con conseguente incremento dei tempi di elaborazione, ma non modifica le dimensioni dei ticket di servizio.
+</string>
+      <string id="NoCbacAndArmor">Non supportato</string>
+      <string id="MixModeCbacAndArmor">Supportato</string>
+      <string id="FullModeCbacAndArmor">Fornisci sempre attestazioni</string>
+      <string id="FullModeCbacAndRequireArmor">Errore per richieste di autenticazione non blindate</string>
+      <string id="TicketSizeThreshold">Avviso per ticket Kerberos di grandi dimensioni</string>
+      <string id="TicketSizeThreshold_explain">Questa impostazione dei criteri consente di configurare le dimensioni raggiunte le quali i ticket Kerberos attivano l'evento di avviso generato durante l'autenticazione Kerberos. Gli avvisi relativi alle dimensioni dei ticket vengono registrati nel registro di sistema.
+
+Se si abilita questa impostazione dei criteri, è possibile impostare il limite di soglia per il ticket Kerberos che attiva gli eventi di avviso. Se il limite è troppo alto, è possibile che si verifichino errori di autenticazione anche se non vengono registrati eventi di avviso.  Se il limite è troppo basso, nel registro compariranno troppi avvisi relativi ai ticket, che quindi non sarebbero di grande utilità ai fini dell'analisi. Il valore deve essere impostato sullo stesso valore specificato per l'impostazione dei criteri Kerberos "Imposta dimensione massima buffer del token di contesto SSPI di Kerberos" oppure sul valore più piccolo di MaxTokenSize utilizzato nell'ambiente, se non si utilizzano i Criteri di gruppo per la configurazione.
+      
+Se si disabilita o non si configura questa impostazione dei criteri, l'impostazione predefinita del valore soglia sarà 12.000 byte, ovvero il valore predefinito di MaxTokenSize di Kerberos per Windows 7, Windows Server 2008 R2 e versioni precedenti.
+
+</string>
+      <string id="RequestCompoundId">Richiedi autenticazione composta</string>
+      <string id="RequestCompoundId_explain">Questa impostazione dei criteri consente di configurare un controller di dominio per richiedere l'autenticazione composta.
+
+Nota: affinché un controller di dominio richieda l'autenticazione composta, è necessario che il criterio "Supporto KDC per attestazioni, autenticazione composta e blindatura Kerberos" sia configurato e abilitato. 
+
+Se si abilita questa impostazione dei criteri, i controller di dominio richiederanno l'autenticazione composta. Il ticket di servizio restituito includerà l'autenticazione composta solo quando l'account è configurato esplicitamente. È consigliabile applicare questa impostazione dei criteri a tutti i controller di dominio per garantire un'applicazione coerente nel dominio. 
+
+Se si disabilita o non si configura questa impostazione dei criteri, i controller di dominio restituiranno ticket di servizio contenenti l'autenticazione composta ogni volta che il client invia una richiesta per questo tipo di autenticazione, indipendentemente dalla configurazione dell'account.
+
+</string>
+      <string id="PKINITFreshness">Supporto KDC per estensione di aggiornamento PKInit</string>
+      <string id="PKINITFreshness_explain">Il supporto per l'estensione di aggiornamento PKInit richiede il livello di funzionalità del dominio di Windows Server 2016. Se il dominio del controller di domino non è al livello di funzionalità del dominio di Windows Server 2016 o versione successiva, questo criterio non verrà applicato.
+
+Questa impostazione dei criteri consente di configurare un controller di dominio per il supporto dell'estensione di aggiornamento PKInit.
+
+Se si abilita questa impostazione dei criteri, sono supportate le opzioni seguenti:
+
+Supportata: l'estensione di aggiornamento PKInit è supportata su richiesta. I client Kerberos che eseguono correttamente l'autenticazione con l'estensione di aggiornamento PKInit otterranno il SID dell'identità chiave pubblica aggiornato.
+
+Richiesta: l'estensione di aggiornamento PKInit è richiesta per l'autenticazione. I client Kerberos che non supportano l'estensione di aggiornamento PKInit avranno sempre esito negativo quando usano credenziali con chiave pubblica.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il controller di dominio non offrirà mai l'estensione di aggiornamento PKInit e accetterà le richieste di autenticazione valide senza verificare l'aggiornamento. Gli utenti non riceveranno mai il SID dell'identità chiave pubblica aggiornato.
+</string>
+      <string id="NoPKINITFreshness">Disabilitato</string>
+      <string id="SupportPKINITFreshness">Supportato</string>
+      <string id="RequirePKINITFreshness">Richiesto</string>
+      <string id="PKINITHashAlgorithmConfiguration">Configurare algoritmi hash per l'accesso al certificato</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Questa impostazione dei criteri controlla gli algoritmi hash o checksum usati dal client Kerberos durante l'esecuzione dell'autenticazione del certificato.
+
+Se si abilita questo criterio, sarà possibile configurare uno dei quattro stati per ogni algoritmo:
+
+Lo stato "Predefinito" imposta l'algoritmo sullo stato consigliato.
+
+"Supportato" consente l'utilizzo dell'algoritmo. L'abilitazione degli algoritmi che sono stati disabilitati per impostazione predefinita può ridurre la sicurezza.
+
+"Monitorato" consente l'utilizzo dell'algoritmo e segnala un evento (ID 309) ogni volta che viene usato. Questo stato ha lo scopo di verificare che l'algoritmo non venga utilizzato e che possa essere disabilitato in sicurezza.
+
+"Non supportato" disabilita l'utilizzo dell'algoritmo. Questo stato è destinato ad algoritmi ritenuti non sicuri.
+
+ Se si disabilita o non si configura questo criterio, ogni algoritmo assumerà lo stato "Predefinito".
+Altre informazioni sugli algoritmi hash e checksum supportati dal client Windows Kerberos e sui relativi stati predefiniti sono disponibili all'indirizzo https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Eventi generati da questa configurazione: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Impostazione predefinita</string>
+      <string id="PKINITHashAlgorithm_Supported">Supportato</string>
+      <string id="PKINITHashAlgorithm_Audited">Monitorato</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Non supportato</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Modalità:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Foreste in cui cercare</label>
+        </textBox>
+        <text>Sintassi:</text>
+        <text>Immettere l'elenco delle foreste in cui cercare quando questo criterio è abilitato.</text>
+        <text>Utilizzare il formato di denominazione per i nomi di dominio completi (FQDN).</text>
+        <text>Separare più voci di ricerca con un punto e virgola ";".</text>
+        <text>Dettagli:</text>
+        <text>Non è necessario includere la foresta corrente nell'elenco, in quanto l'ordine di ricerca nella foresta utilizza innanzitutto il catalogo globale e quindi esegue la ricerca nell'ordine elencato.</text>
+        <text>Non è necessario elencare separatamente tutti i domini della foresta.</text>
+        <text>Se una foresta trusting è inclusa nell'elenco, la ricerca verrà eseguita in tutti i domini di tale foresta.</text>
+        <text>Per ottenere prestazioni ottimali, elencare le foreste secondo l'ordine di probabilità di successo della ricerca.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Attestazioni, autenticazione composta per il controllo dinamico degli accessi e le opzioni di blindatura Kerberos:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Soglia dimensioni ticket</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">Opzioni estensione di aggiornamento PKInit:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

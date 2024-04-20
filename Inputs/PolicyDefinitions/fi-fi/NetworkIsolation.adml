@@ -1,0 +1,157 @@
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Verkon eristäminen  </displayName>
+  <description>Määrittää verkon eristämisasetukset sovelluksia varten  </description>
+  <resources>
+    <stringTable>
+      	<string id="WF_Isolation">Verkon eristäminen</string>
+		
+
+<!--Define server addresses that proxy to the Internet -->	
+	<string id="WF_NetIsolation_Domain_Proxies">Sovellusten Internet-välityspalvelimet</string>  
+	<string id="WF_NetIsolation_Domain_Proxies_Help">  Tämä asetus ei koske työpöytäsovelluksia.
+	
+Puolipistein eroteltu luettelo Internet-välityspalvelimien IP-osoitteista. Windowsin verkon eristäminen sijoittaa osoitteet luokkaan Internet. Ne ovat sellaisten sovellusten käytettävissä, joihin sisältyvät Internet-asiakas- tai Internet-asiakas-/-palvelinominaisuudet.
+
+Jos otat käyttöön tämän käytäntöasetuksen, välityspalvelinta käyttävissä verkoissa olevat sovellukset voivat käyttää Internetiä ilman yksityisverkko-ominaisuutta. Useimmissa tapauksissa Windowsin verkon eristäminen kuitenkin löytää välityspalvelimet ongelmitta. Tämän asetuksen avulla määritettävät välityspalvelimet yhdistetään oletusarvoisesti niihin, jotka automaattinen etsintä löytää. Jos haluat määrittää käytännön ainoiden sallittujen välityspalvelimien luetteloksi, ota käyttöön asetus Välityspalvelinmääritykset ovat määrääviä.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai jätät sen määrittämättä, sovellukset käyttävät Internet-välityspalvelimia, jotka Windowsin verkon eristäminen on löytänyt automaattisesti.
+
+Esimerkki: [3efe:3022::1000];18.0.0.1;18.0.0.2 
+
+Lisätietoja on osoitteessa http://go.microsoft.com/fwlink/p/?LinkId=234043 </string> 
+
+
+<!--Define server addresses that proxy to a private network (intranet) -->	
+	<string id="WF_NetIsolation_Intranet_Proxies">Sovellusten intranet-välityspalvelimet</string>
+	<string id="WF_NetIsolation_Intranet_Proxies_Help">  Tämä asetus ei koske työpöytäsovelluksia.
+	
+Puolipistein eroteltu luettelo intranet-välityspalvelimien IP-osoitteista. Windowsin verkon eristäminen luokittelee osoitteet yksityisiksi. Ne ovat sellaisten sovellusten käytettävissä, joihin sisältyvät koti- ja työverkon käyttöominaisuudet.
+
+Jos otat tämän käytäntöasetuksen käyttöön, järjestelmänvalvoja voi määrittää välityspalvelimet, joiden avulla intranet-resurssit ovat käytettävissä.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai jätät sen määrittämättä, Windowsin verkon eristäminen yrittää löytää välityspalvelimet ja määrittää ne Internet-solmuiksi.
+  
+Tätä asetusta EI pidä käyttää Internet-välityspalvelimien määrittämiseen.
+
+Esimerkki: [3efe:3022::1000]; 18.0.0.1; 18.0.0.2
+
+Lisätietoja on osoitteessa http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define subnet addresses-->	
+	<string id="WF_NetIsolation_PrivateSubnet">Yksityisverkkoalueet sovelluksia varten</string>
+	<string id="WF_NetIsolation_PrivateSubnet_Help"> Tämä asetus ei koske työpöytäsovelluksia.
+				
+Pilkuin eroteltu luettelo IP-osoitealueista, jotka ovat yritysverkossa.
+
+Jos otat tämän käytäntöasetuksen käyttöön, koti- ja työverkon käyttöominaisuudet sisältävillä sovelluksilla on asianmukainen pääsy yritysverkkoon. Sovellukset voivat käyttää näitä osoitteita ainoastaan, jos sovellukseen on määritetty koti- ja työverkon käyttöominaisuudet.
+
+Windowsin verkon eristäminen yrittää löytää yksityisverkon isännät automaattisesti. Tämän käytäntöasetuksen avulla määritettävät osoitteet yhdistetään oletusarvoisesti isäntiin, jotka on automaattisessa etsinnässä määritetty yksityisiksi.
+
+Jos haluat varmistaa, että vain nämä osoitteet luokitellaan myös jatkossa yksityisiksi, ota käyttöön asetus Aliverkkomääritykset ovat määrääviä.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai jätät sen määrittämättä, Windowsin verkon eristäminen yrittää löytää yksityisverkon isännät automaattisesti.
+
+Esimerkki: 3efe:1092::/96,18.1.1.1/10 
+
+Lisätietoja on osoitteessa http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Proxy definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Proxy">Välityspalvelinmääritykset ovat määrääviä</string>
+	<string id="WF_NetIsolation_Authoritative_Proxy_Help"> Tämä asetus ei koske työpöytäsovelluksia.
+				
+Poistaa käytöstä Windowsin verkon eristämisen automaattisen välityspalvelimen etsimisen toimialueen yritysympäristössä.
+
+Jos otat käyttöön tämän käytäntöasetuksen, Windowsin verkon eristämisen automaattinen välityspalvelimen etsiminen poistuu käytöstä toimialueen yritysympäristössä. Vain ryhmäkäytännön avulla määritetyt välityspalvelimet ovat määrääviä. Tämä koskee sekä Internet- että intranet-välityspalvelimia.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai jätät sen määrittämättä, Windowsin verkon eristäminen yrittää löytää välityspalvelinosoitteet automaattisesti.  
+
+Lisätietoja on osoitteessa http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Subnet definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Subnet">Aliverkkomääritykset ovat määrääviä</string>
+	<string id="WF_NetIsolation_Authoritative_Subnet_Help"> Tämä asetus ei koske työpöytäsovelluksia.
+				
+Poistaa käytöstä Windowsin verkon eristämisen automaattisen yksityisverkon isäntien etsimisen toimialueen yritysympäristössä.
+
+Jos otat käyttöön tämän käytäntöasetuksen, Windowsin verkon eristämisen automaattinen yksityisverkon isäntien etsiminen poistuu käytöstä toimialueen yritysympäristössä. Vain ryhmäkäytännössä määritetyillä osoitealueilla olevat verkkoisännät luokitellaan yksityisiksi.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai jätät sen määrittämättä, Windowsin verkon eristäminen yrittää löytää toimialueen yritysympäristössä olevat yksityisverkon isännät automaattisesti. 
+				
+Lisätietoja on osoitteessa http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+
+<!--Define cloud resources-->
+  <string id="WF_NetIsolation_EnterpriseCloudResources">Pilvessä isännöidyt yritysresurssien toimialueet</string>
+  <string id="WF_NetIsolation_EnterpriseCloudResources_Help"> Tämä asetus ei koske työpöytäsovelluksia.
+
+Pystyviivoin eroteltu luettelo toimialueen pilviresursseista. Jokainen pilviresurssi voidaan määrittää valinnaisesti myös sisäisen välityspalvelimen pariksi lisäämällä pilviresurssin loppuun pilkku ja välityspalvelimen osoite.
+
+Sisältää luettelon pilvessä isännöidyistä yritysresurssien toimialueista. Yhteyksiä näihin resursseihin pidetään yhteyksinä yritysverkkoihin.
+
+Jos välityspalvelin on liitetty pariksi pilviresurssin kanssa, liikenne pilviresurssiin reititetään yritysverkon ja ilmaistun välityspalvelimen kautta (portissa 80). Tähän tarkoitukseen käytetty välityspalvelin on määritettävä myös sovelluskäytännön intranet-välityspalvelimien avulla.
+
+Esimerkki: [pilviresurssi]|[pilviresurssi]|[pilviresurssi],[välityspalvelin]|[pilviresurssi]|[pilviresurssi],[välityspalvelin]|
+
+Lisätietoja on osoitteessa http://go.microsoft.com/fwlink/p/?LinkId=234043. </string>
+
+
+<!--Define neutral resources-->
+    <string id="WF_NetIsolation_NeutralResources">Työ- ja henkilökohtaiseen käyttöön luokitellut toimialueet</string>
+    <string id="WF_NetIsolation_NeutralResources_Help"> Tämä asetus ei koske työpöytäsovelluksia.
+
+Pilkuin eroteltu luettelo niiden toimialueiden nimistä, joita voi käyttää sekä työ- että henkilökohtaisena resurssina.
+
+Lisätietoja on osoitteessa http://go.microsoft.com/fwlink/p/?LinkId=234043. </string>
+
+
+    </stringTable>
+ 
+ <!--Start of Presentation Table-->	
+ 
+ <presentationTable>
+
+	<presentation id="WF_NetIsolation_Domain_Proxies">
+        <textBox refId="WF_NetIsolation_Domain_ProxiesBox">
+          <label>Toimialueen välityspalvelimet  </label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_Intranet_Proxies">
+        <textBox refId="WF_NetIsolation_Intranet_ProxiesBox">
+          <label>Kirjoita intranet-välityspalvelimen IP-osoite</label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_PrivateSubnet">
+        <textBox refId="WF_NetIsolation_PrivateSubnetBox">
+          <label>Yksityiset aliverkot  </label>
+        </textBox>
+      </presentation>
+
+  <presentation id="WF_NetIsolation_Authoritative_Proxies">
+      </presentation>
+	
+	<presentation id="WF_NetIsolation_Authoritative_Subnets">
+      </presentation>
+
+   <presentation id="WF_NetIsolation_EnterpriseCloudResources">
+     <textBox refId="WF_NetIsolation_EnterpriseCloudResourcesBox">
+       <label>Yrityksen pilviresurssit </label>
+     </textBox>
+   </presentation>
+
+   <presentation id="WF_NetIsolation_NeutralResources">
+     <textBox refId="WF_NetIsolation_NeutralResourcesBox">
+       <label>Neutraalit resurssit </label>
+     </textBox>
+   </presentation>
+
+ </presentationTable>
+
+  </resources>
+</policyDefinitionResources>

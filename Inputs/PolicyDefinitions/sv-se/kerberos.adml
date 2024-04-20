@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Kerberos-inställningar</displayName>
+  <description>Konfigurationsinställningar för autentiseringsprotokollet Kerberos.</description>
+  <resources>
+    <stringTable>
+      <string id="kerberos">Kerberos</string>
+      <string id="forestsearch">Använd sökordning för skogar</string>
+      <string id="forestsearch_explain">Den här principinställningen definierar listan över betrodda skogar som Kerberos-klienter söker i vid försök att matcha tvådelade SPN.
+
+Om du aktiverar den här principinställningen söker Kerberos-klienten i skogarna i den här listan om den inte kan matcha ett tvådelat SPN. Om en matchning hittas begär Kerberos-klienten en hänvisningsbiljett till lämplig domän.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen söker inte Kerberos-klienten i skogarna i listan för att matcha SPN. Om Kerberos-klienten inte klarar av att matcha ett SPN p.g.a. att namnet inte finns kan NTLM-autentisering användas.</string>
+      <string id="hosttorealm">Definiera värdnamn-till-Kerberos-domänmappningar</string>
+      <string id="hosttorealm_explain">Du kan använda den här principinställningen för att ange vilka DNS-värdnamn och DNS-suffix som mappas till en Kerberos-domän.
+
+Om du aktiverar den här principinställningen kan du visa och ändra listan över de DNS-värdnamn och DNS-suffix som har mappats till en Kerberos-domän enligt grupprincipen. Om du vill visa listan över mappningar kan du aktivera principinställningen och sedan klicka på knappen Visa. Om du vill lägga till en mappning aktiverar du principinställningen, noterar syntaxen och klickar på Visa. Ange ett sfärnamn i kolumnen Värdenamn i dialogrutan Visa innehåll. Ange listan med DNS-värdnamn och DNS-suffix i kolumnen Värde i rätt syntaxformat. Om du vill ta bort en mappning från listan klickar du på mappningen och trycker sedan på DEL-tangenten. Om du vill redigera en mappning kan du ta bort posten från listan och sedan lägga till en ny definition med andra parametrar.
+
+Om du inaktiverar den här principinställningen tas listan över värdnamn-till-Kerberos-domänmappningar som har definierats i grupprincipen bort.
+
+Om du inte konfigurerar den här principinställningen använder systemet värdnamn-till-Kerberos-domänmappningarna i det lokala registret, om de har definierats.</string>
+      <string id="MitRealms">Definiera kompatibla Kerberos V5-domäninställningar</string>
+      <string id="MitRealms_explain">Den här principinställningen konfigurerar Kerberos-klienten så den kan autentisera med kompatibla Kerberos V5-sfärer enligt den här grupprincipen.
+
+Om du aktiverar den här inställningen kan du visa och ändra listan över kompatibla Kerberos V5-sfärer och deras inställningar. Om du vill visa listan över kompatibla Kerberos V5-sfärer kan du aktivera principinställningen och sedan klicka på knappen Visa. Om du vill lägga till en kompatibel Kerberos V5-sfär aktiverar du principinställningen, noterar syntaxen och klickar på knappen Visa. Ange namnet på den kompatibla Kerberos V5-sfären i kolumnen Värdenamn i dialogrutan Visa innehåll. Ange sfärflaggorna och värdnamnen för KDC:erna i kolumnen i rätt syntaxformat. Om du vill ta bort ett kompatibelt Kerberos V5-sfärnamn eller en värdepost från listan klickar du på posten och trycker sedan DEL-tangenten. Om du vill redigera en mappning kan du ta bort posten från listan och sedan lägga till en ny definition med andra parametrar.
+
+Om du inaktiverar den här principinställningen tas de kompatibla Kerberos V5-sfärinställningarna som har definierats i grupprincipen bort.
+
+Om du inte konfigurerar den här principinställningen använder systemet de kompatibla Kerberos V5-sfärinställningarna i det lokala registret, om de har definierats.</string>
+      <string id="ValidateKDC">Kräv strikt KDC-validering</string>
+      <string id="ValidateKDC_explain">Den här principinställningen styr Kerberos-klientens beteende vid verifiering av KDC-certifikatet för inloggning med smartkort och systemcertifikat.
+
+Om du aktiverar den här principinställningen kräver Kerberos-klienten att KDCn:s X.509-certifikat innehåller huvudobjektidentifieraren för KDC i tilläggen förbättrad nyckelanvändning, samt att KDC:ns X.509-certifikat innehåller ett dNSName subjectAltName-tillägg (SAN) som matchar domänens DNS-namn. Om datorn är ansluten till en domän kräver Kerberos-klienten att X.509-certifikatet för KDC signeras av en certifikatutfärdare i NTAuth-arkivet. Om datorn inte tillhör en domän tillåter Kerberos-klienten att rotcertifikatutfärdaren på smartkortet används i sökvägsvalideringen på KDC:ns X.509-certifikat.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen kräver Kerberos-klienten endast att KDC-certifikatet innehåller objektidentifieraren för serverautentisering i EKU-tilläggen som kan utfärdas till valfri server.
+</string>
+      <string id="StrictTarget">Kräv strikt målmatchning för SPN vid RPC (Remote Procedure Calls)</string>
+      <string id="StrictTarget_explain">  Den här principinställningen gör det möjligt att konfigurera servern så att Kerberos kan kryptera en biljett som innehåller det systemgenererade SPN:et. När ett program försöker skicka ett RPC-anrop till den här servern med ett NULL-värde för SPN-namnet försöker datorer som kör Windows 7 eller senare att använda Kerberos genom att generera ett SPN.
+              
+Om du aktiverar den här principinställningen kan endast tjänster som körs som LocalSystem eller NetworkService acceptera dessa anslutningar. Tjänster som körs som andra identiteter autentiseras eventuellt inte.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen kan alla tjänster acceptera inkommande anslutningar med hjälp av det systemgenererade SPN-namnet.</string>
+      <string id="KdcProxyServer">Ange KDC-proxyservrar för Kerberos-klienter</string>
+      <string id="KdcProxyServer_explain">Den här principinställningen konfigurerar Kerberos-klienten till KDC-proxyservrar för domäner baserat på deras DNS-suffixnamn.
+
+Om du aktiverar den här principinställningen använder Kerberos-klienten KDC-proxyservern för en domän när det inte går att hitta en domänkontrollant utifrån de konfigurerade mappningarna. Du kan mappa en KDC-proxyserver till en domän genom att aktivera principinställningen, klicka på Visa och sedan mappa KDC-proxyservernamnen till domänens DNS-namn med den syntax som beskrivs i alternativrutan. Skriv ett DNS-suffixnamn i kolumnen Värdenamn i dialogrutan Visa innehåll. Skriv listan med proxyservrar i kolumnen Värde i rätt syntaxformat. Om du vill visa listan över mappningar kan du aktivera principinställningen och sedan klicka på knappen Visa. Om du vill ta bort en mappning från listan klickar du på mappningen och trycker sedan på DEL-tangenten. Om du vill redigera en mappning kan du ta bort posten från listan och sedan lägga till en ny definition med andra parametrar.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen definieras inga KDC-proxyserverinställningar för Kerberos-klienten av Grupprincip.
+
+</string>
+      <string id="KdcProxyDisableServerRevocationCheck">Inaktivera återkallningskontrollen för KDC-proxyservrarnas SSL-certifikat (Disable revocation checking for the SSL certificate of KDC proxy servers)</string>
+      <string id="KdcProxyDisableServerRevocationCheck_explain">Med den här principinställningen kan du inaktivera återkallningskontrollen av SSL-certifikatet på den aktuella KDC-proxyservern.
+
+Om du aktiverar den här principinställningen ignoreras återkallningskontrollen för KDC-proxyserverns SSL-certifikat av Kerberos-klienten. Den här principinställningen bör endast användas vid felsökning av KDC-proxyanslutningar. 
+Varning! När återkallningskontrollen ignoreras går det inte att garantera att servern som representeras av certifikatet är giltig. 
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen framtvingas återkallningskontrollen av SSL-certifikatet av Kerberos-klienten. Anslutningen till KDC-proxyservern upprättas inte om återkallningskontrollen misslyckas.
+
+</string>
+      <string id="ClientRequireFast">Avböj autentiseringsbegäranden om Kerberos-skydd inte är tillgängligt (Fail authentication requests when Kerberos armoring is not available)</string>
+      <string id="ClientRequireFast_explain">Den här principinställningen avgör om en dator kräver att utbytet av Kerberos-meddelanden ska skyddas vid kommunikation med en domänkontrollant.
+
+Varning! Om det inte går att aktivera Kerberos-skydd för en domän via inställningen för stöd för dynamisk åtkomstkontroll och Kerberos-skydd, misslyckas all autentisering för domänens användare från datorer där den här principinställningen är aktiverad.
+
+Om du aktiverar den här principinställningen framtvingar klientdatorerna i domänen användningen av Kerberos-skydd vid utbyte av AS- (Authentication Service) och TGS-meddelanden (Ticket-Granting Service) med domänkontrollanterna. 
+
+Obs! Kerberos-grupprincipen Kerberosklientstöd för anspråk, sammansatt autentisering och Kerberos-skydd måste också aktiveras för att stödja Kerberos-skydd. 
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen framtvingar klientdatorerna i domänen användningen av Kerberos-skydd om det stöds av måldomänen.
+
+</string>
+      <string id="ServerAcceptsCompound">Stöd sammansatt autentisering</string>
+      <string id="ServerAcceptsCompound_explain">Med den här principinställningen konfigureras enhetens konto i Active Directory för sammansatt autentisering.
+
+När sammansatt autentisering används för åtkomstkontroll måste det finnas tillräckligt många domänkontrollanter i resurskontodomänerna för att begärandena ska kunna hanteras. Den här principen kräver att domänadministratören konfigurerar principen Aktivera stöd för dynamisk åtkomstkontroll och Kerberos-skydd på alla domänkontrollanter.
+
+Om du aktiverar den här principinställningen konfigureras enhetens konto i Active Directory för sammansatt autentisering med de följande alternativen:
+
+Aldrig: Sammansatt autentisering används aldrig för det här datorkontot.
+
+Automatiskt: Sammansatt autentisering används för det här datorkontot om ett eller flera program har konfigurerats för dynamisk åtkomstkontroll.
+
+Alltid: Sammansatt autentisering används alltid för det här datorkontot.
+
+Om du inaktiverar den här principinställningen används Aldrig.
+Om du inte konfigurerar den här principinställningen används Automatiskt.
+
+</string>
+      <string id="CompoundIdEnable_No">Aldrig</string>
+      <string id="CompoundIdEnable_Auto">Automatiskt</string>
+      <string id="CompoundIdEnable_Yes">Alltid</string>
+
+      <string id="MaxTokenSize">Ange största buffertstorlek för SSPI-kontexttoken i Kerberos (Set maximum Kerberos SSPI context token buffer size)</string>
+      <string id="MaxTokenSize_explain">Med den här principinställningen kan du ange det värde som ska returneras till program som begär den största tillåtna storleken för SSPI-kontexttokens buffertstorlek.
+
+Storleken på bufferten för kontexttoken avgör den största storleken på SSPI-kontexttoken som förväntas och allokeras av ett program. Beroende på bearbetningen av autentiseringsbegäranden och gruppmedlemskap kan bufferten vara mindre än SSPI-kontexttokens faktiska storlek.
+
+Om du aktiverar den här principinställningen använder Kerberos-klienten eller -servern det konfigurerade värdet eller det högsta värde som tillåts lokalt, beroende på vilket som är lägst.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen använder Kerberos-klienten eller -servern det lokalt konfigurerade värdet eller standardvärdet.
+
+Obs! Med den här principinställningen konfigureras det befintliga MaxTokenSize-registervärdet i HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa\Kerberos\Parameters, som lades till i Windows XP och Windows Server 2003, med standardvärdet 12 000 byte. Från och med Windows 8 är standardvärdet 48 000 byte. På grund av base64-kodningen av kontexttoken för autentisering i HTTP rekommenderar vi ett högsta värde på 48 000 byte.
+
+</string>
+      <string id="EnableCbacAndArmor">Kerberosklientstöd för anspråk, sammansatt autentisering och Kerberos-skydd</string>
+      <string id="EnableCbacAndArmor_explain">Den här principinställningen bestämmer huruvida en enhet begär anspråk och sammansatt autentisering för dynamisk åtkomstkontroll och Kerberos-skydd via Kerberos-autentisering på domäner som stöder dessa funktioner. 
+Om du aktiverar den här principinställningen kommer klientdatorerna begära anspråk, lämna den information som krävs för att skapa sammansatt autentisering och skydda Kerberos-meddelanden i domäner som stöder anspråk och sammansatt autentisering för dynamisk åtkomstkontroll och Kerberos-skydd.
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen begär klientenheter inte anspråk, lämnar inte den information som krävs för att skapa sammansatt autentisering eller skyddar Kerberos-meddelanden. Tjänster på enheten kommer inte att kunna hämta anspråk åt klienter som använder Kerberos-protokollöverföring.  
+
+</string>
+      <string id="AlwaysSendCompoundId">Skicka alltid sammansatt autentisering först</string>
+      <string id="AlwaysSendCompoundId_explain">Den här principinställningen bestämmer om en enhet alltid ska skicka en begäran om sammansatt autentisering när resursdomänen begär sammansatt ID.
+
+Obs! För att en domänkontrollant ska begära sammansatt autentisering måste principerna "KDC-stöd för anspråk, sammansatt autentisering och Kerberos-skydd" och "Begär sammansatt autentisering" vara konfigurerade och aktiverade på resurskontodomänen. 
+
+Om du aktiverar den här principinställningen och resursdomänen begär sammansatt autentisering, skickar enheter som stöder sammansatt autentisering alltid en begäran om sammansatt autentisering. 
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen och resursdomänen begär sammansatt autentisering, skickar enheterna först en begäran om icke-sammansatt autentisering och sedan en begäran om sammansatt autentisering när tjänsten begär sammansatt autentiseringen.
+
+</string>
+      <string id="DevicePKInitEnabled">Stöd för enhetsautentisering med certifikat</string>
+      <string id="DevicePKInitEnabled_explain">Det krävs anslutning till en domänkontrollant i enhetskontots domän som stöder certifikatautentisering för datorkonton för att kunna ge stöd åt enhetsautentisering med certifikat. 
+
+Med den här principinställningen kan du ange stöd för Kerberos att försöka autentisera med enhetscertifikatet i domänen.
+
+Om du aktiverar principinställningen väljs enhetsautentiseringsuppgifter baserat på följande alternativ:
+
+Automatiskt: Enheten försöker autentisera med dess certifikat. Om domänkontrollanten inte stöder autentisering av datorkonton med certifikat görs ett försök att autentisera med lösenord i stället.
+
+Framtvinga: Enheten autentiserar alltid med dess certifikat. Autentiseringen misslyckas om en domänkontrollant inte kan hittas som stöder autentisering av datorkonton med certifikat.
+
+Om du inaktiverar principinställningen används aldrig certifikat.
+Om du låter bli att konfigurera principinställningen används alternativet Automatiskt.
+</string>
+      <string id="DevicePKInitBehavior_Automatic">Automatiskt</string>
+      <string id="DevicePKInitBehavior_Force">Framtvinga</string>
+      <string id="CloudKerberosTicketRetrievalEnabled">Tillåt hämtning av Azure AD Kerberos Ticket Granting Ticket under inloggning</string>
+      <string id="CloudKerberosTicketRetrievalEnabled_explain">Med den här principinställningen kan du hämta Azure AD Kerberos Ticket Granting Ticket under inloggningen.
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen hämtas inte Azure AD Kerberos Ticket Granting Ticket under inloggningen.
+
+Om du aktiverar den här principinställningen hämtas Azure AD Kerberos Ticket Granting Ticket under inloggningen.</string>
+      <string id="PKInitHashAlgorithmConfiguration">Konfigurera hash-algoritmer för certifikatinloggning</string>
+      <string id="PKInitHashAlgorithmConfiguration_explain">Den här principinställningen styr hash- eller kontrollsummealgoritmer som används av Kerberos-klienten när certifikatautentisering utförs.
+
+Om du aktiverar den här principen kan du konfigurera ett av fyra tillstånd för varje algoritm:
+
+- ”Standard” anger algoritmen till det rekommenderade tillståndet.
+
+- ”Stöds” aktiverar användning av algoritmen. Om du aktiverar algoritmer som har inaktiverats som standard kan det minska säkerheten.
+
+- ”Granskad” aktiverar användning av algoritmen och rapporterar en händelse (ID 206) varje gång den används. Detta tillstånd är avsett att verifiera att algoritmen inte används och kan inaktiveras på ett säkert sätt.
+
+- ”Stöds inte” inaktiverar användningen av algoritmen. Det här tillståndet är avsett för algoritmer som anses vara osäkra.
+
+Om du inaktiverar eller låter bli att konfigurera den här principen antar varje algoritm standardtillståndet.
+Mer information om de hash- och kontrollsummealgoritmer som stöds av Windows Kerberos-klienten och deras standardtillstånd finns på https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Händelser som genererats av denna konfiguration: 205, 206, 207, 208.
+</string>
+      <string id="PKInitHashAlgorithm_Default">Standard</string>
+      <string id="PKInitHashAlgorithm_Supported">Stöds</string>
+      <string id="PKInitHashAlgorithm_Audited">Granskade</string>
+      <string id="PKInitHashAlgorithm_NotSupported">Stöds inte</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="hosttorealm">
+        <listBox refId="hosttorealm">Definiera värdnamn-till-domänmappningar:</listBox>
+        <text></text>
+        <text>Syntax:</text>
+        <text>Ange Kerberos-domännamnet som Värdenamn.</text>
+        <text>Ange värdnamnen och DNS-suffix som du vill</text>
+        <text>ska mappas till Kerberos-domänen som Värde.  Om du vill lägga till flera</text>
+        <text>namn, separerar du posterna med ";".</text>
+        <text></text>
+        <text>Obs! När du anger ett DNS-suffix lägger du till en punkt (.) i posten.</text>
+        <text>För en värdnamnspost anger du inte inledande punkt - ".".</text>
+        <text></text>
+        <text>Exempel:</text>
+        <text>Värdenamn: MICROSOFT.COM</text>
+        <text>Värde: .microsoft.com, .ms.com, computer1.fabrikam.com,</text>
+        <text></text>
+        <text>I exemplet ovan. Alla objekt med antingen DNS-suffixet</text>
+        <text>*.microsoft.com eller *.ms.com mappas till</text>
+        <text>MICROSOFT.COM Kerberos-domänen.  Dessutom mappas också värdnamnet</text>
+        <text>computer1.fabrikam.com mappas också till  </text>
+        <text>MICROSOFT.COM Kerberos-domänen.</text>
+      </presentation>
+      <presentation id="MitRealms">
+        <listBox refId="MitRealms">Definiera kompatibla Kerberos V5-domäninställningar:</listBox>
+        <text></text>
+        <text>Syntax:</text>
+        <text>Ange Kerberos V5-domännamnet som Värdenamn.</text>
+        <text>Ange domänflaggorna och värdnamnen för KDC:erna som</text>
+        <text>Värde.  Omslut domänflaggorna med följande</text>
+        <text>taggar &lt;f&gt; &lt;/f&gt;.  Omslut listan med KDC:er med taggarna &lt;k&gt; &lt;/k&gt;</text>
+        <text>Om du vill lägga till flera KDC-namn, avgränsar du poster med</text>
+        <text>ett semikolon - ";".</text>
+        <text></text>
+        <text>Exempel:</text>
+        <text>Värdenamn: TEST.COM</text>
+        <text>Värde: &lt;f&gt;0x00000004&lt;/f&gt;&lt;k&gt;kdc1.test.com; kdc2.test.com&lt;/k&gt;</text>
+        <text></text>
+        <text>Ett annat exempel:</text>
+        <text>Värdenamn: REALM.FABRIKAM.COM</text>
+        <text>Värde: &lt;f&gt;0x0000000E&lt;/f&gt;</text>
+      </presentation>
+      <presentation id="ValidateKDC">
+        <dropdownList refId="ValidateKDCOp" noSort="true" defaultItem="0">Läge:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Skogar att genomsöka</label>
+        </textBox>
+        <text>Syntax:</text>
+        <text>Ange den lista med skogar som ska genomsökas när den här principen aktiveras.</text>
+        <text>Använd namnformatet FQDN (Fully Qualified Domain Name).</text>
+        <text>Avgränsa flera sökposter med ett semikolon (;).</text>
+        <text>Information:</text>
+        <text>Den aktuella skogen behöver inte ingå i listan eftersom sökordningen för skogar är att först söka i den globala katalogen och sedan i den angivna ordningen.</text>
+        <text>Du behöver inte lista alla domäner i skogen separat.</text>
+        <text>Om en betrodd skog ingår i listan genomsöks alla domäner i den aktuella skogen.</text>
+        <text>För bästa prestanda bör skogarna i listan anges i ordning efter sannolikhet att lyckas.  </text>
+      </presentation>
+      <presentation id="KdcProxyServer">
+        <listBox refId="KdcProxyServer">Definiera inställningar för KDC-proxyservrar:</listBox>
+        <text></text>
+        <text>Syntax:</text>
+        <text></text>
+        <text>Ange DNS-suffixnamnet som Värdenamn.</text>
+        <text>DNS-suffixnamnet stöder tre format med fallande prioriteringsordning:</text>
+        <text>Fullständig matchning: host.contoso.com</text>
+        <text>Suffixmatchning: .contoso.com</text>
+        <text>Standardmatchning: *</text>
+        <text></text>
+        <text>Ange proxyservernamnen som Värde.</text>
+        <text>Proxyservernamnen måste omges av taggar (&lt;https /&gt;)</text>
+        <text>Om du vill lägga till flera proxyservernamn avgränsar du posterna med blanksteg eller komma (,)</text>
+        <text></text>
+        <text>Exempel:</text>
+        <text>Värdenamn: .contoso.com</text>
+        <text>Värde: &lt;https proxy1.contoso.com proxy2.contoso.com /&gt;</text>
+        <text></text>
+        <text>Ett annat exempel:</text>
+        <text>Värdenamn: *</text>
+        <text>Värde: &lt;https proxy.contoso.com /&gt;</text>
+      </presentation>
+      <presentation id="ClientRequireFast">
+      </presentation>
+      <presentation id="ServerAcceptsCompound">
+       <dropdownList refId="CompoundIdEnabled" noSort="true" defaultItem="2">Aktivera stöd för auktorisering med klientenhetsinformation (Support authorization with client device information):</dropdownList>
+      </presentation>
+      <presentation id="MaxTokenSize">
+        <decimalTextBox refId="MaxTokenSize" defaultValue="48000" spinStep="1000">Största storlek</decimalTextBox>
+      </presentation>
+      <presentation id="EnableCbacAndArmor">
+      </presentation>
+      <presentation id="DevicePKInitBehavior">
+        <dropdownList refId="DevicePKInitBehavior" noSort="true" defaultItem="0">Enhetsautentisering med certifikat:</dropdownList>
+      </presentation>
+      <presentation id="PKInitHashAlgorithmConfiguration">
+        <dropdownList refId="PKInitHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKInitHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKInitHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKInitHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

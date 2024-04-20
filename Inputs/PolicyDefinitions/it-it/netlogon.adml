@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>immettere qui il nome visualizzato</displayName>
+  <description>immettere qui la descrizione</description>
+  <resources>
+    <stringTable>
+      <string id="Netlogon">Accesso rete</string>
+      <string id="Netlogon_AllowSingleLabelDnsDomain">Utilizza risoluzione nomi DNS con nome di dominio con etichetta singola invece di risoluzione NetBIOS per individuare il controller di dominio</string>
+      <string id="Netlogon_AllowSingleLabelDnsDomain_Help">Questa impostazione dei criteri specifica se i computer cui viene applicata questa impostazione debbano tentare di eseguire la risoluzione dei nomi DNS di nomi di dominio con etichetta singola.
+
+Per impostazione predefinita, viene utilizzato il comportamento specificato in AllowDnsSuffixSearch. Se i criteri AllowDnsSuffixSearch sono disabilitati, viene utilizzata esclusivamente la risoluzione dei nomi NetBIOS per individuare un controller di dominio che ospita un dominio di Active Directory specificato con un nome con etichetta singola.
+
+Se si abilita questa impostazione dei criteri, i computer ai quali viene applicata tenteranno di individuare un controller di dominio che ospita un dominio di Active Directory specificato con un nome con etichetta singola utilizzando la risoluzione dei nomi DNS.
+
+Se si disabilita questa impostazione dei criteri, i computer ai quali viene applicata utilizzeranno solo i criteri AllowDnsSuffixSearch, se non sono disabilitati o non viene eseguita altrimenti la risoluzione dei nomi NetBIOS, per tentare di individuare un controller di dominio che ospita un dominio di Active Directory specificato con un nome con etichetta singola. In questo caso i computer non utilizzeranno la risoluzione dei nomi DNS, a meno che non venga eseguita la ricerca di un dominio con un nome DNS con etichetta singola presente nella foresta Active Directory alla quale appartiene il computer.
+
+Se non si configura questa impostazione dei criteri, essa non verrà applicata ai computer, nei quali verrà pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_AllowDnsSuffixSearch">Utilizzare la risoluzione dei nomi DNS quando si utilizza un nome di dominio con etichetta singola, aggiungendo i diversi suffissi DNS registrati, se l'impostazione AllowSingleLabelDnsDomain non è abilitata.</string>
+      <string id="Netlogon_AllowDnsSuffixSearch_Help">Questa impostazione dei criteri specifica se i computer a cui viene applicata tentano la risoluzione dei nomi DNS per i nomi di dominio con etichetta singola, aggiungendo i diversi suffissi DNS registrati, e utilizzano la risoluzione dei nomi NetBIOS solo in caso di esito negativo della risoluzione dei nomi DNS. Questi criteri, incluso il comportamento predefinito specificato, non vengono utilizzati se l'impostazione dei criteri AllowSingleLabelDnsDomain è abilitata.
+
+Per impostazione predefinita, se per i criteri non viene specificata alcuna impostazione, il comportamento è lo stesso dell'abilitazione esplicita dei criteri, a meno che non sia abilitata l'impostazione dei criteri AllowSingleLabelDnsDomain.
+
+Se si abilita questa impostazione dei criteri. quando i criteri AllowSingleLabelDnsDomain non sono abilitati, i computer ai quali viene applicata tenteranno di individuare un controller di dominio che ospita un dominio di Active Directory specificato con un nome con etichetta singola aggiungendo i diversi suffissi DNS registrati per eseguire la risoluzione dei nomi DNS. Il nome con etichetta singola non viene utilizzato senza l'aggiunta dei suffissi DNS, a meno che il computer non faccia parte di un dominio con un nome DNS con etichetta singola nella foresta di Active Directory. La risoluzione dei nomi NetBIOS viene eseguita solo sul nome con etichetta singola, in caso di esito negativo della risoluzione DNS.
+
+Se si disabilita questa impostazione dei criteri, quando i criteri AllowSingleLabelDnsDomain non sono abilitati, i computer ai quali viene applicata utilizzeranno solo la risoluzione dei nomi NetBios per tentare di individuare un controller di dominio che ospita un dominio Active Directory specificato con un nome con etichetta singola. In questo caso i computer non tenteranno la risoluzione dei nomi DNS, a meno che non venga eseguita la ricerca di un dominio con un nome DNS con etichetta singola alla quale appartiene il computer, nella foresta Active Directory.
+
+</string>
+      <string id="Netlogon_AutoSiteCoverage">Utilizza Inclusione automatica siti da parte dei record DNS SRV di tipo DC Locator</string>
+      <string id="Netlogon_AutoSiteCoverage_Help">Questa impostazione dei criteri determina se i controller di dominio registreranno dinamicamente record SRV specifici di siti DC Locator per i siti più vicini quando non esistono controller di dominio per lo stesso dominio oppure non esistono cataloghi globali per la stessa foresta. I record DNS verranno registrati in modo dinamico dal servizio Accesso rete e utilizzati per individuare il controller di dominio.
+
+Se si abilita questa impostazione dei criteri, i controller di dominio interessati registreranno dinamicamente record SRV DNS specifici di siti DC Locator per i siti più vicini quando non esistono controller di dominio per lo stesso dominio oppure non esistono cataloghi globali per la stessa foresta.
+
+Se si disabilita questa impostazione dei criteri, i controller di dominio registreranno record SRV DNS specifici di siti DC Locator solo per i propri siti.
+
+Se non si configura questa impostazione dei criteri, essa non verrà applicata ai controller di dominio, nei quali verrà pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_AvoidPdcOnWan">Errore durante l'accesso: contattare PDC</string>
+      <string id="Netlogon_AvoidPdcOnWan_Help">Questa impostazione dei criteri definisce se un controller di dominio dovrà tentare di verificare la password fornita da un client con l'emulatore PDC quando il controller non riesce a convalidare la password.
+
+Contattare l'emulatore del controller di dominio primario (PDC) risulta utile se la password del client è stata modificata di recente e non è stata ancora propagata al controller di dominio. È preferibile disabilitare questa funzionalità se l'emulatore del controller di dominio primario (PDC) si trova in una connessione WAN lenta.
+
+Se si abilita questa impostazione dei criteri, i controller di dominio a cui essa si applica tenteranno di verificare una password con l'emulatore PDC se il controller di dominio non riesce a convalidarla.
+
+Se si disabilita questa impostazione dei criteri, i controller di dominio non tenteranno di verificare alcuna password con l'emulatore del controller di dominio (PDC). 
+
+Se questa impostazione dei criteri non è configurata, non verrà applicata ad alcun controller di dominio.</string>
+      <string id="Netlogon_BackgroundRetryInitialPeriod">Utilizza impostazione iniziale nuovi tentativi di scoperta controller di dominio per chiamanti in background</string>
+      <string id="Netlogon_BackgroundRetryInitialPeriod_Help">Questa impostazione dei criteri determina la quantità di tempo (in secondi) da attendere prima di effettuare un nuovo tentativo per le applicazioni che eseguono ricerche periodiche di controller di dominio e non riescono a trovarne.
+
+Il valore predefinito per questa impostazione è 10 minuti (10*60). Il valore massimo per questa impostazione è 49 giorni (0x49*24*60*60=4233600). Il valore minimo per questa impostazione è 0.
+
+Questa impostazione è pertinente solo per i chiamanti di DsGetDcName per i quali è stato specificato il flag DS_BACKGROUND_ONLY.
+
+Se il valore di questa impostazione è minore del valore specificato nella sottochiave NegativeCachePeriod, verrà utilizzato il valore della sottochiave NegativeCachePeriod.
+
+Avviso: se il valore di questa impostazione è troppo elevato, un client non tenterà di individuare gli eventuali controller di dominio inizialmente non disponibili. Se invece il valore di questa impostazione è troppo basso e il controller di dominio non è disponibile, il traffico causato dalle individuazioni periodiche potrebbe risultare eccessivo.</string>
+      <string id="Netlogon_BackgroundRetryMaximumPeriod">Utilizza impostazione intervallo massimo nuovi tentativi di scoperta controller di dominio per chiamanti in background</string>
+      <string id="Netlogon_BackgroundRetryMaximumPeriod_Help">Questa impostazione dei criteri determina l'intervallo massimo tra nuovi tentativi consentito quando le applicazioni che eseguono ricerche periodiche di controller di dominio non sono in grado di individuarne.
+
+È ad esempio possibile impostare gli intervalli tra tentativi su 10 minuti, quindi su 20, infine su 40, tuttavia quando l'intervallo raggiunge il valore definito in questa impostazione, tale valore diventerà l'intervallo per tutti i tentativi successivi fino al raggiungimento del valore impostato in Impostazione tentativo finale di scoperta controller di dominio.
+
+Il valore predefinito per questa impostazione è 60 minuti (60*60). Il valore massimo per questa impostazione è 49 giorni (0x49*24*60*60=4233600). Il valore minimo per questa impostazione è 0.
+
+Se il valore di questa impostazione è minore del valore specificato in Impostazione tentativo iniziale di scoperta controller di dominio, verrà utilizzato quest'ultimo valore.
+
+Avviso: se il valore di questa impostazione è troppo elevato, gli intervalli di individuazione di un controller di dominio potrebbero essere molto lunghi.
+
+Se invece il valore di questa impostazione è troppo basso e il controller di dominio non è disponibile, la frequenza dei tentativi potrebbe causare un traffico di rete eccessivo.</string>
+      <string id="Netlogon_BackgroundRetryQuitTime">Utilizza impostazione finale nuovi tentativi di scoperta controller di dominio per chiamanti in background</string>
+      <string id="Netlogon_BackgroundRetryQuitTime_Help">Questa impostazione dei criteri determina quando non sono più consentiti nuovi tentativi per le applicazioni che eseguono ricerche periodiche di controller di dominio e non sono in grado di individuarne. È ad esempio possibile specificare che i tentativi debbano essere eseguiti in base all'impostazione Utilizza impostazione intervallo massimo nuovi tentativi di scoperta controller di dominio, tuttavia quando il valore di questa impostazione dei criteri viene raggiunto, non verranno eseguiti altri tentativi. Se un valore di questa impostazione è minore del valore specificato in Utilizza impostazione intervallo massimo nuovi tentativi di scoperta controller di dominio, verrà utilizzato quest'ultimo valore.
+
+Il valore predefinito di questa impostazione è (0), ovvero non interrompere tentativi. Il valore massimo per questa impostazione è 49 giorni (0x49*24*60*60=4233600). Il valore minimo per questa impostazione è 0.
+
+Avviso: se il valore di questa impostazione è troppo basso, un client interromperà troppo presto i tentativi di individuazione di un controller di dominio.</string>
+      <string id="Netlogon_BackgroundSuccessfulRefreshPeriod">Utilizza aggiornamento periodico cache controller di dominio riuscito per programmi chiamanti in background</string>
+      <string id="Netlogon_BackgroundSuccessfulRefreshPeriod_Help">Questa impostazione dei criteri determina quando aggiornare una voce di cache dei controller di dominio riuscita. Questa impostazione dei criteri viene applicata ai programmi chiamanti che tentano di individuare periodicamente i controller di dominio e viene applicata prima della restituzione delle informazioni relative al controller di dominio al programma chiamante. Il valore predefinito per questa impostazione è infinito, ovvero 4294967200. Il valore massimo per questa impostazione è (4294967200), mentre il valore massimo non considerato come infinito è 49 giorni (49*24*60*60=4233600). Qualsiasi valore superiore verrà considerato come infinito. Il valore minimo per questa impostazione è (0), ovvero aggiorna sempre.</string>
+      <string id="Netlogon_DC_Locator_DNS_Records">Record DNS di tipo DC Locator</string>
+      <string id="Netlogon_DebugFlag">Specifica livello output di debug file registro</string>
+      <string id="Netlogon_DebugFlag_Help">Questa impostazione dei criteri specifica il livello di output di debug per il servizio Accesso rete.
+
+Il servizio Accesso rete invia le informazioni di debug al file di registro netlogon.log reperibile nella directory %windir%\debug. Per impostazione predefinita, le informazioni di debug non vengono registrate.
+
+Se si abilita questa impostazione dei criteri e si specifica un valore diverso da zero, le informazioni di debug verranno registrate nel file.  Più alto è il valore specificato, più dettagliata sarà la registrazione.Per un'impostazione ottimale viene in genere utilizzato il valore 536936447.
+
+Se si specifica zero per questa impostazione dei criteri, il comportamento predefinito sarà quello sopra descritto.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il comportamento predefinito sarà quello sopra descritto.</string>
+      <string id="Netlogon_DnsAvoidRegisterRecords">Specifica record DNS di tipo DC Locator non registrati dal controller di dominio</string>
+      <string id="Netlogon_DnsAvoidRegisterRecords_Help">Questa impostazione dei criteri determina quali record DNS di tipo DC Locator non verranno registrati dal servizio Accesso rete.
+
+Per abilitare questa impostazione dei criteri, selezionare Abilitato e specificare un elenco di istruzioni delimitate da spazi per i record DNS di tipo DC Locator DNS che non verranno registrati dai controller di dominio cui si applica tale impostazione.
+
+Selezionare le istruzioni dall'elenco seguente:
+
+Istruzione         Tipo  Record DNS
+
+LdapIpAddress    A     &lt;DnsDomainName&gt;
+Ldap             SRV   _ldap._tcp.&lt;DnsDomainName&gt;
+LdapAtSite       SRV   _ldap._tcp.&lt;SiteName&gt;._sites.&lt;DnsDomainName&gt;
+Pdc              SRV   _ldap._tcp.pdc._msdcs.&lt;DnsDomainName&gt;
+Gc               SRV   _ldap._tcp.gc._msdcs.&lt;DnsForestName&gt;
+GcAtSite         SRV   _ldap._tcp.&lt;SiteName&gt;._sites.gc._msdcs.&lt;DnsForestName&gt;
+DcByGuid         SRV   _ldap._tcp.&lt;DomainGuid&gt;.domains._msdcs.&lt;DnsForestName&gt;
+GcIpAddress      A     gc._msdcs.&lt;DnsForestName&gt;
+DsaCname         CNAME &lt;DsaGuid&gt;._msdcs.&lt;DnsForestName&gt;
+Kdc              SRV   _kerberos._tcp.dc._msdcs.&lt;DnsDomainName&gt;
+KdcAtSite        SRV   _kerberos._tcp.&lt;SiteName&gt;._sites.dc._msdcs.&lt;DnsDomainName&gt;
+Dc               SRV   _ldap._tcp.dc._msdcs.&lt;DnsDomainName&gt;
+DcAtSite         SRV   _ldap._tcp.&lt;SiteName&gt;._sites.dc._msdcs.&lt;DnsDomainName&gt;
+Rfc1510Kdc       SRV   _kerberos._tcp.&lt;DnsDomainName&gt;
+Rfc1510KdcAtSite SRV   _kerberos._tcp.&lt;SiteName&gt;._sites.&lt;DnsDomainName&gt;
+GenericGc        SRV   _gc._tcp.&lt;DnsForestName&gt;
+GenericGcAtSite  SRV   _gc._tcp.&lt;SiteName&gt;._sites.&lt;DnsForestName&gt;
+Rfc1510UdpKdc    SRV   _kerberos._udp.&lt;DnsDomainName&gt;
+Rfc1510Kpwd      SRV   _kpasswd._tcp.&lt;DnsDomainName&gt;
+Rfc1510UdpKpwd   SRV   _kpasswd._udp.&lt;DnsDomainName&gt;
+
+Se si disabilita questa impostazione dei criteri, i controller di dominio configurati per la registrazione dinamica dei record DNS di tipo DC Locator registreranno tutti i record di tale tipo.
+
+Se questa impostazione dei criteri non è configurata, i controller di domio utilizzeranno la configurazione locale</string>
+      <string id="Netlogon_DnsRefreshInterval">Specifica intervallo di aggiornamento record DNS di tipo DC Locator</string>
+      <string id="Netlogon_DnsRefreshInterval_Help">Questa impostazione dei criteri specifica l'intervallo di aggiornamento dei record di risorse DNS di tipo DC Locator per i controller di dominio cui si applica tale impostazione. I record DNS vengono registrati in modo dinamico dal servizio Accesso rete e utilizzati dall'algoritmo del localizzatore per individuare il controller di dominio. Questa impostazione può essere applicata solo ai controller di dominio che utilizzano l'aggiornamento dinamico.
+
+I controller di dominio configurati per la registrazione dinamica dei record di risorse DNS di tipo DC Locator eseguono periodicamente una nuova registrazione dei propri record nei server DNS, anche nel caso in cui i dati dei record non siano stati modificati. Se sono stati configurati server DNS autorevoli per l'esecuzione dello scavenging dei record non aggiornati, risulterà necessario eseguire la nuova registrazione per comunicare ai server DNS configurati per la rimozione (scavenging) automatica dei record non aggiornati che tali record sono effettivamente aggiornati e devono essere conservati mantenuti nel database.
+
+Avviso: se i record delle risorse DNS sono registrati in zone in cui è abilitato lo scavenging, il valore di questa impostazione non dovrà mai essere maggiore dell'intervallo di aggiornamento configurato per queste zone. L'impostazione dell'intervallo di aggiornamento dei record DNS di tipo DC Locator su un valore maggiore di quello dell'intervallo di aggiornamento delle zone DNS potrebbe causare l'eliminazione indesiderata di record di risorse DNS.
+
+Per specificare l'intervallo di aggiornamento dei record del controller di dominio, fare clic su Abilitato, quindi immettere un valore superiore a 1800. Tale valore specifica l'intervallo di aggiornamento dei record del controller di dominio in secondi (ad esempio, il valore 3600 corrisponde a 60 minuti).
+
+Se non si configura questa impostazione dei criteri, essa non viene applicata ai controller di dominio, nei quali viene pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_DnsTtl">Imposta TTL nei record DNS di tipo DC Locator</string>
+      <string id="Netlogon_DnsTtl_Help">Questa impostazione dei criteri specifica il valore per il campo Durata (TTL) nei record di risorse SRV registrati dal servizio Accesso rete. I record DNS vengono registrati in modo dinamico e verranno utilizzati per individuare il controller di dominio (DC).
+
+Per specificare il valore della durata per i record DNS di tipo DC Locator, fare clic su Abilitato e quindi immettere il valore desiderato espresso in secondi.Il valore 900 equivale ad esempio a 15 minuti.
+
+Se non si configura questa impostazione dei criteri, essa non verrà applicata ai controller di dominio, nei quali verrà pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_ExpectedDialupDelay">Specifica ritardo previsto accesso alla rete in connessione remota</string>
+      <string id="Netlogon_ExpectedDialupDelay_Help">Questa impostazione dei criteri specifica il periodo di tempo supplementare che il computer lascia trascorrere in attesa della risposta del controller di dominio durante la procedura di accesso alla rete.
+
+Per specificare il valore relativo al ritardo previsto nell'accesso alla rete in connessione remota, seleziona Abilitato e quindi specifica il valore desiderato espresso in secondi. Il valore 60 corrisponde ad esempio a un minuto.
+
+Se non la configuri, questa impostazione dei criteri non verrà applicata ai computer nei quali verrà pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_GcSiteCoverage">Specifica siti inclusi dai record DNS SRV di tipo GC Locator</string>
+      <string id="Netlogon_GcSiteCoverage_Help">Questa impostazione dei criteri specifica i siti per i quali i cataloghi globali (GC) devono registrare i record di risorse DNS SRV di tipo GC Locator specifici del sito. Questi record vengono registrati in aggiunta ai record SRV specifici registrati per il sito in cui risiede il catalogo globale e a quelli registrati da un catalogo globale configurato per la registrazione dei record DNS SRV di tipo GC Locator per i siti ad esso più vicini che non dispongono di catalogo globale. 
+
+I record DNS di tipo GC Locator e i record SRV specifici di sito vengono registrati in modo dinamico dal servizio Accesso rete e utilizzati per individuare il catalogo globale. Per sito Active Directory si intendono una o più subnet TCP/IP ben collegate che consentono agli amministratori di configurare l'accesso e la replica Active Directory. Per catalogo globale si intende un controller di dominio che contiene una replica parziale di ogni dominio disponibile in Active Directory.
+
+Per specificare i siti interessati dai record DNS SRV di tipo GC Locator, fare clic su Abilitato e quindi immettere i nomi dei siti in un formato delimitato da spazi.
+
+Se non si configura questa impostazione dei criteri, essa non verrà applicata ai cataloghi globali, nei quali verrà pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_LdapSrvPriority">Imposta priorità nei record DNS SRV di tipo DC Locator</string>
+      <string id="Netlogon_LdapSrvPriority_Help">Questa impostazione dei criteri specifica il valore del campo relativo alla priorità per i record di risorse SRV registrati dai controller di dominio (DC) cui si applica tale impostazione. I record DNS verranno registrati in modo dinamico dal servizio Accesso rete e utilizzati per individuare il controller di dominio.
+
+Il campo relativo alla priorità del record SRV consente di impostare la preferenza per gli host di destinazione, specificati nel campo relativo alla destinazione del record SRV. I client DNS che ricercano i record di risorse SRV tentano di contattare il primo host disponibile contraddistinto dal numero di priorità più basso.
+
+Per specificare la priorità per i record di risorse DNS SRV di tipo DC Locator, fare clic su Abilitato e quindi immettere il valore desiderato. L'intervallo di valori è compreso tra 0 e 65535.
+
+Se non si configura questa impostazione dei criteri, essa non verrà applicata ai controller di dominio, nei quali verrà pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_LdapSrvWeight">Imposta peso nei record DNS SRV di tipo DC Locator</string>
+      <string id="Netlogon_LdapSrvWeight_Help">Questa impostazione dei criteri specifica il valore del campo relativo al peso per i record di risorse SRV registrati dai controller di dominio (DC) cui si applica tale impostazione. I record DNS verranno registrati in modo dinamico dal servizio Accesso rete e utilizzati per individuare il controller di dominio.
+
+Il campo relativo al peso per il record SRV può essere utilizzato insieme al valore della priorità per definire un meccanismo di bilanciamento del carico nei casi in cui nel campo relativo alla destinazione dei record SRV siano specificati più server impostati tutti sulla stessa priorità. La probabilità con cui il client DNS seleziona casualmente l'host di destinazione da contattare è proporzionale al valore del campo relativo al peso per il record SRV.
+
+Per specificare il peso per i record di risorse DNS SRV di tipo DC Locator, fare clic su Abilitato e quindi immettere il valore desiderato. L'intervallo di valori è compreso tra 0 e 65535.
+
+Se non si configura questa impostazione dei criteri, essa non verrà applicata ai controller di dominio, nei quali verrà pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_MaximumLogFileSize">Specifica dimensione massima file registro</string>
+      <string id="Netlogon_MaximumLogFileSize_Help">Questa impostazione dei criteri specifica la dimensione massima espressa in byte del file di registro netlogon.log reperibile nella directory %windir%\debug quando la registrazione è abilitata.
+
+Per impostazione predefinita, la dimensione massima del file di registro è 20 MB. Se si abilita questa impostazione dei criteri, la dimensione massima del file di registro verrà impostata sulla dimensione specificata.  Quando il file raggiunge tale dimensione, verrà salvato con il nome netlogon.bak e il file netlogon.log originale verrà troncato. Specificare un valore opportuno che tenga conto dello spazio di archiviazione disponibile.
+
+Se si disabilita o non si configura questa impostazione dei criteri, verrà applicato il comportamento predefinito sprecificato in precedenza.</string>
+      <string id="Netlogon_NdncSiteCoverage">Specifica siti inclusi dai record DNS SRV di DC Locator per la partizione di directory applicativa</string>
+      <string id="Netlogon_NdncSiteCoverage_Help">Questa impostazione dei criteri specifica i siti per i quali i controller di dominio che ospitano una partizione di directory applicativa devono registrare i record di risorse DNS SRV di tipo DC Locator specifici della partizione della directory dell'applicazione. Questi record vengono registrati in aggiunta ai record SRV specifici registrati per il sito in cui risiede il controller di dominio e a quelli registrati da un controller di dominio configurato per la registrazione dei record DSN SRV di tipo DC Locator per i siti più vicini che non dispongono di controller di dominio. 
+
+I record DNS di DC Locator e i record SRV specifici del sito per la partizione di directory applicativa vengono registrati in modo dinamico dal servizio Accesso rete e utilizzati per individuare il controller di dominio specifico della partizione della directory applicativa. Per sito Active Directory si intendono una o più subnet TCP/IP ben collegate che consentono agli amministratori di configurare l'accesso e la replica Active Directory.
+
+Per specificare i siti interessati dai record DNS SRV di tipo DC Locator specifici della partizione della directory applicativa, fare clic su Abilitato e quindi immettere i nomi dei siti in un formato delimitato da spazi.
+
+Se non si configura questa impostazione dei criteri, essa non viene applicata ai controller di dominio, nei quali viene pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_NegativeCachePeriod">Specifica impostazione cache per scoperta controller di dominio fallita</string>
+      <string id="Netlogon_NegativeCachePeriod_Help">Questa impostazione dei criteri specifica il periodo di tempo, espresso in secondi, per il quale il localizzatore del controller di dominio ricorderà che non è stato possibile trovare un controller di dominio in un dominio. Quando si esegue un tentativo successivo di individuazione del controller di dominio entro il periodo di tempo impostato, la funzione di individuazione restituirà immediatamente un errore e non tenterà di individuare il controller di dominio.
+
+Il valore predefinito per questa impostazione è 45 secondi. Il valore massimo per questa impostazione è 7 giorni (7*24*60*60). Il valore minimo per questa impostazione è 0.
+
+Avviso: se il valore di questa impostazione è troppo elevato, un client non tenterà di individuare gli eventuali controller di dominio inizialmente non disponibili. Se il valore di questa impostazione è troppo basso, i client tenteranno di individuare i controller di dominio anche se non sono disponibili.</string>
+      <string id="Netlogon_NetlogonShareCompatibilityMode">Imposta compatibilità condivisione Netlogon</string>
+      <string id="Netlogon_NetlogonShareCompatibilityMode_Help">Questa impostazione dei criteri determina se la condivisione Netlogon creata dal servizio Accesso rete in un controller di dominio supporterà o meno la compatibilità della semantica di condivisione file con applicazioni precedenti.
+
+Se si abilita questa impostazione dei criteri, la condivisione Netlogon eseguirà la semantica di condivisione file che consente l'inoltro di richieste di accesso esclusivo in lettura ai file della condivisione anche nel caso in cui il chiamante disponga solo di un'autorizzazione di lettura.
+
+Se questa impostazione viene disabilitata o non è configurata, la condivisione Netlogon concederà accesso condiviso in lettura ai file della condivisione quando viene richiesto l'accesso esclusivo da un chiamante che dispone solo dell'autorizzazione di lettura.
+
+Per impostazione predefinita, la condivisione Netlogon concede accesso condiviso in lettura ai file della condivisione quando viene richiesto l'accesso esclusivo.
+
+Nota: la condivisione Netlogon è una condivisione creata dal servizio Accesso rete e può essere utilizzata dai computer client appartenenti al dominio. Il comportamento predefinito della condivisione Netlogon assicura che nessuna applicazione che disponga della sola autorizzazione di lettura dei file nella condivisione possa bloccare tali file richiedendone l'accesso esclusivo in lettura e impedendo l'aggiornamento delle impostazioni di Criteri di gruppo nei client appartenenti al dominio. Quando questa impostazione è abilitata, un'applicazione in grado di bloccare i file della condivisione Netlogon disponendo solo dell'autorizzazione di lettura potrà negare ai client di Criteri di gruppo l'accesso in lettura ai file e, più in generale, ridurre la disponibilità della condivisione Netlogon nel dominio.
+
+Se si abilita questa impostazione dei criteri, gli amministratori di dominio devono accertarsi che solo le applicazioni che utilizzano la funzionalità di lettura esclusiva nel dominio siano approvate.</string>
+      <string id="Netlogon_NonBackgroundSuccessfulRefreshPeriod">Specifica aggiornamento periodico riuscito cache controller di dominio per programmi chiamanti non in background</string>
+      <string id="Netlogon_NonBackgroundSuccessfulRefreshPeriod_Help">Questa impostazione dei criteri determina quando aggiornare una voce di cache dei controller di dominio riuscita. Questa impostazione dei criteri viene applicata ai programmi chiamanti che non tentano di individuare periodicamente i controller di dominio e viene applicata prima della restituzione delle informazioni relative al controller di dominio al programma chiamante. Questa impostazione dei criteri è pertinente solo per i chiamanti di DsGetDcName per i quali non è stato specificato il flag DS_BACKGROUND_ONLY.
+
+Il valore predefinito per questa impostazione è 30 minuti (1800). Il valore massimo per questa impostazione è (4294967200), mentre il valore massimo non considerato come infinito è 49 giorni (49*24*60*60=4233600). Qualsiasi valore superiore verrà considerato come infinito. Il valore minimo per questa impostazione è (0), ovvero aggiorna sempre.</string>
+      <string id="Netlogon_ScavengeInterval">Imposta intervallo di scavenging</string>
+      <string id="Netlogon_ScavengeInterval_Help">Questa impostazione dei criteri determina l'intervallo con cui il servizio Accesso rete esegue le operazioni di scavenging seguenti:
+
+- Verificare se è necessario modificare una password in un canale sicuro ed eventualmente modificarla.
+
+- Nei controller di dominio individuare un controller di dominio non individuato in precedenza.
+
+- Nel controller di dominio primario (PDC) tentare di aggiungere il nome &lt;DomainName&gt;[1B] NetBIOS se non è stato aggiunto correttamente in precedenza.
+
+Nessuna delle operazioni indicate è critica. Il valore 15 minuti è adeguato in tutti i casi ad eccezione di quelli estremi. Se ad esempio un controller di dominio è separato da un dominio trusted tramite una linea costosa (ISDN), è possibile aumentare il valore di questo parametro per evitare di eseguire frequentemente operazioni di individuazione dei controller di dominio in un dominio trusted.
+
+Per abilitare l'impostazione, fare clic su Abilitato e specificare l'intervallo desiderato in secondi.</string>
+      <string id="Netlogon_SiteCoverage">Specifica siti inclusi dai record DNS SRV di tipo DC Locator</string>
+      <string id="Netlogon_SiteCoverage_Help">Questa impostazione dei criteri specifica i siti per i quali i controller di dominio devono registrare i record di risorse DNS SRV di tipo DC Locator specifici del sito. Questi record vengono registrati in aggiunta ai record SRV specifici registrati per il sito in cui risiede il controller di dominio e a quelli registrati da un controller di dominio configurato per la registrazione dei record DSN SRV di tipo DC Locator per i siti più vicini che non dispongono di controller di dominio. 
+
+I record DNS di tipo DC Locator vengono registrati in modo dinamico dal servizio Accesso rete e utilizzati per individuare il controller di dominio. Per sito Active Directory si intendono una o più subnet TCP/IP ben collegate che consentono agli amministratori di configurare l'accesso e la replica Active Directory.
+
+Per specificare i siti interessati dai record DNS SRV di tipo DC Locator, fare clic su Abilitato e quindi immettere i nomi dei siti in un formato delimitato da spazi.
+
+Se non si configura questa impostazione dei criteri, essa non verrà applicata ai controller di dominio, nei quali verrà pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_SiteName">Specifica nome sito</string>
+      <string id="Netlogon_SiteName_Help">Questa impostazione dei criteri specifica il sito Active Directory cui appartengono i computer.
+
+Per sito Active Directory si intendono una o più subnet TCP/IP ben collegate che consentono agli amministratori di configurare l'accesso e la replica Active Directory.
+
+Per specificare il nome del sito per questa impostazione, fare clic su Abilitato e quindi immettere il nome del sito. Quando non si specifica il sito cui appartiene un computer, il computer rileva automaticamente il proprio sito da Active Directory.
+
+Se non si configura questa impostazione dei criteri, essa non verrà applicata ai computer, nei quali verrà pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_SysvolShareCompatibilityMode">Imposta compatibilità condivisione SYSVOL</string>
+      <string id="Netlogon_SysvolShareCompatibilityMode_Help">Questa impostazione dei criteri determina se la condivisione SYSVOL creata dal servizio Accesso rete in un controller di dominio supporterà o meno la compatibilità della semantica di condivisione file con applicazioni precedenti.
+
+Quando questa impostazione dei criteri è abilitata, la condivisione SYSVOL eseguirà la semantica di condivisione file che consente l'inoltro di richieste di accesso esclusivo in lettura ai file della condivisione anche nel caso in cui il chiamante disponga solo di un'autorizzazione di lettura.
+
+Quando questa impostazione è disabilitata o non configurata, la condivisione SYSVOL concederà accesso condiviso in lettura ai file della condivisione quando viene richiesto l'accesso esclusivo da un chiamante che dispone solo dell'autorizzazione di lettura.
+
+Per impostazione predefinita, la condivisione SYSVOL concede accesso condiviso in lettura ai file della condivisione quando viene richiesto l'accesso esclusivo.
+
+Nota: la condivisione SYSVOL è una condivisione creata dal servizio Accesso rete e viene utilizzata dai client di Criteri di gruppo appartenenti al dominio. Il comportamento predefinito della condivisione SYSVOL assicura che nessuna applicazione che disponga della sola autorizzazione di lettura dei file nella condivisione possa bloccare tali file richiedendone l'accesso esclusivo in lettura e impedendo l'aggiornamento delle impostazioni di Criteri di gruppo nei client appartenenti al dominio. Quando questa impostazione è abilitata, un'applicazione in grado di bloccare i file della condivisione SYSVOL disponendo solo dell'autorizzazione di lettura potrà negare ai client di Criteri di gruppo l'accesso in lettura ai file e, più in generale, ridurre la disponibilità della condivisione SYSVOL nel dominio.
+
+Se si abilita questa impostazione dei criteri, gli amministratori di dominio devono accertarsi che solo le applicazioni che utilizzano la funzionalità di lettura esclusiva nel dominio siano approvate.</string>
+      <string id="Netlogon_UseDynamicDns">Specifica registrazione dinamica dei record DNS di tipo DC Locator</string>
+      <string id="Netlogon_UseDynamicDns_Help">Questa impostazione dei criteri determina se la registrazione dinamica dei record di risorse DNS di tipo DC Locator è abilitata. I record DNS vengono registrati in modo dinamico dal servizio Accesso rete e utilizzati dall'algoritmo del localizzatore per individuare il controller di dominio.
+
+Se si abilita questa impostazione dei criteri, i controller di dominio cui si applica questa impostazione registreranno in modo dinamico i record di risorse DNS di tipo DC Locator tramite connessioni di rete dinamiche abilitate all'aggiornamento del DNS.
+
+Se si disabilita questa impostazione dei criteri, i controller di dominio non registreranno i record di risorse DNS di tipo DC Locator.
+
+Se non si configura questa impostazione dei criteri, essa non viene applicata ai controller di dominio, nei quali viene pertanto utilizzata la configurazione locale.</string>
+      <string id="Netlogon_TryNextClosestSite">Prova sito più vicino successivo</string>
+      <string id="Netlogon_TryNextClosestSite_Help">Questa impostazione dei criteri consente al servizio DC Locator di ricercare un controller di dominio nel sito più vicino in base al costo totale collegamento-sito nel caso in cui il servizio non riesca a trovare un controller di dominio nello stesso sito. Negli scenari con più siti, eseguire il failover di Prova sito più vicino successivo durante la ricerca del controller di dominio rende più scorrevole il traffico di rete.
+
+Il servizio DC Locator viene utilizzato dai client per trovare controller di dominio per il dominio Active Directory. Per impostazione predefinita, DC Locator cerca un controller di dominio nello stesso sito. Se questa ricerca ha esito negativo, DC Locator può restituire un controller di dominio che potrebbe trovarsi in un altro sito e distare diversi passaggi tra siti. La prossimità tra due siti è determinata dal costo totale collegamento-sito tra i due siti. Un sito è più vicino se presenta un costo totale collegamento-sito più basso rispetto a un altro sito con un costo totale collegamento-sito più alto. 
+
+Se si abilita questa impostazione dei criteri, Prova sito più vicino successivo verrà abilitata per il computer.
+
+Se si disabilita questa impostazione dei criteri, Prova sito più vicino successivo non verrà utilizzata per impostazione predefinita per il computer. Se tuttavia viene eseguita una chiamata al servizio DC Locator utilizzando esplicitamente il flag DS_TRY_NEXTCLOSEST_SITE, la funzione Prova sito più vicino successivo verrà utilizzata.
+
+Se non si configura questa impostazione dei criteri, Prova sito più vicino successivo non verrà utilizzata per impostazione predefinita per il computer. Se si utilizza il flag DS_TRY_NEXTCLOSEST_SITE esplicitamente, Prova sito più vicino verrà utilizzata.</string>
+      <string id="Netlogon_ForceRediscoveryInterval">Imponi intervallo per nuova individuazione</string>
+      <string id="Netlogon_ForceRediscoveryInterval_Help">Questa impostazione dei criteri determina l'intervallo relativo a quando DC Locator esegue la funzione Imponi nuova individuazione.
+
+Il servizio DC Locator viene utilizzato dai client per trovare controller di dominio per il dominio Active Directory. Quando DC Locator trova un controller di dominio, memorizza nella cache i controller di dominio per incrementare l'efficienza dell'algoritmo di percorso. Fino a quando il controller di dominio memorizzato nella cache soddisfa i requisiti ed è in esecuzione, DC Locator continuerà a restituirlo. Se si aggiunge un nuovo controller di dominio, i client esistenti lo individueranno solo quando DC Locator esegue la funzione Imponi nuova individuazione. Per adattarsi alle modifiche nelle condizioni di rete, il servizio DC Locator eseguirà per impostazione predefinita Imponi nuova individuazione in base a un intervallo di tempo specifico e garantirà un efficiente bilanciamento del carico dei client tra tutti i controller di dominio disponibili in tutti i domini o foreste. L'intervallo di tempo predefinito per Imponi nuova individuazione è 12 ore. È inoltre possibile abilitare Imponi nuova individuazione quando DC Locator viene richiamato utilizzando il flag DS_FORCE_REDISCOVERY. La nuova individuazione reimposta il timer per le voci dei controller di dominio memorizzati nella cache.
+
+Se si abilita questa impostazione, il servizio DC Locator sulla macchina eseguirà Imponi nuova individuazione periodicamente in base all'intervallo di tempo configurato. L'intervallo di tempo minimo per impedire che la nuova individuazione generi un traffico di rete eccessivo è 3600 secondi (1 ora). L'intervallo di tempo massimo consentito è 4294967200 secondi; tutti i valori maggiori di 4294967 secondi (~49 giorni) verranno gestiti come infinito.
+
+Se si disabilita questa impostazione dei criteri, Imponi nuova individuazione verrà utilizzata per impostazione predefinita per la macchina a intervalli di 12 ore.
+
+Se non si configura questa impostazione dei criteri, Imponi nuova individuazione verrà utilizzata per impostazione predefinita per la macchina a intervalli di 12 ore, a meno che il valore dell'impostazione della macchina locale nel Registro di sistema non sia diverso.</string>
+      <string id="Netlogon_AddressTypeReturned">Restituisci tipo di indirizzo controller di dominio</string>
+      <string id="Netlogon_AddressTypeReturned_Help">Questa impostazione dei criteri determina il tipo di indirizzo IP restituito per un controller di dominio. Le API del servizio DC Locator restituiscono l'indirizzo IP del controller di dominio insieme ad altre informazioni. Prima dell'introduzione del supporto di IPv6, l'IP del controller di dominio restituito era IPv4. Con il supporto di IPv6, invece, le API del servizio DC Locator possono restituire l'indirizzo di controller di dominio IPv6. Le applicazioni esistenti potrebbero non essere in grado di gestire correttamente questo indirizzo. Questo criterio viene fornito per supportare tali scenari.
+
+Per impostazione predefinita, le API del servizio DC Locator possono restituire un indirizzo di controller di dominio IPv4/IPv6. Se tuttavia la restituzione dell'indirizzo di controller di dominio IPv6 dovesse causare problemi ad alcune applicazioni, è possibile utilizzare questo criterio per disabilitare il comportamento predefinito e imporre la restituzione del solo indirizzo di controller di dominio IPv4. Dopo aver risolto i problemi delle applicazioni, è possibile utilizzare questo criterio per abilitare il comportamento predefinito.
+
+Se si abilita questa impostazione dei criteri, le API del servizio DC Locator potranno restituire l'indirizzo di controller di dominio IPv4/IPv6. È questo il comportamento predefinito del DC Locator.
+
+Se si disabilita questa impostazione dei criteri, le API del servizio DC Locator restituiranno SOLO l'indirizzo di controller di dominio IPv4, se presente. Pertanto, se il controller di dominio supporta entrambi gli indirizzi IPv4 e IPv6, le API del servizio DC Locator restituiranno l'indirizzo IPv4. Se invece il controller di dominio supporta solo l'indirizzo IPv6, l'operazione eseguita dalle API del servizio DC Locator avrà esito negativo.
+
+Se non si configura questa impostazione, le API del servizio DC Locator potranno restituire l'indirizzo di controller di dominio IPv4/IPv6. È questo il comportamento predefinito del DC Locator.</string>
+      <string id="Netlogon_AllowNT4Crypto">Consenti algoritmi di crittografia compatibili con Windows NT 4.0</string>
+      <string id="Netlogon_AllowNT4Crypto_Help">Questa impostazione dei criteri controlla se il servizio Accesso rete consente l'utilizzo dei vecchi algoritmi di crittografia utilizzati in Windows NT 4.0. Gli algoritmi di crittografia utilizzati in Windows NT 4.0 e versioni precedenti non sono sicuri come gli algoritmi più recenti utilizzati in Windows 2000 o versione successiva, inclusa questa versione di Windows.
+
+Per impostazione predefinita, Accesso rete non consentirà l'utilizzo dei vecchi algoritmi di crittografia, che non verranno inclusi nella negoziazione. I computer che eseguono Windows NT 4.0 non saranno pertanto in grado di stabilire una connessione con questo controller di dominio.
+ 
+Se si abilita questa impostazione dei criteri, Accesso rete consentirà la negoziazione e l'utilizzo dei vecchi algoritmi di crittografia compatibili con Windows NT 4.0. L'utilizzo di vecchi algoritmi rappresenta tuttavia un potenziale rischio per la sicurezza.
+
+Se si disabilita questa impostazione dei criteri, Accesso rete non consentirà la negoziazione e l'utilizzo di algoritmi di crittografia meno recenti. 
+
+Se non si configura questa impostazione dei criteri, Accesso rete non consentirà la negoziazione e l'utilizzo di algoritmi di crittografia meno recenti.</string>
+      <string id="Netlogon_IgnoreIncomingMailslotMessages">Non elaborare messaggi mailslot in ingresso utilizzati per l'individuazione del controller di dominio basata sui nomi di dominio NetBIOS</string>
+      <string id="Netlogon_IgnoreIncomingMailslotMessages_Help">Questa impostazione consente di controllare l'elaborazione dei messaggi mailslot in ingresso da un controller di dominio locale.
+
+Nota: per individuare un controller di dominio remoto in base al nome di dominio NetBIOS (etichetta singola), il servizio di individuazione dei controller di dominio recupera innanzitutto l'elenco dei controller di dominio da un server WINS configurato nelle impostazioni locali del client. Viene quindi inviato un messaggio mailslot a ogni controller di dominio remoto per ottenere ulteriori informazioni. L'individuazione del controller di dominio ha esito positivo solo se un controller di dominio remoto risponde al messaggio mailslot.
+
+Questa impostazione dei criteri è consigliata per ridurre la superficie di attacco di un controller di dominio e può essere utilizzata in un ambiente senza WINS, in un ambiente con solo IPv6 oppure quando l'individuazione del controller di dominio basata sul nome di dominio NetBIOS non è necessaria. Questa impostazione dei criteri non influisce sull'individuazione dei controller di dominio basata sui nomi DNS.
+
+Se si abilita questa impostazione dei criteri, il controller di dominio non elaborerà i messaggi mailslot in ingresso utilizzati per l'individuazione del controller di dominio basata sul nome di dominio NetBIOS.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il controller di dominio elaborerà i messaggi mailslot in ingresso. Si tratta del comportamento predefinito del servizio di individuazione dei controller di dominio.</string>
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery">Non utilizzare l'individuazione basata su NetBIOS per il rilevamento dei controller di dominio quando non riesce l'individuazione basata su DNS</string>
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Questa impostazione dei criteri consente di controllare l'algoritmo di percorso del controller di dominio. Per impostazione predefinita, l'algoritmo di percorso del controller di dominio preferisce l'individuazione basata su DNS se il nome di dominio DNS è noto. Se l'individuazione basata su DNS non riesce e il nome di dominio NetBIOS è noto, l'algoritmo utilizzerà l'individuazione basata su NetBIOS come meccanismo di fallback.
+
+L'individuazione basata su NetBIOS utilizza un server WINS e messaggi mailslot ma non utilizza informazioni sui siti. Pertanto, non garantisce che i client individueranno il controller di dominio più vicino. Consente inoltre a un client di un sito hub di individuare un controller di dominio di un sito derivato anche se quest'ultimo registra unicamente record DNS specifici del sito (come consigliato). Per queste ragioni, l'individuazione basata su NetBIOS non è consigliata.
+
+Si noti che questa impostazione dei criteri non influirà sull'individuazione basata su NetBIOS per il percorso del controller di dominio unicamente se il nome di dominio NetBIOS è noto.
+
+Se si abilita o non si configura questa impostazione dei criteri, l'algoritmo di percorso del controller di dominio non utilizzerà l'individuazione basata su NetBIOS come meccanismo di fallback quando l'individuazione basata su DNS ha esito negativo. Questo è il comportamento predefinito.
+
+Se si disabilita questa impostazione dei criteri, l'algoritmo di percorso del controller di dominio potrà utilizzare l'individuazione basata su NetBIOS come meccanismo di fallback quando l'individuazione basata su DNS ha esito negativo.</string>
+
+      <string id="Netlogon_AddressLookupOnPingBehavior">Specifica comportamento ricerca di indirizzi per il ping di localizzazione controller di dominio</string>
+      <string id="Netlogon_AddressLookupOnPingBehavior_Help">Questa impostazione dei criteri configura il comportamento di un controller di dominio quando risponde a un client il cui indirizzo IP non è mappato ad alcun sito configurato.
+
+I controller di dominio utilizzano l'indirizzo IP del client durante una richiesta di ping di localizzazione di controller di dominio per calcolare a quale sito di Active Directory appartiene il client.   Se non è possibile calcolare alcun mapping di sito, il controller di dominio può eseguire una ricerca di indirizzi sul nome di rete del client per individuare altri indirizzi IP che potrebbero essere utilizzati per calcolare un sito corrispondente per il client. 
+
+I valori consentiti per questa impostazione generano i comportamenti seguenti:
+
+0 - I controller di dominio non eseguiranno mai ricerche di indirizzi.
+1 - I controller di dominio eseguiranno una ricerca di indirizzi completa per individuare indirizzi IP aggiuntivi del client.
+2 - I controller di dominio eseguiranno una ricerca di indirizzi veloce per individuare indirizzi IP aggiuntivi del client.
+
+Per specificare questo comportamento nei record DNS SRV di tipo DC Locator, fare clic su Abilitato e quindi immettere un valore. L'intervallo di valori è compreso tra 0 e 2.
+
+Se non viene configurata, questa impostazione dei criteri non verrà applicata ad alcun controller di dominio, per i quali verrà pertanto utilizzata la configurazione locale.</string>
+
+      <string id="Netlogon_PingUrgencyMode">Usa modalità di urgenza durante l'esecuzione del ping dei controller di dominio</string>
+      <string id="Netlogon_PingUrgencyMode_Help">Questa impostazione dei criteri consente di configurare se i computer a cui viene applicata questa impostazione sono più aggressivi durante un tentativo di individuazione di un controller di dominio.
+
+Quando in un ambiente sono presenti numerosi controller di dominio che eseguono sistemi operativi sia vecchi che nuovi, è possibile che il comportamento di individuazione predefinito del  localizzatore dei controller di dominio sia insufficiente a consentire i controller di dominio che eseguono un sistema operativo più recente.  È possibile abilitare questa impostazione dei criteri per configurare il localizzatore dei controller di dominio in modo che sia più aggressivo durante il tentativo di individuazione di un controller di dominio in un tale ambiente, eseguendo il ping dei controller di dominio con maggiore frequenza.  L'abilitazione di questa impostazione può comportare un maggior traffico di rete e un incremento del carico sui controller di dominio.  È consigliabile disabilitare questa impostazione dopo che tutti i controller di dominio eseguono la stessa versione del sistema operativo.
+
+I valori consentiti per questa impostazione generano i comportamenti seguenti:
+
+1 - I computer eseguiranno il ping dei controller di dominio con una frequenza normale.
+2 - I computer eseguiranno il ping dei controller di dominio con una frequenza maggiore.
+
+Per specificare questo comportamento, fare clic su Abilitata e quindi immettere un valore. L'intervallo di valori è compreso tra 1 e 2.
+
+Se non si configura questa impostazione dei criteri, essa non verrà applicata ai computer, nei quali verrà pertanto utilizzata la configurazione locale.</string>
+
+      <string id="Netlogon_DnsSrvRecordUseLowerCaseHostNames">Usa nomi host DNS minuscoli durante la registrazione dei record SRV del controller di dominio</string>
+      <string id="Netlogon_DnsSrvRecordUseLowerCaseHostNames_Help">Questa impostazione dei criteri consente di stabilire se i controller di dominio a cui viene applicata questa impostazione consentiranno di specificare in minuscolo il nome host DNS durante la registrazione dei record SRV.
+
+Se abilitato, i controller di dominio specificano in minuscolo il nome host DNS durante la registrazione dei record SRV del controller di dominio. Verrà effettuato un tentativo migliore per eliminare tutti i record SRV precedentemente registrati che contengono nomi host DNS con maiuscoli e minuscoli. Per altre informazioni e le possibili procedure di pulizia manuale, vedi il collegamento seguente.
+
+Se questa impostazione è disabilitata, i controller di dominio utilizzano il nome host DNS configurato così com'è durante la registrazione dei record SRV del controller di dominio.
+
+Se non è configurata, i controller di dominio utilizzano la configurazione locale.
+
+La configurazione locale predefinita è abilitata.
+
+Per rendere effettive le modifiche apportate a questa impostazione, non è necessario riavviare il sistema.
+
+Ulteriori informazioni sono disponibili all'indirizzo https://aka.ms/lowercasehostnamesrvrecord
+      </string>
+
+    </stringTable>
+    <presentationTable>
+      <presentation id="Netlogon_BackgroundRetryInitialPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundRetryInitialPeriodLabel" defaultValue="600" spinStep="600">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundRetryMaximumPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundRetryMaximumPeriodLabel" defaultValue="3600" spinStep="3600">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundRetryQuitTime">
+        <decimalTextBox refId="Netlogon_BackgroundRetryQuitTimeLabel" defaultValue="0" spinStep="100">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundSuccessfulRefreshPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundSuccessfulRefreshPeriodLabel" defaultValue="4294967200" spinStep="1000">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DebugFlag">
+        <decimalTextBox refId="Netlogon_DebugFlagLabel" defaultValue="536936447">Livello:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DnsAvoidRegisterRecords">
+        <textBox refId="Netlogon_DnsAvoidRegisterRecordsLabel">
+          <label>Istruzioni:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_DnsRefreshInterval">
+        <decimalTextBox refId="Netlogon_DnsRefreshIntervalLabel" defaultValue="1800" spinStep="100">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DnsTtl">
+        <decimalTextBox refId="Netlogon_DnsTtlLabel" defaultValue="600" spinStep="100">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_ExpectedDialupDelay">
+        <decimalTextBox refId="Netlogon_ExpectedDialupDelayLabel" defaultValue="0" spinStep="100">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_GcSiteCoverage">
+        <textBox refId="Netlogon_GcSiteCoverageLabel">
+          <label>Siti:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_LdapSrvPriority">
+        <decimalTextBox refId="Netlogon_LdapSrvPriorityLabel" defaultValue="0" spinStep="100">Priorità:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_LdapSrvWeight">
+        <decimalTextBox refId="Netlogon_LdapSrvWeightLabel" defaultValue="100" spinStep="100">Peso:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_MaximumLogFileSize">
+        <decimalTextBox refId="Netlogon_MaximumLogFileSizeLabel" defaultValue="536936447">Numero byte:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_NdncSiteCoverage">
+        <textBox refId="Netlogon_NdncSiteCoverageLabel">
+          <label>Siti:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_NegativeCachePeriod">
+        <decimalTextBox refId="Netlogon_NegativeCachePeriodLabel" defaultValue="45" spinStep="60">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_NonBackgroundSuccessfulRefreshPeriod">
+        <decimalTextBox refId="Netlogon_NonBackgroundSuccessfulRefreshPeriodLabel" defaultValue="1800" spinStep="1000">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_ScavengeInterval">
+        <decimalTextBox refId="Netlogon_ScavengeIntervalLabel" defaultValue="900" spinStep="900">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_SiteCoverage">
+        <textBox refId="Netlogon_SiteCoverageLabel">
+          <label>Siti:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_SiteName">
+        <textBox refId="Netlogon_SiteNameLabel">
+          <label>Sito:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_ForceRediscoveryInterval">
+        <decimalTextBox refId="Netlogon_ForceRediscoveryIntervalLabel" defaultValue="43200" spinStep="100">Secondi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_AddressLookupOnPingBehavior">
+        <decimalTextBox refId="Netlogon_AddressLookupOnPingBehaviorLabel" defaultValue="2" spinStep="1">Comportamento della ricerca di indirizzi:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_PingUrgencyMode">
+        <decimalTextBox refId="Netlogon_PingUrgencyModeLabel" defaultValue="2" spinStep="1">Modalità di urgenza ping:</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

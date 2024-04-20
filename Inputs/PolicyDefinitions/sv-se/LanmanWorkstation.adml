@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ange visningsnamn här</displayName>
+  <description>ange beskrivning här</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">Lanman Workstation</string>
+      <string id="Pol_CipherSuiteOrder_Name">Chiffersvitordning</string>
+      <string id="Pol_CipherSuiteOrder_Help">Den här inställningen anger vilka chiffersviter som används av SMB-klienten.
+
+Om du aktiverar den här principinställningen prioriteras chiffersviter i den ordning som du anger.
+
+Om du aktiverar inställningen och inte anger minst en chiffersvit som stöds, eller om du inaktiverar eller låter bli att konfigurera principinställningen, används standardordningen för chiffersviter.
+
+SMB 3.11-chiffersviter:
+
+AES_128_GCM
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+SMB 3.0- och 3.02-skiffersviter:
+
+AES_128_CCM
+
+Så här ändrar du inställningen:
+
+Ordna chiffersviterna i den ordning du vill ha i redigeringsrutan enligt följande: en chiffersvit per rad och i prioritetsordning med högst prioritet överst och lägst prioritet längst ned. Ta bort eventuella chiffersviter du inte vill använda.
+
+Obs! Ändringen av den här säkerhetsinställningen börjar inte gälla förrän du startar om Windows.</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">Tillåt oskyddade gästinloggningar</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">Den här principinställningen avgör huruvida SMB-klienten tillåter oskyddade gästinloggningar på en SMB-server.
+
+Om du aktiverar den här principinställningen eller om du låter bli att konfigurera den tillåts oskyddade gästinloggningar av SMB-klienten.
+
+Om du inaktiverar den här principinställningen avvisas alla oskyddade gästinloggningar av SMB-klienten.
+
+Oskyddade gästinloggningar kan användas på filservrar för att tillåta oautentiserad åtkomst till delade mappar. Oskyddade gästinloggningar tillåts oftast inte i företagsmiljöer, men de används flitigt av privatpersoner som använder nätverksanslutna lagringsenheter (NAS) som filservrar. På Windows-filservrar krävs autentisering och oskyddade gästinloggningar tillåts som standard inte. Eftersom oskyddade gästinloggningar är oautentiserade inaktiveras viktiga säkerhetsfunktioner som SMB-signering och SMB-kryptering. Det innebär att de klienter där oskyddade inloggningar tillåts blir sårbara för många olika typer av MITM-angrepp (man-in-the-middle) som kan leda till att data går förlorade eller skadas, samt för skadlig kod. Dessutom kan alla i nätverket potentiellt få tillgång till de data som skrivs till en filserver via en oskyddad gästinloggning. Microsoft rekommenderar att du inaktiverar oskyddade gästinloggningar och konfigurerar alla filservrar så att autentisering krävs för åtkomst."
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">Tillgänglighet av Offlinefiler i resurser med kontinuerlig tillgänglighet</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        Den här principinställningen anger om Offlinefiler tillåts på klienter som ansluter till en SMB-resurs där Kontinuerlig tillgänglighet (CA) har aktiverats
+
+        Om du aktiverar principinställningen visas alternativet Alltid tillgänglig offline i Utforskaren på Windows-datorer när du ansluter till en CA-aktiverad resurs. Det går också att fästa filer i CA-aktiverade resurser med cachelagring på klientsidan.
+
+        Om du inaktiverar eller låter bli att konfigurera principinställningen hindrar Windows användningen av Offlinefiler med CA-aktiverade resurser.
+
+        Obs! Microsoft rekommenderar inte att du aktiverar den här grupprincipen. Om du använder CA tillsammans med Offlinefiler leder det till väldigt långa övergångstider mellan online- och offlinelägena.
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">Referenscachelagring för resurser med kontinuerlig tillgänglighet</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        Den här principinställningen anger om SMB-referenscachelagring tillåts för klienter som ansluter till en SMB-resurs där Kontinuerlig tillgänglighet (CA) har aktiverats.
+
+        Om du aktiverar principinställningen tillåter SMB-klienten cachelagrade referenser till filer på CA-resurser. Detta kan leda till bättre prestanda vid upprepad åtkomst av ett stort antal ostrukturerade datafiler på CA-resurser som körs i Microsoft Azure Files.
+
+        Om du inaktiverar eller låter bli att konfigurera principinställningen hindrar Windows användningen av cachelagrade referenser till filer som öppnats via CA-resurser.
+
+        Obs! Principen har ingen effekt när resurser för skalbara filservrar ansluts från en Windows Server. Microsoft rekommenderar inte att du aktiverar den här principen för klienter som rutinmässigt ansluter till filer på ett Windows-redundanskluster med rollen Filserver för allmän användning, eftersom det kan leda till försämrad redundans och ökad minnes- och CPU-förbrukning.
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Minst Windows Server 2022, Windows 11</string>
+      <string id="Pol_EnableCompressedTraffic_Name">Använd SMB-komprimering som standard</string>
+      <string id="Pol_EnableCompressedTraffic_Help">Den här principen styr om SMB-klienten använder trafikkomprimering som standard.
+
+Om du aktiverar den här principinställningen försöker SMB-klienten komprimera trafiken som standard när SMB-komprimering är aktiverat.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen försöker SMB-klienten inte som standard komprimera trafik. Trafikkomprimering kan dock begäras på annat sätt. Visa anteckningar nedan.
+
+Obs! Den här principen kombineras med egenskaper per resurs och filreferens, genom vilken trafikkomprimering kan begäras. Dessutom måste SMB-servern ha stöd för och aktivera komprimering. Om den här principen till exempel inaktiveras (eller inte konfigureras) kan SMB-klienten fortfarande utföra komprimering om en SMB-serverresurs har begärd komprimering. Om detta inte är önskvärt och du vill inaktivera komprimering helt konfigurerar du den medföljande principen Inaktivera SMB-komprimering i stället.
+      </string>
+      <string id="Pol_DisableCompression_Name">Inaktivera SMB-komprimering</string>
+      <string id="Pol_DisableCompression_Help">Den här principen styr om SMB-servern ska inaktivera (helt förhindra) trafikkomprimering.
+
+Om du aktiverar den här principinställningen komprimerar SMB-klienten aldrig data, oavsett andra principer (till exempel principen Använd SMB-komprimering som standard eller egenskapen per resurs).
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen kan SMB-klienten komprimera trafiken (beroende på en kombination av andra principer och villkor).
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>Chiffersviter:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

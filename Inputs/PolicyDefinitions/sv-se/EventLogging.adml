@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Händelseloggning</displayName>
+    <description>Den här filen innehåller konfigurationsalternativ för Windows-händelseloggning</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Händelseloggning</string>
+            <string id="EnableProtectedEventLogging">Aktivera skyddad händelseloggning</string>
+            <string id="EnableProtectedEventLogging_Explain">
+Med den här principinställningen kan du konfigurera skyddad händelseloggning.
+
+Om du aktiverar den här principinställningen kommer komponenter som stöder den att använda certifikatet du tillhandahåller för att kryptera potentiellt känsliga händelseloggdata innan de skrivs till händelseloggen. Data krypteras med CMS-standarden (Cryptographic Message Syntax) och den offentliga nyckel du tillhandahåller. Du kan använda PowerShell-cmdleten Unprotect-CmsMessage om du vill dekryptera dessa meddelanden, men det kräver att du har tillgång till den privata nyckel som motsvarar den offentliga nyckel de krypterades med.
+
+Om du inaktiverar eller låter bli att konfigurera principinställningen krypteras inte händelseloggmeddelanden innan de skrivs till händelseloggen.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+Tillhandahåll ett krypteringscertifikat som ska användas i samband med Skyddad händelseloggning. Du kan tillhandahålla något av följande:
+
+    - Innehållet i ett Base 64-kodat X.509-certifikat
+    - Tumavtrycket för ett certifikat som finns i certifikatarkivet på den lokala datorn (distribueras vanligtvis med PKI-infrastrukturen)
+    - Den fullständiga sökvägen till ett certifikat (kan vara en lokal resurs eller fjärresurs)
+    - Sökvägen till en katalog med ett eller flera certifikat (kan vara en lokal resurs eller fjärresurs)
+    - Subjektnamnet för ett certifikat som finns i certifikatarkivet på den lokala datorn (distribueras vanligtvis med PKI-infrastrukturen)
+
+Det slutliga certifikatet måste ha Dokumentkryptering som utökad nyckelanvändning (1.3.6.1.4.1.311.80.1), samt Datachiffrering eller Nyckelchiffrering aktiverat som nyckelanvändning.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

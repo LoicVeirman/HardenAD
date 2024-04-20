@@ -1,0 +1,1088 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>immettere qui il nome visualizzato</displayName>
+  <description>immettere qui la descrizione</description>
+  <resources>
+    <stringTable>
+      <string id="ActiveDirectoryBackup_Help">Questa impostazione dei criteri consente di gestire il backup su Servizi di dominio Active Directory delle informazioni di ripristino di Crittografia unità BitLocker. Fornisce un metodo amministrativo per il ripristino dei dati crittografati da BitLocker in modo da evitare che vadano perduti per mancanza delle informazioni sulla chiave. Questa impostazione è applicabile solo ai computer che eseguono Windows Server 2008 o Windows Vista.
+
+Se si abilita questa impostazione dei criteri, verrà eseguito il backup automatico e invisibile all'utente delle informazioni di ripristino di BitLocker su Servizi di dominio Active Directory quando BitLocker è abilitato per un computer. Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Nota: per poter eseguire il backup su Servizi di dominio Active Directory potrebbe essere necessario configurare le impostazioni di controllo di accesso nel dominio e le estensioni dello schema adeguate. Ulteriori informazioni sulla configurazione del backup su Servizi di dominio Active Directory per BitLocker sono disponibili in Microsoft TechNet.
+
+Le informazioni di ripristino di BitLocker includono la password di ripristino e alcuni dati sull'identificatore univoco. È inoltre possibile includere un pacchetto contenente la chiave di crittografia di un'unità protetta da BitLocker. Tale pacchetto della chiave è protetto da una o più password di ripristino e può risultare utile durante l'esecuzione del ripristino specializzato quando il disco è danneggiato.
+
+Se si seleziona l'opzione "Richiedi backup BitLocker su Servizi di dominio Active Directory", non sarà possibile abilitare BitLocker a meno che il computer non sia connesso a un dominio e il backup delle informazioni di ripristino di BitLocker su Servizi di dominio Active Directory abbia esito positivo. Questa opzione è selezionata per impostazione predefinita per consentire il ripristino di BitLocker. Se l'opzione non è selezionata, verrà tentato il backup su Servizi di dominio Active Directory, ma errori di backup o di rete non impediranno l'installazione di BitLocker. Il backup non verrà ritentato automaticamente ed è possibile che la password di ripristino non sia stata archiviata in Servizi di dominio Active Directory durante l'installazione di BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, non verrà eseguito il backup delle informazioni di ripristino di BitLocker su Servizi di dominio Active Directory.
+
+Nota: durante l'installazione di BitLocker potrebbe verificarsi l'inizializzazione del TPM (Trusted Platform Module). Abilitare l'impostazione "Attiva backup TPM su Servizi di dominio Active Directory" in Sistema\Servizi Trusted Platform Module per garantire che venga eseguito il backup anche delle informazioni TPM.
+      
+      </string>
+      <string id="ActiveDirectoryBackup_Name">Archivia informazioni di ripristino di BitLocker in Servizi di dominio Active Directory (Windows Server 2008 e Windows Vista)</string>
+      <string id="ActiveDirectoryBackupDropDown_1">Recupera password e pacchetti della chiave</string>
+      <string id="ActiveDirectoryBackupDropDown_2">Recupera solo password</string>
+
+      <string id="ConfigureStartupUsage_Help">Questa impostazione dei criteri consente di stabilire se la configurazione guidata Crittografia unità BitLocker sarà in grado di impostare un'autenticazione aggiuntiva che verrà richiesta a ogni avvio del computer. Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Nota: questa impostazione dei criteri è applicabile solo ai computer che eseguono Windows Server 2008 o Windows Vista.
+
+In un computer con un TPM (Trusted Platform Module) compatibile è possibile utilizzare due tipi di autenticazione all'avvio per garantire una protezione aggiuntiva per i dati crittografati. Il primo tipo di autenticazione richiede agli utenti di inserire un'unità flash USB contenente una chiave di avvio all'avvio del computer. Il secondo tipo richiede agli utenti di inserire un codice PIN di avvio composto da un minimo di 4 e un massimo di 20 cifre.
+
+Nei computer senza un TPM compatibile è necessaria un'unità flash USB contenente una chiave di avvio. Senza un TPM, i dati crittografati tramite BitLocker vengono protetti soltanto dal materiale della chiave nell'unità flash USB.
+
+Se si abilita questa impostazione dei criteri, la procedura guidata visualizzerà la pagina per consentire all'utente di configurare opzioni di avvio avanzate per BitLocker. È possibile configurare ulteriormente le opzioni relative alle impostazioni per i computer con e senza un TPM.
+
+Se si disabilita o non si configura questa impostazione dei criteri, la configurazione guidata BitLocker visualizzerà i passaggi di base che consentono agli utenti di attivare BitLocker nei computer con un TPM. In questa procedura di base non è possibile configurare chiavi o PIN di avvio aggiuntivi.
+
+</string>
+
+      <string id="ConfigureStartupUsage_Name">Richiedi autenticazione aggiuntiva all'avvio (Windows Server 2008 e Windows Vista)</string>
+      <string id="ConfigureAdvancedStartup_Name">Richiedi autenticazione aggiuntiva all'avvio</string>
+
+      <string id="ConfigureAdvancedStartup_Help">Questa impostazione dei criteri consente di specificare se richiedere l'autenticazione aggiuntiva per BitLocker a ogni avvio del computer e se utilizzare o meno BitLocker con un TPM (Trusted Platform Module). Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Nota: è possibile richiedere all'avvio una sola opzione di autenticazione aggiuntiva; in caso contrario si verificherà un errore dei criteri.
+
+Se si desidera utilizzare BitLocker in un computer privo di TPM, selezionare la casella di controllo "Consenti BitLocker senza un TPM compatibile". In questa modalità è necessaria una password o un'unità USB per l'avvio. Se si utilizza una chiave di avvio, le informazioni sulla chiave utilizzate per crittografare l'unità saranno archiviate nell'unità USB, creando così una chiave USB. Quando si inserirà la chiave USB, l'accesso all'unità verrà autenticato e l'unità sarà accessibile. In caso di smarrimento o indisponibilità della chiave USB o se si dimentica la password, per accedere all'unità sarà necessario utilizzare una delle opzioni di ripristino di BitLocker.
+
+Per fornire protezione aggiuntiva ai dati crittografati in un computer dotato di un TPM compatibile, è possibile utilizzare all'avvio quattro tipi di autenticazione differenti. All'avvio del computer, è possibile utilizzare solo il TPM per l'autenticazione o richiedere anche l'inserimento di un'unità flash USB contenente una chiave di avvio, l'immissione di un PIN costituito da un minimo di 6 e un massimo di 20 cifre o entrambi i metodi.
+
+Se si abilita questa impostazione dei criteri, gli utenti potranno configurare opzioni di avvio avanzate nella configurazione guidata BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, gli utenti potranno configurare solo le opzioni di base nei computer dotati di un TPM.
+
+Nota: se si desidera imporre l'utilizzo di un PIN e di un'unità flash USB all'avvio, è necessario configurare le impostazioni di BitLocker mediante lo strumento da riga di comando manage-bde anziché tramite la configurazione guidata Crittografia unità BitLocker.
+
+</string>
+      <string id="AllowNetworkUnlockAtStartup_Name">Consenti sblocco rete all'avvio</string>
+      <string id="AllowNetworkUnlockAtStartup_Help">Questa impostazione dei criteri stabilisce se un computer protetto tramite BitLocker connesso a una rete LAN (Local Area Network) cablata attendibile e appartenente a un dominio è in grado di creare e utilizzare la protezione di rete con chiave in computer abilitati per TPM per sbloccare automaticamente l'unità del sistema operativo all'avvio del computer.
+
+Se si abilita questa impostazione dei criteri, i client configurati con un certificato di sblocco rete di Crittografia unità BitLocker saranno in grado di creare e utilizzare la protezione di rete con chiave.
+
+Per utilizzare la protezione di rete con chiave per sbloccare il computer, è necessario fornire sia al computer che al server di sblocco rete per Crittografia unità BitLocker un certificato di sblocco rete. Il certificato di sblocco rete di Crittografia unità BitLocker viene utilizzato per creare la protezione di rete con chiave e proteggere le informazioni scambiate con il server per sbloccare il computer. È possibile utilizzare l'impostazione dei Criteri di gruppo "Configurazione computer\Impostazioni di Windows\Impostazioni sicurezza\Criteri chiave pubblica\Certificato di sblocco rete per Crittografia unità BitLocker" nel controller di dominio per distribuire il certificato ai computer dell'organizzazione. Questo metodo di sblocco utilizza il TPM del computer, impedendo così ai computer privi di TPM di creare la protezione di rete con chiave per lo sblocco automatico con Sblocco rete.
+
+Se si disabilita o non si configura questa impostazione dei criteri, i client BitLocker non saranno in grado di creare e utilizzare la protezione di rete con chiave.
+
+Nota: per garantire l'affidabilità e la sicurezza, è necessario che i computer dispongano anche di un PIN di avvio del TPM da utilizzare quando il computer è disconnesso dalla rete cablata o dal server all'avvio.
+
+
+
+</string>
+
+      <string id="ConfigureTPMPINKeyUsageDropDown_Optional">Consenti chiave e PIN di avvio con il TPM</string>
+      <string id="ConfigureTPMPINKeyUsageDropDown_Require">Richiedi chiave e PIN di avvio con il TPM</string>
+      <string id="ConfigureTPMPINKeyUsageDropDown_Disallow">Non consentire chiave e PIN di avvio con il TPM</string>
+
+      <string id="ConfigureTPMUsageDropDown_Optional">Consenti TPM</string>
+      <string id="ConfigureTPMUsageDropDown_Require">Richiedi TPM</string>
+      <string id="ConfigureTPMUsageDropDown_Disallow">Non consentire TPM</string>
+
+      <string id="ConfigurePINUsageDropDown_Optional">Consenti PIN di avvio con il TPM</string>
+      <string id="ConfigurePINUsageDropDown_Require">Richiedi PIN di avvio con il TPM</string>
+      <string id="ConfigurePINUsageDropDown_Disallow">Non consentire PIN di avvio con il TPM</string>
+
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Optional">Consenti chiave di avvio con il TPM</string>
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Require">Richiedi chiave di avvio con il TPM</string>
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Disallow">Non consentire chiave di avvio con il TPM</string>
+
+
+      <string id="ConfigureRecoveryUsage_Help">Questa impostazione dei criteri consente di definire se visualizzare e permettere la scelta delle opzioni di ripristino di BitLocker nella configurazione guidata Crittografia unità BitLocker. Questa impostazione dei criteri è applicabile solo ai computer che eseguono Windows Server 2008 o Windows Vista. Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Per sbloccare i dati crittografati con BitLocker in assenza delle informazioni sulla chiave di avvio richiesta, sono disponibili due opzioni di ripristino. L'utente può digitare una password di ripristino numerica di 48 cifre oppure inserire un'unità flash USB contenente una chiave di ripristino a 256 bit.
+
+Se si abilita questa impostazione dei criteri, sarà possibile configurare le opzioni da visualizzare agli utenti durante la configurazione guidata per ripristinare i dati crittografati con BitLocker. Se si sceglie di salvare le informazioni in un'unità flash USB, la password di ripristino di 48 cifre verrà archiviata come file di testo e la chiave di ripristino a 256 bit come file nascosto. Se si sceglie di salvare le informazioni in una cartella, la password di ripristino di 48 cifre verrà archiviata come file di testo. Se si sceglie di stampare le informazioni, la password di ripristino di 48 cifre verrà inviata alla stampante predefinita. Se, ad esempio, non si consente l'utilizzo della password di ripristino di 48 cifre, gli utenti non potranno stampare o salvare le informazioni di ripristino in una cartella.
+
+Se si disabilita o non si configura questa impostazione dei criteri, durante la configurazione guidata BitLocker verranno offerte agli utenti le opzioni per l'archiviazione delle informazioni di ripristino.
+
+Nota: se è richiesta l'inizializzazione del TPM (Trusted Platform Module) durante la configurazione di BitLocker, le informazioni del proprietario del TPM verranno salvate o stampate con le informazioni di ripristino di BitLocker.
+
+Nota: la password di ripristino di 48 cifre non sarà disponibile in modalità conformità FIPS.
+
+Importante: questa impostazione fornisce un metodo amministrativo per ripristinare i dati crittografati da BitLocker in modo da evitare che vadano perduti per mancanza delle informazioni sulla chiave. Se non viene consentita nessuna delle opzioni di ripristino, è necessario abilitare l'impostazione dei criteri "Archivia informazioni di ripristino di BitLocker in Servizi di dominio Active Directory (Windows Server 2008 e Windows Vista)". In caso contrario si verificherà un errore dei criteri.
+
+      
+
+      </string>
+
+      <string id="ConfigureRecoveryUsage_Name">Scegli modalità di ripristino delle unità protette con BitLocker (Windows Server 2008 e Windows Vista)</string>
+      <string id="ConfigureRecoveryPasswordUsageDropDown_Require">Richiedi password di ripristino (predefinito)</string>
+      <string id="ConfigureRecoveryPasswordUsageDropDown_Disallow">Non consentire password di ripristino</string>
+
+      <string id="ConfigureRecoveryKeyUsageDropDown_Require">Richiedi chiave di ripristino (predefinito)</string>
+      <string id="ConfigureRecoveryKeyUsageDropDown_Disallow">Non consentire chiave di ripristino</string>
+
+
+      <string id="OSRecoveryUsage_Name">Scegli modalità di ripristino delle unità del sistema operativo protette con BitLocker</string>
+
+      <string id="OSRecoveryUsage_Help">Questa impostazione dei criteri consente di definire le modalità di ripristino delle unità del sistema operativo protette con BitLocker in mancanza delle informazioni sulla chiave di avvio richieste. Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Utilizzare la casella di controllo "Consenti agenti recupero dati basati su certificato" per permettere o meno l'utilizzo di un agente recupero dati con le unità del sistema operativo protette con BitLocker. Per utilizzare un agente recupero dati è innanzitutto necessario aggiungerlo dalla voce Criteri chiave pubblica in Console Gestione Criteri di gruppo o in Editor Criteri di gruppo locali. Per ulteriori informazioni sull'aggiunta di agenti recupero dati, consultare il documento BitLocker Drive Encryption Deployment Guide su Microsoft TechNet.
+
+In "Configurazione archiviazione delle informazioni di ripristino di BitLocker da parte degli utenti" scegliere se consentire, imporre o non consentire agli utenti la generazione di una password di ripristino di 48 cifre o di una chiave di ripristino a 256 bit.
+
+Selezionare "Escludi opzioni di ripristino dalla configurazione guidata BitLocker" per impedire agli utenti di specificare le opzioni di ripristino quando abilitano BitLocker su un'unità. In tal caso, gli utenti non sono in grado di specificare l'opzione di ripristino da utilizzare quando abilitano BitLocker e le opzioni di ripristino di BitLocker per l'unità sono determinate dall'impostazione dei criteri.
+
+In "Salva informazioni di ripristino di BitLocker in Servizi di dominio Active Directory" scegliere le informazioni di ripristino di BitLocker da archiviare in Servizi di dominio Active Directory per le unità del sistema operativo. Se si seleziona "Esegui backup delle password di ripristino e dei pacchetti della chiave", la password di ripristino e il pacchetto della chiave di BitLocker verranno archiviati in Servizi di dominio Active Directory. L'archiviazione del pacchetto della chiave consente il ripristino dei dati da un'unità che ha subito danni fisici. Se si seleziona "Esegui backup solo delle password di ripristino", solo la password di ripristino verrà archiviata in Servizi di dominio Active Directory.
+
+Selezionare la casella di controllo "Non abilitare BitLocker finché le informazioni di ripristino non vengono archiviate in Servizi di dominio Active Directory per le unità del sistema operativo" se si desidera impedire agli utenti di abilitare BitLocker finché il computer non sia connesso a un dominio e il backup delle informazioni di ripristino di BitLocker su Servizi di dominio Active Directory non abbia esito positivo.
+
+Nota: se la casella di controllo "Non abilitare BitLocker finché le informazioni di ripristino non vengono archiviate in Servizi di dominio Active Directory per le unità del sistema operativo" è selezionata, verrà generata automaticamente una password di ripristino.
+
+Se si abilita questa impostazione dei criteri, sarà possibile definire le modalità a disposizione degli utenti per ripristinare i dati dalle unità del sistema operativo protette con BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, per il ripristino di BitLocker verranno rese disponibili le opzioni di ripristino predefinite. Per impostazione predefinita, è consentito l'utilizzo dell'agente recupero dati, gli utenti possono specificare le opzioni di ripristino, incluse la password e la chiave di ripristino, e non viene eseguito il backup delle informazioni di ripristino su Servizi di dominio Active Directory.
+
+
+
+</string>
+
+      <string id="OSRecoveryPasswordUsageDropDown_Require">Richiedi password di ripristino di 48 cifre</string>
+      <string id="OSRecoveryPasswordUsageDropDown_Allow">Consenti password di ripristino di 48 cifre</string>
+      <string id="OSRecoveryPasswordUsageDropDown_Disallow">Non consentire password di ripristino di 48 cifre</string>
+
+      <string id="OSRecoveryKeyUsageDropDown_Require">Richiedi chiave di ripristino a 256 bit</string>
+      <string id="OSRecoveryKeyUsageDropDown_Disallow">Non consentire chiave di ripristino a 256 bit</string>
+      <string id="OSRecoveryKeyUsageDropDown_Allow">Consenti chiave di ripristino a 256 bit</string>
+
+      <string id="FDVRecoveryUsage_Name">Scegli modalità di ripristino delle unità fisse protette con BitLocker</string>
+      <string id="FDVRecoveryUsage_Help">Questa impostazione dei criteri consente di definire le modalità di ripristino delle unità dati fisse protette con BitLocker in mancanza delle credenziali richieste. Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Utilizzare la casella di controllo "Consenti agente recupero dati" per permettere o meno l'utilizzo di un agente recupero dati con le unità dati fisse protette con BitLocker. Per utilizzare un agente recupero dati è innanzitutto necessario aggiungerlo dalla voce Criteri chiave pubblica in Console Gestione Criteri di gruppo o in Editor Criteri di gruppo locali. Per ulteriori informazioni sull'aggiunta di agenti recupero dati, consultare il documento BitLocker Drive Encryption Deployment Guide su Microsoft TechNet.
+
+In "Configurazione archiviazione delle informazioni di ripristino di BitLocker da parte degli utenti" scegliere se consentire, imporre o non consentire agli utenti la generazione di una password di ripristino di 48 cifre o di una chiave di ripristino a 256 bit.
+
+Selezionare "Escludi opzioni di ripristino dalla configurazione guidata BitLocker" per impedire agli utenti di specificare le opzioni di ripristino quando abilitano BitLocker su un'unità. In tal caso, gli utenti non sono in grado di specificare l'opzione di ripristino da utilizzare quando abilitano BitLocker e le opzioni di ripristino di BitLocker per l'unità sono determinate dall'impostazione dei criteri.
+
+In "Salva informazioni di ripristino di BitLocker in Servizi di dominio Active Directory" scegliere le informazioni di ripristino di BitLocker da archiviare in Servizi di dominio Active Directory per le unità dati fisse. Se si seleziona "Esegui backup delle password di ripristino e dei pacchetti della chiave", la password di ripristino e il pacchetto della chiave di BitLocker verranno archiviati in Servizi di dominio Active Directory. L'archiviazione del pacchetto della chiave consente il ripristino dei dati da un'unità che ha subito danni fisici. Se si seleziona "Esegui backup solo delle password di ripristino", solo la password di ripristino verrà archiviata in Servizi di dominio Active Directory.
+
+Selezionare la casella di controllo "Non abilitare BitLocker finché le informazioni di ripristino non vengono archiviate in Servizi di dominio Active Directory per le unità dati fisse" se si desidera impedire agli utenti di abilitare BitLocker finché il computer non sia connesso a un dominio e il backup delle informazioni di ripristino di BitLocker su Servizi di dominio Active Directory non abbia esito positivo.
+
+Nota: se la casella di controllo "Non abilitare BitLocker finché le informazioni di ripristino non vengono archiviate in Servizi di dominio Active Directory per le unità dati fisse" è selezionata, verrà generata automaticamente una password di ripristino.
+
+Se si abilita questa impostazione dei criteri, sarà possibile definire le modalità a disposizione degli utenti per ripristinare i dati dalle unità dati fisse protette con BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, per il ripristino di BitLocker verranno rese disponibili le opzioni di ripristino predefinite. Per impostazione predefinita, è consentito l'utilizzo dell'agente recupero dati, gli utenti possono specificare le opzioni di ripristino, incluse la password e la chiave di ripristino, e non viene eseguito il backup delle informazioni di ripristino su Servizi di dominio Active Directory.
+
+
+
+</string>
+
+      <string id="FDVRecoveryPasswordUsageDropDown_Require">Richiedi password di ripristino di 48 cifre</string>
+      <string id="FDVRecoveryPasswordUsageDropDown_Allow">Consenti password di ripristino di 48 cifre</string>
+      <string id="FDVRecoveryPasswordUsageDropDown_Disallow">Non consentire password di ripristino di 48 cifre</string>
+
+      <string id="FDVRecoveryKeyUsageDropDown_Require">Richiedi chiave di ripristino a 256 bit</string>
+      <string id="FDVRecoveryKeyUsageDropDown_Disallow">Non consentire chiave di ripristino a 256 bit</string>
+      <string id="FDVRecoveryKeyUsageDropDown_Allow">Consenti chiave di ripristino a 256 bit</string>
+
+      <string id="RDVRecoveryUsage_Name">Scegli modalità di ripristino delle unità rimovibili protette con BitLocker</string>
+
+      <string id="RDVRecoveryUsage_Help">Questa impostazione dei criteri consente di definire le modalità di ripristino delle unità dati rimovibili protette con BitLocker in mancanza delle credenziali richieste. Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Utilizzare la casella di controllo "Consenti agente recupero dati" per permettere o meno l'utilizzo di un agente recupero dati con le unità dati rimovibili protette con BitLocker. Per utilizzare un agente recupero dati è innanzitutto necessario aggiungerlo dalla voce Criteri chiave pubblica in Console Gestione Criteri di gruppo o in Editor Criteri di gruppo locali. Per ulteriori informazioni sull'aggiunta di agenti recupero dati, consultare il documento BitLocker Drive Encryption Deployment Guide su Microsoft TechNet.
+
+In "Configurazione archiviazione delle informazioni di ripristino di BitLocker da parte degli utenti" scegliere se consentire, imporre o non consentire agli utenti la generazione di una password di ripristino di 48 cifre o di una chiave di ripristino a 256 bit.
+
+Selezionare "Escludi opzioni di ripristino dalla configurazione guidata BitLocker" per impedire agli utenti di specificare le opzioni di ripristino quando abilitano BitLocker su un'unità. In tal caso, gli utenti non sono in grado di specificare l'opzione di ripristino da utilizzare quando abilitano BitLocker e le opzioni di ripristino di BitLocker per l'unità sono determinate dall'impostazione dei criteri.
+
+In "Salva informazioni di ripristino di BitLocker in Servizi di dominio Active Directory" scegliere le informazioni di ripristino di BitLocker da archiviare in Servizi di dominio Active Directory per le unità dati rimovibili. Se si seleziona "Esegui backup delle password di ripristino e dei pacchetti della chiave", la password di ripristino e il pacchetto della chiave di BitLocker verranno archiviati in Servizi di dominio Active Directory. Se si seleziona "Esegui backup solo delle password di ripristino", solo la password di ripristino verrà archiviata in Servizi di dominio Active Directory.
+
+Selezionare la casella di controllo "Non abilitare BitLocker finché le informazioni di ripristino non vengono archiviate in Servizi di dominio Active Directory per le unità dati rimovibili" se si desidera impedire agli utenti di abilitare BitLocker finché il computer non sia connesso a un dominio e il backup delle informazioni di ripristino di BitLocker su Servizi di dominio Active Directory non abbia esito positivo.
+
+Nota: se la casella di controllo "Non abilitare BitLocker finché le informazioni di ripristino non vengono archiviate in Servizi di dominio Active Directory per le unità dati fisse" è selezionata, verrà generata automaticamente una password di ripristino.
+
+Se si abilita questa impostazione dei criteri, sarà possibile definire le modalità a disposizione degli utenti per ripristinare i dati dalle unità dati rimovibili protette con BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, per il ripristino di BitLocker verranno rese disponibili le opzioni di ripristino predefinite. Per impostazione predefinita, è consentito l'utilizzo dell'agente recupero dati, gli utenti possono specificare le opzioni di ripristino, incluse la password e la chiave di ripristino, e non viene eseguito il backup delle informazioni di ripristino su Servizi di dominio Active Directory.
+      
+      </string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Require">Richiedi password di ripristino di 48 cifre</string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Allow">Consenti password di ripristino di 48 cifre</string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Disallow">Non consentire password di ripristino di 48 cifre</string>
+
+      <string id="RDVRecoveryKeyUsageDropDown_Require">Richiedi chiave di ripristino a 256 bit</string>
+      <string id="RDVRecoveryKeyUsageDropDown_Disallow">Non consentire chiave di ripristino a 256 bit</string>
+      <string id="RDVRecoveryKeyUsageDropDown_Allow">Consenti chiave di ripristino a 256 bit</string>
+
+
+      <string id="ConfigureRecoveryFolder_Help">Questa impostazione dei criteri consente di specificare il percorso predefinito visualizzato quando la configurazione guidata Crittografia unità BitLocker richiede all'utente di immettere il percorso di una cartella in cui salvare la password di ripristino. Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Se si abilita questa impostazione dei criteri, è possibile specificare il percorso che verrà utilizzato come percorso predefinito della cartella quando l'utente seleziona l'opzione per salvare la password di ripristino in una cartella. È possibile specificare un percorso completo oppure includere nel percorso le variabili di ambiente del computer di destinazione. Se il percorso non è valido, la configurazione guidata BitLocker visualizzerà la cartella di primo livello del computer.
+
+Se si disabilita o non si configura questa impostazione dei criteri, la configurazione guidata BitLocker visualizzerà la cartella di primo livello del computer quando l'utente seleziona l'opzione per salvare la password di ripristino in una cartella.
+
+Nota: questa impostazione dei criteri non impedisce all'utente di salvare la password di ripristino in un'altra cartella.
+
+
+
+</string>
+
+      <string id="ConfigureRecoveryFolder_Name">Scegli cartella predefinita per password di ripristino</string>
+
+      <string id="EncryptionMethod_Help">Questa impostazione dei criteri consente di configurare l'algoritmo e il livello di codifica utilizzati da Crittografia unità BitLocker. Questa impostazione dei criteri viene applicata quando si abilita BitLocker. La modifica del metodo di crittografia non ha alcun effetto se l'unità è già crittografata o se la crittografia è in corso. Per ulteriori informazioni sui metodi di crittografia disponibili, consultare il documento BitLocker Drive Encryption Deployment Guide su Microsoft TechNet. Questa impostazione dei criteri è applicabile solo ai computer che eseguono Windows Server 2008, Windows Vista, Windows Server 2008 R2 o Windows 7.
+
+Se si abilita questa impostazione dei criteri, sarà possibile scegliere un algoritmo di crittografia e un livello di codifica per la crittografia delle unità mediante BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, BitLocker utilizzerà il metodo di crittografia predefinito AES 128 bit con diffusione o il metodo di crittografia specificato dallo script di configurazione.
+
+      
+
+      </string>
+      <string id="EncryptionMethodNoDiffuser_Help">Questa impostazione dei criteri consente di configurare l'algoritmo e il livello di codifica utilizzati da Crittografia unità BitLocker. Questa impostazione dei criteri viene applicata quando si abilita BitLocker. La modifica del metodo di crittografia non ha alcun effetto se l'unità è già crittografata o se la crittografia è in corso. Per ulteriori informazioni sui metodi di crittografia disponibili, vedere la guida alla distribuzione di Crittografia unità BitLocker su Microsoft TechNet. Questa impostazione dei criteri è applicabile solo ai computer che eseguono Windows 8 e versioni successive.
+
+Se si abilita questa impostazione dei criteri, sarà possibile scegliere un algoritmo di crittografia e un livello di codifica per la crittografia delle unità mediante BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, BitLocker utilizzerà AES con lo stesso livello di bit (128 bit o 256 bit) dell'impostazione dei criteri "Scegli metodo di crittografia dell'unità e livello di codifica (Windows Vista, Windows Server 2008, Windows 7)", se impostato. Se nessuno dei due criteri è impostato, BitLocker utilizzerà il metodo di crittografia predefinito AES 128 bit con diffusione o il metodo di crittografia specificato dallo script di configurazione.
+
+      </string>
+      <string id="EncryptionMethodWithXts_Help">Questa impostazione dei criteri consente di configurare l'algoritmo e il livello di codifica usati da Crittografia unità BitLocker. Questa impostazione dei criteri viene applicata quando si attiva BitLocker. La modifica del metodo di crittografia non ha alcun effetto se l'unità è già stata crittografata o se la crittografia è in corso.
+
+Se si abilita questa impostazione dei criteri, sarà possibile configurare singolarmente un algoritmo di crittografia e un livello di codifica delle chiavi per le unità dati fisse, le unità del sistema operativo e le unità dati rimovibili. Per le unità del sistema operativo e fisse, è consigliabile usare l'algoritmo XTS-AES. Per le unità rimovibili, è necessario usare AES-CBC a 128 bit o AES-CBC a 256 bit se l'unità verrà usata in altri dispositivi in cui non è in esecuzione Windows 10 (versione 1511).
+
+Se si disabilita o non si configura questa impostazione dei criteri, BitLocker userà AES con lo stesso livello di bit (128 bit o 256 bit) delle impostazioni dei criteri "Scegli metodo di crittografia dell'unità e livello di codifica (Windows Vista, Windows Server 2008, Windows 7)" e "Scegli metodo di crittografia dell'unità e livello di codifica" (in questo ordine), se sono impostate. Se non è impostato alcun criterio, BitLocker userà il metodo di crittografia predefinito XTS-AES a 128 bit o il metodo di crittografia specificato dallo script di configurazione.”
+
+      </string>
+      <string id="EncryptionMethod_Name">Scegli metodo di crittografia dell'unità e livello di codifica (Windows Vista, Windows Server 2008, Windows 7, Windows Server 2008 R2)</string>
+      <string id="EncryptionMethodNoDiffuser_Name">Scegli il metodo e il livello di codifica per la crittografia delle unità (Windows 8, Windows Server 2012, Windows 8.1, Windows Server 2012 R2, Windows 10 versione 1507)</string>
+      <string id="EncryptionMethodWithXts_Name">Scegli il metodo e il livello di codifica per la crittografia delle unità (Windows 10 versione 1511 e successive)</string>
+      <string id="EncryptionMethodDropDown_AES128Diffuser_Name">AES 128 bit con diffusione</string>
+      <string id="EncryptionMethodDropDown_AES256Diffuser_Name">AES 256 bit con diffusione</string>
+      <string id="EncryptionMethodDropDown_AES128_Name">AES 128 bit (predefinito)</string>
+      <string id="EncryptionMethodDropDown_AES128_Name2">AES-CBC a 128 bit</string>
+      <string id="EncryptionMethodDropDown_AES128_Name3">AES-CBC a 128 bit (impostazione predefinita)</string>
+      <string id="EncryptionMethodDropDown_AES256_Name">AES 256 bit</string>
+      <string id="EncryptionMethodDropDown_AES256_Name2">AES-CBC a 256 bit</string>
+      <string id="EncryptionMethodDropDown_XTS_AES128_Name">XTS-AES a 128 bit (impostazione predefinita)</string>
+      <string id="EncryptionMethodDropDown_XTS_AES128_Name2">XTS-AES a 128 bit</string>
+      <string id="EncryptionMethodDropDown_XTS_AES256_Name">XTS-AES a 256 bit</string>
+
+      <string id="FVECategory">Crittografia unità BitLocker</string>
+      <string id="PlatformValidation_Deprecated_Help">Questa impostazione dei criteri consente di configurare la modalità di protezione della chiave di crittografia di BitLocker da parte del modulo TPM (Trusted Platform Module) del computer. Questa impostazione dei criteri non si applica se il computer non è provvisto di un TPM compatibile o se BitLocker è già stato abilitato con protezione TPM.
+
+Se abiliti questa impostazione dei criteri prima di abilitare BitLocker, è possibile configurare i componenti di avvio che vengono convalidati dal TPM prima di sbloccare l'accesso all'unità del sistema operativo con crittografia BitLocker. Se uno o più di tali componenti vengono modificati mentre la protezione BitLocker è attiva, il TPM non rilascia la chiave di crittografia per sbloccare l'unità e il computer visualizza invece la console Ripristino BitLocker e richiede l'immissione della password o della chiave di ripristino per sbloccare l'unità.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il TPM utilizzerà il profilo di convalida della piattaforma predefinito o il profilo di convalida della piattaforma specificato dallo script di configurazione. Un profilo di convalida della piattaforma è costituito da un set di indici di registri di configurazione di piattaforma (PCR, Platform Configuration Register) compresi tra 0 e 23. Il profilo di convalida della piattaforma predefinito protegge la chiave di crittografia dalle modifiche al CRTM (Core Root of Trust Measurement), al BIOS, alle estensioni della piattaforma (PCR 0), al codice Option ROM (PCR 2), al codice MBR (Record di avvio principale, Master Boot Record) (PCR 4), al settore di avvio NTFS (PCR 8), al blocco di avvio NTFS (PCR 9), a Boot Manager (PCR 10) e al controllo di accesso BitLocker (PCR 11). Le descrizioni delle impostazioni dei PCR per i computer che utilizzano un'interfaccia EFI (Extensible Firmware Interface) sono differenti da quelle relative alle impostazioni dei PCR per i computer che utilizzano un BIOS standard.
+
+Avviso: la modifica del profilo di convalida predefinito della piattaforma influisce sulla sicurezza e la gestibilità del computer. La sensibilità di BitLocker alle modifiche apportate alla piattaforma (autorizzate o dovute ad attacchi di utenti malintenzionati) aumenta o si riduce a seconda rispettivamente dell'inclusione o dell'esclusione di registri PCR.
+      
+      </string>
+
+      <string id="PlatformValidation_Deprecated_Name">Configurazione profilo di convalida della piattaforma TPM (Windows Vista, Windows Server 2008, Windows 7, Windows Server 2008 R2)</string>
+
+      <string id="PlatformValidation_BIOS_Help">Questa impostazione dei criteri consente di configurare la modalità di protezione della chiave di crittografia di BitLocker da parte del modulo TPM (Trusted Platform Module) del computer. Questa impostazione dei criteri non si applica se il computer non è provvisto di un TPM compatibile o se BitLocker è già stato abilitato con protezione TPM.
+
+Importante: questa impostazione dei Criteri di gruppo si applica solo ai computer con configurazioni del BIOS o a computer con firmware UEFI con un modulo CSM (Compatibility Service Module) abilitato.  Nei computer che utilizzano una configurazione del firmware UEFI nativo vengono archiviati valori diversi nei registri PCR.  Utilizzare l'impostazione dei Criteri di gruppo "Configurazione profilo di convalida della piattaforma TPM per configurazioni del firmware UEFI nativo" per configurare il profilo PCR TPM per i computer che utilizzano il firmware UEFI nativo.
+
+Se si abilita questa impostazione dei criteri prima dell'abilitazione di BitLocker, sarà possibile configurare i componenti di avvio che saranno convalidati dal TPM prima di sbloccare l'accesso all'unità del sistema operativo crittografata con BitLocker. Se uno o più di tali componenti vengono modificati mentre la protezione BitLocker è attiva, il TPM non rilascia la chiave di crittografia per sbloccare l'unità e il computer visualizza invece la console Ripristino BitLocker e richiede l'immissione della password o della chiave di ripristino per sbloccare l'unità.
+
+Se si disabilita o non si configura questa impostazione dei criteri, BitLocker utilizzerà il profilo di convalida predefinito della piattaforma oppure il profilo specificato dallo script di configurazione. Un profilo di convalida della piattaforma è costituito da un set di indici di registri PCR (Platform Configuration Register) nell'intervallo compreso tra 0 e 23. Il profilo di convalida della piattaforma predefinito protegge la chiave di crittografia dalle modifiche al CRTM (Core Root of Trust Measurement), al BIOS, alle estensioni della piattaforma (PCR 0), al codice Option ROM (PCR 2), al codice MBR (Record di avvio principale, Master Boot Record) (PCR 4), al settore di avvio NTFS (PCR 8), al blocco di avvio NTFS (PCR 9), a Boot Manager (PCR 10) e al controllo di accesso BitLocker (PCR 11).
+
+Avviso: la modifica del profilo di convalida predefinito della piattaforma influisce sulla sicurezza e la gestibilità del computer. La sensibilità di BitLocker alle modifiche apportate alla piattaforma (autorizzate o dovute ad attacchi di utenti malintenzionati) aumenta o si riduce a seconda rispettivamente dell'inclusione o dell'esclusione di registri PCR.
+      
+      </string>
+
+      <string id="PlatformValidation_BIOS_Name">Configurazione profilo di convalida della piattaforma TPM per configurazioni del firmware basate su BIOS</string>
+
+      <string id="PlatformValidation_UEFI_Help">Questa impostazione dei criteri consente di configurare la modalità di protezione della chiave di crittografia di BitLocker da parte del modulo TPM (Trusted Platform Module) del computer. Questa impostazione dei criteri non si applica se il computer non è provvisto di un TPM compatibile o se BitLocker è già stato abilitato con protezione TPM.
+
+Importante: questa impostazione dei Criteri di gruppo si applica solo ai computer con una configurazione del firmware UEFI nativo. Nei computer con configurazioni del firmware basate su BIOS o UEFI con un modulo CSM (Compatibility Service Module) abilitato vengono archiviati valori diversi nei registri PCR. Utilizzare l'impostazione dei Criteri di gruppo "Configurazione profilo di convalida della piattaforma TPM per configurazioni del firmware basate su BIOS" per configurare il profilo PCR TPM per i computer con configurazioni del firmware basate su BIOS o UEFI con un modulo CSM abilitato.
+
+Se si abilita questa impostazione dei criteri prima dell'abilitazione di BitLocker, sarà possibile configurare i componenti di avvio che saranno convalidati dal TPM prima di sbloccare l'accesso all'unità del sistema operativo crittografata con BitLocker. Se uno o più di tali componenti vengono modificati mentre la protezione BitLocker è attiva, il TPM non rilascia la chiave di crittografia per sbloccare l'unità e il computer visualizza invece la console di ripristino di BitLocker e richiede l'immissione della password o della chiave di ripristino per sbloccare l'unità.
+
+Se si disabilita o non si configura questa impostazione dei criteri, BitLocker utilizzerà il profilo di convalida predefinito della piattaforma per l'hardware disponibile oppure il profilo specificato dallo script di configurazione. Un profilo di convalida della piattaforma è costituito da un set di indici di registri PCR (Platform Configuration Register) nell'intervallo compreso tra 0 e 23. 
+
+Sui PC senza il supporto Stato avvio protetto (PCR 7), il profilo di convalida della piattaforma predefinito protegge la chiave di crittografia dalle modifiche al codice eseguibile del firmware del sistema principale (PCR 0), al codice eseguibile esteso o modulare (PCR 2), a Boot Manager (PCR 4) e al controllo di accesso BitLocker (PCR 11).
+
+Quando il supporto Stato avvio protetto (PCR7) è disponibile, il profilo di convalida della piattaforma predefinito protegge la chiave di crittografia usando Stato avvio protetto (PCR 7) e il controllo di accesso BitLocker (PCR 11). 
+
+Avviso: la modifica del profilo di convalida predefinito della piattaforma influisce sulla sicurezza e la gestibilità del computer. La sensibilità di BitLocker alle modifiche apportate alla piattaforma (autorizzate o dovute ad attacchi di utenti malintenzionati) aumenta o si riduce a seconda rispettivamente dell'inclusione o dell'esclusione di registri PCR. Nello specifico, se si configura questa impostazione dei criteri omettendo PCR 7, l'impostazione di Criteri di gruppo "Consenti avvio protetto per la convalida dell'integrità" verrà sovrascritta, impedendo a BitLocker di utilizzare l'avvio protetto per la convalida dell'integrità della piattaforma o dei dati configurazione di avvio (BCD). L'impostazione di questa impostazione dei criteri potrebbe comportare il ripristino di BitLocker in caso di aggiornamento del firmware. Se si impostano questi criteri per l'inclusione di PCR 0, sospendere BitLocker prima di applicare gli aggiornamenti del firmware.
+
+Si consiglia di non configurare questo criterio per consentire a Windows di selezionare il profilo PCR per la migliore combinazione di sicurezza e usabilità in base all'hardware disponibile in ogni PC.
+      </string>
+
+      <string id="PlatformValidation_UEFI_Name">Configurazione profilo di convalida della piattaforma TPM per configurazioni del firmware UEFI nativo</string>
+
+      <string id="MorBehavior_Help">Questa impostazione dei criteri controlla le prestazioni di riavvio del computer rispetto al rischio di esposizione dei segreti BitLocker. Questa impostazione dei criteri viene applicata quando si abilita BitLocker. I segreti BitLocker includono il materiale della chiave utilizzata per la crittografia dei dati. Questa impostazione dei criteri si applica solo quando la protezione BitLocker è abilitata.
+
+Se si abilita questa impostazione dei criteri, la memoria non verrà sovrascritta al riavvio. Questo consente migliori prestazioni al riavvio ma aumenta il rischio di esposizione dei segreti BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, i segreti BitLocker verranno rimossi dalla memoria al riavvio del computer.
+
+      
+
+      </string>
+      <string id="MorBehavior_Name">Non sovrascrivere la memoria al riavvio</string>
+
+      <string id="DisableExternalDMAUnderLock_Help">Questa impostazione dei criteri consente di bloccare DMA (Direct Memory Access) per tutte le porte downstream PCI collegabili " hot" Thunderbolt finché l'utente non accede a Windows. Una volta eseguito l'accesso, Windows enumererà i dispositivi PCI connessi alle porte PCI Thunderbolt host. Ogni volta che l'utente blocca il computer, DMA sarà bloccato sulle porte PCI Thunderbolt con collegamento "hot" senza alcun dispositivo figlio, finché l'utente non accede di nuovo. I dispositivi già enumerati al momento dello sblocco del computer continueranno a funzionare fino a quando non saranno scollegati o finché il sistema non verrà riavviato o messo in stato di ibernazione. Questa impostazione dei criteri viene forzata solo quando è abilitato BitLocker o la crittografia del dispositivo.
+
+Nota: alcuni PC potrebbero non essere compatibili con questi criteri se il firmware del sistema abilita DMA per i nuovi dispositivi Thunderbolt collegati prima di esporre i nuovi dispositivi a Windows.
+
+      </string>
+      <string id="DisableExternalDMAUnderLock_Name">Disabilita nuovi dispositivi DMA quando il computer è bloccato</string>
+
+      <string id="FVEOSCategory">Unità del sistema operativo</string>
+      <string id="FVEFDVCategory">Unità dati fisse</string>
+      <string id="FVERDVCategory">Unità dati rimovibili</string>
+
+      <string id="IdentificationField_Name">Fornisci identificatori univoci per l'organizzazione</string>
+      <string id="IdentificationField_Help">Questa impostazione dei criteri consente di associare identificatori univoci dell'organizzazione a una nuova unità abilitata a BitLocker. Tali identificatori vengono archiviati come campo di identificazione e campo di identificazione consentita. Il campo di identificazione consente di associare un identificatore univoco dell'organizzazione alle unità protette con BitLocker. Tale identificatore viene automaticamente aggiunto alle nuove unità protette con BitLocker e può essere aggiornato sulle unità protette con BitLocker esistenti mediante lo strumento da riga di comando manage-bde. Un campo di identificazione è necessario per la gestione degli agenti recupero dati basati su certificato nelle unità protette con BitLocker e per gli eventuali aggiornamenti del lettore BitLocker To Go. Gli agenti recupero dati verranno gestiti e aggiornati solo quando il campo di identificazione nell'unità corrisponde al valore configurato nel computer. In questo modo, il lettore BitLocker To Go verrà aggiornato solo quando il campo di identificazione nell'unità corrisponde al valore configurato nel computer.
+
+Il campo di identificazione consentita permette, in combinazione con l'impostazione "Nega accesso in scrittura per unità rimovibili non protette da BitLocker", di definire l'utilizzo delle unità rimovibili nell'organizzazione. È costituito da un elenco delimitato da virgole di campi di identificazione appartenenti all'organizzazione dell'utente o ad altre organizzazioni esterne.
+
+È possibile configurare i campi di identificazione nelle unità esistenti mediante manage-bde.exe.
+
+Se si abilita questa impostazione dei criteri, sarà possibile configurare il campo di identificazione sulle unità protette con BitLocker e qualsiasi campo di identificazione consentita utilizzato dall'organizzazione.
+
+Quando un'unità protetta con BitLocker viene montata su un altro computer abilitato a BitLocker, il campo di identificazione e il campo di identificazione consentita vengono utilizzati per verificare se l'unità proviene da un'organizzazione esterna.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il campo di identificazione non è obbligatorio.
+
+Nota: i campi di identificazione sono necessari per la gestione degli agenti recupero dati basati su certificato nelle unità protette con BitLocker. Gli agenti recupero dati basati su certificato verranno gestiti e aggiornati solo quando il campo di identificazione è presente in un'unità e corrisponde al valore configurato nel computer. Il campo di identificazione può contenere qualsiasi valore di un massimo di 260 caratteri.
+
+      
+
+      </string>
+
+
+      <string id="UserCertificateOID_Name">Convalida conformità a regola di utilizzo dei certificati smart card</string>
+     <string id="UserCertificateOID_Help">Questa impostazione dei criteri consente di associare un identificatore di oggetto di un certificato smart card a un'unità protetta con BitLocker. Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+L'identificatore di oggetto viene specificato nell'attributo relativo all'utilizzo chiavi avanzato (EKU) di un certificato.  BitLocker può identificare i certificati consentiti per autenticare il certificato di un utente per un'unità protetta con BitLocker confrontando l'identificatore di oggetto contenuto nel certificato con quello definito mediante questa impostazione dei criteri.
+
+L'identificatore di oggetto predefinito è 1.3.6.1.4.1.311.67.1.1
+
+Nota: per BitLocker non è necessario che un certificato contenga un attributo EKU; tuttavia, se tale attributo è stato specificato per il certificato, dovrà essere impostato su un identificatore di oggetto (OID) corrispondente all'OID configurato per BitLocker.
+
+Se si abilita questa impostazione dei criteri, l'identificatore di oggetto specificato nella casella "Identificatore di oggetto" dovrà corrispondere all'identificatore di oggetto contenuto nel certificato smart card.
+
+Se si disabilita o non si configura questa impostazione dei criteri, verrà utilizzato un identificatore di oggetto predefinito.
+
+     
+
+     </string>
+
+      <string id="UseEnhancedBcdProfile_Name">Usa profilo di convalida dei dati di configurazione di avvio avanzata</string>
+      <string id="UseEnhancedBcdProfile_Help">Questa impostazione dei criteri consente di scegliere impostazioni dei dati configurazione di avvio (BCD) specifiche da verificare durante la convalida della piattaforma.
+
+Se si abilita questa impostazione dei criteri, sarà possibile aggiungere ulteriori impostazioni, rimuovere le impostazioni predefinite o eseguire entrambe le azioni.
+
+Se si disabilita questa impostazione dei criteri, nel computer verrà ripristinato un profilo BCD simile al profilo BCD predefinito utilizzato da Windows 7.
+
+Se non si configura questa impostazione dei criteri, verranno verificate le impostazioni BCD di Windows predefinite nel computer. 
+
+Nota: quando BitLocker utilizza l'avvio protetto per la convalida dell'integrità della piattaforma o dei dati della configurazione di avvio (BCD), come definito dal Criterio di gruppo "Consenti avvio protetto per la convalida dell'integrità", il Criterio di gruppo "Usa profilo di convalida dei dati di configurazione di avvio avanzata" verrà ignorato.
+
+L'impostazione che controlla il debugger di avvio (0x16000010) verrà sempre convalidata e non avrà alcun effetto se inclusa nei campi disponibili.
+      
+      </string>
+
+      <string id="OSActiveDirectoryBackupDropDown_1">Archivia password di ripristino e pacchetti della chiave</string>
+      <string id="OSActiveDirectoryBackupDropDown_2">Archivia solo password di ripristino</string>
+
+
+      <string id="MinimumPINLength_Name">Configura lunghezza minima PIN per l'avvio</string>
+      <string id="MinimumPINLength_Help">
+          Questa impostazione dei criteri consente di configurare la lunghezza minima per il PIN di avvio di un TPM (Trusted Platform Module). Questa impostazione dei criteri viene applicata quando si abilita BitLocker. Il PIN di avvio deve contenere almeno 4 e non più di 20 cifre.
+
+          Se abiliti questa impostazione dei criteri, puoi richiedere un numero minimo di cifre da utilizzare per l'impostazione del PIN di avvio.
+
+          Se disabiliti o non configuri questa impostazione dei criteri, gli utenti potranno configurare un PIN di avvio di qualsiasi lunghezza compresa tra 6 e 20 cifre.
+
+          NOTA: se la lunghezza minima del PIN è impostata su meno di 6 cifre, Windows tenta di aggiornare il periodo di blocco del TPM 2.0 su un valore superiore a quello predefinito quando un PIN viene cambiato. Se l'operazione ha esito positivo, Windows reimposta il periodo di blocco del TPM nuovamente sul valore predefinito quando il TPM viene reimpostato.
+
+      </string>
+
+      <string id="OSAllowDRA_Name">Consenti agenti recupero dati basati su certificato</string>
+
+      <string id="FDVDenyWriteAccess_Name">Nega accesso in scrittura per unità fisse non protette da BitLocker</string>
+      <string id="FDVDenyWriteAccess_Help">Questa impostazione dei criteri determina se è richiesta la protezione con BitLocker per consentire la scrittura sulle unità dati fisse di un computer.
+
+Se si abilita questa impostazione dei criteri, tutte le unità dati fisse non protette con BitLocker verranno montate come unità in sola lettura. Se l'unità è protetta con BitLocker, verrà montata con accesso in lettura e in scrittura.
+
+Se si disabilita o non si configura questa impostazione dei criteri, tutte le unità dati fisse nel computer verranno montate con accesso in lettura e in scrittura.
+
+      </string>
+
+      <string id="FDVPassphrase_Name">Configura utilizzo delle password per unità dati fisse</string>
+      <string id="FDVPassphrase_Help">Questa impostazione dei criteri determina se è richiesta una password per sbloccare le unità dati fisse protette con BitLocker. Se si consente l'utilizzo di una password, sarà possibile richiedere che venga utilizzata una password, imporne i requisiti di complessità e specificarne una lunghezza minima. Perché l'impostazione dei requisiti di complessità abbia effetto, è necessario che anche l'impostazione dei Criteri di gruppo "Le password devono essere conformi ai requisiti di complessità" in Configurazione computer\Impostazioni di Windows\Impostazioni sicurezza\Criteri account\Criteri password\ sia abilitata.
+
+Nota: queste impostazioni vengono applicate quando si attiva BitLocker, non quando si sblocca un volume. BitLocker consentirà lo sblocco di un'unità con una delle protezioni disponibili nell'unità stessa.
+
+Se si abilita questa impostazione, gli utenti potranno configurare una password che soddisfi i requisiti definiti. Per richiedere l'utilizzo di una password, selezionare "Richiedi password per unità dati fissa". Per imporre i requisiti di complessità della password, selezionare "Richiedi complessità della password".
+
+Se si seleziona "Richiedi complessità della password", sarà necessaria una connessione a un controller di dominio per consentire a BitLocker l'eventuale convalida della complessità della password. Se si seleziona "Consenti complessità della password", verrà tentata la connessione a un controller di dominio per verificare se la complessità soddisfa le regole impostate nel criterio. Se non vengono trovati controller di dominio, la password verrà comunque accettata indipendentemente dalla complessità effettiva e l'unità verrà crittografata utilizzando tale password come protezione. Se si seleziona "Non consentire complessità della password" la complessità della password non verrà verificata.
+
+Le password devono contenere almeno 8 caratteri. Per configurare una lunghezza minima superiore per la password, immettere il numero di caratteri desiderato nella casella "Lunghezza minima password per unità dati fissa".
+
+Se si disabilita questa impostazione, l'utente non potrà utilizzare una password.
+
+Se non si configura questa impostazione dei criteri, le password saranno supportate con le impostazioni predefinite, che non includono requisiti di complessità della password e richiedono solo 8 caratteri.
+
+Nota: non è possibile utilizzare le password se è abilitata la conformità FIPS. L'impostazione dei criteri "Crittografia di sistema: utilizza algoritmi FIPS compatibili per crittografia, hash e firma" in Configurazione computer\Impostazioni di Windows\Impostazioni sicurezza\Criteri locali\Opzioni di sicurezza specifica se la conformità FIPS è abilitata.
+
+
+
+</string>
+
+      <string id="OSPassphrase_Name">Configura utilizzo delle password per unità del sistema operativo</string>
+      <string id="OSPassphrase_Help">Questa impostazione dei criteri specifica i limiti per le password utilizzate per sbloccare le unità del sistema operativo protette da BitLocker. Se nelle unità del sistema operativo sono consentite protezioni non TPM, sarà possibile effettuare il provisioning di una password, imporne i requisiti di complessità e specificarne una lunghezza minima. Perché l'impostazione dei requisiti di complessità abbia effetto, è necessario che anche l'impostazione dei Criteri di gruppo "Le password devono essere conformi ai requisiti di complessità" in Configurazione computer\Impostazioni di Windows\Impostazioni sicurezza\Criteri account\Criteri password\ sia abilitata.
+
+Nota: queste impostazioni vengono applicate quando si attiva BitLocker, non quando si sblocca un volume. BitLocker consentirà lo sblocco dell'unità mediante qualsiasi protezione disponibile sull'unità stessa.
+
+Se si abilita questa impostazione dei criteri, gli utenti potranno configurare una password che soddisfi i requisiti definiti. Per imporre i requisiti di complessità della password, selezionare "Richiedi complessità della password".
+
+Se si seleziona "Richiedi complessità della password", sarà necessaria una connessione a un controller di dominio per consentire a BitLocker l'eventuale convalida della complessità della password. Se si seleziona "Consenti complessità della password", verrà tentata la connessione a un controller di dominio per verificare se la complessità soddisfa le regole impostate nel criterio. Se non vengono trovati controller di dominio, la password verrà comunque accettata indipendentemente dalla complessità effettiva e l'unità verrà crittografata utilizzando tale password come protezione. Se si seleziona "Non consentire complessità della password", la complessità della password non verrà verificata.
+
+Le password devono contenere almeno 8 caratteri. Per configurare una lunghezza minima superiore per la password, immettere il numero di caratteri desiderato nella casella "Lunghezza minima password".
+
+Se si disabilita o non si configura questa impostazione dei criteri, verrà applicato il limite di lunghezza predefinito di 8 caratteri per le password delle unità del sistema operativo e non verrà eseguita alcuna verifica della complessità.
+
+Nota: non è possibile utilizzare le password se è abilitata la conformità FIPS. L'impostazione dei criteri "Crittografia di sistema: utilizza algoritmi FIPS compatibili per crittografia, hash e firma" in Configurazione computer\Impostazioni di Windows\Impostazioni sicurezza\Criteri locali\Opzioni di sicurezza specifica se la conformità FIPS è abilitata.
+
+
+
+</string>
+
+
+      <string id="PassphraseComplexityDropDown_2">Consenti complessità della password</string>
+      <string id="PassphraseComplexityDropDown_0">Non consentire complessità della password</string>
+      <string id="PassphraseComplexityDropDown_1">Richiedi complessità della password</string>
+
+      <string id="FDVActiveDirectoryBackupDropDown_1">Esegui backup delle password di ripristino e dei pacchetti della chiave</string>
+      <string id="FDVActiveDirectoryBackupDropDown_2">Esegui backup solo delle password di ripristino</string>
+
+
+      <string id="FDVHybrid_Name">Consenti accesso a unità dati fisse protette con BitLocker da precedenti versioni di Windows</string>
+      <string id="FDVHybrid_Help">Questa impostazione consente di specificare se le unità dati fisse formattate con il file system FAT possono essere sbloccate e visualizzate nei computer che eseguono il sistema operativo Windows Server 2008, Windows Vista, Windows XP con Service Pack 3 (SP3) o Windows XP con Service Pack 2 (SP2).
+
+Se si abilita o non si configura questa impostazione dei criteri, sarà possibile sbloccare e visualizzare il contenuto delle unità dati fisse formattate con il file system FAT nei computer che eseguono Windows Server 2008, Windows Vista, Windows XP con SP3 o Windows XP con SP2. In questi sistemi operativi è consentito l'accesso in sola lettura alle unità protette con BitLocker.
+
+Quando questa impostazione dei criteri è abilitata, selezionare la casella di controllo "Non installare il lettore BitLocker To Go nelle unità fisse formattate come FAT" per impedire agli utenti di eseguire il lettore BitLocker To Go dalle unità fisse. Se il lettore BitLocker To Go (bitlockertogo.exe) è presente in un'unità sulla quale non è stato specificato un campo di identificazione o sulla quale è stato specificato lo stesso campo di identificazione definito nell'impostazione dei criteri "Fornisci identificatori univoci per l'organizzazione", all'utente verrà richiesto di aggiornare BitLocker e il lettore BitLocker To Go verrà eliminato dall'unità. In tale situazione, perché sia possibile sbloccare le unità fisse nei computer che eseguono Windows Server 2008, Windows Vista, Windows XP con SP3 o Windows XP con SP2, è necessario che il lettore BitLocker To Go sia installato nel computer. Se questa casella di controllo non è selezionata, il lettore BitLocker To Go verrà installato sull'unità fissa per consentirne lo sblocco nei computer che eseguono Windows Server 2008, Windows Vista, Windows XP con SP3 o Windows XP con SP2 su cui non è installato.
+
+Se si disabilita questa impostazione dei criteri, non sarà possibile sbloccare le unità dati fisse formattate con il file system FAT protette con BitLocker nei computer che eseguono Windows Server 2008, Windows Vista, Windows XP con SP3 o Windows XP con SP2. Bitlockertogo.exe non verrà installato.
+
+Nota: questa impostazione dei criteri non si applica alle unità formattate con il file system NTFS.
+
+      
+
+      </string>
+
+
+      <string id="FDVAllowDRA_Name">Consenti agenti recupero dati basati su certificato</string>
+
+      <string id="FDVConfigureSmartCard_Name">Configura utilizzo delle smart card per unità dati fisse</string>
+      <string id="FDVConfigureSmartCard_Help">Questa impostazione dei criteri consente di specificare se è possibile utilizzare le smart card per autenticare l'accesso utente alle unità dati fisse protette con BitLocker in un computer.
+
+Se si abilita questa impostazione dei criteri, sarà possibile utilizzare le smart card per autenticare l'accesso utente all'unità. È possibile richiedere l'autenticazione tramite smart card selezionando la casella di controllo "Richiedi utilizzo delle smart card per unità dati fisse".
+
+Nota: queste impostazioni vengono applicate quando si attiva BitLocker, non quando si sblocca un'unità. BitLocker consentirà lo sblocco dell'unità mediante qualsiasi protezione disponibile sull'unità stessa.
+
+Se si disabilita questa impostazione dei criteri, gli utenti non potranno utilizzare smart card per autenticare l'accesso alle unità dati fisse protette con BitLocker.
+
+Se non si configura questa impostazione dei criteri, sarà possibile utilizzare le smart card per autenticare l'accesso utente a un'unità protetta con BitLocker.
+
+      
+
+      </string>
+
+      <string id="RDVPassphrase_Name">Configura utilizzo delle password per unità dati rimovibili</string>
+      <string id="RDVPassphrase_Help">Questa impostazione dei criteri determina se è richiesta una password per sbloccare le unità dati rimovibili protette con BitLocker. Se si consente l'utilizzo di una password, sarà possibile richiedere che venga utilizzata una password, imporne i requisiti di complessità e specificarne una lunghezza minima. Perché l'impostazione dei requisiti di complessità abbia effetto, è necessario che anche l'impostazione dei Criteri di gruppo "Le password devono essere conformi ai requisiti di complessità" in Configurazione computer\Impostazioni di Windows\Impostazioni sicurezza\Criteri account\Criteri password\ sia abilitata.
+
+Nota: queste impostazioni vengono applicate quando si attiva BitLocker, non quando si sblocca un volume. BitLocker consentirà lo sblocco di un'unità con una delle protezioni disponibili nell'unità stessa.
+
+Se si abilita questa impostazione dei criteri, gli utenti potranno configurare una password che soddisfi i requisiti definiti. Per richiedere l'utilizzo di una password, selezionare "Richiedi password per unità dati rimovibile". Per imporre i requisiti di complessità della password, selezionare "Richiedi complessità della password".
+
+Se si seleziona"Richiedi complessità della password", sarà necessaria una connessione a un controller di dominio per consentire a BitLocker l'eventuale convalida della complessità della password. Se si seleziona "Consenti complessità della password", verrà tentata la connessione a un controller di dominio per verificare se la complessità soddisfa le regole impostate nel criterio. Se non vengono trovati controller di dominio, la password verrà comunque accettata indipendentemente dalla complessità effettiva e l'unità verrà crittografata utilizzando tale password come protezione. Se si seleziona "Non consentire complessità della password", la complessità della password non verrà verificata.
+
+Le password devono contenere almeno 8 caratteri. Per configurare una lunghezza minima superiore per la password, immettere il numero di caratteri desiderato nella casella "Lunghezza minima password".
+
+Se si disabilita questa impostazione dei criteri, l'utente non potrà utilizzare una password.
+
+Se non si configura questa impostazione dei criteri, le password saranno supportate con le impostazioni predefinite, che non includono requisiti di complessità della password e richiedono solo 8 caratteri.
+
+Nota: non è possibile utilizzare le password se è abilitata la conformità FIPS. L'impostazione dei criteri "Crittografia di sistema: utilizza algoritmi FIPS compatibili per crittografia, hash e firma" in Configurazione computer\Impostazioni di Windows\Impostazioni sicurezza\Criteri locali\Opzioni di sicurezza specifica se la conformità FIPS è abilitata.
+
+      
+
+      </string>
+
+      <string id="RDVDenyWriteAccess_Name">Nega accesso in scrittura per unità rimovibili non protette da BitLocker</string>
+      <string id="RDVDenyWriteAccess_Help">Questa impostazione dei criteri consente di specificare o meno come obbligatoria la protezione di BitLocker perché un computer sia autorizzato alla scrittura di dati su un'unità dati rimovibile.
+
+Se si abilita questa impostazione dei criteri, tutte le unità dati rimovibili non protette con BitLocker verranno montate come unità in sola lettura. Se l'unità è protetta con BitLocker, verrà montata con accesso in lettura e in scrittura.
+
+Se l'opzione "Non consentire accesso in scrittura ai dispositivi configurati in un'altra organizzazione" è selezionata, l'accesso in scrittura sarà consentito solo per le unità con campi di identificazione corrispondenti ai campi di identificazione del computer. Quando si accede a un'unità dati rimovibile, viene verificato se questa contiene campi di identificazione e di identificazione consentita validi. Questi campi sono definiti dall'impostazione dei criteri "Fornisci identificatori univoci per l'organizzazione".
+
+Se si disabilita o non si configura questa impostazione dei criteri, tutte le unità dati rimovibili nel computer verranno montate con accesso in lettura e in scrittura.
+
+Nota: questa impostazione può essere sovrascritta dalle impostazioni dei criteri in Configurazione utente\Modelli amministrativi\Sistema\Accesso agli archivi rimovibili. Se l'impostazione dei criteri "Dischi rimovibili: nega accesso in scrittura" è abilitata, questa impostazione verrà ignorata.
+
+      
+
+      </string>
+
+      <string id="RDVConfigureBDE_Name">Configura utilizzo di BitLocker in unità dati rimovibili</string>
+      <string id="RDVConfigureBDE_Help">Questa impostazione dei criteri consente di definire le modalità di utilizzo di BitLocker nelle unità dati rimovibili. Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Se si abilita questa impostazione dei criteri, sarà possibile impostare le proprietà che controllano il modo in cui gli utenti possono configurare BitLocker. Scegliere "Consenti agli utenti di applicare la protezione BitLocker su unità dati rimovibili" per permettere agli utenti di eseguire la configurazione guidata BitLocker su un'unità dati rimovibile. Scegliere "Consenti agli utenti di sospendere e decrittografare BitLocker su unità dati rimovibili" per permettere agli utenti di rimuovere Crittografia unità BitLocker dall'unità o di sospenderla durante le attività di manutenzione. Per ulteriori informazioni sulla sospensione della protezione BitLocker, consultare il documento BitLocker Drive Encryption Deployment Guide su Microsoft TechNet.
+
+Se non si configura questa impostazione dei criteri, gli utenti potranno utilizzare BitLocker nelle unità disco rimovibili.
+
+Se si disabilita questa impostazione dei criteri, gli utenti non potranno utilizzare BitLocker nelle unità disco rimovibili.
+
+      
+
+      </string>
+
+
+      <string id="RDVActiveDirectoryBackupDropDown_1">Esegui backup delle password di ripristino e dei pacchetti della chiave</string>
+      <string id="RDVActiveDirectoryBackupDropDown_2">Esegui backup solo delle password di ripristino</string>
+
+      <string id="RDVHybrid_Name">Consenti accesso a unità dati rimovibili protette con BitLocker da precedenti versioni di Windows</string>
+      <string id="RDVHybrid_Help">Questa impostazione dei criteri consente di specificare se le unità dati rimovibili formattate con il file system FAT possono essere sbloccate e visualizzate nei computer che eseguono il sistema operativo Windows Server 2008, Windows Vista, Windows XP con Service Pack 3 (SP3) o Windows XP con Service Pack 2 (SP2).
+
+Se si abilita o non si configura questa impostazione dei criteri, sarà possibile sbloccare e visualizzare il contenuto delle unità dati rimovibili formattate con il file system FAT nei computer che eseguono Windows Server 2008, Windows Vista, Windows XP con SP3 o Windows XP con SP2. In questi sistemi operativi è consentito l'accesso in sola lettura alle unità protette con BitLocker.
+
+Quando questa impostazione dei criteri è abilitata, selezionare la casella di controllo "Non installare il lettore BitLocker To Go nelle unità rimovibili formattate come FAT" per impedire agli utenti di eseguire il lettore BitLocker To Go dalle unità rimovibili. Se il lettore BitLocker To Go (bitlockertogo.exe) è presente in un'unità sulla quale non è stato specificato un campo di identificazione o sulla quale è stato specificato lo stesso campo di identificazione definito nell'impostazione dei criteri "Fornisci identificatori univoci per l'organizzazione", all'utente verrà richiesto di aggiornare BitLocker e il lettore BitLocker To Go verrà eliminato dall'unità. In tale situazione, perché sia possibile sbloccare le unità rimovibili nei computer che eseguono Windows Server 2008, Windows Vista, Windows XP con SP3 o Windows XP con SP2, è necessario che il lettore BitLocker To Go sia installato nel computer. Se questa casella di controllo non è selezionata, il lettore BitLocker To Go verrà installato sull'unità rimovibile per consentirne lo sblocco nei computer che eseguono Windows Server 2008, Windows Vista, Windows XP con SP3 o Windows XP con SP2 su cui non è installato.
+
+Se si disabilita questa impostazione dei criteri, non sarà possibile sbloccare le unità dati rimovibili formattate con il file system FAT protette con BitLocker nei computer che eseguono Windows Server 2008, Windows Vista, Windows XP con SP3 o Windows XP con SP2. Bitlockertogo.exe non verrà installato.
+
+Nota: questa impostazione dei criteri non si applica alle unità formattate con il file system NTFS.
+
+      
+
+      </string>
+
+      <string id="RDVAllowDRA_Name">Consenti agenti recupero dati basati su certificato</string>
+
+      <string id="RDVConfigureSmartCard_Name">Configura utilizzo delle smart card per unità dati rimovibili</string>
+      <string id="RDVConfigureSmartCard_Help">Questa impostazione dei criteri consente di specificare se è possibile utilizzare le smart card per autenticare l'accesso utente alle unità dati rimovibili protette con BitLocker in un computer.
+
+Se si abilita questa impostazione dei criteri, sarà possibile utilizzare le smart card per autenticare l'accesso utente all'unità. È possibile richiedere l'autenticazione tramite smart card selezionando la casella di controllo "Richiedi utilizzo delle smart card per unità dati rimovibili".
+
+Nota: queste impostazioni vengono applicate quando si attiva BitLocker, non quando si sblocca un'unità. BitLocker consentirà lo sblocco dell'unità mediante qualsiasi protezione disponibile sull'unità stessa.
+
+Se si disabilita questa impostazione dei criteri, gli utenti non potranno utilizzare smart card per autenticare l'accesso alle unità dati rimovibili protette con BitLocker.
+
+Se non si configura questa impostazione dei criteri, sarà possibile utilizzare le smart card per autenticare l'accesso utente a un'unità rimovibile protetta con BitLocker.
+
+      
+
+      </string>
+
+      <string id="EnhancedPIN_Name">Consenti PIN avanzati per l'avvio</string>
+      <string id="EnhancedPIN_Help">Questa impostazione dei criteri consente di specificare se utilizzare o meno i PIN di avvio avanzati con BitLocker.
+
+I PIN di avvio avanzati permettono l'utilizzo di caratteri quali lettere maiuscole e minuscole, simboli, numeri e spazi. Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Se si abilita questa impostazione dei criteri, tutti i nuovi PIN di avvio per BitLocker saranno PIN avanzati.
+
+Nota: alcuni computer non supportano i PIN avanzati nell'ambiente di preavvio. È consigliabile che gli utenti eseguano un controllo del sistema durante la configurazione di BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, i PIN avanzati non verranno utilizzati.
+
+      
+
+      </string>
+
+      <string id="TPMAutoReseal_Name">Reimposta dati di convalida della piattaforma dopo ripristino di BitLocker</string>
+      <string id="TPMAutoReseal_Help">Questa impostazione dei criteri consente di specificare se aggiornare o meno i dati di convalida della piattaforma quando Windows viene avviato dopo il ripristino di BitLocker.
+
+Se si abilita questa impostazione dei criteri, i dati di convalida della piattaforma verranno aggiornati quando Windows viene avviato dopo il ripristino di BitLocker.
+
+Se si disabilita questa impostazione dei criteri, i dati di convalida della piattaforma non verranno aggiornati quando Windows viene avviato dopo il ripristino di BitLocker.
+
+Se non si configura questa impostazione dei criteri, i dati di convalida della piattaforma verranno aggiornati quando Windows viene avviato dopo il ripristino di BitLocker.
+
+      
+
+      </string>
+
+      <string id="OSEncryptionType_Name">Imponi tipo di crittografia unità sulle unità del sistema operativo</string>
+
+      <string id="FDVEncryptionType_Name">Imponi tipo di crittografia unità sulle unità dati fisse</string>
+
+      <string id="RDVEncryptionType_Name">Imponi tipo di crittografia unità sulle unità dati rimovibili</string>
+
+      <string id="EncryptionType_Help">Questa impostazione dei criteri consente di configurare il tipo di crittografia utilizzato da Crittografia unità BitLocker. Questa impostazione dei criteri viene applicata quando si abilita BitLocker. La modifica del tipo di crittografia non ha alcun effetto se l'unità è già crittografata o se la crittografia è in corso. Scegliere il tipo di crittografia completa per impostare la crittografia dell'intera unità all'attivazione di BitLocker. Scegliere il tipo di crittografia del solo spazio utilizzato per impostare la crittografia della sola parte dell'unità utilizzata per l'archiviazione dei dati all'attivazione di BitLocker.
+
+Se si abilita questa impostazione dei criteri, il tipo di crittografia utilizzato da BitLocker per crittografare le unità verrà definito da questo criterio e l'opzione relativa al tipo di crittografia non verrà presentata nella configurazione guidata BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, la configurazione guidata BitLocker chiederà all'utente di selezionare il tipo di crittografia prima di attivare BitLocker.
+
+      
+
+      </string>
+
+      <string id="EncryptionTypeDropDown_UserChooses_Name">Scelta utente (impostazione predefinita)</string>
+      <string id="EncryptionTypeDropDown_FullEncryption_Name">Crittografia completa</string>
+      <string id="EncryptionTypeDropDown_DataOnlyEncryption_Name">Crittografia del solo spazio utilizzato</string>
+
+      <string id="DisallowStandardUsersCanChangePIN_Name">Non consentire agli utenti standard di modificare il PIN o la password</string>
+      <string id="DisallowStandardUsersCanChangePIN_Help">Questa impostazione dei criteri consente di specificare se agli utenti standard è consentito o meno modificare i PIN dei volumi BitLocker, purché siano in grado di fornire prima il PIN esistente.
+
+Questa impostazione dei criteri viene applicata quando si abilita BitLocker.
+
+Se si abilita questa impostazione dei criteri, gli utenti standard non potranno modificare i PIN o le password di BitLocker.
+
+Se si disabilita o non si configura questa impostazione dei criteri, gli utenti standard potranno modificare i PIN o le password di BitLocker.
+
+      
+
+      </string>
+
+      <string id="OSEDrive_Name">Configura utilizzo della crittografia hardware per unità del sistema operativo</string>
+
+      <string id="FDVEDrive_Name">Configura utilizzo della crittografia hardware per unità dati fisse</string>
+
+      <string id="RDVEDrive_Name">Configura utilizzo della crittografia hardware per unità dati rimovibili</string>
+
+      <string id="OSEDrive_Help">Questa impostazione dei criteri consente di gestire l'utilizzo da parte di BitLocker della crittografia hardware nelle unità del sistema operativo e di specificare gli algoritmi di crittografia che può utilizzare con la crittografia hardware. L'uso della crittografia hardware può migliorare le prestazioni di operazioni sull'unità che prevedono frequenti letture e scritture di dati.
+
+Se abiliti questa impostazione dei criteri, è possibile specificare ulteriori opzioni che controllano se viene utilizzata la crittografia basata sul software BitLocker invece di quella basata sull'hardware nei computer che non supportano quest'ultima, nonché se si desidera limitare gli algoritmi e i pacchetti di crittografia utilizzati con la crittografia basata sul'hardware.
+
+Se disabiliti questa impostazione dei criteri, BitLocker non è in grado di utilizzare la crittografia basata sull'hardware con unità del sistema operativo, pertanto viene utilizzata la crittografia basata sul software BitLocker per impostazione predefinita.
+
+Se non configuri questa impostazione dei criteri, BitLocker utilizza la crittografia basata sull'hardware con l'apposito algoritmo impostato per l'unità. Se la crittografia basata sull'hardware non è disponibile, viene utilizzata quella basata sul software BitLocker.
+
+Nota: l'impostazione dei criteri "Scegli metodo di crittografia dell'unità e livello di codifica" non si applica alla crittografia basata sull'hardware. L'algoritmo di crittografia utilizzato per la crittografia basata sull'hardware viene impostato al momento del partizionamento dell'unità. Per impostazione predefinita, BitLocker utilizza l'algoritmo configurato per l'unità. L'opzione per limitare gli algoritmi e i pacchetti di crittografia consentiti per la crittografia basata sull'hardware consente di limitare gli algoritmi utilizzabili da BitLocker con la crittografia hardware. Se l'algoritmo impostato per l'unità non è disponibile, BitLocker disabilita l'uso della crittografia basata sull'hardware.
+Gli algoritmi di crittografia vengono specificati in base all'identificatore di oggetto (OID). Ad esempio:
+- OID AES 128 in modalità CBC: 2.16.840.1.101.3.4.1.2
+- OID AES 256 in modalità CBC: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="FDVEDrive_Help">Questa impostazione dei criteri consente di gestire l'utilizzo da parte di BitLocker della crittografia hardware nelle unità dati fisse e di specificare gli algoritmi di crittografia che può utilizzare con la crittografia hardware. L'uso della crittografia hardware può migliorare le prestazioni di operazioni sull'unità che prevedono frequenti letture e scritture di dati.
+
+Se abiliti questa impostazione dei criteri, è possibile specificare ulteriori opzioni che controllano se viene utilizzata la crittografia basata sul software BitLocker invece di quella basata sull'hardware nei computer che non supportano quest'ultima, nonché se si desidera limitare gli algoritmi e i pacchetti di crittografia utilizzati con la crittografia basata sull'hardware.
+
+Se disabiliti questa impostazione dei criteri, BitLocker non è in grado di utilizzare la crittografia basata sull'hardware con unità del sistema operativo, pertanto viene utilizzata la crittografia basata sul software BitLocker per impostazione predefinita.
+
+Se non configuri questa impostazione dei criteri, BitLocker utilizza la crittografia basata sull'hardware con l'apposito algoritmo impostato per l'unità. Se la crittografia basata sull'hardware non è disponibile, viene utilizzata quella basata sul software BitLocker.
+
+Nota: l'impostazione dei criteri "Scegli metodo di crittografia dell'unità e livello di codifica" non si applica alla crittografia basata sull'hardware. L'algoritmo di crittografia utilizzato per la crittografia basata sull'hardware viene impostato al momento del partizionamento dell'unità. Per impostazione predefinita, BitLocker utilizza l'algoritmo configurato per l'unità. L'opzione per limitare gli algoritmi e i pacchetti di crittografia consentiti per la crittografia basata sull'hardware consente di limitare gli algoritmi utilizzabili da BitLocker con la crittografia hardware. Se l'algoritmo impostato per l'unità non è disponibile, BitLocker disabilita l'uso della crittografia basata sull'hardware.
+Gli algoritmi di crittografia vengono specificati in base all'identificatore di oggetto (OID). Ad esempio:
+- OID AES 128 in modalità CBC: 2.16.840.1.101.3.4.1.2
+- OID AES 256 in modalità CBC: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="RDVEDrive_Help">Questa impostazione dei criteri consente di gestire l'utilizzo da parte di BitLocker della crittografia hardware nelle unità dati rimovibili e di specificare gli algoritmi di crittografia che può utilizzare con la crittografia hardware. L'uso della crittografia hardware può migliorare le prestazioni di operazioni sull'unità che prevedono frequenti letture e scritture di dati.
+
+Se abiliti questa impostazione dei criteri, è possibile specificare ulteriori opzioni che controllano se viene utilizzata la crittografia basata sul software BitLocker invece di quella basata sull'hardware nei computer che non supportano quest'ultima, nonché se si desidera limitare gli algoritmi e i pacchetti di crittografia utilizzati con la crittografia basata sul'hardware.
+
+Se disabiliti questa impostazione dei criteri, BitLocker non è in grado di utilizzare la crittografia basata sull'hardware con unità del sistema operativo, pertanto viene utilizzata la crittografia basata sul software BitLocker per impostazione predefinita.
+
+Se non configuri questa impostazione dei criteri, BitLocker utilizza la crittografia basata sull'hardware con l'apposito algoritmo impostato per l'unità. Se la crittografia basata sull'hardware non è disponibile, viene utilizzata quella basata sul software BitLocker.
+
+Nota: l'impostazione dei criteri "Scegli metodo di crittografia dell'unità e livello di codifica" non si applica alla crittografia basata sull'hardware. L'algoritmo di crittografia utilizzato per la crittografia basata sull'hardware viene impostato al momento del partizionamento dell'unità. Per impostazione predefinita, BitLocker utilizza l'algoritmo configurato per l'unità. L'opzione per limitare gli algoritmi e i pacchetti di crittografia consentiti per la crittografia basata sull'hardware consente di limitare gli algoritmi utilizzabili da BitLocker con la crittografia hardware. Se l'algoritmo impostato per l'unità non è disponibile, BitLocker disabilita l'uso della crittografia basata sull'hardware.
+Gli algoritmi di crittografia vengono specificati in base all'identificatore di oggetto (OID). Ad esempio:
+- OID AES 128 in modalità CBC: 2.16.840.1.101.3.4.1.2
+- OID AES 256 in modalità CBC: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="EnablePrebootInputProtectorsOnSlates_Name">Abilita l'uso dell'autenticazione BitLocker che richiede l'input da tastiera prima dell'avvio negli slate</string>
+      <string id="EnablePrebootInputProtectorsOnSlates_Help">Questa impostazione dei criteri consente agli utenti di attivare opzioni di autenticazione che richiedono l'input dell'utente dall'ambiente di preavvio anche se nella piattaforma manca una funzionalità di input prima dell'avvio.
+
+La tastiera virtuale di Windows (come quelle utilizzate nei tablet) non è disponibile nell'ambiente di preavvio dove BitLocker richiede ulteriori informazioni, come un PIN o una password.
+
+Se si abilita questa impostazione dei criteri, nei dispositivi devono essere disponibili strumenti alternativi per l'input di preavvio, ad esempio una tastiera USB collegata.
+
+Se non si abilita questa impostazione dei criteri, è necessario abilitare Ambiente ripristino Windows nei tablet per supportare l'immissione della password di ripristino per BitLocker. Quando Ambiente ripristino Windows non è abilitato e questa impostazione dei criteri non è abilitata, non è possibile attivare BitLocker in un dispositivo che utilizza la tastiera virtuale di Windows.
+
+Si noti che se non si abilita questa impostazione dei criteri, le opzioni per l'impostazione dei criteri "Richiedi autenticazione aggiuntiva all'avvio" potrebbero non essere disponibili in tali dispositivi. Tali opzioni includono:
+- Configurazione PIN di avvio del TPM: Obbligatoria/Consentita
+- Configurazione chiave e PIN di avvio del TPM: Obbligatoria/Consentita
+- Configura utilizzo delle password per unità del sistema operativo.
+      
+      </string>
+
+      <string id="EnablePreBootPinExceptionOnDECapableDevice_Name">Consenti a dispositivi conformi a InstantGo o HSTI di escludere la richiesta di PIN prima dell'avvio.</string>
+      <string id="EnablePreBootPinExceptionOnDECapableDevice_Help">Questa impostazione dei criteri consente agli utenti su dispositivi conformi con InstantGo o Microsoft Hardware Security Test Interface (HSTI) di non avere un PIN per l'autenticazione prima dell'avvio. Questa opzione sostituisce le opzioni "Richiedi PIN di avvio con il TPM" e "Richiedi chiave e PIN di avvio con il TPM" del criterio "Richiedi autenticazione aggiuntiva all'avvio" su hardware conforme.
+
+Se si abilita questa impostazione dei criteri, gli utenti su dispositivi conformi a InstantGo e HSTI potranno scegliere di attivare BitLocker senza autenticazione prima dell'avvio.
+
+Se questo criterio non è abilitato, verranno applicate le opzioni del criterio "Richiedi autenticazione aggiuntiva all'avvio".
+      </string>
+
+      <string id="AllowSecureBootForIntegrity_Name">Consenti avvio protetto per la convalida dell'integrità</string>
+      <string id="AllowSecureBootForIntegrity_Help">Questa impostazione dei criteri consente di specificare se consentire l'avvio protetto come provider di integrità della piattaforma per le unità del sistema operativo BitLocker.
+
+L'avvio protetto assicura che l'ambiente di preavvio del PC carichi solo firmware firmato digitalmente da autori di software autorizzati. Offre inoltre maggiore flessibilità per la gestione della configurazione dell'ambiente di preavvio rispetto ai controlli di integrità BitLocker legacy.
+
+Se si abilita o non si configura questa impostazione dei criteri, BitLocker utilizzerà l'avvio protetto per l'integrità della piattaforma, se la piattaforma supporta la convalida dell'integrità basata sull'avvio protetto.
+
+Se si disabilita questa impostazione dei criteri, BitLocker utilizzerà la convalida dell'integrità della piattaforma legacy anche nei sistemi che supportano la convalida dell'integrità basata sull'avvio protetto.
+
+Quando questa impostazione dei criteri è abilitata e l'hardware supporta l'uso dell'avvio protetto per gli scenari BitLocker, l'impostazione del Criterio di gruppo "Usa profilo di convalida dei dati di configurazione di avvio avanzata" verrà ignorata e l'avvio protetto verificherà le impostazioni BCD in base all'impostazione dei criteri di avvio protetto, che viene configurato all'esterno di BitLocker.
+
+Nota: se l'impostazione del Criterio di gruppo "Configurazione profilo di convalida della piattaforma TPM per configurazioni del firmware UEFI nativo" è abilitata ma l'impostazione PCR 7 è stata omessa, BitLocker non sarà in grado di utilizzare l'avvio protetto per la convalida dell'integrità della piattaforma o dei dati della configurazione di avvio (BCD).
+
+Avviso: la disabilitazione di questa impostazione dei criteri potrebbe comportare il ripristino di BitLocker in caso di aggiornamento del firmware. Se si disabilita questa impostazione dei criteri, sospendere BitLocker prima di applicare aggiornamenti del firmware.
+    
+      </string>
+      <string id="SUPPORTED_Windows8NoARM">Almeno Windows Server 2012 o Windows 8</string>  
+      <string id="SUPPORTED_Windows_6_3ToVista">Windows Server 2012 R2, Windows 8.1, Windows Server 2012, Windows 8, Windows Server 2008, Windows 7 e Windows Vista</string>
+      <string id="PrebootRecoveryInfo_Name">Configura il messaggio e l'URL di recupero prima dell'avvio</string>
+      <string id="PrebootRecoveryInfoEmpty"></string>
+      <string id="PrebootRecoveryInfoUseDefault">Usa il messaggio e l'URL di recupero predefiniti</string>
+      <string id="PrebootRecoveryInfoUseMessage">Usa il messaggio di recupero personalizzato</string>
+      <string id="PrebootRecoveryInfoUseUrl">Usa l'URL di recupero personalizzato</string>
+      <string id="PrebootRecoveryInfo_Help">Questa impostazione dei criteri consente di configurare l'intero messaggio di recupero o di sostituire l'URL esistente visualizzati nella schermata di recupero chiavi prima dell'avvio quando l'unità del sistema operativo è bloccata.
+
+Se si seleziona l'opzione "Usa messaggio e URL di recupero predefiniti", il messaggio e l'URL di recupero predefiniti di BitLocker verranno visualizzati nella schermata di recupero chiavi prima dell'avvio. Se è stato configurato in precedenza un messaggio o un URL di recupero personalizzato e si desidera ripristinare il messaggio predefinito, è necessario mantenere abilitato il criterio e selezionare l'opzione "Usa messaggio e URL di recupero predefiniti".
+
+Se si seleziona l'opzione "Usa messaggio di recupero personalizzato", il messaggio digitato nella casella di testo "Opzione messaggio di recupero personalizzato" verrà visualizzato nella schermata di recupero chiavi prima dell'avvio. Se è disponibile un URL di recupero, includerlo nel messaggio.
+
+Se si seleziona l'opzione "Usa URL di recupero personalizzato", l'URL digitato nella casella di testo "Opzione URL di recupero personalizzato" sostituirà l'URL predefinito nel messaggio di recupero predefinito, che verrà visualizzato nella schermata di recupero chiavi prima dell'avvio.
+
+Nota: non tutti i caratteri e le lingue sono supportati prima dell'avvio. È consigliabile verificare che i caratteri utilizzati per il messaggio o l'URL personalizzato vengano visualizzati correttamente nella schermata di recupero prima dell'avvio.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="ActiveDirectoryBackup_Name">
+        <checkBox refId="RequireActiveDirectoryBackup_Name" defaultChecked="true">Richiedi backup BitLocker su Servizi di dominio Active Directory</checkBox>
+        <text>Se questa impostazione dei criteri è selezionata, non sarà possibile attivare BitLocker se il backup non riesce (scelta predefinita consigliata).  </text>
+        <text>Se questa impostazione dei criteri non è selezionata, sarà possibile attivare BitLocker anche se il backup non riesce. Il backup non verrà ritentato automaticamente.</text>
+        <dropdownList refId="ActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">Selezionare le informazioni di ripristino di BitLocker da archiviare:</dropdownList>
+        <text/>
+        <text>Una password di ripristino è un numero di 48 cifre che consente di sbloccare l'accesso a un'unità protetta con BitLocker.</text>
+        <text>Un pacchetto della chiave contiene la chiave di crittografia di BitLocker di un'unità, protetta mediante una o più password di ripristino.</text>
+            <text>I pacchetti della chiave consentono di eseguire operazioni di ripristino specifiche quando il disco è danneggiato.  </text>
+      </presentation>
+
+      <presentation id="ConfigureStartupUsage_Name">
+        <checkBox refId="ConfigureNonTPMStartupKeyUsage_Name" defaultChecked="true">Consenti BitLocker senza un TPM compatibile (richiede una password o una chiave di avvio su un'unità flash USB)</checkBox>
+        <text>Impostazioni per i computer con un TPM:</text>
+        <dropdownList refId="ConfigureTPMStartupKeyUsageDropDown_Name" noSort="true" defaultItem="0">Configurazione chiave di avvio del TPM:</dropdownList>
+        <dropdownList refId="ConfigurePINUsageDropDown_Name" noSort="true" defaultItem="0">Configurazione PIN di avvio del TPM:</dropdownList>
+        <text>Importante: se si richiede la chiave di avvio, è necessario non consentire il PIN di avvio.  </text>
+        <text>Viceversa, se si richiede il PIN di avvio, è necessario non consentire la chiave di avvio. In caso contrario, si verificherà un errore dei criteri.</text>
+        <text>Nota: è possibile non consentire sia il PIN di avvio che la chiave di avvio per nascondere la scheda Avanzate in un computer dotato di un TPM.</text>
+      </presentation>
+
+      <presentation id="ConfigureAdvancedStartup_Name">
+        <checkBox refId="ConfigureNonTPMStartupKeyUsage_Name" defaultChecked="true">Consenti BitLocker senza un TPM compatibile (richiede una password o una chiave di avvio su un'unità flash USB)</checkBox>
+        <text>Impostazioni per i computer con un TPM:</text>
+        <dropdownList refId="ConfigureTPMUsageDropDown_Name" noSort="true" defaultItem="0">Configurazione PIN di avvio:</dropdownList>
+        <dropdownList refId="ConfigurePINUsageDropDown_Name" noSort="true" defaultItem="0">Configurazione PIN di avvio del TPM:</dropdownList>
+        <dropdownList refId="ConfigureTPMStartupKeyUsageDropDown_Name" noSort="true" defaultItem="0">Configurazione chiave di avvio del TPM:</dropdownList>
+        <dropdownList refId="ConfigureTPMPINKeyUsageDropDown_Name" noSort="true" defaultItem="0">Configurazione chiave e PIN di avvio del TPM:</dropdownList>
+        <text/>
+      </presentation>
+
+      <presentation id="ConfigureRecoveryUsage_Name">
+        <text>Importante: per impedire la perdita di dati, è necessario disporre di un metodo per ripristinare le chiavi di crittografia di BitLocker. Se non si consentono entrambe le opzioni di ripristino seguenti, sarà necessario abilitare il backup delle informazioni di ripristino di BitLocker su Servizi di dominio Active Directory. In caso contrario, si verificherà un errore dei criteri.</text>
+        <dropdownList refId="ConfigureRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0">Configurazione password di ripristino di 48 cifre:</dropdownList>
+        <dropdownList refId="ConfigureRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0">Configurazione chiave di ripristino a 256 bit:</dropdownList>
+        <text>Nota: se non si consente la password di ripristino e si richiede la chiave di ripristino, gli utenti non potranno attivare BitLocker senza salvare le informazioni su un'unità USB.</text>
+        <text/>
+      </presentation>
+
+      <presentation id="OSRecoveryUsage_Name">
+        <checkBox refId="OSAllowDRA_Name" defaultChecked="true">Consenti agente recupero dati</checkBox>
+        <text>Configurazione archiviazione delle informazioni di ripristino di BitLocker da parte degli utenti:</text>
+        <dropdownList refId="OSRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="OSRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="OSHideRecoveryPage_Name" defaultChecked="false">Escludi opzioni di ripristino dalla configurazione guidata BitLocker</checkBox>
+        <checkBox refId="OSActiveDirectoryBackup_Name" defaultChecked="true">Salva informazioni di ripristino di BitLocker in Servizi di dominio Active Directory per le unità del sistema operativo</checkBox>
+        <dropdownList refId="OSActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">Configurazione archiviazione delle informazioni di ripristino di BitLocker in Servizi di dominio Active directory:</dropdownList>
+        <checkBox refId="OSRequireActiveDirectoryBackup_Name">Non abilitare BitLocker finché le informazioni di ripristino non vengono archiviate in Servizi di dominio Active Directory per le unità del sistema operativo</checkBox>
+       </presentation>
+
+      <presentation id="FDVRecoveryUsage_Name">
+        <checkBox refId="FDVAllowDRA_Name" defaultChecked="true">Consenti agente recupero dati</checkBox>
+        <text>Configurazione archiviazione delle informazioni di ripristino di BitLocker da parte degli utenti:</text>
+        <dropdownList refId="FDVRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="FDVRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="FDVHideRecoveryPage_Name" defaultChecked="false">Escludi opzioni di ripristino dalla configurazione guidata BitLocker</checkBox>
+        <checkBox refId="FDVActiveDirectoryBackup_Name" defaultChecked="true">Salva informazioni di ripristino di BitLocker in Servizi di dominio Active Directory per le unità dati fisse</checkBox>
+        <dropdownList refId="FDVActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">Configurazione archiviazione delle informazioni di ripristino di BitLocker in Servizi di dominio Active directory:</dropdownList>
+        <checkBox refId="FDVRequireActiveDirectoryBackup_Name">Non abilitare BitLocker finché le informazioni di ripristino non vengono archiviate in Servizi di dominio Active Directory per le unità dati fisse</checkBox>
+      </presentation>
+
+      <presentation id="RDVRecoveryUsage_Name">
+        <checkBox refId="RDVAllowDRA_Name" defaultChecked="true">Consenti agente recupero dati</checkBox>
+        <text>Configurazione archiviazione delle informazioni di ripristino di BitLocker da parte degli utenti:</text>
+        <dropdownList refId="RDVRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="RDVRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="RDVHideRecoveryPage_Name" defaultChecked="false">Escludi opzioni di ripristino dalla configurazione guidata BitLocker</checkBox>
+        <checkBox refId="RDVActiveDirectoryBackup_Name" defaultChecked="true">Salva informazioni di ripristino di BitLocker in Servizi di dominio Active Directory per le unità dati rimovibili</checkBox>
+        <dropdownList refId="RDVActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">Configurazione archiviazione delle informazioni di ripristino di BitLocker in Servizi di dominio Active directory:</dropdownList>
+        <checkBox refId="RDVRequireActiveDirectoryBackup_Name">Non abilitare BitLocker finché le informazioni di ripristino non vengono archiviate in Servizi di dominio Active Directory per le unità dati rimovibili</checkBox>
+      </presentation>
+
+      <presentation id="ConfigureRecoveryFolder_Name">
+        <textBox refId="ConfigureRecoveryFolderPath_Input">
+          <label>Configurazione del percorso predefinito della cartella:</label>
+          <defaultValue/>
+        </textBox>
+        <text>Specificare un percorso completo oppure includere nel percorso le variabili di ambiente del computer.  </text>
+        <text>Ad esempio, immettere \\server\cartellabackup" oppure "%VariabileAmbienteUnitàProtetta%\cartellabackup"</text>
+        <text>Nota: in tutti i casi, l'utente sarà in grado di selezionare altre cartelle in cui salvare la password di ripristino.</text>
+        <text/>
+      </presentation>
+
+      <presentation id="EncryptionMethod_Name">
+        <dropdownList refId="EncryptionMethodDropDown_Name" noSort="true" defaultItem="2">Seleziona il metodo di crittografia:</dropdownList>
+      </presentation>
+
+      <presentation id="EncryptionMethodNoDiffuser_Name">
+        <dropdownList refId="EncryptionMethodNoDiffDropDown_Name" noSort="true" defaultItem="0">Seleziona il metodo di crittografia:</dropdownList>
+      </presentation>
+
+      <presentation id="EncryptionMethodWithXts_Name">
+        <dropdownList refId="EncryptionMethodWithXtsOsDropDown_Name" noSort="true" defaultItem="2">Selezionare il metodo di crittografia per le unità del sistema operativo:</dropdownList>
+        <dropdownList refId="EncryptionMethodWithXtsFdvDropDown_Name" noSort="true" defaultItem="2">Selezionare il metodo di crittografia per le unità dati fisse:</dropdownList>
+        <dropdownList refId="EncryptionMethodWithXtsRdvDropDown_Name" noSort="true" defaultItem="0">Selezionare il metodo di crittografia per le unità dati rimovibili:</dropdownList>
+      </presentation>
+
+      <presentation id="OSEncryptionType">
+        <dropdownList refId="OSEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">Seleziona il tipo di crittografia:</dropdownList>
+      </presentation>
+
+      <presentation id="FDVEncryptionType">
+        <dropdownList refId="FDVEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">Seleziona il tipo di crittografia:</dropdownList>
+      </presentation>
+
+      <presentation id="RDVEncryptionType">
+        <dropdownList refId="RDVEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">Seleziona il tipo di crittografia:</dropdownList>
+      </presentation>
+
+      <presentation id="PlatformValidation_Deprecated_Name">
+        <text>Un profilo di convalida della piattaforma è costituito da un set di indici di registri di configurazione di piattaforma (PCR, Platform Configuration Register). Ogni indice PCR è associato a componenti che vengono eseguiti all'avvio di Windows.</text>
+        <text>Utilizzare le caselle di controllo seguenti per scegliere gli indici PCR da includere nel profilo.</text>
+        <text>Prestare attenzione quando si modifica tale impostazione.</text>
+        <text>È consigliabile utilizzare i registri PCR 0, 2, 4, 8, 9, 10 e 11.</text>
+        <text>Affinché la protezione BitLocker abbia effetto, è necessario includere PCR 11.</text>
+
+        <text>Per ulteriori informazioni sui vantaggi e i rischi correlati alla modifica del profilo di convalida della piattaforma del TPM predefinito, consultare la documentazione online.</text>
+
+        <checkBox refId="PlatformValidation_Deprecated_Setting0" defaultChecked="true">PCR 0: CRTM (Core Root of Trust of Measurement), BIOS ed estensioni di piattaforma</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting1">PCR 1: dati e configurazione di scheda madre e piattaforma</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting2" defaultChecked="true">PCR 2: codice ROM facoltativa</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting3">PCR 3: dati e configurazione ROM facoltativa</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting4" defaultChecked="true">PCR 4: codice del record di avvio principale (MBR)</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting5">PCR 5: tabella di partizione del record di avvio principale (MBR)</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting6">PCR 6: transizione dello stato ed eventi di riattivazione</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting7">PCR 7: specifico per il produttore del computer</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting8" defaultChecked="true">PCR 8: settore di avvio NTFS</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting9" defaultChecked="true">PCR 9: blocco di avvio NTFS</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting10" defaultChecked="true">PCR 10: Boot Manager</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting11" defaultChecked="true">PCR 11: controllo di accesso BitLocker</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting12">PCR 12: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting13">PCR 13: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting14">PCR 14: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting15">PCR 15: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting16">PCR 16: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting17">PCR 17: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting18">PCR 18: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting19">PCR 19: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting20">PCR 20: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting21">PCR 21: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting22">PCR 22: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting23">PCR 23: riservato per un utilizzo futuro</checkBox>
+      </presentation>
+
+      <presentation id="PlatformValidation_BIOS_Name">
+        <text>Un profilo di convalida della piattaforma è costituito da un set di indici di registri di configurazione di piattaforma (PCR, Platform Configuration Register). Ogni indice PCR è associato a componenti che vengono eseguiti all'avvio di Windows.</text>
+        <text>Utilizzare le caselle di controllo seguenti per scegliere gli indici PCR da includere nel profilo.</text>
+        <text>Prestare attenzione quando si modifica tale impostazione.</text>
+        <text>È consigliabile utilizzare i registri PCR 0, 2, 4, 8, 9, 10 e 11.</text>
+        <text>Affinché la protezione BitLocker abbia effetto, è necessario includere PCR 11.</text>
+
+        <text>Per ulteriori informazioni sui vantaggi e i rischi correlati alla modifica del profilo di convalida della piattaforma del TPM predefinito, consultare la documentazione online.</text>
+
+        <checkBox refId="PlatformValidation_BIOS_Setting0" defaultChecked="true">PCR 0: CRTM (Core Root of Trust of Measurement), BIOS ed estensioni di piattaforma</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting1">PCR 1: dati e configurazione di scheda madre e piattaforma</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting2" defaultChecked="true">PCR 2: codice ROM facoltativa</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting3">PCR 3: dati e configurazione ROM facoltativa</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting4" defaultChecked="true">PCR 4: codice del record di avvio principale (MBR)</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting5">PCR 5: tabella di partizione del record di avvio principale (MBR)</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting6">PCR 6: transizione dello stato ed eventi di riattivazione</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting7">PCR 7: specifico per il produttore del computer</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting8" defaultChecked="true">PCR 8: settore di avvio NTFS</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting9" defaultChecked="true">PCR 9: blocco di avvio NTFS</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting10" defaultChecked="true">PCR 10: Boot Manager</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting11" defaultChecked="true">PCR 11: controllo di accesso BitLocker</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting12">PCR 12: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting13">PCR 13: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting14">PCR 14: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting15">PCR 15: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting16">PCR 16: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting17">PCR 17: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting18">PCR 18: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting19">PCR 19: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting20">PCR 20: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting21">PCR 21: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting22">PCR 22: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting23">PCR 23: riservato per un utilizzo futuro</checkBox>
+      </presentation>
+
+      <presentation id="PlatformValidation_UEFI_Name">
+        <text>Un profilo di convalida della piattaforma è costituito da un set di indici di registri di configurazione di piattaforma (PCR, Platform Configuration Register). Ogni indice PCR è associato a componenti che vengono eseguiti all'avvio di Windows.</text>
+        <text>Utilizzare le caselle di controllo seguenti per scegliere gli indici PCR da includere nel profilo.</text>
+        <text>Prestare attenzione quando si modifica tale impostazione.</text>
+        <text>È consigliabile utilizzare i registri PCR 0, 2, 4 e 11.</text>
+        <text>Affinché la protezione BitLocker abbia effetto, è necessario includere PCR 11.</text>
+
+        <text>Per ulteriori informazioni sui vantaggi e i rischi correlati alla modifica del profilo di convalida della piattaforma del TPM predefinito, consultare la documentazione online.</text>
+
+        <checkBox refId="PlatformValidation_UEFI_Setting0" defaultChecked="true">PCR 0: codice eseguibile del firmware del sistema principale</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting1">PCR 1: dati del firmware del sistema principale</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting2" defaultChecked="true">PCR 2: codice eseguibile esteso o modulare</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting3">PCR 3: dati del firmware estesi o modulari</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting4" defaultChecked="true">PCR 4: Boot Manager</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting5">PCR 5: GPT/tabella di partizione</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting6">PCR 6: ripresa dagli eventi di stato di alimentazione S4 e S5</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting7">PCR 7: stato dell'avvio protetto</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting8">PCR 8: inizializzato su 0 senza estensioni (riservato per uso futuro)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting9">PCR 9: inizializzato su 0 senza estensioni (riservato per uso futuro)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting10">PCR 10: inizializzato su 0 senza estensioni (riservato per uso futuro)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting11" defaultChecked="true">PCR 11: controllo di accesso BitLocker</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting12">PCR 12: eventi dati ed eventi altamente volatili</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting13">PCR 13: dettagli del modulo di avvio</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting14">PCR 14: autorità di avvio</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting15">PCR 15: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting16">PCR 16: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting17">PCR 17: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting18">PCR 18: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting19">PCR 19: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting20">PCR 20: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting21">PCR 21: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting22">PCR 22: riservato per un utilizzo futuro</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting23">PCR 23: riservato per un utilizzo futuro</checkBox>
+      </presentation>
+
+      <presentation id="MorBehavior_Name">
+
+      </presentation>
+
+      <presentation id="IdentificationField">
+        <textBox refId="IdentificationField">
+          <label>Campi di identificazione BitLocker:</label>
+        </textBox>
+        <textBox refId="SecIdentificationField">
+          <label>Campo di identificazione BitLocker consentita:</label>
+        </textBox>
+      </presentation>
+
+      <presentation id="UserCertificateOID">
+        <textBox refId="UserCertificateOID">
+          <label>Identificatore di oggetto:</label>
+          <defaultValue>1.3.6.1.4.1.311.67.1.1</defaultValue>
+        </textBox>
+        </presentation>
+
+      <presentation id="UseEnhancedBcdProfile">
+        <text>Verifica delle impostazioni BCD aggiuntive seguenti:</text>
+        <multiTextBox refId="EnhancedBcdProfile_AdditionalSecurityCriticalSettings"/>
+        <text>Esclusione delle impostazioni BCD aggiuntive seguenti:</text>
+        <multiTextBox refId="EnhancedBcdProfile_AdditionalExcludedSettings"/>
+      </presentation>
+
+     <presentation id="MinimumPINLength">
+        <decimalTextBox refId="MinPINLength" defaultValue="6">Numero minimo caratteri:</decimalTextBox>
+      </presentation>
+
+     <presentation id="FDVPassphrase_Name">
+        <checkBox refId="FDVRequirePassphrase">Richiedi password per unità dati fissa</checkBox>
+        <dropdownList refId="FDVPassphraseComplexity" noSort="true" defaultItem="0">Configurazione complessità della password per unità dati fisse:</dropdownList>
+        <decimalTextBox refId="FDVMinPassphraseLength" defaultValue="8">Lunghezza minima password per unità dati fissa:</decimalTextBox>
+       <text>Nota: perché l'impostazione relativa alla complessità della password abbia effetto è necessario abilitare l'impostazione "Le password devono essere conformi ai requisiti di complessità".</text>
+      </presentation>
+
+     <presentation id="OSPassphrase_Name">
+       <dropdownList refId="OSPassphraseComplexity_Name" noSort="true" defaultItem="0">Configurazione complessità della password per unità del sistema operativo:</dropdownList>
+       <decimalTextBox refId="OSPassphraseLength_Name" defaultValue="8">Lunghezza minima password per unità del sistema operativo:</decimalTextBox>
+       <text>Nota: perché l'impostazione relativa alla complessità della password abbia effetto è necessario abilitare l'impostazione "Le password devono essere conformi ai requisiti di complessità".</text>
+       <checkBox refId="OSPassphraseASCIIOnly_Name">Richiedi password solo ASCII per unità del sistema operativo rimovibili</checkBox>
+     </presentation>
+
+     <presentation id="FDVConfigureSmartCard">
+       <checkBox refId="FDVRequireSmartCard_Name">Richiedi utilizzo delle smart card per unità dati fisse</checkBox>
+     </presentation>
+
+     <presentation id="RDVPassphrase_Name">
+        <checkBox refId="RDVRequirePassphrase">Richiedi password per unità dati rimovibile</checkBox>
+       <dropdownList refId="RDVPassphraseComplexity" noSort="true" defaultItem="0">Configurazione complessità della password per unità dati rimovibili:</dropdownList>
+        <decimalTextBox refId="RDVMinPassphraseLength" defaultValue="8">Lunghezza minima password per unità dati rimovibile:</decimalTextBox>
+<text>Nota: perché l'impostazione relativa alla complessità della password abbia effetto è necessario abilitare l'impostazione "Le password devono essere conformi ai requisiti di complessità".</text>
+      </presentation>
+
+      <presentation id="RDVConfigureBDE">
+        <checkBox refId="RDVAllowBDE_Name" noSort="true" defaultChecked="true">Consenti agli utenti di applicare la protezione BitLocker su unità dati rimovibili</checkBox>
+        <checkBox refId="RDVDisableBDE_Name" noSort="true" defaultChecked="true">Consenti agli utenti di sospendere e decrittografare BitLocker su unità dati rimovibili</checkBox>
+      </presentation>
+
+      <presentation id="RDVDenyWriteAccess">
+        <checkBox refId="RDVCrossOrg" noSort="true" defaultChecked="false">Non consentire accesso in scrittura ai dispositivi configurati in un'altra organizzazione</checkBox>
+      </presentation>
+
+
+      <presentation id="RDVConfigureSmartCard">
+        <checkBox refId="RDVRequireSmartCard_Name" noSort="true" defaultItem="0">Richiedi utilizzo delle smart card per unità dati rimovibili</checkBox>
+        </presentation>
+
+      <presentation id="EnhancedPIN">
+
+      </presentation>
+
+      <presentation id="TPMAutoReseal">
+
+      </presentation>
+
+      <presentation id="DisallowStandardUsersCanChangePIN">
+
+      </presentation>
+
+      <presentation id="FDVDiscoveryVolumeType">
+        <checkBox refId="FDVNoBitLockerToGoReader_Name" noSort="true" defaultChecked="false">Non installare il lettore BitLocker To Go nelle unità fisse formattate come FAT</checkBox>
+      </presentation>
+
+      <presentation id="RDVDiscoveryVolumeType">
+        <checkBox refId="RDVNoBitLockerToGoReader_Name" noSort="true" defaultChecked="false">Non installare il lettore BitLocker To Go nelle unità rimovibili formattate come FAT</checkBox>
+      </presentation>
+
+      <presentation id="OSEDrive_Name">
+        <checkBox refId="OSUseSW" noSort="true" defaultChecked="true">Usa crittografia basata sul software BitLocker se non è disponibile la crittografia hardware</checkBox>
+        <checkBox refId="OSRestrictAlgos" noSort="true" defaultChecked="false">Limita algoritmi e pacchetti di crittografia consentiti per la crittografia basata sull'hardware</checkBox>
+        <textBox refId="OSAllowedAlgos">
+          <label>Limita gli algoritmi o i pacchetti di crittografia ai seguenti:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="FDVEDrive_Name">
+        <checkBox refId="FDVUseSW" noSort="true" defaultChecked="true">Usa crittografia basata sul software BitLocker se non è disponibile la crittografia hardware</checkBox>
+        <checkBox refId="FDVRestrictAlgos" noSort="true" defaultChecked="false">Limita algoritmi e pacchetti di crittografia consentiti per la crittografia basata sull'hardware</checkBox>
+        <textBox refId="FDVAllowedAlgos">
+          <label>Limita gli algoritmi o i pacchetti di crittografia ai seguenti:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="RDVEDrive_Name">
+        <checkBox refId="RDVUseSW" noSort="true" defaultChecked="true">Usa crittografia basata sul software BitLocker se non è disponibile la crittografia hardware</checkBox>
+        <checkBox refId="RDVRestrictAlgos" noSort="true" defaultChecked="false">Limita algoritmi e pacchetti di crittografia consentiti per la crittografia basata sull'hardware</checkBox>
+        <textBox refId="RDVAllowedAlgos">
+          <label>Limita gli algoritmi o i pacchetti di crittografia ai seguenti:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="PrebootRecoveryInfo">
+        <dropdownList refId="PrebootRecoveryInfoDropDown_Name" noSort="true" defaultItem="0">Selezionare un'opzione per il messaggio di recupero prima dell'avvio:</dropdownList>
+        <textBox refId="RecoveryMessage_Input">
+          <label>Opzione messaggio di recupero personalizzato:</label>
+          <defaultValue/>
+        </textBox>
+        <textBox refId="RecoveryUrl_Input">
+          <label>Opzione URL di recupero personalizzato:</label>
+          <defaultValue/>
+        </textBox>
+      </presentation>
+
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

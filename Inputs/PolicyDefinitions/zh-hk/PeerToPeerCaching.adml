@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+    <displayName>BranchCache</displayName>
+    <description>BranchCache 讓用戶端可以安全地從分公司內部擷取內容，而不必從裝載內容的伺服器擷取內容。依部署模式而定，內容可以從分公司中的其他用戶端擷取，也可以從分公司中的託管快取伺服器擷取。如果伺服器授權用戶端只能從分公司內部擷取內容，則用戶端只能這樣做。使用 BranchCache 可以降低將分公司連線到資料中心或總公司的廣域網路 (WAN) 連結成本，並提高已下載到分公司之內容的下載速度。
+    
+    </description>
+
+    <resources>
+        <stringTable>
+            <!-- Supported Platforms -->
+            <string id="SUPPORTED_Windows7OrBITS4">至少需要 Windows 7 或 Windows Server 2008 R2*</string>
+            <!-- Supported Platforms -->
+
+            <string id="WBC_Cat">BranchCache</string>
+
+            <string id="WBC_Enable">開啟 BranchCache</string>
+
+            <string id="WBC_Enable_Help">這個原則設定會指定是否在套用這個原則的用戶端電腦上啟用 BranchCache。除了這個原則設定之外，您也必須指定用戶端電腦為託管快取模式或分散式快取模式的用戶端。若要這麼做，請設定下列其中一個原則設定: 
+
+- 設定 BranchCache 分散式快取模式
+
+- 設定 BranchCache 託管快取模式
+
+- 設定託管快取伺服器
+
+原則設定
+
+選取下列其中一項:
+
+- 尚未設定。使用這個選項時，BranchCache 設定不會透過這個原則套用到用戶端電腦。當用戶端電腦為網域成員，但您不想在所有用戶端電腦啟用 BranchCache 時，可以為這個網域群組原則設定指定 [尚未設定]，然後將本機電腦原則設定為在個別用戶端電腦啟用 BranchCache。因為未設定網域群組原則設定，所以不會覆寫您在要啟用 BranchCache 之個別用戶端電腦所使用的已啟用設定。
+
+- 已啟用。使用這個選項時，會在套用原則的所有用戶端電腦開啟 BranchCache。例如，如果在網域群組原則中啟用這個原則，會在套用這個原則的所有網域成員用戶端電腦開啟 BranchCache。
+
+- 已停用。使用這個選項時，會在套用原則的所有用戶端電腦關閉 BranchCache。
+
+* 執行 Windows Vista Business、Enterprise 以及 Ultimate Edition 且已安裝背景智慧型傳送服務 (BITS) 4.0 的電腦，可支援這個原則設定。
+            
+            </string>
+
+            <string id="WBC_Cache_Percent">設定用於用戶端電腦快取的磁碟空間百分比</string>
+
+            <string id="WBC_Cache_Percent_Help">這個原則設定會指定用戶端電腦上，配置供 BranchCache 磁碟快取使用的預設磁碟空間總計百分比。
+
+如果您啟用這個原則設定，您可以設定配置供快取使用的磁碟空間總計百分比。
+
+如果您停用或未設定這個原則設定，則快取設為用戶端電腦上磁碟空間總計的百分之五。
+
+原則設定
+
+選取下列其中一項:
+
+- 尚未設定。使用這個選項時，BranchCache 用戶端電腦快取設定不會透過這個原則套用到用戶端電腦。當用戶端電腦為網域成員，但您不想在所有用戶端電腦設定 BranchCache 用戶端電腦快取設定時，可以為這個網域群組原則設定指定 [尚未設定]，然後將本機電腦原則設定為在個別用戶端電腦啟用 BranchCache 用戶端電腦快取設定。因為未設定網域群組原則設定，所以不會覆寫您在個別用戶端電腦所使用的用戶端電腦快取設定。
+
+- 已啟用。使用這個選項時，會在套用原則的所有用戶端電腦啟用 BranchCache 用戶端電腦快取設定。例如，如果在網域群組原則中啟用 [設定用於用戶端電腦快取的磁碟空間百分比]，會在套用這個原則的所有網域成員用戶端電腦開啟您在原則中指定的 BranchCache 用戶端電腦快取設定。
+
+- 已停用。使用這個選項時，BranchCache 用戶端電腦會使用預設的用戶端電腦快取設定，即用戶端電腦上磁碟空間總計的百分之五。
+
+在啟用這個設定的情況下，您還可以選取和設定以下選項:
+
+- 指定配置供快取使用的磁碟空間總計百分比。指定一個整數，代表供 BranchCache 用戶端電腦快取使用的用戶端電腦磁碟空間總計百分比。
+
+* 執行 Windows Vista Business、Enterprise 以及 Ultimate Edition 且已安裝背景智慧型傳送服務 (BITS) 4.0 的電腦，可支援這個原則設定。
+            
+            </string>
+
+            <string id="WBC_HostedCache_Location">設定 BranchCache 託管快取模式</string>
+
+            <string id="WBC_HostedCache_Location_Help">這個原則設定會指定是否在套用這個原則的用戶端電腦上啟用 BranchCache 託管快取模式。除了這個原則之外，您也必須使用 [開啟 BranchCache] 原則，啟用用戶端電腦上的 BranchCache。
+
+當用戶端電腦設定為託管快取模式的用戶端時，便能夠從位於分公司的託管快取伺服器下載快取的內容。此外，當託管快取用戶端從內容伺服器取得內容時，用戶端可以將內容上傳到託管快取伺服器，讓位於分公司的其他託管快取用戶端存取。
+
+原則設定
+
+選取下列其中一項:
+
+- 尚未設定。使用這個選項時，BranchCache 設定不會透過這個原則套用到用戶端電腦。當用戶端電腦為網域成員，但您不想在所有用戶端電腦啟用 BranchCache 時，可以為這個網域群組原則設定指定 [尚未設定]，然後將本機電腦原則設定為在個別用戶端電腦啟用 BranchCache。因為未設定網域群組原則設定，所以不會覆寫您在要啟用 BranchCache 之個別用戶端電腦所使用的已啟用設定。
+
+- 已啟用。使用這個選項時，會在套用原則的所有用戶端電腦啟用 BranchCache 託管快取模式。例如，如果在網域群組原則中啟用這個原則，會在套用這個原則的所有網域成員用戶端電腦開啟 BranchCache 託管快取模式。
+
+- 已停用。使用這個選項時，會在套用原則的所有用戶端電腦關閉 BranchCache 託管快取模式。
+
+在啟用這個設定的情況下，您還可以選取和設定以下選項:
+
+- 輸入託管快取伺服器的名稱。指定託管快取伺服器的電腦名稱。因為託管快取伺服器名稱也會在向託管快取伺服器註冊的憑證中指定，所以您在這裡輸入的名稱必須與伺服器憑證中指定的託管快取伺服器名稱相符。
+
+託管快取用戶端必須信任發給託管快取伺服器的伺服器憑證。請確定發行 CA 憑證安裝在所有託管快取用戶端電腦上可信任的根憑證授權單位的憑證存放區。
+
+* 執行 Windows Vista Business、Enterprise 以及 Ultimate Edition 且已安裝背景智慧型傳送服務 (BITS) 4.0 的電腦，可支援這個原則設定。
+            
+            </string>
+
+            <string id="WBC_Distributed_Enable">設定 BranchCache 分散式快取模式</string>
+
+            <string id="WBC_Distributed_Enable_Help">這個原則設定會指定是否在套用這個原則的用戶端電腦上啟用 BranchCache 分散式快取模式。除了這個原則之外，您也必須使用 [開啟 BranchCache] 原則，啟用用戶端電腦上的 BranchCache。
+
+在分散式快取模式中，用戶端電腦從啟用 BranchCache 的總公司內容伺服器下載內容，在本機快取內容，然後將內容提供給分公司中的其他 BranchCache 分散式快取模式用戶端。
+
+原則設定
+
+選取下列其中一項:
+
+- 尚未設定。使用這個選項時，BranchCache 設定不會透過這個原則套用到用戶端電腦。當用戶端電腦為網域成員，但您不想在所有用戶端電腦啟用 BranchCache 時，可以為這個網域群組原則設定指定 [尚未設定]，然後將本機電腦原則設定為在個別用戶端電腦啟用 BranchCache。因為未設定網域群組原則設定，所以不會覆寫您在要啟用 BranchCache 之個別用戶端電腦所使用的已啟用設定。
+
+- 已啟用。使用這個選項時，會在套用原則的所有用戶端電腦啟用 BranchCache 分散式快取模式。例如，如果在網域群組原則中啟用這個原則，會在套用這個原則的所有網域成員用戶端電腦開啟 BranchCache 分散式快取模式。
+
+- 已停用。使用這個選項時，會在套用原則的所有用戶端電腦關閉 BranchCache 分散式快取模式。
+
+* 執行 Windows Vista Business、Enterprise 以及 Ultimate Edition 且已安裝背景智慧型傳送服務 (BITS) 4.0 的電腦，可支援這個原則設定。
+            
+            </string>
+
+            <string id="WBC_SMB_Enable">設定用於網路檔案的 BranchCache</string>
+
+            <string id="WBC_SMB_Enable_Help">只有當您已經在總公司部署一或多個啟用 BranchCache 的檔案伺服器時，才會使用這個原則設定。這個原則設定會根據用戶端透過廣域網路 (WAN) 連結從總公司下載內容時發生的網路延遲 (或延遲)，指定分公司的用戶端電腦何時開始從檔案伺服器快取內容。 當您設定這個設定的值 (即快取開始前允許的最大來回網路延遲)，用戶端會在網路延遲到達指定的值時才快取內容; 當網路延遲大於該值時，用戶端會在從檔案伺服器收到內容後開始快取內容。
+
+原則設定
+
+選取下列其中一項:
+
+- 尚未設定。使用這個選項時，BranchCache 延遲設定不會透過這個原則套用到用戶端電腦。當用戶端電腦為網域成員，但您不想在所有用戶端電腦設定 BranchCache 延遲設定時，可以為這個網域群組原則設定指定 [尚未設定]，然後將本機電腦原則設定為在個別用戶端電腦啟用 BranchCache 延遲設定。因為未設定網域群組原則設定，所以不會覆寫您在個別用戶端電腦所使用的延遲設定。
+
+- 已啟用。使用這個選項時，會在套用原則的所有用戶端電腦啟用 BranchCache 最大來回延遲設定。例如，如果在網域群組原則中啟用 [設定用於網路檔案的 BranchCache]，會在套用這個原則的所有網域成員用戶端電腦開啟您在原則中指定的 BranchCache 延遲設定。
+
+- 已停用。使用這個選項時，BranchCache 用戶端電腦會使用預設延遲設定 80 毫秒。
+
+在啟用這個原則設定的情況下，您還可以選取和設定以下選項:
+
+- 輸入最大來回網路延遲 (毫秒)，達到之後就會開始快取。指定時間 (毫秒) 達到之後，BranchCache 用戶端電腦開始在本機快取內容。
+            
+            </string>
+
+            <string id="WBC_HostedCacheDiscovery_Enable">透過服務連接點啟用自動託管快取探索</string>
+
+            <string id="WBC_HostedCacheDiscovery_Enable_Help">這個原則設定會指定用戶端電腦是否應該透過搜尋發佈服務連接點 (與用戶端的目前 Active Directory 站台關聯) 的託管快取伺服器，嘗試自動設定託管快取模式。 如果您啟用這個原則設定，套用這個原則設定的用戶端電腦會搜尋使用 Active Directory 的託管快取伺服器，而且這些伺服器和託管快取模式的優先順序高於手動 BranchCache 設定或使用其他群組原則的 BranchCache 設定。
+
+除了 [開啟 BranchCache] 原則設定之外，如果您也啟用這個原則設定，BranchCache 用戶端會嘗試探索當地分公司的託管快取伺服器。 如果用戶端電腦偵測到託管快取伺服器，便會開啟託管快取模式。 如果沒有偵測到託管快取伺服器，不會開啟託管快取模式，用戶端會使用以手動指定或透過群組原則的其他設定。
+
+套用這個原則設定時，用戶端電腦會在下列情況下執行或不執行自動託管快取伺服器探索:
+
+如果未套用其他以 BranchCache 模式為基礎的原則設定，用戶端電腦會執行自動託管快取伺服器探索。如果找到一或多個託管快取伺服器，用戶端電腦會自行設定託管快取模式。
+
+如果除了這個原則之外，也套用 [設定 BranchCache 分散式快取模式] 原則設定，用戶端電腦會執行自動託管快取伺服器探索。如果找到一或多個託管快取伺服器，用戶端電腦僅自行設定託管快取模式。
+
+如果套用 [設定 BranchCache 託管快取模式] 原則設定，用戶端電腦不會執行自動託管快取探索。套用 [設定託管快取伺服器] 原則設定時，用戶端電腦也不會執行自動託管快取探索。
+
+這個原則設定只適用於至少執行 Windows 8 的用戶端電腦。 這個原則對於執行 Windows 7 或 Windows Vista 的電腦沒有作用。 
+
+如果您停用或未設定這個設定，用戶端不會透過服務連接點嘗試探索託管快取伺服器。
+
+原則設定
+
+選取下列其中一項:
+
+- 尚未設定。使用這個選項時，BranchCache 設定不會透過這個原則設定套用到用戶端電腦，且用戶端電腦不會執行託管快取伺服器探索。
+
+- 已啟用。使用這個選項時，原則設定會套用到用戶端電腦，該電腦會執行自動託管快取伺服器探索，且設定為託管快取模式的用戶端。
+
+- 已停用。使用這個選項時，這個原則不會套用到用戶端電腦。
+            
+            </string>
+
+            <string id="WBC_HostedCache_MultipleServers">設定託管快取伺服器</string>
+
+            <string id="WBC_HostedCache_MultipleServers_Help">這個原則設定會指定用戶端電腦是否設定為使用託管快取模式，並提供可供用戶端電腦使用之託管快取伺服器的電腦名稱。 託管快取模式可以讓分公司的用戶端電腦，從安裝在相同辦公室位置的一或多個託管快取伺服器擷取內容。 您可以使用這個設定自動設定針對託管快取模式所設定的用戶端電腦，這些電腦具備分公司中託管快取伺服器的電腦名稱。
+
+如果您啟用這個原則設定，並指定有效的託管快取伺服器電腦名稱，會在套用這個原則設定的所有用戶端電腦啟用託管快取模式。若要讓這個原則設定生效，您還必須啟用 [開啟 BranchCache] 原則設定。
+
+這個原則設定只適用於至少執行 Windows 8 的用戶端電腦。 這個原則對於執行 Windows 7 或 Windows Vista 的電腦沒有作用。 同時套用 [設定 BranchCache 託管快取模式] 原則設定和這個原則設定的用戶端電腦，會使用在這個原則設定中指定的託管快取伺服器，不會使用 [設定 BranchCache 託管快取模式] 原則設定中指定的託管快取伺服器。
+
+如果您未設定這個原則設定，或停用這個原則設定，以託管快取模式設定的用戶端電腦仍然可以正常運作。
+
+原則設定
+
+選取下列其中一項:
+
+- 尚未設定。使用這個選項時，BranchCache 設定不會透過這個原則設定套用到用戶端電腦。
+
+- 已啟用。使用這個選項時，原則設定會套用到設定為託管快取模式用戶端的用戶端電腦，使用您在 [託管快取伺服器] 中指定的託管快取伺服器。
+
+- 已停用。使用這個選項時，這個原則不會套用到用戶端電腦。
+
+在啟用這個設定的情況下，您還可以選取和設定以下選項:
+
+- 託管快取伺服器。若要將託管快取伺服器電腦名稱新增到這個原則設定，按一下 [已啟用]，然後按一下 [顯示]。[顯示內容] 對話方塊隨即開啟。按一下 [值]，然後輸入託管快取伺服器的電腦名稱。
+            
+            </string>
+
+            <string id="WBC_Downgrading">設定用戶端 BranchCache 版本支援</string>
+
+            <string id="WBC_Downgrading_Help">這個原則設定會指定啟用 BranchCache 的用戶端電腦是否可以在降級模式中操作，以維護與舊版 BranchCache 的相容性。 如果用戶端電腦沒有使用相同的 BranchCache 版本，可能會降低快取效率，因為使用不同 BranchCache 版本的用戶端電腦可能會以不相容的格式儲存快取資料。
+
+如果您啟用這個原則設定，所有用戶端都會使用您在「從下列版本中選取」中指定的 BranchCache 版本。
+
+如果您未設定這個設定，則所有用戶端都會使用符合其作業系統的 BranchCache 版本。
+
+原則設定
+
+選取下列其中一項:
+
+- 尚未設定。使用這個選項時，這個原則設定不會套用到用戶端電腦，用戶端會執行其作業系統內含的 BranchCache 版本。
+
+- 已啟用。使用這個選項時，這個原則設定會根據您指定的 [從下列版本中選取] 選項設定值，套用到用戶端電腦。
+
+- 已停用。使用這個選項時，這個原則設定不會套用到用戶端電腦，用戶端會執行其作業系統內含的 BranchCache 版本。
+
+在啟用這個設定的情況下，您還可以選取和設定以下選項:
+
+從下列版本中選取
+
+- Windows Vista (安裝 BITS 4.0)、Windows 7 或 Windows Server 2008 R2。如果您選取這個版本，更新版本的 Windows 會執行這些作業系統內含的 BranchCache 版本，而非更新版本的 BranchCache。
+
+- Windows 8。如果您選取這個版本，Windows 8 會執行作業系統內含的 BranchCache 版本。
+            
+            </string>
+
+            <string id="WBC_Downgrading_Version_Win7">Windows Vista (已安裝 BITS 4.0)、Windows 7 或 Windows Server 2008 R2。</string>
+            <string id="WBC_Downgrading_Version_Win8">Windows 8</string>
+
+            <string id="WBC_Cache_MaxAge">設定資料快取中的區段留存時間</string>
+
+            <string id="WBC_Cache_MaxAge_Help">這個原則設定會指定用戶端電腦上，BranchCache 資料快取中區段有效的預設留存時間 (天)。
+
+如果您啟用這個原則設定，就可以設定資料快取中的區段留存時間。
+
+如果您停用或未設定這個原則設定，留存時間會設定為 28 天。
+
+原則設定
+
+選取下列其中一項:
+
+- 尚未設定。使用這個選項時，BranchCache 用戶端電腦快取留存時間設定不會透過這個原則套用到用戶端電腦。當用戶端電腦為網域成員，但您不想在所有用戶端電腦設定 BranchCache 用戶端電腦快取設定時，可以為這個網域群組原則設定指定 [尚未設定]，然後將本機電腦原則設定為在個別用戶端電腦啟用 BranchCache 用戶端電腦快取留存時間設定。因為未設定網域群組原則設定，所以不會覆寫您在個別用戶端電腦所使用的用戶端電腦快取留存時間設定。
+
+- 已啟用。使用這個選項時，會在套用原則的所有用戶端電腦啟用 BranchCache 用戶端電腦快取留存時間設定。例如，如果在網域群組原則中啟用這個原則設定，會在套用這個原則的所有網域成員用戶端電腦開啟您在原則中指定的 BranchCache 用戶端電腦快取留存時間。
+
+- 已停用。使用這個選項時，BranchCache 用戶端電腦會使用用戶端電腦上的預設用戶端電腦快取留存時間設定，即 28 天。
+
+在啟用這個設定的情況下，您還可以選取和設定以下選項:
+
+- 指定區段在資料快取中有效的留存時間 (天)。
+            
+            </string>
+
+        </stringTable>
+
+        <presentationTable>
+            <presentation id="WBC_Cache_Size_Exact_Presentation">
+                <decimalTextBox refId="WBC_Cache_Size_Exact_dctxtbox" defaultValue="10485760" spinStep="10485760">
+                </decimalTextBox>
+            </presentation>
+
+            <presentation id="WBC_Cache_Size_Percent_Presentation">
+                <text>指定配置供快取使用的磁碟空間總計百分比</text>
+                <decimalTextBox refId="WBC_Cache_Size_Percent_dctxtbox" defaultValue="5" spinStep="5">
+                </decimalTextBox>
+            </presentation>
+
+            <presentation id="WBC_Cache_Location_TextBox">
+                <textBox refId="WBC_Cache_TextBox">
+                    <label>輸入用戶端電腦快取位置</label>
+                </textBox>
+            </presentation>
+
+            <presentation id="WBC_Hosted_Cache_Location_TextBox">
+                <textBox refId="WBC_Cache_TextBox">
+                    <label>輸入託管快取伺服器的名稱</label>
+                </textBox>
+            </presentation>
+
+            <presentation id="WBC_SMB_DecimalTextBox">
+              <text>輸入最大來回網路延遲 (毫秒)，達到之後開始快取</text>  
+              <decimalTextBox refId="WBC_SMBLatency_DecimalTextBox" defaultValue="80" spinStep="20">
+                </decimalTextBox>
+            </presentation>
+
+            <presentation id="WBC_MultipleServers">
+              <text>託管快取伺服器</text>  
+              <listBox refId="WBC_MultipleServers_Listbox"/>
+            </presentation>
+
+            <presentation id="WBC_Downgrading_VersionSelection">
+              <dropdownList refId="Downgrading_Version" noSort="true" defaultItem="0">從下列版本中選取:</dropdownList>
+            </presentation>
+
+            <presentation id="WBC_Cache_MaxAge_Presentation">
+                <text>指定區段在資料快取中有效的留存時間 (天)</text>
+                <decimalTextBox refId="WBC_Cache_MaxAge_dctxtbox" defaultValue="28" spinStep="5">
+                </decimalTextBox>
+            </presentation>
+
+        </presentationTable>
+    </resources>
+</policyDefinitionResources>

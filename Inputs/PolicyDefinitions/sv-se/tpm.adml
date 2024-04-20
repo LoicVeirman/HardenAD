@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ange visningsnamn här</displayName>
+  <description>ange beskrivning här</description>
+  <resources>
+    <stringTable>
+      <string id="BlockedCommandsList_Help">Med den här principinställningen kan du hantera listan i Grupprincip över TPM-kommandon (Trusted Platform Module) som blockeras av Windows.
+
+Om du aktiverar den här principinställningen hindras vissa kommandon från att skickas till TPM:en på datorn. TPM-kommandon refereras med att kommandonummer. Exempel: Kommando 129 är TPM_OwnerReadInternalPub och kommando 170 är TPM_FieldUpgrade. Om du vill ta reda på vilket kommandonummer som hör till olika TPM-kommandon med TPM 1.2 kan du köra tpm.msc och gå till avsnittet Kommandohantering.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen kan bara de TPM-kommandon som anges i standardlistor eller lokala listor blockeras av Windows. Standardlistan över blockerade TPM-kommandon är förkonfigurerad i Windows. Du kan visa standardlistan genom att köra tpm.msc, navigera till Kommandohantering och visa kolumnen På standardlistan över blockerade. Det går att konfigurera den lokala listan över blockerade TPM-kommandon utanför Grupprincip genom att köra "tpm.msc" eller genom att använda skript mot Win32_Tpm-gränssnittet. Se de relaterade principinställningarna om du vill använda eller ignorera standardlistorna eller de lokala listorna med blockerade TPM-kommandon.</string>
+      <string id="BlockedCommandsList_Name">Konfigurera listan med blockerade TPM-kommandon</string>
+      <string id="IgnoreDefaultList_Help">Du kan använda den här principinställningen för att använda eller ignorera datorns standardlista med blockerade TPM-kommandon.
+
+Om inställningen aktiveras ignoreras datorns standardlista med blockerade TPM-kommandon i Windows och blockering sker endast av kommandon som anges via grupprincipen eller den lokala listan.
+
+Standardlistan över blockerade TPM-kommandon är förkonfigurerad i Windows. Du kan visa standardlistan genom att köra tpm.msc, navigera till Kommandohantering och visa kolumnen På standardlistan över blockerade. Det går att konfigurera den lokala listan över blockerade TPM-kommandon utanför Grupprincip genom att köra "tpm.msc" eller genom att använda skript mot Win32_Tpm-gränssnittet. Se den relaterade principinställningen för konfigurering av grupprinciplistan med blockerade TPM-kommandon.
+
+Om du inaktiverar eller låter bli att konfigurera inställningen blockeras TPM-kommandon i standardlistan, utöver kommandon i grupprincipen och lokala listor. </string>
+      <string id="IgnoreDefaultList_Name">Ignorera standardlistan med blockerade TPM-kommandon</string>
+      <string id="IgnoreLocalList_Help">Du kan använda den här principinställningen för att använda eller ignorera datorns lokala lista med blockerade TPM-kommandon.
+
+Om inställningen aktiveras ignoreras datorns lokala lista med blockerade TPM-kommandon i Windows och blockering sker endast av kommandon som anges via grupprincipen eller standardlistan.
+
+Det går att konfigurera den lokala listan över blockerade TPM-kommandon utanför Grupprincip genom att köra "tpm.msc" eller genom att använda skript mot Win32_Tpm-gränssnittet. Standardlistan över blockerade TPM-kommandon är förkonfigurerad i Windows. Se den relaterade principinställningen för konfigurering av grupprinciplistan med blockerade TPM-kommandon.
+
+Om du inaktiverar eller låter bli att konfigurera inställningen blockeras TPM-kommandon i den lokala listan, utöver kommandon i grupprincipen och standardlistorna.</string>
+      <string id="IgnoreLocalList_Name">Ignorera den lokala listan med blockerade TPM-kommandon</string>
+      <string id="TPMCategory">TPM-tjänster (Trusted Platform Module)</string>
+      <string id="OSManagedAuth_Name">Konfigurera hur mycket auktoriseringsinformation för TPM-ägare som är tillgänglig för operativsystemet (Configure the level of TPM owner authorization information available to the operating system)</string>
+      <string id="OSManagedAuth_Help">Den här principinställningen bestämmer hur mycket av TPM-ägarens auktoriseringsinformation som lagras i registret på den lokala datorn. Beroende på hur mycket av TPM-ägarens auktoriseringsinformation som lagras lokalt kan operativsystemet och TPM-baserade program utföra vissa TPM-åtgärder som kräver auktorisering av TPM-ägaren utan att användaren behöver ange TPM-ägarens lösenord.
+
+Du kan välja att låta operativsystemet lagra antingen hela TPM-ägarens auktoriseringsvärde, TPM-bloben för administrativ delegering plus TPM-bloben för användardelegering eller ingenting.
+
+Om du aktiverar den här principinställningen lagrar Windows TPM-ägarens auktorisering i registret på den lokala datorn i enlighet med den hanterade TPM-autentiseringsinställning för operativsystemet som du väljer.
+
+Välj inställningen Fullständig för den av operativsystemet hanterade TPM-autentiseringsinställningen om du vill lagra all auktoriseringsinformation om TPM-ägaren, TPM-bloben för administrativ delegering och TPM-bloben för användardelegering i det lokala registret. Med den här inställningen går det att använda TPM utan fjärrlagring eller extern lagring av TPM-ägarens auktoriseringsvärde. Den här inställningen lämpar sig i scenarier som inte kräver att det går att förhindra återställning av TPM-antihamringslogiken eller att ändra TPM-ägarens auktoriseringsvärde. Vissa TPM-baserade program kan kräva att den här inställningen ändras innan några funktioner som är beroende av TPM-antihamringslogiken kan användas.
+
+Välj Delegerad för den av operativsystemet hanterade TPM-autentiseringsinställningen om du bara vill lagra TPM-bloben för administrativ delegering och TPM-bloben för användardelegering i det lokala registret. Den här inställningen lämpar sig för TPM-baserade program som behöver utnyttja TPM-antihamringslogiken.
+
+Välj inställningen Ingen för den av operativsystemet hanterade TPM-autentiseringsinställningen om du vill uppnå kompatibilitet med tidigare operativsystem och program eller för scenarier som kräver att auktoriseringsinformation om TPM-ägaren inte lagras lokalt. Den här inställningen kan orsaka problem med vissa TPM-baserade program.
+
+Obs! Om inställningen för den av operativsystemet hanterade TPM-autentiseringen ändras från Fullständig till Delegerad återskapas det fullständiga auktoriseringsvärdet för TPM-ägaren och alla kopior av det ursprungliga auktoriseringsvärdet för TPM-ägaren är ogiltiga.
+</string>
+      <string id="OSManagedAuth-TpmAuthFull">Fullständig</string>
+      <string id="OSManagedAuth-TpmAuthAdminPlusUser">Delegerad</string>
+      <string id="OSManagedAuth-TpmAuthNone">Ingen</string>
+      <string id="StandardUserAuthorizationFailureDuration_Name">Standardvaraktighet för användarutelåsning (Standard User Lockout Duration)</string>
+      <string id="StandardUserAuthorizationFailureDuration_Name_Help">Med den här principinställningen kan du ange i hur många minuter standardanvändare som inte lyckas auktorisera sig för att använda TPM-kommandon (Trusted Platform Module) inte får använda kommandon som kräver auktorisering. Om antalet TPM-kommandon som inte har gått att auktorisera inom perioden överstiger ett tröskelvärde hindras standardanvändare från att skicka kommandon som kräver auktorisering till TPM.
+
+Med den här inställningen kan administratörer hindra TPM-maskinvara från att hamna i utelåst läge, eftersom den sänker frekvensen för hur ofta standardanvändaren kan skicka kommandon som kräver auktorisering till TPM.
+
+Ett auktoriseringsfel inträffar varje gång en standardanvändare skickar ett kommando till TPM och får ett felmeddelande som visar att ett auktoriseringsfel har inträffat. Auktoriseringsfel som inträffade före perioden ignoreras.
+
+Två tröskelvärden gäller för varje standardanvändare. Om något av dessa värden överskrids kan standardanvändaren inte skicka ett kommando till TPM som kräver auktorisering.
+
+Värdet för Standardtröskelvärde för utelåsning av enskild användare (Standard User Lockout Threshold Individual) är det maximala antalet auktoriseringsfel som varje standardanvändare kan få innan användaren inte tillåts skicka kommandon som kräver auktorisering till TPM.
+
+Värdet för Standardtröskelvärde för utelåsning av alla användare (Standard User Lockout Total Threshold) är det maximala totala antalet auktoriseringsfel som alla standardanvändare kan få innan alla standardanvändare inte tillåts skickas kommandon som kräver auktorisering till TPM.
+
+TPM är utformat att skydda sig mot personer som gissar lösenord genom att låsa maskinvaran när för många kommandon tas emot med ett felaktigt auktoriseringsvärde. När en TPM försätts i utelåsningsläge gäller detta alla användare, även administratörer och Windows-funktioner som BitLocker-diskkryptering. Antalet auktoriseringsfel en TPM tillåter och hur lång tid den är utelåst varierar för olika TPM-tillverkare. Vissa TPM:er kan försättas i utelåsningsläge i allt längre perioder med allt färre misslyckade auktoriseringsförsök beroende på tidigare misslyckade försök. Vissa TPM kan kräva att datorn startas om för att utelåsningsläget ska avslutas. Andra TPM kan kräva att datorn är på och att tillräckligt många klockcykler går innan utelåsningsläget avslutas.
+
+En administratör som känner till TPM-ägarens lösenord kan återställa TPM-maskinvarans utelåsningslogik från TPM-hanteringskonsolen (tpm.msc). Varje gång en administratör återställer TPM-maskinvarans utelåsningslogik ignoreras alla tidigare TPM-auktoriseringsfel som rör standardanvändare. Standardanvändarna kan alltså använda TPM normalt igen omedelbart.
+
+Om det här värdet inte är konfigurerat används standardvärdet 480 minuter (8 timmar).
+      </string>
+      <string id="StandardUserAuthorizationFailureIndividualThreshold_Name">Standardtröskelvärde för utelåsning av enskild användare (Standard User Individual Lockout Threshold)</string>
+      <string id="StandardUserAuthorizationFailureIndividualThreshold_Name_Help">Med den här principinställningen kan du ange det maximala antalet auktoriseringsfel för varje standardanvändare för TPM (Trusted Platform Module). Om antalet auktoriseringsfel för användaren inom intervallet för Standardvaraktighet för användarutelåsning (Standard User Lockout Duration) är lika med det här värdet, hindras standardanvändaren från att skicka kommandon till TPM (Trusted Platform Module) som kräver auktorisering.
+
+Med den här inställningen kan administratörer hindra TPM-maskinvara från att hamna i utelåst läge, eftersom den sänker frekvensen för hur ofta standardanvändaren kan skicka kommandon som kräver auktorisering till TPM.
+
+Ett auktoriseringsfel inträffar varje gång en standardanvändare skickar ett kommando till TPM och får ett felmeddelande som visar att ett auktoriseringsfel har inträffat. Auktoriseringsfel som inträffade före intervallet ignoreras.
+
+Två tröskelvärden gäller för varje standardanvändare. Om något av dessa värden överskrids kan standardanvändaren inte skicka ett kommando till TPM som kräver auktorisering.
+
+Det här värdet är det maximala antalet auktoriseringsfel som varje standardanvändare kan få innan användaren inte tillåts skickas kommandon som kräver auktorisering till TPM.
+
+Värdet för Standardtröskelvärde för utelåsning av alla användare (Standard User Lockout Total Threshold) är det maximala totala antalet auktoriseringsfel som alla standardanvändare kan få innan alla standardanvändare inte tillåts skickas kommandon som kräver auktorisering till TPM.
+
+TPM är utformat att skydda sig mot personer som gissar lösenord genom att låsa maskinvaran när för många kommandon tas emot med ett felaktigt auktoriseringsvärde. När en TPM försätts i utelåsningsläge gäller detta alla användare, även administratörer och Windows-funktioner som BitLocker-diskkryptering. Antalet auktoriseringsfel en TPM tillåter och hur lång tid den är utelåst varierar för olika TPM-tillverkare. Vissa TPM:er kan försättas i utelåsningsläge i allt längre perioder med allt färre misslyckade auktoriseringsförsök beroende på tidigare misslyckade försök. Vissa TPM kan kräva att datorn startas om för att utelåsningsläget ska avslutas. Andra TPM kan kräva att datorn är på och att tillräckligt många klockcykler går innan utelåsningsläget avslutas.
+
+En administratör som känner till TPM-ägarens lösenord kan återställa TPM-maskinvarans utelåsningslogik från TPM-hanteringskonsolen (tpm.msc). Varje gång en administratör återställer TPM-maskinvarans utelåsningslogik ignoreras alla tidigare TPM-auktoriseringsfel som rör standardanvändare. Standardanvändarna kan alltså använda TPM normalt igen omedelbart.
+
+Om det här värdet inte är konfigurerat används standardvärdet 4.
+
+Värdet noll innebär att operativsystemet inte tillåter standardanvändare att skicka kommandon som kan orsaka ett auktoriseringsfel till en TPM.
+      </string>
+
+      <string id="StandardUserAuthorizationFailureTotalThreshold_Name">Standardtröskelvärde för utelåsning av alla användare (Standard User Total Lockout Threshold)</string>
+      <string id="StandardUserAuthorizationFailureTotalThreshold_Name_Help">Med den här principinställningen kan du ange det maximala antalet auktoriseringsfel för alla standardanvändare för TPM (Trusted Platform Module). Om det totala antalet auktoriseringsfel för alla standardanvändare inom intervallet för Standardvaraktighet för användarutelåsning (Standard User Lockout Duration) är lika med det här värdet, hindras alla standardanvändare från att skicka kommandon till TPM (Trusted Platform Module) som kräver auktorisering.
+
+Med den här inställningen kan administratörer hindra TPM-maskinvara från att hamna i utelåst läge, eftersom den sänker frekvensen för hur ofta standardanvändaren kan skicka kommandon som kräver auktorisering till TPM.
+
+Ett auktoriseringsfel inträffar varje gång en standardanvändare skickar ett kommando till TPM och får ett felmeddelande som visar att ett auktoriseringsfel har inträffat. Auktoriseringsfel som inträffade före intervallet ignoreras.
+
+Två tröskelvärden gäller för varje standardanvändare. Om något av dessa värden överskrids kan standardanvändaren inte skicka ett kommando till TPM som kräver auktorisering.
+
+Värdet för Standardtröskelvärde för utelåsning av enskild användare (Standard User Individual Lockout) är det maximala antalet auktoriseringsfel som varje standardanvändare kan få innan användaren inte tillåts skickas kommandon som kräver auktorisering till TPM.
+
+Det här värdet är det maximala totala antalet auktoriseringsfel som alla standardanvändare kan få innan alla standardanvändare inte tillåts skickas kommandon som kräver auktorisering till TPM.
+
+TPM är utformat att skydda sig mot personer som gissar lösenord genom att låsa maskinvaran när för många kommandon tas emot med ett felaktigt auktoriseringsvärde. När en TPM försätts i utelåsningsläge gäller detta alla användare, även administratörer och Windows-funktioner som BitLocker-diskkryptering. Antalet auktoriseringsfel en TPM tillåter och hur lång tid den är utelåst varierar för olika TPM-tillverkare. Vissa TPM:er kan försättas i utelåsningsläge i allt längre perioder med allt färre misslyckade auktoriseringsförsök beroende på tidigare misslyckade försök. Vissa TPM kan kräva att datorn startas om för att utelåsningsläget ska avslutas. Andra TPM kan kräva att datorn är på och att tillräckligt många klockcykler går innan utelåsningsläget avslutas.
+
+En administratör som känner till TPM-ägarens lösenord kan återställa TPM-maskinvarans utelåsningslogik från TPM-hanteringskonsolen (tpm.msc). Varje gång en administratör återställer TPM-maskinvarans utelåsningslogik ignoreras alla tidigare TPM-auktoriseringsfel som rör standardanvändare. Standardanvändarna kan alltså använda TPM normalt igen omedelbart.
+
+Om det här värdet inte är konfigurerat används standardvärdet 9.
+
+Värdet noll innebär att operativsystemet inte tillåter standardanvändare att skicka kommandon som kan orsaka ett auktoriseringsfel till en TPM.
+
+      </string>
+      <string id="UseLegacyDAP_Name">Konfigurera systemet till att använda äldre Dictionary Attack Prevention Parameters-inställningen för TPM 2.0.</string>
+      <string id="UseLegacyDAP_Help">Den här principinställningen konfigurerar TPM till värdena för Dictionary Attack Prevention Parameters (tröskelvärde för utelåsning och återställningstid) som användes för Windows 10 version 1607 och tidigare. Den här principen har endast effekt om a) TPM ursprungligen förbereddes för en version av Windows efter Windows 10 version 1607 och b) systemet har TPM 2.0. Observera att om principen aktiveras börjar den gälla först efter att TPM-underhållsaktiviteter körts (vilket vanligtvis görs efter en systemomstart). När principen har aktiverats i ett system och trätt i kraft (efter en systemomstart) har inaktivering ingen effekt. Systemets TPM förblir konfigurerad till att använda äldre Dictionary Attack Prevention Parameters oavsett vilket värde den här grupprincipen får. Det enda sättet att få den inaktiverade inställningen att träda i kraft i ett system där den en gång har aktiverats är att a) inaktivera den från grupprincip och b) rensa TPM i systemet.</string>
+      <string id="DSHACategory">Tjänsten Hälsoattestering för enhet</string>
+      <string id="OptIntoDSHA_Name">Aktivera övervakning och rapportering med Hälsoattestering för enhet</string>
+      <string id="OptIntoDSHA_Help">Den här grupprincipen aktiverar rapportering med Hälsoattestering för enhet (DHA-rapporter) på enheter som stöds. Den gör att en enhet kan skicka hälsoattesteringsrelaterad information (startloggar för enhet, PCR-värden, TPM-certifikat o.s.v.) till tjänsten Hälsoattestering för enhet (DHA-tjänsten) varje gång enheten startar. Tjänsten Hälsoattestering för enhet verifierar enheters säkerhets- och hälsostatus och rapporterar det den hittar till företagsadministratörer via en molnbaserad rapporteringsportal. Den här principen körs oberoende av DHA-rapporter som initieras av lösningar för hantering av enheter (t.ex. MDM eller SCCM), och den påverkar inte deras arbetsflöden.</string>
+      <string id="ClearTPMIfNotReady_Name">Konfigurera systemet till att rensa TPM om den inte har statusen redo att användas.</string>
+      <string id="ClearTPMIfNotReady_Help">Den här principinställningen konfigurerar systemet till att uppmana användaren att rensa TPM om TPM har en annan status än redo att användas. Principen träder bara i kraft om systemets TPM har en annan status än redo att användas, inklusive om TPM är redo att användas med nedsatt funktionalitet. Uppmaningen att rensa TPM görs efter nästa omstart när användaren loggar in och endast om användaren ingår i gruppen Administratörer för systemet. Uppmaningen kan ignoreras, men den visas efter varje omstart och inloggning tills principen inaktiveras eller tills TPM har statusen redo att användas.</string>
+        
+    </stringTable>
+    <presentationTable>
+      <presentation id="BlockedCommandsList_Name">
+        <text>Ange kommandon som ska blockeras genom att lägga till kommandonumren i listan.</text>
+        <listBox refId="BlockedCommandsList_Ordinals2">Listan med blockerade TPM-kommandon:</listBox>
+        <text>Om du t ex vill blockera kommandona TPM_OwnerReadInternalPub</text>
+        <text>och TPM_FieldUpgrade ska du lägga till posterna 129 och 170 i listan.</text>
+      </presentation>
+      <presentation id="OSManagedAuth_Name">
+        <dropdownList refId="SelectOSManagedAuthLevel" noSort="true" defaultItem="1">Av operativsystemet hanterad TPM-autentiseringsnivå:</dropdownList>
+      </presentation>
+      <presentation id="StandardUserAuthorizationFailureDuration_Name">
+        <decimalTextBox refId="DXT_StandardUserAuthorizationFailureDuration_Name" defaultValue="480">Längd för beräkning av misslyckade TPM-auktoriseringar (minuter):</decimalTextBox>
+      </presentation>
+      <presentation id="StandardUserAuthorizationFailureIndividualThreshold_Name">
+        <decimalTextBox refId="DXT_StandardUserAuthorizationFailureIndividualThreshold_Name" defaultValue="4">Maximalt antal misslyckade auktorisering per intervall:</decimalTextBox>
+      </presentation>
+      <presentation id="StandardUserAuthorizationFailureTotalThreshold_Name">
+        <decimalTextBox refId="DXT_StandardUserAuthorizationFailureTotalThreshold_Name" defaultValue="9">Maximalt antal misslyckade auktorisering per intervall:</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

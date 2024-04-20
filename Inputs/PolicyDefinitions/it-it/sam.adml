@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Impostazioni SAM</displayName>
+  <description>Impostazioni di configurazione per Gestione account di sicurezza (SAM)</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">Gestione degli account di sicurezza</string>
+      <string id="SamNGCKeyROCAValidation">Configura la convalida delle chiavi di Windows Hello for Business con vulnerabilità ROCA durante l'autenticazione</string>
+      <string id="SamNGCKeyROCAValidationNone">Ignora le chiavi di Windows Hello for Business con vulnerabilità ROCA</string>
+      <string id="SamNGCKeyROCAValidationAudit">Controlla le chiavi di Windows Hello for Business con vulnerabilità ROCA durante l'uso</string>
+      <string id="SamNGCKeyROCAValidationBlock">Blocca le chiavi di Windows Hello for Business con vulnerabilità ROCA durante l'uso</string>
+      <string id="SamNGCKeyROCAValidation_explain">Questa impostazione dei criteri consente di configurare in che modo i controller di dominio gestiscono le chiavi di Windows Hello for Business che presentano una vulnerabilità di tipo "Return of Coppersmith's attack" (ROCA).
+
+Per altre informazioni sulla vulnerabilità ROCA, vedere:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+Se si abilita questa impostazione dei criteri, sono supportate le opzioni seguenti:
+
+Ignora: durante l'autenticazione il controller di dominio non eseguirà alcun test per verificare se le chiavi di Windows Hello for Business presentano la vulnerabilità ROCA.
+
+Controlla: durante l'autenticazione il controller di dominio creerà eventi di controllo per le chiavi di Windows Hello for Business che sono soggette alla vulnerabilità ROCA. Le autenticazioni verranno comunque eseguite.
+
+Blocca: durante l'autenticazione il controller di dominio impedirà l'uso di chiavi di Windows Hello for Business che sono soggette alla vulnerabilità ROCA. Le autenticazioni non verranno eseguite.
+
+Questa impostazione ha effetto solo sui controller di dominio.
+
+Se non viene configurata, per impostazione predefinita i controller di dominio useranno la configurazione locale. La configurazione locale predefinita è Controlla.
+
+Non è richiesto il riavvio per rendere effettive le modifiche apportate a questa impostazione.
+
+Nota: per evitare problemi imprevisti, è consigliabile non usare l'impostazione Blocca finché non sono state adottate appropriate soluzioni appropriate, ad esempio l'applicazione di patch ai TPM vulnerabili.
+
+Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Opzioni per la gestione delle chiavi di Windows Hello for Business con vulnerabilità ROCA:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

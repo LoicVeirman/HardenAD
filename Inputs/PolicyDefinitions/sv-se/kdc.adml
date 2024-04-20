@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>KDC-inställningar</displayName>
+  <description>Konfigurationsinställningar för Kerberos KDC (Key Distribution Center).</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">Använd sökordning för skogar</string>
+      <string id="forestsearch_explain">Den här principinställningen definierar listan över betrodda skogar som KDC (Key Distribution Center) söker i vid försök att matcha tvådelade SPN (Service Principal Names).
+
+Om du aktiverar den här principinställningen söker KDC i skogarna som finns i listan om den inte klarar av att matcha ett tvådelat SPN i den lokala skogen. Sökningen i skogarna utförs antingen med en global katalog eller med namnsuffixledtrådar. Om en matchning hittas returnerar KDC en hänvisningsbiljett till klienten för den aktuella domänen.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen söker inte KDC i skogarna i listan för att matcha ett SPN. Om KDC inte klarar av att matcha ett SPN på grund av att namnet inte kan hittas kan istället NTLM-autentisering användas.
+
+Den här principinställningen måste stödjas och anges på samma sätt på alla domänkontrollanter i domänen om ett konsekvent beteende ska kunna garanteras.</string>
+      <string id="emitlili">Tillhandahålla information om tidigare inloggningar på klientdatorer</string>
+      <string id="emitlili_explain">Den här principinställningen avgör om domänkontrollanten ska tillhandahålla information om tidigare inloggningar till klientdatorer.
+
+Om du aktiverar den här principinställningen tillhandahåller domänkontrollanten information om tidigare inloggningar.
+
+Dessutom måste principinställningen Visa information om tidigare inloggningar när användaren loggar in under Windows-komponenter i noden Inloggningsalternativ för Windows vara aktiverad för att Inloggning för Windows ska kunna använda den här funktionen.
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen tillhandahåller inte domänkontrollanten information om tidigare inloggningar, såvida inte principinställningen Visa information om tidigare inloggningar när användaren loggar in är aktiverad.
+
+Obs! För att information om tidigare inloggningar ska tillhandahållas måste domänens funktionalitetsnivå vara Windows Server 2008. Domänkontrollanter i domäner med funktionalitetsnivån Windows Server 2003, Windows 2000 enhetligt eller Windows 2000 blandat kan inte tillhandahålla information om tidigare inloggningar, och inga extra resurser används om du aktiverar den här inställningen.
+
+</string>
+      <string id="CbacAndArmor">KDC-stöd för anspråk, sammansatt autentisering och Kerberos-skydd</string>
+      <string id="CbacAndArmor_explain">Med den här principinställningen kan du konfigurera en domänkontrollant för anspråk och sammansatt autentisering för dynamisk åtkomstkontroll och Kerberos-skydd via Kerberos-autentisering.
+
+Om du aktiverar den här principinställningen kommer klientdatorer som har stöd för anspråk och sammansatt autentisering för dynamisk åtkomstkontroll samt har Kerberos-skydd att använda funktionen för Kerberos-autentiseringsmeddelanden. Den här principinställningen bör användas på alla domänkontrollanter för att säkerställa en konsekvent tillämpning av principen i domänen. 
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen har inte domänkontrollanten stöd för anspråk, sammansatt autentisering och Kerberos-skydd.
+
+Om du konfigurerar alternativet Stöds inte (Not supported) kan domänkontrollanten inte hantera anspråk, sammansatt autentisering eller skydd, vilket är standardbeteendet för domänkontrollanter som kör Windows Server 2008 R2 eller tidigare operativsystem.
+
+Obs! Om följande alternativ för KDC-principen ska fungera måste Kerberos-grupprincipen Kerberosklientstöd för anspråk, sammansatt autentisering och Kerberos-skydd vara aktiverad på de system som stöds. Om Kerberos-principinställningen inte är aktiverad används inte dessa funktioner i Kerberos-autentiseringsmeddelanden.
+
+Om du konfigurerar alternativet Stöds (Supported) kan domänkontrollanten hantera anspråk, sammansatt autentisering och Kerberos-skydd. Domänkontrollanten meddelar Kerberos-klientdatorerna att domänen kan hantera anspråk och sammansatt autentisering för dynamisk åtkomstkontroll samt Kerberos-skydd.
+
+Krav på domänfunktionsnivå
+Om domänfunktionsnivån är Windows Server 2008 R2 eller tidigare beter sig domänkontrollanterna som om alternativet Stöds (Supported) har valts för alternativen Tillhandahåll alltid anspråk (Always provide claims) och Avböj oskyddade autentiseringsbegäranden (Fail unarmored authentication requests).
+
+När domänfunktionsnivån är inställd på Windows Server 2012 meddelar domänkontrollanten Kerberos-klientdatorerna att domänen kan hantera anspråk och sammansatt autentisering för dynamisk åtkomstkontroll samt Kerberos-skydd och:
+   – Om du anger alternativet Tillhandahåll alltid anspråk (Always provide claims) returnerar domänkontrollanterna dessutom alltid anspråk för konton samt stöder RFC-funktioner för FAST-annonsering (Flexible Authentication Secure Tunneling).
+   – Om du väljer alternativet Avböj oskyddade autentiseringsbegäranden (Fail unarmored authentication requests) avvisar domänkontrollanterna oskyddade Kerberos-meddelanden.
+
+Varning! Om du väljer Avböj oskyddade autentiseringsbegäranden (Fail unarmored authentication requests) kommer autentiseringen av domänkontrollanten för klientdatorer som inte stöder Kerberos-skydd att misslyckas.
+
+För att funktionen ska vara effektiv är det dock viktigt att tillräckligt många domänkontrollanter har stöd för anspråk och sammansatt autentisering för dynamisk åtkomstkontroll samt har Kerberos-skydd för hantering av autentiseringsbegäranden. Om inte tillräckligt många domänkontrollanter har för stöd för principen misslyckas autentiseringen när dynamisk åtkomstkontroll eller Kerberos-skydd krävs (d.v.s. alternativet Stöds (Supported) är aktiverat).
+
+Prestandakonsekvenser för domänkontrollanter när den här principinställningen är aktiverad:
+ – Funktionsidentifiering för säkra Kerberos-domäner krävs, vilket leder till ytterligare meddelandeutbyten.
+   – Med anspråk och sammansatt autentisering för dynamisk åtkomstkontroll ökar storleken och komplexiteten på data i meddelandet, vilket leder till längre bearbetningstid och större storlek på Kerberos-tjänstbiljetter.
+   – Med Kerberos-skydd krypteras Kerberos-meddelanden helt och Kerberos-fel signeras, vilket leder till ökad bearbetningstid. Storleken på tjänstbiljetterna ändras dock inte.
+</string>
+      <string id="NoCbacAndArmor">Stöds inte (Not supported)</string>
+      <string id="MixModeCbacAndArmor">Stöds</string>
+      <string id="FullModeCbacAndArmor">Tillhandahåll alltid anspråk (Always provide claims)</string>
+      <string id="FullModeCbacAndRequireArmor">Avböj oskyddade autentiseringsbegäranden (Fail unarmored authentication requests)</string>
+      <string id="TicketSizeThreshold">Varning för stora Kerberos-biljetter (Warning for large Kerberos tickets)</string>
+      <string id="TicketSizeThreshold_explain">Med den här principinställningen kan du konfigurera vilken storlek på Kerberos-biljetterna som visar varningshändelsen som utfärdas vid Kerberos-autentisering. Varningarna för stora biljetter loggas i systemloggen.
+
+Om du aktiverar den här principinställningen kan du ange tröskelvärdet för Kerberos-biljetter som ska visa varningshändelser. Om värdet är för högt kan autentiseringsfel inträffa trots att varningshändelser inte har loggats.  Om värdet är för lågt kan för många biljettvarningar loggas än vad som är användbart i analyssyfte. Värdet ska anges som samma värde som Kerberos-principen Ange största buffertstorlek för SSPI-kontexttoken i Kerberos (Set maximum Kerberos SSPI context token buffer size) eller den minsta MaxTokenSize som används i miljön om du inte konfigurerar med en grupprincip.
+      
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen används tröskelvärdet 12 000 byte som standard, vilket motsvarar standardstorleken för MaxTokenSize i Kerberos i Windows 7, Windows Server 2008 R2 och tidigare versioner.
+
+</string>
+      <string id="RequestCompoundId">Begär sammansatt autentisering</string>
+      <string id="RequestCompoundId_explain">Med den här principinställningen kan du konfigurera en domänkontrollant så att den begär sammansatt autentisering.
+
+Obs! För att en domänkontrollant ska begära sammansatt autentisering måste principen "KDC-stöd för anspråk, sammansatt autentisering och Kerberos-skydd" vara konfigurerad och aktiverad. 
+
+Om du aktiverar den här principinställningen begär domänkontrollanter sammansatt autentisering. För att tjänstbiljetten som returneras ska innehålla sammansatt autentisering måste kontot uttryckligen ha konfigurerats. Den här principinställningen bör användas på alla domänkontrollanter för att säkerställa en konsekvent tillämpning av principen i domänen. 
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen returnerar domänkontrollanterna tjänstbiljetter som innehåller sammansatt autentisering varje gång klienten skickar en begäran om sammansatt autentisering, oavsett kontokonfiguration.
+
+</string>
+      <string id="PKINITFreshness">KDC-stöd för PKInit Freshness Extension</string>
+      <string id="PKINITFreshness_explain">Windows Server 2016-domänfunktionsnivå krävs för att PKInit Freshness Extension ska stödas. Om domänkontrollantens domän inte är på Windows Server 2016-domänfunktionsnivå eller senare tillämpas inte principen.
+
+Med den här principinställningen kan du konfigurera en domänkontrollant till att stöda PKInit Freshness Extension.
+
+Om du aktiverar principinställningen har du följande alternativ:
+
+Stöds: PKInit Freshness Extension stöds på begäran. Kerberos-klienter som autentiseras med PKInit Freshness Extension får ett SID för en aktuell identitet för offentlig nyckel.
+
+Krävs: PKInit Freshness Extension krävs för att autentisering ska gå att genomföra. Kerberos-klienter som inte stöder PKInit Freshness Extension kan inte autentiseras när de använder en offentlig nyckel.
+
+Om du inaktiverar eller låter bli att konfigurera principinställningen tillhandahåller domänkontrollanten aldrig PKInit Freshness Extension och den accepterar giltiga autentiseringsbegäranden utan att kontrollera aktualitet. Användarna får heller aldrig något SID för en aktuell identitet för offentlig nyckel.
+</string>
+      <string id="NoPKINITFreshness">Inaktiverat</string>
+      <string id="SupportPKINITFreshness">Stöds</string>
+      <string id="RequirePKINITFreshness">Krävs</string>
+      <string id="PKINITHashAlgorithmConfiguration">Konfigurera hash-algoritmer för certifikatinloggning</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Den här principinställningen styr hash- eller kontrollsummealgoritmer som används av Kerberos-klienten när certifikatautentisering utförs.
+
+Om du aktiverar den här principen kan du konfigurera ett av fyra tillstånd för varje algoritm:
+
+- ”Standard” anger algoritmen till det rekommenderade tillståndet.
+
+- ”Stöds” aktiverar användning av algoritmen. Om du aktiverar algoritmer som har inaktiverats som standard kan det minska säkerheten.
+
+- ”Granskad” aktiverar användning av algoritmen och rapporterar en händelse (ID 309) varje gång den används. Detta tillstånd är avsett att verifiera att algoritmen inte används och kan inaktiveras på ett säkert sätt.
+
+- ”Stöds inte” inaktiverar användningen av algoritmen. Det här tillståndet är avsett för algoritmer som anses vara osäkra.
+
+Om du inaktiverar eller låter bli att konfigurera den här principen antar varje algoritm standardtillståndet.
+Mer information om de hash- och kontrollsummealgoritmer som stöds av Windows Kerberos-klienten och deras standardtillstånd finns på https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Händelser som genererats av denna konfiguration: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Standard</string>
+      <string id="PKINITHashAlgorithm_Supported">Stöds</string>
+      <string id="PKINITHashAlgorithm_Audited">Granskade</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Stöds inte</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Läge:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Skogar att genomsöka</label>
+        </textBox>
+        <text>Syntax:</text>
+        <text>Ange den lista med skogar som ska genomsökas när den här principen aktiveras.</text>
+        <text>Använd namnformatet FQDN (Fully Qualified Domain Name).</text>
+        <text>Avgränsa flera sökposter med ett semikolon (;).</text>
+        <text>Information:</text>
+        <text>Den aktuella skogen behöver inte ingå i listan eftersom sökordningen för skogar är att först söka i den globala katalogen och sedan i den angivna ordningen.</text>
+        <text>Du behöver inte lista alla domäner i skogen separat.</text>
+        <text>Om en betrodd skog ingår i listan genomsöks alla domäner i den aktuella skogen.</text>
+        <text>För bästa prestanda bör skogarna i listan anges i ordning efter sannolikhet att lyckas.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Alternativ för anspråk, sammansatt autentisering för dynamisk åtkomstkontroll och Kerberos-skydd:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Tröskelvärde för biljettstorlek</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">Alternativ för PKInit Freshness Extension:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

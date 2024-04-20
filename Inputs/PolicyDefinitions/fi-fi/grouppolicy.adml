@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>kirjoita näyttönimi tähän</displayName>
+  <description>kirjoita kuvaus tähän</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Vaikutuksen heikentämisen asetukset</string>
+      <string id="Font_List">Fonttien, joihin ei luoteta, estäminen</string>
+      <string id="Font_List_Help">Tämä suojausominaisuus tarjoaa yleisen asetuksen, jonka avulla voidaan estää ohjelmia lataamasta fontteja, joihin ei luoteta. Fontit, joihin ei luoteta, asennetaan hakemiston %windir%\Fonts ulkopuolelle. Tämä ominaisuus voidaan määrittää olemaan jossakin kolmesta tilasta: Käytössä, Ei käytössä ja Valvonta. Oletusarvon mukaan se on Ei käytössä -tilassa, eikä fontteja estetä. Jos et ole vielä valmis ottamaan tätä ominaisuutta käyttöön organisaatioosi, voit suorittaa sen Valvonta-tilassa, jolloin näet, aiheuttaako fonttien, joihin ei luoteta, estäminen ongelmia käytettävyyden tai yhteensopivuuden suhteen.</string>
+      <string id="FontMitigation_On">Estä fontit, joihin ei luoteta, ja kirjaa tapahtumat</string>
+      <string id="FontMitigation_Off">Älä estä fontteja, joihin ei luoteta</string>
+      <string id="FontMitigation_Audit">Kirjaa tapahtumat estämättä fontteja, joihin ei luoteta</string>
+
+	  <string id="ProcessMitigationOptions_List">Prosessin lievennysasetukset</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Tämän suojausominaisuuden avulla voi korvata yksittäisiä MitigationOptions-prosessiasetuksia. Näin voidaan pakottaa sovelluksille ominaisia suojauskäytäntöjä. Arvon nimeksi määritetään sovelluksen nimi (mukaan lukien tiedostotunniste). Arvo määritetään bittikenttänä, jossa on sarja merkintöjä tietyissä sijainneissa. Bitin arvo voi olla joko 0 (asetus on pakotettu pois), 1 (asetus on pakotettu käyttöön) tai ? (asetus säilyttää olemassa olevan arvon ennen ryhmäkäytäntöobjektin arviointia). Tunnistetut bittien sijainnit ovat seuraavat:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        Ottaa käyttöön tietojen suorittamisen estämisen aliprosessille
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        Ottaa käyttöön DEP-ATL-välitysosaemulaation aliprosessille. DEP-ATL-välitysosaemulaation ansiosta järjestelmä sieppaa NX-virheet, jotka ovat peräisin ATL (Active Template Library) -alirutiinitasolta.
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        Ottaa käyttöön strukturoidun poikkeuskäsittelijän korvaussuojauksen (SEHOP) aliprosessille. SEHOP estää heikkoutta hyödyntävät ohjelmat, jotka käyttävät strukturoidun poikkeuskäsittelijän (SEH) korvaustekniikkaa.
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        ASLR (Address Space Layout Randomization) -käytäntö määrittää uudelleen kuvat, jotka eivät ole yhteensopivia dynaamisen kannan kanssa toimimalla aivan kuin latauksen aikana olisi ilmennyt kuvakannan ristiriita. Jos sijaintia pitää siirtää, sellaisia kuvia ei ladata, joilla ei ole kannan uudelleensijoitusosaa.
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        Alhaalta ylös -satunnaistamiskäytäntö, joka sisältää pinosatunnaistamisasetuksia, johtaa siihen, että alimpana käyttäjäosoitteena käytetään satunnaista sijaintia.
+
+        Jos esimerkiksi haluat ottaa käyttöön PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE:n ja PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON:n, poista käytöstä PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF ja jätä muut asetukset oletusarvoihinsa. Määritä seuraava arvo:
+        ???????????????0???????1???????1
+
+        Asetustunnukset, joita ei ole määritetty tässä muille kuin ?-arvolle, käyttäytyvät määrittämättömästi.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">Ota käyttöön AD/DFS-toimialueen ohjauskoneen synkronointi käytännön päivityksen aikana</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">Kun tämä asetus otetaan käyttöön, ryhmäkäytäntöasiakas muodostaa yhteyden samaan jaettujen DFS-resurssien toimialueen ohjauskoneeseen kuin Active Directory.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">Poista ryhmäkäytäntöasiakaspalvelun AOAC-optimointi käytöstä</string>
+      <string id="DisableAOACProcessing_Help">Tämä käytäntö estää ryhmäkäytäntöasiakaspalvelun pysäyttämisen käyttämättömässä tilassa.
+
+
+
+</string>
+      <string id="EnableCDP">Jatka kokemuksia tässä laitteessa</string>
+      <string id="EnableCDP_Help">
+Tämä käytäntöasetus määrittää, voiko Windows-laite osallistua laitteiden välisiin kokemuksiin (jatkaa kokemuksia).
+
+Jos otat tämän käytäntöasetuksen käyttöön, muut samalle käyttäjälle kuuluvat Windows-laitteet löytävät Windows-laitteen ja voivat osallistua laitteiden välisiin kokemuksiin.
+
+Jos poistat tämän käytäntöasetuksen käytöstä, muut laitteet eivät löydä Windows-laitetta eivätkä voi osallistua laitteiden välisiin kokemuksiin.
+
+Jos et määritä tätä käytäntöasetusta, oletustoiminta määräytyy Windows-version mukaan. Tähän käytäntöön tehdyt muutokset tulevat voimaan uudelleenkäynnistyksen yhteydessä.
+      </string>
+      <string id="EnableMMX">Puhelin-tietokone-linkitys tässä laitteessa</string>
+      <string id="EnableMMX_Help">
+Tämän käytännön avulla IT-järjestelmänvalvojat pystyvät poistamaan puhelimen ja tietokoneen linkitysmahdollisuuden käytöstä. Kun laitteet ovat linkitettyinä, käyttäjä pystyy keskeytyksettä jatkamaan lukemista, sähköpostin käyttöä ja muita puhelimen ja tietokoneen välistä linkitystä vaativia tehtäviä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, Windows-laite pystyy rekisteröitymään puhelin-tietokone-linkitystoimintoon ja hyödyntämään Jatka tietokoneessa -sovelluksen toimintoja.
+
+Jos poistat tämän käytäntöasetuksen käytöstä, Windows-laitteen linkitys puhelimiin ei ole sallittua, laitteen tiedot poistuvat linkitettyjen puhelimien laiteluetteloista eikä laitteella pysty hyödyntämään Jatka tietokoneessa -sovelluksen toimintoja.
+
+Jos et määritä tätä käytäntöasetusta, oletusarvoinen toiminta määräytyy Windows-version mukaan. Tämän käytännön muutokset tulevat voimaan uudelleenkäynnistyksen yhteydessä.
+      </string>
+      <string id="EnableAppUriHandlers">Määritä verkosta sovellukseen -linkitys sovelluksen URI-käsittelijöihin</string>
+      <string id="EnableAppUriHandlers_Help">
+Tämä käytäntö määrittää, tukeeko Windows verkosta sovellukseen -linkitystä sovelluksen URI-käsittelijöihin.
+
+Jos tämä käytäntöasetus otetaan käyttöön, verkosta sovellukseen -linkitys otetaan käyttöön, jolloin sovellukset voidaan käynnistää http(s)-URI-osoitteella.
+
+Jos tämä käytäntö poistetaan käytöstä, verkosta sovellukseen -linkitys poistetaan käytöstä, ja http(s)-URI-osoitteet avataan osoitteeseen liittyvän sovelluksen avaamisen sijaan oletusselaimessa.
+
+Jos et määritä tätä käytäntöasetusta, oletustoiminta vaihtelee Windows-version mukaan. Tämän käytännön muutokset astuvat voimaan uudelleenkäynnistyksen yhteydessä.
+      </string>
+      <string id="Fonts">Fontit</string>
+      <string id="EnableFontProviders">Ota fonttipalvelut käyttöön</string>
+      <string id="EnableFontProviders_Help">
+        Tämä käytäntöasetus määrittää, voiko Windows ladata fontteja ja fonttiluettelotietoja verkkofonttipalveluista.
+
+        Jos otat tämän käytäntöasetuksen käyttöön, Windows kyselee säännöllisesti verkkofonttipalvelusta, onko uutta fonttiluetteloa saatavilla. Windows voi myös ladata fonttitietoja, jos niitä tarvitaan tekstin muotoilemiseen tai hahmontamiseen.
+
+        Jos poistat tämän käytäntöasetuksen käytöstä, Windows ei muodosta yhteyttä verkkofonttipalveluun vaan luetteloi vain paikallisesti asennetut fontit.
+
+        Jos et määritä tätä käytäntöasetusta, oletuskäytäntö määräytyy Windows-version mukaan. Käytännön muutokset tulevat voimaan uudelleenkäynnistyksen yhteydessä.
+      </string>
+      <string id="EnableLogonOptimization">Määritä ryhmäkäytäntöjen tallentaminen välimuistiin</string>
+      <string id="EnableLogonOptimization_Help">
+        Tämän käytäntöasetuksen avulla voit määrittää ryhmäkäytännön välimuistiin tallentamisen toiminnan.
+
+        Jos otat tämän käytäntöasetuksen käyttöön, ryhmäkäytäntö tallentaa käytäntötiedot välimuistiin jokaisen taustakäsittelyistunnon jälkeen. Välimuistiin tallennetaan sovellettavat ryhmäkäytäntöobjektit ja niiden sisältämät asetukset. Kun ryhmäkäytäntö suoritetaan synkronisesti edustalla, se viittaa tähän välimuistiin, mikä mahdollistaa ryhmäkäytännön suorittamisen nopeammin. Kun välimuisti luetaan, ryhmäkäytäntö yrittää muodostaa yhteyden kirjautumistoimialueen ohjauskoneeseen linkkinopeuden määrittämistä varten. Kun ryhmäkäytäntö suoritetaan taustalla tai asynkronisesti edustalla, se jatkaa käytäntötietojen uusimman version lataamista ja määrittää kaistanleveysarvion perusteella hitaan yhteyden raja-arvot. (Lisätietoja asynkronisen edustakäsittelyn määrittämisestä on Määritä hidas yhteys ryhmäkäytäntöasetuksia käytettäessä -käytäntöasetuksessa.)
+
+        Tässä käytäntöasetuksessa määritettävä hitaan yhteyden raja-arvo määrittää, kuinka kauan ryhmäkäytäntö odottaa vastausta toimialueen ohjauskoneelta ennen kuin se raportoi hitaasta linkkinopeudesta. Oletusarvo on 500 millisekuntia.
+
+        Tässä käytäntöasetuksessa määritettävä aikakatkaisuarvo määrittää, kuinka kauan ryhmäkäytäntö odottaa vastausta toimialueen ohjauskoneelta ennen kuin se toteaa, ettei verkkoyhteyttä ole. Nykyisen ryhmäkäytännön käsittely pysäytetään. Ryhmäkäytäntö suoritetaan taustalla seuraavan kerran, kun toimialueen ohjauskoneeseen muodostetaan yhteys. Jos arvo määritetään liian korkeaksi, käyttäjä saattaa joutua odottamaan pidempään tietokonetta käynnistettäessä tai kirjauduttaessa. Oletusarvo on 5 000 millisekuntia.
+
+        Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, ryhmäkäytäntöasiakas ei tallenna välimuistiin sovellettavia ryhmäkäytäntöobjekteja tai niiden sisältämiä asetuksia. Kun ryhmäkäytäntö suoritetaan asynkronisesti, se lataa verkosta käytännön uusimman version ja määrittää kaistanleveysarvion perusteella hitaan linkin raja-arvot. (Lisätietoja asynkronisen edustakäsittelyn määrittämisestä on Määritä hidas yhteys ryhmäkäytäntöasetuksia käytettäessä -käytäntöasetuksessa.)
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">Ota käyttöön ryhmäkäytännön välimuistiin tallentaminen Server-koneissa</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        Tämän käytäntöasetuksen avulla voit määrittää ryhmäkäytännön välimuistiin tallentamisen toiminnan Windows Server -koneissa.
+        Jos otat tämän käytäntöasetuksen käyttöön, ryhmäkäytäntö tallentaa käytäntötiedot välimuistiin jokaisen taustakäsittelyistunnon jälkeen. Välimuistiin tallennetaan sovellettavat ryhmäkäytäntöobjektit ja niiden sisältämät asetukset. Kun ryhmäkäytäntö suoritetaan synkronisesti edustalla, se viittaa tähän välimuistiin, mikä mahdollistaa ryhmäkäytännön suorittamisen nopeammin. Kun välimuisti luetaan, ryhmäkäytäntö yrittää muodostaa yhteyden kirjautumistoimialueen ohjauskoneeseen linkkinopeuden määrittämistä varten. Kun ryhmäkäytäntö suoritetaan taustalla tai asynkronisesti edustalla, se jatkaa käytäntötietojen uusimman version lataamista ja määrittää kaistanleveysarvion perusteella hitaan yhteyden raja-arvot. (Lisätietoja asynkronisen edustakäsittelyn määrittämisestä on Määritä hidas yhteys ryhmäkäytäntöasetuksia käytettäessä -ryhmäkäytännössä.)
+        Tässä käytäntöasetuksessa määritettävä hitaan yhteyden raja-arvo määrittää, kuinka kauan ryhmäkäytäntö odottaa vastausta toimialueen ohjauskoneelta ennen kuin se raportoi hitaasta linkkinopeudesta. Oletusarvo on 500 millisekuntia.
+        Tässä käytäntöasetuksessa määritettävä aikakatkaisuarvo määrittää, kuinka kauan ryhmäkäytäntö odottaa vastausta toimialueen ohjauskoneelta ennen kuin se toteaa, ettei verkkoyhteyttä ole. Nykyisen ryhmäkäytännön käsittely pysäytetään. Ryhmäkäytäntö suoritetaan taustalla seuraavan kerran, kun toimialueen ohjauskoneeseen muodostetaan yhteys. Jos arvo määritetään liian korkeaksi, käyttäjä saattaa joutua odottamaan pidempään tietokonetta käynnistettäessä tai kirjauduttaessa. Oletusarvo on 5 000 millisekuntia.
+        Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, ryhmäkäytäntöasiakas ei tallenna välimuistiin sovellettavia ryhmäkäytäntöobjekteja tai niiden sisältämiä asetuksia. Kun ryhmäkäytäntö suoritetaan asynkronisesti, se lataa verkosta käytännön uusimman version ja määrittää kaistanleveysarvion perusteella hitaan linkin raja-arvot. (Lisätietoja asynkronisen edustakäsittelyn määrittämisestä on Määritä hidas yhteys ryhmäkäytäntöasetuksia käytettäessä -ryhmäkäytännössä.)
+      
+      </string>
+
+      <string id="LogonScriptDelay">Määritä kirjautumiskomentosarjan viive</string>
+      <string id="LogonScriptDelay_Help">
+        Kirjoita 0, jos haluat poistaa kirjautumiskomentosarjan viiveen käytöstä.
+
+        Tämän käytäntöasetuksen avulla voit määrittää, kuinka kauan ryhmäkäytäntöasiakas odottaa kirjautumisen jälkeen ennen komentosarjojen suorittamista.
+
+        Oletusarvon mukaan ryhmäkäytäntöasiakas odottaa viisi minuuttia ennen kirjautumiskomentosarjojen suorittamista. Siten saadaan luotua hyvin reagoiva työpöytäympäristö ja ehkäistyä levyristiriidat.
+
+        Jos otat tämän käytäntöasetuksen käyttöön, ryhmäkäytäntö odottaa määritetyn ajan ennen kirjautumiskomentosarjojen suorittamista.
+
+        Jos poistat tämän käytäntöasetuksen käytöstä, ryhmäkäytäntö suorittaa komentosarjat välittömästi kirjautumisen jälkeen.
+
+        Jos et määritä tätä käytäntöasetusta, ryhmäkäytäntö odottaa viisi minuuttia ennen kirjautumiskomentosarjojen suorittamista.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">Määritä Direct Access -yhteydet nopeaksi verkkoyhteydeksi</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">Tämän käytäntöasetuksen avulla järjestelmänvalvoja voi määrittää Direct Access -yhteyden nopeaksi verkkoyhteydeksi, jota käytetään ryhmäkäytännön käyttämiseen ja päivittämiseen.
+
+Kun ryhmäkäytäntö havaitsee Direct Access -yhteyden kaistanleveyden, kaistanleveyden nopeustietojen tunnistus saattaa joskus epäonnistua. Jos ryhmäkäytäntö havaitsee kaistanleveyden nopeuden, ryhmäkäytäntö noudattaa normaaleja sääntöjä arvioidessaan Direct Access -yhteyden hitaaksi tai nopeaksi verkkoyhteydeksi. Jos kaistanleveyttä ei tunnisteta, ryhmäkäytäntö arvioi verkkoyhteyden oletusarvon mukaan hitaaksi. Tämän käytäntöasetuksen avulla järjestelmänvalvoja voi määrittää, että oletusarvoisesti käytetään hitaan yhteyden asemesta nopeaa yhteyttä, jos verkon kaistanleveyden nopeutta ei tunnisteta.
+
+Huomautus: kun ryhmäkäytäntö havaitsee hitaan verkkoyhteyden, se käsittelee vain ne asiakaspuolen laajennukset, jotka on määritetty käsiteltäviksi hitaan linkin yhteydessä (hidas verkkoyhteys).
+
+Jos otat tämän käytännön käyttöön, kun ryhmäkäytäntö ei tunnista Direct Access -kaistanleveyden nopeutta, ryhmäkäytäntö arvioi verkkoyhteyden nopeaksi ja käsittelee kaikki asiakaspuolen laajennukset.
+
+Jos poistat tämän asetuksen käytöstä tai et määritä sitä, ryhmäkäytäntö arvioi verkkoyhteyden hitaaksi ja käsittelee vain ne asiakaspuolen laajennukset, jotka on määritetty käsiteltäviksi hitaan linkin yhteydessä.
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">Muuta ryhmäkäytäntö suorittamaan käsittely asynkronisesti, kun hidas verkkoyhteys havaitaan.</string>
+      <string id="SlowlinkDefaultToAsync_Help">Tämä käytäntö ohjaa ryhmäkäytännön ohittamaan synkronista käsittelyä (tietokoneet odottavat, kunnes verkko on alustettu täysin tietokonetta käynnistettäessä ja käyttäjän kirjautuessa sisään) edellyttävien asiakaspuolten laajennusten käsittelyn, kun hidas verkkoyhteys havaitaan.
+
+Jos otat tämän käytäntöasetuksen käyttöön, kun hidas verkkoyhteys havaitaan, ryhmäkäytäntö suorittaa käsittelyn aina asynkronisesti.
+Asiakastietokoneet eivät odota verkon täyttä alustumista tietokonetta käynnistettäessä ja käyttäjän kirjautuessa sisään. Nykyisten käyttäjien kirjautumiseen käytetään välimuistiin tallennettuja valtuustietoja,
+mikä nopeuttaa kirjautumista sisään. Ryhmäkäytäntö otetaan käyttöön taustalla sen jälkeen, kun verkko on käytettävissä.
+Huomaa, että koska kyseessä on taustapäivitys, asynkronista käsittelyä edellyttäviä laajennuksia, kuten ohjelmistoasennusta, kansioiden uudelleenohjausta
+tai asemamäärityksiä, ei toteuteta.
+
+Huomautus: kahdessa tapauksessa ryhmäkäytäntö käsitellään kuitenkin synkronisesti, vaikka tämä käytäntöasetus olisikin otettu käyttöön:
+1 - Ensimmäisen tietokoneen käynnistyksen yhteydessä sen jälkeen, kun asiakastietokone on liitetty toimialueeseen.
+2 - Jos Odota aina verkkoa käynnistyksessä ja kirjautumisessa -käytäntöasetus on otettu käyttöön.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, hitaan verkkoyhteyden havaitseminen ei vaikuta siihen, suorittaako ryhmäkäytäntö käsittelyn synkronisesti vai asynkronisesti.
+
+      </string>
+      <string id="DisableLGPOProcessing">Poista paikallisten ryhmäkäytäntöobjektien käsittely käytöstä</string>
+      <string id="DisableLGPOProcessing_Help">Tämä käytäntöasetus estää paikallisten ryhmäkäytäntöobjektien käyttämisen.
+
+Paikallisten ryhmäkäytäntöobjektien asetukset otetaan oletusarvon mukaan käyttöön ennen toimialuekohtaisia ryhmäkäytäntöobjektiasetuksia. Näitä käytäntöasetuksia voidaan käyttää sekä käyttäjille että paikalliselle tietokoneelle. Voit poistaa kaikkien paikallisten ryhmäkäytäntöobjektien käsittelyn ja käyttöönoton käytöstä, jos haluat varmistaa, että vain toimialueeseen perustuvia ryhmäkäytäntöobjekteja käytetään.
+
+Jos otat tämän käytäntöasetuksen käyttöön, järjestelmä ei käsittele tai käytä mitään paikallisia ryhmäkäytäntöobjekteja.
+
+Jos poistat tämän asetuksen käytöstä tai et määritä sitä, paikallisia ryhmäkäytäntöobjekteja käytetään edelleen.
+
+Huomautus: Microsoft suosittelee, että määrität tämän asetuksen toimialueeseen liitetyissä tietokoneissa ainoastaan toimialueeseen perustuvissa ryhmäkäytäntöobjekteissa. Tämä käytäntöasetus ohitetaan työryhmään liitetyissä tietokoneissa.
+
+</string>
+      <string id="SyncWaitTime">Määritä käynnistyskäytännön käsittelyn odotusaika</string>
+      <string id="SyncWaitTime_Help">Tämä käytäntöasetus määrittää, miten kauan ryhmäkäytännön tulee odottaa verkon käytettävyysilmoituksia käynnistyskäytännön käsittelyn aikana. Jos käynnistyskäytännön käsittely on synkroninen, tietokone on estetyssä tilassa, kunnes verkko on käytettävissä tai oletusodotusaika täyttyy. Jos käynnistyskäytännön käsittely on asynkroninen, tietokonetta ei estetä ja käytännön käsittely tehdään taustalla. Kummassakin tapauksessa tämä käytäntöasetus ohittaa mahdolliset järjestelmän laskemat odotusajat.
+
+Jos otat tämän käytäntöasetuksen käyttöön, ryhmäkäytäntö käyttää tätä järjestelmänvalvojan määrittämää enimmäisodotusaikaa ja ohittaa mahdolliset oletusarvon mukaiset tai järjestelmän laskemat odotusajat.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, ryhmäkäytäntö käyttää oletusodotusaikaa 30 sekuntia Windows Vista -tietokoneissa. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Salli toimialuepuuryhmien väliset käyttäjäkäytännöt ja palvelimessa sijaitsevat käyttäjäprofiilit</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">Tämä käytäntöasetus sallii käyttäjäpohjaisen käytäntökäsittelyn, palvelimessa sijaitsevat käyttäjäprofiilit sekä käyttäjäobjektien kirjautumiskomentosarjat vuorovaikutteisissa kirjautumisessa toimialuepuuryhmien välillä.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käyttäjätileihin, jotka kirjautuvat vuorovaikutteisesti toiseen toimialuepuuryhmään kuuluvaan tietokoneisiin, kun toimialuepuuryhmien välillä on luottamussuhde tai kaksisuuntainen toimialuepuuryhmien luottamussuhde.
+
+Jos et määritä tätä käytäntöasetusta, järjestelmä toimii seuraavasti:
+- Mitään käyttäjäpohjaisia käytäntöasetuksia ei oteta käyttöön käyttäjän toimialuepuuryhmästä.
+- Käyttäjät eivät vastaanota palvelimissa sijaitsevia profiilejaan, vaan he vastaanottavat paikallisen profiilin paikallisen toimialuepuuryhmän tietokoneessa. Käyttäjälle näytetään varoitus. Lisäksi järjestelmässä julkaistaan tapahtumaloki-ilmoitus (1529).
+- Järjestelmä käyttää silmukkaryhmäkäytäntökäsittelyä ryhmäkäytäntöobjekteille, jotka on määritetty tietokoneelle.
+- Järjestelmä julkaisee tapahtumaloki-ilmoituksen (1109), jossa ilmoitetaan, että silmukkaa kutsuttiin korvaustilassa.
+
+Jos otat tämän käytäntöasetuksen käyttöön, toiminta on samanlaista kuin Windows 2000:ssa: käyttäjäkäytäntö on käytössä ja palvelimessa sijaitseva käyttäjäprofiili sallitaan luotetusta toimialuepuuryhmästä.
+
+Jos poistat tämän käytäntöasetuksen käytöstä, järjestelmä toimii siten kuin asetusta ei olisi määritetty.</string>
+      <string id="CSE_AppMgmt">Määritä ohjelmistoasennuskäytännön käsittely</string>
+      <string id="CSE_AppMgmt_Help">Tämä käytäntöasetus määrittää, milloin ohjelmistoasennuskäytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käytäntöasetuksiin, jotka käyttävät ryhmäkäytännön ohjelmistoasennusosaa, esimerkiksi Ohjelmistoasetukset\Ohjelmistojen asennus -kohdan käytäntöasetuksiin. Voit määrittää ohjelmistoasennuskäytännön vain Active Directoryyn tallennetuille ryhmäkäytäntöobjekteille, et paikallisen tietokoneen ryhmäkäytäntöobjekteille.
+
+Tämä käytäntöasetus kumoaa ne mukautetut asetukset, jotka ohjelmistoasennuskäytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla. Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Salli käsitteleminen verkkoyhteyden ollessa hidas -asetus päivittää käytännöt, vaikka päivitys lähetetään hitaalla verkkoyhteydellä, esimerkiksi puhelinyhteydellä. Päivitys hitailla yhteyksillä voi aiheuttaa merkittäviä viiveitä.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus saatat kuitenkin haluta päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muokannut niitä.</string>
+      <string id="CSE_DiskQuota">Määritä levykiintiökäytännön käsitteleminen</string>
+      <string id="CSE_DiskQuota_Help">Tämä käytäntöasetus määrittää, milloin levykiintiökäytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käytäntöihin, jotka käyttävät ryhmäkäytännön levykiintiöosaa, esimerkiksi Tietokoneasetukset\Hallintamallit\Järjestelmä\Levykiintiöt-kohdan käytäntöihin.
+
+Tämä käytäntöasetus kumoaa ne mukautetut asetukset, jotka levykiintiökäytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla. Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Salli käsitteleminen verkkoyhteyden ollessa hidas -asetus päivittää käytännöt, vaikka päivitys lähetetään hitaalla verkkoyhteydellä, esimerkiksi puhelinyhteydellä. Päivitys hitailla yhteyksillä voi aiheuttaa merkittäviä viiveitä.
+
+Älä käytä säännöllisen taustakäsittelyn aikana -asetus estää järjestelmää päivittämästä käytäntöjä taustalla tietokoneen ollessa käytössä. Kun taustapäivitykset on poistettu käytöstä, käytäntöjen muutokset tulevat voimaan vasta, kun seuraava käyttäjä kirjautuu sisään tai kun järjestelmä käynnistetään uudelleen.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus haluat ehkä kuitenkin päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muokannut niitä.</string>
+      <string id="CSE_EFSRecovery">Määritä EFS-palautuskäytäntöjen käsitteleminen</string>
+      <string id="CSE_EFSRecovery_Help">Tämä käytäntöasetus määrittää, milloin salauskäytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käytäntöasetuksiin, jotka käyttävät ryhmäkäytännön salausosaa, esimerkiksi Windows-asetukset\Suojausasetukset-kohdan käytäntöasetuksiin.
+
+Tämä asetus kumoaa ne mukautetut asetukset, jotka salauskäytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla. Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Salli käsitteleminen verkkoyhteyden ollessa hidas -asetus päivittää käytännöt, vaikka päivitys lähetetään hitaalla verkkoyhteydellä, esimerkiksi puhelinyhteydellä. Päivitys hitailla yhteyksillä voi aiheuttaa merkittäviä viiveitä.
+
+Älä käytä säännöllisen taustakäsittelyn aikana -asetus estää järjestelmää päivittämästä käytäntöjä taustalla tietokoneen ollessa käytössä. Kun taustapäivitykset on poistettu käytöstä, käytäntöjen muutokset tulevat voimaan vasta, kun seuraava käyttäjä kirjautuu sisään tai kun järjestelmä käynnistetään uudelleen.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus saatat kuitenkin haluta päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muokannut niitä.</string>
+      <string id="CSE_FolderRedirection">Määritä kansion uudelleenohjauskäytäntöjen käsitteleminen</string>
+      <string id="CSE_FolderRedirection_Help">Tämä käytäntöasetus määrittää, milloin kansioiden uudelleenohjauskäytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käytäntöasetuksiin, jotka käyttävät ryhmäkäytännön kansioiden uudelleenohjausosaa, esimerkiksi Windows-asetukset\Kansion uudelleenohjaus -kohdan käytäntöasetuksiin. Voit määrittää kansioiden uudelleenohjauskäytännön vain Active Directoryyn tallennetuille ryhmäkäytäntöobjekteille, et paikallisen tietokoneen ryhmäkäytäntöobjekteille.
+
+Tämä käytäntöasetus kumoaa ne mukautetut asetukset, jotka kansioiden uudelleenohjauskäytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla. Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Salli käsitteleminen verkkoyhteyden ollessa hidas -asetus päivittää käytännöt, vaikka päivitys lähetetään hitaalla verkkoyhteydellä, esimerkiksi puhelinyhteydellä. Päivitys hitailla yhteyksillä voi aiheuttaa merkittäviä viiveitä.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus haluat ehkä kuitenkin päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muokannut niitä.</string>
+      <string id="CSE_IEM">Määritä Internet Explorerin ylläpitokäytäntöjen käsitteleminen</string>
+      <string id="CSE_IEM_Help">Tämä käytäntöasetus määrittää, milloin Internet Explorerin ylläpitokäytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käytäntöasetuksiin, jotka käyttävät ryhmäkäytännön Internetin Explorerin ylläpidon osaa, esimerkiksi Windows-asetukset\Internet Explorerin ylläpito -kohdan käytäntöasetuksiin.
+
+Tämä käytäntöasetus kumoaa ne mukautetut asetukset, jotka Internet Explorerin ylläpitokäytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla. Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Salli käsitteleminen verkkoyhteyden ollessa hidas -asetus päivittää käytännöt, vaikka päivitys lähetetään hitaalla verkkoyhteydellä, esimerkiksi puhelinyhteydellä. Päivitys hitailla yhteyksillä voi aiheuttaa merkittäviä viiveitä.
+
+Älä käytä säännöllisen taustakäsittelyn aikana -asetus estää järjestelmää päivittämästä käytäntöjä taustalla tietokoneen ollessa käytössä. Kun taustapäivitykset on poistettu käytöstä, käytäntöjen muutokset tulevat voimaan vasta, kun seuraava käyttäjä kirjautuu sisään tai kun järjestelmä käynnistetään uudelleen.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus haluat ehkä kuitenkin päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muokannut niitä.</string>
+      <string id="CSE_IPSecurity">Määritä IP-suojauskäytäntöjen käsitteleminen</string>
+      <string id="CSE_IPSecurity_Help">Tämä käytäntöasetus määrittää, milloin IP-suojauskäytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käytäntöasetuksiin, jotka käyttävät ryhmäkäytännön IP-suojausosaa, esimerkiksi Tietokoneasetukset\Windows-asetukset\Suojausasetukset\Paikallisen koneen IP-suojauskäytännöt -kohdan käytäntöasetuksiin.
+
+Tämä käytäntöasetus kumoaa ne mukautetut asetukset, jotka IP-suojauskäytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla. Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Salli käsitteleminen verkkoyhteyden ollessa hidas -asetus päivittää käytännöt, vaikka päivitys lähetetään hitaalla verkkoyhteydellä, esimerkiksi puhelinyhteydellä. Päivitys hitailla yhteyksillä voi aiheuttaa merkittäviä viiveitä.
+
+Älä käytä säännöllisen taustakäsittelyn aikana -asetus estää järjestelmää päivittämästä käytäntöjä taustalla tietokoneen ollessa käytössä. Kun taustapäivitykset on poistettu käytöstä, käytäntöjen muutokset tulevat voimaan vasta, kun seuraava käyttäjä kirjautuu sisään tai kun järjestelmä käynnistetään uudelleen.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus saatat kuitenkin haluta päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muuttanut niitä.</string>
+      <string id="CSE_Registry">Määritä rekisterikäytännön käsitteleminen</string>
+      <string id="CSE_Registry_Help">Tämä käytäntöasetus määrittää, milloin rekisterikäytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin Hallintamallit-kansion käytäntöihin sekä käytäntöihin, jotka tallentavat arvoja rekisterissä. Tämä asetus kumoaa ne mukautetut asetukset, jotka rekisterikäytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla. Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Älä käytä säännöllisen taustakäsittelyn aikana -asetus estää järjestelmää päivittämästä käytäntöjä taustalla tietokoneen ollessa käytössä. Kun taustapäivitykset on poistettu käytöstä, käytäntöjen muutokset tulevat voimaan vasta, kun seuraava käyttäjä kirjautuu sisään tai kun järjestelmä käynnistetään uudelleen.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus haluat ehkä kuitenkin päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muokannut niitä.</string>
+      <string id="CSE_Scripts">Määritä komentosarjakäytännön käsitteleminen</string>
+      <string id="CSE_Scripts_Help">Tämä käytäntöasetus määrittää, milloin jaettuja komentosarjoja määrittävät käytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käytäntöasetuksiin, jotka käyttävät ryhmäkäytännön komentosarjaosaa, esimerkiksi Windows-asetukset\Komentosarjat-kohdan käytäntöasetuksiin. Tämä asetus kumoaa ne mukautetut asetukset, jotka komentosarjakäytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla. Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Salli käsitteleminen verkkoyhteyden ollessa hidas -asetus päivittää käytännöt, vaikka päivitys lähetetään hitaalla verkkoyhteydellä, esimerkiksi puhelinyhteydellä. Päivitys hitailla yhteyksillä voi aiheuttaa merkittäviä viiveitä.
+
+Älä käytä säännöllisen taustakäsittelyn aikana -asetus estää järjestelmää päivittämästä käytäntöjä taustalla tietokoneen ollessa käytössä. Kun taustapäivitykset on poistettu käytöstä, käytäntöjen muutokset tulevat voimaan vasta, kun seuraava käyttäjä kirjautuu sisään tai kun järjestelmä käynnistetään uudelleen.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus haluat ehkä kuitenkin päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muokannut niitä.</string>
+      <string id="CSE_Security">Määritä suojauskäytäntöjen käsitteleminen</string>
+      <string id="CSE_Security_Help">Tämä käytäntöasetus määrittää, milloin suojauskäytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käytäntöasetuksiin, jotka käyttävät ryhmäkäytännön suojausosaa, esimerkiksi Windows-asetukset\Suojausasetukset-kohdan käytäntöasetuksiin.
+
+Tämä käytäntöasetus kumoaa ne mukautetut asetukset, jotka suojauskäytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla. Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Älä käytä säännöllisen taustakäsittelyn aikana -asetus estää järjestelmää päivittämästä käytäntöjä taustalla tietokoneen ollessa käytössä. Kun taustapäivitykset on poistettu käytöstä, käytäntöjen muutokset tulevat voimaan vasta, kun seuraava käyttäjä kirjautuu sisään tai kun järjestelmä käynnistetään uudelleen.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus saatat kuitenkin haluta päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muuttanut niitä.</string>
+      <string id="CSE_Wireless">Määritä langattoman verkon käytännön käsitteleminen</string>
+      <string id="CSE_Wireless_Help">Tämä käytäntöasetus määrittää, milloin langattomien verkkojen asetuksia määrittävät käytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käytäntöasetuksiin, jotka käyttävät ryhmäkäytännön langattomien verkkojen osaa, esimerkiksi Windows-asetukset\Langattoman verkon käytännöt -kohdan käytäntöasetuksiin.
+
+Tämä asetus kumoaa ne mukautetut asetukset, jotka langattoman verkon käytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytännön käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Salli käsitteleminen verkkoyhteyden ollessa hidas -asetus päivittää käytännöt, vaikka päivitys lähetetään hitaalla verkkoyhteydellä, esimerkiksi puhelinyhteydellä. Päivitys hitailla yhteyksillä voi aiheuttaa merkittäviä viiveitä.
+
+Älä käytä säännöllisen taustakäsittelyn aikana -asetus estää järjestelmää päivittämästä käytäntöjä taustalla tietokoneen ollessa käytössä. Kun taustapäivitykset on poistettu käytöstä, käytäntöjen muutokset tulevat voimaan vasta, kun seuraava käyttäjä kirjautuu sisään tai kun järjestelmä käynnistetään uudelleen.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus saatat kuitenkin haluta päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muuttanut niitä.</string>
+      <string id="CSE_Wired">Määritä langallisen verkon käytännön käsitteleminen</string>
+      <string id="CSE_Wired_Help">Tämä käytäntöasetus määrittää, milloin langallisten verkkojen asetuksia määrittävät käytännöt päivitetään.
+
+Tämä käytäntöasetus vaikuttaa kaikkiin käytäntöasetuksiin, jotka käyttävät ryhmäkäytännön langallisten verkkojen osaa, esimerkiksi Windows-asetukset\Langallisen verkon käytännöt -kohdan käytäntöasetuksiin.
+
+Tämä asetus kumoaa ne mukautetut asetukset, jotka langallisen verkon käytännön suorittanut sovellus määritti asennuksen yhteydessä.
+
+Jos otat tämän käytännön käyttöön, voit muuttaa sen asetuksia valintaruutujen avulla.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, se ei vaikuta järjestelmään mitenkään.
+
+Salli käsitteleminen verkkoyhteyden ollessa hidas -asetus päivittää käytännöt, vaikka päivitys lähetetään hitaalla verkkoyhteydellä, esimerkiksi puhelinyhteydellä. Päivitys hitailla yhteyksillä voi aiheuttaa merkittäviä viiveitä.
+
+Älä käytä säännöllisen taustakäsittelyn aikana -asetus estää järjestelmää päivittämästä käytäntöjä taustalla tietokoneen ollessa käytössä. Kun taustapäivitykset on poistettu käytöstä, käytäntöjen muutokset tulevat voimaan vasta, kun seuraava käyttäjä kirjautuu sisään tai kun järjestelmä käynnistetään uudelleen.
+
+Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet -asetus päivittää käytännöt ja ottaa ne käyttöön, vaikka niitä ei olisi muutettu. Monet käytäntöasetukset on määritetty siten, että ne päivitetään vain muutosten yhteydessä. Joskus saatat kuitenkin haluta päivittää myös muuttumattomia käytäntöasetuksia, esimerkiksi silloin, kun otat haluamasi käytännöt uudelleen käyttöön, jos käyttäjä on muokannut niitä.</string>
+
+      <string id="DenyRsopToInteractiveUser">Määritä, voivatko vuorovaikutteiset käyttäjät luoda RSOP-tietoja</string>
+      <string id="DenyRsopToInteractiveUser_Help">Tämä käytäntöasetus määrittää, voivatko käyttäjät tarkastella voimassa olevan käytännön (RSoP, Resultant Set of Policy) tietoja.
+
+Vuorovaikutteisesti sisäänkirjautunut käyttäjä voi oletusarvoisesti tarkastella omia voimassa olevan käytännön (RSoP) tietojaan.
+
+Jos otat tämän käytäntöasetuksen käyttöön, vuorovaikutteiset käyttäjät eivät voi luoda RSoP-tietoja.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, vuorovaikutteiset käyttäjät voivat luoda RSoP-tietoja.
+
+Huomautus: tämä asetus ei vaikuta järjestelmänvalvojiin. Olipa tämä asetus käytössä tai ei, järjestelmänvalvojat voivat oletusarvoisesti tarkastella RSoP-tietoja.
+
+Huomautus: Voit tarkastella RSoP-tietoja asiakastietokoneessa Microsoft Management Consolen RSoP-laajennuksen avulla. Voit käynnistää RSoP-laajennuksen komentoriviltä kirjoittamalla Rsop.msc
+
+Huomautus: tämä käytäntöasetus on sekä Käyttäjäasetukset- että Tietokoneasetukset-kansiossa.
+
+Katso myös Poista RSoP-kirjaus käytöstä -käytäntöasetusta kansiossa Tietokoneasetukset\Hallintamallit\Järjestelmä\Ryhmäkäytäntö.</string>
+      <string id="DisableAutoADMUpdate">Poista ADM-tiedostojen automaattinen päivitys käytöstä</string>
+      <string id="DisableAutoADMUpdate_Help">Estää järjestelmää päivittämästä Hallintamallit-lähdetiedostoja automaattisesti, kun ryhmäkäytäntöobjektien editori avataan.  Tästä asetuksesta on ehkä hyötyä järjestelmänvalvojille, jotka haluavat hallita toimialueen ohjauskoneen järjestelmäaseman varaamaa tilaa.
+
+Oletusarvoisesti järjestelmä vertaa paikalliseen %SYSTEMROOT%\inf-hakemistoon ja ryhmäkäytäntöobjektiin tallennettujen lähdetiedostojen aikaleimoja, kun ryhmäkäytäntöobjektien editori käynnistetään.  Jos paikalliset tiedostot ovat ryhmäkäytäntöobjektin tiedostoja uudempia, paikalliset tiedostot kopioidaan ryhmäkäytäntöobjektiin.
+
+Jos tämä asetus otetaan käyttöön, lähdetiedostoja ei kopioida ryhmäkäytäntöobjektiin.
+
+Jos asetus poistetaan käytöstä, järjestelmä käyttää oletusasetusta.  Myöhemmällä aikaleimalla merkityt tiedostot kopioidaan ryhmäkäytäntöobjektiin.
+
+HUOMAUTUS: jos Tietokoneasetukset-asetus Käytä ryhmäkäytäntöobjektien editorissa aina paikallisia ADM-tiedostoja on käytössä, tämä asetus ohitetaan ja sen katsotaan olevan käytössä.</string>
+      <string id="DisableBackgroundPolicy">Poista käytöstä ryhmäkäytäntöasetusten taustapäivitys</string>
+      <string id="DisableBackgroundPolicy_Help">Tämä käytäntöasetus estää ryhmäkäytännön päivittämisen tietokoneen ollessa käytössä. Tätä käytäntöasetusta käytetään tietokoneiden, käyttäjien ja toimialueen ohjauskoneiden ryhmäkäytäntöihin.
+
+Jos otat tämän käytäntöasetuksen käyttöön, järjestelmä odottaa, kunnes nykyinen käyttäjä kirjautuu ulos järjestelmästä, ennen kuin tietokone- ja käyttäjäkohtaisia asetuksia päivitetään.
+
+Jos poistat tämän asetuksen käytöstä tai et määritä sitä, päivitykset voidaan ottaa käyttöön käyttäjien jatkaessa käyttöään. Päivitysväli määritetään Määritä tietokoneiden ryhmäkäytäntöasetusten päivitysväli- ja Määritä käyttäjien ryhmäkäytäntöasetusten päivitysväli -käytäntöasetusten avulla.
+
+Huomautus: jos muutat tätä käytäntöasetusta, sinun on käynnistettävä tietokone uudelleen, jotta asetukset tulevat voimaan.</string>
+      <string id="DisableUsersFromMachGP">Poista käyttäjien mahdollisuus tietokonekäytännön päivittämiseen</string>
+      <string id="DisableUsersFromMachGP_Help">Tämän käytäntöasetuksen avulla voit hallita käyttäjän mahdollisuutta tietokonekäytännön päivittämiseen.
+
+Jos otat tämän käytäntöasetuksen käyttöön, käyttäjät eivät voi pyytää tietokonekäytännön päivitystä. Tietokonekäytäntöä käytetään kuitenkin käynnistyksen yhteydessä tai virallisen käytäntöpäivitysaikataulun mukaan.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, järjestelmä käyttää oletusasetuksia. Oletusarvoisesti tietokonekäytäntöä käytetään tietokonetta käynnistettäessä. Käytäntöä käytetään myös määritetyin päivitysvälein tai käyttäjän käynnistäessä päivityksen manuaalisesti.
+
+Huomautus: Tämä käytäntöasetus vaikuttaa vain muihin kuin järjestelmänvalvojiin. Järjestelmänvalvojat voivat edelleen pyytää tietokonekäytännön päivitystä milloin tahansa tästä käytäntöasetuksesta riippumatta.
+
+Jos haluat muuttaa käytännön päivitysväliä, tutustu myös Määritä tietokoneiden ryhmäkäytäntöasetusten päivitysväli -asetukseen.
+
+Huomautus: jos muutat tätä käytäntöasetusta, sinun on käynnistettävä tietokone uudelleen, jotta asetukset tulevat voimaan.</string>
+      <string id="EnforcePoliciesOnly">Pakota Näytä vain käytännöt</string>
+      <string id="EnforcePoliciesOnly_Help">Tämä käytäntöasetus estää järjestelmänvalvojia tarkastelemasta tai käyttämästä ryhmäkäytäntöasetuksia.
+
+Ryhmäkäytännön hallintatiedosto (.adm) voi sisältää sekä ensisijaisia että toissijaisia asetuksia. Ensisijaiset asetukset ovat ryhmäkäytännön täysin tukemia asetuksia. Niiden on käytettävä Ohjelmisto\Käytännöt-kansion rekisterimerkintöjä tai Ohjelmisto\Microsoft\Windows\CurrentVersion\Käytännöt-kansion alirekisteriavaimia. Toissijaiset asetukset ovat asetuksia, joita tueta täysin. Ne käyttävät muiden aliavaimien rekisterimerkintöjä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, Näytä vain käytännöt -komento on käytössä – ja järjestelmänvalvojat eivät voi poistaa sitä käytöstä. Tämän johdosta ryhmäkäytäntöobjektieditori näyttää vain ensisijaiset asetukset; toissijaisia asetuksia ei näytetä.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, Näytä vain käytännöt -komento on oletusarvoisesti käytössä. Järjestelmänvalvojat voivat tässä tapauksessa kuitenkin tarkastella toissijaisia asetuksia poistamalla Näytä vain käytännöt -komennon käytöstä.
+
+Huomautus: voit muokata Näytä vain käytännöt -komentoa ryhmäkäytäntöobjektieditorissa valitsemalla Hallintamallit-kansion (kumman tahansa), napsauttamalla samaa kansiota hiiren kakkospainikkeella ja valitsemalla sitten Näytä.
+
+Toissijaisilla asetuksilla on ryhmäkäytäntöeditorissa punainen kuvake, jonka perusteella erotat ne ensisijaisista asetuksista, joilla on sininen kuvake.</string>
+      <string id="GPDCOptionAny">Käytä mitä tahansa käytettävissä olevaa toimialueen ohjauskonetta</string>
+      <string id="GPDCOptionInherit">Määritä Active Directoryn laajennusten mukaisesti</string>
+      <string id="GPDCOptionPDC">Käytä toimialueen pääohjauskonetta</string>
+      <string id="GPDCOptions">Määritä ryhmäkäytäntöjen toimialueen ohjauskoneen valinta</string>
+      <string id="GPDCOptions_Help">Tämä käytäntöasetus määrittää, mitä toimialueen ohjauskonetta ryhmäkäytäntöobjektien editorilaajennus käyttää.
+
+Jos otat tämän asetuksen käyttöön, voit valita käytettävän toimialueen ohjauskoneen seuraavien asetusten avulla:
+
+Käytä toimialueen pääohjauskonetta -asetus tarkoittaa sitä, että ryhmäkäytäntöobjektien editorilaajennus lukee muutokset siitä toimialueen ohjauskoneesta ja kirjoittaa muutokset siihen toimialueen ohjauskoneeseen, joka on määritetty toimialueen Operations Master -pääohjauskoneeksi.
+
+Määritä Active Directoryn laajennusten mukaisesti -asetus tarkoittaa sitä, että ryhmäkäytäntöobjektien editorilaajennus kirjoittaa muutokset siihen toimialueen ohjauskoneeseen ja lukee muutokset siitä toimialueen ohjauskoneesta, jota Active Directoryn käyttäjät ja tietokoneet -laajennus tai Active Directoryn sivustot ja palvelut -laajennus käyttää.
+
+Käytä mitä tahansa käytettävissä olevaa toimialueen ohjauskonetta -asetus tarkoittaa sitä, että ryhmäkäytäntöobjektien editorilaajennus voi lukea muutoksia mistä tahansa vapaana olevasta toimialueen ohjauskoneesta ja kirjoittaa muutoksia siihen.
+
+Jos tämä asetus poistetaan käytöstä tai sitä ei ole määritetty, ryhmäkäytäntöobjektien editorilaajennus käyttää sitä toimialueen ohjauskonetta, joka on määritetty toimialueen Operations Master -pääohjauskoneeksi.
+
+Huomautus: toimialueen Operations Master -pääohjauskone voidaan vaihtaa Active Directoryn käyttäjät ja tietokoneet -laajennuksessa napsauttamalla toimialuetta hiiren kakkospainikkeella ja valitsemalla sitten Operations Master.</string>
+      <string id="GPTransferRate">Määritä hidas yhteys ryhmäkäytäntöasetuksia käytettäessä</string>
+      <string id="GPTransferRate_Help">Tämä käytäntöasetus määrittää hitaan yhteyden ryhmäkäytännön käyttämistä ja päivittämistä varten.
+
+Jos nopeus siirrettäessä käytäntöpäivityksiä toimialueen ohjauskoneesta tämän ryhmän tietokoneisiin on hitaampi kuin tässä asetuksessa on määritetty, järjestelmä katsoo yhteyden olevan hidas.
+
+Järjestelmä reagoi tähän vaihtelevasti käytännön mukaan. Käytännön suorittava sovellus voi määrittää, miten järjestelmä reagoi hitaaseen linkkiin. Lisäksi tässä kansiossa olevien käytäntöjen käsittelyasetusten avulla voidaan ohittaa reagointitapa, joka on määritetty kussakin sovelluksessa hitaille linkeille.
+
+Jos otat tämän asetuksen käyttöön, voit määrittää Yhteyden nopeus -ruutuun kymmenjärjestelmän luvun 0–4 294 967 200. Tämä arvo ilmaisee siirtonopeuden kilobitteinä sekunnissa. Kaikkien tätä hitaampien yhteyksien katsotaan olevan hitaita. Jos arvoksi määritetään 0, kaikki yhteydet katsotaan nopeiksi.
+
+Jos tämä asetus poistetaan käytöstä tai sitä ei määritetä, järjestelmä käyttää oletusarvoa, joka on 500 kilobittiä sekunnissa.
+
+Tämä asetus näkyy sekä Tietokoneasetukset- että Käyttäjäasetukset-kansioissa. Tietokoneasetukset-arvo määrittää hitaan linkin Tietokoneasetukset-kansion käytäntöjä varten. Käyttäjäasetukset-arvo määrittää hitaan linkin Käyttäjäasetukset-kansion asetuksia varten.
+
+Katso myös Älä tunnista hitaita verkkoyhteyksiä -käytäntöä ja siihen liittyviä käytäntöjä Tietokoneasetukset\Hallintamallit\Järjestelmä\Käyttäjäprofiili-kansiossa. Huomautus: Yhteyden nopeus -asetusta käytetään, jos profiilipalvelin käyttää IP:tä. Jos profiilipalvelin ei käytä IP:tä, käytetään SMB-ajoitusta.</string>
+      <string id="GroupPolicyRefreshRate">Määritä tietokoneiden ryhmäkäytäntöasetusten päivitysväli</string>
+      <string id="GroupPolicyRefreshRate_Help">Tämä käytäntöasetus määrittää, miten usein tietokoneen ryhmäkäytäntö päivitetään tietokoneen ollessa käytössä (taustapäivitys). Tämä asetus määrittää taustapäivitysvälin vain Tietokoneasetukset-kansion ryhmäkäytännöille.
+
+Taustapäivitysten lisäksi tietokoneen ryhmäkäytäntö päivitetään aina järjestelmän käynnistyksen yhteydessä.
+
+Oletusarvoisesti tietokoneen ryhmäkäytäntö päivitetään taustalla 90 minuutin välein satunnaisen siirtymän ollessa 0–30 minuuttia.
+
+Jos otat tämän asetuksen käyttöön, voit määrittää päivitysväliksi 0–64 800 minuuttia (45 päivää). Jos arvoksi valitaan 0 minuuttia, tietokone yrittää päivittää ryhmäkäytännön seitsemän sekunnin välein. Päivitykset saattavat kuitenkin häiritä käyttäjän työskentelyä ja kasvattaa verkkoliikennettä, joten hyvin lyhyet päivitysvälit eivät useimmissa kokoonpanoissa ole tarkoituksenmukaisia.
+
+Jos tämä asetus poistetaan käytöstä, ryhmäkäytäntö päivitetään 90 minuutin välein (oletusarvo). Jos valitset Poista käytöstä ryhmäkäytäntöasetusten taustapäivitys -käytännön, ryhmäkäytäntöä ei päivitetä koskaan tietokoneen ollessa käytössä.
+
+Määritä tietokoneiden ryhmäkäytäntöasetusten päivitysväli -käytännön avulla voit myös määrittää, paljonko todellinen päivitysväli vaihtelee. Järjestelmä vaihtelee kunkin asiakkaan päivitysväliä joillakin minuuteilla, jotta estettäisiin samaa päivitysväliä käyttäviä asiakkaita pyytämästä päivityksiä samanaikaisesti. Satunnaisen ajanjakson ruutuun kirjoitettava luku määrittää tämän vaihteluvälin ylärajan. Jos arvoksi kirjoitetaan esimerkiksi 30 minuuttia, järjestelmä valitsee arvon 0:sta 30 minuuttiin. Jos annettu luku on suuri, päivityspyyntöjen päällekkäisyyttä ei todennäköisesti esiinny. Tällöin päivitykset saatavat kuitenkin viivästyä merkittävästi.
+
+Tämä asetus määrittää tietokoneen ryhmäkäytäntöasetusten päivitysvälin. Jos haluat määrittää käyttäjien ryhmäkäytäntöjen päivitysvälin, käytä Määritä käyttäjien ryhmäkäytäntöasetusten päivitysväli -käytäntöä (sijainti: Käyttäjäasetukset\Hallintamallit\Järjestelmä\Ryhmäkäytäntö).
+
+Tätä asetusta käytetään vain silloin, kun Poista käytöstä ryhmäkäytäntöasetusten taustapäivitys -asetus ei ole käytössä.
+
+Huomautus: käyttäjille on hyvä antaa tiedoksi, että heidän käytäntönsä päivitetään säännöllisesti, jotta he tunnistavat päivityksen sitä tehtäessä. Kun ryhmäkäytäntöä päivitetään, myös Windows-työpöytä päivitetään: se vilkkuu lyhyesti ja avoimet valikot sulkeutuvat. Lisäksi jotkin ryhmäkäytäntöjen määräämät rajoitukset (esimerkiksi rajoitukset käytettävissä oleviin ohjelmiin) saattavat aiheuttaa häiriöitä käynnissä oleviin tehtäviin.</string>
+      <string id="GroupPolicyRefreshRateDC">Määritä toimialueen ohjauskoneiden ryhmäkäytäntöasetusten päivitysväli</string>
+      <string id="GroupPolicyRefreshRateDC_Help">Tämä käytäntöasetus määrittää, miten usein toimialueiden ohjauskoneiden ryhmäkäytäntö päivitetään niiden ollessa käynnissä (taustapäivitys). Tällä asetuksella määritetyt päivitykset suoritetaan järjestelmän käynnistymisen yhteydessä suoritettavien päivitysten lisäksi.
+
+Toimialueiden ohjauskoneiden ryhmäkäytäntö päivitetään oletusarvoisesti viiden minuutin välein.
+
+Jos otat tämän asetuksen käyttöön, voit määrittää päivitysväliksi 0–64 800 minuuttia (45 päivää). Jos määrität arvoksi 0 minuuttia, toimialueen ohjauskone yrittää päivittää käyttäjän ryhmäkäytännön seitsemän sekunnin välein. Päivitykset saattavat kuitenkin häiritä käyttäjän työskentelyä ja kasvattaa verkkoliikennettä, joten hyvin lyhyet päivitysvälit eivät useimmissa kokoonpanoissa ole tarkoituksenmukaisia.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, toimialueen ohjauskone päivittää ryhmäkäytännön viiden minuutin välein oletusasetuksen mukaisesti. Jos haluat, että käyttäjien ryhmäkäytäntöjä ei koskaan päivitetä tietokoneen ollessa käytössä, valitse Poista käytöstä ryhmäkäytäntöasetusten taustapäivitys -asetus.
+
+Tämän asetuksen avulla voidaan myös määrittää, paljonko todellinen päivitysväli vaihtelee. Järjestelmä vaihtelee kunkin toimialueen ohjauskoneen päivitysväliä joillakin minuuteilla, jotta samaa päivitysväliä käyttävät toimialueen ohjauskoneet eivät pyydä päivityksiä samanaikaisesti. Satunnaisen ajanjakson ruutuun kirjoitettava luku määrittää tämän vaihteluvälin ylärajan. Jos arvoksi kirjoitetaan esimerkiksi 30 minuuttia, järjestelmä valitsee arvon 0:sta 30 minuuttiin. Jos annat suuren luvun, päivityspyyntöjen päällekkäisyyttä ei todennäköisesti esiinny. Tällöin päivitykset saatavat kuitenkin viivästyä merkittävästi.
+
+Huomautus: tätä asetus käytetään vain toimialueen, sivuston, organisaatioyksikön tai mukautetun ryhmän käytännön määrittämiseen. Jos olet määrittämässä käytäntöä vain paikalliselle tietokoneelle, järjestelmä ohittaa tämän asetuksen.</string>
+      <string id="GroupPolicyRefreshRateUser">Määritä käyttäjien ryhmäkäytäntöasetusten päivitysväli</string>
+      <string id="GroupPolicyRefreshRateUser_Help">Tämä käytäntöasetus määrittää, miten usein käyttäjien ryhmäkäytäntö päivitetään tietokoneen ollessa käytössä (taustapäivitys). Tämä asetus määrittää taustapäivitysvälin vain Käyttäjäasetukset-kansion ryhmäkäytännöille.
+
+Taustapäivitysten lisäksi käyttäjien ryhmäkäytäntö päivitetään aina käyttäjien kirjautuessa sisään.
+
+Oletusarvoisesti käyttäjän ryhmäkäytäntö päivitetään taustalla 90 minuutin välein ja satunnainen siirtymä on 0–30 minuuttia.
+
+Jos otat tämän asetuksen käyttöön, voit määrittää päivitysväliksi 0–64 800 minuuttia (45 päivää). Jos arvoksi valitaan 0 minuuttia, tietokone yrittää päivittää käyttäjän ryhmäkäytännön seitsemän sekunnin välein. Päivitykset saattavat kuitenkin häiritä käyttäjän työskentelyä ja kasvattaa verkkoliikennettä, joten hyvin lyhyet päivitysvälit eivät useimmissa kokoonpanoissa ole tarkoituksenmukaisia.
+
+Jos tämä asetus poistetaan käytöstä, käyttäjän ryhmäkäytäntö päivitetään 90 minuutin välein (oletusarvo). Jos valitset Poista käytöstä ryhmäkäytäntöasetusten taustapäivitys -asetuksen, käyttäjien ryhmäkäytäntöä ei koskaan päivitetä tietokoneen ollessa käytössä.
+
+Tämän asetuksen avulla voidaan myös määrittää, paljonko todellinen päivitysväli vaihtelee. Järjestelmä vaihtelee kunkin asiakkaan päivitysväliä joillakin minuuteilla, jotta estettäisiin samaa päivitysväliä käyttäviä asiakkaita pyytämästä päivityksiä samanaikaisesti. Satunnaisen ajanjakson ruutuun kirjoitettava luku määrittää tämän vaihteluvälin ylärajan. Jos arvoksi kirjoitetaan esimerkiksi 30 minuuttia, järjestelmä valitsee arvon 0:sta 30 minuuttiin. Jos annettu luku on suuri, päivityspyyntöjen päällekkäisyyttä ei todennäköisesti esiinny. Tällöin päivitykset saatavat kuitenkin viivästyä merkittävästi.
+
+Tärkeää: jos Poista käytöstä ryhmäkäytäntöasetusten taustapäivitys -asetus on käytössä, tämä asetus ohitetaan.
+
+Huomautus: tämä asetus määrittää käyttäjän ryhmäkäytäntöjen päivitysvälin. Tietokoneen ryhmäkäytäntöjen päivitysväli asetetaan Tietokoneen ryhmäkäytäntöasetusten päivitysväli -asetuksen avulla (sijainti: Tietokoneasetukset\Hallintamallit\Järjestelmä\Ryhmäkäytäntö).
+
+Vihje: käyttäjille on hyvä antaa tiedoksi, että heidän käytäntönsä päivitetään säännöllisesti, jotta he tunnistavat päivityksen sitä tehtäessä. Kun ryhmäkäytäntöä päivitetään, myös Windows-työpöytä päivitetään: se vilkkuu lyhyesti ja avoimet valikot sulkeutuvat. Lisäksi jotkin ryhmäkäytäntöjen määräämät rajoitukset (esimerkiksi rajoitukset käytettävissä oleviin ohjelmiin) saattavat aiheuttaa häiriöitä käynnissä oleviin tehtäviin</string>
+      <string id="NewGPODisplayName">Määritä uusien ryhmäkäytäntöobjektien oletusnimi</string>
+      <string id="NewGPODisplayName_Help">Tällä käytäntöasetuksella voit määrittää uusien ryhmäkäytäntöobjektien oletusnäyttönimen.
+
+Tämän asetuksen avulla voit määrittää oletusnimen uusille ryhmäkäytäntöobjekteille, jotka luodaan ryhmäkäytäntöjen hallintatyökalujen, kuten Active Directory -työkalujen Ryhmäkäytäntö-välilehden ja ryhmäkäytäntöobjektien selaimen, avulla.
+
+Näyttönimi voi sisältää ympäristömuuttujia ja se voi olla enintään 255 merkin pituinen.
+
+Jos tämä asetus poistetaan käytöstä tai sitä ei määritetä, järjestelmä käyttää uuden ryhmäkäytäntöobjektin oletusnäyttönimeä.</string>
+      <string id="NewGPOLinksDisabled">Luo uudet ryhmäkäytäntöobjektien linkit oletusarvoisesti erikseen käyttöön otettavina</string>
+      <string id="NewGPOLinksDisabled_Help">Tämä käytäntöasetuksen avulla voit luoda uudet ryhmäkäytäntöobjektien linkit erikseen käyttöön otettavina.
+
+Jos otat tämän asetuksen käyttöön, voit luoda kaikki uudet ryhmäkäytäntöobjektien linkit oletusarvoisesti erikseen käyttöön otettavina. Uudet objektilinkit voidaan ottaa järjestelmän käyttöön sen jälkeen kun ne on määritetty ja testattu käyttäen joko Active Directoryn Käyttäjät ja tietokoneet -laajennusta tai Active Directory -sivustot ja palvelut -laajennusta.
+
+Jos tämä asetus poistetaan käytöstä tai sitä ei määritetä, uudet ryhmäkäytäntöobjektien linkit luodaan valmiiksi käyttövalmiissa tilassa. Jos et halua niiden tulevan voimaan, ennen kuin ne on määritetty ja testattu, objektilinkki on poistettava käytöstä.</string>
+      <string id="OnlyUseLocalAdminFiles">Käytä ryhmäkäytäntöobjektien editorissa aina paikallisia ADM-tiedostoja</string>
+      <string id="OnlyUseLocalAdminFiles_Help">Tämän käytäntöasetuksen avulla voit käyttää vain paikallisia ADM-tiedostoja Ryhmäkäytäntö-laajennuksessa.
+
+Kun ryhmäkäytäntöobjektien editorilaajennusta käytetään jonkin ryhmäkäytäntöobjektin muokkaamiseen, ADM-tiedostot ladataan oletusarvoisesti kyseisestä ryhmäkäytäntöobjektista ryhmäkäytäntöobjektien editorilaajennukseen. Tämän ansiosta voit käyttää ryhmäkäytäntöobjektia muokattaessa samoja ADM-tiedostoja, joiden avulla ryhmäkäytäntöobjekti on luotu.
+
+Tällä ominaisuudella on seuraavat vaikutukset:
+
+- Jos ryhmäkäytäntöobjekti on alun perin luotu esimerkiksi englanninkielisessä järjestelmässä, ryhmäkäytäntöobjekti sisältää englanninkielisiä ADM-tiedostoja.
+
+- Jos muokkaat ryhmäkäytäntöobjektia myöhemmin erikielisessä järjestelmässä, käytössä ovat silti ryhmäkäytäntöobjektin sisältämät englanninkieliset ADM-tiedostot.
+
+Voit muuttaa tätä ominaisuutta tämän asetuksen avulla.
+
+Jos tämä asetus otetaan käyttöön, ryhmäkäytäntöobjektien editorilaajennus käyttää ryhmäkäytäntöobjekteja muokattaessa aina Windows\inf-hakemiston paikallisia ADM-tiedostoja.
+
+Tällä ominaisuudella on seuraavat vaikutukset:
+
+- Jos ryhmäkäytäntöobjekti luotiin alun perin englanninkielisessä järjestelmässä ja sitä muokataan myöhemmin japaninkielisessä järjestelmässä, ryhmäkäytäntöobjektien editorilaajennus käyttää paikallisia japaninkielisiä ADM-tiedostoja ja hallintamalleissa näkyy japaninkielistä tekstiä.
+
+Jos tämä asetus poistetaan käytöstä tai sitä ei määritetä, ryhmäkäytäntöobjektien editorilaajennus lataa aina kaikki ADM-tiedostot käytettävästä ryhmäkäytäntöobjektista.
+
+Huomautus: jos kaikki tarvitsemasi ADM-tiedostot eivät ole käytettävissä paikallisessa %windir%\inf-hakemistossa, et ehkä voi tarkastella kaikkia muokattavan ryhmäkäytäntöobjektin asetuksia.</string>
+      <string id="PolicyPolicies">Ryhmäkäytäntö</string>
+      <string id="RSoPLogging">Poista RSoP-kirjaus käytöstä</string>
+      <string id="RSoPLogging_Help">Tämän asetuksen avulla voit ottaa käyttöön tai poistaa käytöstä asiakastietokoneen RSoP (Resultant Set of Policy) -kirjauksen.
+
+RSoP kirjaa lokiin tietoja asiakkaaseen käytetyistä ryhmäkäytäntöasetuksista. Tähän sisältyvät tiedot sovelletuista ryhmäkäytäntöobjekteista ja niiden alkuperästä sekä sisällytetyistä asiakkaan laajennusasetuksista.
+
+Jos tämä asetus otetaan käyttöön, RSoP-kirjaus poistetaan käytöstä.
+
+Jos tämä asetus poistetaan käytöstä tai sitä ei määritetä, RSoP-kirjaus on käytössä. Oletusarvoisesti RSoP-kirjaus on aina käytössä.
+
+Huomautus: voit tarkastella asiakastietokoneen lokiin kirjattuja RSoP-tietoja Microsoft Management Consolen RSoP-laajennuksen avulla.</string>
+      <string id="UserPolicyMode">Määritä käyttäjän ryhmäkäytäntöjen silmukkakäsittelytila</string>
+      <string id="UserPolicyMode_Help">Tämä käytäntöasetus ohjaa järjestelmää käyttämään tietokoneen ryhmäkäytäntöobjektien joukkoa kaikkiin käyttäjiin, jotka kirjautuvat sisään tämän asetuksen vaikutusalueeseen kuuluvaan tietokoneeseen. Se on tarkoitettu erikoiskäytössä (esimerkiksi julkisilla paikoilla, laboratorioissa ja luokkahuoneissa) oleville tietokoneille, joiden kohdalla käyttäjäasetusta on muokattava käytettävän tietokoneen mukaan.
+
+Oletusarvoisesti käyttäjän ryhmäkäytäntöobjektit määrittävät, mitä käyttäjäasetuksia käytetään. Jos tämä käytäntö otetaan käyttöön, tietokoneen ryhmäkäytäntöobjektit määrittävät, mitä ryhmäkäytäntöobjektien joukkoa käytetään käyttäjän kirjautuessa tähän tietokoneeseen.
+
+Jos otat tämän asetuksen käyttöön, voit valita jonkin seuraavista Tila-ruudun asetuksista:
+
+- Korvaa-asetuksella tietokoneen ryhmäkäytäntöobjektien määrittämät asetukset korvaavat käyttäjään normaalisti sovellettavat asetukset.
+
+Yhdistä-asetuksella tietokoneen ryhmäkäytäntöobjektien määrittämät asetukset ja käyttäjään normaalisti sovellettavat asetukset yhdistetään. Jos asetukset ovat ristiriitaisia, tietokoneen ryhmäkäytäntöobjektien määrittämät asetukset kumoavat käyttäjään normaalisti sovelletut asetukset.
+
+Jos poistat tämän asetuksen käytöstä tai et määritä sitä, käyttäjän ryhmäkäytäntöobjektit määrittävät, mitä käytäntöjä sovelletaan.
+
+Huomautus: tämä asetus on voimassa vain, kun sekä tietokonetili että käyttäjätili kuuluvat Windows 2000 -toimialueeseen tai tätä uudempaan toimialueeseen.</string>
+      <string id="UserPolicyMode_Merge">Yhdistä</string>
+      <string id="UserPolicyMode_Replace">Korvaa</string>
+      <string id="CorpConnSyncWaitTime">Määritä työpaikkayhteyksien odotusaika käytäntöjä käsiteltäessä</string>
+      <string id="CorpConnSyncWaitTime_Help">Tämä käytäntöasetus määrittää, miten kauan ryhmäkäytännön tulee odottaa työpaikkayhteyden ilmoituksia käynnistyskäytännön käsittelyn aikana. Jos käynnistyskäytännön käsittely on synkroninen, tietokone on estetyssä tilassa, kunnes työpaikkayhteys on käytettävissä tai oletusodotusaika täyttyy. Jos käynnistyskäytännön käsittely on asynkroninen, tietokonetta ei estetä ja käytännön käsittely tehdään taustalla. Kummassakin tapauksessa tämä käytäntöasetus ohittaa mahdolliset järjestelmän laskemat odotusajat.
+
+Jos otat tämän käytäntöasetuksen käyttöön, ryhmäkäytäntö käyttää tätä järjestelmänvalvojan määrittämää työpaikkayhteyden enimmäisodotusaikaa ja ohittaa mahdolliset oletusarvon mukaiset tai järjestelmän laskemat odotusajat.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, ryhmäkäytäntö käyttää 60 sekunnin oletusodotusaikaa Windows 7:ää uudempaa Windows-käyttöjärjestelmää käyttävissä tietokoneissa, joihin on määritetty työpaikkayhteys.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Vaikutuksen heikentämisen asetukset</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">Prosessin lievennysasetukset</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">Salli Windowsin fonttivälimuistipalvelun ladata fontteja ja fonttiluettelotietoja verkkofonttipalveluista.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">Hitaan linkin arvo: [arvokenttä] millisekuntia</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Aikakatkaisuarvo: [arvokenttä] millisekuntia</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">minuutti:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Odotusaika (sekunteina):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Salli käsitteleminen verkkoyhteyden ollessa hidas</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Salli käsitteleminen verkkoyhteyden ollessa hidas</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Älä käytä säännöllisen taustakäsittelyn aikana</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Salli käsitteleminen verkkoyhteyden ollessa hidas</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Älä käytä säännöllisen taustakäsittelyn aikana</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Salli käsitteleminen verkkoyhteyden ollessa hidas</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Salli käsitteleminen verkkoyhteyden ollessa hidas</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Älä käytä säännöllisen taustakäsittelyn aikana</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Salli käsitteleminen verkkoyhteyden ollessa hidas</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Älä käytä säännöllisen taustakäsittelyn aikana</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Älä käytä säännöllisen taustakäsittelyn aikana</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Salli käsitteleminen verkkoyhteyden ollessa hidas</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Älä käytä säännöllisen taustakäsittelyn aikana</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Älä käytä säännöllisen taustakäsittelyn aikana</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Salli käsitteleminen verkkoyhteyden ollessa hidas</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Älä käytä säännöllisen taustakäsittelyn aikana</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Salli käsitteleminen verkkoyhteyden ollessa hidas</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Älä käytä säännöllisen taustakäsittelyn aikana</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Käsittele, vaikka ryhmäkäytäntöobjektit eivät olisi muuttuneet</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Kun ryhmäkäytäntöobjektien editori valitsee käytettävää toimialueen ohjauskonetta, sen tulisi:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Yhteyden nopeus (kbps):</decimalTextBox>
+        <text> </text>
+        <text>Kirjoita 0, jos haluat poistaa hitaan linkin tunnistamisen käytöstä.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Yhteyden nopeus (kbps):</decimalTextBox>
+        <text> </text>
+        <text>Kirjoita 0, jos haluat poistaa hitaan linkin tunnistamisen käytöstä.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">Käsittele WWAN-yhteyksiä aina hitaina yhteyksinä</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>Tämän asetuksen avulla voidaan määrittää, miten usein ryhmäkäytäntöä käytetään</text>
+        <text>tietokoneissa. Voit määrittää arvoksi 0–44 640 minuuttia (31 päivää).</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Minuuttia:</decimalTextBox>
+        <text> </text>
+        <text>Tämä on satunnainen aika, joka on lisätty päivitysväliin sen varmistamiseksi, että</text>
+        <text>kaikki asiakkaat eivät pyydä ryhmäkäytäntöä samanaikaisesti.</text>
+        <text>Arvoalue on 0–1 440 minuuttia (24 tuntia)</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Minuuttia:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>Tämän asetuksen avulla voidaan määrittää, miten usein ryhmäkäytäntöä käytetään</text>
+        <text>toimialueen ohjauskoneissa. Voit määrittää arvoksi 0–44 640 minuuttia (31 päivää).</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Minuuttia:</decimalTextBox>
+        <text> </text>
+        <text>Tämä on satunnainen aika, joka on lisätty päivitysväliin sen varmistamiseksi, että</text>
+        <text>kaikki asiakkaat eivät pyydä ryhmäkäytäntöä samanaikaisesti.</text>
+        <text>Arvoalue on 0–1 440 minuuttia (24 tuntia)</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Minuuttia:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>Tämän asetuksen avulla voidaan määrittää, miten usein ryhmäkäytäntöä käytetään</text>
+        <text>käyttäjien kohdalla. Voit määrittää arvoksi 0–44 640 minuuttia (31 päivää).</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Minuuttia:</decimalTextBox>
+        <text> </text>
+        <text>Tämä on satunnainen aika, joka on lisätty päivitysväliin sen varmistamiseksi, että</text>
+        <text>kaikki asiakkaat eivät pyydä ryhmäkäytäntöä samanaikaisesti.</text>
+        <text>Arvoalue on 0–1 440 minuuttia (24 tuntia)</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Minuuttia:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>Ryhmäkäytäntöobjektin nimi:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Tila:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Odotusaika (sekunteina):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>
