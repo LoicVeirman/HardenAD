@@ -1,0 +1,279 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<policyDefinitions
+    revision="1.0"
+    schemaVersion="1.0"
+    >
+  <policyNamespaces>
+    <target
+        namespace="Microsoft.Policies.LAPS"
+        prefix="laps"
+        />
+    <using
+        namespace="Microsoft.Policies.Windows"
+        prefix="windows"
+        />
+  </policyNamespaces>
+  <supersededAdm fileName=""/>
+  <resources minRequiredRevision="1.0"/>
+  <supportedOn>
+    <definitions>
+      <definition
+          displayName="$(string.SUPPORTED_Windows10)"
+          name="SUPPORTED_Windows10"
+          />
+    </definitions>
+  </supportedOn>
+  <categories>
+    <category
+        displayName="$(string.LAPS)"
+        name="LAPS_CAT"
+        >
+      <parentCategory ref="windows:System"/>
+    </category>
+  </categories>
+  <policies>
+    <policy
+        class="Machine"
+        displayName="$(string.LAPS_BackupDirectory)"
+        explainText="$(string.LAPS_BackupDirectory_Help)"
+        key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+        valueName="BackupDirectory"
+        name="LAPS_BackupDirectory"
+        presentation="$(presentation.LAPS_BackupDirectory)"
+        >
+        <parentCategory ref="LAPS_CAT"/>
+        <supportedOn ref="SUPPORTED_Windows10"/>
+        <elements>
+          <enum
+            id="LAPS_BackupDirectory"
+            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            valueName="BackupDirectory"
+            >
+            <item displayName="$(string.LAPS_BackupDirectoryDisabled)">
+              <value>
+                <decimal value="0" />
+              </value>
+            </item>
+            <item displayName="$(string.LAPS_BackupDirectoryAzure)">
+              <value>
+                <decimal value="1" />
+              </value>
+            </item>
+            <item displayName="$(string.LAPS_BackupDirectoryAD)">
+              <value>
+                <decimal value="2" />
+              </value>
+            </item>
+          </enum>
+        </elements>
+    </policy>
+    <policy
+        class="Machine"
+        displayName="$(string.LAPS_PasswordSettings)"
+        explainText="$(string.LAPS_PasswordSettings_Help)"
+        key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+        name="LAPS_PasswordSettings"
+        presentation="$(presentation.LAPS_PasswordSettings)"
+        >
+      <parentCategory ref="LAPS_CAT"/>
+      <supportedOn ref="SUPPORTED_Windows10"/>
+      <elements>
+        <enum
+            id="LAPS_PasswordComplexity"
+            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            valueName="PasswordComplexity"
+            >
+          <item displayName="$(string.LAPS_PwdComplexity_Item_1)">
+            <value>
+              <decimal value="1"/>
+            </value>
+          </item>
+          <item displayName="$(string.LAPS_PwdComplexity_Item_2)">
+            <value>
+              <decimal value="2"/>
+            </value>
+          </item>
+          <item displayName="$(string.LAPS_PwdComplexity_Item_3)">
+            <value>
+              <decimal value="3"/>
+            </value>
+          </item>
+          <item displayName="$(string.LAPS_PwdComplexity_Item_4)">
+            <value>
+              <decimal value="4"/>
+            </value>
+          </item>
+        </enum>
+        <decimal
+            id="LAPS_PasswordLength"
+            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            minValue="8"
+            maxValue="64"
+            valueName="PasswordLength"
+            />
+        <decimal
+            id="LAPS_PasswordAgeDays"
+            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            minValue="1"
+            maxValue="365"
+            valueName="PasswordAgeDays"
+            />
+      </elements>
+    </policy>
+    <policy
+        class="Machine"
+        displayName="$(string.LAPS_AdminName)"
+        explainText="$(string.LAPS_AdminName_Help)"
+        key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+        name="LAPS_AdminName"
+        presentation="$(presentation.LAPS_AdminName)"
+        >
+      <parentCategory ref="LAPS_CAT"/>
+      <supportedOn ref="SUPPORTED_Windows10"/>
+      <elements>
+        <text
+            id="TEXT_AdminAccountName"
+            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            maxLength="64"
+            valueName="AdministratorAccountName"
+            />
+      </elements>
+    </policy>
+    <policy
+        class="Machine"
+        displayName="$(string.LAPS_DontAllowPwdExpirationBehindPolicy)"
+        explainText="$(string.LAPS_DontAllowPwdExpirationBehindPolicy_Help)"
+        key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+        name="LAPS_DontAllowPwdExpirationBehindPolicy"
+        valueName="PwdExpirationProtectionEnabled"
+        >
+      <parentCategory ref="LAPS_CAT"/>
+      <supportedOn ref="SUPPORTED_Windows10"/>
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+    </policy>
+    <policy
+        class="Machine"
+        displayName="$(string.LAPS_ADPasswordEncryptionEnabled)"
+        explainText="$(string.LAPS_ADPasswordEncryptionEnabled_Help)"
+        key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+        name="LAPS_ADPasswordEncryptionEnabled"
+        valueName="ADPasswordEncryptionEnabled"
+        >
+      <parentCategory ref="LAPS_CAT"/>
+      <supportedOn ref="SUPPORTED_Windows10"/>
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+    </policy>
+    <policy
+        class="Machine"
+        displayName="$(string.LAPS_ADPasswordEncryptionPrincipal)"
+        explainText="$(string.LAPS_ADPasswordEncryptionPrincipal_Help)"
+        key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+        name="LAPS_ADPasswordEncryptionPrincipal"
+        presentation="$(presentation.LAPS_ADPasswordEncryptionPrincipal)"
+        >
+      <parentCategory ref="LAPS_CAT"/>
+      <supportedOn ref="SUPPORTED_Windows10"/>
+      <elements>
+        <text
+            id="TEXT_ADPasswordEncryptionPrincipal"
+            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            maxLength="128"
+            valueName="ADPasswordEncryptionPrincipal"
+            />
+      </elements>
+    </policy>
+    <policy
+        class="Machine"
+        displayName="$(string.LAPS_ADEncryptedPasswordHistorySize)"
+        explainText="$(string.LAPS_ADEncryptedPasswordHistorySize_Help)"
+        key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+        name="LAPS_ADEncryptedPasswordHistorySize"
+        presentation="$(presentation.LAPS_ADEncryptedPasswordHistorySize)"
+        >
+      <parentCategory ref="LAPS_CAT"/>
+      <supportedOn ref="SUPPORTED_Windows10"/>
+      <elements>
+        <decimal
+            id="LAPS_ADEncryptedPasswordHistorySize_INT"
+            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            minValue="0"
+            maxValue="12"
+            valueName="ADEncryptedPasswordHistorySize"
+            />
+      </elements>
+    </policy>
+    <policy
+        class="Machine"
+        displayName="$(string.LAPS_ADBackupDSRMPassword)"
+        explainText="$(string.LAPS_ADBackupDSRMPassword_Help)"
+        key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+        name="LAPS_ADBackupDSRMPassword"
+        valueName="ADBackupDSRMPassword"
+        >
+      <parentCategory ref="LAPS_CAT"/>
+      <supportedOn ref="SUPPORTED_Windows10"/>
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+    </policy>
+    <policy
+        class="Machine"
+        displayName="$(string.LAPS_PostAuthenticationActions)"
+        explainText="$(string.LAPS_PostAuthenticationActions_Help)"
+        key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+        name="LAPS_PostAuthenticationActions"
+        presentation="$(presentation.LAPS_PostAuthenticationActions)"
+        >
+      <parentCategory ref="LAPS_CAT"/>
+      <supportedOn ref="SUPPORTED_Windows10"/>
+      <elements>
+        <decimal
+            id="LAPS_PostAuthenticationResetDelay_INT"
+            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            minValue="0"
+            maxValue="24"
+            valueName="PostAuthenticationResetDelay"
+            />
+        <enum
+            id="LAPS_PostAuthenticationActions"
+            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            valueName="PostAuthenticationActions"
+            >
+          <item displayName="$(string.PostAuthenticationActions_Item0)">
+            <value>
+              <decimal value="0"/>
+            </value>
+          </item>
+          <item displayName="$(string.PostAuthenticationActions_Item1)">
+            <value>
+              <decimal value="1"/>
+            </value>
+          </item>
+          <item displayName="$(string.PostAuthenticationActions_Item3)">
+            <value>
+              <decimal value="3"/>
+            </value>
+          </item>
+          <item displayName="$(string.PostAuthenticationActions_Item5)">
+            <value>
+              <decimal value="5"/>
+            </value>
+          </item>
+        </enum>
+      </elements>
+    </policy>
+  </policies>
+</policyDefinitions>

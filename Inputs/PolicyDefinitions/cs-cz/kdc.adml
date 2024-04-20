@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Nastavení služby KDC</displayName>
+  <description>Konfigurační nastavení pro službu Kerberos Key Distribution Center</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">Služba KDC</string>
+      <string id="forestsearch">Používat pořadí hledání v doménových strukturách</string>
+      <string id="forestsearch_explain">Toto nastavení zásad definuje seznam důvěřujících doménových struktur, které služba KDC (Key Distribution Center) prohledává při překladu hlavních názvů služeb (SPN) skládajících se ze dvou částí.
+
+Pokud toto nastavení zásad povolíte, služba KDC bude doménové struktury v tomto seznamu prohledávat v případě, že nebude moci přeložit hlavní název služby skládající se ze dvou částí v místní doménové struktuře. Prohledávání doménové struktury probíhá prostřednictvím globálního katalogu nebo nápovědy k příponě názvu. Pokud je nalezena shoda, zobrazí služba KDC klientovi referenční seznam pro odpovídající doménu.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, služba KDC nebude prohledávat doménové struktury uvedené v seznamu za účelem přeložení hlavního názvu služby. Pokud služba KDC nebude moci přeložit hlavní název služby, protože nenalezne název, může být použito ověřování NTLM.
+
+Aby bylo zajištěno konzistentní chování, musí být toto nastavení zásad podporováno a identicky nastaveno na všech řadičích domény v doméně.</string>
+      <string id="emitlili">Poskytnout informace o předchozích přihlášeních ke klientským počítačům</string>
+      <string id="emitlili_explain">Toto nastavení zásad určuje, zda řadič domény poskytuje informace o předchozích přihlášeních ke klientským počítačům.
+
+Pokud toto nastavení zásad povolíte, řadič domény bude poskytovat informativní zprávu o předchozích přihlášeních.
+
+Aby mohlo Přihlášení k systému Windows využívat tuto funkci, musí být povoleno také nastavení zásady Zobrazit informace o předchozích přihlášeních během přihlášení uživatele nacházející se v uzlu Možnosti přihlášení k systému Windows v části Součásti systému Windows.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, řadič domény informace o předchozích přihlášeních nebude poskytovat, pokud je povoleno nastavení zásad Zobrazit informace o předchozích přihlášeních během přihlášení uživatele.
+
+Poznámka: Informace o předchozích přihlášeních jsou poskytovány, pouze pokud je funkční úroveň domény Windows Server 2008. V doménách s funkční úrovní domény Windows Server 2003, Windows 2000 – nativní režim nebo Windows 2000 – smíšený režim nemohou řadiče domény poskytovat informace o předchozích přihlášeních a povolení tohoto nastavení nebude mít žádný vliv.
+
+</string>
+      <string id="CbacAndArmor">Podpora služby KDC pro deklarace identity, složené ověřování a obranu protokolu Kerberos</string>
+      <string id="CbacAndArmor_explain">Toto nastavení zásad umožňuje nakonfigurovat řadič domény tak, aby podporoval deklarace identity a složené ověřování dynamického řízení přístupu a obranu protokolu Kerberos pomocí ověřování protokolu Kerberos.
+
+Pokud toto nastavení zásad povolíte, budou klientské počítače podporující deklarace identity, složené ověřování dynamického řízení přístupu a obranu protokolu Kerberos používat tuto funkci pro ověřovací zprávy protokolu Kerberos. Tato zásada by měla být uplatněna na všech řadičích domény, aby bylo zajištěno jednotné používání této zásady v doméně. 
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebudou řadiče domény podporovat deklarace identity, složené ověřování ani obranu.
+
+Pokud nakonfigurujete možnost Není podporováno, nebude řadič domény podporovat deklarace identity, složené ověřování ani obranu, což je výchozí chování řadičů domény s operačním systémem Windows Server 2008 R2 nebo starším.
+
+Poznámka: Aby byly účinné následující možnosti této zásady služby KDC, musí být v podporovaných systémech povoleno nastavení zásad skupiny protokolu Kerberos „Podpora klientů služby Kerberos pro deklarace identity, složené ověřování a obranu protokolu Kerberos“. Pokud není toto nastavení zásad protokolu Kerberos povoleno, nebudou ověřovací zprávy protokolu Kerberos tyto možnosti používat.
+
+Pokud nakonfigurujete možnost Podporováno, bude řadič domény podporovat deklarace identity, složené ověřování a obranu protokolu Kerberos. Řadič domény klientským počítačům služby Kerberos inzeruje, že doména podporuje deklarace identity, složené ověřování dynamického řízení přístupu a obranu protokolu Kerberos.
+
+Požadavky na úroveň funkčnosti domény
+Pokud je úroveň funkčnosti domény nastavena na Windows Server 2008 R2 nebo starší, chovají se možnosti „Vždy poskytovat deklarace identity“ a „Odmítnout žádosti o ověření bez obrany“ stejně, jako kdyby byla vybrána možnost Podporováno.
+
+Pokud je úroveň funkčnosti domény nastavena na Windows Server 2012, inzeruje řadič domény klientským počítačům služby Kerberos, že doména podporuje deklarace identity, složené ověřování dynamického řízení přístupu a obranu protokolu Kerberos, přičemž:
+   – Při nastavení možnosti „Vždy poskytovat deklarace identity“ vrátí vždy deklarace identity pro účty a u architektury FAST (Flexible Authentication Secure Tunneling) podporuje chování podle dokumentu RFC.
+   – Při nastavení možnosti „Odmítnout žádosti o ověření bez obrany“ jsou odmítány zprávy protokolu Kerberos bez obrany.
+
+Upozornění: Při nastavení možnosti „Odmítnout žádosti o ověření bez obrany“ se nezdaří ověření klientských počítačů, které nepodporují obranu protokolu Kerberos, vůči řadiči domény.
+
+Pro efektivní využití této funkce nasaďte dostatečný počet řadičů domény s podporou deklarací identity, složeného ověřování dynamického řízení přístupu a obrany protokolu Kerberos, které zvládnou žádosti o ověření. Při nedostatečném počtu řadičů domény, kteří podporují tuto zásadu, dojde k chybě ověření vždy, když je vyžadováno dynamické řízení přístupu nebo obrana protokolu Kerberos (tedy při povolené možnosti Podporováno).
+
+Účinek povolení tohoto nastavení zásad na výkon řadiče domény:
+   – Je vyžadováno zjišťování schopností domény zabezpečené protokolem Kerberos, což má za následek další výměny zpráv.
+   – Deklarace identity a složené ověřování dynamického řízení přístupu zvyšuje množství a složitost dat ve zprávě, což prodlužuje dobu zpracování a zvětšuje lístek služby Kerberos.
+   – Obrana protokolu Kerberos zajišťuje úplné šifrování zpráv protokolu Kerberos a podepisování chyb protokolu Kerberos, což prodlužuje dobu zpracování, ale nemění velikost lístku služby.
+</string>
+      <string id="NoCbacAndArmor">Není podporováno</string>
+      <string id="MixModeCbacAndArmor">Podporováno</string>
+      <string id="FullModeCbacAndArmor">Vždy poskytovat deklarace</string>
+      <string id="FullModeCbacAndRequireArmor">Odmítnout žádosti o ověření bez obrany</string>
+      <string id="TicketSizeThreshold">Upozornění na velké lístky protokolu Kerberos</string>
+      <string id="TicketSizeThreshold_explain">Toto nastavení zásad umožňuje nakonfigurovat, při jaké velikosti lístků služby Kerberos se aktivuje událost upozornění vydaná během ověřování protokolem Kerberos. Upozornění na velikost lístků jsou zaznamenávána do systémového protokolu.
+
+Pokud toto nastavení zásad povolíte, můžete nastavit prahový limit lístku služby Kerberos, při kterém se aktivují události upozornění. Při nastavení příliš vysoké hodnoty může docházet k chybám ověřování, přestože události upozornění nejsou protokolovány.  Při nastavení příliš nízké hodnoty bude v protokolu příliš mnoho upozornění na lístky, což pro analýzu není užitečné. Tato hodnota by měla být nastavena na stejnou hodnotu jako zásada Nastavit maximální velikost vyrovnávací paměti kontextových tokenů SSPI protokolu Kerberos nebo nejmenší hodnota MaxTokenSize použitá ve vašem prostředí, pokud konfiguraci neprovádíte pomocí zásad skupiny.
+      
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nastaví se prahová hodnota na 12 000 bajtů, což je výchozí hodnota MaxTokenSize protokolu Kerberos pro systémy Windows 7, Windows Server 2008 R2 a starší verze.
+
+</string>
+      <string id="RequestCompoundId">Požadovat složené ověřování</string>
+      <string id="RequestCompoundId_explain">Toto nastavení zásad umožňuje nakonfigurovat řadič domény tak, aby vyžadoval složené ověřování.
+
+Poznámka: Aby mohl řadič domény vyžadovat složené ověřování, musí být povolena a nakonfigurována zásada Podpora služby KDC pro deklarace identity, složené ověřování a obranu protokolu Kerberos. 
+
+Pokud toto nastavení zásad povolíte, budou řadiče domény požadovat složené ověřování. Vrácený lístek služby bude obsahovat složené ověřování pouze v případě, že je účet explicitně nakonfigurován. Tato zásada by měla být uplatněna na všech řadičích domény, aby bylo zajištěno jednotné používání této zásady v doméně. 
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, vrátí řadiče domén lístky služby, které obsahují složené ověřování, vždy, když klient odešle žádost o složené ověřování, bez ohledu na konfiguraci účtu.
+
+</string>
+      <string id="PKINITFreshness">Podpora KDC pro rozšíření PKInit Freshness Extension</string>
+      <string id="PKINITFreshness_explain">Pro podporu rozšíření PKInit Freshness Extension se vyžaduje úroveň funkčnosti domény Windows Server 2016. Pokud doména řadiče domény není na úrovni funkčnosti Windows Server 2016 nebo vyšší, tato zásada se nepoužije.
+
+Toto nastavení zásad umožňuje nakonfigurovat řadič domény tak, aby podporoval rozšíření PKInit Freshness Extension.
+
+Pokud toto nastavení zásad povolíte, podporují se následující možnosti:
+
+Podporováno: Rozšíření PKInit Freshness Extension se podporuje na požádání. Klienti Kerberos, kteří se úspěšně ověří u rozšíření PKInit Freshness Extension, dostanou čerstvý identifikátor SID identity veřejného klíče.
+
+Požadováno: Rozšíření PKInit Freshness Extension je nezbytné k úspěšnému ověření. Klienti Kerberos, kteří rozšíření PKInit Freshness Extension nepodporují, narazí při použití přihlašovacích údajů veřejného klíče vždycky na chybu.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, řadič domény nebude rozšíření PKInit Freshness Extension nikdy nabízet a bude přijímat platné žádosti o ověření bez kontroly čerstvosti. Uživatelé nikdy nedostanou čerstvý identifikátor SID identity veřejného klíče.
+</string>
+      <string id="NoPKINITFreshness">Zakázáno</string>
+      <string id="SupportPKINITFreshness">Podporováno</string>
+      <string id="RequirePKINITFreshness">Požadováno</string>
+      <string id="PKINITHashAlgorithmConfiguration">Konfigurovat algoritmy hash pro přihlášení k certifikátu</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Toto nastavení zásad řídí algoritmy hash nebo kontrolního součtu používané klientem Kerberos při ověřování certifikátu.
+
+Pokud tuto zásadu povolíte, budete moct pro každý algoritmus nakonfigurovat jeden ze čtyř stavů:
+
+- „Výchozí“ nastaví algoritmus na doporučený stav.
+
+- „Podporováno“ povolí použití algoritmu. Povolení algoritmů, které byly ve výchozím nastavení zakázány, může snížit zabezpečení.
+
+- „Auditováno“ umožňuje použití algoritmu a hlásí událost (ID 309) při každém použití. Tento stav je určen k ověření, zda algoritmus není používán a lze jej bezpečně zakázat.
+
+- „Nepodporováno“ zakáže použití algoritmu. Tento stav je určen pro algoritmy, které jsou považovány za nezabezpečené.
+
+Pokud tuto zásadu zakážete nebo nenakonfigurujete, zaujme každý algoritmus „Výchozí“ stav.
+Další informace o algoritmech hash a kontrolních součtů podporovaných klientem Windows Kerberos a jejich výchozích stavech najdete na https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Události generované touto konfigurací: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Výchozí</string>
+      <string id="PKINITHashAlgorithm_Supported">Podporováno</string>
+      <string id="PKINITHashAlgorithm_Audited">Auditováno</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Nepodporováno</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Režim:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Doménové struktury k prohledávání</label>
+        </textBox>
+        <text>Syntaxe:</text>
+        <text>Zadejte seznam doménových struktur, které mají být prohledávány, pokud je povolena tato zásada.</text>
+        <text>Použijte formát pojmenování v podobě plně kvalifikovaného názvu domény.</text>
+        <text>Více položek hledání oddělujte středníkem (;).</text>
+        <text>Podrobnosti:</text>
+        <text>Aktuální doménová struktura nemusí být v seznamu uvedena, protože pro pořadí vyhledávání v doménových strukturách se používá nejprve globální katalog a potom se vyhledává v uvedeném pořadí.</text>
+        <text>Není potřeba uvádět zvlášť jednotlivé domény v doménové struktuře.</text>
+        <text>Pokud je uvedena důvěřující doménová struktura, budou prohledány všechny domény v této doménové struktuře.</text>
+        <text>Nejlepších výsledků dosáhnete tak, že doménové struktury seřadíte podle pravděpodobnosti úspěšnosti.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Možnosti deklarace identity, složeného ověřování dynamického řízení přístupu a obrany protokolu Kerberos:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Prahová hodnota velikosti lístku</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">Možnosti rozšíření PKInit Freshness Extension:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Политики службы Windows Servicing</displayName>
+  <description>Политики службы Windows Servicing</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">Укажите параметры для установки необязательных компонентов и восстановления компонентов</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+Этот параметр политики указывает сетевые расположения, которые используются для восстановления повреждений операционной системы и для включения необязательных функций, рабочие файлы которых были удалены.
+
+Если включить этот параметр политики и указать новое расположение, то файлы, находящиеся в этом расположении, используются для восстановления повреждений операционной системы и для включения необязательных функций, полезные файлы которых были удалены. Введите полный путь к новому расположению в поле «Альтернативный путь к исходным файлам». Можно указать несколько расположений, разделяя пути точкой с запятой. 
+
+Для сетевого размещения можно указать либо папку, либо WIM-файл. Если выбран WIM-файл, путь расположения должно содержать префикс «wim:» и включать индекс образа, используемый в WIM-файле. Например, «wim:\\server\share\install.wim:3».
+
+Если этот параметр политики отключен или не настроен, а также если не удается найти нужные файлы в расположении, указанном в этом параметре политики, файлы загружаются из центра обновления Windows, если это разрешено параметрами политики для данного компьютера.
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>Альтернативный путь к исходным файлам</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">Не пытайтесь загрузить полезные данные из центра обновления Windows</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">Скачайте содержимое для восстановления и дополнительные компоненты непосредственно из Центра обновления Windows вместо использования служб Windows Server Update Services (WSUS)</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

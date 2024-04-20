@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2015 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Microsoft Windows Device Guard</displayName>
+  <description>Windows Device Guard 安全性</description>
+  <resources>
+    <stringTable>
+      <string id="DeviceGuard">Device Guard</string>
+      <string id="VirtualizationBasedSecurity">開啟虛擬化型安全性</string>
+      <string id="VirtualizationBasedSecurityHelp">指定是否啟用虛擬化型安全性。
+
+虛擬化型安全性使用 Windows Hypervisor 提供安全性服務的支援。虛擬化型安全性需要安全開機，而且可以選擇性地使用 DMA 保護來啟用。DMA 保護需要硬體支援，且只會在正確設定的裝置上啟用。
+
+程式碼完整性的虛擬化型保護
+
+此設定會啟用「核心模式程式碼完整性」的虛擬化型保護。啟用此選項時，會強制執行核心模式記憶體保護，且「程式碼完整性」驗證路徑會由「虛擬化型安全性」功能保護。
+
+[已停用] 選項可從遠端關閉「程式碼完整性」的「虛擬化型保護」選項，如果先前是使用「啟用而不鎖定」選項開啟。
+
+[在 UEFI 鎖定時啟用] 選項可確保「程式碼完整性」的「虛擬化型保護」無法從遠端停用。若要停用此功能，您必須將群組原則設為 [已停用]，並使用實際存在的使用者從每部電腦移除安全性功能，以清除 UEFI 中保存的設定。
+
+[在不含鎖定的情況下啟用] 選項允許使用 [程式碼完整性] 的虛擬化型保護從遠端使用群組原則。
+
+[未設定] 選項會將原則設定維持為未定義狀態。群組原則不會將原則設定寫入登錄，因此不會影響電腦或使用者。如果登錄中有目前的設定，將不會修改。
+
+[需要 UEFI 記憶體屬性工作表格] 選項只會在記憶體屬性資料表支援 UEFI 韌體的裝置上啟用「程式碼完整性的虛擬化型保護」。沒有 UEFI 記憶體屬性工作表格的裝置，其韌體可能與「程式碼完整性」的「虛擬化型保護」不相容，在某些情況下可能會導致當機、資料遺失，或與特定外掛程式卡片不相容。若未設定此選項，應測試目標裝置以確保相容性。
+
+警告: 系統上的所有驅動程式都必須與此功能相容，否則系統可能會當機。請確認此原則設定只部署到已知相容的電腦。
+
+Credential Guard
+
+此設定可讓使用者開啟具有虛擬化型安全性的 Credential Guard，以協助保護認證。
+
+對於 Windows 11 21H2 及更舊版本，如果先前使用 [已啟用而不鎖定] 選項開啟 Credential Guard，則 [已停用] 選項會從遠端關閉 Credential Guard。若為較新版本，如果先前使用 [在不鎖定的情況下啟用] 選項或 [未設定] 開啟 Credential Guard，則 [已停用] 選項會從遠端關閉 Credential Guard。
+
+[在 UEFI 鎖定時啟用] 選項可確保 Credential Guard 無法從遠端停用。若要停用此功能，您必須將群組原則設為 [已停用]，並使用實際存在的使用者從每部電腦移除安全性功能，以清除 UEFI 中保存的設定。
+
+[在不含鎖定的情況下啟用] 選項允許使用群組原則從遠端停用 Credential Guard。使用此設定的裝置必須至少執行 Windows 10 (版本 1511)。
+
+對於 Windows 11 21H2 及更舊版本，[尚未設定] 選項會將原則設定維持為未定義狀態。群組原則不會將原則設定寫入登錄，因此不會影響電腦或使用者。如果登錄中有目前的設定，將不會修改。若為較新版本，如果登錄中沒有目前的設定，[尚未設定] 選項會在不鎖定 UEFI 的情況下啟用 Credential Guard。
+
+安全啟動
+
+此設定會設定安全啟動的設定，以保護開機鏈結。
+
+[尚未設定] 設定為預設值，並允許系統管理使用者設定功能。
+
+[已啟用] 選項會在支援的硬體上開啟安全啟動。
+
+[已停用] 選項會關閉安全啟動，不論硬體支援如何。
+
+核心模式硬體強制堆疊保護
+
+這個設定會啟用核心模式程式碼的硬體強制堆疊保護。啟用此安全性功能時，會使用硬體型陰影堆疊強化核心模式資料堆疊，這些堆疊會儲存預定的傳回位址目標，以確保程式控制流程不會遭到竄改。
+
+此安全性功能具有下列先決條件：
+1) CPU 硬體支援硬體型陰影堆疊。
+2)程式碼完整性虛擬化型保護已啟用。
+
+如果不符合任一個先決條件，即使已為此功能選取 [已啟用] 選項，也不會啟用此功能。請注意，選取此功能的 [已啟用] 選項將不會自動啟用程式碼完整性的「虛擬化型保護」，必須個別完成。
+
+啟用此安全性功能的裝置必須至少執行 Windows 11 (版本 22H2)。
+
+[已停用] 選項會關閉核心模式硬體強制堆疊保護。
+
+[在稽核模式中啟用] 選項可在稽核模式中啟用核心模式硬體強制堆疊保護，其中陰影堆疊違規不會嚴重，而且會記錄到系統事件記錄檔。
+
+[在強制模式中啟用] 選項會在強制模式中啟用硬體強制堆疊保護，其中陰影堆疊違規嚴重。
+
+[未設定] 選項會將原則設定維持為未定義狀態。群組原則不會將原則設定寫入登錄，因此不會影響電腦或使用者。如果登錄中有目前的設定，將不會修改。
+
+警告： 系統上的所有驅動程式都必須與此安全性功能相容，否則系統可能會在強制模式下當機。稽核模式可用來探索不相容的驅動程式。如需詳細資訊，請參閱https://go.microsoft.com/fwlink/?LinkId=2162953.
+      </string>
+      <string id="SecureBoot">安全開機</string>
+      <string id="SecureBootAndDmaProtection">安全開機及 DMA 保護</string>
+      <string id="Disabled">已停用</string>
+      <string id="Enabled">已啟用</string>
+      <string id="EnabledWithoutLock">在不含鎖定情況下啟用</string>
+      <string id="EnabledWithUefiLock">在包含 UEFI 鎖定的情況下啟用</string>
+      <string id="EnabledAudit">在稽核模式中啟用</string>
+      <string id="EnabledEnforcement">在強制模式中啟用</string>
+      <string id="NotConfigured">尚未設定</string>
+      <string id="ConfigCIPolicy">部署 Windows Defender 應用程式控制</string>
+      <string id="ConfigCIPolicyHelp">部署 Windows Defender 應用程式控制
+
+這個原則設定可讓您部署「程式碼完整性原則」到電腦上，以控制哪些可在該電腦上執行。
+
+如果您部署「程式碼完整性原則」，Windows 將會基於此原則，限制在核心模式與 Windows 桌面兩者可以執行的項目。若要啟用這項原則，電腦必須重新啟動。
+
+檔案路徑必須是通用命名慣例 (UNC) 路徑 (如 \\ServerName\ShareName\SIPolicy.p7b)，或本機有效路徑 (如 C:\FolderName\SIPolicy.p7b)。本機電腦帳號 (本機系統) 必須擁有存取原則檔案的權限。
+
+如果正在使用已簽署或已保護的原則，停用這個原則設定不會從電腦上移除任何功能。相反地，您必須執行下列任一項：
+
+   1) 首先，更新原則為非保護原則，然後停用設定，或 
+   2) 停用設定，然後透過實際操作的使用者，從每部電腦移除原則。
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="VirtualizationBasedSecurity">
+        <dropdownList refId="RequirePlatformSecurityFeaturesDrop" defaultItem="1">選取平台安全性層級:</dropdownList>
+        <dropdownList refId="HypervisorEnforcedCodeIntegrityDrop" defaultItem="3">程式碼完整性的虛擬化型保護:</dropdownList>
+        <checkBox refId="CheckboxMAT">需要 UEFI 記憶體屬性表格</checkBox>
+        <dropdownList refId="CredentialIsolationDrop" defaultItem="3">Credential Guard 設定:</dropdownList>
+        <dropdownList refId="SystemGuardDrop" defaultItem="2">安全啟動設定:</dropdownList>
+        <dropdownList refId="KernelShadowStacksDrop" defaultItem="3">核心模式硬體強制堆疊保護:</dropdownList>
+      </presentation>
+      <presentation id="ConfigCIPolicy">
+        <textBox refId="ConfigCIPolicyFilePathText">
+          <label>程式碼完整性原則檔案路徑:</label>
+        </textBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

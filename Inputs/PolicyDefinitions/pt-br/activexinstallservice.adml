@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Serviço Instalador do ActiveX</displayName>
+  <description>Instala os controles ActiveX de locais de instalação aprovados</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">Serviço Instalador do ActiveX</string>
+      <string id="AxISURLZonePolicies">Estabelecer política de instalação do ActiveX para sites em Zonas confiáveis</string>        
+      <string id="AxISURLZonePolicies_explain">Esta configuração de política controla a instalação de controles ActiveX para sites em Zonas confiáveis. 
+
+Se você habilitar esta configuração de política, controles ActiveX serão instalados de acordo com as configurações definidas pela configuração de política. 
+      
+Se você desabilitar ou não definir essa configuração de política, controles ActiveX questionarão o usuário antes da instalação. 
+
+Se o site confiável usar o protocolo HTTPS, esta configuração de política também poderá controlar como o Serviço Instalador do ActiveX responde a erros de certificado. Por padrão, todas as conexões HTTPS devem fornecer um certificado de servidor que transmita todos os critérios de validação. Se você souber que um site confiável possui um erro de certificado, mas deseja confiar nele mesmo assim, poderá selecionar os erros do certificado que deseja ignorar. 
+    
+Observação: esta configuração de política se aplica a todos os sites em Zonas confiáveis.
+
+</string>
+      <string id="TrustedZoneDisabled">Não instalar</string>
+      <string id="TrustedZonePrompt">Solicitar ao usuário</string>
+      <string id="TrustedZoneSilentInstall">Instalar silenciosamente</string>
+      <string id="ApprovedActiveXInstallSites">Locais de instalação aprovados dos controles ActiveX</string>
+      <string id="ApprovedActiveXInstallSites_explain">Esta configuração de política determina quais sites de instalação do ActiveX os usuários padrão em sua organização podem usar para instalar controles ActiveX em seus computadores. Quando essa configuração está habilitada, o administrador pode criar uma lista de sites de instalação do ActiveX aprovados especificados pela URL de host. 
+
+Se você habilitar essa configuração, o administrador pode criar uma lista de sites de instalação do ActiveX aprovados especificados pela URL de host. 
+      
+Se você desabilitar ou não definir essa configuração de política, controles ActiveX solicitarão o usuário as credenciais administrativas antes da instalação. 
+
+Observação: caracteres curingas não podem ser usados ao especificar as URLs de host.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Política de Instalação para controle ActiveX assinado por fornecedor confiável</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Política de Instalação para controle ActiveX assinado</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Política de Instalação para controle ActiveX não assinado</dropdownList>
+        <text>Permitir conexão a sites confiáveis com os erros de certificado do servidor a seguir.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">CA (autoridade de certificação) desconhecida</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">CN (nome de certificado) inválido</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Data de validação de certificado expirada</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Uso de certificado incorreto</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">URLs de host</listBox>
+        <text>Contém a política para o URL de host.</text>
+        <text>Por exemplo  </text>
+        <text>Nome do host: http://activex.microsoft.com</text>
+        <text>Valor: 2,1,0,0</text>
+        <text>O valor para cada URL de host são quatro configurações no formato CSV.</text>
+        <text>Isso representa "ControleAssinadoTPS,ControleAssinado,ControleNãoAssinado,PolíticaCertificadoServidor</text>
+        <text>Os três valores mais à esquerda na política controlam a instalação dos controles ActiveX com base em sua assinatura.</text>
+        <text>Eles podem ser qualquer um dos apresentados a seguir.</text>
+        <text>0: O controle ActiveX não será instalado</text>
+        <text>1: Solicita que o usuário instale o controle ActiveX</text>
+        <text>2: O controle ActiveX será instalado silenciosamente</text>
+        <text>Controles assinados por certificados em repositórios do fornecedor confiável serão instalados silenciosamente  </text>
+        <text>Não há suporte para instalação silenciosa dos controles não assinados</text>
+        <text></text>
+        <text>O valor mais à direita na política é um sinalizador de bit de mascaramento</text>
+        <text>Os sinalizadores são usados para ignorar erros de certificado https.</text>
+        <text>O valor padrão é 0.</text>
+        <text>Isso significa que as conexões https devem passar em todas as verificações de segurança</text>
+        <text></text>
+        <text>Use a combinação dos seguintes valores</text>
+        <text>para ignorar erros de certificado inválido</text>
+        <text>0x00000100  Ignora CA desconhecido</text>
+        <text>0x00001000  Ignora CN inválido</text>
+        <text>0x00002000  Ignora data de certificado inválida</text>
+        <text>0x00000200  Ignora utilização de certificado errado</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

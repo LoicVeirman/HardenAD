@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>请在此处输入显示名称</displayName>
+  <description>请在此处输入描述</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">Lanman 工作站</string>
+      <string id="Pol_CipherSuiteOrder_Name">密码套件顺序</string>
+      <string id="Pol_CipherSuiteOrder_Help">此策略设置确定 SMB 客户端使用的密码套件。
+
+如果启用此策略设置，密码套件的优先级别是指定的顺序。
+
+如果你启用此策略设置并且未指定至少一个受支持的密码套件，或者如果禁用或未配置此策略设置，则将使用默认的密码套件顺序。
+
+SMB 3.11 密码套件:
+
+AES_128_GCM
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+SMB 3.0 和 3.02 密码套件:
+
+AES_128_CCM
+
+修改此设置的方式: 
+
+在编辑框中排列所需的密码套件 — 每行一个密码套件、按从最高到最不优先的顺序、最优先的密码套件在顶部。删除任何不希望使用的密码套件。
+
+注意: 在配置此安全设置时，更改将在你重新启动 Windows 后生效。</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">启用不安全的来宾登录</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">此策略设置确定 SMB 客户端是否允许在 SMB 服务器上进行不安全的来宾登录。
+
+如果你启用此策略设置或者未配置此策略设置，SMB 客户端将允许不安全的来宾登录。
+
+如果你禁用此策略设置，SMB 客户端将拒绝不安全的来宾登录。
+
+文件服务器使用不安全的来宾登录来允许对共享文件夹进行未经身份验证的访问。尽管在企业环境中不太常见，但充当文件服务器的消费型网络附加存储(NAS)设备经常使用不安全的来宾登录。默认情况下，Windows 文件服务器要求身份验证并且不会使用不安全的来宾登录。由于不安全的来宾登录未经过身份验证，重要的安全功能(例如 SMB 签名和 SMB 加密)将被禁用。因此，允许不安全的来宾登录的客户端很容易受到各种中间人攻击，从而导致数据丢失、数据损坏和遭受恶意软件的攻击。此外，可能网络上的任何人都可以访问写入到使用不安全来宾登录的文件服务器中的任何数据。Microsoft 建议禁用不安全的来宾登录，并将文件服务器配置为要求经过身份验证的访问。
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">脱机文件在连续可用性共享中的可用性</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        此策略设置决定了脱机文件在连接到启用了连续可用性(CA)标志的 SMB 共享的客户端上的行为。
+
+        如果启用此策略设置，Windows 计算机在连接到启用了 CA 的共享时，“始终脱机可用”选项将出现在其“文件资源管理器”菜单中。另外，还可以使用客户端缓存在启用了 CA 的共享中固定文件。
+
+        如果禁用或未配置此策略设置，Windows 将阻止在启用了 CA 的共享中使用脱机文件。
+
+        注意: Microsoft 建议不要启用此组策略。对脱机文件使用 CA 会导致联机和脱机状态之间的转换时间过长。
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">连续可用性共享中的句柄缓存</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        此策略设置决定了连接到启用了连续可用性(CA)标志的 SMB 共享的客户端的 SMB 句柄缓存行为。
+
+        如果启用此策略设置，SMB 客户端将允许对 CA 共享中的文件使用缓存的句柄。当重复访问 Microsoft Azure Files 中运行的 CA 共享中的大量非结构化数据文件时，这可能会导致性能提高。
+
+        如果禁用或未配置此策略设置，Windows 将阻止对通过 CA 共享打开的文件使用缓存的句柄。
+
+        注意: 在连接 Windows Server 提供的横向扩展文件服务器共享时，此策略不会生效。如果客户端定期连接到 Windows 故障转移群集中托管的文件，并使用文件服务器完成一般用途任务，Microsoft 建议不要为这样的客户端启用此策略，因为这可能导致故障转移时间变长，并会增加内存使用量和 CPU 使用率。
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">至少为 Windows Server 2022、Windows 11</string>
+      <string id="Pol_EnableCompressedTraffic_Name">默认情况下使用 SMB 压缩</string>
+      <string id="Pol_EnableCompressedTraffic_Help">此策略控制 SMB 客户端是否默认使用流量压缩。
+
+如果启用此策略设置，则在启用 SMB 压缩时，SMB 客户端将默认尝试压缩流量。
+
+如果禁用或未配置此策略设置，则 SMB 客户端默认不会尝试压缩流量。但是，可以通过其他方式请求流量压缩。请参阅以下备注。
+
+注意: 此策略与每共享和每文件句柄属性结合使用，通过这些属性可以请求流量压缩。此外，SMB 服务器还必须支持并启用压缩。例如，如果禁用(或未配置)此策略，则 SMB 客户端仍可执行压缩(如果 SMB 服务器共享已请求压缩)。如果无需执行此操作，且希望完全禁用压缩，请改为配置随附的“禁用 SMB 压缩”策略。
+      </string>
+      <string id="Pol_DisableCompression_Name">禁用 SMB 压缩</string>
+      <string id="Pol_DisableCompression_Help">此策略控制 SMB 客户端是否将禁用(完全阻止)流量压缩。
+
+如果启用此策略设置，则无论“默认使用 SMB 压缩”策略或每共享属性)等其他策略(，SMB 客户端绝不会压缩数据。
+
+如果禁用或未配置此策略设置，则 SMB 客户端可能会根据)的其他策略和条件组合(压缩流量。
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>密码套件:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

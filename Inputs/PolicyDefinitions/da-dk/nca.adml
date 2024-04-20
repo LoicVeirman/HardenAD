@@ -1,0 +1,132 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>Skabelon til gruppepolitik for indstillinger for DirectAccess Client Experience</displayName>
+  <description>Denne admx-fil beskriver politikskabelonen for NCA-komponenten i DirectAccess Client</description>
+  <resources>
+    <stringTable>
+      <string id="NCA">Indstillinger for DirectAccess Client Experience</string>
+      <string id="NCA_Help">Det er skabelonen til gruppepolitik for indstillinger for DirectAccess Client Experience. Læs installationsvejledningen til DirectAccess for at få flere oplysninger.</string>
+      <string id="SupportEmail">Understøttet e-mailadresse</string>
+      <string id="SupportEmail_Help">Angiver den e-mailadresse, som skal bruges til at sende de logfiler, der oprettes af NCA, til netværksadministratoren. 
+
+Når brugeren sender logfilerne til administratoren, bruger NCA standard-e-mailklienten til at åbne en ny meddelelse med den understøttede e-mailadresse i feltet Til: i meddelelsen, og derefter vedhæftes de oprettede logfiler som en .html-fil. Brugeren kan gennemse meddelelsen og tilføje flere oplysninger, før meddelelsen sendes.
+
+</string>
+      <string id="FriendlyName">Brugervenligt navn</string>
+      <string id="FriendlyName_Help">Angiver den streng, der vises for DirectAccess-forbindelsen, når brugeren klikker på ikonet Netværk i meddelelsesområdet. Du kan f.eks. angive "Contoso Intranet Access" for DirectAccess-kunderne i Contoso Corporation.
+
+Hvis denne politikindstilling ikke er konfigureret, er den streng, der vises for DirectAccess-forbindelsen, "Corporate Connection".
+
+</string>
+      <string id="ShowUI">Brugergrænseflade</string>
+      <string id="ShowUI_Help">Angiver, om der vises en post for DirectAccess-forbindelsen, når brugeren klikker på ikonet Netværk i meddelelsesområdet.
+
+Angiv denne indstilling til Deaktiveret for at forhindre, at brugerne bliver forvirret, når du bare vil bruge DirectAccess til at fjernadministrere DirectAccess-klientcomputere fra dit intranet og ikke vil give adgang til intranettet. 
+
+Hvis denne politikindstilling ikke er konfigureret, vises posten for DirectAccess-forbindelsen.
+
+</string>
+      <string id="PassiveMode">Passiv tilstand for DirectAccess</string>
+      <string id="PassiveMode_Help">Angiver, om NCA-tjenesten kører i passiv tilstand eller ej.
+
+Angiv denne politikindstilling til Deaktiveret, så NCA hele tiden tester aktivt. Hvis denne politikindstilling ikke er konfigureret, er NCA-test som standard i aktiv tilstand.
+
+</string>
+      <string id="LocalNamesOn">Foretræk tilladte lokale navne</string>
+      <string id="LocalNamesOn_Help">Angiver, om der brugeren har indstillingerne Opret forbindelse og Afbryd forbindelsen for DirectAccess-posten, når brugeren klikker på ikonet Netværk i meddelelsesområdet.
+
+Hvis brugeren klikker på indstillingen Afbryd forbindelsen, fjerner NCA DirectAccess-reglerne fra NRPT (Name Resolution Policy Table), og DirectAccess-klientcomputeren bruger den normale navnefortolkning, der er tilgængelig for klientcomputeren i den aktuelle netværkskonfiguration, herunder afsendelse af alle DNS-forespørgsler til det lokale intranet eller internet-DNS-servere. Bemærk, at NCA ikke fjerner de eksisterende IPsec-tunneler, og bruger kan stadig få adgang til intranetressourcer på hele DirectAccess-serveren ved at angive IPv6-adresser i stedet for navne.
+
+Muligheden for at afbryde forbindelsen giver brugere mulighed for at angive ikke-kvalificerede enkelt-ressourcer (f.eks. "PRINTSVR") for lokale ressourcer, når de har forbindelse til et andet intranet, og for at få midlertidig adgang til intranetressourcer, når registrering af netværksplacering ikke korrekt har angivet, at DirectAccess-klientcomputeren har forbindelse til sit eget intranet.
+
+Brugeren kan gendanne DirectAccess-reglerne til NRPT og genoptage den normale DirectAccess-funktionalitet ved at klikke på Opret forbindelse.
+
+Bemærk! 
+Hvis DirectAccess-klientcomputeren findes på intranettet og har angivet netværksplaceringen korrekt, har indstillingen Afbryd forbindelsen ingen virkning, da reglerne for DirectAccess allerede er fjernet fra NRPT.
+
+Hvis denne politikindstilling ikke er konfigureret, har brugere ikke indstillingerne Opret forbindelse og Afbryd forbindelsen.
+
+</string>
+      <string id="DTEs">IPsec-tunnelslutpunkter</string>
+      <string id="DTEs_Help">Angiver IPv6-adresserne til slutpunkterne for IPsec-tunneler (Internet Protocol security), der aktiverer DirectAccess. NCA forsøger at få adgang til de ressourcer, der er angivet i indstillingen Virksomhedsressourcer via disse konfigurerede tunnelslutpunkter. 
+
+NCA bruger som standard samme DirectAccess-server, som forbindelsen til DirectAccess-klientcomputeren bruger. I standardkonfigurationer af DirectAccess findes der typisk to IPsec-tunnelslutpunkter: en til infrastrukturtunnelen og en til intranettunnelen. Du skal konfigurere ét slutpunkt for hver tunnel. 
+	  
+De enkelte poster består af teksten PING: efterfulgt af IPv6-adressen på et IPsec-tunnelslutpunkt. Eksempel: PING:2002:836b:1::836b:1.
+
+Du skal konfigurere denne indstilling til at have alle NCA-funktioner.
+
+</string>
+      <string id="CorporateResources">Virksomhedsressourcer</string>
+      <string id="CorporateResources_Help">Angiver ressourcer på dit intranet, som DirectAccess-klienter som regel har adgang til. De enkelte poster består af en streng, der identificerer typen af ressource og ressourcens placering. 
+
+De enkelte strenge kan være en af følgende typer:
+	  
+-  Et DNS-navn eller en IPv6-adresse, som NCA pinger. Syntaksen "PING:" efterfulgt at et FQDN (Fully Qualified Domain Name), som fortolkes som en IPv6-adresse, eller en IPv6-adresse. Eksempler: PING:myserver.corp.contoso.com eller PING:2002:836b:1::1. 
+ 
+Bemærk! 
+
+Det anbefales, at du bruger FQDN'er i stedet for IPv6-adresser, hvor det er muligt.
+
+Vigtigt! 
+
+Mindst en af posterne skal være en PING:-ressource.
+
+-	En URL-adresse (Uniform Resource Locator), som NCA forespørger med en HTTP-anmodning (Hypertext Transfer Protocol). Indholdet på websiden har ingen betydning. Syntaksen er "HTTP:" efterfulgt af en URL-adresse. Værtsdelen i URL-adressen skal fortolkes som en IPv6-adresse på en webserver eller indeholde en IPv6-adresse. Eksempler: HTTP:http://myserver.corp.contoso.com/ eller HTTP:http://2002:836b:1::1/.
+
+-	En UNC-sti (Universal Naming Convention) til en fil. NCA undersøger, om denne fil findes. Indholdet i filen har ingen betydning. Syntaksen er "FILE:" efterfulgt af en UNC-sti. ComputerName i UND-stien skal fortolkes som en IPv6-adresse eller indeholde en IPv6-adresse. Eksempler: FILE:\\myserver\myshare\test.txt eller FILE:\\2002:836b:1::1\myshare\test.txt.
+
+Du skal konfigurere denne indstilling til at have alle NCA-funktioner.
+
+</string>
+
+      <string id="CustomCommands">Brugerdefinerede kommandoer</string>
+      <string id="CustomCommands_Help">Angiver kommandoer, der er konfigureret af administratoren til brugerdefineret logføring. Disse kommandoer kører ud over standardlogføringskommandoer.</string>
+
+    </stringTable>
+    
+    <presentationTable>
+      <presentation id="POL_08EF8AE6_3960_4852_93B5_3E068D6C2E6B">
+        <textBox refId="TXT_60660913_5491_4D50_AF96_770639FF243D">
+          <label>Fejlfinding i forbindelse med portalen</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="SupportEmail">
+        <textBox refId="SupportEmail_Control">
+          <label>Understøttet e-mail</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="FriendlyName">
+        <textBox refId="FriendlyName_Control">
+          <label>Brugervenligt navn</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="LocalNamesOn"/>
+      <presentation id="ShowUI"/>
+      <presentation id="CorporateResources">
+        <listBox refId="CorporateResources_Control">Virksomhedsressourcer</listBox>
+      </presentation>
+      <presentation id="PortalName">
+        <textBox refId="PortalName_Control">
+          <label>Portalnavn</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="DTEs">
+        <listBox refId="DTEs_Control">DTE'er</listBox>
+      </presentation>
+      <presentation id="PassiveMode"/>
+      <presentation id="CoporatePortalSite">
+        <textBox refId="CoporatePortalSite_Control">
+          <label>Virksomhedens portalwebsted – URL-adresse</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="CustomCommands">
+        <listBox refId="CustomCommands_Control">Brugerdefinerede kommandoer</listBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

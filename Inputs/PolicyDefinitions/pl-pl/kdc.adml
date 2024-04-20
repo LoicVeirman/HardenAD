@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Ustawienia KDC</displayName>
+  <description>Ustawienia konfiguracji centrum dystrybucji kluczy Kerberos.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">Użyj funkcji kolejności przeszukiwania lasów</string>
+      <string id="forestsearch_explain">To ustawienie zasad definiuje listę lasów ufających, które centrum dystrybucji kluczy (KDC) przeszukuje podczas prób rozpoznania dwuczęściowych głównych nazw usługi (SPN).
+
+Jeśli to ustawienie zasad zostanie włączone, centrum dystrybucji kluczy będzie przeszukiwać lasy z tej listy, jeśli nie będzie w stanie rozpoznać dwuczęściowej nazwy SPN w lesie lokalnym. Przeszukiwanie lasów jest wykonywane przy użyciu wykazu globalnego lub wskazówek dotyczących sufiksu nazwy. Jeśli zostanie znalezione dopasowanie, centrum dystrybucji kluczy zwróci klientowi bilet odwołania do odpowiedniej domeny.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, centrum dystrybucji kluczy nie będzie przeszukiwać wymienionych na liście lasów w celu rozpoznania nazwy SPN. Jeśli centrum dystrybucji kluczy nie będzie w stanie rozpoznać nazwy SPN, ponieważ jej odnalezienie będzie niemożliwe, będzie można użyć uwierzytelniania NTLM.
+
+Aby zagwarantować spójne zachowanie, to ustawienie zasad musi być obsługiwane i identycznie ustawione na wszystkich kontrolerach domeny.</string>
+      <string id="emitlili">Podaj informacje o poprzednich logowaniach do komputerów klienckich</string>
+      <string id="emitlili_explain">To ustawienie zasad określa, czy kontroler domeny udostępnia komputerom klienckim informacje o poprzednich logowaniach.
+
+Jeśli to ustawienie zasad zostanie włączone, kontroler domeny będzie przekazywać komunikat informacyjny o poprzednich logowaniach.
+
+Aby ta funkcja mogła być używana podczas logowania do systemu Windows, musi też być włączone ustawienie zasad „Wyświetl informacje o poprzednich zalogowaniach podczas logowania użytkownika”, które jest dostępne w węźle Opcje logowania systemu Windows w węźle Składniki systemu Windows.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, kontroler domeny nie będzie udostępniać informacji o poprzednich logowaniach, chyba że będzie włączone ustawienie zasad Wyświetl informacje o poprzednich zalogowaniach podczas logowania użytkownika.
+
+Uwaga: informacje o poprzednich logowaniach są dostarczane tylko wtedy, gdy poziomem funkcjonalności domeny jest system Windows Server 2008. W przypadku domen z poziomem funkcjonalności systemu Windows Server 2003, systemu Windows 2000 działającego w trybie natywnym lub systemu Windows 2000 działającego w trybie mieszanym kontrolery domeny nie mogą dostarczać informacji o poprzednich logowaniach, a włączenie tego ustawienia zasad nie przyniesie żadnego efektu.
+
+</string>
+      <string id="CbacAndArmor">Obsługa oświadczeń, tożsamości złożonej i ochrony protokołu Kerberos w centrum dystrybucji kluczy</string>
+      <string id="CbacAndArmor_explain">To ustawienie zasad umożliwia skonfigurowanie kontrolera domeny pod kątem obsługi oświadczeń i tożsamości złożonej na potrzeby dynamicznej kontroli dostępu, a także ochrony protokołu Kerberos podczas używania uwierzytelniania Kerberos.
+
+Jeśli to ustawienie zasad zostanie włączone, komputery klienckie obsługujące oświadczenia i tożsamość złożoną na potrzeby dynamicznej kontroli dostępu, a także ochronę protokołu Kerberos będą używać tej funkcji dla komunikatów uwierzytelniania Kerberos. Te zasady należy wprowadzić na wszystkich kontrolerach domeny w celu zapewnienia ich spójnego stosowania w domenie.
+
+Jeśli to ustawienie zostanie wyłączone lub pozostanie nieskonfigurowane, kontroler domeny nie będzie obsługiwać oświadczeń, tożsamości złożonej ani ochrony protokołu.
+
+Jeśli zostanie skonfigurowana opcja „Nieobsługiwany”, kontroler domeny nie będzie obsługiwać oświadczeń, tożsamości złożonej ani ochrony protokołu, co jest domyślnym zachowaniem kontrolerów domeny z systemem operacyjnym Windows Server 2008 R2 lub wcześniejszymi wersjami.
+
+Uwaga: Aby poniższe opcje tej zasady dotyczącej centrum dystrybucji kluczy działały, zasady grupy protokołu Kerberos „Obsługa oświadczeń, tożsamości złożonej i ochrony protokołu Kerberos przez klienta protokołu Kerberos” musi być włączona w obsługiwanych systemach. Jeśli ustawienie zasad protokołu Kerberos nie jest włączone, komunikaty uwierzytelniania Kerberos nie będą używały tych funkcji.
+
+Jeśli zostanie skonfigurowana opcja „Obsługiwany”, kontroler domeny będzie obsługiwać oświadczenia, tożsamość złożoną i ochronę protokołu Kerberos. Kontroler domeny anonsuje komputerom klienckim protokołu Kerberos, że domena obsługuje oświadczenia i tożsamość złożoną na potrzeby dynamicznej kontroli dostępu oraz ochronę protokołu Kerberos.
+
+Wymagania poziomu funkcjonalności domeny
+W przypadku opcji „Zawsze dostarczaj oświadczenia” i „Odrzucaj niechronione żądania uwierzytelniania” ustawienie poziomu funkcjonalności domeny na system Windows Server 2008 R2 lub wcześniejszą wersję powoduje, że zachowanie kontrolerów domeny jest takie, jak gdyby była zaznaczona opcja „Obsługiwany”.
+
+Gdy poziom funkcjonalności domeny jest ustawiony na system Windows Server 2012, kontroler domeny anonsuje komputerom klienckim protokołu Kerberos, że domena obsługuje oświadczenia i tożsamość złożoną na potrzeby dynamicznej kontroli dostępu oraz ochronę protokołu Kerberos, a także:
+ – Jeśli ustawiono opcję „Zawsze dostarczaj oświadczenia”, kontroler domeny będzie zawsze zwracać oświadczenia także dla kont i będzie obsługiwać zachowanie zgodne ze specyfikacją RFC na potrzeby anonsowania protokołu FAST (Flexible Authentication Secure Tunneling).
+    – Jeśli ustawiono opcję „Odrzucaj niechronione żądania uwierzytelniania”, kontroler domeny będzie odrzucać niechronione komunikaty Kerberos.
+
+Ostrzeżenie: Ustawienie opcji „Odrzucaj niechronione żądania uwierzytelniania” powoduje, że na kontrolerze domeny nie można uwierzytelniać komputerów klienckich nieobsługujących ochrony protokołu Kerberos.
+
+Aby zapewnić efektywne działanie tej funkcji, należy wdrożyć wystarczającą liczbę kontrolerów domeny obsługujących oświadczenia i tożsamość złożoną na potrzeby dynamicznej kontroli dostępu oraz ochronę protokołu Kerberos, aby mogły obsłużyć żądania uwierzytelnienia. Niewystarczająca liczba kontrolerów domeny obsługujących te zasady spowoduje niepowodzenia uwierzytelniania przy każdym żądaniu wymagającym użycia dynamicznej kontroli dostępu lub ochrony protokołu Kerberos (to znaczy przy włączonej opcji „Obsługiwany”).
+
+Wpływ na wydajność kontrolera domeny, jeśli to ustawienie zasad jest włączone:
+    – Wymagane jest bezpieczne odnajdowanie możliwości domeny protokołu Kerberos, co powoduje dodatkową wymianę komunikatów.
+    – Oświadczenia i uwierzytelnianie złożone na potrzeby dynamicznej kontroli dostępu zwiększają ilość i złożoność danych w komunikacie, co powoduje wydłużenie czasu przetwarzania i zwiększenie rozmiaru biletu usługi Kerberos.
+    – Ochrona protokołu Kerberos umożliwia pełne szyfrowanie komunikatów Kerberos i podpisywanie błędów protokołu Kerberos, co powoduje wydłużenie czasu przetwarzania, ale nie powoduje zmiany rozmiaru biletu usługi.
+</string>
+      <string id="NoCbacAndArmor">Nieobsługiwany</string>
+      <string id="MixModeCbacAndArmor">Obsługiwany</string>
+      <string id="FullModeCbacAndArmor">Zawsze dostarczaj oświadczenia</string>
+      <string id="FullModeCbacAndRequireArmor">Odrzucaj niechronione żądania uwierzytelniania</string>
+      <string id="TicketSizeThreshold">Ostrzeżenie dotyczące dużych biletów Kerberos</string>
+      <string id="TicketSizeThreshold_explain">To ustawienie zasad umożliwia skonfigurowanie rozmiaru biletu Kerberos, przy którym będzie wyzwalane zdarzenie ostrzeżenia wydane podczas uwierzytelniania protokołu Kerberos. Ostrzeżenia o rozmiarze biletu są rejestrowane w dzienniku systemu.
+
+Jeśli to ustawienie zasad zostanie włączone, można ustawić limit progu dla biletu Kerberos, powyżej którego będą wyzwalane zdarzenia ostrzeżeń. Jeśli ustawienie jest za wysokie, mogą wystąpić błędy uwierzytelniania, mimo że nie zarejestrowano żadnych zdarzeń ostrzeżenia.  Jeśli limit będzie zbyt niski, w dzienniku będzie zbyt dużo ostrzeżeń dotyczących biletów i nie będą one przydatne na potrzeby analizy. Ta wartość powinna zostać ustawiona na taką samą wartość jak w ustawieniu zasad protokołu Kerberos „Ustaw maksymalny rozmiar buforu tokenu kontekstu Kerberos SSPI” lub na taką samą wartość jak najmniejszy rozmiar parametru MaxTokenSize używanego w danym środowisku, jeśli nie jest konfigurowane korzystanie z zasad grupy.
+      
+Jeśli to ustawienie zasad zostanie wyłączone lub pozostanie nieskonfigurowane, wartość progu będzie domyślnie wynosić 12 000 bajtów, co jest domyślną wartością parametru MaxTokenSize protokołu Kerberos w systemach Windows 7, Windows Server 2008 R2 i starszych.
+
+</string>
+      <string id="RequestCompoundId">Żądaj uwierzytelniania złożonego</string>
+      <string id="RequestCompoundId_explain">To ustawienie zasad pozwala skonfigurować kontroler domeny w celu żądania uwierzytelniania złożonego.
+
+Uwaga: aby kontroler domeny mógł żądać uwierzytelniania złożonego, należy skonfigurować i włączyć zasadę „Obsługa oświadczeń, tożsamości złożonej i ochrony protokołu Kerberos w centrum dystrybucji kluczy”. 
+
+Jeśli to ustawienie zasad zostanie włączone, kontrolery domeny będą żądać uwierzytelniania złożonego. Zwrócony bilet usługi zawiera uwierzytelnianie złożone tylko wtedy, gdy konto zostało jawnie skonfigurowane. Te zasady należy wprowadzić na wszystkich kontrolerach domeny w celu zapewnienia ich spójnego stosowania w domenie. 
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, kontrolery domeny będą zwracać bilety usług zawierające uwierzytelnianie złożone za każdym razem, gdy klient wyśle żądanie uwierzytelniania złożonego niezależnie od konfiguracji konta.
+
+</string>
+      <string id="PKINITFreshness">Obsługa centrum dystrybucji kluczy dla rozszerzenia aktualności PKInit</string>
+      <string id="PKINITFreshness_explain">Obsługa rozszerzenia aktualności PKInit wymaga poziomu funkcjonalności domeny systemu Windows Server 2016. Jeśli kontroler domeny nie ma poziomu funkcjonalności domeny systemu Windows Server 2016 lub wyższego, to ustawienie zasad nie zostanie zastosowane.
+
+To ustawienie zasad umożliwia skonfigurowanie obsługi rozszerzenia aktualności PKInit na kontrolerze domeny.
+
+Jeśli to ustawienie zasad zostanie włączone, będą obsługiwane następujące opcje:
+
+Obsługiwane: rozszerzenie aktualności PKInit jest obsługiwane na żądanie. Klienci Kerberos pomyślnie przechodzący uwierzytelnienie przy użyciu rozszerzenia aktualności PKInit uzyskają aktualny identyfikator SID tożsamości klucza publicznego.
+
+Wymagane: rozszerzenie aktualności PKInit jest wymagane do pomyślnego uwierzytelnienia. W przypadku klientów Kerberos bez obsługi rozszerzenia aktualności PKInit użycie poświadczeń z kluczami publicznymi będzie zawsze kończyć się niepowodzeniem.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, kontroler domeny nigdy nie będzie oferował rozszerzenia aktualności PKInit i będzie akceptował prawidłowe żądania uwierzytelniania bez sprawdzania aktualności. Użytkownicy nigdy nie będą otrzymywać aktualnego identyfikatora SID tożsamości klucza publicznego.
+</string>
+      <string id="NoPKINITFreshness">Wyłączone</string>
+      <string id="SupportPKINITFreshness">Obsługiwane</string>
+      <string id="RequirePKINITFreshness">Wymagane</string>
+      <string id="PKINITHashAlgorithmConfiguration">Konfiguruj algorytmy wyznaczania wartości skrótu dla logowania certyfikatu</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">To ustawienie zasad kontroluje algorytmami skrótu lub sumy kontrolnej używanymi przez klienta protokołu Kerberos podczas uwierzytelniania certyfikatu.
+
+Jeśli te zasady zostaną włączone, będzie można skonfigurować jeden z czterech stanów dla każdego algorytmu:
+
+- „Domyślny” ustawia algorytm na zalecany stan.
+
+- „Obsługiwany” umożliwia użycie algorytmu. Włączenie algorytmów, które zostały domyślnie wyłączone, może zmniejszyć bezpieczeństwo.
+
+- „Poddany inspekcji” umożliwia użycie algorytmu i zgłasza zdarzenie (identyfikator 309) za każdym razem, gdy jest on używany. Ten stan ma na celu sprawdzenie, czy algorytm nie jest używany i można go bezpiecznie wyłączyć.
+
+- „Nieobsługiwany” wyłącza użycie algorytmu. Ten stan jest przeznaczony dla algorytmów uznanych za niezabezpieczone.
+
+Jeśli te zasady zostaną wyłączone lub nie zostaną skonfigurowane, każdy algorytm przyjmie stan „Domyślny”.
+tów i sum kontrolnych obsługiwanych przez klienta protokołu Kerberos systemu Windows oraz ich stanach domyślnych można znaleźć na stronie https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Zdarzenia generowane przez tę konfigurację: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Domyślny</string>
+      <string id="PKINITHashAlgorithm_Supported">Obsługiwany</string>
+      <string id="PKINITHashAlgorithm_Audited">Poddane inspekcji</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Nieobsługiwany</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Tryb:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Lasy do przeszukania</label>
+        </textBox>
+        <text>Składnia:</text>
+        <text>Wprowadź listę lasów, które będą przeszukiwanie po włączeniu tej zasady.</text>
+        <text>Użyj formatu nazewnictwa w pełni kwalifikowanej nazwy domeny (FQDN).</text>
+        <text>Rozdziel wpisy wyszukiwania średnikami (;).</text>
+        <text>Szczegóły:</text>
+        <text>Bieżącego lasu nie trzeba umieszczać na liście, ponieważ funkcja kolejności przeszukiwania lasów najpierw używa wykazu globalnego, a następnie wykonuje wyszukiwanie zgodnie z kolejnością z listy.</text>
+        <text>Nie ma potrzeby tworzenia osobnej listy zawierającej wszystkie domeny w lesie.</text>
+        <text>Jeśli na liście znajduje się las ufający, zostaną przeszukane wszystkie domeny w tym lesie.</text>
+        <text>Aby uzyskać najwyższą wydajność, kolejność lasów na liście powinna odpowiadać prawdopodobieństwu sukcesu.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Opcje oświadczeń, uwierzytelniania złożonego na potrzeby dynamicznej kontroli dostępu oraz ochrony protokołu Kerberos:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Próg rozmiaru biletu</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">Opcje rozszerzenia aktualności PKInit:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

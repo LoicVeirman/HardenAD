@@ -1,0 +1,157 @@
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Isolamento de Rede  </displayName>
+  <description>Configura as Opções de Isolamento de Rede para as aplicações  </description>
+  <resources>
+    <stringTable>
+      	<string id="WF_Isolation">Isolamento de Rede</string>
+		
+
+<!--Define server addresses that proxy to the Internet -->	
+	<string id="WF_NetIsolation_Domain_Proxies">Servidores proxy de Internet para as aplicações</string>  
+	<string id="WF_NetIsolation_Domain_Proxies_Help">  Esta definição não se aplica a aplicações de ambiente de trabalho.
+	
+Uma lista separada por ponto e vírgula de endereços IP do servidor proxy de Internet. Estes endereços são categorizados como Internet pelo Isolamento de Rede Windows e ficam acessíveis para as aplicações com funções Cliente Internet ou Cliente/Servidor Internet.
+
+Se ativar esta definição de política, as aplicações em redes com proxies podem aceder à Internet sem dependerem da função de Rede Privada. No entanto, na maior parte das situações, o Isolamento de Rede Windows será capaz de detetar corretamente os proxies. Por predefinição, quaisquer proxies configurados com esta definição são intercalados com os proxies de deteção automática. Para tornar esta configuração de política na única lista de proxies permitidos, ative a definição "As definições de proxy são autoritativas".
+
+Se desativar ou não configurar esta definição de política, as aplicações utilizarão os proxies de Internet detetados automaticamente pelo Isolamento de Rede Windows.
+
+Exemplo: [3efe:3022::1000];18.0.0.1;18.0.0.2 
+
+Para mais informações, consulte: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string> 
+
+
+<!--Define server addresses that proxy to a private network (intranet) -->	
+	<string id="WF_NetIsolation_Intranet_Proxies">Servidores proxy de intranet para as aplicações</string>
+	<string id="WF_NetIsolation_Intranet_Proxies_Help">  Esta definição não se aplica a aplicações de ambiente de trabalho.
+	
+Uma lista separada por ponto e vírgula de endereços IP do servidor proxy de intranet. Estes endereços são categorizados como privados pelo Isolamento de Rede Windows e ficam acessíveis para as aplicações com a função Rede Doméstica/Trabalho.
+
+Se ativar esta definição de política, permite que um administrador configure um conjunto de proxies que fornece acesso aos recursos da intranet.
+
+Se desativar ou não configurar esta definição de política, o Isolamento de Rede Windows tenta detetar os proxies e configura-os como nós da Internet.
+  
+Esta definição NÃO deve ser utilizada para configurar proxies de Internet.
+
+Exemplo: [3efe:3022::1000]; 18.0.0.1; 18.0.0.2
+
+Para mais informações, consulte: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define subnet addresses-->	
+	<string id="WF_NetIsolation_PrivateSubnet">Intervalos de rede privada para as aplicações</string>
+	<string id="WF_NetIsolation_PrivateSubnet_Help"> Esta definição não se aplica a aplicações de ambiente de trabalho.
+				
+Uma lista separada por vírgula de intervalos de endereços IP existentes na rede empresarial.
+
+Se ativar esta definição de política, garante que as aplicações com função Rede Doméstica/Trabalho têm acesso adequado à rede  empresarial. Estes endereços só ficam acessíveis para as aplicações se a aplicação tiver declarado a função de Rede Doméstica/Trabalho.
+
+O Isolamento de Rede Windows tenta detetar automaticamente os anfitriões de rede privada. Por predefinição, os endereços configurados com esta definição de política são intercalados com os anfitriões declarados como privados através da deteção automática.
+
+Para garantir que estes endereços são os únicos a serem classificados como privados, ative a definição de política "As definições de sub-rede são autoritativas".
+
+Se desativar ou não configurar esta definição de política, o Isolamento de Rede Windows tenta detetar automaticamente os anfitriões de rede privada.
+
+Exemplo: 3efe:1092::/96,18.1.1.1/10 
+
+Para mais informações, consulte http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Proxy definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Proxy">As definições de proxy são autoritativas</string>
+	<string id="WF_NetIsolation_Authoritative_Proxy_Help"> Esta definição não se aplica a aplicações de ambiente de trabalho.
+				
+Desativa a deteção automática de proxy do Isolamento de Rede Windows no ambiente empresarial do domínio.
+
+Se ativar esta definição de política, desativa a deteção automática de proxy do Isolamento de Rede Windows no ambiente empresarial do domínio. Apenas os proxies configurados com a Política de Grupo são autoritativos. Isto aplica-se a proxies de Internet e intranet.
+
+Se desativar ou não configurar esta definição de política, o Isolamento de Rede Windows tenta detetar automaticamente os endereços de servidor proxy.  
+
+Para mais informações, consulte: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Subnet definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Subnet">As definições de sub-rede são autoritativas</string>
+	<string id="WF_NetIsolation_Authoritative_Subnet_Help"> Esta definição não se aplica a aplicações de ambiente de trabalho.
+				
+Desativa a deteção automática do Isolamento de Rede Windows dos anfitriões de rede privada no ambiente empresarial do domínio.
+
+Se ativar esta definição de política, desativa a deteção automática do Isolamento de Rede Windows dos anfitriões de rede privada do ambiente empresarial de domínio. Apenas os anfitriões de rede nos intervalos de endereços configurados através da Política de Grupo serão classificados como privados.
+
+Se desativar ou não configurar esta definição de política, o Isolamento de Rede Windows tenta detetar automaticamente os anfitriões de rede privada no ambiente empresarial do domínio. 
+				
+Para mais informações, consulte: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+
+<!--Define cloud resources-->
+  <string id="WF_NetIsolation_EnterpriseCloudResources">Domínios de recursos empresariais alojados na cloud</string>
+  <string id="WF_NetIsolation_EnterpriseCloudResources_Help"> Esta definição não se aplica a aplicações de ambiente de trabalho.
+
+Uma lista de recursos em cloud de domínio separada por pipes. Opcionalmente, cada recurso em cloud também pode estar emparelhado com um servidor proxy interno utilizando uma vírgula final seguida pelo endereço de proxy.
+
+Contém uma lista de domínios de recursos empresariais alojados na cloud. As ligações a estes recursos são consideradas ligações a redes empresariais.
+
+Se um proxy for emparelhado com um recurso em cloud, o tráfego para o recurso em cloud vai ser encaminhado através da rede empresarial, pelo servidor proxy indicado (na Porta 80). Um servidor proxy utilizado para este efeito também deve ser configurado utilizando os servidores proxy de Intranet para a política de aplicações.
+
+Exemplo: [cloudresource]|[cloudresource]|[cloudresource],[proxy]|[cloudresource]|[cloudresource],[proxy]
+
+Para obter mais informações, consulte: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define neutral resources-->
+    <string id="WF_NetIsolation_NeutralResources">Domínios categorizados como pessoais e de trabalho</string>
+    <string id="WF_NetIsolation_NeutralResources_Help"> Esta definição não se aplica a aplicações de ambiente de trabalho.
+
+Uma lista de nomes de domínio separados por vírgulas que pode ser utilizada como recurso pessoal ou de trabalho.
+
+Para obter mais informações, consulte: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+    </stringTable>
+ 
+ <!--Start of Presentation Table-->	
+ 
+ <presentationTable>
+
+	<presentation id="WF_NetIsolation_Domain_Proxies">
+        <textBox refId="WF_NetIsolation_Domain_ProxiesBox">
+          <label>Proxies de Domínio  </label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_Intranet_Proxies">
+        <textBox refId="WF_NetIsolation_Intranet_ProxiesBox">
+          <label>Escrever um endereço IP de servidor proxy para a intranet</label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_PrivateSubnet">
+        <textBox refId="WF_NetIsolation_PrivateSubnetBox">
+          <label>Sub-redes privadas  </label>
+        </textBox>
+      </presentation>
+
+  <presentation id="WF_NetIsolation_Authoritative_Proxies">
+      </presentation>
+	
+	<presentation id="WF_NetIsolation_Authoritative_Subnets">
+      </presentation>
+
+   <presentation id="WF_NetIsolation_EnterpriseCloudResources">
+     <textBox refId="WF_NetIsolation_EnterpriseCloudResourcesBox">
+       <label>Recursos empresariais em cloud </label>
+     </textBox>
+   </presentation>
+
+   <presentation id="WF_NetIsolation_NeutralResources">
+     <textBox refId="WF_NetIsolation_NeutralResourcesBox">
+       <label>Recursos neutros </label>
+     </textBox>
+   </presentation>
+
+ </presentationTable>
+
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,188 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>
+  </displayName>
+  <description>
+  </description>
+  <resources>
+    <stringTable>
+      <string id="LAPS">LAPS</string>
+      <string id="LAPS_BackupDirectory">配置密码备份目录</string>
+      <string id="LAPS_BackupDirectory_Help">使用此设置配置本地管理员帐户密码备份到的目录。
+
+允许的设置为：
+
+0=禁用(密码将不会备份)
+
+1=将密码备份到Azure Active Directory
+
+2=将密码备份到 Active Directory
+
+如果未指定，则此设置将默认为 0 (禁用)。
+
+如果此设置配置为 1，并且托管设备未加入Azure Active Directory，则将不管理本地管理员密码。
+
+如果此设置配置为 2，并且托管设备未加入 Active Directory，则将不会管理本地管理员密码。
+
+如果禁用或未配置此设置，则不管理本地管理员密码。
+
+有关详细信息，请参阅https://go.microsoft.com/fwlink/?linkid=2188435。
+      </string>
+      <string id="LAPS_BackupDirectoryDisabled">已禁用</string>
+      <string id="LAPS_BackupDirectoryAzure">Azure Active Directory</string>
+      <string id="LAPS_BackupDirectoryAD">Active Directory</string>
+      <string id="LAPS_PasswordSettings">密码设置</string>
+      <string id="LAPS_PasswordSettings_Help">配置密码参数
+
+密码复杂性: 生成新密码时使用哪些字符
+  默认值: 大写字母 + 小写字母 + 数字 + 特殊字符
+
+密码长度
+最小值: 8 个字符
+  最大值: 64 个字符
+  默认值: 14个字符
+
+密码期限(天)
+  最小值: 1 天(将备份目录配置为 Azure AD 时为 7 天)
+ 最大值: 365 天
+  默认值: 30 天
+
+请参阅 https://go.microsoft.com/fwlink/?linkid=2188435 以了解详细信息。
+      </string>
+      <string id="LAPS_PwdComplexity_Item_1">大写字母</string>
+      <string id="LAPS_PwdComplexity_Item_2">大写字母 + 小写字母</string>
+      <string id="LAPS_PwdComplexity_Item_3">大字母 + 小写字母 + 数字</string>
+      <string id="LAPS_PwdComplexity_Item_4">大写字母 + 小写字母 + 数字 + 特殊字符</string>
+      <string id="LAPS_AdminName">要管理的管理员帐户名称</string>
+      <string id="LAPS_AdminName_Help">此策略设置指定用于管理其密码的自定义管理员帐户名。
+
+如果启用此策略设置，LAPS 将使用此名称管理本地帐户的密码。
+
+如果禁用或未配置此策略设置，LAPS 将管理已知管理员帐户的密码。
+
+请勿启用此策略设置来管理内置管理员帐户。已知 SID 自动检测到内置管理员帐户，该帐户不依赖于帐户名。
+
+有关详细信息，请参阅https://go.microsoft.com/fwlink/?linkid=2188435。
+      </string>
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy">不允许密码过期时间长于策略要求的时间</string>
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">如果启用或未配置此设置，则不允许将计划密码过期时间设置为超过由“密码设置”策略规定的密码期限。检测到此类过期设置时，将立即更改密码，并根据策略设置密码过期时间。
+
+如果禁用此设置，则密码过期时间可能超过“密码设置”策略的要求。
+
+请参阅 https://go.microsoft.com/fwlink/?linkid=2188435 以了解详细信息。
+      </string>
+      <string id="LAPS_ADPasswordEncryptionEnabled">启用密码加密</string>
+      <string id="LAPS_ADPasswordEncryptionEnabled_Help">启用此设置时，将加密托管密码，然后再将其发送到 Active Directory。
+
+启用此设置无效，除非已将 1 个)密码配置为备份到 Active Directory，2 个) Active Directory 域功能级别为 Windows Server 2016 或更高。
+
+如果启用此设置，并且域功能级别达到或高于Windows Server 2016，则将加密托管帐户密码。
+
+如果启用此设置，并且域功能级别小于 Windows Server 2016，则不会将托管帐户密码备份到目录。
+
+如果禁用此设置，则不加密托管帐户密码。
+
+如果未配置，此设置将默认为“已启用”。
+
+有关详细信息，请参阅https://go.microsoft.com/fwlink/?linkid=2188435。
+      </string>
+      <string id="LAPS_ADPasswordEncryptionPrincipal">配置授权密码解密器</string>
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">配置此设置以控制有权解密加密密码的特定用户或组。
+
+除非已启用密码加密，否则配置此设置将不起作用。
+
+如果启用此设置，则指定组将可以解密加密的密码。
+
+如果禁用或未配置此设置，则域管理员组将可以解密加密的密码。
+
+必须使用字符串格式的 SID (“S-1-5-21-2127521184-1604012920-1887927527-35197”)或“域\(组或用户)”格式的组或用户名称来配置此设置。指定的用户或组必须可由托管设备解析，否则将不会备份密码。
+
+有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2188435。
+      </string>
+      <string id="LAPS_ADEncryptedPasswordHistorySize">配置加密密码历史记录的大小</string>
+      <string id="LAPS_ADEncryptedPasswordHistorySize_Help">使用此设置可配置将在 Active Directory 中存储多少个以前加密的密码。
+
+如果要让配置此设置生效，必须 1) 已将密码配置为备份到 Active Directory 以及 2) 已启用密码加密。
+
+如果启用此设置，则将在 Active Directory 中存储指定数目的旧密码。
+
+如果禁用或未配置此设置，则将在 Active Directory 中存储零个旧密码。
+
+此设置的最小允许值为 0 个密码。
+
+此设置的最大允许值为 12 个密码。
+
+有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2188435。
+      </string>
+      <string id="LAPS_ADBackupDSRMPassword">为 DSRM 帐户启用密码备份</string>
+      <string id="LAPS_ADBackupDSRMPassword_Help">启用此设置时，DSRM 管理员帐户密码将被管理和备份到 Active Directory。
+
+启用此设置不起作用，除非托管设备是域控制器，并且密码加密也已启用。
+
+如果启用此设置，则域控制器上的 DSRM 管理员帐户的密码将备份到 Active Directory。
+
+如果禁用或未配置此设置，则不会将域控制器上的 DSRM 管理员帐户的密码备份到 Active Directory。
+
+有关详细信息，请参阅https://go.microsoft.com/fwlink/?linkid=2188435。
+      </string>
+      <string id="LAPS_PostAuthenticationActions">身份验证后操作</string>
+      <string id="LAPS_PostAuthenticationActions_Help">此策略配置身份验证后操作，这些操作将在托管帐户检测到身份验证后执行。
+
+宽限期: 指定在执行指定的身份验证后操作之前在身份验证后等待的时间(小时)。
+
+如果启用此设置且大于零，则将在宽限期到期后执行指定的身份验证后操作。
+
+如果禁用或未配置此设置，则将在默认的 24 小时宽限期后执行指定的身份验证后操作。
+
+如果此设置等于零，则不会执行身份验证后操作。
+
+操作: 指定宽限期到期时要执行的操作。
+
+重置密码: 宽限期到期后，将重置托管帐户密码。
+
+重置密码并注销托管帐户: 宽限期到期后，将重置托管帐户密码，并且将终止使用托管帐户的任何交互式登录会话。
+
+(注意: 在终止任何交互式登录会话后，托管帐户可能仍会使用其他经过身份验证的会话。确保之前的密码使用时间更长的唯一可靠方法是重新启动设备。)
+
+重置密码并重新启动: 宽限期到期后，将重置托管帐户密码，并将立即重新启动托管设备。
+
+如果禁用或未配置此设置，则身份验证后操作将默认为“重置密码并注销托管帐户”。
+
+注意: 无法为身份验证后操作配置域控制器上的 DSRM 帐户。此策略对域控制器没有影响，即使已为 DC 配置，也将被忽略。
+
+有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2188435。
+      </string>
+      <string id="PostAuthenticationActions_Item0">已禁用 - 不执行任何操作</string>
+      <string id="PostAuthenticationActions_Item1">重置密码</string>
+      <string id="PostAuthenticationActions_Item3">重置密码并注销托管帐户</string>
+      <string id="PostAuthenticationActions_Item5">重置密码并重新启动设备</string>
+      <string id="SUPPORTED_Windows10">至少 Microsoft Windows 10 或更高版本</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="LAPS_BackupDirectory">
+        <dropdownList refId="LAPS_BackupDirectory" defaultItem="1">备份目录</dropdownList>
+      </presentation>
+      <presentation id="LAPS_PasswordSettings">
+        <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">密码复杂性</dropdownList>
+        <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">密码长度</decimalTextBox>
+        <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">密码期限(天)</decimalTextBox>
+      </presentation>
+      <presentation id="LAPS_AdminName">
+        <textBox refId="TEXT_AdminAccountName">
+          <label>管理员帐户名</label>
+        </textBox>
+      </presentation>
+      <presentation id="LAPS_ADPasswordEncryptionPrincipal">
+        <textBox refId="TEXT_ADPasswordEncryptionPrincipal">
+          <label>授权密码解密器</label>
+        </textBox>
+      </presentation>
+      <presentation id="LAPS_ADEncryptedPasswordHistorySize">
+        <decimalTextBox refId="LAPS_ADEncryptedPasswordHistorySize_INT" defaultValue="0">加密密码历史记录大小</decimalTextBox>
+      </presentation>
+      <presentation id="LAPS_PostAuthenticationActions">
+        <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">宽限期(天):</decimalTextBox>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">操作:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

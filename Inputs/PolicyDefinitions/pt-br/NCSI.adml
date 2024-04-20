@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2008 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Configurações da Política de Grupo do Indicador de Status da Conectividade de Rede</displayName>
+  <description>Configurações da Política de Grupo do Indicador de Status da Conectividade de Rede</description>
+  <resources>
+    <stringTable>
+      <string id="NCSI_Category">Indicador de Status da Conectividade de Rede</string>
+      <string id="NCSI_CorpWebProbeUrl">Especificar URL de investigação de site corporativo</string>
+      <string id="NCSI_CorpWebProbeUrl_Help">Essa configuração de política permite especificar a URL do site corporativo em que será realizada a investigação ativa.</string>
+      <string id="NCSI_CorpDnsProbeHost">Especificar o nome de host DNS corporativo de investigação</string>
+      <string id="NCSI_CorpDnsProbeHost_Help">Essa configuração de política permite especificar o nome de host de um computador conhecido que esteja na rede corporativa. A resolução bem-sucedida desse nome de host para o endereço esperado indica conectividade corporativa.</string>
+      <string id="NCSI_CorpDnsProbeContent">Especificar o endereço de host DNS corporativo de investigação</string>
+      <string id="NCSI_CorpDnsProbeContent_Help">Essa configuração de política permite especificar o endereço esperado do nome de host usado para a investigação de DNS. A resolução bem-sucedida do nome de host para esse endereço indica a conectividade corporativa.</string>
+      <string id="NCSI_CorpSitePrefixes">Especificar a lista de prefixos de sites corporativos</string>
+      <string id="NCSI_CorpSitePrefixes_Help">Essa configuração de política permite especificar a lista dos prefixos de sites corporativos IPv6 para monitorar a conectividade corporativa. A acessibilidade de endereços com qualquer um desses prefixos indica a conectividade corporativa.</string>
+      <string id="NCSI_DomainLocationDeterminationUrl">Especificar a URL de determinação de local do domínio</string>
+      <string id="NCSI_DomainLocationDeterminationUrl_Help">Essa configuração de política permite especificar a URL HTTPS do site corporativo que os clientes usam para determinar o local de domínio atual (isto é, se o computador está dentro ou fora da rede corporativa). A acessibilidade do destino da URL indica que o local do cliente está dentro da rede corporativa; caso contrário, ele está fora da rede.</string>
+      <string id="NCSI_PassivePolling">Especificar a sondagem passiva</string>
+      <string id="NCSI_PassivePolling_Help">Essa configuração de Política permite especificar o comportamento da sondagem passiva. O NCSI sonda com frequência diversas medidas em toda a pilha de rede para determinar se a conectividade da rede foi perdida.  Use as opções para controlar o comportamento da sondagem passiva.</string>
+      <string id="NCSI_GlobalDns">Especificar DNS global</string>
+      <string id="NCSI_GlobalDns_Help">Esta configuração de política permite especificar o comportamento de associação de DNS. Por padrão, o NCSI restringirá as pesquisas de DNS à interface em que está fazendo a sondagem atualmente. Se você habilitar esta configuração, o NCSI permitirá que as pesquisas de DNS ocorram em qualquer interface.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="NCSI_CorpWebProbeUrl">
+        <textBox refId="NCSI_CorpWebProbeUrlBox">
+          <label>URL de Investigação de Site Corporativo:</label>
+        </textBox>
+        <text>Especifique a URL do site corporativo para</text>
+        <text>usar para investigar a conectividade corporativa.</text>
+        <text>Exemplo:</text>
+        <text>  http://ncsi.corp.microsoft.com/</text>
+      </presentation>
+      <presentation id="NCSI_CorpDnsProbeHost">
+        <textBox refId="NCSI_CorpDnsProbeHostBox">
+          <label>Nome de Host DNS Corporativo de Investigação:</label>
+        </textBox>
+        <text>Especifique um nome de host corporativo a ser resolvido</text>
+        <text>para investigar a conectividade corporativa.</text>
+        <text>Exemplo:</text>
+        <text>  ncsi.corp.microsoft.com</text>
+      </presentation>
+      <presentation id="NCSI_CorpDnsProbeContent">
+        <textBox refId="NCSI_CorpDnsProbeContentBox">
+          <label>Endereço DNS Corporativo de Investigação:</label>
+        </textBox>
+        <text>Especifique o endereço DNS esperado para o</text>
+        <text>nome de host corporativo a ser investigado.</text>
+        <text>Exemplo:</text>
+        <text>  2001:4898:28:3:38a1:c31:7b3d:bf0</text>
+      </presentation>
+      <presentation id="NCSI_CorpSitePrefixes">
+        <textBox refId="NCSI_CorpSitePrefixesBox">
+          <label>Lista de Prefixos de Sites Corporativos:</label>
+        </textBox>
+        <text>Especifique a lista de prefixos de sites IPv6 corporativos</text>
+        <text>para verificar a acessibilidade para detectar a</text>
+        <text>conectividade corporativa.</text>
+        <text>Sintaxe:</text>
+        <text>    A lista deve estar separada por vírgulas sem</text>
+        <text>    espaços em branco adicionais.</text>
+        <text>Exemplo:</text>
+        <text>  fe80::/9,fe81::/9</text>
+      </presentation>
+      <presentation id="NCSI_DomainLocationDeterminationUrl">
+        <textBox refId="NCSI_DomainLocationDeterminationUrlBox">
+          <label>URL de Determinação de Local do Domínio Corporativo:</label>
+        </textBox>
+        <text>Especifique a URL HTTPS do site corporativo para</text>
+        <text>determinar se o local está dentro ou fora do domínio.</text>
+        <text>Exemplo:</text>
+        <text>  https://nid.corp.microsoft.com/</text>
+      </presentation>
+      <presentation id="NCSI_PassivePolling">
+        <text>A caixa de seleção a seguir desabilita o mecanismo de sondagem passiva no NCSI.   Isso pode melhorar a carga de trabalho da CPU em servidores ou outros computadores cuja conectividade de rede é estática.</text>
+        <checkBox refId="NCSI_DisablePassivePolling_Checkbox">Desabilitar a sondagem passiva</checkBox>
+      </presentation>
+      <presentation id="NCSI_GlobalDns">
+        <text>A caixa de seleção a seguir desabilita a associação de interface quando as pesquisas de DNS são feitas no NCSI. Isso pode permitir que o NCSI funcione melhor com configurações de rede especiais, como um servidor DNS em execução em um localhost.</text>
+        <checkBox refId="NCSI_UseGlobalDns_Checkbox">Usar DNS global</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

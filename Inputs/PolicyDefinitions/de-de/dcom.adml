@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Anzeigenamen hier eingeben</displayName>
+  <description>Beschreibung hier eingeben</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">DCOM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Lokale Aktivierungssicherheitsüberprüfungs-Ausnahmen zu lassen</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Hiermit können Sie angeben, dass lokale Computeradministratoren die Liste "Aktivierungssicherheitsüberprüfungs-Ausnahmen definieren" ergänzen dürfen.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren und DCOM keinen expliziten Eintrag für eine DCOM-Serveranwendungs-ID in der Richtlinie "Aktivierungssicherheitsüberprüfungs-Ausnahmen definieren" (falls aktiviert) findet, sucht DCOM nach einem Eintrag in der lokal konfigurierten Liste.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, sucht DCOM nicht in der lokal konfigurierten Liste für DCOM-Aktivierungssicherheitsüberprüfungs-Ausnahmen.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, sucht DCOM nur in der lokal konfigurierten Ausnahmeliste, falls die Richtlinie "Aktivierungssicherheitsüberprüfungs-Ausnahmen definieren" nicht konfiguriert ist.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Aktivierungssicherheitsüberprüfungs-Ausnahmen definieren</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Ermöglicht Ihnen eine Liste der DCOM-Serveranwendungskennungen (appids), die von der DCOM-Aktivierungssicherheitsüberprüfung ausgeschlossen sind, anzuzeigen und zu ändern.  DCOM verwendet zwei Listen: Eine wird über die Gruppenrichtlinie mit dieser Richtlinieneinstellung konfiguriert, die andere mit Aktionen der lokalen Computeradministratoren.  DCOM ignoriert die zweite Liste, wenn diese Richtlinieneinstellung konfiguriert ist, es sei denn, die Richtlinie "Lokale Aktivierungssicherheitsüberprüfungs-Ausnahmen zulassen" ist aktiviert.
+
+Die DCOM-Serveranwendungskennungen, die dieser Richtlinie hinzugefügt werden, müssen in geschweiften Klammern angegeben werden.  Beispiele: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}.  Wenn Sie eine nicht vorhandene Anwendungskennung oder eine Anwendungskennung mit einem ungültigen Format angeben, fügt DCOM sie der Liste ohne Fehlerüberprüfung hinzu.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie die dadurch definierte Liste der DCOM-Aktivierungssicherheitsüberprüfungs-Ausnahmen anzeigen und ändern. Wenn Sie dieser Liste eine Anwendungskennung hinzufügen und deren Wert auf 1 setzen, erzwingt DCOM die Aktivierungssicherheitsüberprüfung für diesen DCOM-Server nicht.   Wenn Sie dieser Liste eine Anwendungskennung hinzufügen und deren Wert auf 0 setzen, erzwingt DCOM unabhängig von den lokalen Einstellungen immer die Aktivierungssicherheitsüberprüfung für diesen DCOM-Server.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, wird die von der Gruppenrichtlinie definierte Anwendungskennungs-Ausnahmeliste gelöscht und die von den lokalen Computeradministratoren definierte Anwendungskennungs-Ausnahmeliste verwendet.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, wird die von den lokalen Computeradministratoren definierte Anwendungskennungs-Ausnahmeliste verwendet.
+
+Hinweise:
+
+Die DCOM-Aktivierungssicherheitsüberprüfung wird nach Starten eines DCOM-Serverprozessess ausgeführt, aber bevor eine Objektaktivierungsanforderung an den Serverprozess gesendet wird.   Diese Zugriffsüberprüfung wird anhand der benutzerdefinierten Startberechtigungs-Sicherheitsbeschreibung des DCOM-Servers ausgeführt (falls vorhanden), und anderenfalls anhand der konfigurierten Standardwerte.
+
+Falls die benutzerdefinierte DCOM-Server-Startberechtigung explizite Verweigerungseinträge enthält, können Objektaktivierungen, die zuvor für bestimmte Benutzer nach dem Starten und Ausführen des DCOM-Serverprozesses erfolgreich waren, jetzt möglicherweise zu Fehlern führen.   In diesem Fall sollten Sie die benutzerdefinierten Einstellungen für die Startberechtigung des DCOM-Servers erneut richtig konfigurieren. Sie können diese Richtlinieneinstellung aber kurzfristig als Hilfe zum Bereitstellen der Anwendungskompatibilität verwenden.
+
+Die dieser Ausnahmeliste hinzugefügten DCOM-Server werden nur ausgeschlossen, wenn die benutzerdefinierten Startberechtigungen keine expliziten Zulassungs- oder Verweigerungseinträge vom Typ LocalLaunch, RemoteLaunch, LocalActivate oder RemoteActivate für Benutzer oder Gruppen enthalten.   Beachten Sie außerdem, dass für 32- und 64-Bit-Versionen des Servers Ausnahmen für DCOM-Serveranwendungskennungen gelten, die dieser Liste hinzugefügt werden.</string>
+      <string id="DCOMAppCompatPolicies">Anwendungskompatibilität</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Geben Sie einen Servernamen gepaart mit einem der unten aufgeführten Aktionswerte ein.</text>
+        <text>Die Anwendungskennung muss die öffnende und die schließende geschweifte Klammer enthalten.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">DCOM-Server der Ausnahmeliste hinzufügen bzw. aus der Liste entfernen: </listBox>
+        <text> </text>
+        <text>Werte:</text>
+        <text>0 = Die angegebene Anwendungskennung wird nicht von der Aktivierungssicherheitsüberprüfung ausgeschlossen.</text>
+        <text>1 = Die angegebene Anwendungskennung wird von der Aktivierungssicherheitsüberprüfung ausgeschlossen.</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Politikker for Windows Servicing</displayName>
+  <description>Politikker for Windows Servicing</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">Angiv indstillinger for installation af valgfrie komponenter og reparation af komponenter</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+Denne politikindstilling angiver de netværksplaceringer, der bruges til reparation af operativsystemet, hvis det bliver beskadiget, og til aktivering af de valgfrie funktioner, hvor de primære filer er blevet fjernet.
+
+Hvis du aktiverer denne politikindstilling og angiver den nye placering, bruges filerne på den placering til reparation af operativsystemet, hvis det bliver beskadiget, og til aktivering af de valgfrie funktioner, hvor de primære filer er blevet fjernet. Du skal angive den fuldt kvalificerede sti til den nye placering i feltet "Alternativ sti til kildefiler". Du kan angive flere placeringer, som skal være adskilt med et semikolon. 
+
+Netværksplaceringen kan være en mappe eller en WIM-fil. Hvis det er en WIM-fil, skal placeringen angives med et foranstillet "wim:" i stien, og du skal medtage indekset for det billede i WIM-filen, der skal bruges. Eksempel: “wim:\\server\share\install.wim:3”.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, eller hvis de påkrævede filer ikke blev fundet på de placeringer, der er angivet i politikindstillingen, hentes filerne fra Windows Update, hvis dette er tilladt i politikindstillingerne for computeren.
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>Alternativ sti til kildefiler</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">Forsøg aldrig at hente de primære filer fra Windows Update</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">Download indhold til reparation og valgfrie funktioner direkte fra Windows Update i stedet for WSUS (Windows Server Update Services)</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

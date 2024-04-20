@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>digite o nome para exibição aqui</displayName>
+  <description>digite a descrição aqui</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Opções de Mitigação</string>
+      <string id="Font_List">Bloqueio de Fonte Não Confiável</string>
+      <string id="Font_List_Help">Esse recurso de segurança fornece uma configuração global para impedir que programas carreguem fontes não confiáveis. Fontes não confiáveis são qualquer fonte instalada fora do diretório %windir%\Fonts. Esse recurso pode ser configurado para 3 modos: ligado, desligado e de auditoria. Por padrão, ele está desativado e nenhuma fonte está bloqueada. Se você não estiver pronto para implantar esse recurso em sua organização, poderá executá-lo no modo de auditoria para ver se o bloqueio de fontes não confiáveis causa problemas de usabilidade ou compatibilidade.</string>
+      <string id="FontMitigation_On">Bloquear fontes não confiáveis e registrar eventos</string>
+      <string id="FontMitigation_Off">Não bloquear fontes não confiáveis</string>
+      <string id="FontMitigation_Audit">Registrar eventos sem bloquear fontes não confiáveis</string>
+
+	  <string id="ProcessMitigationOptions_List">Opções de mitigação de processo</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Esse recurso de segurança fornece um meio para substituir as configurações de MitigationOptions de processos individuais. Isso pode ser usado para impor uma série de políticas de segurança específicas para aplicativos. O nome do aplicativo é especificado como o nome do Valor, incluindo a extensão. O Valor é especificado como um campo de bit com uma série de sinalizadores em posições específicas. Os bits podem ser definidos como 0 (a configuração é modo forçado desativado), 1 (a configuração é modo forçado ativado) ou ? (a configuração mantém o valor existente anterior à avaliação do GPO). Os locais de bits reconhecidos são:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        Habilita a prevenção da execução de dados (DEP) para o processo filho
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        Habilita a emulação de conversão DEP-ATL para o processo filho. A emulação de conversão DEP-ATL faz com que o Sistema intercepte falhas de NX oriundas da camada de conversão da ATL (Active Template Library).
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        Permite que o manipulador de exceção estruturado substitua a proteção (SEHOP) para o processo filho. SEHOP bloqueia explorações que usam a técnica de substituição do manipulador de exceção estruturada (SEH).
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        A política ASLR (Address Space Layout Randomization) forçosamente troca a base das imagens que não são compatíveis com a base dinâmica agindo como se ocorresse uma colisão de base de imagem no tempo de carregamento. Se realocações forem necessárias, as imagens que não tenham uma seção de realocação de base não serão carregadas.
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        A política aleatória ascendente, que inclui as opções de randomização de pilha, faz com que um local aleatório seja usado como o endereço do usuário mais baixo.
+
+        Por exemplo, para habilitar PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE e PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON, desabilite PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF, e para deixar todas as outras opções em seus valores padrão, especifique um valor de:
+        ???????????????0???????1???????1
+
+        Sinalizadores de configuração não especificados aqui para qualquer valor diferente de ? resultam em um comportamento indefinido.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">Habilitar sincronização do controlador de domínio AD/DFS durante atualização da política</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">A habilitação dessa configuração faz com que o Cliente da Política de Grupo se conecte ao mesmo controlador de domínio para compartilhamentos DFS que o que está sendo usado para o Active Directory.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">Desativar otimização de AOAC de Serviço de Cliente de Política de Grupo</string>
+      <string id="DisableAOACProcessing_Help">Esta configuração de política evita que o Serviço de Cliente de Política de Grupo pare quando estiver ocioso.
+
+
+
+</string>
+      <string id="EnableCDP">Continuar experiências neste dispositivo</string>
+      <string id="EnableCDP_Help">
+Essa configuração de política determina se o dispositivo Windows tem permissão para participar de experiências entre dispositivos (experiências contínuas).
+
+Se você habilitar essa configuração de política, o dispositivo Windows poderá ser descoberto por outros dispositivos Windows que pertencem ao mesmo usuário e podem participar de experiências entre dispositivos.
+
+Se você desabilitar essa configuração de política, o dispositivo Windows não poderá ser descoberto por outros dispositivos e não poderá participar de experiências entre dispositivos.
+
+Se você não definir essa configuração de política, o comportamento padrão dependerá da edição do Windows. As alterações dessa política entram em vigor na reinicialização.
+      </string>
+      <string id="EnableMMX">Vinculação de telefone-computador neste dispositivo</string>
+      <string id="EnableMMX_Help">
+Essa política permite que os administradores desativem a capacidade de Vincular um Telefone a um PC para continuar a ler, enviar e receber emails e outras tarefas que exigem a vinculação entre telefone e computador.
+
+Se você habilitar essa configuração de política, o dispositivo Windows poderá se registrar na funcionalidade de vinculação telefone-computador e participar de experiências de Continuar no PC.
+
+Se você desabilitar essa configuração de política, o dispositivo Windows não poderá ser vinculado a Telefones, será removido da lista de dispositivos dos Telefones vinculados e não poderá participar das experiências de Continuar no PC.
+
+Se você não configurar essa política, o comportamento padrão dependerá da edição do Windows. As alterações dessa política serão efetivadas após a reinicialização.
+      </string>
+      <string id="EnableAppUriHandlers">Configurar a criação de link da Web para aplicativo com manipuladores de URI de aplicativo</string>
+      <string id="EnableAppUriHandlers_Help">
+Essa configuração de política determina se o Windows dá suporte à criação de link da Web para aplicativo com manipuladores de URI de aplicativo.
+
+Habilitar essa configuração de política habilita a criação de link da Web para aplicativo, para que os aplicativos possam ser iniciados com um URI http(s).
+
+Desabilitar esta política desabilita a criação de link da Web para aplicativo, e os URIs http(s) serão abertos no navegador padrão, em vez de iniciar o aplicativo associado.
+
+Se você não definir essa configuração de política, o comportamento padrão dependerá da edição do Windows. As alterações nessa política entram em vigor na reinicialização.
+      </string>
+      <string id="Fonts">Fontes</string>
+      <string id="EnableFontProviders">Habilitar Provedores de Fontes</string>
+      <string id="EnableFontProviders_Help">
+        Essa configuração de política determina se o Windows tem permissão para baixar fontes e dados do catálogo de fontes de um provedor de fontes online.
+
+        Se você habilitar essa configuração de política, o Windows consultará periodicamente um provedor de fontes online para determinar se um novo catálogo de fontes está disponível. O Windows também pode baixar dados de fonte, se necessário, para formatar ou renderizar texto.
+
+        Se você desabilitar essa configuração de política, o Windows não se conectará a um provedor de fontes online e somente enumerará fontes instaladas localmente.
+
+        Se você não configurar essa política, o comportamento padrão dependerá da edição do Windows. As alterações dessa política serão efetivadas após a reinicialização.
+      </string>
+      <string id="EnableLogonOptimization">Configurar o armazenamento em cache da Política de Grupo</string>
+      <string id="EnableLogonOptimization_Help">
+        Essa configuração de política permite que você configure o comportamento de armazenamento em cache da Política de Grupo.
+
+        Se você habilitar ou não configurar essa política, a Política de Grupo armazenará em cache informações da política após cada sessão de processamento em segundo plano. Esse cache salva GPOs aplicáveis e as configurações contidas neles. Quando a Política de Grupo é executada em primeiro plano síncrono, ela faz referência a esse cache, o que a permite ser executada mais rapidamente. Quando o cache é lido, a Política de Grupo tenta entrar em contato com um controlador de domínio de logon para determinar a velocidade de conexão. Quando a Política de Grupo é executada em segundo plano ou em primeiro plano assíncrono, ela continua a baixar a versão mais recente das informações da política e usa uma estimativa de largura de banda para determinar os limites de conexão lenta. (Consulte a configuração de política "Configurar Detecção de Conexão Lenta da Política de Grupo" para configurar o comportamento assíncrono em primeiro plano.)
+
+        O valor de conexão lenta definido nessa configuração de política determina por quanto tempo a Política de Grupo aguardará uma resposta do controlador de domínio antes de relatar a velocidade de conexão como lenta. O padrão é de 500 milissegundos.
+
+        O valor de tempo limite definido nessa configuração de política determina por quanto tempo a Política de Grupo aguardará uma resposta do controlador de domínio antes de determinar que não há conectividade de rede. Isso interrompe o processamento atual da Política de Grupo. A Política de Grupo será executada em segundo plano na próxima vez que uma conexão com um controlador de domínio for estabelecida. Definir esse valor muito alto pode resultar em esperas mais longas para o usuário na inicialização ou logon. O padrão é de 5000 milissegundos.
+
+        Se você desabilitar essa configuração de política, o cliente da Política de Grupo não armazenará em cache os GPOs aplicáveis ou as configurações contidas nos GPOs. Quando a Política de Grupo é executada de forma síncrona, ela baixa a versão mais recente da política da rede e usa estimativas de largura de banda para determinar os limites de conexão lenta. (Consulte a configuração de política "Configurar Detecção de Conexão Lenta da Política de Grupo" para configurar o comportamento assíncrono em primeiro plano.)
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">Habilitar cache de política de grupo para servidores</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        Essa configuração de política permite configurar o comportamento de cache da Política de Grupo em computadores Windows Server.
+        Se você habilitar essa configuração de política, a Política de Grupo armazenará em cache as informações de política após cada sessão de processamento em segundo plano. Esse cache salva os GPOs aplicáveis e as configurações contidas neles. Quando uma Política de Grupo é executada no modo em primeiro plano e síncrono, ela consulta esse cache que, por sua vez, permite uma execução mais rápida da política. Quando o cache é lido, a Política de Grupo tenta contatar um controlador de domínio de logon para determinar a velocidade do link. Quando a Política de Grupo é executada no modo em segundo plano ou no modo em primeiro plano e assíncrono, ela continua a baixar a última versão das informações da política e usa uma estimativa de largura de banda para determinar os limites de link lento. (Consulte a configuração de política “Configurar Detecção de Link Lento de Política de Grupo” para definir o comportamento em primeiro plano assíncrono.)
+        O valor de link lento, que é definido nessa configuração de política, determina o tempo que a Política de Grupo deverá esperar por uma resposta do controlador de domínio, antes de relatar a velocidade do link como lenta. O padrão é 500 milissegundos.
+        O valor de tempo limite, que é definido nessa configuração de política, determina o tempo que a Política de Grupo deverá esperar por uma resposta do controlador de domínio, antes de determinar que não há conectividade de rede. Isso interrompe o processo atual da Política de Grupo. A Política de Grupo será executada em segundo plano na próxima vez que uma conexão for estabelecida com o controlador de domínio. A configuração de um valor muito alto poderá resultar em longas esperas para o usuário, na reinicialização ou no logon. O padrão é 5000 milissegundos.
+        Se você desabilitar ou não definir essa configuração de política, o cliente da Política de Grupo não armazenará em cache os GPOs aplicáveis ou as configurações contidas neles. Quando uma Política de Grupo é executada de maneira síncrona, ela baixa a última versão da política, da rede e usa estimativas de largura de banda para determinar os limites de link lento. (Consulte a configuração de política “Configurar Detecção de Link Lento de Política de Grupo” para definir o comportamento em primeiro plano assíncrono.)
+      
+      </string>
+
+      <string id="LogonScriptDelay">Configurar atraso de script de logon</string>
+      <string id="LogonScriptDelay_Help">
+        Digite “0” para desabilitar Atraso de Script de Logon.
+
+        Essa configuração de política permite configurar o tempo que o cliente da Política de Grupo deve esperar, após o logon, para executar scripts.
+
+        Por padrão, o cliente da Política de Grupo espera cinco minutos antes de executar os scripts de logon. Isso ajuda a criar um ambiente responsivo de área de trabalho evitando a contenção do disco.
+
+        Se habilitar essa configuração de política, a Política de Grupo esperará o período especificado antes de executar os scripts de logon.
+
+        Se desabilitar essa configuração de política, a Política de Grupo executará os scripts imediatamente após o logon.
+
+        Se você não definir essa configuração de política, a Política de Grupo esperará cinco minutos para executar os scripts de logon.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">Configurar conexões de acesso direto como uma conexão de rede rápida</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">Essa configuração de política permite ao administrador definir a conexão de Acesso Direto para que seja considerada uma conexão de rede rápida, com a finalidade de aplicar e atualizar a Política de Grupo.
+
+Quando a Política de Grupo detecta a velocidade da largura de banda de uma conexão de Acesso Direto, a detecção pode às vezes não fornecer as informações de velocidade da largura de banda. Se a Política de Grupo detectar a velocidade da largura de banda, ela seguirá as regras normais de avaliação se a conexão de Acesso Direto for uma conexão de rede rápida ou lenta. Se nenhuma velocidade de largura de banda for detectada, a Política de Grupo usará como padrão a conexão de rede lenta. Essa configuração de política permite ao administrador substituir o padrão da conexão de rede lenta pelo padrão de usar a conexão de rede rápida caso nenhuma velocidade de largura de banda da rede seja determinada.
+
+Observação: quando a Política de Grupo detecta uma conexão de rede lenta, ela apenas processa as extensões do lado do cliente configuradas para processamento por uma conexão lenta (conexão de rede lenta).
+
+Se você habilitar essa política, quando a Política de Grupo não puder determinar a velocidade da largura de banda pelo Acesso Direto, ela avaliará a conexão de rede como uma conexão rápida e processará todas as extensões do lado do cliente.
+
+Se você desabilitar ou não definir essa configuração, a Política de Grupo avaliará a conexão de rede como uma conexão lenta e processará somente as extensões do lado do cliente configuradas para processamento por uma conexão lenta.
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">Altere o processamento da Política de Grupo para execução assíncrona quando uma conexão de rede lenta é detectada.</string>
+      <string id="SlowlinkDefaultToAsync_Help">Essa política direciona o processo da Política de Grupo para ignorar o processamento de qualquer extensão do lado do cliente que exija processamento síncrono (ou seja, quando os computadores devem aguardar a rede ser totalmente iniciada durante a inicialização do computador e o logon do usuário) quando uma conexão lenta de rede é detectada.
+
+Se você habilitar essa configuração de política, quando uma conexão de rede lenta for detectada, o processamento da Política de Grupo sempre será executado de maneira assíncrona.
+Os computadores clientes não aguardam a rede ser totalmente iniciada durante a inicialização e o logon. Os usuários existentes serão conectados usando as credenciais armazenadas em cache,
+o que resulta em menor tempo de logon. A Política de Grupo será aplicada em segundo plano depois que a rede ficar disponível.
+Como esta é uma atualização em segundo plano, observe que as extensões que exigem processamento síncrono, como a extensão de preferência Instalação de Software, Redirecionamento de Pasta
+e Mapas de Unidades, não serão aplicadas.
+
+Observação: há duas condições que fazem com que a Política de Grupo seja processada de forma síncrona, mesmo quando essa configuração de política está habilitada:
+1 - Na primeira inicialização do computador, após o ingresso do computador cliente no domínio.
+2 - Se a configuração de política " Sempre esperar pela rede ao iniciar o computador e fazer logon" estiver habilitada.
+
+Se você desabilitar ou não definir essa configuração de política, a detecção de uma conexão de rede lenta não afetará se o processamento da Política de Grupo será síncrono ou assíncrono.
+
+      </string>
+      <string id="DisableLGPOProcessing">Desativar processamento de Objetos de Políticas de Grupo Locais</string>
+      <string id="DisableLGPOProcessing_Help">Esta configuração de política impede a aplicação de Objetos de Políticas de Grupo Locais (GPOs Locais).
+
+Por padrão, as configurações de política em GPOs Locais são aplicadas antes de qualquer configuração de política de GPO baseado em domínio. Essas configurações de políticas podem ser aplicadas a usuários e ao computador local. É possível desabilitar o processamento e a aplicação de todos os GPOs Locais para garantir que somente GPOs baseados em domínios sejam aplicados.
+
+Se você habilitar essa configuração de política, o sistema não processará e aplicará qualquer GPO Local.
+
+Se você desabilitar ou não configurar essa política, GPOs Locais continuarão a ser aplicados.
+
+Observação: no caso de computadores que ingressaram em domínios, é altamente recomendável que somente você defina essa configuração de política em GPOs baseados em domínios. Esta configuração de política será ignorada em computadores que ingressaram em um grupo de trabalho.
+
+</string>
+      <string id="SyncWaitTime">Especificar o tempo de espera de processamento de política de inicialização</string>
+      <string id="SyncWaitTime_Help">Essa configuração de política especifica o tempo de espera da Política de Grupo por notificações de disponibilidade de rede durante o processamento da política de inicialização. Se o processamento da política de inicialização for síncrono, o computador será bloqueado até que a rede esteja disponível ou que o tempo de espera padrão seja alcançado. Se o processamento da política de inicialização for assíncrono, o computador não será bloqueado e o processamento da política ocorrerá em segundo plano. Nos dois casos, a configuração dessa política substitui qualquer tempo de espera calculado pelo sistema.
+
+Se você habilitar essa configuração de política, a Política de Grupo usará esse tempo de espera máximo configurado administrativamente e substituirá qualquer tempo de espera padrão ou calculado pelo sistema.
+
+Se você desabilitar ou não definir esta configuração de política, a Política de Grupo usará o tempo de espera padrão de 30 segundos em computadores que executam o sistema operacional Windows Vista. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Permitir política de usuário entre florestas e perfis móveis de usuários</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">Esta configuração de política permite o processamento de políticas baseadas em usuários, perfis de usuários móveis e scripts de logon de objetos de usuários para logons interativos entre florestas.
+
+Essa configuração de política afeta todas as contas de usuários que fazem logon de forma interativa em um computador em outra floresta quando há uma relação de confiança entre florestas ou uma relação de confiança bidirecional entre florestas.
+
+Se você não definir essa configuração de política:
+- Nenhuma configuração de política baseada em usuário será aplicada a partir da floresta do usuário.
+- Os usuários não receberão seus perfis móveis; eles receberão um perfil local no computador a partir de um floresta local. Uma mensagem de aviso será exibida para o usuário, e uma mensagem de log de eventos (1529) será postada.
+- O processamento da Política de Grupo de Loopback será aplicado, usando o escopo de Objetos de Política de Grupo (GPOs) no computador.
+- Uma mensagem de log de eventos (1109) será postada, informando que o loopback foi invocado no modo de Substituição.
+
+Quando você habilita essa configuração de política, o comportamento é exatamente o mesmo no Windows 2000: a política de usuário é aplicada e um perfil de usuário móvel é permitido da floresta confiável.
+
+Quando essa configuração de política é desabilitada, o comportamento é como se não tivesse sido configurada.</string>
+      <string id="CSE_AppMgmt">Configurar o processamento de política de instalação de software</string>
+      <string id="CSE_AppMgmt_Help">Esta configuração de política determina quando as políticas de instalação de software são atualizadas.
+
+Essa configuração de política afeta todas as configurações de política que usam o componente de instalação de software de Política de Grupo, como as configurações de política existentes em Configurações de Software\Instalação de Software. É possível definir a política de instalação de software somente para Objetos de Política de Grupo armazenados no Active Directory, não para Objetos de Política de Grupo armazenados no computador local.
+
+Essa configuração de política substitui as configurações personalizadas que o programa que está implementando a política de instalação de software definiu quando foi instalado.
+
+Se você habilitar essa configuração de política, poderá usar as caixas de seleção fornecidas para alterar as opções. Se você desabilitar ou não definir essa configuração de política, ela não terá efeito sobre o sistema.
+
+A opção "Permitir processamento através de uma conexão de rede lenta" atualiza as políticas até mesmo quando a atualização está sendo transmitida por uma conexão de rede lenta, como uma linha telefônica. Atualizações feitas por conexões lentas podem gerar atrasos significativos.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de configurações de política especificam que sejam atualizadas somente quando alteradas. No entanto, convém atualizar configurações de política não alteradas, por exemplo, para aplicar novamente uma política desejada caso um usuário a tenha alterado.</string>
+      <string id="CSE_DiskQuota">Configurar processamento de política de cotas de disco</string>
+      <string id="CSE_DiskQuota_Help">Esta configuração de política determina quando as políticas de cotas de disco são atualizadas.
+
+Essa configuração de política afeta todas as políticas que usam o componente de cotas de disco de Política de Grupo, como as existentes em Configuração do Computador\Modelos Administrativos\Sistema\Cotas de Disco.
+
+Essa configuração de política substitui as configurações personalizadas que o programa que está implementando a política de cotas de disco definiu quando foi instalado.
+
+Se você habilitar essa configuração de política, poderá usar as caixas de seleção fornecidas para alterar as opções. Se você desabilitar ou não definir essa configuração de política, ela não terá efeito sobre o sistema.
+
+A opção "Permitir processamento através de uma conexão de rede lenta" atualiza as políticas até mesmo quando a atualização está sendo transmitida por uma conexão de rede lenta, como uma linha telefônica. Atualizações feitas por conexões lentas podem gerar atrasos significativos.
+
+A opção "Não aplicar durante processamento periódico em segundo plano" impede o sistema de atualizar em segundo plano as políticas afetadas enquanto o computador está em uso. Quando as atualizações em segundo forem desabilitadas, as alterações de política só terão efeito depois que o próximo usuário fizer logon ou que o sistema for reiniciado.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de política especificam que elas são atualizadas apenas quando alteradas. No entanto, convém atualizar políticas não alteradas, por exemplo, para aplicar novamente uma configuração desejada caso um usuário a tenha alterado.</string>
+      <string id="CSE_EFSRecovery">Configurar processamento de política de recuperação EFS</string>
+      <string id="CSE_EFSRecovery_Help">Esta configuração de política determina quando as políticas de criptografia são atualizadas.
+
+Essa configuração de política afeta todas as políticas que usam o componente de criptografia de Política de Grupo, como políticas relacionadas à criptografia em Configurações do Windows/Configurações de Segurança.
+
+Ela substitui as configurações personalizadas que o programa que está implementando a política de criptografia definiu quando foi instalado.
+
+Se você habilitar essa configuração de política, poderá usar as caixas de seleção fornecidas para alterar as opções. Se você desabilitar ou não definir essa configuração de política, ela não terá efeito sobre o sistema.
+
+A opção "Permitir processamento através de uma conexão de rede lenta" atualiza as políticas até mesmo quando a atualização está sendo transmitida por uma conexão de rede lenta, como uma linha telefônica. Atualizações feitas por conexões lentas podem gerar atrasos significativos.
+
+A opção "Não aplicar durante processamento periódico em segundo plano" impede o sistema de atualizar em segundo plano as políticas afetadas enquanto o computador está em uso. Quando as atualizações em segundo forem desabilitadas, as alterações de política só terão efeito depois que o próximo usuário fizer logon ou que o sistema for reiniciado.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de política especificam que elas são atualizadas apenas quando alteradas. No entanto, convém atualizar políticas não alteradas, por exemplo, para aplicar novamente uma configuração desejada caso um usuário a tenha alterado.</string>
+      <string id="CSE_FolderRedirection">Configurar processamento de política de redirecionamento de pasta</string>
+      <string id="CSE_FolderRedirection_Help">Esta configuração de política determina quando as políticas de redirecionamento de pasta são atualizadas.
+
+Essa configuração de política afeta todas as políticas que usam o componente de redirecionamento de pasta de Política de Grupo, como as existentes em Configurações do Windows/Redirecionamento de Pasta. É possível definir a política de redirecionamento de pasta somente para objetos de Política de Grupo armazenados no Active Directory, não para objetos de Política de Grupo armazenados no computador local.
+
+Essa configuração de política substitui as configurações personalizadas que o programa que está implementando a configuração de política de redirecionamento de pasta definiu quando foi instalado.
+
+Se você habilitar essa configuração de política, poderá usar as caixas de seleção fornecidas para alterar as opções. Se você desabilitar ou não definir essa configuração de política, ela não terá efeito sobre o sistema.
+
+A opção "Permitir processamento através de uma conexão de rede lenta" atualiza as políticas até mesmo quando a atualização está sendo transmitida por uma conexão de rede lenta, como uma linha telefônica. Atualizações feitas por conexões lentas podem gerar atrasos significativos.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de política especificam que elas são atualizadas apenas quando alteradas. No entanto, convém atualizar políticas não alteradas, por exemplo, para aplicar novamente uma configuração desejada caso um usuário a tenha alterado.</string>
+      <string id="CSE_IEM">Configurar processamento de política de manutenção do Internet Explorer</string>
+      <string id="CSE_IEM_Help">Esta configuração de política determina quando as políticas de manutenção do Internet Explorer são atualizadas.
+
+Essa configuração de política afeta todas as políticas que usam o componente de Manutenção do Internet Explorer de Política de Grupo, como as existentes em Configurações do Windows/Manutenção do Internet Explorer.
+
+Essa configuração de política substitui as configurações personalizadas que o programa que está implementando a política de manutenção do Internet Explorer definiu quando foi instalado.
+
+Se você habilitar essa configuração de política, poderá usar as caixas de seleção fornecidas para alterar as opções. Se você desabilitar ou não definir essa configuração de política, ela não terá efeito sobre o sistema.
+
+A opção "Permitir processamento através de uma conexão de rede lenta" atualiza as políticas até mesmo quando a atualização está sendo transmitida por uma conexão de rede lenta, como uma linha telefônica. Atualizações feitas por conexões lentas podem gerar atrasos significativos.
+
+A opção "Não aplicar durante processamento periódico em segundo plano" impede o sistema de atualizar em segundo plano as políticas afetadas enquanto o computador está em uso. Quando as atualizações em segundo forem desabilitadas, as alterações de política só terão efeito depois que o próximo usuário fizer logon ou que o sistema for reiniciado.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de política especificam que elas são atualizadas apenas quando alteradas. No entanto, convém atualizar políticas não alteradas, por exemplo, para aplicar novamente uma configuração de política desejada caso um usuário a tenha alterado.</string>
+      <string id="CSE_IPSecurity">Configurar processamento de política de segurança de IP</string>
+      <string id="CSE_IPSecurity_Help">Esta configuração de política determina quando as políticas de segurança de IP são atualizadas.
+
+Essa configuração de política afeta todas as políticas que usam o componente de segurança IP de Política de Grupo, como as existentes em Configuração do Computador\Configurações do Windows\Configurações de Segurança\Políticas de Segurança IP na Máquina Local.
+
+Essa configuração de política substitui as configurações personalizadas que o programa que está implementando a política de segurança de IP definiu quando foi instalado.
+
+Se você habilitar essa configuração de política, poderá usar as caixas de seleção fornecidas para alterar as opções. Se você desabilitar ou não definir essa configuração de política, ela não terá efeito sobre o sistema.
+
+A opção "Permitir processamento através de uma conexão de rede lenta" atualiza as políticas até mesmo quando a atualização está sendo transmitida por uma conexão de rede lenta, como uma linha telefônica. Atualizações feitas por conexões lentas podem gerar atrasos significativos.
+
+A opção "Não aplicar durante processamento periódico em segundo plano" impede o sistema de atualizar em segundo plano as políticas afetadas enquanto o computador está em uso. Quando as atualizações em segundo forem desabilitadas, as alterações de política só terão efeito depois que o próximo usuário fizer logon ou que o sistema for reiniciado.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de política especificam que elas são atualizadas apenas quando alteradas. No entanto, convém atualizar políticas não alteradas, por exemplo, para aplicar novamente uma configuração de política desejada caso um usuário a tenha alterado.</string>
+      <string id="CSE_Registry">Configurar processamento de política de Registro</string>
+      <string id="CSE_Registry_Help">Esta configuração de política determina quando as políticas de Registro são atualizadas.
+
+Essa configuração de política afeta todas as políticas na pasta Modelos Administrativos e qualquer outra política que armazene valores no Registro. Ela substitui as configurações personalizadas que o programa que está implementando uma política de do Registro definiu quando foi instalado.
+
+Se você habilitar essa configuração de política, poderá usar as caixas de seleção fornecidas para alterar as opções. Se você desabilitar ou não definir essa configuração de política, ela não terá efeito sobre o sistema.
+
+A opção "Não aplicar durante processamento periódico em segundo plano" impede o sistema de atualizar em segundo plano as políticas afetadas enquanto o computador está em uso. Quando as atualizações em segundo forem desabilitadas, as alterações de política só terão efeito depois que o próximo usuário fizer logon ou que o sistema for reiniciado.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de política especificam que elas são atualizadas apenas quando alteradas. No entanto, convém atualizar políticas não alteradas, por exemplo, para aplicar novamente uma configuração de política desejada caso um usuário a tenha alterado.</string>
+      <string id="CSE_Scripts">Configurar processamento de política de scripts</string>
+      <string id="CSE_Scripts_Help">Esta configuração de política determina quando as políticas que atribuem scripts compartilhados são atualizadas.
+
+Essa configuração de política afeta todas as políticas que usam o componente de script de Política de Grupo, como as existentes em Configurações do Windows/Scripts. Ela substitui as configurações personalizadas que o programa que está implementando a política de script definiu quando foi instalado.
+
+Se você habilitar essa configuração de política, poderá usar as caixas de seleção fornecidas para alterar as opções. Se você desabilitar ou não definir essa configuração, ela não terá efeito sobre o sistema.
+
+A opção "Permitir processamento através de uma conexão de rede lenta" atualiza as políticas até mesmo quando a atualização está sendo transmitida por uma conexão de rede lenta, como uma linha telefônica. Atualizações feitas por conexões lentas podem gerar atrasos significativos.
+
+A opção "Não aplicar durante processamento periódico em segundo plano" impede o sistema de atualizar em segundo plano as políticas afetadas enquanto o computador está em uso. Quando as atualizações em segundo forem desabilitadas, as alterações de política só terão efeito depois que o próximo usuário fizer logon ou que o sistema for reiniciado.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de política especificam que elas são atualizadas apenas quando alteradas. No entanto, convém atualizar políticas não alteradas, por exemplo, para aplicar novamente uma configuração de política desejada caso um usuário a tenha alterado.</string>
+      <string id="CSE_Security">Configurar processamento de política de segurança</string>
+      <string id="CSE_Security_Help">Esta configuração de política determina quando as políticas de segurança são atualizadas.
+
+Essa configuração de política afeta todas as políticas que usam o componente de segurança de Política de Grupo, como as existentes em Configurações do Windows/Configurações de Segurança.
+
+Essa configuração de política substitui as configurações personalizadas que o programa que está implementando a política de segurança definiu quando foi instalado.
+
+Se você habilitar essa configuração de política, poderá usar as caixas de seleção fornecidas para alterar as opções. Se você desabilitar ou não definir essa configuração de política, ela não terá efeito sobre o sistema.
+
+A opção "Não aplicar durante processamento periódico em segundo plano" impede o sistema de atualizar em segundo plano as políticas afetadas enquanto o computador está em uso. Quando as atualizações em segundo forem desabilitadas, as alterações de política só terão efeito depois que o próximo usuário fizer logon ou que o sistema for reiniciado.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de políticas especificam que elas são atualizadas somente ao serem alteradas. No entanto, convém atualizar políticas não alteradas, por exemplo, para aplicar novamente uma configuração de política desejada caso um usuário a tenha alterado.</string>
+      <string id="CSE_Wireless">Configurar processamento de política sem fio</string>
+      <string id="CSE_Wireless_Help">Esta configuração de política determina quando as políticas que atribuem configurações de rede sem fio são atualizadas.
+
+Essa configuração de política afeta todas as políticas que usam o componente de rede sem fio de Política de Grupo, como as existentes em Configurações do Windows/Políticas de Rede Sem Fio.
+
+Ela substitui as configurações personalizadas que o programa que está implementando a rede sem fio definiu quando foi instalado.
+
+Se você habilitar essa política, poderá usar as caixas de seleção fornecidas para alterar as opções.
+
+Se você desabilitar ou não fizer essa configuração, o sistema não será afetado.
+
+A opção "Permitir processamento através de uma conexão de rede lenta" atualiza as políticas até mesmo quando a atualização está sendo transmitida por uma conexão de rede lenta, como uma linha telefônica. Atualizações feitas por conexões lentas podem gerar atrasos significativos.
+
+A opção "Não aplicar durante processamento periódico em segundo plano" impede o sistema de atualizar em segundo plano as políticas afetadas enquanto o computador está em uso. Quando as atualizações em segundo forem desabilitadas, as alterações de política só terão efeito depois que o próximo usuário fizer logon ou que o sistema for reiniciado.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de política especificam que elas são atualizadas apenas quando alteradas. No entanto, convém atualizar políticas não alteradas, por exemplo, para aplicar novamente uma configuração desejada caso um usuário a tenha alterado.</string>
+      <string id="CSE_Wired">Configurar processamento de política com fio</string>
+      <string id="CSE_Wired_Help">Esta configuração de política determina quando as políticas que atribuem configurações de rede com fio são atualizadas.
+
+Essa configuração de política afeta todas as políticas que usam o componente de rede com fio da Política de Grupo, como as existentes em Configurações do Windows\Políticas de Rede com Fio.
+
+Ela substitui as configurações personalizadas que o programa que está implementando a rede com fio definiu quando foi instalado.
+
+Se você habilitar essa política, poderá usar as caixas de seleção fornecidas para alterar as opções.
+
+Se você desabilitar ou não fizer essa configuração, o sistema não será afetado.
+
+A opção "Permitir processamento através de uma conexão de rede lenta" atualiza as políticas até mesmo quando a atualização está sendo transmitida por uma conexão de rede lenta, como uma linha telefônica. Atualizações feitas por conexões lentas podem gerar atrasos significativos.
+
+A opção "Não aplicar durante processamento periódico em segundo plano" impede o sistema de atualizar em segundo plano as políticas afetadas enquanto o computador está em uso. Quando as atualizações em segundo forem desabilitadas, as alterações de política só terão efeito depois que o próximo usuário fizer logon ou que o sistema for reiniciado.
+
+A opção "Processar mesmo que os objetos de Política de Grupo não tenham sido alterados" atualizará e reaplicará as políticas mesmo se elas não tiverem sido alteradas. Muitas implementações de política especificam que elas são atualizadas apenas quando alteradas. No entanto, convém atualizar políticas não alteradas, por exemplo, para aplicar novamente uma configuração desejada caso um usuário a tenha alterado.</string>
+
+      <string id="DenyRsopToInteractiveUser">Determinar se usuários interativos podem gerar dados RSoP</string>
+      <string id="DenyRsopToInteractiveUser_Help">Essa configuração de política controla a capacidade de os usuários exibirem os dados do Conjunto de Políticas Resultante (RSoP).
+
+Por padrão, os usuários que fazem logon interativamente podem exibir seus próprios dados do Conjunto de Políticas Resultante (RSoP).
+
+Se você habilitar esta configuração de política, os usuários interativos não poderão gerar dados RSoP.
+
+Se você desabilitar ou não definir esta configuração de política, os usuários interativos poderão gerar RSoP.
+
+Observação: essa configuração de política não afeta administradores. Se você habilitar ou desabilitar essa configuração de política, os administradores poderão visualizar dados RSoP por padrão.
+
+Observação: para exibir dados RSoP em um computador cliente, use o snap-in RSoP para o Console de Gerenciamento Microsoft. Para iniciar o snap-in RSoP a partir da linha de comando, digite RSOP.msc
+
+Observação: essa configuração de política existe como Configuração do Usuário e como Configuração do Computador.
+
+Consulte também a configuração de política "Desativar log de Conjunto de Políticas Resultante" em Configuração do Computador/Modelos Administrativos/Sistema/Política de Grupo.</string>
+      <string id="DisableAutoADMUpdate">Desativar atualização automática de arquivos ADM</string>
+      <string id="DisableAutoADMUpdate_Help">Impede o sistema de atualizar os arquivos de origem dos modelos administrativos automaticamente quando você abrir o editor de objeto de política de grupo.  Os administradores poderão usar esse recurso caso estejam preocupados quanto ao espaço usado no volume do sistema de um DC.
+
+Por padrão, quando o Editor de Objeto de Política de Grupo é iniciado, é executada uma comparação de carimbo de data/hora nos arquivos de origem no diretório local %SYSTEMROOT%\inf e nos arquivos de origem armazenados no GPO.  Se os arquivos locais forem mais novos, eles serão copiados para o GPO.
+
+Se o status dessa configuração for alterado para Habilitado, os arquivos de origem não serão copiados para o GPO.
+
+Se o status dessa configuração for alterado para Desabilitado, prevalecerá o comportamento padrão.  Os arquivos serão sempre copiados para o GPO se tiverem um carimbo de data/hora mais recente.
+
+OBSERVAÇÃO: se a configuração de política de Configuração do Computador "Sempre usar arquivos ADM locais para o editor de objeto de política de grupo" for ativada, o estado desta configuração será ignorado e será sempre tratado como Ativado.</string>
+      <string id="DisableBackgroundPolicy">Desativar atualização em segundo plano da política de grupo</string>
+      <string id="DisableBackgroundPolicy_Help">Esta configuração de política impede que a política de grupo seja atualizada enquanto o computador estiver em uso. Essa configuração de política se aplica a Políticas de Grupo de computadores, usuários e controladores de domínio.
+
+Se você habilitar essa configuração de política, o sistema aguardará até que o usuário atual faça logoff no sistema antes de atualizar as configurações do computador e do usuário.
+
+Se você desabilitar ou não definir essa configuração de política, as atualizações poderão ser aplicadas enquanto os usuários estiverem trabalhando. A frequência das atualizações é determinada pelas configurações de política "Definir Intervalo de atualização da Política de Grupo para computadores'' e ''Definir Intervalo de atualização da Política de Grupo para usuários".
+
+Observação: se você fizer alterações nesta configuração de política, deverá reiniciar o computador para que elas entrem em vigor.</string>
+      <string id="DisableUsersFromMachGP">Remover a capacidade de invocar a atualização de política do PC</string>
+      <string id="DisableUsersFromMachGP_Help">Essa configuração de política permite controlar a capacidade de um usuário de invocar uma atualização de política do computador.
+
+Se você habilitar essa configuração de política, os usuários não poderão invocar uma atualização de política do computador. A política do computador será aplicada ainda na inicialização ou quando ocorrer uma atualização oficial da política.
+
+Se você desabilitar ou não fizer essa configuração de política, será aplicado o comportamento padrão. Por padrão, a política do computador é aplicada quando o computador é iniciado. Ela também se aplica um intervalo de atualização especificado ou ao ser invocada manualmente pelo usuário.
+
+Observação: essa configuração aplica-se somente a usuários que não sejam administradores. Os administradores podem invocar uma atualização de política do computador a qualquer momento, independentemente de como essa configuração de política é configurada.
+
+Consulte também a configuração de política "Definir Intervalo de atualização de Política de Grupo para computadores" para alterar o intervalo de atualização da política.
+
+Observação: se você fizer alterações nesta configuração de política, deverá reiniciar o computador para que elas entrem em vigor.</string>
+      <string id="EnforcePoliciesOnly">Aplicar apenas Mostrar políticas</string>
+      <string id="EnforcePoliciesOnly_Help">Esta configuração de política evita que os administradores exibam ou usem as preferências da Política de Grupo.
+
+Um arquivo de administração de Política de Grupo (.adm) pode conter configurações verdadeiras e preferências. As configurações verdadeiras, que recebem suporte total da Política de Grupo, devem usar entradas do Registro nas subchaves do Registro Software\Policies ou Software\Microsoft\Windows\CurrentVersion\Policies. As preferências, que não recebem suporte total, usam entradas do Registro em outras subchaves.
+
+Se você habilitar essa configuração de política, o comando "Mostrar Apenas Políticas" será ativado e os administradores não poderão desativá-lo. Como resultado, um Editor de Objeto de Política de Grupo só exibe configurações verdadeiras; as preferências não são exibidas.
+
+Se você desabilitar ou não definir essa configuração de política, o comando "Mostrar Apenas Políticas" será ativado por padrão, mas os administradores poderão exibir as preferências desativando esse comando.
+
+Observação: para localizar o comando "Mostrar Apenas Políticas", no Editor de Objeto de Política de Grupo, clique na pasta Modelos Administrativos (qualquer uma), clique com o botão direito do mouse na mesma pasta e aponte para "Exibir".
+
+No Editor de Objeto de Política de Grupo, as preferências possuem um ícone vermelho para distingui-las das configurações verdadeiras, que possuem um ícone azul.</string>
+      <string id="GPDCOptionAny">Usar controlador de domínio disponível</string>
+      <string id="GPDCOptionInherit">Herdar de snap-ins do Active Directory</string>
+      <string id="GPDCOptionPDC">Usar o controlador de domínio primário</string>
+      <string id="GPDCOptions">Configurar seleção de controlador de domínio da política de grupo</string>
+      <string id="GPDCOptions_Help">Esta configuração de política determina que controlador de domínio o snap-in do Editor de Objeto de Política de Grupo usa.
+
+Se você habilitar essa configuração, poderá definir qual controlador de domínio é usado de acordo com estas opções:
+
+"Usar o controlador de domínio primário" indica que o snap-in do Editor de Objeto de Política de Grupo lê e grava alterações para o controlador de domínio designado como Mestre de operações de PDC para o domínio.
+
+"Herdar de Snap-ins do Active Directory" indica que o snap-in do Editor de Objeto de Política de Grupo lê e grava alterações no controlador de domínio que os snap-ins de Usuários e Computadores do Active Directory ou de Serviços e Sites do Active Directory usam.
+
+"Usar qualquer controlador de domínio disponível" indica que o snap-in do Editor de Objeto de Política de Grupo pode ler e gravar alterações em qualquer controlador de domínio disponível.
+
+Se você desabilitar ou não fizer essa configuração, o snap-in do Editor de Objeto de Política de Grupo usará o controlador de domínio designado como Mestre de Operações de PDC para o domínio.
+
+Observação: para alterar o Mestre de Operações de PDC para um domínio, em Usuários e Computadores do Active Directory, clique com o botão direito do mouse em um domínio e clique em "Mestres de operações".</string>
+      <string id="GPTransferRate">Configurar detecção de vínculo lento de política de grupo</string>
+      <string id="GPTransferRate_Help">Esta configuração de política define uma conexão lenta com o objetivo de aplicar e atualizar uma Política de Grupo.
+
+Se a taxa de transferência de dados do controlador de domínio que está fornecendo uma atualização de política aos computadores desse grupo for mais lenta que a taxa especificada pela configuração, o sistema considerará a conexão lenta.
+
+A resposta do sistema a uma conexão de política lenta varia entre as políticas. O programa que está implementando a configuração pode especificar a resposta para um vínculo lento. Além disso, as configurações de processamento de políticas nessa pasta permitem substituir as respostas especificadas dos programas para vínculos lentos.
+
+Se você habilitar essa configuração, será possível digitar, na caixa "Velocidade da conexão", um número decimal entre 0 e 4.294.967.200, indicando uma taxa de transferência em quilobits por segundo. Qualquer conexão mais lenta do que esta taxa é considerada lenta. Se você digitar 0, todas as conexões serão consideradas rápidas.
+
+Se você desabilitar ou não fizer essa configuração, o sistema usará o valor padrão de 500 quilobits por segundo.
+
+Esta configuração aparece nas pastas Configuração do Computador e Configuração do Usuário. A configuração em 'Configuração do computador' define um vínculo lento para configurações na pasta 'Configuração do computador'. A configuração em Configuração do Usuário define um vínculo lento para configurações na pasta Configuração do Usuário.
+
+Consulte também "Não detectar conexões de rede lentas" e políticas relacionadas em Configuração do Computador\Modelos Administrativos\Sistema\Perfil do Usuário. Observação: se o servidor de perfil tiver a conectividade IP, será usada a configuração de velocidade de conexão. Se o servidor de perfil não tiver a conectividade IP, será usada a temporização SMB.</string>
+      <string id="GroupPolicyRefreshRate">Definir intervalo de atualização de política de grupo para computadores</string>
+      <string id="GroupPolicyRefreshRate_Help">Esta configuração de política especifica a frequência com que a política de grupo para computadores é atualizada enquanto o computador está em uso (em segundo plano). Essa configuração especifica uma taxa de atualização em segundo plano somente para Políticas de Grupo na pasta Configuração do Computador.
+
+Além das atualizações em segundo plano, a Política de Grupo para o computador sempre é atualizada quando o sistema é iniciado.
+
+Por padrão, a Política de Grupo é atualizada em segundo plano a cada 90 minutos, com um deslocamento aleatório de 0 a 30 minutos.
+
+Se você habilitar essa configuração, será possível especificar uma taxa de atualização entre 0 e 64.800 minutos (45 dias). Se você selecionar 0 minutos, o computador tentará atualizar a política de grupo a cada sete segundos. Entretanto, como as atualizações podem interferir no trabalho do usuário e aumentar o tráfego de rede, intervalos de atualização muito curtos não são adequados à maioria das instalações.
+
+Se você desabilitar essa configuração, a Política de Grupo será atualizada a cada 90 minutos (o padrão). Para especificar que a Política de Grupo nunca deve ser atualizada enquanto o computador estiver em uso, selecione a política "Desativar atualização em segundo plano da Política de Grupo".
+
+A política Definir intervalo de atualização de política de grupo para computadores também permite especificar o grau de variação do intervalo de atualização real. Para impedir que clientes com o mesmo intervalo de atualização solicitem atualizações simultaneamente, o sistema varia o intervalo de atualização para cada cliente em um número aleatório de minutos. O número que você digita na caixa período de tempo aleatório define o limite máximo para o intervalo de variação. Por exemplo, se você digitar 30 minutos, o sistema selecionará uma variação de 0 a 30 minutos. A digitação de um número maior estabelece um intervalo mais abrangente e torna menos provável que os pedidos dos clientes se sobreponham. Entretanto, as atualizações podem sofrer atrasos significativos.
+
+Esta configuração estabelece a taxa de atualização para a Política de Grupo de computador. Para definir uma taxa de atualização para políticas de usuários, use a configuração "Definir intervalo de atualização de Política de Grupo para usuários" (localizada em Configuração do Usuário\Modelos administrativos\Sistema\Política de grupo).
+
+Essa configuração só será usada quando a configuração "Desativar atualização em segundo plano da política de grupo" não estiver habilitada.
+
+Observação: é aconselhável notificar os usuários que sua configuração é atualizada periodicamente para que eles reconheçam os sinais de uma atualização de configuração. Quando a Política de Grupo é atualizada, a área de trabalho do Windows é atualizada; ela cintila rapidamente e fecha os menus abertos. Além disso, as restrições impostas por políticas de grupo, como aquelas que limitam os programas que o usuário pode executar, podem interferir nas tarefas em andamento.</string>
+      <string id="GroupPolicyRefreshRateDC">Definir intervalo de atualização de política de grupo para controladores de domínio</string>
+      <string id="GroupPolicyRefreshRateDC_Help">Esta configuração de política especifica com que frequência a política de grupo é atualizada nos controladores de domínio enquanto eles estão sendo executados (em segundo plano). Além das atualizações executadas quando o sistema é iniciado, também são feitas as atualizações especificadas por essa configuração.
+
+Por padrão, a Política de Grupo nos controladores de domínio é atualizada a cada cinco minutos.
+
+Se você habilitar essa configuração, será possível especificar uma taxa de atualização entre 0 e 64.800 minutos (45 dias). Se você selecionar 0 minutos, o controlador de domínio tenta atualizar a política de grupo a cada 7 segundos. Entretanto, como as atualizações podem interferir no trabalho do usuário e aumentar o tráfego de rede, intervalos de atualização muito curtos não são adequados à maioria das instalações.
+
+Se você desabilitar ou não definir essa configuração, o controlador de domínio atualizará a Política de Grupo a cada 5 minutos (o padrão). Para especificar que as Políticas de Grupo para usuários nunca devem ser atualizadas enquanto o computador estiver em uso, selecione a configuração "Desativar atualização em segundo plano da Política de Grupo".
+
+Essa configuração também permite especificar o grau de variação do intervalo de atualização real. Para impedir que controladores de domínio com o mesmo intervalo de atualização solicitem atualizações simultaneamente, o sistema varia o intervalo de atualização para cada controlador em um número aleatório de minutos. O número que você digita na caixa período de tempo aleatório define o limite máximo para o intervalo de variação. Por exemplo, se você digitar 30 minutos, o sistema selecionará uma variação de 0 a 30 minutos. A digitação de um número maior estabelece um intervalo mais abrangente e torna menos provável que os pedidos de atualização se sobreponham. Entretanto, as atualizações podem sofrer atrasos significativos.
+
+Observação: esta configuração é usada apenas quando você está estabelecendo a configuração para um domínio, site, OU (unidade organizacional) ou grupo personalizado. Caso você esteja estabelecendo a configuração para um computador local apenas, o sistema ignorará esta configuração.</string>
+      <string id="GroupPolicyRefreshRateUser">Definir intervalo de atualização de política de grupo para usuários</string>
+      <string id="GroupPolicyRefreshRateUser_Help">Esta configuração de política especifica a frequência com que a política de grupo para usuários é atualizada enquanto o computador está em uso (em segundo plano). Essa configuração especifica uma taxa de atualização em segundo plano somente para Políticas de Grupo na pasta Configuração do Usuário.
+
+Além das atualizações em segundo plano, a Política de Grupo para usuários sempre é atualizada quando os usuários fazem logon.
+
+Por padrão, a Política de Grupo é atualizada em segundo plano a cada 90 minutos, com um deslocamento aleatório de 0 a 30 minutos.
+
+Se você habilitar essa configuração, será possível especificar uma taxa de atualização entre 0 e 64.800 minutos (45 dias). Se você selecionar 0 minutos, o computador tentará atualizar a política de grupo de usuário a cada 7 segundos. Entretanto, como as atualizações podem interferir no trabalho do usuário e aumentar o tráfego de rede, intervalos de atualização muito curtos não são adequados à maioria das instalações.
+
+Se você desabilitar essa configuração, a Política de Grupo de usuário será atualizada a cada 90 minutos (o padrão). Para especificar que a Política de Grupo para usuários nunca deve ser atualizada enquanto o computador estiver em uso, selecione a configuração "Desativar atualização em segundo plano da Política de Grupo".
+
+Essa configuração também permite especificar o grau de variação do intervalo de atualização real. Para impedir que clientes com o mesmo intervalo de atualização solicitem atualizações simultaneamente, o sistema varia o intervalo de atualização para cada cliente em um número aleatório de minutos. O número que você digita na caixa período de tempo aleatório define o limite máximo para o intervalo de variação. Por exemplo, se você digitar 30 minutos, o sistema selecionará uma variação de 0 a 30 minutos. A digitação de um número maior estabelece um intervalo mais abrangente e torna menos provável que os pedidos dos clientes se sobreponham. Entretanto, as atualizações podem sofrer atrasos significativos.
+
+Importante: se a configuração "Desativar atualização em segundo plano da Política de Grupo" estiver habilitada, ela será ignorada.
+
+Observação: esta configuração estabelece a taxa de atualização para políticas de grupo de usuários. Para definir uma taxa de atualização para Políticas de Grupo de computadores, use a configuração "Intervalo de atualização de Política de Grupo para computadores" (localizada em Configuração do Computador\Modelos Administrativos\Sistema\Política de grupo).
+
+Dica: é aconselhável notificar os usuários que sua configuração é atualizada periodicamente para que eles reconheçam os sinais de uma atualização de configuração. Quando a Política de Grupo é atualizada, a área de trabalho do Windows é atualizada; ela cintila rapidamente e fecha os menus abertos. Além disso, restrições impostas por políticas de grupo, como aquelas que limitam os programas que podem ser executados pelo usuário, podem interferir em tarefas em andamento.</string>
+      <string id="NewGPODisplayName">Definir nome padrão para novos objetos de política de grupo</string>
+      <string id="NewGPODisplayName_Help">Esta configuração de política permite definir o nome de exibição padrão para novos objetos de Política de Grupo.
+
+Essa configuração permite especificar o nome padrão de novos objetos de Política de Grupo criados com as ferramentas de Gerenciamento de Política de Grupo compatíveis com a política, incluindo a guia Política de Grupo nas ferramentas do Active Directory e o navegador do GPO.
+
+O nome para exibição pode conter variáveis de ambiente e pode ter no máximo 255 caracteres.
+
+Se essa configuração estiver Desabilitada ou Não Configurada, o nome para exibição padrão do Novo objeto de Política de Grupo será usado.</string>
+      <string id="NewGPOLinksDisabled">Criar vínculos a objetos de política de grupo desativados como padrão</string>
+      <string id="NewGPOLinksDisabled_Help">Esta configuração de política permite criar novos vínculos a objetos de Política de Grupo em estado desativado.
+
+Se você habilitar essa configuração, poderá criar todos os novos vínculos de objetos de Política de Grupo no estado desativado por padrão. Após configurar e testar os novos vínculos de objetos usando uma ferramenta de gerenciamento de Política de Grupo compatível com a política, como Usuários e Computadores do Active Directory ou Serviços e Sites do Active Directory, será possível habilitar os vínculos de objetos para uso no sistema.
+
+Se você desabilitar ou não fizer essa configuração, os novos vínculos de objetos da Política de Grupo serão criados no estado desabilitado. Se você não quiser que eles entrem em vigor até serem configurados e testados, deverá desativar o vínculo de objeto.</string>
+      <string id="OnlyUseLocalAdminFiles">Sempre usar arquivos ADM locais para o editor de objeto de política de grupo</string>
+      <string id="OnlyUseLocalAdminFiles_Help">Esta configuração de política permite que você sempre use arquivos ADM locais para o snap-in de Política de Grupo.
+
+Por padrão, quando você edita um Objeto de Política de Grupo (GPO) usando o snap-in de Editor de Objeto de Política de Grupo, os arquivos ADM são carregados desse GPO para o snap-in de Editor de Objeto de Política de Grupo. Isso permite que você use a mesma versão dos arquivos ADM usados para criar o GPO ao editar esse GPO.
+
+Ocorre o seguinte comportamento:
+
+- Se você tiver criado originalmente o GPO com, por exemplo, um sistema em inglês, o GPO conterá arquivos ADM em inglês.
+
+- Se mais tarde você editar o GPO em um sistema com um idioma diferente, obterá os arquivos ADM em inglês da maneira como estavam no GPO.
+
+Você pode alterar esse comportamento usando essa configuração.
+
+Se você ativar esta configuração, o snap-in de Editor de Objeto de Política de Grupo sempre usará os arquivos ADM locais no diretório %windir%\inf ao editar GPOs.
+
+Ocorre o seguinte comportamento:
+
+- Se você tiver criado originalmente o GPO com um sistema em inglês e editar o GPO com um sistema em japonês, o snap-in de Editor de Objeto de Política de Grupo usará os arquivos ADM locais em japonês e você verá o texto em japonês em 'Modelos administrativos'.
+
+Se você desativar ou não definir esta configuração, o snap-in de Editor de Objeto de Política de Grupo sempre carregará todos os arquivos ADM do GPO.
+
+Observação: se os ADMs de que você necessita não estiverem todos disponíveis localmente no diretório %windir%\inf, talvez não seja possível consultar todas as configurações que foram definidas no GPO que você está editando.</string>
+      <string id="PolicyPolicies">Política de Grupo</string>
+      <string id="RSoPLogging">Desativar log de conjunto de políticas resultante</string>
+      <string id="RSoPLogging_Help">Essa configuração permite habilitar ou desabilitar o log do Conjunto de Políticas Resultante (RSoP) no computador cliente.
+
+O RSoP registra informações sobre configurações de Política de Grupo que foram aplicadas ao cliente. Essas informações incluem alguns detalhes, como que Objetos de Política de Grupo (GPO) foram aplicados, a origem e as configurações de extensão do cliente que foram incluídas.
+
+Se você habilitar essa configuração, os logs de RSoP serão desativados.
+
+Se você desabilitar ou não definir essa configuração, os logs de RSoP serão ativados. Por padrão, os logs de RSoP sempre estão ativados.
+
+Observação: para exibir as informações de RSoP registradas em um computador cliente, você pode usar o snap-in RSoP no Console de Gerenciamento Microsoft (MMC).</string>
+      <string id="UserPolicyMode">Configurar modo de processamento de loopback de política de grupo de usuários</string>
+      <string id="UserPolicyMode_Help">Essa configuração de política direciona o sistema para aplicar o conjunto de objetos de Política de Grupo do computador a qualquer usuário que fizer logon em um computador afetado por essa configuração. Foi criada para computadores de uso especial, como os existentes em locais públicos, laboratórios e salas de aula, onde é necessário modificar a configuração do usuário com base no computador que está sendo usado.
+
+Por padrão, os Objetos de Política de Grupo do usuário determinam quais configurações do usuário serão aplicadas. Se essa configuração for habilitada, quando um usuário fizer logon no computador, os Objetos de Política de Grupo do computador determinarão que conjunto de Objetos de Política de Grupo será aplicado.
+
+Se você habilitar essa configuração, será possível selecionar um dos seguintes modos na caixa Modo:
+
+"Substituir" indica que as configurações do usuário definidas nos Objetos de Política de Grupo do computador substituem as configurações do usuário normalmente aplicadas ao usuário.
+
+"Mesclar" indica que as configurações do usuário definidas nos Objetos de Política de Grupo e as configurações do usuário normalmente aplicadas ao usuário estão combinadas. Se houver conflito nas configurações, as configurações do usuário nos Objetos de Política de Grupo do computador prevalecerão sobre as configurações normais do usuário.
+
+Se você desabilitar ou não definir essa configuração, os Objetos de Política de Grupo do usuário determinarão quais configurações do usuário devem ser aplicadas.
+
+Observação: esta política só entrará em vigor quando a conta de computador e a conta de usuário estiverem em domínios do Windows 2000, no mínimo.</string>
+      <string id="UserPolicyMode_Merge">Mesclar</string>
+      <string id="UserPolicyMode_Replace">Substituir</string>
+      <string id="CorpConnSyncWaitTime">Especificar tempo de espera de conectividade do local de trabalho para processamento de política</string>
+      <string id="CorpConnSyncWaitTime_Help">Essa configuração de política especifica o tempo de espera da Política de Grupo por notificações de conectividade do local de trabalho durante o processamento da política de inicialização. Se o processamento da política de inicialização for síncrono, o computador será bloqueado até que a conectividade do local de trabalho esteja disponível ou que o tempo de espera padrão seja alcançado. Se o processamento da política de inicialização for assíncrono, o computador não será bloqueado e o processamento da política ocorrerá em segundo plano. Nos dois casos, a configuração dessa política substitui qualquer tempo de espera calculado pelo sistema.
+
+Se você habilitar essa configuração de política, a Política de Grupo usará esse tempo de espera máximo configurado para conectividade do local de trabalho administrativamente e substituirá qualquer tempo de espera padrão ou calculado pelo sistema.
+
+Se você desabilitar ou não definir esta configuração de política, a Política de Grupo usará o tempo de espera padrão de 60 segundos em computadores que executam sistemas operacionais Windows superiores ao Windows 7 configurados para conectividade do local de trabalho.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Opções de Mitigação</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">Opções de mitigação de processo</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">O Serviço de Cache de Fontes do Windows deve ter permissão para baixar fontes e dados de catálogos de fontes de provedores de fontes online.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">Valor de link lento:[campo de número] milissegundos</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Valor de tempo limite:[campo de número] milissegundos</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">minuto:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Tempo de espera (em segundos):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Permitir processamento em uma conexão de rede lenta</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Permitir processamento em uma conexão de rede lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Não aplicar durante o processamento periódico em segundo plano</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Permitir processamento em uma conexão de rede lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Não aplicar durante o processamento periódico em segundo plano</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Permitir processamento em uma conexão de rede lenta</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Permitir processamento em uma conexão de rede lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Não aplicar durante o processamento periódico em segundo plano</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Permitir processamento em uma conexão de rede lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Não aplicar durante o processamento periódico em segundo plano</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Não aplicar durante o processamento periódico em segundo plano</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Permitir processamento em uma conexão de rede lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Não aplicar durante o processamento periódico em segundo plano</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Não aplicar durante o processamento periódico em segundo plano</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Permitir processamento em uma conexão de rede lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Não aplicar durante o processamento periódico em segundo plano</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Permitir processamento em uma conexão de rede lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Não aplicar durante o processamento periódico em segundo plano</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Processar mesmo que os objetos de Política de Grupo não tenham mudado</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Quando um controlador de domínio estiver sendo selecionado para uso:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Velocidade da conexão (Kbps):</decimalTextBox>
+        <text> </text>
+        <text>Digite 0 para desativar a detecção de vínculos lentos.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Velocidade da conexão (Kbps):</decimalTextBox>
+        <text> </text>
+        <text>Digite 0 para desativar a detecção de vínculos lentos.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">Sempre tratar conexões WWAN como um vínculo lento</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>Esta configuração permite personalizar com que frequência a Política de Grupo é aplicada</text>
+        <text>a computadores. O intervalo vai de 0 a 44.640 minutos (31 dias).</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Minutos:</decimalTextBox>
+        <text> </text>
+        <text>Este é um tempo aleatório adicionado ao intervalo de atualização para impedir que</text>
+        <text>todos os clientes enviem solicitações à Política de Grupo ao mesmo tempo.</text>
+        <text>O intervalo vai de 0 a 1440 minutos (24 horas)</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Minutos:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>Esta configuração permite personalizar com que frequência a Política de Grupo é aplicada</text>
+        <text>a controladores de domínio. O intervalo vai de 0 a 44.640 minutos (31 dias).</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Minutos:</decimalTextBox>
+        <text> </text>
+        <text>Este é um tempo aleatório adicionado ao intervalo de atualização para impedir que</text>
+        <text>todos os clientes enviem solicitações à Política de Grupo ao mesmo tempo.</text>
+        <text>O intervalo vai de 0 a 1440 minutos (24 horas)</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Minutos:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>Esta configuração permite personalizar com que frequência a Política de Grupo é aplicada</text>
+        <text>a usuários. O intervalo vai de 0 a 44.640 minutos (31 dias).</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Minutos:</decimalTextBox>
+        <text> </text>
+        <text>Este é um tempo aleatório adicionado ao intervalo de atualização para impedir que</text>
+        <text>todos os clientes enviem solicitações à Política de Grupo ao mesmo tempo.</text>
+        <text>O intervalo vai de 0 a 1440 minutos (24 horas)</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Minutos:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>Nome de objeto de política de grupo:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Modo:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Tempo de espera (em segundos):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

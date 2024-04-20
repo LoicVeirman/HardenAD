@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>SAM 設定</displayName>
+  <description>安全性帳戶管理員的組態設定</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">安全性帳戶管理員</string>
+      <string id="SamNGCKeyROCAValidation">在驗證期間設定易受攻擊的 ROCA WHfB 金鑰驗證</string>
+      <string id="SamNGCKeyROCAValidationNone">略過易受攻擊的 ROCA WHfB 金鑰</string>
+      <string id="SamNGCKeyROCAValidationAudit">稽核正在使用易受攻擊的 ROCA WHfB 金鑰</string>
+      <string id="SamNGCKeyROCAValidationBlock">封鎖正在使用易受攻擊的 ROCA WHfB 金鑰</string>
+      <string id="SamNGCKeyROCAValidation_explain">此原則設定讓您設定網域控制站處理 Windows Hello 企業版 (WHfB) 金鑰的方式，其容易受到 "Return of Coppersmith's attack" (ROCA) 漏洞的影響。
+
+如需 ROCA 漏洞的詳細資訊，請參閱:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+如果您啟用此原則設定，則支援下列選項:
+
+略過: 驗證網域控制站期間，系統將無法探查 ROCA 漏洞的任何 WHfB 金鑰。
+
+稽核: 驗證網域控制站期間，系統將發出 WHfB 金鑰的稽核事件，其受限於 ROCA 漏洞 (驗證仍會成功)。
+
+封鎖: 驗證網域控制站期間，系統將封鎖使用的 WHfB 金鑰，其受限於 ROCA 漏洞 (驗證會失敗)。
+
+此設定只有在網域控制站上才會生效。
+
+如果未設定，網域控制站將預設使用其本機設定。預設本機設定是「稽核」。
+
+變更此設定不需要重新啟動就會生效。
+
+注意: 為了避免未預期的干擾，此設定將不會設定為「封鎖」，直到已執行適當的風險降低，例如修補易受攻擊的 TPM。
+
+如需詳細資訊，請前往 https://go.microsoft.com/fwlink/?linkid=2116430。
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">處理易受攻擊的 ROCA WHfB 金鑰選項:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

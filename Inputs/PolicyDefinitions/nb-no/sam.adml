@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>SAM Innstillinger</displayName>
+  <description>Konfigurasjonsinnstillinger for sikkerhetskontobehandling</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">Sikkerhetskontobehandling</string>
+      <string id="SamNGCKeyROCAValidation">Konfigurer valideringen av ROCA,-sårbare WHfB-nøkler under godkjenningen</string>
+      <string id="SamNGCKeyROCAValidationNone">Ignorer ROCA-sårbare WHfB-nøkler</string>
+      <string id="SamNGCKeyROCAValidationAudit">Overvåk ROCA-sårbare WHfB-nøkler til bruk</string>
+      <string id="SamNGCKeyROCAValidationBlock">Blokker ROCA-sårbare WHfB-nøkler til bruk</string>
+      <string id="SamNGCKeyROCAValidation_explain">Du kan bruke denne policyinnstillingen til å konfigurere hvordan domenekontrollere skal håndtere Windows Hello for bedrifter (WHfB)-nøkler som er sårbare for sikkerhets problemet «Return of Coppersmith's attack» (ROCA).
+
+Hvis du vil ha mer informasjon om sikkerhetsproblemet med ROCA, kan du se:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+Hvis du aktiverer denne policyinnstillingen, støttes følgende alternativer:
+
+Ignorer : under godkjenning vil domenekontrolleren ikke granske eventuelle WHfB-nøkler for ROCA-sikkerhetsproblemet.
+
+Overvåk: under godkjenning vil domenekontrolleren sende overvåkingshendelser for WHfB nøkler som er underlagt ROCA-sikkerhetsproblemet (godkjenningen vil fremdeles lykkes).
+
+Blokker: under godkjenningen vil domenekontrolleren blokkere bruken av WHfB-nøkler som er underlagt ROCA-sikkerhetsproblemet (godkjenninger vil mislykkes).
+
+Denne innstillingen påvirker bare domenekontrollere.
+
+Hvis de ikke er konfigurert, vil domenekontrollere som standard bruke den lokale konfigurasjonen. Den lokale standard konfigurasjonen er kontroll.
+
+En omstart er ikke nødvendig for at endringene skal tre i kraft.
+
+Obs! hvis du vil unngå uventede avbrudd, bør denne innstillingen ikke settes til blokkering før de nødvendige begrensningene har blitt utført, for eksempel ved å oppdatere sårbare TPMs.
+
+Hvis du vil ha mer informasjon, er dette tilgjengelig på https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Alternativer for å behandle ROCA-sårbare WHfB-nøkler:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

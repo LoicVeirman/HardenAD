@@ -627,7 +627,6 @@ Function Set-ADFunctionalLevel
                             $blnPreRequisitesOK = $false
                         }
                     }
-
                 }
                 catch {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! Some issue occured when getting domain $DomainDns" 

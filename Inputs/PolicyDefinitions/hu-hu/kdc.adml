@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>KDC-beállítások</displayName>
+  <description>A Kerberos kulcskiosztó központjára (KDC) vonatkozó beállítások.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">Erdőkeresési sorrend használata</string>
+      <string id="forestsearch_explain">Ez a házirend-beállítás megadja azoknak a megbízható erdőknek a listáját, amelyekben a kulcsszolgáltató (KDC) a kétrészes egyszerű szolgáltatásnevek (SPN) feloldásakor keres.
+
+Ha engedélyezi ezt a beállítást, a KDC a listában szereplő erdőkben keres, ha nem tud feloldani egy kétrészes SPN-nevet a helyi erdőben. Az erdőben való keresést a kulcsszolgáltató egy globális katalógus vagy névutótag-emlékeztetők használatával végzi. Ha van találat, a KDC hivatkozó jegyet küld vissza az ügyfélnek a megfelelő tartományhoz.
+
+Ha letiltja vagy nem konfigurálja ezt a beállítást, a KDC nem fog keresni a listában szereplő erdőkben az SPN-név feloldásához. Ha a KDC nem tudja feloldani az SPN-nevet, mert a név nem található, akkor előfordulhat, hogy az NTLM-hitelesítést fogja használni.
+
+A következetes működés biztosításához a házirend-beállítást támogatni kell, és ugyanúgy kell beállítani a tartományban lévő összes tartományvezérlőn.</string>
+      <string id="emitlili">Információ az ügyfélszámítógépekre történő korábbi bejelentkezésekről</string>
+      <string id="emitlili_explain">Ez a házirend-beállítás határozza meg, hogy a tartományvezérlő nyújt-e információt az ügyfélszámítógépekre történő korábbi bejelentkezésekről.
+
+A házirend-beállítás engedélyezése esetén a tartományvezérlő megjelenít információs üzenetet a korábbi bejelentkezésekről.
+
+Ahhoz, hogy a Windows bejelentkeztetője ki tudja használni ezt a funkciót, a Windows-összetevőkben található Windows bejelentkezési beállítások csomópont alatti „Korábbi bejelentkezések adatainak megjelenítése a felhasználó bejelentkezése során” házirend-beállítást is engedélyezni kell.
+
+Ha a házirend-beállítást letiltja vagy nem konfigurálja, a tartományvezérlő nem szolgál információval az előző bejelentkezésekről, kivéve ha a „Korábbi bejelentkezések adatainak megjelenítése a felhasználó bejelentkezése során” házirend-beállítás engedélyezve van.
+
+Megjegyzés: Az előző bejelentkezésekre vonatkozó információt csak olyan tartományvezérlők tudják biztosítani, amelyek Windows Server 2008 működési szintű tartományban vannak. A Windows Server 2003, a Windows 2000 natív vagy a Windows 2000 vegyes működési szintű tartományban lévő tartományvezérlők nem tudnak információt nyújtani a korábbi bejelentkezésekről, így ezek esetében a beállítás engedélyezése semmilyen hatással nem jár.
+
+</string>
+      <string id="CbacAndArmor">A jogcímek, az összetett hitelesítés és a Kerberos-védelem KDC általi támogatása</string>
+      <string id="CbacAndArmor_explain">Ezzel a házirend-beállítással úgy konfigurálhat egy adott tartományvezérlőt, hogy az támogassa a jogcímek és az összetett hitelesítés használatát a dinamikus hozzáférés-vezérlés esetében, valamint a Kerberos-védelmet a Kerberos hitelesítés használatával.
+
+Ha engedélyezi ezt a házirend-beállítást, akkor a dinamikus hozzáférés-vezérléshez tartozó jogcímeket és összetett hitelesítést támogató, valamint a Kerberos-védelem felismerésére képes ügyfélszámítógépek ezt a szolgáltatást használják a Kerberos hitelesítési üzenetekhez. A házirend teljes tartományban való egységes érvényesítése érdekében a házirendet az összes tartományvezérlőre alkalmazni kell. 
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, akkor a tartományvezérlő nem támogatja a jogcímek, az összetett hitelesítés és a Kerberos-védelem használatát.
+
+Ha a konfigurálás során a „Nem támogatott” értéket adja meg, a tartományvezérlő nem támogatja a jogcímek, az összetett hitelesítés és a Kerberos-védelem használatát; a Windows Server 2008 R2 vagy régebbi operációs rendszert futtató tartományvezérlők esetében ez az alapértelmezett működés.
+
+Megjegyzés: ahhoz, hogy e KDC-házirend következő beállításai érvénybe lépjenek, „A jogcímek, az összetett hitelesítés és a Kerberos-védelem Kerberos-ügyfelek általi támogatása" Kerberos-csoportházirendet engedélyezni kell a támogatott rendszerekben. Ha a Kerberos-csoportházirend nincs engedélyezve, a Kerberos-alapú hitelesítési üzenetek nem használják ezeket a funkciókat.  
+
+Ha a „Támogatott” értéket adja meg, a tartományvezérlő támogatja a jogcímek, az összetett hitelesítés és a Kerberos-védelem használatát. A tartományvezérlő tájékoztatja a Kerberos-ügyfélszámítógépeket arról, hogy a tartomány képes a dinamikus hozzáférés-vezérléshez tartozó jogcímek és összetett hitelesítés, valamint a Kerberos-védelem használatára. 
+
+Tartományi működési szint követelmények
+Amikor a „Jogcímek megadása mindig” és a „Nem védett hitelesítési kérelmek elutasítása” beállítások esetén a tartomány működési szintjének beállítása Windows Server 2008 R2 vagy korábbi verzió, akkor a tartományvezérlők beállításai megegyeznek a „Támogatott” lehetőség kiválasztásakor érvényes beállításokkal. 
+
+Ha a tartomány működési szintje Windows Server 2012, a tartományvezérlő tájékoztatja a Kerberos-ügyfélszámítógépeket arról, hogy a tartomány képes a dinamikus hozzáférés-vezérléshez tartozó jogcímek és összetett hitelesítés, valamint a Kerberos-védelem használatára; továbbá:
+   - Ha a „Jogcímek megadása mindig” beállítás van megadva, a tartományvezérlő mindig ellátja a fiókokat jogcímekkel, és támogatja az RFC-működést a FAST szolgáltatással kapcsolatos tájékoztatás esetén.
+   - Ha „A nem védett hitelesítési kérelmek elutasítása” beállítást adja meg, akkor a tartományvezérlő visszautasítja a nem védett Kerberos-üzeneteket.
+
+Figyelmeztetés: Ha „A nem védett hitelesítési kérések elutasítása” beállítás van megadva, akkor a Kerberos-védelmet nem támogató ügyfélszámítógépek hitelesítése a tartományvezérlő felé sikertelen lesz.
+
+A szolgáltatás hatékonysága érdekében telepítsen a hitelesítési kérelmek kezeléséhez elegendő számú tartományvezérlőt, amelyek támogatják a dinamikus hozzáférés-vezérléshez tartozó jogcímeket és összetett hitelesítést, valamint felismerik a Kerberos-védelmet. Ha nincs elegendő, a házirendet támogató tartományvezérlő, a dinamikus hozzáférés-vezérlés vagy a Kerberos-védelem használatát igénylő hitelesítési műveletek sikertelenek lesznek (ha a „Támogatott” beállítás engedélyezve van).
+
+A házirend-beállítás engedélyezésének hatása a tartományvezérlők teljesítményére:
+   - A biztonságos Kerberos tartományképesség felderítése szükséges, ami több üzenetváltást eredményez.
+   - A dinamikus hozzáférés-vezérléshez tartozó jogcímek és összetett hitelesítés növeli az üzenetben szereplő adatok méretét és összetettségét, így a feldolgozási idő és a Kerberos-jegy mérete nagyobb lesz.
+   - A Kerberos-védelem teljes mértékben titkosítja a Kerberos-üzeneteket és jelzi a Kerberos-hibákat, így a feldolgozási idő hosszabb lesz, de a szolgáltatásjegy mérete nem változik.
+</string>
+      <string id="NoCbacAndArmor">Nem támogatott</string>
+      <string id="MixModeCbacAndArmor">Támogatott</string>
+      <string id="FullModeCbacAndArmor">Jogcímek megadása mindig</string>
+      <string id="FullModeCbacAndRequireArmor">Nem védett hitelesítési kérelmek elutasítása</string>
+      <string id="TicketSizeThreshold">Figyelmeztetés nagyméretű Kerberos jegyek esetében</string>
+      <string id="TicketSizeThreshold_explain">Ezen házirend-beállítás segítségével konfigurálhatja, hogy mekkora méretű Kerberos-jegyek indítják el a figyelmeztetési eseményt a Kerberos-hitelesítés során. A jegymérettel kapcsolatos figyelmeztetéseket a Rendszernaplóba menti a rendszer.
+
+Ha engedélyezi ezt a házirend-beállítást, beállíthatja azt a küszöbértéket a Kerberos-jegy esetében, amely figyelmeztetési eseményt indít el. Ha túl magas értéket ad meg, az sikertelen hitelesítési kísérletekhez vezethet olyankor is, amikor a rendszer nem naplóz figyelmeztetési eseményeket.  Ha túl alacsony értéked ad meg, túl sok jeggyel kapcsolatos figyelmeztetés jelenik meg a naplóban az elemzéshez. Az értéknek azonosnak kell lennie a „Kerberos SSPI környezeti token maximális pufferméretének beállítása” Kerberos-házirend értékével, vagy az adott környezetben használt legkisebb MaxTokenSize értékkel, amennyiben nem Csoportházirend segítségével végzi a konfigurálást.
+      
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, az alapértelmezett küszöbérték 12 000 bájt, amely a Windows 7, a Windows Server 2008 R2 és a korábbi verziók alapértelmezett Kerberos MaxTokenSize értéke.
+
+</string>
+      <string id="RequestCompoundId">Összetett hitelesítés kérése</string>
+      <string id="RequestCompoundId_explain">Ez a házirend lehetővé teszi, hogy összetett hitelesítés kérésére állítson be egy tartományvezérlőt.
+
+Megjegyzés: ahhoz, hogy egy tartományvezérlő összetett hitelesítést kérhessen, „A jogcímek, az összetett hitelesítés és a Kerberos-védelem KDC általi támogatása” házirendet konfigurálni és engedélyezni kell. 
+
+Ha engedélyezi ezt a házirend-beállítást, a tartományvezérlők összetett hitelesítést kérnek. A visszaküldött szolgáltatásjegy csak akkor tartalmaz összetett hitelesítést, ha a fiók konfigurálva van. A házirend teljes tartományban való egységes érvényesítése érdekében a házirendet az összes tartományvezérlőre alkalmazni kell. 
+
+Ha letiltja vagy nem konfigurálja a beállítást, a tartományvezérlők minden esetben összetett hitelesítéssel válaszolnak az összetett hitelesítési ügyfélkérelmekre – függetlenül a fiók konfigurációjától.
+
+</string>
+      <string id="PKINITFreshness">KDC-támogatás a PKINIT-alapú Freshness Extension bővítményhez</string>
+      <string id="PKINITFreshness_explain">A PKINIT-alapú Freshness Extension bővítmény csak akkor használható, ha a tartomány Windows Server 2016 működési szintű. Amennyiben a tartományvezérlő tartománya nem ezen a működési szinten vagy annál újabb szinten üzemel, a házirend nem lép érvénybe.
+
+Ezzel a házirend-beállítással úgy konfigurálhatók a tartományvezérlők, hogy támogassák a PKINIT-alapú Freshness Extension bővítményt.
+
+A házirend-beállítás engedélyezésével az alábbi funkciók lesznek támogatottak:
+
+Támogatott: A PKINIT-alapú Freshness Extension bővítmény támogatása kérelem alapján. Azok a Kerberos-ügyfelek, amelyek sikeresen hitelesítik magukat a bővítménnyel, megkapják a nyilvános kulcsokra épülő identitások friss biztonsági azonosítóját.
+
+Kötelező: A sikeres hitelesítéshez mindenképpen szükséges a PKINIT-alapú Freshness Extension bővítmény. Azok a Kerberos-ügyfelek, amelyek nem támogatják a bővítményt, nem tudják majd hitelesíteni magukat a nyilvános kulcsok hitelesítő adataival.
+
+Ha letiltja vagy nem konfigurálja a házirend-beállítást, a tartományvezérlő soha nem ajánlja fel a PKINIT-alapú Freshness Extension bővítmény használatát, és a frissesség ellenőrzése nélkül soha nem fogadja el az érvényes hitelesítési kérelmeket. Ezenkívül a felhasználók soha nem kapják meg a nyilvános kulcsokra épülő identitások friss biztonsági azonosítóját.
+</string>
+      <string id="NoPKINITFreshness">Letiltva</string>
+      <string id="SupportPKINITFreshness">Támogatott</string>
+      <string id="RequirePKINITFreshness">Kötelező</string>
+      <string id="PKINITHashAlgorithmConfiguration">Kivonatoló algoritmusok konfigurálása tanúsítványt alkalmazó bejelentkezéshez</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Ez a házirend-beállítás szabályozza a Kerberos-ügyfél által a tanúsítványhitelesítés elvégzésekor használt kivonatoló vagy ellenőrzőösszeg-algoritmusokat.
+
+Ha engedélyezi ezt a házirendet, konfigurálhatja a következő négy állapot egyikét mindegyik algoritmushoz:
+
+- Az „Alapértelmezett” beállítás az ajánlott állapotra állítja be az algoritmust.
+
+A „Támogatott” beállítás engedélyezi az algoritmus használatát. Az alapértelmezés szerint letiltott algoritmusok engedélyezése csökkentheti a biztonságot.
+
+- Az „Auditálva” beállítás engedélyezi az algoritmus használatát, és minden egyes használatakor jelentést küld egy eseményről (azonosító: 309). Ez az állapot annak ellenőrzésére szolgál, hogy az algoritmus nincs-e használatban, és biztonságosan letiltható-e.
+
+- A „Nem támogatott” beállítás letiltja az algoritmus használatát. Ez az állapot a nem biztonságosnak ítélt algoritmusok megjelölésére szolgál.
+
+Ha letiltja vagy nem konfigurálja ezt a házirendet, mindegyik algoritmus „Alapértelmezett” állapotot vesz fel.
+A Windows Kerberos-ügyfél által támogatott kivonatoló és ellenőrzőösszeg-algoritmusokról, valamint azok alapértelmezett állapotáról a https://go.microsoft.com/fwlink/?linkid=2169037 címen olvashat bővebben.
+
+A konfiguráció által generált események: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Alapértelmezett</string>
+      <string id="PKINITHashAlgorithm_Supported">Támogatott</string>
+      <string id="PKINITHashAlgorithm_Audited">Vizsgálva</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Nem támogatott</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Mód:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>A keresés helyéül szolgáló erdők</label>
+        </textBox>
+        <text>Szintaxis:</text>
+        <text>Adja meg, hogy a keresés mely erdőkre terjedjen ki, amikor a házirend engedélyezve van.</text>
+        <text>Használja a teljes tartománynév (FQDN) névformátumot.</text>
+        <text>A keresési bejegyzéseket pontosvesszővel (;) válassza el.</text>
+        <text>Részletek:</text>
+        <text>Az aktuális erdőket nem kell felsorolni, mert az erdőkeresési sorrend szerint a rendszer először a globális katalógusban, majd a megadott sorrendben keres.</text>
+        <text>Nem kell külön felsorolnia az erdőben lévő összes tartományt.</text>
+        <text>Ha a megadott erdők listájában meghatalmazó erdő is szerepel, a rendszer az adott erdőben lévő összes tartományban keres.</text>
+        <text>Úgy érheti el a legjobb teljesítményt, ha az erdőket a keresési sikeresség valószínűségének sorrendjében sorolja fel.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">A jogcímek, a dinamikus hozzáférés-vezérléshez tartozó összetett hitelesítés és a Kerberos-védelem beállításai:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Jegyméret küszöbértéke</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">PKINIT-alapú Freshness Extension bővítmény beállításai:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

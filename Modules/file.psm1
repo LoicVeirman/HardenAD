@@ -3,7 +3,7 @@
 ## -------------------                                          ##
 ## This function will set the GPO store within the SYSVOL share ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 01.0Z.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Set-GpoCentralStore {
@@ -92,13 +92,13 @@ Function Set-GpoCentralStore {
         $UniqueId = (Get-Date -Format yyyy-MM-yy_HHmmss)
         try {
             Rename-Item "$GPOCentralStore\PolicyDefinitions" "$GPOCentralStore\PolicyDefinitions-$UniqueId" -ErrorAction SilentlyContinue
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinitions has been renamed to PolicyDefinition-$UniqueID"
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinitions has been renamed to PolicyDefinitions-$UniqueID"
             $result = 0
         }
         catch {
             $global:err = "Error in Renaming the current repository."
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while renaming PolicyDefinitions folder."
-            $ResMess = "Error while renaming PolicyDefinition to PolicyDefinition-$UniqueId"
+            $ResMess = "Error while renaming PolicyDefinition to PolicyDefinitions-$UniqueId"
             $result = 1
         }
         
@@ -107,12 +107,12 @@ Function Set-GpoCentralStore {
         {
             try {
                 Copy-Item $HardenPolicyDefinition.FullName -Destination "$sysVolBasePath\$domName\Policies" -Recurse -Force -ErrorAction SilentlyContinue
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinition has been copied to $sysVolBasePath\$domName\Policies"
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinitions has been copied to $sysVolBasePath\$domName\Policies"
                 $result = 0
             }
             catch {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while copying $($HardenPolicyDefinition.Name)."
-                $ResMess = "Error while copying PolicyDefinition to $sysVolBasePath\$domName\Policies"
+                $ResMess = "Error while copying PolicyDefinitions to $sysVolBasePath\$domName\Policies"
                 $result = 2
             }
         }
@@ -175,7 +175,8 @@ Function New-ScheduleTasks {
         .Notes
          Version: 01.00 -- contact@hardenad.net 
          
-         history: 21.08.05 Script creation
+         history: 2021.08.05 Script creation
+
     #>
     param(
     )

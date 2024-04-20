@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>digite o nome para exibição aqui</displayName>
+  <description>digite a descrição aqui</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">Estação de trabalho do LANMAN</string>
+      <string id="Pol_CipherSuiteOrder_Name">Ordem do pacote de codificação</string>
+      <string id="Pol_CipherSuiteOrder_Help">Essa configuração de política determina o pacote de criptografia usado pelo cliente SMB.
+
+Se você habilitar essa configuração de política, os pacotes de codificação serão priorizados na ordem especificada.
+
+Se você habilitar essa configuração de política e não especificar pelo menos um pacote de criptografia com suporte, ou se você desabilitar ou não definir essa configuração de política, a ordem do pacote de codificação padrão será usada.
+
+Pacotes de criptografia SMB 3.11:
+
+AES_128_GCM
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+Pacotes de criptografia SMB 3.0 e 3.02:
+
+AES_128_CCM
+
+Como modificar essa configuração:
+
+Organize os pacotes de codificação desejados na caixa de edição, um pacote de codificação por linha, do mais ao menos preferencial, com o pacote de codificação preferencial na parte superior. Remova qualquer pacote de criptografia que você não deseja usar.
+
+Observação: ao definir esta configuração de segurança, as alterações só terão efeito depois que você reiniciar o Windows.</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">Habilitar logons de convidados não seguros</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">Essa configuração de política determina se o cliente SMB permitirá logons de convidados não seguros em um servidor SMB.
+
+Se você habilitar essa configuração de política, ou se você não definir essa configuração de política, o cliente SMB permitirá logons de convidados não seguros.
+
+Se você desabilitar essa configuração de política, o cliente SMB rejeitará logons de convidados não seguros.
+
+Logons de convidados não seguros são usados por servidores de arquivos para permitir o acesso não autenticado a pastas compartilhadas. Embora incomum em um ambiente empresarial, os logons de convidados não seguros são frequentemente usados por dispositivos de armazenamento NAS do consumidor que atuam como servidores de arquivos. Os servidores de arquivos do Windows requerem autenticação e não usam logons de convidados não seguros por padrão. Como logons de convidados não seguros não são autenticados, recursos de segurança importantes, como a Assinatura SMB e a Criptografia SMB, estão desativados. Como resultado, os clientes que permitem logons de convidados não seguros são vulneráveis a uma variedade de ataques man-in-the-middle que podem resultar em perda de dados, dados corrompidos e exposição a malware. Além disso, todos os dados gravados em um servidor de arquivos com o uso de um logon de convidado não seguro poderão ser potencialmente acessados por qualquer pessoa na rede. A Microsoft recomenda desabilitar logons de convidados não seguros e configurar os servidores de arquivos para exigir acesso autenticado.
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">Disponibilidade de Arquivos Offline em Compartilhamentos de Disponibilidade Contínua</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        Essa configuração de política determina o comportamento de Arquivos Offline em clientes que se conectam a um compartilhamento SMB onde o sinalizador CA (Disponibilidade Contínua) está habilitado.
+
+       Se você habilitar essa configuração de política, a opção "Sempre Disponível Offline" será exibida no menu do Explorador de Arquivos em um computador Windows ao se conectar a um compartilhamento habilitado para CA. A fixação de arquivos em compartilhamentos habilitados para CA usando o cache do lado do cliente também será possível.
+
+        Se você desabilitar ou não definir essa configuração de política, o Windows impedirá o uso de Arquivos Offline com compartilhamentos habilitados para CA.
+
+        Observação: a Microsoft não recomenda habilitar essa política de grupo. O uso de CA com Arquivos Offline causará tempos de transição muito longos entre os estados online e offline.
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">Cache de Identificador em Compartilhamentos de Disponibilidade Contínua</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        Essa configuração de política determina o comportamento de cache de identificador SMB para clientes que se conectam a um compartilhamento SMB onde o sinalizador CA (Disponibilidade Contínua) está habilitado.
+
+        Se você habilitar essa configuração de política, o cliente SMB permitirá identificadores armazenados em cache para arquivos em compartilhamentos CA. Isso pode melhorar o desempenho ao acessar repetidamente um grande número de arquivos de dados não estruturados em compartilhamentos CA em execução em Arquivos do Microsoft Azure.
+
+        Se você desabilitar ou não definir essa configuração de política, o Windows impedirá o uso de identificadores armazenados em cache para arquivos abertos por meio de compartilhamentos CA.
+
+        Observação: essa política não tem efeito ao se conectar a compartilhamentos de Servidor de Arquivos de Escalabilidade Horizontal fornecidos por um Windows Server. A Microsoft não recomenda habilitar essa política para clientes que se conectam rotineiramente a arquivos hospedados em um Cluster de Failover do Windows com o Servidor de Arquivos para a função Uso Geral, pois ela pode causar tempos de failover adversos e aumentar o uso de memória e CPU.
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Windows Server 2022, Windows 11 ou posterior</string>
+      <string id="Pol_EnableCompressedTraffic_Name">Usar a compactação SMB por padrão</string>
+      <string id="Pol_EnableCompressedTraffic_Help">Essa política controla se o cliente SMB usa compactação de tráfego por padrão.
+
+Se você habilitar essa configuração de política, o cliente SMB tentará compactar o tráfego por padrão quando a compactação SMB estiver habilitada.
+
+Se você desabilitar ou não definir essa configuração de política, o cliente SMB não tentará, por padrão, compactar o tráfego. No entanto, a compactação de tráfego pode ser solicitada por outros meios. Veja as observações abaixo.
+
+Observação: essa política é combinada com propriedades de identificador de arquivo por compartilhamento e por arquivo, através das quais a compactação de tráfego pode ser solicitada. Além disso, o servidor SMB deve suportar e habilitar a compactação. Por exemplo, se esta política estiver desabilitada (ou não configurada), o cliente SMB ainda poderá executar a compactação se um compartilhamento de servidor SMB tiver a compactação solicitada. Se isso for indesejado e se desejar desabilitar completamente a compactação, configure a diretiva 'Desabilitar compactação SMB' que o acompanha.
+      </string>
+      <string id="Pol_DisableCompression_Name">Desabilitar compactação SMB</string>
+      <string id="Pol_DisableCompression_Help">Esta política controla se o cliente SMB desabilitará (impedir completamente) a compactação de tráfego.
+
+Se você habilitar essa configuração de política, o cliente SMB nunca compactará dados, independentemente de outras políticas (como a política 'Usar compactação SMB por padrão' ou a propriedade por compartilhamento).
+
+Se você desabilitar ou não definir essa configuração de política, o cliente SMB poderá compactar o tráfego (dependendo de uma combinação de outras políticas e condições).
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>Pacotes de codificação:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

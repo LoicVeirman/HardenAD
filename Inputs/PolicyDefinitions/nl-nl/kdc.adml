@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>KDC-instellingen</displayName>
+  <description>Configuratie-instellingen voor het Kerberos Key Distribution Center.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">Zoekvolgorde forests gebruiken</string>
+      <string id="forestsearch_explain">Deze beleidsinstelling bepaalt de lijst met vertrouwende forests die KDC (Key Distribution Center) doorzoekt om SPN-namen om te zetten die uit twee delen bestaan.
+
+Als u deze beleidsinstelling inschakelt, doorzoekt KDC de forests in deze lijst als het niet lukt een SPN die uit twee delen bestaat in het lokale forest om te zetten. De zoekopdracht wordt uitgevoerd met een globale catalogus of hints voor naamachtervoegsels. Als er een overeenkomst wordt gevonden, stuurt KDC een verwijzingsticket voor het betreffende domein terug naar de client.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, wordt de lijst met forests niet doorzocht door KDC om de SPN om te zetten. Als KDC de SPN niet kan omzetten omdat de naam niet is gevonden, kan NTLM-verificatie worden gebruikt.
+
+Voor een consistente werking is het belangrijk dat deze beleidsinstelling wordt ondersteund op alle domeincontrollers in het domein en overal identiek is ingesteld.</string>
+      <string id="emitlili">Informatie leveren over eerdere aanmeldingspogingen bij clientcomputers</string>
+      <string id="emitlili_explain">Met deze beleidsinstelling kunt u bepalen of de domeincontroller informatie levert over eerdere aanmeldingspogingen bij clientcomputers.
+
+Als u deze beleidsinstelling inschakelt, geeft de domeincontroller informatieberichten weer over eerdere aanmeldingspogingen.
+
+Deze functie kan alleen worden gebruikt door Windows-aanmelding als de beleidsinstelling Informatie over eerdere aanmeldingspogingen weergeven tijdens het aanmelden ook is ingeschakeld (in het knooppunt Windows-aanmeldingsopties onder Windows-onderdelen).
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, levert de domeincontroller geen informatie over eerdere aanmeldingspogingen, tenzij de beleidsinstelling Informatie over eerdere aanmeldingspogingen weergeven tijdens het aanmelden is ingeschakeld.
+
+Opmerking: informatie over eerdere aanmeldingspogingen wordt alleen verstrekt als het domeinfunctionaliteitsniveau Windows Server 2008 is. In domeinen van het functieniveau Windows Server 2003, Windows 2000 (native) of Windows 2000 (gecombineerd) kunnen domeincontrollers geen informatie leveren over eerdere aanmeldingspogingen, en heeft het inschakelen van deze beleidsinstelling dus geen effect.
+
+</string>
+      <string id="CbacAndArmor">KDC-ondersteuning voor claims, samengestelde authenticatie en Kerberos-beveiliging</string>
+      <string id="CbacAndArmor_explain">Met deze beleidsinstelling kunt u een domeincontroller zo configureren dat claims en samengestelde verificatie voor dynamisch toegangsbeheer en Kerberos-beveiliging met behulp van Kerberos-authenticatie worden ondersteund.
+
+Als u deze beleidsinstelling inschakelt, maken de clientcomputers die claims en samengestelde verificatie voor dynamisch toegangsbeheer ondersteunen en geschikt zijn voor Kerberos-beveiliging, gebruik van de Kerberos-verificatieberichten. Dit beleid dient te worden toegepast op alle domeincontrollers om te zorgen voor consistente toepassing van dit beleid in het domein.
+
+ Als u deze beleidsinstelling uitschakelt of niet configureert, zal de domeincontroller geen claims, samengestelde verificatie of beveiliging ondersteunen.
+
+Als u de optie 'Niet ondersteund' configureert, ondersteunt de domeincontroller geen claims, samengestelde verificatie of beveiliging, hetgeen de standaard werking is voor domeincontrollers die worden uitgevoerd op Windows Server 2008 R2 of eerdere besturingssystemen.
+
+Opmerking: de volgende opties van dit KDC-beleid zijn pas van kracht nadat het Kerberos-groepsbeleid 'Kerberos-klantondersteuning voor claims, samengestelde verificatie en Kerberos-beveiliging' is ingeschakeld op ondersteunde systemen. Als de Kerberos-beleidsinstelling niet is ingeschakeld, worden deze functies niet gebruikt in Kerberos-verificatieberichten.
+
+Als u de optie 'Ondersteund' configureert, worden claims, samengestelde verificatie en Kerberos-beveiliging ondersteund op de domeincontroller. Vanaf de domeincontroller wordt aan de Kerberos-clientcomputers gemeld dat in het domein claims en samengestelde verificatie voor dynamisch toegangsbeheer en Kerberos-beveiliging kunnen worden verwerkt.
+
+Functionele niveauvereisten voor domein
+Als het functionele domeinniveau is ingesteld op Windows Server 2008 R2 of eerder, werken de domeincontrollers voor de opties 'Altijd claims aanleveren' en 'Onbeveiligd verificatieverzoek mislukt' alsof de optie 'Ondersteund' is ingeschakeld.
+
+Als het functionele domeinniveau is ingesteld op Windows Server 2012, meldt de domeincontroller aan de Kerberos-clientcomputers dat het domein in staat is om claims en samengestelde verificatie voor dynamisch toegangsbeheer en Kerberos-beveiliging te verwerken en:
+   - indien u de optie 'Altijd claims aanleveren' instelt, worden altijd claims voor account teruggestuurd en wordt de RFC-werking voor het melden van de flexibele verificatie secure tunneling (FAST) ondersteund.
+   - indien u de optie 'Onbeveiligd verificatieverzoek mislukt' instelt, worden onbeveiligde Kerberos-berichten geweigerd.
+
+Waarschuwing: als de optie 'Onbeveiligd verificatieverzoek mislukt' is ingesteld, zal de verificatie van de clientcomputers, die de Kerberos-beveiliging niet ondersteunen, bij de domeincontrollers mislukken.
+
+Om de effectiviteit van deze functie te kunnen garanderen, moeten voldoende domeincontrollers worden geïmplementeerd, die claims en samengestelde verificatie voor dynamisch toegangsbeheer ondersteunen en geschikt zijn voor Kerberos-beveiliging om de verificatieverzoeken te kunnen verwerken. Een onvoldoende aantal domeincontrollers die dit beleid ondersteunen, zal resulteren in mislukte verificaties wanneer dynamisch toegangsbeheer of Kerberos-beveiliging is vereist (hetgeen van toepassing is wanneer de optie 'Ondersteund' is ingeschakeld)
+
+De prestaties van de domeincontroller worden beïnvloed als deze beleidsinstelling is ingeschakeld:
+   - beveiligde Kerberos-domeinopsporing is vereist en heeft dit een extra berichtenuitwisseling tot gevolg.
+   - claims en samengestelde verificatie voor dynamisch toegangsbeheer vergroot de hoeveelheid en complexiteit van de data in een bericht, hetgeen resulteert in meer verwerkingstijd en grotere Kerberos-serviceticketafmeting.
+   - Kerberos-beveiliging voorziet in het volledig versleutelen van Kerberos-berichten en ondertekent Kerberos-fouten, hetgeen resulteert in een langere verwerkingstijd, maar verandert niet de grootte van het serviceticket.
+</string>
+      <string id="NoCbacAndArmor">Niet ondersteund</string>
+      <string id="MixModeCbacAndArmor">Ondersteund</string>
+      <string id="FullModeCbacAndArmor">Altijd claims opgeven</string>
+      <string id="FullModeCbacAndRequireArmor">Onbewapende aanvragen voor authenticatie doen mislukken</string>
+      <string id="TicketSizeThreshold">Waarschuwing voor grote Kerberos-tickets</string>
+      <string id="TicketSizeThreshold_explain">Met deze beleidsinstelling kunt configureren bij welke grootte Kerberos-tickets tijdens de Kerberos-verificatie een waarschuwing uitgeven. De waarschuwingen voor de grootte van tickets worden opgetekend in het systeemlogboek.
+
+Als u deze beleidsinstelling inschakelt, kunt u de drempelwaarde voor de Kerberos-ticket instellen, waarmee de waarschuwing wordt uitgegeven. Wanneer deze te hoog wordt ingesteld, kunnen zelfs verificaties mislukken wanneer geen waarschuwingen worden vastgelegd.  Wanneer deze te laag wordt ingesteld, worden teveel ticketwaarschuwingen in het logboek geregistreerd, om waardevol te kunnen zijn voor analyses. Deze waarde moet op dezelfde waarde ingesteld als het Kerberos-beleid "Stel de maximale buffergrootte in voor het Kerberos SSPI-contexttoken" of de kleinste MaxTokenGrootte die in uw omgeving wordt gebruikt wanneer u geen gebruikt groepsbeleid heeft geconfigureerd.
+      
+Als u deze beleidsinstelling uitschakelt of niet configureert, wordt de standaardwaarde ingesteld op 12.000 bytes. Dit is de standaard MaxTokenGrootte Kerberos voor Windows 7, Windows Server 2008 R2 en eerdere versies.
+
+</string>
+      <string id="RequestCompoundId">Samengestelde verificatie aanvragen</string>
+      <string id="RequestCompoundId_explain">Met deze beleidsinstelling kunt u een domeincontroller configureren om samengestelde authenticatie aan te vragen.
+
+Opmerking: een domeincontroller kan uitsluitend om samengestelde authenticatie vragen als de beleidsregel "KDC-ondersteuning voor claims, samengestelde authenticatie en Kerberos-beveiliging" is geconfigureerd en ingeschakeld. 
+
+Als u deze beleidsinstelling inschakelt, vragen domeincontrollers om samengestelde authenticatie. Het geretourneerde serviceticket bevat uitsluitend samengestelde authenticatie als het account daar expliciet voor is geconfigureerd. Dit beleid dient toegepast te worden op alle domeincontrollers om te zorgen voor consistente toepassing van dit beleid in het domein. 
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, retourneren domeincontrollers servicetickets met samengestelde authenticatie wanneer de client een aanvraag voor samengestelde authenticatie verzendt, ongeacht de accountconfiguratie.
+
+</string>
+      <string id="PKINITFreshness">KDC-ondersteuning voor PKInit-nieuwheidsextensie</string>
+      <string id="PKINITFreshness_explain">Ondersteuning voor de PKInit-nieuwheidextensie vereist het Windows Server 2016-functionaliteitsniveau van domein (DFL). Als het domein van de domeincontroller niet het niveau Windows Server 2016 DFL of hoger heeft, wordt dit beleid niet toegepast.
+
+Met deze beleidsinstelling kunt u een domeincontroller (DC) zo configureren dat de PKInit-nieuwheidsextensie wordt ondersteund.
+
+Als u deze beleidsinstelling inschakelt, worden de volgende opties ondersteund:
+
+Ondersteund: PKInit-nieuwheidsextensie wordt op aanvraag ondersteund. Kerberos-clients met een juiste verificatie met de PKInit-nieuwheidsextensie krijgen de nieuwe openbare sleutelidentiteit SID.
+
+Vereist: PKInit-nieuwheidsextensie is vereist voor een geslaagde verificatie. Bij Kerberos-clients die de PKInit-nieuwheidsextensie niet ondersteunen, mislukt de verificatie met openbare sleutelreferenties altijd.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, biedt de domeincontroller de PKInit-nieuwheidsextensie nooit aan en worden geldige verificatieaanvragen nooit geaccepteerd zonder te controleren op nieuwheid. Gebruikers ontvangen nooit de nieuwe openbaresleutelidentiteit SID.
+</string>
+      <string id="NoPKINITFreshness">Uitgeschakeld</string>
+      <string id="SupportPKINITFreshness">Ondersteund</string>
+      <string id="RequirePKINITFreshness">Vereist</string>
+      <string id="PKINITHashAlgorithmConfiguration">Hash-algoritmen configureren voor certificaataanmelding</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Met deze beleidsinstelling beheert u hash- of controlesomalgoritmen die door de Kerberos-client worden gebruikt bij het uitvoeren van certificaatverificatie.
+
+Als u dit beleid inschakelt, kunt u een van de vier statussen configureren voor elke algoritme:
+
+- Als u 'Standaard' kiest, wordt het algoritme ingesteld op de aanbevolen status.
+
+- Als u 'Ondersteund' kiest, wordt het gebruik van het algoritme ingeschakeld. Het inschakelen van algoritmen die standaard zijn uitgeschakeld, kan uw beveiliging verminderen.
+
+- Als u 'Gecontroleerd' kiest, wordt het algoritme gebruikt en wordt een gebeurtenis (id 309) gerapporteerd telkens wanneer deze wordt gebruikt. Deze status is bedoeld om te controleren of het algoritme niet wordt gebruikt en veilig kan worden uitgeschakeld.
+
+- Als u 'Niet ondersteund' kiest, wordt het gebruik van het algoritme uitgeschakeld. Deze status is bedoeld voor algoritmen die als onveilig worden beschouwd.
+
+Als u dit beleid uitschakelt of niet configureert, wordt voor elk algoritme de status 'Standaard' gebruikt.
+Meer informatie over de hash- en controlesomalgoritmen die worden ondersteund door de Windows Kerberos-client en de standaardstatussen vindt u op https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Gebeurtenissen gegenereerd door deze configuratie: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Standaard</string>
+      <string id="PKINITHashAlgorithm_Supported">Ondersteund</string>
+      <string id="PKINITHashAlgorithm_Audited">Gecontroleerd</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Niet ondersteund</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Modus:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Te doorzoeken forests</label>
+        </textBox>
+        <text>Syntaxis:</text>
+        <text>Voer de lijst met forests in die moet worden doorzocht als dit beleid is ingeschakeld.</text>
+        <text>Gebruik de naamgevingsindeling FQDN-naam (Fully Qualified Domain Name).</text>
+        <text>Gebruik een puntkomma ";" om zoektekst van elkaar te scheiden.</text>
+        <text>Details:</text>
+        <text>Het huidige forest hoeft niet te worden opgenomen in de lijst omdat Zoekvolgorde forests gebruiken eerst de globale catalogus gebruikt en dan zoekt in de aangegeven volgorde.</text>
+        <text>U hoeft niet alle domeinen in het forest afzonderlijk te vermelden.</text>
+        <text>Als er een vertrouwend domein in de lijst staat, worden alle domeinen in dat forest doorzocht.</text>
+        <text>U krijgt de beste prestaties als u de forests met de meeste kans op succes boven in de lijst plaatst.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Claims, samengestelde verificatie voor dynamische toegangsregeling en Kerberos-beveiligingsopties.</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Drempelwaarde van ticket</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">Opties voor PKInit-nieuwheidsextensie:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

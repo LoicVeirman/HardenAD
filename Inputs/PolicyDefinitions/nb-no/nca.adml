@@ -1,0 +1,132 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>Gruppepolicymal for innstillinger for DirectAccess-klientopplevelse</displayName>
+  <description>Denne ADMX-filen beskriver policymalen for NCA-komponenten for DirectAccess-klient.</description>
+  <resources>
+    <stringTable>
+      <string id="NCA">Innstillinger for DirectAccess-klientopplevelse</string>
+      <string id="NCA_Help">Dette er gruppepolicymal for innstillinger for DirectAccess-klientopplevelse. Les distribusjonsveiledningen for DirectAccess hvis du vil ha mer informasjon.</string>
+      <string id="SupportEmail">E-postadresse for støtte</string>
+      <string id="SupportEmail_Help">Angir e-postadressen som skal brukes til å sende loggfilene som genereres av NCA, til systemansvarlig. 
+
+Når brukeren sender loggfilene til systemansvarlig, bruker NCA standard e-postklient til å åpne en ny melding og sette inn e-postadressen for støtte i Til-feltet i meldingen. De genererte loggfilene blir lagt ved som en HTML-fil. Brukeren kan gå gjennom meldingen og legge til mer informasjon før meldingen sendes.
+
+</string>
+      <string id="FriendlyName">Egendefinert navn</string>
+      <string id="FriendlyName_Help">Angir strengen som vises for DirectAccess-tilkobling når brukeren klikker nettverksikonet i systemstatusfeltet. Du kan for eksempel angi "Tilgang til Contoso-intranett" for DirectAccess-klientene for Contoso Corporation.
+
+Hvis du ikke konfigurerer denne innstillingen, vises strengen "Firmatilkobling" for DirectAccess-tilkobling.
+
+</string>
+      <string id="ShowUI">Brukergrensesnitt</string>
+      <string id="ShowUI_Help">Angir om det vises en oppføring for DirectAccess-tilkobling når brukeren klikker nettverksikonet i systemstatusfeltet.
+
+Sett denne innstillingen til Deaktivert for å unngå brukerforvirring når du bare bruker DirectAccess til ekstern administrasjon av DirectAccess-klientdatamaskiner fra intranettet, og ikke gir sømløs tilgang til intranettet. 
+
+Hvis du ikke konfigurerer denne innstillingen, vises oppføringen for DirectAccess-tilkobling.
+
+</string>
+      <string id="PassiveMode">Passiv DirectAccess-modus</string>
+      <string id="PassiveMode_Help">Angi om NCA-tjenesten kjører i passiv modus eller ikke.
+
+Sett denne innstillingen til Deaktivert for at NCA-undersøkelse skal være aktiv hele tiden. Hvis du ikke konfigurerer denne innstillingen, er NCA-undersøkelse i aktiv modus som standard.
+
+</string>
+      <string id="LocalNamesOn">Foretrekk lokale navn tillatt</string>
+      <string id="LocalNamesOn_Help">Angir om brukeren har alternativene Koble til og Koble fra for DirectAccess-oppføringen når brukeren klikker nettverksikonet i systemstatusfeltet.
+
+Hvis brukeren klikker Koble fra, fjerner NCA DirectAccess-reglene fra navneløsningspolicytabellen (NRPT), og DirectAccess-klientdatamaskinen bruker en hvilken som helst normal navneløsning som er tilgjengelig for klientdatamaskinen i gjeldende nettverkskonfigurasjon, inkludert sending av alle DNS-spørringer til de lokale intranettserverne eller Internett DNS-serverne. Vær oppmerksom på at NCA ikke fjerner eksisterende IPsec-tunneler, og brukerne har fortsatt tilgang til intranettressurser på DirectAccess-serveren ved å bruke IPv6-adresser i stedet for navn.
+
+Muligheten til frakobling gjør det mulig for brukerne å angi ukvalifiserte ettleddsnavn (for eksempel "PRINTSVR") for lokale ressurser når de kobler til et annet intranett, og for midlertidig tilgang til intranettressurser når funksjonen for oppdaging av nettverksplassering ikke kan fastslå riktig at DirectAccess-klientdatamaskinen er koblet til sitt eget intranett.
+
+Brukeren kan klikke Koble til for å gjenopprette DirectAccess-reglene til NRPT og gjenoppta normal DirectAccess-funksjonalitet.
+
+Obs!
+Hvis DirectAccess-klientdatamaskinen er på intranettet og nettverksplasseringen er riktig fastslått, har ikke Koble fra noen virkning fordi reglene for DirectAccess allerede er fjernet fra NRPT.
+
+Hvis du ikke konfigurerer denne innstillingen, har ikke brukerne alternativene Koble fra og Koble til.
+
+</string>
+      <string id="DTEs">IPsec-tunnelendepunkt</string>
+      <string id="DTEs_Help">Angir IPv6-adressene til endepunktene for IPsec-tunnelen (Internet Protocol-sikkerhet) som aktiverer DirectAccess. Ved hjelp av disse konfigurerte tunnelendepunktene prøver NCA å få tilgang til ressursene som er angitt i innstillingen Firmaressurser. 
+
+Som standard bruker NCA den samme DirectAccess-serveren som DirectAccess-klientdatamaskinen bruker til tilkobling. I standardkonfigurasjonene for DirectAccess er det vanligvis to IPsec-tunnelendepunkt: ett for infrastrukturtunnelen og ett for intranettunnellen. Du bør konfigurere ett endepunkt for hver tunnel. 
+	  
+Hver oppføring består av teksten "PING:", etterfulgt av IPv6-adressen til IPsec-tunnelendepunktet. Eksempel: PING:2002:836b:1::836b:1
+
+Du må konfigurere denne innstillingen med full NCA-funksjonalitet.
+
+</string>
+      <string id="CorporateResources">Firmaressurser</string>
+      <string id="CorporateResources_Help">Angir intranettressurser som normalt er tilgjengelige for DirectAccess-klienter. Hver oppføring er en streng som identifiserer ressurstype og ressursplassering. 
+
+Hver streng kan være en av følgende typer:
+	 
+– Et DNS-navn eller en IPv6-adresse som NCA pinger. Syntaksen er "PING:", etterfulgt av et fullstendig kvalifisert domenenavn (FQDN) som løses til en IPv6-adresse, eller en IPv6-adresse. Eksempler: PING:myserver.corp.contoso.com eller PING:2002:836b:1::1 
+ 
+Obs!
+
+Vi anbefaler at du bruker FQDN i stedet for IPv6-adresser når dette er mulig.
+
+Viktig!
+
+Minst én av oppføringene må være en PING:-ressurs.
+
+- En URL-adresse (Uniform Resource Locator) som NCA spør etter ved hjelp av en HTTP-forespørsel (Hypertext Transfer Protocol). Innholdet på nettsiden spiller ingen rolle. Syntaksen er "HTTP:", etterfulgt av en URL-adresse. Vertsdelen av URL-adressen må løses til en IPv6-adresse for en webserver eller inneholde en IPv6-adresse. Eksempler: HTTP:http://myserver.corp.contoso.com/ eller HTTP:http://2002:836b:1::1/
+
+- En URL-bane (Universal Naming Convention) til en fil som NCA kontrollerer om finnes. Innholdet i filen spiller ingen rolle. Syntaksen er "FILE:", etterfulgt av en UNC-bane. Datamaskinnavndelen av UNC-banen må løses til en IPv6-adresse eller inneholde en IPv6-adresse. Eksempler: FILE:\\myserver\myshare\test.txt eller FILE:\\2002:836b:1::1\myshare\test.txt
+
+Du må konfigurere denne innstillingen med full NCA-funksjonalitet.
+
+</string>
+
+      <string id="CustomCommands">Egendefinerte kommandoer</string>
+      <string id="CustomCommands_Help">Angir kommandoer som systemansvarlig har konfigurert for egendefinert logging. Disse kommandoene kjører i tillegg til standard loggkommandoer.</string>
+
+    </stringTable>
+    
+    <presentationTable>
+      <presentation id="POL_08EF8AE6_3960_4852_93B5_3E068D6C2E6B">
+        <textBox refId="TXT_60660913_5491_4D50_AF96_770639FF243D">
+          <label>Feilsøkingsportal</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="SupportEmail">
+        <textBox refId="SupportEmail_Control">
+          <label>E-postadresse for støtte</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="FriendlyName">
+        <textBox refId="FriendlyName_Control">
+          <label>Egendefinert navn</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="LocalNamesOn"/>
+      <presentation id="ShowUI"/>
+      <presentation id="CorporateResources">
+        <listBox refId="CorporateResources_Control">Firmaressurser</listBox>
+      </presentation>
+      <presentation id="PortalName">
+        <textBox refId="PortalName_Control">
+          <label>Portalnavn</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="DTEs">
+        <listBox refId="DTEs_Control">DTE</listBox>
+      </presentation>
+      <presentation id="PassiveMode"/>
+      <presentation id="CoporatePortalSite">
+        <textBox refId="CoporatePortalSite_Control">
+          <label>Bedriftens portalområde – URL-adresse</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="CustomCommands">
+        <listBox refId="CustomCommands_Control">Egendefinerte kommandoer</listBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

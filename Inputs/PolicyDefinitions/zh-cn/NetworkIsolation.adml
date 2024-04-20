@@ -1,0 +1,157 @@
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>网络隔离  </displayName>
+  <description>为应用配置网络隔离选项  </description>
+  <resources>
+    <stringTable>
+      	<string id="WF_Isolation">网络隔离</string>
+		
+
+<!--Define server addresses that proxy to the Internet -->	
+	<string id="WF_NetIsolation_Domain_Proxies">应用的 Internet 代理服务器</string>  
+	<string id="WF_NetIsolation_Domain_Proxies_Help">  此设置不适用于桌面应用。
+	
+Internet 代理服务器 IP 地址的列表，以分号分隔。这些地址可按 Windows 网络隔离分类为“Internet”，并可被拥有 Internet 客户端或 Internet 客户端/服务器功能的应用访问。
+
+如果启用此策略设置，则使用代理服务器的网络上的应用无需借助专用网络功能就可以访问 Internet。但是，在大多数情况下，Windows 网络隔离都可以正确地发现代理。默认情况下，使用此设置配置的任何代理都可以与自动发现的代理合并。若要使用此策略配置允许的代理的唯一列表，则可启用“代理定义权威”设置。
+
+如果禁用或未配置此策略设置，则应用将使用 Windows 网络隔离自动发现的 Internet 代理。
+
+例如: [3efe:3022::1000];18.0.0.1;18.0.0.2 
+
+有关更多详细信息，请参见: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string> 
+
+
+<!--Define server addresses that proxy to a private network (intranet) -->	
+	<string id="WF_NetIsolation_Intranet_Proxies">应用的 Intranet 代理服务器</string>
+	<string id="WF_NetIsolation_Intranet_Proxies_Help">  此设置不适用于桌面应用。
+	
+Intranet 代理服务器 IP 地址的列表，以分号分隔。这些地址可按 Windows 网络隔离分类为“专用”，并可被拥有家庭/办公网络功能的应用访问。
+
+如果启用此策略设置，则管理员可以配置提供 Intranet 资源访问的代理集。
+
+如果禁用或未配置此策略设置，则 Windows 网络隔离尝试发现代理并将其配置为 Internet 节点。
+  
+不得将此设置用于配置 Internet 代理。
+
+例如: [3efe:3022::1000]; 18.0.0.1; 18.0.0.2
+
+有关更多详细信息，请参见: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define subnet addresses-->	
+	<string id="WF_NetIsolation_PrivateSubnet">应用的专用网络地址范围</string>
+	<string id="WF_NetIsolation_PrivateSubnet_Help"> 此设置不适用于桌面应用。
+				
+企业网络中 IP 地址范围的列表，以逗号分隔。
+
+如果启用此策略设置，可确保拥有家庭/办公网络功能的应用能适当地访问你的企业网络。仅在应用已声明家庭/办公网络功能的情况下，应用才可以访问这些地址。
+
+Windows 网络隔离尝试自动发现专用网络主机。默认情况下，使用此策略设置配置的地址通过自动发现与声明为专用的主机合并。
+
+若要确保这些地址是被归类为“专用”的唯一地址，则可启用“子网定义权威”策略设置。
+
+如果禁用或未配置此策略设置，则 Windows 网络隔离尝试自动发现专用网络端口。
+
+例如: 3efe:1092::/96,18.1.1.1/10 
+
+有关更多详细信息，请参见: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Proxy definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Proxy">代理定义权威</string>
+	<string id="WF_NetIsolation_Authoritative_Proxy_Help"> 此设置不适用于桌面应用。
+				
+在域企业环境中关闭 Windows 网络隔离的自动发现代理功能。
+
+如果启用此策略设置，则将在域企业环境中关闭 Windows 网络隔离的自动发现代理功能。仅以将组策略配置的代理作为权威。此设置对 Internet 代理和 Inranet 代理均适用。
+
+如果禁用或未配置此策略设置，则 Windows 网络隔离尝试自动发现代理服务器地址。 
+
+有关更多详细信息，请参见: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Subnet definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Subnet">子网定义权威</string>
+	<string id="WF_NetIsolation_Authoritative_Subnet_Help"> 此设置不适用于桌面应用。
+				
+在域企业环境中关闭 Windows 网络隔离的自动发现专用网络主机功能。
+
+如果启用此策略设置，则将在域企业环境中关闭 Windows 网络隔离的自动发现专用网络主机功能。只有通过组策略配置的地址范围内的网络主机能被归类为“专用”。
+
+如果禁用或未配置此策略设置，则 Windows 网络隔离尝试自动发现域企业环境中的专用网络主机。
+				
+有关更多详细信息，请参见: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+
+<!--Define cloud resources-->
+  <string id="WF_NetIsolation_EnterpriseCloudResources">托管在云中的企业资源域</string>
+  <string id="WF_NetIsolation_EnterpriseCloudResources_Help"> 此设置不适用于桌面应用。
+
+以竖线分隔的域云资源列表。也可以选择使用尾部逗号后跟代理地址的形式，将每个云资源与内部代理服务器配对。
+
+包含托管在云中的企业资源域的列表。与这些资源的连接被视为与企业网络的连接。
+
+如果代理已与云资源配对，则到云资源的流量将通过指定的代理服务器(在端口 80 上)经企业网络进行路由。用于此目的的代理服务器还必须使用 Intranet 代理服务器针对应用策略进行配置。
+
+示例: [cloudresource]|[cloudresource]|[cloudresource],[proxy]|[cloudresource]|[cloudresource],[proxy]|
+
+有关详细信息，请参阅: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define neutral resources-->
+    <string id="WF_NetIsolation_NeutralResources">按工作和个人分类的域</string>
+    <string id="WF_NetIsolation_NeutralResources_Help"> 此设置不适用于桌面应用。
+
+以逗号分隔的域名列表，这些域名可用作工作或个人资源。
+
+有关详细信息，请参阅: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+    </stringTable>
+ 
+ <!--Start of Presentation Table-->	
+ 
+ <presentationTable>
+
+	<presentation id="WF_NetIsolation_Domain_Proxies">
+        <textBox refId="WF_NetIsolation_Domain_ProxiesBox">
+          <label>域代理  </label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_Intranet_Proxies">
+        <textBox refId="WF_NetIsolation_Intranet_ProxiesBox">
+          <label>键入 Intranet 的代理服务器 IP 地址</label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_PrivateSubnet">
+        <textBox refId="WF_NetIsolation_PrivateSubnetBox">
+          <label>专用子网  </label>
+        </textBox>
+      </presentation>
+
+  <presentation id="WF_NetIsolation_Authoritative_Proxies">
+      </presentation>
+	
+	<presentation id="WF_NetIsolation_Authoritative_Subnets">
+      </presentation>
+
+   <presentation id="WF_NetIsolation_EnterpriseCloudResources">
+     <textBox refId="WF_NetIsolation_EnterpriseCloudResourcesBox">
+       <label>企业云资源 </label>
+     </textBox>
+   </presentation>
+
+   <presentation id="WF_NetIsolation_NeutralResources">
+     <textBox refId="WF_NetIsolation_NeutralResourcesBox">
+       <label>中性资源 </label>
+     </textBox>
+   </presentation>
+
+ </presentationTable>
+
+  </resources>
+</policyDefinitionResources>

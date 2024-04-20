@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>skriv inn visningsnavn her</displayName>
+  <description>skriv inn beskrivelse her</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Reduksjonsalternativer</string>
+      <string id="Font_List">Uklarert skriftblokkering</string>
+      <string id="Font_List_Help">Denne sikkerhetsfunksjonen formidler en global innstilling for å hindre at programmer laster uklarerte skrifter. Uklarerte skrifter er alle typer skrifter som installeres utenfor %windir%\Fonts-mappen. Denne funksjonen kan konfigureres til å fungere i 3 moduser: På, Av og Overvåk. Som standard er Av valgt slik at ingen skrifter er blokkert. Hvis du ikke er klar til å bruke denne funksjonen i organisasjonen, kan du kjøre den i overvåkingsmodus for å se om blokkering av uklarerte skrifter fører til ustabilitet eller kompatibilitetsproblemer.</string>
+      <string id="FontMitigation_On">Blokker uklarerte skrifter og logg hendelser</string>
+      <string id="FontMitigation_Off">Ikke blokker uklarerte skrifter</string>
+      <string id="FontMitigation_Audit">Logg hendelser uten å blokkere uklarerte skrifter</string>
+
+	  <string id="ProcessMitigationOptions_List">Behandle reduksjonsalternativer</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Med denne sikkerhetsfunksjonen kan man overstyre individuelle MitigationOptions-prosessinnstillinger. Dette kan brukes til å håndheve en rekke sikkerhetspolicyer som er spesifikke for apper. Appnavnet er oppgitt som verdinavn pluss filtype. Verdien er oppgitt som et bitfelt med en rekke flagg i bestemte posisjoner. Biter kan settes til enten 0 (innstillingen fjernes), 1 (innstillingen fremtvinges) eller ? (innstillingen beholder sin eksisterende verdi før GPO-evaluering). Følgende bitplasseringer er gyldige:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        Aktiverer datakjøringsforhindring (DEP) for den underordnede prosessen.
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        Aktiverer thunk-emulering for DEP-ATL for den underordnede prosessen. Thunk-emulering for DEP-ATL fører til at systemet fanger opp NX-feil som stammer fra thunk-laget for Active Template Library (ATL).
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        Aktiverer SEHOP (Structured Exception Handler Overwrite Protection) for den underordnede prosessen. SEHOP blokkerer utnyttelser som bruker overskrivingsteknikken SEH (Structured Exception Handler).
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        Fremtvingningspolicyen ASLR (Address Space Layout Randomization) oppretter en ny basis for avbildninger som ikke er kompatible med den dynamiske basisen, ved å late som om en avbildningsbasiskollisjon oppstod ved innlasting. Hvis det kreves omplasseringer, lastes ikke avbildninger som ikke har en del for basisomplassering.
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        Nedenfra-og-opp-randomiseringspolicyen, som omfatter alternativer for stakkrandomisering, gjør at en tilfeldig plassering brukes som laveste brukeradresse.
+
+        Hvis du for eksempel vil aktivere PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE og PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON, deaktiverer du PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF. Og hvis du vil beholde standardverdiene for alle andre alternativer, oppgir du verdien
+        ???????????????0???????1???????1
+
+        Settes flagg som ikke er oppgitt her, til en annen verdi enn ?, resulterer dette i udefinert atferd.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">Aktiver synkronisering av AD-/DFS-domenekontroller under oppdatering av policy</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">Hvis du aktiverer denne innstillingen, vil gruppepolicyklienten koble til den samme domenekontrolleren for DFS-delinger som den som brukes for Active Directory.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">Deaktiver AOAC-optimalisering av tjenesten Group Policy Client</string>
+      <string id="DisableAOACProcessing_Help">Denne policyinnstillingen forhindrer at tjenesten for gruppepolicyklient stopper når den er inaktiv.
+
+
+
+</string>
+      <string id="EnableCDP">Fortsett opplevelser på denne enheten</string>
+      <string id="EnableCDP_Help">
+Denne policyinnstillingen angir om Windows-enheten har tillatelse til å delta i opplevelser på tvers av enheter (kontinuerlige opplevelser).
+
+Hvis du aktiverer denne policyinnstillingen, er Windows-enheten synlig for andre Windows-enheter som tilhører samme bruker, og den kan delta i opplevelser på tvers av enheter.
+
+Hvis du deaktiverer denne policyinnstillingen, kan ikke Windows-enheten oppdages av andre enheter, og den kan dermed ikke delta i opplevelser på tvers av enheter.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, avhenger standardvirkemåten av Windows-versjonen. Endringer i policyen trer i kraft ved omstart.
+      </string>
+      <string id="EnableMMX">Kobling av telefon og PC på denne enheten</string>
+      <string id="EnableMMX_Help">
+Ved hjelp av denne policyen kan IT-administratorer deaktivere muligheten til å koble en telefon med en PC for å fortsette å lese, bruke e-post og gjøre andre ting som krever kobling mellom telefon og PC.
+
+Hvis du aktiverer denne policyinnstillingen, kan Windows-enheten bruke funksjoner for kobling av telefon og PC samt delta i Fortsett på PC-opplevelser.
+
+Hvis du deaktiverer denne policyinnstillingen, kan Windows-enheten ikke kobles med telefoner og kan ikke delta i Fortsett på PC-opplevelser. I tillegg fjernes den fra enhetslisten på alle koblede telefoner.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, avhenger standard virkemåte av Windows-utgaven. Endringer i denne policyen trer i kraft etter omstart.
+      </string>
+      <string id="EnableAppUriHandlers">Konfigurere web til app-kobling med URI-behandlingsprogrammer for appen</string>
+      <string id="EnableAppUriHandlers_Help">
+Denne policyinnstillingen fastslår om Windows har støtte for web til app-kobling med URI-behandlingsprogrammer for appen.
+
+Hvis du aktiverer denne policyinnstillingen, aktiveres web til app-kobling, slik at apper kan startes med en http(s)-URI.
+
+Hvis du deaktiverer denne policyen, deaktiveres web til app-kobling og http(s)-URI-er åpnes i standard nettleser i stedet for å starte den tilknyttede appen.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, avhenger standardvirkemåten av Windows-versjonen. Endringer i policyen trer i kraft ved omstart.
+      </string>
+      <string id="Fonts">Skrifter</string>
+      <string id="EnableFontProviders">Aktiver skriftleverandører</string>
+      <string id="EnableFontProviders_Help">
+        Denne policyinnstillingen bestemmer om Windows kan laste ned skrifter og skriftkatalogdata fra en skriftleverandør på nettet.
+
+        Hvis du aktiverer denne policyinnstillingen, sender Windows periodevise forespørsler til en skriftleverandør på nettet for å finne ut om en ny skriftkatalog er tilgjengelig. Windows kan også laste ned skriftdata etter behov for å formatere eller gjengi tekst.
+
+        Hvis du deaktiverer denne policyinnstillingen, kobles ikke Windows til noen skriftleverandør på nettet, men bruker bare skrifttyper som er installert lokalt.
+
+        Hvis du ikke konfigurerer denne policyinnstillingen, avhenger standard virkemåte av Windows-utgaven. Endringer i denne policyen trer i kraft etter omstart.
+      </string>
+      <string id="EnableLogonOptimization">Konfigurere hurtigbufring av Gruppepolicy</string>
+      <string id="EnableLogonOptimization_Help">
+        Ved hjelp av denne policyinnstillingen kan du konfigurere virkemåten for hurtigbufring av Gruppepolicy.
+
+        Hvis du aktiverer eller ikke konfigurerer denne policyinnstillingen, hurtigbufrer Gruppepolicy policyinformasjon etter hver økt som kjører i bakgrunnen. Denne hurtigbufferen lagrer aktuelle GPO-er og innstillingene i dem. Når Gruppepolicy kjører i synkron forgrunnsmodus, refererer Gruppepolicy til denne hurtigbufferen, som gjør at den kjører raskere. Når hurtigbufferen leses, forsøker Gruppepolicy å kontakte en domenekontroller for pålogging for å fastslå koblingshastigheten. Når Gruppepolicy kjører i bakgrunnsmodus eller asynkron forgrunnsmodus, fortsetter Gruppepolicy å laste ned den nyeste versjonen av policyinformasjonen, og en båndbreddeberegning brukes til å fastslå langsomme koblingsterskler. (Se policyinnstillingen Konfigurer gjenkjenning av langsom gruppepolicytilkobling for å konfigurere asynkron forgrunnsvirkemåte.)
+
+        Verdien for den langsomme koblingen som er definert i denne policyinnstillingen, fastslår hvor lenge Gruppepolicy venter på svar fra domenekontrolleren før koblingshastigheten rapporteres som langsom. Standardverdien er 500 millisekunder.
+
+        Tidsavbruddsverdien som er definert i denne policyinnstillingen, fastslår hvor lenge Gruppepolicy venter på svar fra domenekontrolleren før det fastslås at ingen nettverkstilkobling eksisterer. Dette stopper kjøringen av gjeldende gruppepolicy. Gruppepolicy kjører i bakgrunnen neste gang det opprettes en tilkobling til en domenekontroller. Hvis du oppgir en for høy verdi, kan det føre til lengre ventetid for brukeren ved oppstart eller pålogging. Standardverdien er 5000 millisekunder.
+
+        Hvis du deaktiverer denne policyinnstillingen, hurtigbufrer ikke Gruppepolicy-klienten aktuelle GPO-er eller innstillinger i GPO-ene. Når Gruppepolicy kjører synkront, lastes den nyeste versjonen av policyen ned fra nettverket, og båndbreddeberegninger brukes til å fastslå langsomme koblingsterskler. (Se policyinnstillingen Konfigurer gjenkjenning av langsom gruppepolicytilkobling for å konfigurere asynkron forgrunnsvirkemåte.)
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">Aktiver hurtigbufring av gruppepolicy for servere</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        Du kan bruke denne gruppepolicyen til å konfigurere virkemåten til hurtigbufring av gruppepolicy på Windows Server-datamaskiner.
+        Hvis du aktiverer denne policyinnstillingen, hurtigbufrer gruppepolicy policyinformasjon etter hver økt som kjører i bakgrunnen. Denne hurtigbufferen lagrer aktuelle GPOer og innstillingene i dem. Når Gruppepolicy kjører i synkront forgrunnsmodus, refererer Gruppepolicy til denne hurtigbufferen, noe som gjør at den kjører raskere. Når hurtigbufferen leses, forsøker Gruppepolicy å kontakte en domenekontroller for pålogging for å fastslå koblingshastigheten. Når Gruppepolicy kjører i bakgrunnsmodus eller asynkront forgrunnsmodus, fortsetter Gruppepolicy å laste ned den nyeste versjonen av policyinformasjonen, og en båndbreddeberegning brukes til å fastslå langsomme koblingsterskler. (Se policyinnstillingen Konfigurer gjenkjenning av langsom gruppepolicytilkobling for å konfigurere asynkron forgrunnsvirkemåte.)
+        Verdien for den langsomme koblingen som er definert i denne policyinnstillingen, fastslår hvor lenge Gruppepolicy venter på svar fra domenekontrolleren før koblingshastigheten rapporteres som langsom. Standardverdien er 500 millisekunder.
+        Tidsavbruddsverdien som er definert i denne policyinnstillingen, fastslår hvor lenge Gruppepolicy venter på svar fra domenekontrolleren før det fastslås at ingen nettverkstilkobling eksisterer. Dette stopper kjøringen av gjeldende gruppepolicy. Gruppepolicy kjører i bakgrunnen neste gang det opprettes en tilkobling til en domenekontroller. Hvis du angir en for høy verdi, kan det føre til lengre ventetid for brukeren ved oppstart eller pålogging. Standardverdien er 5 000 millisekunder.
+        Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, hurtigbufrer ikke Gruppepolicy-klienten aktuelle GPOer eller innstillinger i GPOene. Når Gruppepolicy kjører synkront, lastes den nyeste versjonen av policyen ned fra nettverket, og båndbreddeberegninger brukes til å fastslå langsomme koblingsterskler. (Se policyinnstillingen Konfigurer gjenkjenning av langsom gruppepolicytilkobling for å konfigurere asynkron forgrunnsvirkemåte.)
+      
+      </string>
+
+      <string id="LogonScriptDelay">Konfigurere forsinkelse for påloggingsskript</string>
+      <string id="LogonScriptDelay_Help">
+        Oppgi 0 for å deaktivere forsinkelse for påloggingsskript.
+
+        Ved hjelp av denne policyinnstillingen kan du konfigurere hvor lenge Gruppepolicy-klienten skal vente etter pålogging før skript kjøres.
+
+        Gruppepolicy-klienten venter som standard i fem minutter før påloggingsskript kjøres. Dette bidrar til å skape et responsivt skrivebordsmiljø ved å hindre diskkonflikt.
+
+        Hvis du aktiverer denne policyinnstillingen, venter Gruppepolicy den oppgitte tiden før påloggingsskript kjøres.
+
+        Hvis du deaktiverer denne policyinnstillingen, kjører Gruppepolicy skript umiddelbart etter pålogging.
+
+        Hvis du ikke konfigurerer denne policyinnstillingen, venter Gruppepolicy i fem minutter før påloggingsskript kjøres.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">Konfigurer Direct Access-tilkoblinger som en hurtig nettverkstilkobling</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">Ved hjelp av denne policyinnstillingen kan en administrator definere at Direct Access-tilkoblingen skal regnes som en hurtig nettverkstilkobling for bruk og oppdatering av Gruppepolicy.
+
+Når Gruppepolicy registrerer båndbreddehastigheten til en Direct Access-tilkobling, kan det hende at dette ikke gir informasjon om båndbreddehastigheten. Hvis Gruppepolicy registrerer en båndbreddehastighet, vil de vanlige reglene følges for å fastslå om Direct Access-tilkoblingen er en hurtig eller langsom nettverkstilkobling. Hvis det ikke blir registrert noen båndbreddehastighet, bruker Gruppepolicy som standard en langsom nettverkstilkobling. Denne policyinnstillingen gir administratoren mulighet til å overstyre standardverdien langsom nettverkstilkobling og i stedet sette som standard at det skal brukes en hurtig nettverkstilkobling dersom båndbreddehastighet ikke er fastslått for nettverket.
+
+Obs! Hvis Gruppepolicy registrerer en langsom nettverkstilkobling, vil Gruppepolicy bare behandle de klientsideutvidelsene som er konfigurert for behandling over en langsom kobling (langsom nettverkstilkobling).
+
+Hvis du aktiverer denne policyinnstillingen, vil Gruppepolicy regne nettverkstilkoblingen som en hurtig kobling og behandle alle klientsideutvidelsene hvis Gruppepolicy ikke kan fastslå båndbreddehastigheten via Direct Access.
+
+Hvis du deaktiverer denne innstillingen eller ikke konfigurerer den, vil Gruppepolicy regne nettverkstilkoblingen som en langsom kobling og bare behandle de klientsideutvidelsene som er konfigurert for behandling over en langsom kobling.
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">Endre gruppepolicybehandling til å kjøre asynkront når det blir oppdaget en langsom nettverkstilkobling.</string>
+      <string id="SlowlinkDefaultToAsync_Help">Denne policyen angir at gruppepolicybehandling skal hoppe over behandling av alle klientsideutvidelser som krever synkron behandling (det vil si at datamaskiner venter til nettverket er fullstendig initialisert ved oppstart og brukerpålogging) når en langsom nettverkstilkobling registreres.
+
+Hvis du aktiverer denne policyinnstillingen, vil gruppepolicybehandling alltid kjøres asynkront når det registreres en langsom nettverksforbindelse.
+Klientdatamaskiner vil ikke vente til nettverket er fullstendig initialisert ved oppstart og pålogging. Eksisterende brukere blir logget på ved hjelp av hurtigbufret legitimasjon,
+noe som vil føre til raskere pålogging. Gruppepolicyen brukes i bakgrunnen når nettverket blir tilgjengelig.
+Vær oppmerksom på at siden dette er en bakgrunnsoppdatering, vil ikke utvidelser som krever synkron behandling, for eksempel programvareinstallasjon, mappeomadressering
+og preferanseutvidelse for stasjonskart, tre i kraft.
+
+Obs! Det er to forhold som vil føre til at gruppepolicyen blir behandlet synkront selv om denne policyinnstillingen er aktivert:
+1. Ved første oppstart av datamaskinen etter at klientdatamaskinen har blitt tilknyttet domenet.
+2. Hvis policyinnstillingen Vent alltid på nettverket ved datamaskinoppstart og pålogging er aktivert.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, vil registrering av en langsom nettverkstilkobling ikke påvirke om gruppepolicybehandlingen blir synkron eller asynkron.
+
+      </string>
+      <string id="DisableLGPOProcessing">Deaktiver behandling av lokale gruppepolicyobjekter</string>
+      <string id="DisableLGPOProcessing_Help">Denne policyinnstillingen forhindrer bruk av lokale gruppepolicyobjekter.
+
+Som standard brukes policyinnstillingene i lokale gruppepolicyobjekter før eventuelle domenebaserte gruppepolicyobjekter. Disse policyinnstillingene kan gjelde både for brukere og den lokale datamaskinen. Du kan deaktivere behandling og bruk av alle lokale gruppepolicyobjekter for å sikre at bare domenebaserte gruppepolicyobjekter brukes.
+
+Hvis du aktiverer denne policyinnstillingen, vil ikke systemet behandle og bruke lokale gruppepolicyobjekter.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, blir lokale gruppepolicyobjekter fortsatt brukt.
+
+Obs!  For datamaskiner som er tilknyttet et domene, anbefaler vi at du bare konfigurerer denne policyinnstillingen i domenebaserte gruppepolicyobjekter. Policyinnstillingen ignoreres på datamaskiner som er tilknyttet en arbeidsgruppe.
+
+</string>
+      <string id="SyncWaitTime">Angi ventetid for behandling av oppstartspolicy</string>
+      <string id="SyncWaitTime_Help">Denne policyinnstillingen angir hvor lenge gruppepolicyen skal vente på meldinger om nettverkstilgjengelighet ved behandling av oppstartspolicy. Hvis behandlingen av oppstartspolicy er synkron, er datamaskinen blokkert inntil nettverket er tilgjengelig eller standardventetiden er nådd. Hvis behandlingen av oppstartspolicy er asynkron, er ikke datamaskinen blokkert, og policybehandlingen foregår i bakgrunnen. I begge tilfeller overstyrer konfigureringen av denne policyinnstillingen eventuelle systemberegnede ventetider.
+
+Hvis du aktiverer denne policyinnstillingen, bruker gruppepolicyen denne administrativt konfigurerte maksimumsventetiden og overstyrer en eventuell standardventetid eller systemberegnet ventetid.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, bruker gruppepolicyen standardventetiden på 30 sekunder på datamaskiner som kjører operativsystemet Windows Vista. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Tillat krysskogbrukerpolicy og sentrale brukerprofiler</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">Denne policyinnstillingen tillater brukerbasert policybehandling, sentrale brukerprofiler og påloggingsskript for brukerobjekt for interaktive krysskogpålogginger.
+
+Denne policyinnstillingen påvirker alle brukerkontoer som logges interaktivt på en datamaskin i en annen skog når en krysskogklarering eller toveis skogklarering finnes.
+
+Hvis du ikke konfigurerer denne policyinnstillingen:
+– Ingen brukerbaserte policyinnstillinger fra brukerens skog blir brukt.
+- Brukerne mottar ikke sentrale profiler. De mottar en lokal profil på datamaskinen fra den lokale skogen. Brukeren ser en varselsmelding, og en hendelsesloggmelding (1529) blir lagt inn.
+- Gruppepolicybehandlingen blir tilbakekoblet ved hjelp av gruppepolicyobjekter som omfattes av datamaskinen.
+- Det blir lagt inn en hendelsesloggmelding (1109) som angir at tilbakekobling ble startet i erstatningsmodus.
+
+Hvis du aktiverer denne policyinnstillingen, er virkemåten nøyaktig lik den i Windows 2000: Brukerpolicy brukes, og en sentral brukerprofil tillates fra den klarerte skogen.
+
+Hvis du deaktiverer denne policyinnstillingen, er virkemåten den samme som når du ikke konfigurerer den.</string>
+      <string id="CSE_AppMgmt">Konfigurer behandling av policy for programvareinstallasjon</string>
+      <string id="CSE_AppMgmt_Help">Denne policyinnstillingen angir når policyer for programvareinstallasjon oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger som bruker komponenten for programvareinstallasjon i gruppepolicyen, for eksempel policyinnstillinger i Programvareinnstillinger\Programvareinstallasjon. Du kan bare angi policyer for programvareinstallasjon for gruppepolicyobjekter som er lagret i Active Directory, og ikke for gruppepolicyobjekter på den lokale datamaskinen.
+
+Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte policyen for programvareinstallasjon, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene. Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, har den ingen innvirkning på systemet.
+
+Alternativet Tillat behandling over en langsom nettverkstilkobling oppdaterer policyene selv når oppdateringen overføres over en langsom nettverkstilkobling, for eksempel en telefonlinje. Oppdateringer over langsomme tilkoblinger kan forårsake betydelige forsinkelser.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyinnstillinger, for eksempel for å gjenopprette en policy hvis en bruker har endret den.</string>
+      <string id="CSE_DiskQuota">Konfigurer behandling av diskkvotepolicy</string>
+      <string id="CSE_DiskQuota_Help">Denne policyinnstillingen angir når diskkvotepolicyer oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger som bruker diskkvotekomponenten i gruppepolicyen, for eksempel policyinnstillinger i Datamaskinkonfigurasjon\Administrative maler\System\Diskkvoter.
+
+Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte diskkvotepolicyen, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene. Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, har den ingen innvirkning på systemet.
+
+Alternativet Tillat behandling over en langsom nettverkstilkobling oppdaterer policyene selv når oppdateringen overføres over en langsom nettverkstilkobling, for eksempel en telefonlinje. Oppdateringer over langsomme tilkoblinger kan forårsake betydelige forsinkelser.
+
+Alternativet Ikke aktiver under periodisk bakgrunnsbehandling hindrer at systemet oppdaterer berørte policyer i bakgrunnen mens datamaskinen er i bruk. Når bakgrunnsoppdateringer er deaktivert, trer ikke policyendringer i kraft før ved neste brukerpålogging eller omstart av systemet.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyer, for eksempel for å gjenopprette en policyinnstilling hvis en bruker har endret den.</string>
+      <string id="CSE_EFSRecovery">Konfigurer behandling av EFS-gjenopprettingspolicy</string>
+      <string id="CSE_EFSRecovery_Help">Denne policyinnstillingen angir når krypteringspolicyer oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger som bruker krypteringskomponenten i gruppepolicyen, for eksempel policyinnstillinger i Windows-innstillinger\Sikkerhetsinnstillinger.
+
+Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte krypteringspolicyen, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene. Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, har den ingen innvirkning på systemet.
+
+Alternativet Tillat behandling over en langsom nettverkstilkobling oppdaterer policyene selv når oppdateringen overføres over en langsom nettverkstilkobling, for eksempel en telefonlinje. Oppdateringer over langsomme tilkoblinger kan forårsake betydelige forsinkelser.
+
+Alternativet Ikke aktiver under periodisk bakgrunnsbehandling hindrer at systemet oppdaterer berørte policyer i bakgrunnen mens datamaskinen er i bruk. Når bakgrunnsoppdateringer er deaktivert, trer ikke policyendringer i kraft før ved neste brukerpålogging eller omstart av systemet.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyer, for eksempel for å gjenopprette en policyinnstilling hvis en bruker har endret den.</string>
+      <string id="CSE_FolderRedirection">Konfigurer behandling av policy for mappeomadressering</string>
+      <string id="CSE_FolderRedirection_Help">Denne policyinnstillingen angir når policyer for mappeomadressering oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger som bruker komponenten for mappeomadressering i gruppepolicyen, for eksempel policyinnstillinger i Windows-innstillinger\Mappeomadressering. Du kan bare angi policyer for mappeomadressering for gruppepolicyobjekter som er lagret i Active Directory, og ikke for gruppepolicyobjekter på den lokale datamaskinen.
+
+Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte policyen for mappeomadressering, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene. Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, har den ingen innvirkning på systemet.
+
+Alternativet Tillat behandling over en langsom nettverkstilkobling oppdaterer policyene selv når oppdateringen overføres over en langsom nettverkstilkobling, for eksempel en telefonlinje. Oppdateringer over langsomme tilkoblinger kan forårsake betydelige forsinkelser.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyer, for eksempel for å gjenopprette en policyinnstilling hvis en bruker har endret den.</string>
+      <string id="CSE_IEM">Konfigurer behandling av vedlikeholdspolicy for Internet Explorer</string>
+      <string id="CSE_IEM_Help">Denne policyinnstillingen angir når vedlikeholdspolicyer for Internet Explorer oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger som bruker vedlikeholdskomponenten for Internet Explorer i gruppepolicyen, for eksempel policyinnstillinger i Windows-innstillinger\Vedlikehold av Internet Explorer.
+
+Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte vedlikeholdspolicyen for Internet Explorer, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene. Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, har den ingen innvirkning på systemet.
+
+Alternativet Tillat behandling over en langsom nettverkstilkobling oppdaterer policyene selv når oppdateringen overføres over en langsom nettverkstilkobling, for eksempel en telefonlinje. Oppdateringer over langsomme tilkoblinger kan forårsake betydelige forsinkelser.
+
+Alternativet Ikke aktiver under periodisk bakgrunnsbehandling hindrer at systemet oppdaterer berørte policyer i bakgrunnen mens datamaskinen er i bruk. Når bakgrunnsoppdateringer er deaktivert, trer ikke policyendringer i kraft før ved neste brukerpålogging eller omstart av systemet.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyer, for eksempel for å gjenopprette en policyinnstilling hvis en bruker har endret den.</string>
+      <string id="CSE_IPSecurity">Konfigurer behandling av IP-sikkerhetspolicy</string>
+      <string id="CSE_IPSecurity_Help">Denne policyinnstillingen angir når IP-sikkerhetspolicyer oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger som bruker IP-sikkerhetskomponenten i gruppepolicyen, for eksempel policyinnstillinger i Datamaskinkonfigurasjon\Windows-innstillinger\Sikkerhetsinnstillinger\IP-sikkerhetspolicyer på Lokal maskin.
+
+Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte IP-sikkerhetspolicyen, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene. Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, har den ingen innvirkning på systemet.
+
+Alternativet Tillat behandling over en langsom nettverkstilkobling oppdaterer policyene selv når oppdateringen overføres over en langsom nettverkstilkobling, for eksempel en telefonlinje. Oppdateringer over langsomme tilkoblinger kan forårsake betydelige forsinkelser.
+
+Alternativet Ikke aktiver under periodisk bakgrunnsbehandling hindrer at systemet oppdaterer berørte policyer i bakgrunnen mens datamaskinen er i bruk. Når bakgrunnsoppdateringer er deaktivert, trer ikke policyendringer i kraft før ved neste brukerpålogging eller omstart av systemet.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyer, for eksempel for å gjenopprette en policyinnstilling hvis en bruker har endret den.</string>
+      <string id="CSE_Registry">Konfigurer behandling av registerpolicy</string>
+      <string id="CSE_Registry_Help">Denne policyinnstillingen angir når registerpolicyer oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger i Administrative maler-mappen og andre policyinnstillinger som lagrer verdier i registret. Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte registerpolicyen, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene. Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, har den ingen innvirkning på systemet.
+
+Alternativet Ikke aktiver under periodisk bakgrunnsbehandling hindrer at systemet oppdaterer berørte policyer i bakgrunnen mens datamaskinen er i bruk. Når bakgrunnsoppdateringer er deaktivert, trer ikke policyendringer i kraft før ved neste brukerpålogging eller omstart av systemet.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyer, for eksempel for å gjenopprette en policyinnstilling hvis en bruker har endret den.</string>
+      <string id="CSE_Scripts">Konfigurer behandling av skriptpolicy</string>
+      <string id="CSE_Scripts_Help">Denne policyinnstillingen angir når policyer som tilordner delte skript, oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger som bruker skriptkomponenten i gruppepolicyen, for eksempel policyinnstillinger i Windows-innstillinger\Skript. Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte skriptpolicyen, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene. Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, har den ingen innvirkning på systemet.
+
+Alternativet Tillat behandling over en langsom nettverkstilkobling oppdaterer policyene selv når oppdateringen overføres over en langsom nettverkstilkobling, for eksempel en telefonlinje. Oppdateringer over langsomme tilkoblinger kan forårsake betydelige forsinkelser.
+
+Alternativet Ikke aktiver under periodisk bakgrunnsbehandling hindrer at systemet oppdaterer berørte policyer i bakgrunnen mens datamaskinen er i bruk. Når bakgrunnsoppdateringer er deaktivert, trer ikke policyendringer i kraft før ved neste brukerpålogging eller omstart av systemet.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyer, for eksempel for å gjenopprette en policyinnstilling hvis en bruker har endret den.</string>
+      <string id="CSE_Security">Konfigurer behandling av sikkerhetspolicy</string>
+      <string id="CSE_Security_Help">Denne policyinnstillingen angir når sikkerhetspolicyer oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger som bruker sikkerhetskomponenten i gruppepolicyen, for eksempel policyinnstillinger i Windows-innstillinger\Sikkerhetsinnstillinger.
+
+Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte sikkerhetspolicyen, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene. Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, har den ingen innvirkning på systemet.
+
+Alternativet Ikke aktiver under periodisk bakgrunnsbehandling hindrer at systemet oppdaterer berørte policyer i bakgrunnen mens datamaskinen er i bruk. Når bakgrunnsoppdateringer er deaktivert, trer ikke policyendringer i kraft før ved neste brukerpålogging eller omstart av systemet.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyer, for eksempel for å gjenopprette en policyinnstilling hvis en bruker har endret den.</string>
+      <string id="CSE_Wireless">Konfigurer behandling av trådløs policy</string>
+      <string id="CSE_Wireless_Help">Denne policyinnstillingen angir når policyer som tilordner innstillinger for trådløse nettverk, oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger som bruker komponenten for trådløse nettverk i gruppepolicyen, for eksempel policyinnstillinger i Windows-innstillinger\Policyer for trådløse nettverk.
+
+Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte det trådløse nettverket, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, har den ingen innvirkning på systemet.
+
+Alternativet Tillat behandling over en langsom nettverkstilkobling oppdaterer policyene selv når oppdateringen overføres over en langsom nettverkstilkobling, for eksempel en telefonlinje. Oppdateringer over langsomme tilkoblinger kan forårsake betydelige forsinkelser.
+
+Alternativet Ikke aktiver under periodisk bakgrunnsbehandling hindrer at systemet oppdaterer berørte policyer i bakgrunnen mens datamaskinen er i bruk. Når bakgrunnsoppdateringer er deaktivert, trer ikke policyendringer i kraft før ved neste brukerpålogging eller omstart av systemet.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyer, for eksempel for å gjenopprette en policyinnstilling hvis en bruker har endret den.</string>
+      <string id="CSE_Wired">Konfigurer behandling av policy for kabelbaserte nettverk</string>
+      <string id="CSE_Wired_Help">Denne policyinnstillingen angir når policyer som tilordner innstillinger for kabelbaserte nettverk, oppdateres.
+
+Denne policyinnstillingen påvirker alle policyinnstillinger som bruker komponenten for kabelbaserte nettverk i gruppepolicyen, for eksempel policyinnstillinger i Windows-innstillinger\Policyer for kabelbaserte nettverk.
+
+Policyinnstillingen overstyrer egendefinerte innstillinger som programmet som implementerte det kabelbaserte nettverket, angav da det ble installert.
+
+Hvis du aktiverer denne policyinnstillingen, kan du bruke avmerkingsboksene til å endre alternativene.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, har den ingen innvirkning på systemet.
+
+Alternativet Tillat behandling over en langsom nettverkstilkobling oppdaterer policyene selv når oppdateringen overføres over en langsom nettverkstilkobling, for eksempel en telefonlinje. Oppdateringer over langsomme tilkoblinger kan forårsake betydelige forsinkelser.
+
+Alternativet Ikke aktiver under periodisk bakgrunnsbehandling hindrer at systemet oppdaterer berørte policyer i bakgrunnen mens datamaskinen er i bruk. Når bakgrunnsoppdateringer er deaktivert, trer ikke policyendringer i kraft før ved neste brukerpålogging eller omstart av systemet.
+
+Alternativet Utfør selv om gruppepolicyobjekter ikke er endret oppdaterer policyene og bruker dem på nytt selv om de ikke er endret. Mange policyoppsett angir at de bare skal oppdateres når de er endret. Du vil imidlertid kanskje også oppdatere uendrede policyer, for eksempel for å gjenopprette en policyinnstilling hvis en bruker har endret den.</string>
+
+      <string id="DenyRsopToInteractiveUser">Angi om interaktive brukere skal kunne generere data fra resulterende policysett</string>
+      <string id="DenyRsopToInteractiveUser_Help">Denne policyinnstillingen angir om brukerne kan vise egne data fra resulterende policysett (RSoP).
+
+Som standard kan brukere som er logget på interaktivt, vise egne data fra resulterende policysett (RSoP).
+
+Hvis du aktiverer denne policyinnstillingen, kan ikke interaktive brukere generere RSoP-data.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, kan interaktive brukere generere RSoP-data.
+
+Obs!  Denne policyinnstillingen har ingen betydning for administratorer. Administratorer kan som standard vise RSoP-data selv om du deaktiverer policyinnstillingen eller ikke konfigurerer den.
+
+Obs!  Hvis du vil vise RSoP-data på en klientdatamaskin, bruker du RSoP-snapin-modulen for Microsoft Management Console. Du kan starte RSoP-snapin-modulen fra kommandolinjen ved å skrive inn RSOP.msc.
+
+Obs!  Denne policyinnstillingen finnes både i Brukerkonfigurasjon og Datamaskinkonfigurasjon.
+
+Se også policyinnstillingen Deaktiver resulterende policysett (logging) i Datamaskinkonfigurasjon\Administrative maler\System\Gruppepolicy.</string>
+      <string id="DisableAutoADMUpdate">Deaktiver automatisk oppdatering av ADM-filer</string>
+      <string id="DisableAutoADMUpdate_Help">Denne policyinnstillingen hindrer at systemet automatisk oppdaterer kildefilene i Administrative maler når du åpner redigeringsprogrammet for gruppepolicyobjekt.  Administratorer kan bruke denne policyinnstillingen hvis de er bekymret over mengden diskplass som brukes på systemvolumet for en domenekontroller.
+
+Når du starter redigeringsprogrammet for gruppepolicyobjekt, utføres det som standard en tidsstempelsammenligning mellom kildefilene i den lokale %SYSTEMROOT%\inf-mappen og kildefilene som er lagret i gruppepolicyobjektet.  Hvis de lokale filene er nyere, kopieres de til gruppepolicyobjektet.
+
+Hvis du endrer statusen for denne policyinnstillingen til Aktivert, kan ikke kildefilene kopieres til gruppepolicyobjektet.
+
+Hvis du endrer statusen for policyinnstillingen til Deaktivert, fungerer kopieringen som normalt.  Filer kopieres alltid til gruppepolicyobjektet hvis de har et senere tidsstempel.
+
+Obs!  Hvis du har aktivert policyinnstillingen Bruk alltid lokale ADM-filer for redigeringsprogrammet for gruppepolicyobjekt i Datamaskinkonfigurasjon, ignoreres statusen, og policyinnstillingen blir behandlet som om den var aktivert.</string>
+      <string id="DisableBackgroundPolicy">Deaktiver bakgrunnsoppdatering av gruppepolicy</string>
+      <string id="DisableBackgroundPolicy_Help">Denne policyinnstillingen forhindrer oppdatering av gruppepolicyer mens datamaskinen er i bruk. Dette gjelder gruppepolicyer for datamaskiner, brukere og domenekontrollere.
+
+Hvis du aktiverer denne policyinnstillingen, venter systemet til gjeldende bruker logger av systemet før datamaskinen og brukerinnstillingene oppdateres.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, kan oppdateringer implementeres mens brukerne arbeider. Oppdateringsfrekvensen bestemmes av policyinnstillingene Angi oppdateringsintervall for gruppepolicy for datamaskiner og Angi oppdateringsintervall for gruppepolicy for brukere.
+
+Obs!  Hvis du endrer denne policyinnstillingen, må du starte datamaskinen på nytt for at endringene skal tre i kraft.</string>
+      <string id="DisableUsersFromMachGP">Fjern brukers mulighet til å aktivere en oppdatering av datamaskinpolicy</string>
+      <string id="DisableUsersFromMachGP_Help">Med denne policyinnstillingen kan du angi om brukerne skal kunne aktivere en oppdatering av datamaskinpolicy.
+
+Hvis du aktiverer denne policyinnstillingen, kan ikke brukerne aktivere en oppdatering av datamaskinpolicy. Datamaskinpolicyen vil likevel bli brukt ved oppstart eller når en offisiell policyoppdatering foretas.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, gjelder standardvirkemåten. Som standard blir datamaskinpolicyen brukt når datamaskinen startes. Policyen brukes også ved et angitt oppdateringsintervall, eller brukeren kan aktivere den manuelt.
+
+Obs!  Denne policyinnstillingen gjelder bare for brukere som ikke er administratorer. Administratorer kan når som helst aktivere en oppdatering av datamaskinpolicy, uansett hvordan policyinnstillingen er konfigurert.
+
+Se også policyinnstillingen Angi oppdateringsintervall for gruppepolicy for datamaskiner hvis du vil endre oppdateringsintervallet.
+
+Obs!  Hvis du endrer denne policyinnstillingen, må du starte datamaskinen på nytt for at endringene skal tre i kraft.</string>
+      <string id="EnforcePoliciesOnly">Fremtving Vis bare policyer</string>
+      <string id="EnforcePoliciesOnly_Help">Denne policyinnstillingen forhindrer at administratorer viser eller bruker innstillinger for gruppepolicy.
+
+En administrasjonsfil for gruppepolicy (.adm) kan inneholde både fullstendige policyer og innstillinger. Fullstendige policyer som støttes fullt ut av gruppepolicyen, må bruke registeroppføringer i registerundernøkkelen Software\Policies eller Software\Microsoft\Windows\CurrentVersion\Policies. Innstillinger som ikke støttes fullt ut, bruker registeroppføringer i andre undernøkler.
+
+Hvis du aktiverer denne policyinnstillingen, aktiveres kommandoen Vis bare policyer, og administratorer kan ikke deaktivere kommandoen. Redigeringsprogrammet for gruppepolicyobjekt vil da bare vise fullstendige policyer, men ikke innstillinger.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, aktiveres kommandoen Vis bare policyer som standard, men administratorer kan vise innstillinger ved å deaktivere kommandoen.
+
+Obs!  Du finner kommandoen Vis bare policyer ved å klikke en av Administrative maler-mappene i redigeringsprogrammet for gruppepolicyobjekt, høyreklikke mappen og peke på Vis.
+
+I redigeringsprogrammet for gruppepolicyobjekt er innstillinger merket med et rødt ikon for å skille dem fra fullstendige policyer, som har et blått ikon.</string>
+      <string id="GPDCOptionAny">Bruk en tilgjengelig domenekontroller</string>
+      <string id="GPDCOptionInherit">Arv fra Active Directory-snapin-moduler</string>
+      <string id="GPDCOptionPDC">Bruk den primære domenekontrolleren</string>
+      <string id="GPDCOptions">Konfigurer valg av domenekontroller for gruppepolicy</string>
+      <string id="GPDCOptions_Help">Denne policyinnstillingen angir hvilken domenekontroller snapin-modulen for redigeringsprogrammet for gruppepolicyobjekt bruker.
+
+Hvis du aktiverer denne policyinnstillingen, kan du se hvilken domenekontroller som brukes:
+
+Bruk den primære domenekontrolleren angir at snapin-modulen for redigeringsprogrammet for gruppepolicyobjekt leser og skriver endringer til domenekontrolleren som er valgt som primær domenekontroller og driftsovervåker for domenet.
+
+Arv fra Active Directory-snapin-moduler angir at snapin-modulen for redigeringsprogrammet for gruppepolicyobjekt leser og skriver endringer til domenekontrolleren som snapin-modulene Active Directory-brukere og -datamaskiner og Active Directory-områder og -tjenester bruker.
+
+Bruk en tilgjengelig domenekontroller angir at snapin-modulen for redigeringsprogrammet for gruppepolicyobjekt kan lese og skrive endringer til en hvilken som helst tilgjengelig domenekontroller.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, bruker snapin-modulen for redigeringsprogrammet for gruppepolicyobjekt domenekontrolleren som er valgt som primær domenekontroller og driftsovervåker for domenet.
+
+Obs!  Hvis du vil endre primær domenekontroller og driftsovervåker for et domene, høyreklikker du domenet i Active Directory-brukere og -datamaskiner og klikker Driftsovervåkere.</string>
+      <string id="GPTransferRate">Konfigurer gjenkjenning av langsom gruppepolicytilkobling</string>
+      <string id="GPTransferRate_Help">Denne policyinnstillingen definerer en langsom tilkobling for bruk og oppdatering av gruppepolicy.
+
+Hvis dataoverføringshastigheten fra domenekontrolleren som foretar policyoppdateringen til datamaskinen i gruppen, er langsommere enn hastigheten som er angitt i denne policyinnstillingen, anser systemet tilkoblingen som langsom.
+
+Hvordan systemet svarer på en langsom policytilkobling, varierer fra policy til policy. Programmet som implementerer policyen, kan angi hvordan det skal svares på en langsom tilkobling. Policyen som behandler innstillingene i denne mappen, lar deg overstyre programmets angitte svar på langsomme tilkoblinger.
+
+Hvis du vil bruke denne policyinnstillingen, kan du angi et desimaltall mellom 0 og 4 294 967 200 i boksen Tilkoblingshastighet for å angi overføringshastigheten i kilobiter per sekund. En langsommere tilkobling enn dette anses som langsom. Hvis du angir 0, vil alle tilkoblinger regnes som raske.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, bruker systemet standardverdien på 500 kilobiter per sekund.
+
+Denne policyinnstillingen vises i mappene Datamaskinkonfigurasjon og Brukerkonfigurasjon. Policyinnstillingen i Datamaskinkonfigurasjon definerer en langsom tilkobling for policyer i mappen Datamaskinkonfigurasjon. Policyinnstillingen i Brukerkonfigurasjon definerer en langsom tilkobling for innstillinger i mappen Brukerkonfigurasjon.
+
+Se også policyinnstillingen Ikke søk etter langsomme nettverkstilkoblinger og andre relaterte policyinnstillinger i Datamaskinkonfigurasjon\Administrative maler\System\Brukerprofil. Obs!  Hvis profilserveren har IP-tilkobling, brukes innstillingen for tilkoblingshastighet. Hvis profilserveren ikke har IP-tilkobling, brukes SMB-tidsbegrensning.</string>
+      <string id="GroupPolicyRefreshRate">Angi oppdateringsintervall for gruppepolicy for datamaskiner</string>
+      <string id="GroupPolicyRefreshRate_Help">Denne policyinnstillingen angir hvor ofte gruppepolicyen for datamaskiner oppdateres (i bakgrunnen) mens datamaskinen er i bruk. Policyinnstillingen angir bakgrunnsoppdateringsfrekvens bare for gruppepolicyer i mappen Datamaskinkonfigurasjon.
+
+I tillegg til bakgrunnsoppdateringer blir gruppepolicyen for datamaskiner alltid oppdatert ved oppstart av systemet.
+
+Gruppepolicyen for datamaskiner oppdateres som standard i bakgrunnen hvert 90. minutt, med en tilfeldig valgt forskyvning mellom 0 og 30 minutter.
+
+Hvis du aktiverer denne policyinnstillingen, kan du angi en oppdateringsfrekvens mellom 0 og 64 800 minutter (45 dager). Hvis du velger 0 minutter, prøver datamaskinen å oppdatere gruppepolicyen hvert 7. sekund. Ettersom oppdateringer kan påvirke brukernes arbeid og øke nettverkstrafikken, er ikke veldig korte oppdateringsintervaller anbefalt for de fleste installasjoner.
+
+Hvis du deaktiverer denne policyinnstillingen, oppdateres gruppepolicyen hvert 90. minutt (standard). Velg policyinnstillingen Deaktiver bakgrunnsoppdatering av gruppepolicy for å angi at gruppepolicyen aldri skal oppdateres mens datamaskinen er i bruk.
+
+Oppdateringsintervallet for gruppepolicyen for datamaskiner lar deg også angi hvor mye det faktiske oppdateringsintervallet skal variere. Systemet varierer oppdateringsintervallet for hver klient med et tilfeldig valgt antall minutter for å hindre at klienter med samme oppdateringsintervall ber om oppdateringer samtidig. Tallet du angir, er den øvre grensen for variansintervallet. Hvis du for eksempel skriver inn 30 minutter, velger systemet en varians mellom 0 og 30 minutter. Et høyt tall gir et bredt intervall og gjør det mindre sannsynlig at klientforespørsler overlapper hverandre. Oppdateringer kan imidlertid bli betraktelig forsinket.
+
+Denne policyinnstillingen angir oppdateringsfrekvens for gruppepolicyer for datamaskiner. Bruk policyinnstillingen Angi oppdateringsintervall for gruppepolicy for brukere (i Brukerkonfigurasjon\Administrative maler\System\Gruppepolicy) til å angi en oppdateringsfrekvens for brukerpolicyer.
+
+Denne policyinnstillingen brukes bare når policyinnstillingen Deaktiver bakgrunnsoppdatering av gruppepolicy er deaktivert.
+
+Obs!  Du bør varsle brukerne om at policyen deres oppdateres periodisk, og forklare hva som skjer ved en policyoppdatering. Når gruppepolicyen oppdateres, oppdateres Windows-skrivebordet. Skrivebordet flimrer litt, og åpne menyer lukkes. Gruppepolicyer kan også pålegge begrensninger, for eksempel for hvilke programmer brukerne kan kjøre, noe som kan påvirke pågående oppgaver.</string>
+      <string id="GroupPolicyRefreshRateDC">Angi oppdateringsintervall for gruppepolicy for domenekontrollere</string>
+      <string id="GroupPolicyRefreshRateDC_Help">Denne policyinnstillingen angir hvor ofte gruppepolicyen oppdateres (i bakgrunnen) for domenekontrollere mens de kjører. Oppdateringene som angis av policyinnstillingen, kommer i tillegg til oppdateringer som utføres ved oppstart av systemet.
+
+Gruppepolicyen for domenekontrollere oppdateres som standard hvert 5. minutt.
+
+Hvis du aktiverer denne policyinnstillingen, kan du angi en oppdateringsfrekvens mellom 0 og 64 800 minutter (45 dager). Hvis du velger 0 minutter, prøver domenekontrolleren å oppdatere gruppepolicyen hvert 7. sekund. Ettersom oppdateringer kan påvirke brukernes arbeid og øke nettverkstrafikken, er ikke veldig korte oppdateringsintervaller anbefalt for de fleste installasjoner.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, oppdaterer domenekontrolleren gruppepolicyen hvert 5. minutt (standard). Velg policyinnstillingen Deaktiver bakgrunnsoppdatering av gruppepolicy for å angi at gruppepolicyer for brukere aldri skal oppdateres mens datamaskinen er i bruk.
+
+Med denne policyinnstillingen kan du også angi hvor mye det faktiske oppdateringsintervallet skal variere. Systemet varierer oppdateringsintervallet for hver domenekontroller med et tilfeldig valgt antall minutter for å hindre at kontrollere med samme oppdateringsintervall ber om oppdateringer samtidig. Tallet du angir, er den øvre grensen for variansintervallet. Hvis du for eksempel skriver inn 30 minutter, velger systemet en varians mellom 0 og 30 minutter. Et høyt tall gir et bredt intervall og gjør det mindre sannsynlig at oppdateringsforespørsler overlapper hverandre. Oppdateringer kan imidlertid bli betraktelig forsinket.
+
+Obs!  Denne policyinnstillingen brukes bare når du oppretter en policy for et domene, et område, en organisasjonsenhet (OU) eller en egendefinert gruppe. Den ignoreres hvis du oppretter en policy bare for en lokal datamaskin.</string>
+      <string id="GroupPolicyRefreshRateUser">Angi oppdateringsintervall for gruppepolicy for brukere</string>
+      <string id="GroupPolicyRefreshRateUser_Help">Denne policyinnstillingen angir hvor ofte gruppepolicyen for brukere oppdateres (i bakgrunnen) mens datamaskinen er i bruk. Policyinnstillingen angir en bakgrunnsoppdateringsfrekvens bare for gruppepolicyer i mappen Brukerkonfigurasjon.
+
+I tillegg til bakgrunnsoppdateringer blir gruppepolicyen for brukere alltid oppdatert når brukerne logger på.
+
+Gruppepolicyen for brukere oppdateres som standard i bakgrunnen hvert 90. minutt, med en tilfeldig valgt forskyvning mellom 0 og 30 minutter.
+
+Hvis du aktiverer denne policyinnstillingen, kan du angi en oppdateringsfrekvens mellom 0 og 64 800 minutter (45 dager). Hvis du velger 0 minutter, prøver datamaskinen å oppdatere gruppepolicyen for brukere hvert 7. sekund. Ettersom oppdateringer kan påvirke brukernes arbeid og øke nettverkstrafikken, er ikke veldig korte oppdateringsintervaller anbefalt for de fleste installasjoner.
+
+Hvis du deaktiverer denne policyinnstillingen, oppdateres gruppepolicyen for brukere hvert 90. minutt (standard). Velg policyinnstillingen Deaktiver bakgrunnsoppdatering av gruppepolicy for å angi at gruppepolicyen for brukere aldri skal oppdateres mens datamaskinen er i bruk.
+
+Med denne policyinnstillingen kan du også angi hvor mye det faktiske oppdateringsintervallet skal variere. Systemet varierer oppdateringsintervallet for hver klient med et tilfeldig valgt antall minutter for å hindre at klienter med samme oppdateringsintervall ber om oppdateringer samtidig. Tallet du angir, er den øvre grensen for variansintervallet. Hvis du for eksempel skriver inn 30 minutter, velger systemet en varians mellom 0 og 30 minutter. Et høyt tall gir et bredt intervall og gjør det mindre sannsynlig at klientforespørsler overlapper hverandre. Oppdateringer kan imidlertid bli betraktelig forsinket.
+
+Viktig!  Denne policyinnstillingen ignoreres hvis policyinnstillingen Deaktiver bakgrunnsoppdatering av gruppepolicy er aktivert.
+
+Obs!  Denne policyinnstillingen angir oppdateringsfrekvens for gruppepolicyer for brukere. Bruk policyinnstillingen Oppdateringsintervall for gruppepolicy for datamaskiner (i Datamaskinkonfigurasjon\Administrative maler\System\Gruppepolicy) til å angi en oppdateringsfrekvens for gruppepolicyer for datamaskiner.
+
+Tips!  Du bør varsle brukerne om at policyen deres oppdateres periodisk, og forklare hva som skjer ved en policyoppdatering. Når gruppepolicyen oppdateres, oppdateres Windows-skrivebordet. Skrivebordet flimrer litt, og åpne menyer lukkes. Gruppepolicyer kan også pålegge begrensninger, for eksempel for hvilke programmer brukerne kan kjøre, noe som kan påvirke pågående oppgaver.</string>
+      <string id="NewGPODisplayName">Angi standardnavn for nye gruppepolicyobjekter</string>
+      <string id="NewGPODisplayName_Help">Med denne policyinnstillingen kan du angi standard visningsnavn for nye gruppepolicyobjekter.
+
+Med denne policyinnstillingen kan du angi standardnavn for nye gruppepolicyobjekter som opprettes fra policykompatible verktøy for gruppepolicybehandling, inkludert kategorien Gruppepolicy i Active Directory-verktøy og gruppepolicyobjektleseren.
+
+Visningsnavnet kan inneholde miljøvariabler og kan være opptil 255 tegn langt.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, brukes standardvisningsnavnet for det nye gruppepolicyobjektet.</string>
+      <string id="NewGPOLinksDisabled">Opprett nye koblinger for gruppepolicyobjekter i deaktivert tilstand som standard</string>
+      <string id="NewGPOLinksDisabled_Help">Med denne policyinnstillingen kan du opprette nye koblinger for gruppepolicyobjekter i deaktivert tilstand som standard.
+
+Hvis du aktiverer denne policyinnstillingen, opprettes alle nye koblinger for gruppepolicyobjekter i deaktivert tilstand som standard. Når du har konfigurert og testet de nye objektkoblingene ved hjelp av et policykompatibelt verktøy for gruppepolicybehandling, for eksempel Active Directory-brukere og -datamaskiner eller Active Directory-områder og -tjenester, kan du aktivere objektkoblingene for bruk på systemet.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, opprettes nye koblinger for gruppepolicyobjekter i aktivert tilstand. Hvis du ikke vil at de skal være aktive før du har konfigurert og testet dem, deaktiverer du objektkoblingen.</string>
+      <string id="OnlyUseLocalAdminFiles">Bruk alltid lokale ADM-filer for redigeringsprogrammet for gruppepolicyobjekt</string>
+      <string id="OnlyUseLocalAdminFiles_Help">Med denne policyinnstillingen kan du alltid bruke lokale ADM-filer for snapin-modulen for gruppepolicy.
+
+Når du redigerer et gruppepolicyobjekt ved hjelp av snapin-modulen for redigeringsprogrammet for gruppepolicyobjekt, blir ADM-filene som standard lastet fra dette gruppepolicyobjektet og inn i snapin-modulen. Det gjør at du kan redigere gruppepolicyobjektet ved å bruke den samme versjonen av ADM-filene som du brukte til å opprette gruppepolicyobjektet.
+
+Dette gir følgende virkemåte:
+
+– Hvis du opprinnelig opprettet gruppepolicyobjektet med for eksempel et engelsk system, inneholder gruppepolicyobjektet engelske ADM-filer.
+
+- Hvis du senere redigerer gruppepolicyobjektet fra et annet språksystem, får du de engelske ADM-filene slik de var i gruppepolicyobjektet.
+
+Denne virkemåten kan du endre ved hjelp av denne policyinnstillingen.
+
+Hvis du aktiverer policyinnstillingen, bruker snapin-modulen for redigeringsprogrammet for gruppepolicyobjekt alltid lokale ADM-filer i mappen %windir%\inf ved redigering av gruppepolicyobjekter.
+
+Dette gir følgende virkemåte:
+
+– Hvis du opprinnelig opprettet gruppepolicyobjektet med et engelsk system og deretter redigerer gruppepolicyobjektet med et japansk system, bruker snapin-modulen for redigeringsprogrammet for gruppepolicyobjekt de lokale japanske ADM-filene, og du ser teksten på japansk under Administrative maler.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, laster snapin-modulen for redigeringsprogrammet for gruppepolicyobjekt alltid inn alle ADM-filer fra det faktiske gruppepolicyobjektet.
+
+Obs!  Hvis ikke alle nødvendige ADM-filer er tilgjengelige lokalt i mappen %windir%\inf, er det ikke sikkert at du ser alle innstillingene som er konfigurert i gruppepolicyobjektet du redigerer.</string>
+      <string id="PolicyPolicies">Gruppepolicy</string>
+      <string id="RSoPLogging">Deaktiver resulterende policysett (logging)</string>
+      <string id="RSoPLogging_Help">Med denne policyinnstillingen kan du aktivere eller deaktivere logging av resulterende policysett (RSoP) på en klientdatamaskin.
+
+RSoP logger informasjon om gruppepolicyinnstillinger som er brukt på klienten. Denne informasjonen omfatter detaljer som hvilke gruppepolicyobjekter som er brukt, hvor de kom fra, og hvilke innstillinger for klientsideutvidelse som er inkludert.
+
+Hvis du aktiverer denne policyinnstillingen, deaktiveres RSoP-logging.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, aktiveres RSoP-logging. RSoP-logging er som standard alltid aktivert.
+
+Obs!  Hvis du vil se RSoP-informasjonen som er logget på en klientdatamaskin, kan du bruke RSoP-snapin-modulen i Microsoft Management Console (MMC).</string>
+      <string id="UserPolicyMode">Konfigurer prosessmodus for tilbakekobling av brukergruppepolicy</string>
+      <string id="UserPolicyMode_Help">Denne policyinnstillingen angir at systemet skal bruke settet med gruppepolicyobjekter for datamaskiner for alle brukere som logger på en datamaskin som policyinnstillingen gjelder for. Den er beregnet for datamaskiner som brukes til spesielle oppgaver, for eksempel maskiner på offentlige steder eller i laboratorier og klasserom, der du må endre brukerinnstillinger basert på datamaskinen som brukes.
+
+Som standard bestemmer brukerens gruppepolicyobjekter hvilke brukerinnstillinger som gjelder. Hvis denne policyinnstillingen er aktivert, bestemmer datamaskinens gruppepolicyobjekter hvilket sett med gruppepolicyobjekter som skal gjelde når en bruker logger på datamaskinen.
+
+Hvis du aktiverer denne policyinnstillingen, kan du velge en av følgende modi fra Modus-boksen:
+
+Erstatt angir at brukerinnstillingene som er definert i datamaskinens gruppepolicyobjekter, erstatter brukerinnstillingene som vanligvis gjelder for brukeren.
+
+Slå sammen angir at brukerinnstillingene som er definert i datamaskinens gruppepolicyobjekter, kombineres med brukerinnstillingene som vanligvis gjelder for brukeren. Hvis policyinnstillingene er i konflikt, prioriteres brukerinnstillingene i datamaskinens gruppepolicyobjekter foran brukerens vanlige innstillinger.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, bestemmer brukerens gruppepolicyobjekter hvilke brukerinnstillinger som gjelder.
+
+Obs!  Denne policyinnstillingen gjelder bare hvis både datamaskinkontoen og brukerkontoen er i et domene for Windows 2000 eller høyere.</string>
+      <string id="UserPolicyMode_Merge">Slå sammen</string>
+      <string id="UserPolicyMode_Replace">Erstatt</string>
+      <string id="CorpConnSyncWaitTime">Angi ventetid for policybehandling for arbeidsplasstilkobling</string>
+      <string id="CorpConnSyncWaitTime_Help">Denne policyinnstillingen angir hvor lenge gruppepolicyen skal vente på meldinger om arbeidsplasstilkobling ved behandling av oppstartspolicy. Hvis behandlingen av oppstartspolicy er synkron, er datamaskinen blokkert inntil arbeidsplasstilkoblingen er tilgjengelig eller ventetiden er nådd. Hvis behandlingen av oppstartspolicy er asynkron, er ikke datamaskinen blokkert, og policybehandlingen foregår i bakgrunnen. I begge tilfeller overstyrer konfigureringen av denne policyinnstillingen eventuelle systemberegnede ventetider.
+
+Hvis du aktiverer denne policyinnstillingen, bruker gruppepolicyen denne administrativt konfigurerte maksimumsventetiden for arbeidsplasstilkobling og overstyrer en eventuell standardventetid eller systemberegnet ventetid.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, bruker gruppepolicyen standardventetiden på 60 sekunder på datamaskiner som kjører et nyere Windows-operativsystem enn Windows 7 og er konfigurert for arbeidsplasstilkobling.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Reduksjonsalternativer</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">Behandle reduksjonsalternativer</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">Skriftbuffertjenesten for Windows bør få tillatelse til å laste ned skrifter og skriftkatalogdata fra nettbaserte skriftleverandører.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">Verdi for langsom kobling:[number field] millisekunder</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Tidsavbruddsverdi: [number field] millisekunder</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">minutt:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Ventetid (i sekunder):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Tillat behandling over en langsom nettverkstilkobling</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Tillat behandling over en langsom nettverkstilkobling</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Ikke aktiver under periodisk bakgrunnsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Tillat behandling over en langsom nettverkstilkobling</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Ikke aktiver under periodisk bakgrunnsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Tillat behandling over en langsom nettverkstilkobling</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Tillat behandling over en langsom nettverkstilkobling</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Ikke aktiver under periodisk bakgrunnsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Tillat behandling over en langsom nettverkstilkobling</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Ikke aktiver under periodisk bakgrunnsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Ikke aktiver under periodisk bakgrunnsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Tillat behandling over en langsom nettverkstilkobling</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Ikke aktiver under periodisk bakgrunnsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Ikke aktiver under periodisk bakgrunnsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Tillat behandling over en langsom nettverkstilkobling</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Ikke aktiver under periodisk bakgrunnsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Tillat behandling over en langsom nettverkstilkobling</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Ikke aktiver under periodisk bakgrunnsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Utfør selv om gruppepolicyobjekter ikke er endret</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Når redigeringsprogrammet for gruppepolicyobjekt velger domenekontroller, bør det:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Tilkoblingshastighet (kbps):</decimalTextBox>
+        <text> </text>
+        <text>Angi 0 for å deaktivere gjenkjenning av langsom tilkobling.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Tilkoblingshastighet (kbps):</decimalTextBox>
+        <text> </text>
+        <text>Angi 0 for å deaktivere gjenkjenning av langsom tilkobling.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">Behandle alltid WWAN-tilkoblinger som langsom tilkobling</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>Med denne policyinnstillingen kan du angi hvor ofte gruppepolicy skal brukes</text>
+        <text>for datamaskiner. Området er 0 til 44 640 minutter (31 dager).</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Minutter:</decimalTextBox>
+        <text> </text>
+        <text>Dette er en tilfeldig tid som er lagt til oppdateringsintervallet for å forhindre</text>
+        <text>at alle klienter ber om gruppepolicy samtidig.</text>
+        <text>Intervallet er 0 til 1 440 minutter (24 timer).</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Minutter:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>Med denne policyinnstillingen kan du angi hvor ofte gruppepolicy skal brukes</text>
+        <text>for domenekontrollere. Området er 0 til 44 640 minutter (31 dager).</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Minutter:</decimalTextBox>
+        <text> </text>
+        <text>Dette er en tilfeldig tid som er lagt til oppdateringsintervallet for å forhindre</text>
+        <text>at alle klienter ber om gruppepolicy samtidig.</text>
+        <text>Intervallet er 0 til 1 440 minutter (24 timer).</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Minutter:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>Med denne policyinnstillingen kan du angi hvor ofte gruppepolicy skal brukes</text>
+        <text>for brukere. Området er 0 til 44 640 minutter (31 dager).</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Minutter:</decimalTextBox>
+        <text> </text>
+        <text>Dette er en tilfeldig tid som er lagt til oppdateringsintervallet for å forhindre</text>
+        <text>at alle klienter ber om gruppepolicy samtidig.</text>
+        <text>Intervallet er 0 til 1 440 minutter (24 timer).</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Minutter:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>Navn på gruppepolicyobjekt:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Modus:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Ventetid (i sekunder):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

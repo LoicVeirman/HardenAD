@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>イベント ログ</displayName>
+    <description>このファイルには、Windows イベント ログの構成オプションが含まれています</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">イベント ログ</string>
+            <string id="EnableProtectedEventLogging">保護されたイベント ログを有効にする</string>
+            <string id="EnableProtectedEventLogging_Explain">
+このポリシー設定では、保護されたイベント ログを構成できます。
+
+このポリシー設定を有効にした場合、この設定をサポートしているコンポーネントは、指定された証明書を使用して、機密性の高いイベント ログ データをイベント ログに書き込む前に暗号化します。データは、Cryptographic Message Syntax (CMS) 標準と、指定された公開キーを使用して暗号化されます。暗号化に使用された公開キーに対応する秘密キーにアクセスできる場合は、Unprotect-CmsMessage PowerShell コマンドレットを使用して、これらの暗号化メッセージの暗号化を解除できます。
+
+このポリシー設定を無効にした場合、または構成しなかった場合、コンポーネントはイベント ログ メッセージをイベント ログに書き込む前に暗号化しません。
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+保護されたイベント ログで使用する暗号化証明書を指定します。次のいずれかを指定できます:
+
+    - Base 64 エンコードの X.509 証明書の内容
+    - ローカル コンピューターの証明書ストアにある証明書の拇印 (通常は PKI インフラストラクチャによって展開されます)
+    - 証明書への完全パス (ローカルのパス、またはリモート共有のパス)
+    - 証明書が含まれているディレクトリへのパス (ローカルのパス、またはリモート共有のパス)
+    - ローカル コンピューターの証明書ストアにある証明書のサブジェクト名 (通常は PKI インフラストラクチャによって展開されます)
+
+該当する証明書には、拡張キー使用法として "ドキュメントの暗号化" (1.3.6.1.4.1.311.80.1) が含まれていて、"データの暗号化" または "キーの暗号化" のいずれかのキー使用法が有効になっている必要があります。
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

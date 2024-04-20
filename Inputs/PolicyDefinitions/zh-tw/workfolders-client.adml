@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2012 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>在此輸入顯示名稱</displayName>
+  <description>在此輸入描述</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_WorkFolders">Work Folders</string>
+      <string id="Pol_MachineEnableWorkFolders">強制為所有使用者自動設定</string>
+      <string id="Pol_MachineEnableWorkFolders_Help">這個原則設定指定是否應為受影響之電腦的所有使用者自動設定 Work Folders。
+      
+如果您啟用這個原則設定，會為受影響之電腦的所有使用者自動設定 Work Folders。這樣可避免使用者選擇不使用電腦上的 Work Folders，也可避免使用者手動指定 Work Folders 儲存檔案的本機資料夾。Work Folders 會使用「指定 Work Folders 設定」原則設定 (位於 [使用者設定\系統管理範本\Windows 元件\WorkFolders]) 中指定的設定。如果「指定 Work Folders 設定」原則設定未套用到使用者，就不會自動設定 Work Folders。
+      
+如果您停用或未設定這個原則設定，Work Folders 會使用「指定 Work Folders 設定」原則設定的「強制自動設定」選項，決定是否為特定使用者自動設定 Work Folders。
+      
+      </string>
+      <string id="Pol_UserEnableWorkFolders">指定 Work Folders 設定</string>
+      <string id="Pol_UserEnableWorkFolders_Help">這項原則設定會為受影響的使用者指定工作資料夾伺服器，以及決定使用者在加入網域的電腦上設定工作資料夾時，是否可以變更設定。
+
+若您啟用這項原則設定，受影響的使用者在登入加入網域的電腦時，會接收到工作資料夾設定。若停用或未設定這項原則設定，則不會為受影響的使用者指定工作資料夾設定，不過使用者仍然可以使用工作資料夾控制台項目手動設定工作資料夾。
+
+「工作資料夾 URL」可以指定組織進行工作資料夾探索時所用的 URL，或儲存受影響使用者資料的特定檔案伺服器 URL。
+
+「工作資料夾本機路徑」會指定同步處理檔案時，在用戶端電腦上要使用的本機資料夾。此路徑可包含環境變數。注意: 為了讓這項設定生效，您必須指定有效的「工作資料夾 URL」。
+  
+「隨選檔案存取喜好設定」選項會控制是否要啟用隨選檔案存取。當啟用時，使用者會控制哪些工作資料夾中的檔案可供指定的電腦離線使用。工作資料夾中其餘的檔案會持續顯示，且不會佔用電腦上的任何空間，但使用者必須連線至網際網路才能加以存取。
+
+若您啟用這項原則設定，隨選檔案存取即啟用。
+若您停用這項原則設定，隨選檔案存取即停用，並且每個使用者的電腦上都必須要有足夠空間，以儲存使用者的所有檔案。
+若您指定 [使用者選擇] 或並未設定這項原則設定，使用者可決定是否要啟用隨選檔案存取。然而，若啟用了「強制自動安裝」原則設定，則將會自動設定工作資料夾，並啟用隨選檔案存取。
+
+「強制自動安裝」選項會指定工作資料夾應在不提示使用者的情況下自動設定。如此可避免使用者在電腦上不選擇使用工作資料夾，另外也可以防止使用者手動指定工作資料夾用於儲存檔案的本機資料夾。根據預設，工作資料夾會儲存在 "%USERPROFILE%\Work Folders" 資料夾。若未指定此選項，使用者必須在其電腦上使用工作資料夾控制台項目來設定工作資料夾。
+      </string>
+      <string id="Pol_UserEnableTokenBroker">啟用權杖代理用於 AD FS 驗證</string>
+      <string id="Pol_UserEnableTokenBroker_Help">該原則指定工作資料夾是應使用針對互動 AD FS 驗證的權杖代理，而不是以前的版本使用的自己的 OAuth2 權杖流。</string>
+      <string id="Pol_GhostingPreference_Enabled">啟用 (建議選項)</string>
+      <string id="Pol_GhostingPreference_Disabled">停用</string>
+      <string id="Pol_GhostingPreference_UserDefined">使用者選擇</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_EnableWorkFolders">
+        <textBox refId="Lbl_ServerURL_Edit">
+          <label>Work Folders URL:  </label>
+        </textBox>
+        <text> </text>
+        <textBox refId="Lbl_LocalFolderPath_Edit">
+          <label>「工作資料夾」本地位置: </label>
+        </textBox>
+        <text> </text>
+        <dropdownList refId="Lbl_GhostingPreference_Enum" noSort="true" defaultItem="0">隨選檔案存取喜好設定:</dropdownList>        
+        <text> </text>
+        <checkBox refId="Lbl_AutoProvision_Chk" defaultChecked="false">強制自動設定</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

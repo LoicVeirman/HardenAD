@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>请在此处输入显示名称</displayName>
+  <description>请在此处输入描述</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">分布式 COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">允许本地激活安全检查例外</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">允许你指定本地计算机管理员可以补充“定义激活安全检查例外”列表。
+
+如果启用了此策略设置，且 DCOM 未在“定义激活安全检查例外”策略(如果启用的话)中找到 DCOM 服务器应用程序 ID (appid) 的显式项目，则 DCOM 将在本地配置的列表中查找项目。
+
+如果禁用了此策略设置，则 DCOM 不会在本地配置的 DCOM 激活安全检查例外列表中查找。
+
+如果未配置此策略设置，则 DCOM 将只在本地配置的例外列表中查找(如果未配置“定义激活安全检查例外”策略)。
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">定义激活安全检查例外</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">允许查看和更改 DCOM 服务器应用程序 ID (appids) 的列表，这些 ID 未经 DCOM 激活安全检查。DCOM 使用两个这样的列表，一个列表通过此策略设置(位于组策略中)进行配置，而另一个由本地计算机管理员配置。如果配置了此策略设置，那么，除非启用了“允许本地激活安全检查例外”策略，否则 DCOM 将忽略第二个列表。
+
+添加到此策略中的 DCOM 服务器 appid 必须以花括号格式列出。例如: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}。如果输入的 appid 不存在或者格式不正确，DCOM 将不检查其中是否存在错误，就将其添加到列表。
+
+如果启用了此策略设置，则可以查看和更改由组策略设置定义的 DCOM 激活安全检查例外的列表。如果你将向该列表中添加一个 appid 并将它的值设置为 1，DCOM 将不会为针对此 DCOM 服务器实施激活安全检查。如果你将向该列表中添加一个 appid 并将它的值设置为 0，那么，无论本地设置如何，DCOM 将总是针对此 DCOM 服务器实施激活安全检查。
+
+如果禁用了此策略设置，那么，将使用由本地计算机管理员定义的列表，而由组策略定义的 appid 例外列表将被删除。
+
+如果未配置此策略设置，则将使用由本地计算机管理员定义的 appid 例外列表。
+
+注意: 
+
+DCOM 激活安全检查在 DCOM 服务器进程开始之后、向服务器进程发送对象激活请求之后完成。如果存在 DCOM 服务器的自定义启动权限安全描述符，将针对其进行访问检查，否则将针对所配置的默认值进行访问检查。
+
+如果 DCOM 服务器的自定义启动权限包含显式拒绝项目，则可能意味着指定用户先前在 DCOM 服务器进程启动并运行之后成功的对象激活，而现在有可能失败。在这种情况下，正确的操作是将 DCOM 服务器的自定义启动权限设置重新配置为正确的安全设置，但是可以在短期内使用此策略设置来帮助部署应用程序兼容性。
+
+对于添加到此例外列表的 DCOM 服务器，只有当它们的自定义启动权限中不包含任何用户或组的特定 LocalLaunch、RemoteLaunch、LocalActivate 或 RemoteActivate 授予或拒绝条目时，才能免于检查。另外要注意的是，添加到此列表中的 DCOM 服务器 appid 例外将适用于 32 位和 64 位版本的服务器(如果有的话)。</string>
+      <string id="DCOMAppCompatPolicies">应用程序兼容性设置</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>请输入与下面列出的操作值配对的 DCOM 服务器 appid。</text>
+        <text>appid 应该包含左右花括号。</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">在例外列表中添加/删除 DCOM 服务器: </listBox>
+        <text> </text>
+        <text>值: </text>
+        <text>0 = 指定的 appid 将不会免于激活安全检查</text>
+        <text>1 = 指定的 appid 将免于激活安全检查</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

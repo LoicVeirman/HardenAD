@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ActiveX Installer 서비스</displayName>
+  <description>승인된 설치 사이트에서 ActiveX 컨트롤 설치</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">ActiveX Installer 서비스</string>
+      <string id="AxISURLZonePolicies">Establish ActiveX installation policy for sites in Trusted zones(신뢰할 수 있는 영역의 사이트에 대한 ActiveX 설치 정책 설정)</string>        
+      <string id="AxISURLZonePolicies_explain">이 정책 설정은 신뢰할 수 있는 영역의 사이트에 대한 ActiveX 컨트롤의 설치를 제어합니다. 
+
+이 정책 설정을 사용하면 이 정책 설정에서 정의한 설정에 따라 ActiveX 컨트롤이 설치됩니다. 
+      
+이 정책 설정을 사용하지 않거나 구성하지 않으면 ActiveX 컨트롤이 설치 전에 사용자에게 메시지를 표시합니다. 
+
+신뢰할 수 있는 사이트에서 HTTPS 프로토콜을 사용할 경우 이 정책 설정은 ActiveX Installer 서비스에서 인증서 오류에 대처하는 방법을 제어할 수도 있습니다. 기본적으로 모든 HTTPS 연결은 모든 유효성 조건을 만족하는 서버 인증서를 제공해야 합니다. 신뢰할 수 있는 사이트에 인증서 오류가 있음을 알고 있지만 해당 사이트를 신뢰할 경우 무시하려는 인증서 오류를 선택할 수 있습니다. 
+    
+참고: 이 정책 설정은 신뢰할 수 있는 영역의 모든 사이트에 적용됩니다.
+
+</string>
+      <string id="TrustedZoneDisabled">설치하지 않음</string>
+      <string id="TrustedZonePrompt">사용자에게 확인</string>
+      <string id="TrustedZoneSilentInstall">자동으로 설치</string>
+      <string id="ApprovedActiveXInstallSites">ActiveX 컨트롤용 승인된 설치 사이트</string>
+      <string id="ApprovedActiveXInstallSites_explain">이 정책 설정은 조직의 표준 사용자가 컴퓨터에 ActiveX 컨트롤을 설치하는 데 사용할 수 있는 ActiveX 설치 사이트를 지정합니다. 이 설정을 사용하면 관리자는 호스트 URL에서 지정한 승인된 ActiveX 설치 사이트 목록을 만들 수 있습니다. 
+
+이 설정을 사용하면 관리자는 호스트 URL에서 지정한 승인된 ActiveX 설치 사이트 목록을 만들 수 있습니다. 
+      
+이 정책 설정을 사용하지 않거나 구성하지 않으면 ActiveX 컨트롤이 설치 전에 사용자에게 관리자 자격 증명을 요구합니다. 
+
+참고: 호스트 URL을 지정할 때는 와일드카드 문자를 사용할 수 없습니다.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">신뢰할 수 있는 게시자가 서명한 ActiveX 컨트롤에 대한 설치 정책</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">서명된 ActiveX 컨트롤에 대한 설치 정책</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">서명되지 않은 ActiveX 컨트롤에 대한 설치 정책</dropdownList>
+        <text>다음 서버 인증서 오류가 있지만 신뢰할 수 있는 사이트에 대한 연결 허용.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">알 수 없는 CA(인증 기관)</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">유효하지 않은 인증서 이름(CN)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">인증서 유효 기간 만료</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">인증서 용도 오류</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">호스트 URL</listBox>
+        <text>호스트 URL에 대한 정책을 포함합니다.</text>
+        <text>예  </text>
+        <text>호스트 이름: http://activex.microsoft.com</text>
+        <text>값: 2,1,0,0</text>
+        <text>각 호스트 URL의 값은 CSV 형식으로 되어 있는 4개의 설정인</text>
+        <text>"TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy"를 나타냅니다.</text>
+        <text>정책에서 왼쪽에 있는 세 개의 값은 해당 서명에 기초하여 ActiveX 컨트롤 설치를 제어합니다.</text>
+        <text>다음 중 하나가 될 수 있습니다.</text>
+        <text>0: ActiveX 컨트롤이 설치되지 않습니다.</text>
+        <text>1: ActiveX 컨트롤을 설치할 것인지 묻는 메시지를 표시합니다.</text>
+        <text>2: ActiveX 컨트롤이 자동으로 설치됩니다.</text>
+        <text>신뢰할 수 있는 게시자 저장소의 인증서에서 서명한 컨트롤은 자동으로 설치됩니다. </text>
+        <text>서명되지 않은 컨트롤의 자동 설치는 지원되지 않습니다.</text>
+        <text></text>
+        <text>정책의 맨 오른쪽 값은 비트 마스크 플래그입니다.</text>
+        <text>이러한 플래그는 https 인증서 오류를 무시하기 위해 사용됩니다.</text>
+        <text>기본값은 0입니다.</text>
+        <text>https 연결이 모든 보안 검사를 통과해야 한다는 것을 의미합니다.</text>
+        <text></text>
+        <text>다음 값의 조합을 사용하여</text>
+        <text>유효하지 않은 인증서 오류를 무시할 수 있습니다.</text>
+        <text>0x00000100  알 수 없는 CA 무시</text>
+        <text>0x00001000  유효하지 않은 CN 무시</text>
+        <text>0x00002000  유효하지 않은 인증서 날짜 무시</text>
+        <text>0x00000200  잘못된 인증서 사용 무시</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

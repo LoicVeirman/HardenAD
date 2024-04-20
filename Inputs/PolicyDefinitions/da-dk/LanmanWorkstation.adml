@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>indtast det viste navn her</displayName>
+  <description>indtast beskrivelsen her</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">Lanman-arbejdsstation</string>
+      <string id="Pol_CipherSuiteOrder_Name">Rækkefølge af krypteringsprogrammer</string>
+      <string id="Pol_CipherSuiteOrder_Help">Denne politikindstilling bestemmer de krypteringsprogrammer, der bruges af SMB-klienten.
+
+Hvis du aktiverer denne politikindstilling, prioriteres krypteringsprogrammerne i den angivne rækkefølge.
+
+Hvis du aktiverer denne politikindstilling og ikke angiver mindst ét krypteringsprogram, der er understøttet, eller hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, bruges standardrækkefølgen for krypteringsprogrammer.
+
+SMB 3.11-krypteringsprogrammer:
+
+AES_128_GCM
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+SMB 3.0 and 3.02-krypteringsprogrammer:
+
+AES_128_CCM
+
+Sådan ændres denne indstilling:
+
+Arranger de ønskede krypteringsprogrammer i redigeringsfeltet, ét krypteringsprogram pr. linje, i en rækkefølge fra mest foretrukken til mindst foretrukken, og hvor det mest foretrukne krypteringsprogram er øverst. Fjern de krypteringsprogrammer, du ikke vil bruge.
+
+Bemærk! Når du konfigurerer denne sikkerhedsindstilling, vil ændringerne ikke træde i kraft, før du genstarter Windows.</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">Giv mulighed for usikre gæstelogon</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">Denne politikindstilling bestemmer, om SMB-klienten tillader usikre gæstelogon på en SMB-server.
+
+Hvis du aktiverer denne politikindstilling, eller hvis du ikke konfigurerer denne politikindstilling, tillader SMB-klienten usikre gæstelogon.
+
+Hvis du deaktiverer denne politikindstilling, afviser SMB-klienten usikre gæstelogon
+
+Filservere bruger usikre gæstelogon til ikkegodkendt adgang til delte mapper. Hvor dette er usædvanligt i et virksomhedsmiljø, bruges usikre gæstelogon ofte til anvendelse af NAS-netværk (Network Attached Storage) til privat brug som f.eks.  filserver. Windows-filservere kræver godkendelse og bruger ikke usikker gæstelogon som standard. Da usikre gæstelogon ikke er godkendte, er vigtige sikkerhedsfunktioner som SMB-signering og SMB-kryptering deaktiveret. Klienter, der tillader usikker gæstelogon, er derfor sårbare over for en række man-in-the-middle-angreb, der kan resultere i datatab, ødelagte data og risiko for malware. Desuden er de data, der er skrevet til en filserver ved hjælp af et usikkert gæstelogon, potentielt set tilgængelig for alle på netværket. Microsoft anbefaler deaktivering af usikre gæstelogon, og at filservere konfigureres, så der kræves godkendt adgang.
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">Tilgængeligheden af offlinefiler på shares med konstant tilgængelighed</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        Denne politikindstilling bestemmer funktionen af offlinefiler på klienter, der opretter forbindelse til et SMB-share, hvor flaget Konstant tilgængelighed (CA) er aktiveret.
+
+        Hvis du aktiverer denne politikindstilling, vises indstillingen "Altid tilgængelig offline" i menuen i Stifinder på en Windows-computer, når der oprettes forbindelse til et CA-aktiveret share. Fastgørelse af filer på CA-aktiverede shares ved hjælp af cachelagring på klientsiden vil også være mulig.
+
+        Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, forhindrer Windows brugen af offlinefiler sammen med CA-aktiverede shares.
+
+        Bemærk! Microsoft anbefaler ikke, at du aktiverer denne gruppepolitik. Brug af CA sammen med offlinefiler fører til meget lange overførselstider mellem online- og offlinetilstandene.
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">Håndtering af cachelagring på shares med konstant tilgængelighed</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        Denne politikindstilling bestemmer funktionen af cachelagring af SMB-handle for klienter, der opretter forbindelse til et SMB-share, hvor flaget for konstant tilgængelighed (CA) er aktiveret.
+
+        Hvis du aktiverer denne politikindstilling, tillader SMB-klienten cachelagrede handles til filer på CA-shares. Dette kan resultere i bedre ydeevne, når du gentagne gange åbner et stort antal ustrukturerede datafiler på CA-shares, der kører i Microsoft Azure-filer.
+
+        Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, vil Windows forhindre brug af cachelagrede handles til filer, der åbnes via CA-shares.
+
+        Bemærk! Denne politik har ingen effekt, når der tilsluttes filservershares til udskalering, der leveres af en Windows Server. Microsoft anbefaler ikke aktivering af denne politik til klienter, der jævnligt opretter forbindelse til filer, der hostes på en Windows-failoverklynge, hvor filserveren har rollen Generel brug, da det kan medføre uønskede failover-tider og øget belastning af hukommelse og CPU.
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Mindst Windows Server 2022 eller Windows 11</string>
+      <string id="Pol_EnableCompressedTraffic_Name">Brug SMB-komprimering som standard</string>
+      <string id="Pol_EnableCompressedTraffic_Help">Denne politik styrer, om SMB-klienten som standard bruger trafikkomprimering.
+
+Hvis du aktiverer denne politikindstilling, forsøger SMB-klienten som standard at komprimere trafik, når SMB-komprimering er aktiveret.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, vil SMB-klienten som standard ikke forsøge at komprimere trafik. Der kan dog anmodes om trafikkomprimering på en anden måde. Se noterne nedenfor.
+
+Bemærk! Denne politik kombineres med egenskaber pr. share og håndtag pr. fil, som der kan anmodes om trafikkomprimering gennem. SMB-serveren skal også understøtte og aktivere komprimering. Hvis denne politik f.eks. deaktiveres (eller ikke konfigureres), kan SMB-klienten stadig udføre komprimering, hvis der er anmodet om komprimering på et SMB-servershare. Hvis dette er uønsket, og du ønsker at deaktivere komprimering helt, skal du i stedet konfigurere den tilhørende politik "Deaktiver SMB-komprimering".
+      </string>
+      <string id="Pol_DisableCompression_Name">Deaktiver SMB-komprimering</string>
+      <string id="Pol_DisableCompression_Help">Denne politik styrer, om SMB-klienten deaktiverer (forhindrer fuldstændig) trafikkomprimering.
+
+Hvis du aktiverer denne politikindstilling, komprimerer SMB-klienten aldrig data, uanset andre politikker (f.eks. politikken "Brug SMB-komprimering som standard" eller egenskab pr. share).
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, kan SMB-klienten komprimere trafik (afhængigt af en kombination af andre politikker og betingelser).
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>Krypteringsprogrammer:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

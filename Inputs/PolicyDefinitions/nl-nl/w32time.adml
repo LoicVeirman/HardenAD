@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>voer hier de weergegeven naam in</displayName>
+  <description>typ hier een beschrijving</description>
+  <resources>
+    <stringTable>
+      <string id="W32TIME_CONFIG_EXPLAIN">Met deze beleidsinstelling kunt u klokdiscipline en algemene waarden voor de Windows Time-service (W32time) instellen voor domeincontrollers, waaronder RODC's.
+
+Als deze instelling is ingeschakeld, gebruikt de W32time-service op doelmachines de hier verstrekte instellingen. Anders gebruikt de service op doelmachines lokaal geconfigureerde instellingen.
+
+Meer informatie over individuele parameters, combinaties van parameterwaarden en definities van markeringen vindt u hier: https://go.microsoft.com/fwlink/?linkid=847809.
+
+        FrequencyCorrectRate
+Deze parameter bepaalt hoe snel W32time de frequentie van de lokale klok corrigeert. Een lagere waarde betekent grotere correcties; een hogere waarde betekent kleinere correcties. Standaard: 4 (scalar).
+
+        HoldPeriod
+Deze parameter duidt op het aantal consistente tijdvoorbeelden dat de clientcomputer in een reeks moet ontvangen alvorens volgende tijdvoorbeelden worden beoordeeld als potentiële pieken. Standaard: 5.
+
+        LargePhaseOffset
+Als een tijdvoorbeeld met meer dan LargePhaseOffset afwijkt van de lokale klok van de clientcomputer, wordt ervan uitgegaan dat de lokale klok aanzienlijk is afgeweken, oftewel heeft gepiekt. Standaard: 50.000.000 eenheden van 100 nanoseconden (ns) of 5 seconden.
+
+        MaxAllowedPhaseOffset
+Als een reactie is ontvangen met een tijdafwijking die groter is dan deze parameterwaarde, zet W32time de lokale klok van de clientcomputer onmiddellijk op de tijd die als accuraat wordt geaccepteerd van de NTP-server (Network Time Protocol). Als de tijdafwijking lager is dan deze waarde, wordt de lokale klok van de clientcomputer geleidelijk bijgesteld. Standaard: 300 seconden.
+
+        MaxNegPhaseCorrection
+Als een tijdvoorbeeld is ontvangen dat een tijd in het verleden aangeeft (ten opzichte van de lokale klok van de clientcomputer) dat een tijdsverschil vertoont dat groter is dan de MaxNegPhaseCorrection-waarde, wordt het tijdvoorbeeld verwijderd. Standaard: 172.800 seconden.
+
+        MaxPosPhaseCorrection
+Als een tijdvoorbeeld is ontvangen dat een tijd in de toekomst aangeeft (ten opzichte van de lokale klok van de clientcomputer) met een groter tijdsverschil dan de MaxPosPhaseCorrection-waarde, wordt het tijdvoorbeeld verwijderd. Standaard: 172.800 seconden.
+
+        PhaseCorrectRate
+Deze parameter bepaalt hoe snel W32time de afwijking van de lokale klok van de clientcomputer corrigeert naar de tijdvoorbeelden die zijn geaccepteerd als accuraat op de NTP-server. Een lagere waarde betekent dat de klok sneller wordt gecorrigeerd; een hogere waarde betekent een langzamere correctie. Standaard: 7 (scalar).
+
+        PollAdjustFactor
+Deze parameter bepaalt hoe snel W32time polling-intervallen wijzigt. Wanneer reacties als accuraat worden beschouwd, wordt het polling-interval automatisch verlengd. Wanneer de reacties als onjuist worden beschouwd, wordt het polling-interval automatisch ingekort. Standaard: 5 (scalar).
+
+        SpikeWatchPeriod
+Deze parameter geeft aan hoe lang het duurt voordat een voorbeeld met een tijdafwijking die groter is dan LargePhaseOffset wordt geaccepteerd als accuraat. SpikeWatchPeriod wordt samen met HoldPeriod gebruikt om sporadische, onnauwkeurige tijdvoorbeelden uit te sluiten die door een peer worden geretourneerd. Standaard: 900 seconden.
+
+        UpdateInterval
+Deze parameter duidt op de hoeveelheid tijd dat W32time tussen correcties wacht wanneer de klok geleidelijk wordt gecorrigeerd. Bij geleidelijke correcties wordt de klok een klein beetje bijgesteld, wordt de aangegeven tijd gewacht, waarna wordt gecontroleerd of er nog een bijstelling nodig is, totdat de gehele correctie is uitgevoerd. Standaard: 100 eenheden van 1/100e seconde, of 1 seconde.
+
+        Algemene parameters:
+
+        AnnounceFlags
+Deze parameter is een bitmask-waarde die bepaalt hoe de beschikbaarheid van de tijdservice wordt bekendgemaakt via NetLogon. Standaard: 0x0-a hexadecimaal
+
+        EventLogFlags
+Deze parameter bepaalt speciale gebeurtenissen die kunnen worden geregistreerd in het logboekbestand van het Logboeken-systeem. Standaard: 0x02 hexadecimale bitmask.
+
+        LocalClockDispersion
+Deze parameter geeft de maximale fout in seconden aan die door de NTP-server wordt gemeld aan clients die een tijdvoorbeeld aanvragen. (Alleen van toepassing wanneer de NTP-server de tijd van de lokale CMOS-klok gebruikt.) Standaard: 10 seconden.
+
+        MaxPollInterval
+Deze parameter bepaalt het maximale polling-interval, waarmee de maximale hoeveelheid tijd tussen polls van een peer wordt gedefinieerd. Standaard: 10 in log base-2, of 1024 seconden. (Moet niet hoger worden gezet dan 15.)
+
+        MinPollInterval
+Deze parameter bepaalt het minimale polling-interval, waarmee de minimale hoeveelheid tijd tussen polls van een peer wordt gedefinieerd. Standaard: 6 in log base-2, of 64 seconden.
+
+        ClockHoldoverPeriod
+Deze parameter duidt op het maximale aantal seconden dat een systeemklok nominaal accuraat kan blijven zonder te synchroniseren met een tijdbron. Als deze tijdperiode voorbijgaat zonder dat W32time nieuwe voorbeelden van zijn invoerproviders heeft gekregen, start W32time opnieuw detectie van tijdbronnen. Standaard: 7800 seconden.
+
+        RequireSecureTimeSyncRequests
+Deze parameter bepaalt of de DC wel of niet reageert op tijdsynchronisatieaanvragen die oudere authenticatieprotocollen gebruiken. Indien ingeschakeld (op 1 ingesteld), reageert de DC niet op aanvragen die dergelijke protocollen gebruiken. Standaard: 0 Booleaans.
+
+        UtilizeSslTimeData
+Deze parameter bepaalt of W32time tijdgegevens gebruikt die worden berekend op grond van SSL-verkeer op de machine als extra invoer voor correctie van de lokale klok. Standaard: 1 (ingeschakeld) Booleaans
+
+   ClockAdjustmentAuditLimit
+Deze parameter specificeert de kleinste lokale klokaanpassingen die kunnen worden vastgelegd in het W32time-servicegebeurtenislogboek op de doelcomputer. Standaard: 800 delen per miljoen (PPM).
+
+        RODC parameters:
+
+     ChainEntryTimeout
+Deze parameter geeft de maximale hoeveelheid tijd aan dat een vermelding in de chaining-tabel mag zijn voordat deze als verlopen wordt beschouwd. Verlopen vermeldingen kunnen worden verwijderd wanneer de volgende aanvraag of reactie wordt verwerkt. Standaard: 16 seconden.
+
+         ChainMaxEntries
+Deze parameter bepaalt het maximale aantal vermeldingen dat in de chaining-tabel is toegestaan. Als de chaining-tabel vol is en er geen verlopen vermeldingen kunnen worden verwijderd, worden alle binnenkomende aanvragen verwijderd. Standaard: 128 vermeldingen.
+
+        ChainMaxHostEntries
+Deze parameter bepaalt het maximale aantal vermeldingen dat in de chaining-tabel is toegestaan voor een bepaalde host. Standaard: 4 vermeldingen.
+
+        ChainDisable
+Deze parameter bepaalt of het chaining-mechanisme wel of niet wordt uitgeschakeld. Als chaining uitgeschakeld is (instelling 4), kan de RODC synchroniseren met elke gewenste domeincontroller, maar hosts die hun wachtwoorden niet in de cache op de RODC bewaren, kunnen niet synchroniseren met de RODC. Standaard: 0 Booleaans.
+
+       ChainLoggingRate
+Deze parameter bepaalt de frequentie waarop een gebeurtenis die aangeeft hoeveel succesvolle en mislukte chaining-pogingen worden gedaan, wordt geregistreerd in het systeemlogboek in Logboeken. Standaard: 30 minuten.
+      </string>
+
+<string id="W32TIME_CONFIGURE_NTPCLIENT_EXPLAIN">Met deze beleidsinstelling geeft u een set parameters op voor het besturen van de Windows NTP-client.
+
+Als u deze beleidsinstelling inschakelt, kunt u de volgende parameters voor de Windows NTP-client opgeven.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, gebruikt de Windows NTP-client de standaardinstellingen van elk van de volgende parameters.
+
+NtpServer
+De naam van het Domain Name System (DNS) of het IP-adres van een NTP-tijdsbron. Deze waarde heeft de notatie ""dnsNaam,vlaggen"", waarbij ""vlaggen"" bestaat uit een hexadecimaal bitmasker van de vlaggen voor die host. Zie voor meer informatie de sectie NTP Client Group Policy Settings Associated with Windows Time van het artikel Windows Time Service Group Policy Settings. De standaardwaarde is ""time.windows.com,0x09"". 
+
+Type
+Deze waarde bepaalt welke authenticatiemethode W32time gebruikt. De standaardwaarde is NT5DS.
+
+CrossSiteSyncFlags
+Deze waarde, uitgedrukt als een bitmasker, bepaalt op welke manier W32time tijdsbronnen buiten de eigen site kiest. De mogelijke waarden zijn 0, 1 en 2. Als u deze waarde instelt op 0 (Geen), mag de cliënt van de Time-service geen externe tijdsbronnen gebruiken voor het synchroniseren van de tijd. Als u deze waarde instelt op 1 (Alleen PDC), kunnen alleen de computers die in andere domeinen optreden als operations-master voor de emulatie van een primaire domeincontroller (PDC) worden gebruikt als synchronisatiepartners wanneer de cliënt de tijd moet synchroniseren met een externe partner. Als u de waarde 2 (Alle) instelt, betekent dit dat elke synchronisatiepartner kan worden gebruikt. Deze waarde wordt genegeerd als de waarde NT5DS niet is ingesteld. De standaardwaarde is 2 decimaal (0x02 hexadecimaal).
+
+ResolvePeerBackoffMinutes
+Deze waarde, uitgedrukt in minuten, bepaalt hoe lang W32time wacht voordat wordt geprobeerd een DNS-naam om te zetten als een eerdere poging is mislukt. De standaardwaarde is 15 minuten.
+
+ResolvePeerBackoffMaxTimes
+Deze waarde bepaalt hoe vaak W32time probeert een DNS-naam om te zetten voordat het detectieproces opnieuw wordt gestart. Elke keer dat de omzetting mislukt, wordt de wachttijd tot de volgende poging verdubbeld. De standaardwaarde is zeven pogingen.
+
+SpecialPollInterval
+Deze NTP-cliëntwaarde, uitgedrukt in seconden, bepaalt hoe vaak er polling van een handmatig geconfigureerde tijdsbron plaatsvindt wanneer de tijdsbron is geconfigureerd voor het gebruik van een speciaal polling-interval. Als de vlag SpecialInterval is ingeschakeld in de instelling NTPServer, gebruikt de cliënt de waarde die is ingesteld met SpecialPollInterval, en niet een variabel interval tussen de waarden van MinPollInterval en MaxPollInterval, om te bepalen wanneer er polling van de tijdsbron moet plaatsvinden. De waarde van SpecialPollInterval moet tussen MinPollInterval en MaxPollInterval liggen. Anders wordt de dichtstbijzijnde waarde uit het bereik gekozen. Standaard: 1024 seconden.
+
+EventLogFlags
+Deze waarde is een bitmasker dat bepaalt welke gebeurtenissen er kunnen worden vastgelegd in het systeemlogboek in Logboeken. Als u deze waarde instelt op 0x1, genereert W32time een gebeurtenis wanneer er een tijdssprong wordt gedetecteerd. Als u deze waarde instelt op 0x2, wordt er een gebeurtenis geregistreerd wanneer er een wijziging van de tijdsbron optreedt. Aangezien het een bitmaskerwaarde betreft, kunt u met 0x3 (0x1 en 0x2 opgeteld) aangeven dat zowel tijdssprongen als tijdsbronwijzigingen worden geregistreerd.
+      </string>
+      <string id="W32TIME_ENABLE_NTPCLIENT_EXPLAIN">Dit beleid instelling geeft aan of de Windows NTP-Client is ingeschakeld.
+
+Het inschakelen van de Windows NTP-cliënt betekent dat de computerklok van uw computer kan worden gesynchroniseerd met andere NTP-servers. U kunt deze service uitschakelen als u een andere tijdprovider wilt gebruiken.
+
+Als u deze beleidsinstelling inschakelt, kunt u de lokale computerklok op tijd synchroniseren met de NTP-servers.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, wordt de lokale computerklok niet gesynchroniseerd met NTP-servers.
+      
+      </string>
+      <string id="W32TIME_ENABLE_NTPSERVER_EXPLAIN">Met deze beleidsinstelling kunt u aangeven of de Windows NTP-server is ingeschakeld.
+
+Als u deze beleidsinstelling inschakelt voor de Windows NTP-server, kan de computer NTP-aanvragen van andere computers behandelen.
+
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, kan uw computer geen NTP-aanvragen van andere computers behandelen.
+
+
+
+</string>
+      <string id="W32TIME_POLICY_CONFIG">Globale configuratie-instellingen</string>
+      <string id="W32TIME_POLICY_CONFIGURE_NTPCLIENT">Windows NTP-cliënt configureren</string>
+      <string id="W32TIME_POLICY_ENABLE_NTPCLIENT">Windows NTP-cliënt inschakelen</string>
+      <string id="W32TIME_POLICY_ENABLE_NTPSERVER">Windows NTP-server inschakelen</string>
+      <string id="W32TIME_ROOT">Windows Time-service</string>
+      <string id="W32TIME_TIMEPROVIDERS">Tijdproviders</string>
+      <string id="W32TIME_Type_AllSync">AllSync</string>
+      <string id="W32TIME_Type_NoSync">NoSync</string>
+      <string id="W32TIME_Type_NT5DS">NT5DS</string>
+      <string id="W32TIME_Type_Ntp">NTP</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="W32TIME_POLICY_CONFIG">
+        <text>Klokdisciplineparameters</text>
+        <decimalTextBox refId="W32TIME_FrequencyCorrectRate" defaultValue="4">FrequencyCorrectRate</decimalTextBox>
+        <decimalTextBox refId="W32TIME_HoldPeriod" defaultValue="5">HoldPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_LargePhaseOffset" defaultValue="50000000">LargePhaseOffset</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxAllowedPhaseOffset" defaultValue="300">MaxAllowedPhaseOffset</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxNegPhaseCorrection" defaultValue="172800">MaxNegPhaseCorrection</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxPosPhaseCorrection" defaultValue="172800">MaxPosPhaseCorrection</decimalTextBox>
+        <decimalTextBox refId="W32TIME_PhaseCorrectRate" defaultValue="1">PhaseCorrectRate</decimalTextBox>
+        <decimalTextBox refId="W32TIME_PollAdjustFactor" defaultValue="5">PollAdjustFactor</decimalTextBox>
+        <decimalTextBox refId="W32TIME_SpikeWatchPeriod" defaultValue="900">SpikeWatchPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_UpdateInterval" defaultValue="100">UpdateInterval</decimalTextBox>
+        <text>Algemene parameters</text>
+        <decimalTextBox refId="W32TIME_AnnounceFlags" defaultValue="10">AnnounceFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_EventLogFlags" defaultValue="2">EventLogFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_LocalClockDispersion" defaultValue="10">LocalClockDispersion</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxPollInterval" defaultValue="10">MaxPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MinPollInterval" defaultValue="6">MinPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ClockHoldoverPeriod" defaultValue="7800">ClockHoldoverPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_RequireSecureTimeSyncRequests" defaultValue="0">RequireSecureTimeSyncRequests</decimalTextBox>
+        <decimalTextBox refId="W32TIME_UtilizeSslTimeData" defaultValue="1">UtilizeSslTimeData</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ClockAdjustmentAuditLimit" defaultValue="800">ClockAdjustmentAuditLimit</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainEntryTimeout" defaultValue="16">ChainEntryTimeout</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainMaxEntries" defaultValue="128">ChainMaxEntries</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainMaxHostEntries" defaultValue="4">ChainMaxHostEntries</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainDisable" defaultValue="0">ChainDisable</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainLoggingRate" defaultValue="30">ChainLoggingRate</decimalTextBox>
+      </presentation>
+      <presentation id="W32TIME_POLICY_CONFIGURE_NTPCLIENT">
+        <textBox refId="W32TIME_NtpServer">
+          <label>NtpServer</label>
+          <defaultValue>time.windows.com,0x9</defaultValue>
+        </textBox>
+        <dropdownList refId="W32TIME_Type" noSort="true" defaultItem="2">Type</dropdownList>
+        <decimalTextBox refId="W32TIME_CrossSiteSyncFlags" defaultValue="2">CrossSiteSyncFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ResolvePeerBackoffMinutes" defaultValue="15">ResolvePeerBackoffMinutes</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ResolvePeerBackoffMaxTimes" defaultValue="7">ResolvePeerBackoffMaxTimes</decimalTextBox>
+        <decimalTextBox refId="W32TIME_SpecialPollInterval" defaultValue="1024">SpecialPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_NtpClientEventLogFlags" defaultValue="0">EventLogFlags</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

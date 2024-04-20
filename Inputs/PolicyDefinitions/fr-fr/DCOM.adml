@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>tapez le nom complet ici</displayName>
+  <description>tapez la description ici</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">DCOM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Autoriser les exemptions locales de vérification de la sécurité à l’activation</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Vous permet d’indiquer que les administrateurs d’ordinateurs locaux peuvent modifier la liste Définir les exemptions de vérification de la sécurité à l’activation.
+
+Si vous activez ce paramètre de stratégie et si DCOM ne trouve aucune entrée explicite d’identificateur d’application serveur DCOM (AppId) dans la stratégie Définir les exemptions de vérification de la sécurité à l’activation (si celle-ci est activée), DCOM recherche une entrée dans la liste configurée localement.
+
+Si vous désactivez ce paramètre de stratégie, DCOM n’interroge pas la liste d’exemptions DCOM locale.
+
+Si vous ne configurez pas ce paramètre de stratégie, DCOM n’interroge la liste d’exemptions locale que si la stratégie Définir les exemptions de vérification de la sécurité à l’activation n’est pas configurée.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Définir les exemptions de vérification de la sécurité à l’activation</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Vous permet d’afficher et de modifier la liste des identificateurs d’applications serveurs DCOM (AppId) qui sont exemptés des tests de sécurité d’activation DCOM.  DCOM gère deux de ces listes : la première est configurée via la Stratégie de groupe par le biais de ce paramètre de stratégie, la seconde est définie par les actions des administrateurs des ordinateurs locaux.  DCOM ignore la seconde liste lorsque ce paramètre de stratégie est configuré, sauf si la stratégie « Autoriser les exemptions locales de vérification de la sécurité à l’activation » est activée.
+
+Les identificateurs d’applications serveurs DCOM ajoutés à cette stratégie doivent être placés entre accolades.  Par exemple : {b5dcb061-cefb-42e0-a1be-e6a6438133fe}.  Si vous entrez un identificateur inexistant ou mal formaté, DCOM l’ajoute à la liste sans signaler d’erreur.
+
+Si vous activez ce paramètre de stratégie, vous pouvez afficher et modifier la liste des exemptions de tests de sécurité d’activation DCOM définie par les paramètres de stratégie de groupe. Si vous ajoutez un identificateur d’application à cette liste et lui donnez la valeur 1, DCOM n’applique pas le test de sécurité d’activation à ce serveur DCOM.   Si vous ajoutez un identificateur d’application à cette liste et lui donnez la valeur 0, DCOM applique toujours le test de sécurité d’activation à ce serveur DCOM, quels que soient les paramètres locaux.
+
+Si vous désactivez ce paramètre de stratégie, la liste des exemptions d’identificateurs d’applications définie par la stratégie de groupe est supprimée, et celle qui est définie par les administrateurs locaux est utilisée.
+
+Si vous ne configurez pas ce paramètre de stratégie, la liste d’exemptions d’identificateurs d’applications définie par les administrateurs d’ordinateurs locaux est utilisée.
+
+Remarques :
+
+le test de sécurité d’activation DCOM est effectué après le démarrage du processus serveur DCOM, mais avant que la demande d’activation d’un objet ne soit transmise au processus serveur.   Ce test d’accès est effectué par rapport au descripteur de sécurité d’autorisation de lancement personnalisé du serveur DCOM (s’il existe), ou par rapport aux valeurs par défaut configurées.
+
+Si l’autorisation de lancement personnalisé du serveur DCOM contient des entrées DENY explicites, ceci peut signifier que les activations d’objets qui auraient précédemment réussi pour ces utilisateurs spécifiés risquent, une fois que le processus serveur DCOM est en service, d’échouer.   La solution, dans ce cas, consiste à reconfigurer les autorisations de lancement personnalisé du serveur DCOM en modifiant les paramètres de sécurité, mais ce paramètre de stratégie peut être utilisé à court terme comme aide au déploiement de compatibilité des applications.
+
+Les serveurs DCOM ajoutés à cette liste d’exemptions ne sont exemptés que si leurs autorisations de lancement personnalisé ne contiennent pas d’entrées LocalLaunch, RemoteLaunch, LocalActivate ou RemoteActivate « Grant » ou « Deny » pour un utilisateur ou un groupe.   Notez également que les exemptions des identificateurs d’applications serveur DCOM ajoutées à cette liste s’appliquent aux versions 32 et 64 bits du serveur.</string>
+      <string id="DCOMAppCompatPolicies">Paramètres de compatibilité des applications</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Entrez des identificateurs serveurs DCOM accompagnés d’une action répertoriée ci-dessous.</text>
+        <text>L’identificateur d’application doit comporter des accolades ouvrantes et fermantes.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Ajouter/supprimer des serveurs DCOM à la liste d’exemptions : </listBox>
+        <text> </text>
+        <text>Valeurs :</text>
+        <text>0 = l’identificateur d’application spécifié n’est pas exempt du test de sécurité à l’activation</text>
+        <text>1 = l’identificateur d’application spécifié est exempt du test de sécurité à l’activation</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

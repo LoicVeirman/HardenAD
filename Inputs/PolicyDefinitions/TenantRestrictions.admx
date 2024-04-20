@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions revision="1.0" schemaVersion="1.0">
+  <policyNamespaces>
+   <target prefix="trv2" namespace="Microsoft.Policies.TenantRestrictions" />
+   <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+  <categories>
+    <category name="TenantRestrictions" displayName="$(string.TenantRestrictions)">
+      <parentCategory ref="windows:WindowsComponents" />
+    </category>
+  </categories>
+  <policies>
+    <policy name="trv2_payload" class="Machine" displayName="$(string.trv2_payload)" explainText="$(string.trv2_payload_EXPLAIN)" presentation="$(presentation.trv2_payload)" key="SOFTWARE\Policies\Microsoft\Windows\TenantRestrictions\Payload" >
+      <parentCategory ref="TenantRestrictions" />
+      <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS7_NOSERVER" />
+      <elements>
+        <text id="PayloadCloudId" valueName="cloudid" />
+        <text id="PayloadTenantId" valueName="tenantid" required="true" />
+        <text id="PayloadPolicyId" valueName="policyid" required="true" />
+        <boolean id="EnforceFirewall" valueName="enforceFirewall">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <delete />
+          </falseValue>
+        </boolean>
+        <multiText id="PayloadHostnamesId" valueName="hostnames" />
+        <multiText id="PayloadSubdomainSupportedHostnamesId" valueName="subdomainSupportedHostnames" />
+        <multiText id="PayloadIpRangesId" valueName="ipRanges" />
+      </elements>
+    </policy>
+  </policies>
+</policyDefinitions>

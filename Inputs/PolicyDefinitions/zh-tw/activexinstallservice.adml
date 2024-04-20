@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ActiveX Installer 服務</displayName>
+  <description>從認可的安裝網站安裝 ActiveX 控制項</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">ActiveX Installer 服務</string>
+      <string id="AxISURLZonePolicies">建立信任區域中網站的 ActiveX 安裝原則</string>        
+      <string id="AxISURLZonePolicies_explain">這個原則設定控制信任的區域中網站的 ActiveX 控制項安裝方式。
+
+如果您啟用這個原則設定，就會根據這個原則設定所定義的設定安裝 ActiveX 控制項。
+      
+如果您停用或未設定這個原則設定，ActiveX 控制項會在安裝前提示使用者。
+
+如果信任的網站使用 HTTPS 通訊協定，這個原則設定也可以控制 ActiveX 安裝程式服務回應憑證錯誤的方式。根據預設，所有 HTTPS 連線都必須提供可以通過所有驗證準則的伺服器憑證。如果您知道信任的網站憑證錯誤，但無論如何還是要信任它，您可以選取忽略憑證錯誤。
+    
+注意: 這個原則設定適用於信任區域中的所有網站。
+
+</string>
+      <string id="TrustedZoneDisabled">不要安裝</string>
+      <string id="TrustedZonePrompt">提示使用者</string>
+      <string id="TrustedZoneSilentInstall">自動安裝</string>
+      <string id="ApprovedActiveXInstallSites">ActiveX 控制項的認可安裝網站</string>
+      <string id="ApprovedActiveXInstallSites_explain">這個原則設定可以決定組織中的標準使用者可以使用哪個 ActiveX 安裝網站，在電腦上安裝 ActiveX 控制項。啟用這個設定後，系統管理員可以建立一份清單，內含主機 URL 指定的認可 ActiveX 安裝網站。
+
+如果您啟用這個設定，系統管理員可以建立一份清單，內含主機 URL 指定的認可 ActiveX 安裝網站。
+      
+如果您停用或未設定這個原則設定，ActiveX 控制項會在安裝前提示使用者提供系統管理認證。
+
+注意: 指定主機 URL 時不能使用萬用字元。
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">由受信任的發行者所簽署之 ActiveX 控制項的安裝原則</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">已簽署之 ActiveX 控制項的安裝原則</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">未簽署之 ActiveX 控制項的安裝原則</dropdownList>
+        <text>允許在有下列伺服器憑證錯誤的情況下連線到信任的網站。</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">未知的憑證授權單位 (CA)</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">無效的憑證名稱 (CN)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">過期的憑證驗證日期</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">錯誤的憑證使用方式</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">主機 URL</listBox>
+        <text>包含主機 URL 的原則。</text>
+        <text>例如  </text>
+        <text>主機名稱: http://activex.microsoft.com</text>
+        <text>值: 2,1,0,0</text>
+        <text>每部主機 URL 的值是以 CSV 格式呈現的四個設定。</text>
+        <text>其呈現方式為 "TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy</text>
+        <text>原則中左邊的前三個值會根據其簽章來控制 ActiveX 控制項的安裝。</text>
+        <text>它們應該是下列其中一項。</text>
+        <text>0: 將不會安裝 ActiveX 控制項</text>
+        <text>1: 提示使用者安裝 ActiveX 控制項</text>
+        <text>2: ActiveX 控制項將會以無訊息方式安裝</text>
+        <text>將以無訊息方式安裝由信任的發行者存放區中的憑證所簽署的控制項  </text>
+        <text>不支援未簽署之控制項的無訊息安裝</text>
+        <text></text>
+        <text>原則中最右邊的值是位元遮罩旗標</text>
+        <text>旗標可用來略過 https 憑證錯誤。</text>
+        <text>預設值為 0。</text>
+        <text>這表示 https 連線必須通過所有安全性檢查</text>
+        <text></text>
+        <text>使用下列值的組合</text>
+        <text>以略過無效的憑證錯誤</text>
+        <text>0x00000100 略過未知的 CA</text>
+        <text>0x00001000 略過無效的 CN</text>
+        <text>0x00002000 略過無效的憑證日期</text>
+        <text>0x00000200 略過錯誤的憑證使用率</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

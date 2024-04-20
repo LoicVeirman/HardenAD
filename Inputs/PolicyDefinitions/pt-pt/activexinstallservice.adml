@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Serviço ActiveX Installer</displayName>
+  <description>Instala os controlos ActiveX a partir dos sites de instalação aprovados</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">Serviço ActiveX Installer</string>
+      <string id="AxISURLZonePolicies">Estabelecer política de instalação ActiveX para sites em zonas Confiáveis</string>        
+      <string id="AxISURLZonePolicies_explain">Esta definição de política controla a instalação de controlos ActiveX para sites na zona Confiável. 
+
+Se ativar esta definição de política, os controlos do ActiveX serão instalados de acordo com as definições definidas por esta definição de política. 
+      
+Se desativar ou não configurar esta definição de política, os controlos ActiveX avisam o utilizador antes da instalação. 
+
+Se o site confiável utilizar o protocolo HTTPS, esta definição de política também pode controlar o modo como o Serviço ActiveX Installer responde a erros de certificados. Por predefinição, todas as ligações HTTPS têm de fornecer um certificado de servidor que transmita todos os critérios de validação. Se souber que um site confiável tem um erro de certificado, mas, mesmo assim, pretender considerá-lo confiável, poderá selecionar os erros de certificado que pretende ignorar. 
+    
+Nota: esta definição de política aplica-se a todos os sites em zonas Confiáveis.
+
+</string>
+      <string id="TrustedZoneDisabled">Não instalar</string>
+      <string id="TrustedZonePrompt">Perguntar ao utilizador</string>
+      <string id="TrustedZoneSilentInstall">Instalação automática</string>
+      <string id="ApprovedActiveXInstallSites">Sites de Instalação Aprovados para Controlos ActiveX</string>
+      <string id="ApprovedActiveXInstallSites_explain">Esta definição de política determina os sites de instalação do ActiveX que os utilizadores padrão na sua organização podem utilizar para instalar controlos ActiveX nos seus computadores. Quando esta definição está ativada, o administrador pode criar uma lista de sites de Instalação Activex aprovados especificados pelo URL do anfitrião. 
+
+Se ativar esta definição, o administrador poderá criar uma lista de sites de Instalação ActiveX aprovados especificados pelo URL do anfitrião. 
+      
+Se desativar ou não configurar esta definição de política, os controlos ActiveX pedem ao utilizador as credenciais administrativas antes da instalação. 
+
+Nota: não podem ser utilizados carateres universais ao especificar os URLs do anfitrião.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Política de Instalação para controlo ActiveX assinado por fabricante fidedigno</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Política de Instalação para controlo ActiveX assinado</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Política de Instalação para controlo ActiveX não assinado</dropdownList>
+        <text>Permitir ligação a sites fidedignos com os seguintes erros de certificados.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Autoridade de certificação (AC) desconhecida</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Nome de certificado inválido (NC)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Data de validação do certificado expirado</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Utilização de certificado incorreta</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">URLs Anfitrião</listBox>
+        <text>Contém a política para o URL anfitrião.</text>
+        <text>Por exemplo  </text>
+        <text>Nome_Anfitrião: http://activex.microsoft.com</text>
+        <text>Valor: 2,1,0,0</text>
+        <text>O valor de cada URL Anfitrião é constituído por quatro definições no formato CSV.</text>
+        <text>Representam "TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy</text>
+        <text>Os três valores da esquerda da política controlam a instalação de controlos ActiveX com base na respetiva assinatura.</text>
+        <text>Podem assumir um dos seguintes valores.</text>
+        <text>0: o controlo ActiveX não será instalado</text>
+        <text>1: solicitar a instalação do controlo ActiveX ao utilizador</text>
+        <text>2: o controlo ActiveX será instalado silenciosamente</text>
+        <text>Os controlos assinados por certificados no arquivo de fabricantes fidedignos serão instalados automaticamente  </text>
+        <text>A instalação silenciosa de controlos não assinados não é suportada</text>
+        <text></text>
+        <text>O valor da direita da política é um sinalizador com máscara de bits</text>
+        <text>Os sinalizadores são utilizados para ignorar os erros de certificado HTTPS.</text>
+        <text>O valor predefinido é 0.</text>
+        <text>O que significa que as ligações HTTPS têm de passar todas as verificações de segurança</text>
+        <text></text>
+        <text>Utilize a combinação dos valores seguintes</text>
+        <text>para ignorar erros de certificados inválidos</text>
+        <text>0x00000100  Ignorar AC Desconhecida</text>
+        <text>0x00001000  Ignorar NC inválido</text>
+        <text>0x00002000  Ignorar data de certificado inválida</text>
+        <text>0x00000200  Ignorar utilização incorreta de certificado</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Windows-Wartungsrichtlinien</displayName>
+  <description>Windows-Wartungsrichtlinien</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">Einstellungen für die Installation optionaler Komponenten und die Reparatur von Komponenten angeben</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+Mit dieser Richtlinieneinstellung werden die Netzwerkadressen angegeben, die für die Reparatur von Beschädigungen des Betriebssystems und zum Aktivieren optionaler Features verwendet werden, für die die Nutzlastdateien entfernt worden sind.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren und den neuen Speicherort angeben, werden die Dateien an diesem Speicherort verwendet, um Beschädigungen des Betriebssystems zu reparieren und die optionalen Features zu aktivieren, für die die Nutzlastdateien entfernt worden sind. Sie müssen im Textfeld "Alternativer Dateiquellpfad" den vollqualifizierten Pfad für den neuen Speicherort eingeben. Es können mehrere Speicherorte angegeben werden, wenn jeder Pfad durch ein Semikolon getrennt wird. 
+
+Bei der Netzwerkadresse kann es sich entweder um einen Ordner oder eine WIM-Datei handeln. Wenn es sich um eine WIM-Datei handelt, sollte der Pfad für den Speicherort mit dem Präfix "wim:" angegeben werden und den Index des zu verwendenden Images in der WIM-Datei enthalten. Beispiel: “wim:\\Server\Freigabe\install.wim:3”.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren oder wenn die erforderlichen Dateien am Speicherort, der in dieser Richtlinieneinstellung angegeben wurde, nicht gefunden werden können, werden die Dateien über Windows Update heruntergeladen (sofern dies die Richtlinieneinstellungen für den Computer zulassen).
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>Alternativer Dateiquellpfad</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">Versuchen Sie niemals, Nutzlastdateien über Windows Update herunterzuladen.</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">Laden Sie Inhalte für das Reparieren und optionale Features direkt von Windows Update anstatt von WSUS (Windows Server Update Services) herunter.</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="0.9" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+  <policyNamespaces>
+    <target prefix="multitasking" namespace="Microsoft.Policies.Multitasking" />
+    <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+  <categories>
+    <category name="MULTITASKING" displayName="$(string.MULTITASKING)" explainText="$(string.MULTITASKINGHELP)">
+       <parentCategory ref="windows:WindowsComponents" />
+    </category>
+  </categories>
+  <policies>
+    <policy name="BrowserAltTabBlowout" class="User" displayName="$(string.BrowserAltTabBlowout)" explainText="$(string.BrowserAltTabBlowout_Help)" presentation="$(presentation.AltTabFilter)" key="Software\Policies\Microsoft\Windows\Explorer">
+      <parentCategory ref="MULTITASKING" />
+      <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS7" />
+      <elements>
+        <enum id="AltTabFilterDropdown" valueName="MultiTaskingAltTabFilter" required="true">
+          <item displayName="$(string.AltTabFilter_All)">
+            <value>
+              <decimal value="1" />
+            </value>
+          </item>
+          <item displayName="$(string.AltTabFilter_Five)">
+            <value>
+              <decimal value="2" />
+            </value>
+          </item>
+          <item displayName="$(string.AltTabFilter_Three)">
+            <value>
+              <decimal value="3" />
+            </value>
+          </item>
+          <item displayName="$(string.AltTabFilter_None)">
+            <value>
+              <decimal value="4" />
+            </value>
+          </item>
+        </enum>
+      </elements>
+    </policy>
+  </policies>
+</policyDefinitions>

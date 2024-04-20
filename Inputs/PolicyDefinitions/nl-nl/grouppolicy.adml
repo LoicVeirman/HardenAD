@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>voer hier de weergegeven naam in</displayName>
+  <description>typ hier een beschrijving</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Opties voor risicobeperking</string>
+      <string id="Font_List">Niet-vertrouwd lettertype blokkeren</string>
+      <string id="Font_List_Help">Deze beveiligingsfunctie biedt een algemene instelling om te voorkomen dat programma's niet-vertrouwde lettertypen laden. Niet-vertrouwde lettertypen zijn lettertypen die worden geïnstalleerd buiten de map %windir%\Fonts. Deze functie kan in de volgende drie modi worden geconfigureerd: ingeschakeld, uitgeschakeld en controle. De standaardmodus is uitgeschakeld, in dat geval worden er geen lettertypen geblokkeerd. Als u niet helemaal zeker bent of deze functie in uw organisatie moet worden geïmplementeerd, kunt u deze uitvoeren in de controlemodus om te zien of het blokkeren van niet-vertrouwde lettertypen leidt tot bruikbaarheids- of compatibiliteitsproblemen.</string>
+      <string id="FontMitigation_On">Niet-vertrouwde lettertypen blokkeren en gebeurtenissen in logboek registreren</string>
+      <string id="FontMitigation_Off">Niet-vertrouwde lettertypen niet blokkeren</string>
+      <string id="FontMitigation_Audit">Gebeurtenissen in logboek registreren zonder niet-vertrouwde lettertypen te blokkeren</string>
+
+	  <string id="ProcessMitigationOptions_List">Opties voor risicobeperking verwerken</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Deze beveiligingsfunctie biedt een manier om de MitigationOptions-instellingen van een afzonderlijk proces te negeren. Dit is handig voor het afdwingen van een aantal beveiligingsbeleidsregels die specifiek zijn voor een toepassing. De toepassingsnaam wordt opgegeven als waardenaam, inclusief extensies. De waarde wordt opgegeven als een bitveld met een reeks vlaggen op bepaalde locaties. Bits kunnen worden ingesteld op 0 (instelling is geforceerd uitgeschakeld), 1 (instelling is geforceerd ingeschakeld) of ? (instelling behoudt de waarde van voor de GPO-evaluatie). De erkende bitlocaties zijn:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        DEP (Data Execution Prevention) inschakelen voor het onderliggende proces
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        DEP-ATL thunk-emulatie inschakelen voor het onderliggende proces. DEP-ATL thunk-emulatie zorgt ervoor dat het systeem NX-fouten onderschept die afkomstig zijn van de Active Template Library (ATL)-thunk-laag. 
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        SEHOP (Structured Exception Handler Overwrite Protection) inschakelen voor het onderliggende proces. SEHOP blokkeert aanvallen waarbij gebruik wordt gemaakt van de overschrijftechniek van SEH (Structured Exception Handler).
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        Met het forceren van het ASLR (Address Space Layout Randomization)-beleid worden installatiekopieën die niet compatibel zijn met de dynamische basis, geforceerd van een nieuwe basislocatie voorzien door net te doen alsof er een installatiekopiebasisconflict is opgetreden tijdens het laden. Als er nieuwe locaties moeten worden toegewezen, worden installatiekopieën zonder herlocatie van de basis niet geladen.
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        Het willekeurig bottom-up-beleid, inclusief willekeurige stapelopties, zorgt ervoor dat een willekeurige locatie wordt gebruikt als laagste gebruikersadres.
+
+        Als u bijvoorbeeld PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE en PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON wilt inschakelen, PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF wilt uitschakelen en voor alle andere opties de standaardwaarden wilt gebruiken, geeft u een waarde op van:
+        ???????????????0???????1???????1
+
+        Als u vlaggen die hier niet zijn vermeld, instelt op een andere waarde dan ?, zal dit leiden tot ongedefinieerd gedrag.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">Schakel de synchronisatie van de AD/DFS-domeincontroller tijdens de beleidsvernieuwing in</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">Door deze instelling in te schakelen wordt de Group Policy Client-met dezelfde domeincontroller voor gedeelde DFS's verbonden als die voor de de Active Directory wordt gebruikt.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">Schakel Group Policy Client-service AOAC optimalisatie uit.</string>
+      <string id="DisableAOACProcessing_Help">Deze beleidsinstelling voorkomt dat de Group Policy Client-service stopt wanneer deze niet actief is.
+
+
+
+</string>
+      <string id="EnableCDP">Ervaringen voortzetten op dit apparaat</string>
+      <string id="EnableCDP_Help">
+Met deze beleidsinstelling bepaalt u of het Windows-apparaat mag deelnemen aan apparaatoverschrijdende ervaringen (ervaringsvoortzetting).
+
+Als u deze beleidsinstelling inschakelt, kan het Windows-apparaat worden gevonden door andere Windows-apparaten die in het bezit zijn van dezelfde gebruiker en kan het deelnemen aan apparaatoverschrijdende ervaringen.
+
+Als u deze beleidsinstelling uitschakelt, is het Windows-apparaat niet vindbaar voor andere apparaten en kan het niet deelnemen aan deze ervaringen.
+
+Als u deze beleidsinstelling niet configureert, hangt het standaardgedrag af van de Windows-versie. Wijzigingen in dit beleid worden van kracht na opnieuw opstarten.
+      </string>
+      <string id="EnableMMX">Koppelen van telefoon en pc op dit apparaat</string>
+      <string id="EnableMMX_Help">
+Met dit beleid kunnen IT-beheerders de mogelijkheid uitschakelen om een telefoon te koppelen met een pc om verder te kunnen lezen, e-mails te verzenden en andere taken uit te voeren waarvoor een koppeling tussen de telefoon en de pc vereist is.
+
+Als u deze beleidsinstelling inschakelt, kan het Windows-apparaat worden ingeschreven voor de functionaliteit voor het koppelen van telefoon en pc en deelnemen aan 'Doorgaan op pc'-ervaringen.
+
+Als u deze beleidsinstelling uitschakelt, mag het Windows-apparaat niet worden gekoppeld aan telefoons, verwijdert het zichzelf uit de apparaatlijst van eventuele gekoppelde telefoons en kan het apparaat niet deelnemen aan 'Doorgaan op pc'-ervaringen.
+
+Als u deze beleidsinstelling niet configureert, is het standaardgedrag afhankelijk van de Windows-versie. Wijzigingen van dit beleid worden van kracht bij het opnieuw opstarten.
+      </string>
+      <string id="EnableAppUriHandlers">Web-naar-app-koppeling configureren met App URI-handlers</string>
+      <string id="EnableAppUriHandlers_Help">
+Met deze beleidsinstelling bepaalt u of Windows web-naar-app-koppeling met App URI-handlers ondersteunt.
+
+Door deze beleidsinstelling in te schakelen maakt u web-naar-app-koppeling mogelijk zodat apps kunnen worden gestart met een http(s)-URI.
+
+Door deze instelling uit te schakelen schakelt u web-naar-app-koppeling uit en worden http(s)-URI´s geopend in de standaardbrowser in plaats van dat de gekoppelde app wordt gestart.
+
+Als u deze beleidsinstelling niet configureert, is het standaardgedrag afhankelijk van de Windows-versie. Wijzigingen in dit beleid worden van kracht als de computer opnieuw is opgestart.
+      </string>
+      <string id="Fonts">Lettertypen</string>
+      <string id="EnableFontProviders">Providers van lettertypen inschakelen</string>
+      <string id="EnableFontProviders_Help">
+        Deze beleidsinstelling bepaalt of Windows lettertypen en gegevens uit lettertypecatalogussen mag downloaden bij een onlineprovider van lettertypen.
+        
+        Als u deze beleidsinstelling inschakelt, raadpleegt Windows periodiek een onlineprovider van lettertypen om te controleren of er een nieuwe lettertypecatalogus beschikbaar is. Windows kan ook lettertypegegevens downloaden als dat nodig is om tekst op te maken of weer te geven.
+        
+        Als u deze beleidsinstelling uitschakelt, maakt Windows geen verbinding met een onlineprovider van lettertypen en worden alleen lokaal geïnstalleerde lettertypen geïnventariseerd.
+      
+        Als u deze beleidsinstelling niet configureert, hangt het standaardgedrag af van de Windows-versie. Wijzigingen van dit beleid worden van kracht bij het opnieuw opstarten.
+      </string>
+      <string id="EnableLogonOptimization">Cache van Groepsbeleid configureren</string>
+      <string id="EnableLogonOptimization_Help">
+        Met deze beleidsinstelling kunt u het gedrag van de cache voor het Groepsbeleid configureren.
+
+        Als u deze beleidsinstelling inschakelt of niet configureert, slaat Groepsbeleid beleidsgegevens op in de cache na elke achtergrondverwerkingssessie. In deze cache worden de relevant groepsbeleidsobjecten (GPO's) opgeslagen, evenals de daarin opgenomen instellingen. Wanneer Groepsbeleid in de synchrone voorgrondmodus wordt uitgevoerd, verwijst het naar deze cache, waardoor het beleid sneller kan worden uitgevoerd. Wanneer de cache wordt gelezen, probeert Groepsbeleid contact te leggen met een aanmeldingsdomeincontroller om de verbindingssnelheid te bepalen. Wanneer Groepsbeleid in de achtergrondmodus of asynchrone voorgrondmodus wordt uitgevoerd, gaat het door met het downloaden van de recentste versie van de beleidsgegevens en schat het de bandbreedte in om de drempelwaarden voor de langzame verbinding te bepalen. (Raadpleeg de beleidsinstelling 'Configureer Detectie van langzame verbinding voor Groepsbeleid' om het asynchrone voorgrondgedrag te configureren.)
+
+        De waarde voor de langzame verbinding die in deze beleidsinstelling wordt gedefinieerd, bepaalt hoe lang Groepsbeleid op antwoord van de domeincontroller wacht voordat het bepaalt dat de verbindingssnelheid langzaam is. De standaardwaarde is 500 milliseconden.
+
+        De time-outwaarde die in deze beleidsinstelling wordt gedefinieerd, bepaalt hoe lang Groepsbeleid op antwoord van de domeincontroller wacht voordat vaststelt dat er geen netwerkverbinding is. Hierdoor wordt de verwerking van het huidige Groepsbeleid gestopt. De volgende keer dat er een verbinding met een domeincontroller tot stand wordt gebracht, wordt Groepsbeleid in de achtergrond uitgevoerd. Als u deze waarde te hoog afstelt, kan dit ertoe leiden dat de gebruiker langer moet wachten tijdens het opstarten of aanmelden. De standaardwaarde is 5000 milliseconden.
+
+        Als u deze beleidsinstelling uitschakelt, slaat de client van Groepsbeleid de relevante GPO's of instellingen binnen de GPO's niet op in een cache. Wanneer Groepsbeleid synchroon wordt uitgevoerd, downloadt het de recentste versie van het beleid vanaf het netwerk en schat deze de bandbreedte in om de drempelwaarden voor de langzame verbinding te bepalen. (Raadpleeg de beleidsinstelling 'Configureer Detectie van langzame verbinding voor groepsbeleid' om het asynchrone voorgrondgedrag te configureren.)
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">Opslag van Groepsbeleid voor servers inschakelen</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        Met deze beleidsinstelling kunt u het gedrag van de cache voor het Groepsbeleid op Windows Server-computers configureren.
+        Als u deze beleidsinstelling inschakelt, slaat Groepsbeleid beleidsgegevens op in de cache na elke achtergrondverwerkingssessie. In deze cache worden de relevante groepsbeleidsobjecten (GPO's) opgeslagen, evenals de daarin opgenomen instellingen. Wanneer Groepsbeleid in de synchrone voorgrondmodus wordt uitgevoerd, verwijst het naar deze cache, waardoor het beleid sneller kan worden uitgevoerd. Wanneer de cache wordt gelezen, probeert Groepsbeleid contact te leggen met een aanmeldingsdomeincontroller om de verbindingssnelheid te bepalen. Wanneer Groepsbeleid in de achtergrondmodus of asynchrone voorgrondmodus wordt uitgevoerd, gaat het door met het downloaden van de recentste versie van de beleidsgegevens en schat het de bandbreedte in om de drempelwaarden voor de langzame verbinding te bepalen. (Raadpleeg de beleidsinstelling 'Configureer Detectie van langzame verbinding voor Groepsbeleid' om het asynchrone voorgrondgedrag te configureren.)
+        De waarde voor de langzame verbinding die in deze beleidsinstelling wordt gedefinieerd, bepaalt hoe lang Groepsbeleid op antwoord van de domeincontroller wacht voordat het bepaalt dat de verbindingssnelheid langzaam is. De standaardwaarde is 500 milliseconden.
+        De time-outwaarde die in deze beleidsinstelling wordt gedefinieerd, bepaalt hoe lang Groepsbeleid op antwoord van de domeincontroller wacht voordat vaststelt dat er geen netwerkverbinding is. Hierdoor wordt de verwerking van het huidige Groepsbeleid gestopt. De volgende keer dat er een verbinding met een domeincontroller tot stand wordt gebracht, wordt Groepsbeleid in de achtergrond uitgevoerd. Als u deze waarde te hoog afstelt, kan dit ertoe leiden dat de gebruiker langer moet wachten tijdens het opstarten of aanmelden. De standaardwaarde is 5.000 milliseconden.
+        Als u deze beleidsinstelling uitschakelt of niet configureert, slaat de client van Groepsbeleid de relevante GPO's of instellingen binnen de GPO's niet op in een cache. Wanneer Groepsbeleid synchroon wordt uitgevoerd, downloadt het de recentste versie van het beleid vanaf het netwerk en schat het de bandbreedte om de drempelwaarden voor de langzame verbinding te bepalen. (Raadpleeg de beleidsinstelling 'Configureer Detectie van langzame verbinding voor groepsbeleid' om het asynchrone voorgrondgedrag te configureren.)
+      
+      </string>
+
+      <string id="LogonScriptDelay">Vertraging aanmeldingsscript configureren</string>
+      <string id="LogonScriptDelay_Help">
+        Voer '0' in om Vertraging aanmeldingsscript uit te schakelen.
+
+        Met deze beleidsinstelling kunt u bepalen hoe lang de client van Groepsbeleid na aanmelding moet wachten voordat er scripts worden uitgevoerd.
+
+        Standaard wacht de client van Groepsbeleid vijf minuten alvorens aanmeldingsscripts uit te voeren. Dit bevordert een snel reagerende bureaubladomgeving door het voorkomen van te veel gelijktijdige schijfverzoeken.
+
+        Als u deze beleidsinstelling inschakelt, wacht Groepsbeleid gedurende de opgegeven tijd voordat het aanmeldingsscripts uitvoert.
+
+        Als u deze beleidsinstelling uitschakelt, voert Groepsbeleid scripts onmiddellijk na aanmelding uit.
+
+        Als u deze beleidsinstelling niet configureert, wacht Groepsbeleid vijf minuten voordat het aanmeldingsscripts uitvoert.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">Direct Access-verbindingen configureren als snelle netwerkverbinding</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">Met deze beleidsinstelling kan een beheerder definiëren welke Direct Access-verbinding moet worden beschouwd als snelle netwerkverbinding ten behoeve van het toepassen en bijwerken van Groepsbeleid.
+
+Wanneer met Groepsbeleid de bandbreedtesnelheid van een Direct Access-verbinding wordt gedetecteerd, kunnen soms mogelijk geen gegevens over deze snelheid worden verstrekt. Als er met Groepsbeleid een bandbreedtesnelheid wordt gedetecteerd, worden de normale regels voor evaluatie gevolgd wanneer de Direct Access-verbinding een snelle of langzame internetverbinding is. Als er geen bandbreedtesnelheid wordt gedetecteerd, wordt Groepsbeleid standaard ingesteld op een langzame netwerkverbinding. Met deze beleidsinstelling kan de beheerder de standaardinstelling voor een langzame netwerkverbinding overschrijven, zodat in plaats hiervan standaard een snelle netwerkverbinding wordt gebruikt mocht de bandbreedtesnelheid van het netwerk niet worden vastgesteld.
+
+Opmerking: wanneer met Groepsbeleid een langzame netwerkverbinding wordt gedetecteerd, worden extensies van de client alleen verwerkt als ze zijn geconfigureerd voor verwerking via een langzame netwerkverbinding.
+
+Als u dit beleid inschakelt en de bandbreedtesnelheid voor Direct Access niet kan worden bepaald met Groepsbeleid, wordt de netwerkverbinding als snel beoordeeld en worden alle extensies van de client verwerkt.
+
+Als u deze instelling uitschakelt of niet configureert, wordt de netwerkverbinding als langzaam beoordeeld en worden alleen extensies van de client verwerkt die zijn geconfigureerd voor verwerking via een langzame verbinding.
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">Zorg ervoor dat Groepsbeleid asynchroon wordt verwerkt wanneer er een langzame netwerkverbinding wordt gedetecteerd.</string>
+      <string id="SlowlinkDefaultToAsync_Help">Met dit beleid worden extensies van de client niet verwerkt als deze synchroon moeten worden verwerkt (dus of computers wachten totdat het netwerk volledig is geïnitialiseerd wanneer ze worden opgestart en gebruikers zich aanmelden) wanneer een langzame netwerkverbinding is gedetecteerd.
+
+Als u deze beleidsinstelling inschakelt en er een langzame netwerkverbinding wordt gedetecteerd, wordt Groepsbeleid altijd asynchroon verwerkt.
+Tijdens het opstarten en aanmelden van clientcomputers wordt niet gewacht totdat het netwerk volledig is geïnitialiseerd. Bestaande gebruikers worden aangemeld met referenties die in de cache zijn opgeslagen. Zodoende worden ze sneller aangemeld. Groepsbeleid wordt op de achtergrond toegepast zodra het netwerk beschikbaar is.
+Omdat deze vernieuwing op de achtergrond wordt uitgevoerd, worden extensies die synchroon moeten worden verwerkt, zoals Software-installatie, Mapomleiding
+en de voorkeursextensie Stationstoewijzingen, niet toegepast.
+
+Opmerking: er zijn twee voorwaarden waardoor Groepsbeleid synchroon wordt verwerkt, zelfs als deze beleidsinstelling is ingeschakeld:
+1 - Wanneer de computer voor het eerst wordt opgestart nadat de clientcomputer lid is geworden van het domein.
+2 - Als de beleidsinstelling Altijd wachten op het netwerk bij het opstarten van de computer en het aanmelden is ingeschakeld.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, is de detectie van een langzame netwerkverbinding niet van invloed op het feit of Groepsbeleid synchroon of asynchroon wordt uitgevoerd.
+
+      </string>
+      <string id="DisableLGPOProcessing">Verwerking van lokale groepsbeleidsobjecten uitschakelen</string>
+      <string id="DisableLGPOProcessing_Help">Met deze beleidsinstelling wordt voorkomen dat lokale groepsbeleidsobjecten worden toegepast.
+
+De beleidsinstellingen in de lokale groepsbeleidsobjecten worden standaard toegepast vóór eventuele instellingen in groepsbeleidsobjecten voor het domein. Deze beleidsinstellingen kunnen van toepassing zijn op zowel gebruikers als de lokale computer. U kunt de verwerking en toepassing van alle lokale groepsbeleidsobjecten uitschakelen om er zeker van te zijn dat alleen groepsbeleidsobjecten voor het domein worden toegepast.
+
+Als u deze beleidsinstelling inschakelt, worden geen lokale groepsbeleidsobjecten verwerkt en toegepast door het systeem.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, worden lokale groepsbeleidsobjecten gewoon toegepast.
+
+N.B.: Voor computers die lid zijn van een domein, wordt u aangeraden deze beleidsinstelling alleen te configureren in groepsbeleidsobjecten voor het domein. Deze beleidsinstelling wordt genegeerd op computers die lid zijn van een werkgroep.
+
+</string>
+      <string id="SyncWaitTime">Bepaal de wachttijd voor verwerking van opstartbeleid</string>
+      <string id="SyncWaitTime_Help">Deze beleidsinstelling bepaalt hoe lang door groepsbeleid moet worden gewacht op meldingen van netwerkbeschikbaarheid tijdens de verwerking van het opstartbeleid. Als de verwerking van het opstartbeleid synchroon is, wordt de computer geblokkeerd totdat het netwerk beschikbaar is of totdat de standaardwachttijd is verstreken. Als de verwerking van het opstartbeleid asynchroon is, wordt de computer niet geblokkeerd en wordt het beleid op de achtergrond verwerkt. In beide gevallen heeft deze beleidsinstelling voorrang op door het systeem berekende wachttijden.
+
+Als u deze beleidsinstelling inschakelt, gebruikt groepsbeleid deze geconfigureerde maximumwachttijd in plaats van de standaard- of door het systeem berekende wachttijd.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, wordt door groepsbeleid een standaardwachttijd van 30 seconden gebruikt op computers met het besturingssysteem Windows Vista. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Sta crossforest-gebruikersbeleid en zwervende crossforest-gebruikersprofielen toe</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">Met deze beleidsinstelling worden beleidsverwerking op basis van gebruikers, zwervende gebruikersprofielen en aanmeldingsscripts voor gebruikersobjecten voor interactief aanmelden in verschillende forests toegestaan.
+
+Deze beleidsinstelling is van invloed op alle gebruikersaccounts die zich interactief aanmelden op een computer in een ander forest wanneer er een vertrouwensrelatie of een tweerichtingsrelatie tussen forests bestaat.
+
+Wanneer u deze beleidsinstelling niet configureert:
+-  Worden geen beleidsinstellingen op basis van gebruikersprofielen toegepast vanuit het gebruikers forest.
+-  Gebruikers ontvangen niet hun zwevende profielen; zij ontvangen een lokaal profiel op de computer vanuit het lokale forest. Er wordt een waarschuwingsbericht weergegeven aan de gebruiker en in het gebeurtenislogboek wordt een bericht (1529) gepost.
+- Loopbackverwerking van groepsbeleid wordt toegepast, met de groepsbeleidsobjecten (GPO's) die aan de computer zijn toegewezen.
+- In het gebeurtenislogboek wordt een bericht (1109) gepost, dat aangeeft dat loopback is aangeroepen in de modus Vervangen.
+
+Wanneer u deze beleidsinstelling inschakelt, is het gedrag exact hetzelfde als in Windows 2000: het gebruikersbeleid wordt toegepast en er wordt een zwevend gebruikersprofiel toegestaan uit het vertrouwde forest.
+
+Wanneer u ze instelling is uitschakelt, is het resultaat hetzelfde als wanneer de instelling niet is geconfigureerd.</string>
+      <string id="CSE_AppMgmt">Configureer de verwerking van software-installatiebeleid</string>
+      <string id="CSE_AppMgmt_Help">Deze beleidsinstelling bepaalt wanneer software-installatiebeleid wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op alle beleidsinstellingen die gebruik maken van het onderdeel voor software-installatie van groepsbeleid, zoals beleidsinstellingen in de map Software-instellingen\Software-installatie. U kunt beleid voor software-installatie alleen instellen voor groepsbeleidsobjecten die zijn opgeslagen in Active Directory, niet voor groepsbeleidsobjecten op de lokale computer.
+
+Deze beleidsinstelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee het beleid voor software-installatie is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze beleidsinstelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes. Als u deze beleidsinstelling uitschakelt of niet configureert, heeft dat geen invloed op het systeem.
+
+Met de optie 'Verwerking via een langzame netwerkverbinding toestaan' wordt het beleid ook bijgewerkt wanneer de update wordt overgedragen via een langzame netwerkverbinding, zoals een telefoonlijn. Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. In veel beleidsinstellingimplementaties is vastgelegd dat items alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigde beleidsinstelling bijwerken, als u een gewenst beleid opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+      <string id="CSE_DiskQuota">Configureer verwerking van schijfquotumbeleid</string>
+      <string id="CSE_DiskQuota_Help">Deze beleidsinstelling bepaalt wanneer schijfquotumbeleid wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op elk beleid dat gebruik maakt van het onderdeel voor schijfquota van groepsbeleid, zoals de instellingen in de map  Computerconfiguratie\Beheersjablonen\Systeem\Schijfquota.
+
+Deze beleidsinstelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee het beleid voor schijfquota is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze beleidsinstelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes. Als u deze beleidsinstelling uitschakelt of niet configureert, heeft dat geen invloed op het systeem.
+
+Met de optie 'Verwerking via een langzame netwerkverbinding toestaan' wordt het beleid ook bijgewerkt wanneer de update wordt overgedragen via een langzame netwerkverbinding, zoals een telefoonlijn. Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast
+
+De optie 'Niet toepassen tijdens periodieke achtergrondverwerking' voorkomt dat beleidsinstellingen op de achtergrond worden bijgewerkt terwijl de computer in gebruik is. Wanneer bijwerken op de achtergrond is uitgeschakeld, worden beleidswijzigingen pas van kracht bij de volgende aanmelding van een gebruiker of de volgende keer dat het systeem opnieuw wordt opgestart.
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. In veel beleidsimplementaties is vastgelegd dat items alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigd beleid bijwerken, als u een gewenste instelling opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+      <string id="CSE_EFSRecovery">Configureer Verwerking van EFS-herstelbeleid</string>
+      <string id="CSE_EFSRecovery_Help">Deze beleidsinstelling bepaalt wanneer het versleutelingsbeleid wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op elk beleid dat gebruikmaakt van het onderdeel voor versleuteling van groepsbeleid, zoals beleidsinstellingen voor versleuteling in de map Windows-instellingen\Beveiligingsinstellingen.
+
+De instelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee het beleid voor versleuteling is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze beleidsinstelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes. Als u deze beleidsinstelling uitschakelt of niet configureert, heeft dat geen invloed op het systeem.
+
+Met de optie 'Verwerking via een langzame netwerkverbinding toestaan' wordt het beleid ook bijgewerkt wanneer de update wordt overgedragen via een langzame netwerkverbinding, zoals een telefoonlijn. Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast
+
+De optie 'Niet toepassen tijdens periodieke achtergrondverwerking' voorkomt dat beleidsinstellingen op de achtergrond worden bijgewerkt terwijl de computer in gebruik is. Wanneer bijwerken op de achtergrond is uitgeschakeld, worden beleidswijzigingen pas van kracht bij de volgende aanmelding van een gebruiker of de volgende keer dat het systeem opnieuw wordt opgestart.
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. In veel beleidsimplementaties is vastgelegd dat items alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigd beleid bijwerken, als u een gewenste instelling opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+      <string id="CSE_FolderRedirection">Configureer Verwerking van mapomleidingsbeleid</string>
+      <string id="CSE_FolderRedirection_Help">Deze beleidsinstelling bepaalt wanneer een mapomleidingsbeleid wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op elk beleid dat gebruikmaakt van het onderdeel voor mapomleiding van groepsbeleid, zoals de instellingen in de map Windows-instellingen\Mapomleiding. U kunt beleid voor mapomleiding alleen instellen voor groepsbeleidsobjecten die zijn opgeslagen in Active Directory, niet voor groepsbeleidsobjecten op de lokale computer.
+
+Deze beleidsinstelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee de beleidsinstelling voor mapomleiding is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze beleidsinstelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes. Als u deze beleidsinstelling uitschakelt of niet configureert, heeft dat geen invloed op het systeem.
+
+Met de optie 'Verwerking via een langzame netwerkverbinding toestaan' wordt het beleid ook bijgewerkt wanneer de update wordt overgedragen via een langzame netwerkverbinding, zoals een telefoonlijn. Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. In veel beleidsimplementaties is vastgelegd dat items alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigd beleid bijwerken, als u een gewenste instelling opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+      <string id="CSE_IEM">Configureer Verwerking van Internet Explorer-onderhoudsbeleid</string>
+      <string id="CSE_IEM_Help">Deze beleidsinstelling bepaalt wanneer het beleid voor Internet Explorer-onderhoud wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op elk beleid dat gebruikmaakt van het onderdeel voor Internet Explorer-onderhoud van groepsbeleid, zoals de instellingen in de map Windows-instellingen\Internet Explorer-onderhoud.
+
+Deze beleidsinstelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee het beleid voor Internet Explorer-onderhoud is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze beleidsinstelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes. Als u deze beleidsinstelling uitschakelt of niet configureert, heeft dat geen invloed op het systeem.
+
+Met de optie 'Verwerking via een langzame netwerkverbinding toestaan' wordt het beleid ook bijgewerkt wanneer de update wordt overgedragen via een langzame netwerkverbinding, zoals een telefoonlijn. Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast
+
+De optie 'Niet toepassen tijdens periodieke achtergrondverwerking' voorkomt dat beleidsinstellingen op de achtergrond worden bijgewerkt terwijl de computer in gebruik is. Wanneer bijwerken op de achtergrond is uitgeschakeld, worden beleidswijzigingen pas van kracht bij de volgende aanmelding van een gebruiker of de volgende keer dat het systeem opnieuw wordt opgestart.
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. In veel beleidsimplementaties is vastgelegd dat items alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigd beleid bijwerken, als u een gewenste beleidsinstelling opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+      <string id="CSE_IPSecurity">Configureer Verwerking van IP-beveiligingsbeleid</string>
+      <string id="CSE_IPSecurity_Help">Deze beleidsinstelling bepaalt wanneer IP-beveiligingsbeleidsregels wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op elk beleid dat gebruikmaakt van het onderdeel voor IP-beveiliging van groepsbeleid, zoals de instellingen in de map Computerconfiguratie\Windows-instellingen\Beveiligingsinstellingen\IP-beveiligingsbeleid op Lokale computer.
+
+Deze beleidsinstelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee IP-beveiligingsbeleidsregels is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze beleidsinstelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes. Als u deze beleidsinstelling uitschakelt of niet configureert, heeft dat geen invloed op het systeem.
+
+Met de optie 'Verwerking via een langzame netwerkverbinding toestaan' wordt het beleid ook bijgewerkt wanneer de update wordt overgedragen via een langzame netwerkverbinding, zoals een telefoonlijn. Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast
+
+De optie 'Niet toepassen tijdens periodieke achtergrondverwerking' voorkomt dat beleidsinstellingen op de achtergrond worden bijgewerkt terwijl de computer in gebruik is. Wanneer bijwerken op de achtergrond is uitgeschakeld, worden beleidswijzigingen pas van kracht bij de volgende aanmelding van een gebruiker of de volgende keer dat het systeem opnieuw wordt opgestart.
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. In veel beleidsimplementaties is vastgelegd dat items alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigd beleid bijwerken, als u een gewenste beleidsinstelling opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+      <string id="CSE_Registry">Configureer Verwerking van registerbeleid</string>
+      <string id="CSE_Registry_Help">Deze beleidsinstelling bepaalt wanneer het registerbeleid wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op alle beleidsinstellingen in de map Beheersjablonen en op andere beleidsinstellingen waarmee waarden worden opgeslagen in het register. De instelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee een registerbeleid is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze beleidsinstelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes. Als u deze beleidsinstelling uitschakelt of niet configureert, heeft dat geen invloed op het systeem.
+
+De optie 'Niet toepassen tijdens periodieke achtergrondverwerking' voorkomt dat beleidsinstellingen op de achtergrond worden bijgewerkt terwijl de computer in gebruik is. Wanneer bijwerken op de achtergrond is uitgeschakeld, worden beleidswijzigingen pas van kracht bij de volgende aanmelding van een gebruiker of de volgende keer dat het systeem opnieuw wordt opgestart.
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. In veel beleidsimplementaties is vastgelegd dat items alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigd beleid bijwerken, als u een gewenste beleidsinstelling opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+      <string id="CSE_Scripts">Configureer Verwerking van scriptbeleid</string>
+      <string id="CSE_Scripts_Help">Deze beleidsinstelling bepaalt wanneer beleid waarmee gedeelde scripts worden toegewezen, wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op elk beleid dat gebruik maakt van het onderdeel voor scripts van groepsbeleid, zoals de instellingen in de map Windows-instellingen\Scripts. De instelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee het beleid voor scripts is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze beleidsinstelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes. Als u deze instelling uitschakelt of niet configureert, heeft dat geen invloed op het systeem.
+
+Met de optie 'Verwerking via een langzame netwerkverbinding toestaan' wordt het beleid ook bijgewerkt wanneer de update wordt overgedragen via een langzame netwerkverbinding, zoals een telefoonlijn. Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast
+
+De optie 'Niet toepassen tijdens periodieke achtergrondverwerking' voorkomt dat beleidsinstellingen op de achtergrond worden bijgewerkt terwijl de computer in gebruik is. Wanneer bijwerken op de achtergrond is uitgeschakeld, worden beleidswijzigingen pas van kracht bij de volgende aanmelding van een gebruiker of de volgende keer dat het systeem opnieuw wordt opgestart.
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. In veel beleidsimplementaties is vastgelegd dat items alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigd beleid bijwerken, als u een gewenste beleidsinstelling opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+      <string id="CSE_Security">Configureer Verwerking van beveiligingsbeleid</string>
+      <string id="CSE_Security_Help">Deze beleidsinstelling bepaalt wanneer het beveiligingsbeleid wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op elk beleid dat gebruikmaakt van het onderdeel voor beveiliging van groepsbeleid, zoals de instellingen in de map Windows-instellingen\Beveiligingsinstellingen.
+
+Deze beleidsinstelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee beveiligingsbeleidsregels is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze beleidsinstelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes. Als u deze beleidsinstelling uitschakelt of niet configureert, heeft dat geen invloed op het systeem.
+
+De optie 'Niet toepassen tijdens periodieke achtergrondverwerking' voorkomt dat beleidsinstellingen op de achtergrond worden bijgewerkt terwijl de computer in gebruik is. Wanneer bijwerken op de achtergrond is uitgeschakeld, worden beleidswijzigingen pas van kracht bij de volgende aanmelding van een gebruiker of de volgende keer dat het systeem opnieuw wordt opgestart.
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. Veel beleidsimplementaties bepalen dat ze alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigd beleid bijwerken, als u een gewenste beleidsinstelling opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+      <string id="CSE_Wireless">Configureer Verwerking van beleid voor draadloze netwerken</string>
+      <string id="CSE_Wireless_Help">Deze beleidsinstelling bepaalt wanneer beleid waarmee draadloze netwerken worden toegewezen, wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op elk beleid dat gebruik maakt van het onderdeel voor draadloze netwerken van groepsbeleid, zoals de instellingen in de map Windows-instellingen\Beleid voor draadloze netwerken.
+
+De instelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee het draadloze netwerk is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze instelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes.
+
+Als u deze instelling uitschakelt of niet configureert, heeft deze geen effect op het systeem.
+
+Met de optie 'Verwerking via een langzame netwerkverbinding toestaan' wordt het beleid ook bijgewerkt wanneer de update wordt overgedragen via een langzame netwerkverbinding, zoals een telefoonlijn. Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast
+
+De optie 'Niet toepassen tijdens periodieke achtergrondverwerking' voorkomt dat beleidsinstellingen op de achtergrond worden bijgewerkt terwijl de computer in gebruik is. Wanneer bijwerken op de achtergrond is uitgeschakeld, worden beleidswijzigingen pas van kracht bij de volgende aanmelding van een gebruiker of de volgende keer dat het systeem opnieuw wordt opgestart.
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. In veel beleidsimplementaties is vastgelegd dat items alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigd beleid bijwerken, als u een gewenste instelling opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+      <string id="CSE_Wired">Configureer Verwerking van beleid voor bekabelde netwerken</string>
+      <string id="CSE_Wired_Help">Deze beleidsinstelling bepaalt wanneer beleid waarmee bekabelde netwerken worden toegewezen, wordt bijgewerkt.
+
+Deze beleidsinstelling is van invloed op elk beleid dat gebruikmaakt van het onderdeel voor bekabelde netwerken van groepsbeleid, zoals de instellingen in de map Windows Settings\Wired Network Policies.
+
+De instelling heeft voorrang op aangepaste instellingen die zijn ingesteld door het programma waarmee het bekabelde netwerk is geïmplementeerd toen dit werd geïnstalleerd.
+
+Als u deze instelling inschakelt, kunt u de opties wijzigen met behulp van de beschikbare selectievakjes.
+
+Als u deze instelling uitschakelt of niet configureert, heeft deze geen effect op het systeem.
+
+Met de optie 'Verwerking via een langzame netwerkverbinding toestaan' wordt het beleid ook bijgewerkt wanneer de update wordt overgedragen via een langzame netwerkverbinding, zoals een telefoonlijn. Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast
+
+De optie 'Niet toepassen tijdens periodieke achtergrondverwerking' voorkomt dat beleidsinstellingen op de achtergrond worden bijgewerkt terwijl de computer in gebruik is. Wanneer bijwerken op de achtergrond is uitgeschakeld, worden beleidswijzigingen pas van kracht bij de volgende aanmelding van een gebruiker of de volgende keer dat het systeem opnieuw wordt opgestart.
+
+Met de optie 'Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd' wordt beleid altijd bijgewerkt en opnieuw toegepast, ook als het beleid niet is gewijzigd. In veel beleidsimplementaties is vastgelegd dat items alleen worden bijgewerkt als ze zijn gewijzigd. U kunt echter een ongewijzigd beleid bijwerken, als u een gewenste instelling opnieuw wilt toepassen, voor het geval een gebruiker deze instelling heeft gewijzigd.</string>
+
+      <string id="DenyRsopToInteractiveUser">Bepaal of interactieve gebruikers RSoP-gegevens kunnen genereren</string>
+      <string id="DenyRsopToInteractiveUser_Help">Deze beleidsinstelling bepaalt of gebruikers hun RSoP-gegevens (Resulterende verzameling beleidsregels) kunnen weergeven.
+
+Interactief aangemelde gebruikers kunnen standaard hun eigen RSoP-gegevens weergeven.
+
+Als u deze beleidsinstelling inschakelt, kunnen interactieve gebruikers geen RSoP-gegevens genereren.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, kunnen interactieve gebruikers RSoP-gegevens genereren.
+
+N.B.: Deze beleidsinstelling is niet van invloed op beheerders. Wanneer u deze beleidsinstelling inschakelt of uitschakelt, kunnen systeembeheerders standaard RSoP-gegevens bekijken.
+
+N.B.: Gebruik de RSoP-module van de Microsoft Management Console als u RSoP-gegevens op een clientcomputer wilt bekijken. U kunt de RSoP-module starten door in de opdrachtregel RSOP.msc in te voeren
+
+N.B.: Deze beleidsinstelling bestaat zowel als Gebruikersconfiguratie en Computerconfiguratie.
+
+Zie ook de beleidsinstelling 'RSoP-logboekregistratie uitschakelen' in Computerconfiguratie\Beheersjablonen\Systeem\Groepsbeleid.</string>
+      <string id="DisableAutoADMUpdate">Automatisch bijwerken van ADM-bestanden uitschakelen</string>
+      <string id="DisableAutoADMUpdate_Help">Hiermee voorkomt u dat het systeem de bronbestanden van Beheersjablonen automatisch bijwerkt wanneer u Groepsbeleidsobjecteditor opent.  Beheerders kunnen deze instelling gebruiken als ze bang zijn dat er te veel schijfruimte wordt gebruikt op het systeemvolume van een domeincontroller.
+
+Wanneer u Groepsbeleidsobjecteditor start, wordt standaard een vergelijking van tijdstempels uitgevoerd op de bronbestanden in de lokale map %SYSTEMROOT%\inf en de bronbestanden die zijn opgeslagen in het groepsbeleidsobject.  Als de lokale bestanden recenter zijn, worden deze naar het groepsbeleidsobject gekopieerd.
+
+Als u deze instelling inschakelt, worden geen bronbestanden naar het groepsbeleidsobject gekopieerd.
+
+Als u deze instelling uitschakelt, wordt de standaardwerking afgedwongen.  Bestanden worden altijd naar het groepsbeleidsobject gekopieerd als deze een later tijdstempel hebben.
+
+Opmerking: als de beleidsinstelling 'Altijd lokale ADM-bestanden voor de Groepsbeleidsobjecteditor gebruiken' in Computerconfiguratie is ingeschakeld, wordt de status van deze instelling genegeerd en wordt de instelling altijd als ingeschakeld beschouwd.</string>
+      <string id="DisableBackgroundPolicy">Achtergrondvernieuwing van groepsbeleid uitschakelen</string>
+      <string id="DisableBackgroundPolicy_Help">Deze beleidsinstelling voorkomt dat groepsbeleid wordt bijgewerkt als de computer in gebruik is. Deze beleidsinstelling is van toepassing op groepsbeleid voor computers, gebruikers en domeincontrollers.
+
+Als u deze beleidsinstelling inschakelt, worden de computer- en gebruikersinstellingen pas bijgewerkt nadat de huidige gebruiker zich heeft afgemeld bij het systeem.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, kunnen updates worden toegepast terwijl gebruikers actief zijn. De frequentie van updates wordt bepaald door de instellingen 'Vernieuwingsinterval van groepsbeleid voor computers instellen' en 'Vernieuwingsinterval van groepsbeleid voor gebruikers instellen'.
+
+N.B.: Als u deze beleidsinstelling wijzigt, moet u de computer opnieuw opstarten om de instelling van kracht te laten worden.</string>
+      <string id="DisableUsersFromMachGP">Het aanroepen van een computerbeleidsvernieuwing door de gebruiker uitschakelen</string>
+      <string id="DisableUsersFromMachGP_Help">Met deze beleidsinstelling bepaalt u of een gebruiker computerbeleid kan vernieuwen.
+
+Als u deze beleidsinstelling inschakelt, kunnen gebruikers computerbeleid mogelijk niet vernieuwen. Computerbeleid wordt toegepast bij het opstarten of wanneer een officiële vernieuwing van het beleid optreedt.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, is het standaardgedrag van toepassing. Computerbeleid wordt standaard toegepast wanneer de computer wordt opgestart. Het wordt bovendien toegepast na een opgegeven vernieuwingsinterval of wanneer het vernieuwen handmatig wordt gestart door de gebruiker.
+
+N.B.: Deze beleidsinstelling is alleen van invloed op niet-beheerders. Beheerders kunnen computerbeleid altijd vernieuwen, ongeacht de configuratie van deze beleidsinstelling.
+
+Zie ook de instelling 'Vernieuwingsinterval van groepsbeleid voor computers instellen' als u het vernieuwingsinterval voor deze beleidsinstelling wilt wijzigen.
+
+N.B.: Als u deze beleidsinstelling wijzigt, moet u de computer opnieuw opstarten om de instelling van kracht te laten worden.</string>
+      <string id="EnforcePoliciesOnly">Alleen beleid weergeven forceren</string>
+      <string id="EnforcePoliciesOnly_Help">Deze beleidsinstelling voorkomt dat beheerders voorkeursinstellingen van groepsbeleid weergeven of gebruiken.
+
+Een beheerbestand van groepsbeleid (.ADM) kan zowel echte instellingen als voorkeursinstellingen bevatten. Echte instellingen, die volledig worden ondersteund door groepsbeleid, moeten gebruikmaken van registervermeldingen in de subsleutels Software\Policies of Software\Microsoft\Windows\CurrentVersion\Policies van het register. Voorkeursinstellingen, die niet volledig worden ondersteund, maken gebruik van registervermeldingen in andere subsleutels.
+
+Als u deze beleidsinstelling inschakelt, wordt de opdracht 'Alleen beleid weergeven' ingeschakeld en kan deze niet worden uitgeschakeld door beheerders. Door Groepsbeleidsobjecteditor worden dan alleen echte instellingen weergegeven.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, wordt de opdracht 'Alleen beleid weergeven' standaard ingeschakeld, maar kunnen beheerders voorkeursinstellingen weergeven door de opdracht 'Alleen beleid weergeven' uit te schakelen.
+
+Opmerking: Om de opdracht 'Alleen beleid weergeven' te zoeken in de Groepsbeleidobjecteditor, klikt u op de map 'Beheersjablonen' (één van beide), waarna u met de rechter muisknop op dezelfde map klikt en vervolgens met de muis naar 'Weergeven' gaat.
+
+In de Groepsbeleidobjecteditor hebben voorkeuren een rood pictogram om ze te onderscheiden van echte instellingen, die een blauw pictogram hebben.</string>
+      <string id="GPDCOptionAny">Willekeurige domeincontroller gebruiken</string>
+      <string id="GPDCOptionInherit">Overnemen van Active Directory-modules</string>
+      <string id="GPDCOptionPDC">De primaire domeincontroller gebruiken</string>
+      <string id="GPDCOptions">Configureer Selectie van domeincontroller voor groepsbeleid</string>
+      <string id="GPDCOptions_Help">Deze beleidsinstelling bepaalt welke domeincontroller wordt gebruikt door de module Groepsbeleidsobjecteditor.
+
+Wanneer u deze instelling inschakelt, kunt u kiezen welke domeincontroller wordt gebruikt, overeenkomstig deze opties:
+
+'De primaire domeincontroller gebruiken' geeft aan dat de module Groepsbeleidsobjecteditor wijzigingen leest uit en schrijft naar de domeincontroller die is aangewezen als PDC operations-master voor het domein.
+
+'Overnemen van Active Directory-modules' geeft aan de module Groepsbeleidsobjecteditor wijzigingen leest uit en schrijft naar de domeincontroller die wordt gebruikt door de modules Active Directory:gebruikers en computers en Active Directory: sites en services.
+
+'Willekeurige domeincontroller gebruiken' geeft aan dat de module Groepsbeleidsobjecteditor wijzigingen kan lezen uit en schrijven naar elke beschikbare domeincontroller.
+
+Als u deze instelling uitschakelt of niet configureert, gebruikt de module Groepsbeleidsobjecteditor de domeincontroller die is aangewezen als PDC operations-master voor het domein.
+
+Opmerking: als u de PDC operations-master voor een domein wilt wijzigen, klikt u met de rechtermuisknop op een domein in Active Directory: gebruikers en computers en klikt u vervolgens op 'Operations-masters'.</string>
+      <string id="GPTransferRate">Configureer Detectie van langzame verbinding voor groepsbeleid</string>
+      <string id="GPTransferRate_Help">Deze beleidsinstelling definieert een langzame verbinding voor het toepassen en bijwerken van groepsbeleid.
+
+Een verbinding wordt als langzaam beschouwd als de snelheid waarmee gegevens worden overgedragen van de domeincontroller die beleidsupdates levert aan de computers in deze groep, lager is dan de snelheid die met deze instelling is opgegeven.
+
+Hoe het systeem reageert op een beleid voor een langzame verbinding hangt af van de beleidsinstelling. De reactie op een langzame verbinding kan worden opgegeven via het programma dat het beleid implementeert. Bovendien kunt u met de instellingen voor beleidsverwerking in deze map reacties op langzame verbindingen die door programma's zijn opgegeven, overschrijven.
+
+Als u deze instelling inschakelt, kunt u in het vak 'Verbindingssnelheid' een decimaal getal tussen 0 en 4.294.967.200 intypen, dat de overdrachtssnelheid in kilobits per seconde aangeeft. Een verbinding die langzamer is dan deze waarde, wordt als langzaam beschouwd. Als u een 0 invoert, worden alle verbindingen als snel beschouwd.
+
+Als u deze instelling uitschakelt of niet configureert, wordt de standaardwaarde van 500 kilobits per seconde gebruikt.
+
+Deze instelling wordt weergegeven in de map Computerconfiguratie en de map Gebruikersconfiguratie. De instelling in Computerconfiguratie definieert een langzame verbinding voor beleidsinstellingen in de map Computerconfiguratie. De instelling in Gebruikersconfiguratie definieert een langzame verbinding voor beleidsinstellingen in de map Gebruikersconfiguratie.
+
+Zie ook 'Langzame netwerkverbindingen niet detecteren' en verwante beleidsinstellingen in Computerconfiguratie\Beheersjablonen\Systeem\Gebruikersprofiel. Opmerking: Als de profielserver IP-verbindingen kan maken, wordt de instelling voor de verbindingssnelheid gebruikt. Als de profielserver geen IP-verbindingen kan maken, wordt SMB-timing gebruikt.</string>
+      <string id="GroupPolicyRefreshRate">Vernieuwingsinterval van groepsbeleid voor computers instellen</string>
+      <string id="GroupPolicyRefreshRate_Help">Deze beleidsinstelling bepaalt hoe vaak groepsbeleid voor computers wordt bijgewerkt als de computer in gebruik is (op de achtergrond). Deze instelling voor bijwerken op de achtergrond is alleen van toepassing op groepsbeleid in de map Computerconfiguratie.
+
+Behalve op de achtergrond wordt groepsbeleid voor de computer altijd bijgewerkt wanneer het systeem wordt gestart.
+
+Groepsbeleid voor de computer wordt standaard elke 90 minuten op de achtergrond bijgewerkt, met een willekeurige marge van 0 tot 30 minuten.
+
+Wanneer u deze instelling inschakelt, kunt u een waarde opgeven van 0 tot 64.800 minuten (45 dagen). Als u 0 minuten selecteert, zal de computer proberen groepsbeleid elke zeven seconden bij te werken. Dergelijke hele korte update-intervallen zijn echter voor de meeste installaties niet geschikt, omdat updates van invloed kunnen zijn op het werk van gebruikers en het netwerkverkeer doen toenemen.
+
+Als u deze instelling uitschakelt, wordt groepsbeleid elke 90 minuten bijgewerkt (de standaardinstelling). Als u wilt dat groepsbeleid nooit wordt bijgewerkt terwijl de computer in gebruik is, selecteert u het beleid 'Achtergrondvernieuwing van groepsbeleid uitschakelen'.
+
+Met het beleid 'Vernieuwingsinterval van groepsbeleid voor computers instellen' kunt u ook opgeven hoeveel het werkelijke update-interval varieert. Om te voorkomen dat clients met hetzelfde update-interval tegelijkertijd updates aanvragen, varieert het systeem het update-interval voor elke client met een willekeurig aantal minuten. De waarde die u opgeeft in het vak 'Willekeurige tijd' stelt de bovenlimiet in voor het variantiebereik. Als u bijvoorbeeld 30 minuten opgeeft, zal het systeem een variantie selecteren van 0 tot 30 minuten. Met een hoge waarde wordt een groot bereik ingesteld, waardoor de kans minder groot is dat clientaanvragen elkaar overlappen. Updates kunnen echter aanzienlijk worden vertraagd.
+
+Met deze instelling stelt u de updatefrequentie in voor groepsbeleid voor computers. Als u een updatefrequentie wilt instellen voor groepsbeleid voor gebruikers, gebruikt u de instelling 'Vernieuwingsinterval van groepsbeleid voor gebruikers instellen' in Gebruikersconfiguratie\Beheersjablonen\Systeem\Groepsbeleid.
+
+Deze instelling wordt alleen gebruikt wanneer de instelling 'Achtergrondvernieuwing van groepsbeleid uitschakelen' niet is ingeschakeld.
+
+Opmerking: Het is raadzaam om gebruikers te waarschuwen dat hun beleid regelmatig wordt bijgewerkt, zodat zij weten wanneer er een beleidsupdate wordt uitgevoerd. Wanneer groepsbeleid wordt bijgewerkt, wordt het Windows-bureaublad vernieuwd; het flikkert even en geopende menu's worden gesloten. Bovendien kunnen beperkingen die door groepsbeleid zijn ingesteld, bijvoorbeeld voor de programma's die kunnen worden uitgevoerd door gebruikers, van invloed zijn op actieve taken.</string>
+      <string id="GroupPolicyRefreshRateDC">Vernieuwingsinterval van groepsbeleid voor domeincontrollers instellen</string>
+      <string id="GroupPolicyRefreshRateDC_Help">Deze beleidsinstelling bepaalt hoe vaak groepsbeleid op domeincontrollers wordt bijgewerkt als deze actief zijn (op de achtergrond). De updates die met deze instelling worden opgegeven, worden uitgevoerd naast de updates bij het starten van het systeem.
+
+Standaard wordt groepsbeleid op de domeincontrollers elke vijf minuten bijgewerkt.
+
+Wanneer u deze instelling inschakelt, kunt u een waarde opgeven van 0 tot 64.800 minuten (45 dagen). Als u 0 minuten selecteert, zal de domeincontroller proberen groepsbeleid elke zeven seconden bij te werken. Dergelijke hele korte update-intervallen zijn echter voor de meeste installaties niet geschikt, omdat updates van invloed kunnen zijn op het werk van gebruikers en het netwerkverkeer doen toenemen.
+
+Als u deze instelling uitschakelt of niet configureert, wordt groepsbeleid elke 5 minuten bijgewerkt door de domeincontroller (de standaardinstelling). Als u wilt dat groepsbeleid voor gebruikers nooit wordt bijgewerkt terwijl de computer in gebruik is, selecteert u de instelling 'Achtergrondvernieuwing van groepsbeleid uitschakelen'.
+
+U kunt met deze instelling ook opgeven hoeveel het werkelijke update-interval varieert. Om te voorkomen dat domeincontrollers met hetzelfde update-interval tegelijkertijd updates aanvragen, varieert het systeem het update-interval voor elke domeincontroller met een willekeurig aantal minuten. De waarde die u opgeeft in het vak 'Willekeurige tijd' stelt de bovenlimiet in voor het variantiebereik. Als u bijvoorbeeld 30 minuten opgeeft, zal het systeem een variantie selecteren van 0 tot 30 minuten. Met een hoge waarde wordt een groot bereik ingesteld, waardoor de kans minder groot is dat aanvragen voor updates elkaar overlappen. Updates kunnen echter aanzienlijk worden vertraagd.
+
+Opmerking: Deze instelling wordt alleen gebruikt als u beleid voor een domein, site, organisatie-eenheid (OU) of aangepaste groep instelt. Als u alleen beleid voor een lokale computer instelt, wordt deze instelling genegeerd door het systeem.</string>
+      <string id="GroupPolicyRefreshRateUser">Vernieuwingsinterval van groepsbeleid voor gebruikers instellen</string>
+      <string id="GroupPolicyRefreshRateUser_Help">Deze beleidsinstelling bepaalt hoe vaak groepsbeleid voor gebruikers wordt bijgewerkt als de computer in gebruik is (op de achtergrond). Deze instelling voor bijwerken op de achtergrond is alleen van toepassing op groepsbeleid in de map Gebruikersconfiguratie.
+
+Behalve op de achtergrond wordt groepsbeleid voor gebruikers altijd bijgewerkt wanneer gebruikers zich aanmelden.
+
+Groepsbeleid voor gebruikers wordt standaard elke 90 minuten op de achtergrond bijgewerkt, met een willekeurige marge van 0 tot 30 minuten.
+
+Wanneer u deze instelling inschakelt, kunt u een waarde opgeven van 0 tot 64.800 minuten (45 dagen). Als u 0 minuten selecteert, zal de computer proberen groepsbeleid elke zeven seconden bij te werken. Dergelijke hele korte update-intervallen zijn echter voor de meeste installaties niet geschikt, omdat updates van invloed kunnen zijn op het werk van gebruikers en het netwerkverkeer doen toenemen.
+
+Als u deze instelling uitschakelt, wordt groepsbeleid voor gebruikers elke 90 minuten bijgewerkt (de standaardinstelling). Als u wilt dat groepsbeleid voor gebruikers nooit wordt bijgewerkt terwijl de computer in gebruik is, selecteert u de instelling 'Achtergrondvernieuwing van groepsbeleid uitschakelen'.
+
+U kunt met deze instelling ook opgeven hoeveel het werkelijke update-interval varieert. Om te voorkomen dat clients met hetzelfde update-interval tegelijkertijd updates aanvragen, varieert het systeem het update-interval voor elke client met een willekeurig aantal minuten. De waarde die u opgeeft in het vak 'Willekeurige tijd' stelt de bovenlimiet in voor het variantiebereik. Als u bijvoorbeeld 30 minuten opgeeft, zal het systeem een variantie selecteren van 0 tot 30 minuten. Met een hoge waarde wordt een groot bereik ingesteld, waardoor de kans minder groot is dat clientaanvragen elkaar overlappen. Updates kunnen echter aanzienlijk worden vertraagd.
+
+Belangrijk: als de instelling 'Achtergrondvernieuwing van groepsbeleid uitschakelen' is ingeschakeld, wordt deze instelling genegeerd.
+
+Opmerking: Deze instelling stelt de updatefrequentie in voor groepsbeleid voor gebruikers. Als u een updatefrequentie wilt instellen voor groepsbeleid voor computers, gebruikt u de instelling 'Vernieuwingsinterval van groepsbeleid voor computers' in Computerconfiguratie\Beheersjablonen\Systeem\Groepsbeleid.
+
+Tip: Het is raadzaam om gebruikers te waarschuwen dat hun beleid regelmatig wordt bijgewerkt, zodat zij weten wanneer er een beleidsupdate wordt uitgevoerd. Wanneer groepsbeleid wordt bijgewerkt, wordt het Windows-bureaublad vernieuwd; het flikkert even en geopende menu's worden gesloten. Bovendien kunnen beperkingen die door groepsbeleid zijn ingesteld, bijvoorbeeld voor de programma's die kunnen worden uitgevoerd door een gebruiker, van invloed zijn op actieve taken.</string>
+      <string id="NewGPODisplayName">Standaardnaam voor nieuwe groepsbeleidsobjecten instellen</string>
+      <string id="NewGPODisplayName_Help">Met deze beleidsinstelling stelt u de standaard weergavenaam voor nieuwe Groepsbeleidobjecten in.
+
+Met deze instelling kunt u de standaardnaam opgeven voor nieuwe groepsbeleidsobjecten die worden gemaakt met hulpprogramma's van Groepsbeleidsbeheer, zoals het tabblad Groepsbeleid in Active Directory-hulpprogramma's en de groepsbeleidsobjectbrowser.
+
+De weergegeven naam kan omgevingsvariabelen bevatten en mag maximaal 255 tekens lang zijn.
+
+Als deze instelling is uitgeschakeld of niet is geconfigureerd, wordt de standaardnaam Nieuw groepsbeleidsobject gebruikt.</string>
+      <string id="NewGPOLinksDisabled">Nieuwe koppelingen naar groepsbeleidsobject maken die standaard zijn uitgeschakeld</string>
+      <string id="NewGPOLinksDisabled_Help">Met deze beleidsinstelling kunt u nieuwe koppelingen naar groepsbeleidobject maken die zijn uitgeschakeld.
+
+Wanneer u deze instelling inschakelt, kunt u standaard alle nieuwe groepsbeleidsobjectkoppelingen maken met de status Uitgeschakeld. Nadat u de nieuwe groepsbeleidsobjectkoppelingen hebt geconfigureerd en getest met een hulpprogramma van Groepsbeleidsbeheer, zoals Active Directory:gebruikers en computers of Active Directory: sites en services, kunt u de objectkoppelingen inschakelen voor gebruik op het systeem.
+
+Als u deze instelling uitschakelt of niet configureert, worden nieuwe groepsbeleidsobjectkoppelingen gemaakt met de status Ingeschakeld. Als u de objectkoppelingen niet effectief wilt maken totdat deze zijn geconfigureerd en getest, dient u de koppelingen uit te schakelen.</string>
+      <string id="OnlyUseLocalAdminFiles">Altijd lokale ADM-bestanden voor de Groepsbeleidsobjecteditor gebruiken</string>
+      <string id="OnlyUseLocalAdminFiles_Help">Met deze beleidsinstelling kunt u altijd lokale ADM-bestanden gebruiken voor de module Groepsbeleidsobjecteditor.
+
+Standaard, wanneer u een Groepsbeleidobject bewerkt met de Groepsbeleidobjecteditor-module, worden de ADM-bestanden geopend uit die GPO in de Groepsbeleidobjecteditor-module. Hiermee kunt u dezelfde versie van de ADM-bestanden gebruiken die werden gebruikt om de GPO te maken tijdens het bewerken van deze GPO.
+
+Dit heeft het volgende gedrag tot gevolg:
+
+- Als u het oorspronkelijke groepsbeleidsobject hebt gemaakt met een Engels systeem, bevat het groepsbeleidsobject Engelse ADM-bestanden.
+
+- Als u het groepsbeleidsobject later bewerkt op een systeem met een andere taal, krijgt u toch de oorspronkelijke Engelse ADM-bestanden in het groepsbeleidsobject.
+
+Dit gedrag kunt u wijzigen met deze instelling.
+
+Als u deze instelling inschakelt, gebruikt de module Groepsbeleidsobjecteditor altijd lokale ADM-bestanden in de map %windir%\inf voor het bewerken van groepsbeleidsobjecten.
+
+Dit heeft het volgende gedrag tot gevolg:
+
+- Als u het groepsbeleidsobject met een Engels systeem hebt gemaakt en het vervolgens met een Japans systeem bewerkt, gebruikt de module Groepsbeleidsobjecteditor de lokale Japanse ADM-bestanden en ziet u de tekst in het Japans onder Beheersjablonen.
+
+Als u deze instelling uitschakelt of niet configureert, laadt de module Groepsbeleidsobjecteditor alle ADM-bestanden vanuit het eigenlijke groepsbeleidsobject.
+
+Opmerking: als de vereiste ADM-bestanden niet allemaal lokaal beschikbaar zijn in de map %windir%\inf, kunt u mogelijk niet alle instellingen zien die zijn geconfigureerd in het groepsbeleidsobject dat u nu bewerkt.</string>
+      <string id="PolicyPolicies">Groepsbeleid</string>
+      <string id="RSoPLogging">RSoP-logboekregistratie uitschakelen</string>
+      <string id="RSoPLogging_Help">Met deze instelling kunt u logboekregistratie van Resulterende verzameling beleidsregels (RSoP) op een clientcomputer in- of uitschakelen.
+
+Door Resulterende verzameling beleidsregels worden gegevens vastgelegd over groepsbeleidsinstellingen die zijn toegepast op de client. Dit zijn onder andere gegevens zoals welke groepsbeleidsobjecten zijn toegepast, de oorsprong van deze objecten en de instellingen van uitbreidingen bij de client die zijn gebruikt.
+
+Als u deze instelling inschakelt, wordt RSoP-logboekregistratie uitgeschakeld.
+
+Als u deze instelling uitschakelt of niet configureert, wordt RSoP-logboekregistratie ingeschakeld. RSoP-logboekregistratie is standaard altijd ingeschakeld.
+
+Opmerking: als u de RSoP-gegevens wilt bekijken die zijn vastgelegd op een clientcomputer, kunt u de module Resulterende verzameling beleidsregels in de Microsoft Management Console (MMC) gebruiken.</string>
+      <string id="UserPolicyMode">Configureer Loopback-verwerkingsmodus voor gebruikersgroepsbeleid</string>
+      <string id="UserPolicyMode_Help">Met deze beleidsinstelling wordt de set groepsbeleidsobjecten voor de computer toegepast op elke gebruiker die zich aanmeldt op een computer waarop deze instelling van toepassing is. De instelling is bedoeld voor computers met een speciale functie, zoals computers in openbare plaatsen, laboratoria en klaslokalen, waar u de gebruikersinstellingen moet wijzigen op basis van de computer die wordt gebruikt.
+
+Standaard wordt door de groepsbeleidsobjecten van de gebruiker bepaald welke gebruikersinstellingen van toepassing zijn. Als deze instelling is ingeschakeld, wordt door de groepsbeleidsobjecten van de computer bepaald welke set groepsbeleidsobjecten van toepassing is wanneer een gebruiker zich aanmeldt op deze computer.
+
+Wanneer u deze instelling inschakelt, kunt u één van de volgende modi selecteren in het vak Modus:
+
+'Vervangen' geeft aan dat de gebruikersinstellingen die normaal worden toegepast op de gebruiker, worden vervangen door de gebruikersinstellingen die zijn gedefinieerd in de groepsbeleidsobjecten van de computer. 
+
+'Samenvoegen' geeft aan dat de gebruikersinstellingen die normaal worden toegepast op de gebruiker worden gecombineerd met de gebruikersinstellingen die zijn gedefinieerd in de groepsbeleidsobjecten van de computer. Als de instellingen strijdig zijn, hebben de gebruikersinstellingen in de groepsbeleidsobjecten van de computer voorrang op de normale instellingen van de gebruiker.
+
+Als u deze instelling uitschakelt of niet configureert, wordt door de groepsbeleidsobjecten van de gebruiker bepaald welke gebruikersinstellingen van toepassing zijn.
+
+Opmerking: Deze instelling geldt alleen als zowel de computeraccount als de gebruikersaccount zich in Windows 2000-domeinen bevinden.</string>
+      <string id="UserPolicyMode_Merge">Samenvoegen</string>
+      <string id="UserPolicyMode_Replace">Vervangen</string>
+      <string id="CorpConnSyncWaitTime">Specificeer de wachttijd voor de werkplekconnectiviteit voor beleidsverwerking.</string>
+      <string id="CorpConnSyncWaitTime_Help">Deze beleidsinstelling bepaalt hoe lang door groepsbeleid moet worden gewacht op meldingen van werkplekconnectiviteit tijdens de verwerking van het opstartbeleid. Als de verwerking van het opstartbeleid synchroon is, wordt de computer geblokkeerd totdat het werkplekconnectiviteit beschikbaar is of totdat de standaardwachttijd is verstreken. Als de verwerking van het opstartbeleid asynchroon is, wordt de computer niet geblokkeerd en wordt het beleid op de achtergrond verwerkt. In beide gevallen heeft deze beleidsinstelling voorrang op door het systeem berekende wachttijden.
+
+Als u deze beleidsinstelling inschakelt, wordt deze door de beheerder geconfigureerde maximumwachttijd in Groepsbeleid gebruikt voor connectiviteit op de werkplek en wordt elke standaard- of automatisch berekende wachttijd overschreven.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, wordt door groepsbeleid een standaardwachttijd van 60 seconden gebruikt op computers met het Windows-besturingssysteem groter dan Windows 7, geconfigureerd voor werkplekconnectiviteit.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Opties voor risicobeperking</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">Opties voor risicobeperking verwerken</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">De Windows Font Cache-service moet worden toegestaan om lettertypen en gegevens uit lettertypecatalogussen te downloaden bij onlineproviders van lettertypen.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">waarde voor langzame verbinding:[number field] milliseconden</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Time-outwaarde:[number field] milliseconden</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">minuut:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Tijd die moet worden gewacht (in seconden):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Verwerking via een langzame netwerkverbinding toestaan</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Verwerking via een langzame netwerkverbinding toestaan</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Niet toepassen tijdens periodieke achtergrondverwerking</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Verwerking via een langzame netwerkverbinding toestaan</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Niet toepassen tijdens periodieke achtergrondverwerking</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Verwerking via een langzame netwerkverbinding toestaan</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Verwerking via een langzame netwerkverbinding toestaan</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Niet toepassen tijdens periodieke achtergrondverwerking</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Verwerking via een langzame netwerkverbinding toestaan</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Niet toepassen tijdens periodieke achtergrondverwerking</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Niet toepassen tijdens periodieke achtergrondverwerking</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Verwerking via een langzame netwerkverbinding toestaan</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Niet toepassen tijdens periodieke achtergrondverwerking</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Niet toepassen tijdens periodieke achtergrondverwerking</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Verwerking via een langzame netwerkverbinding toestaan</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Niet toepassen tijdens periodieke achtergrondverwerking</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Verwerking via een langzame netwerkverbinding toestaan</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Niet toepassen tijdens periodieke achtergrondverwerking</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Ook verwerken als de groepsbeleidsobjecten niet zijn gewijzigd</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Als Groepsbeleidsobjecteditor een domeincontroller selecteert, moet deze:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Verbindingssnelheid (kbps):</decimalTextBox>
+        <text> </text>
+        <text>Geef 0 op om detectie van langzame verbinding uit te schakelen.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Verbindingssnelheid (kbps):</decimalTextBox>
+        <text> </text>
+        <text>Geef 0 op om detectie van langzame verbinding uit te schakelen.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">WWAN-verbindingen altijd behandelen als langzame verbinding</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast</text>
+        <text>op computers. Het bereik ligt tussen 0 en 44640 minuten (31 dag).</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Minuten:</decimalTextBox>
+        <text> </text>
+        <text>Dit is een willekeurige tijd die wordt toegevoegd aan het vernieuwingsinterval om</text>
+        <text>te voorkomen dat alle clients op hetzelfde moment groepsbeleid opvragen.</text>
+        <text>Het bereik ligt tussen 0 en 1.440 minuten (24 uur)</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Minuten:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast</text>
+        <text>op domeincontrollers. Het bereik ligt tussen 0 en 44640 minuten (31 dag).</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Minuten:</decimalTextBox>
+        <text> </text>
+        <text>Dit is een willekeurige tijd die wordt toegevoegd aan het vernieuwingsinterval om</text>
+        <text>te voorkomen dat alle clients op hetzelfde moment groepsbeleid opvragen.</text>
+        <text>Het bereik ligt tussen 0 en 1.440 minuten (24 uur)</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Minuten:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>Met deze instelling kunt u aanpassen hoe vaak groepsbeleid wordt toegepast</text>
+        <text>op gebruikers. Het bereik ligt tussen 0 en 44640 minuten (31 dag).</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Minuten:</decimalTextBox>
+        <text> </text>
+        <text>Dit is een willekeurige tijd die wordt toegevoegd aan het vernieuwingsinterval om</text>
+        <text>te voorkomen dat alle clients op hetzelfde moment groepsbeleid opvragen.</text>
+        <text>Het bereik ligt tussen 0 en 1.440 minuten (24 uur)</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Minuten:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>Naam groepsbeleidsobject:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Modus:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Tijd die moet worden gewacht (in seconden):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

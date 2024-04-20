@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Service d’installation ActiveX</displayName>
+  <description>Installe les contrôles ActiveX à partir des sites d’installation approuvés</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">Service d’installation ActiveX</string>
+      <string id="AxISURLZonePolicies">Définir la stratégie d’installation ActiveX pour les sites faisant partie des zones de confiance</string>        
+      <string id="AxISURLZonePolicies_explain">Ce paramètre de stratégie permet de gérer l’installation des contrôles ActiveX pour les sites qui figurent dans une zone de confiance. 
+
+Si vous activez ce paramètre de stratégie, les contrôles ActiveX sont installés selon le paramétrage défini par ce paramètre de stratégie. 
+      
+Si vous désactivez ou ne configurez pas ce paramètre de stratégie, les contrôles ActiveX demandent confirmation à l’utilisateur avant l’installation. 
+
+Si le site de confiance utilise le protocole HTTPS, ce paramètre de stratégie permet également de contrôler la façon dont le service d’installation ActiveX répond aux erreurs de certificat. Par défaut, toutes les connexions HTTPS doivent fournir un certificat de serveur répondant à tous les critères de validation. Si vous savez qu’un site de confiance présente une erreur de certificat mais que vous voulez tout de même l’approuver, vous pouvez sélectionner les erreurs de certificat que vous souhaitez ignorer. 
+    
+Remarque : ce paramètre de stratégie s’applique à tous les sites figurant dans des zones de confiance.
+
+</string>
+      <string id="TrustedZoneDisabled">Ne pas installer</string>
+      <string id="TrustedZonePrompt">Demander à l’utilisateur</string>
+      <string id="TrustedZoneSilentInstall">Installer de manière silencieuse</string>
+      <string id="ApprovedActiveXInstallSites">Sites d’installation approuvés pour les contrôles ActiveX</string>
+      <string id="ApprovedActiveXInstallSites_explain">Ce paramètre de stratégie détermine quels sites d’installation ActiveX les utilisateurs standard de votre organisation peuvent utiliser pour installer des contrôles ActiveX sur leur ordinateur. Lorsque ce paramètre est activé, l’administrateur peut créer une liste des sites d’installation ActiveX approuvés spécifiés par l’URL hôte. 
+
+Si vous activez ce paramètre, l’administrateur peut créer une liste des sites d’installation ActiveX approuvés spécifiés par l’URL hôte. 
+      
+Si vous désactivez ou ne configurez pas ce paramètre de stratégie, les contrôles ActiveX invitent l’utilisateur à spécifier des informations d’identification d’administration avant l’installation. 
+
+Remarque : vous ne pouvez pas utiliser de caractères génériques pour indiquer des URL hôtes.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Stratégie d’installation des contrôles ActiveX signés par un éditeur approuvé</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Stratégie d’installation des contrôles ActiveX signés</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Stratégie d’installation des contrôles ActiveX non signés</dropdownList>
+        <text>Autoriser la connexion aux sites de confiance comportant les erreurs de certificat suivantes.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Autorité de certification inconnue</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Nom de certificat non valide</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Date de validation du certificat expirée</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Utilisation incorrecte du certificat</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">URL hôtes</listBox>
+        <text>Contient la stratégie de l’URL hôte.</text>
+        <text>Par exemple,  </text>
+        <text>NomHôte : http://activex.microsoft.com</text>
+        <text>Valeur : 2,1,0,0</text>
+        <text>La valeur de chaque URL hôte comporte quatre paramètres au format CSV.</text>
+        <text>Lesquels représentent ContrôleSignéTPS,ContrôleSigné,ContrôleNonSigné,StratégieCertificatServeur</text>
+        <text>Les trois valeurs de gauche de la stratégie gèrent l’installation des contrôles ActiveX en fonction de leur signature.</text>
+        <text>Elles peuvent prendre les valeurs suivantes :</text>
+        <text>0 : le contrôle ActiveX ne sera pas installé</text>
+        <text>1 : invite l’utilisateur à installer le contrôle ActiveX</text>
+        <text>2 : le contrôle ActiveX sera installé de manière silencieuse</text>
+        <text>Les contrôles signés par les certificats de la banque d’éditeurs approuvés seront installés de manière silencieuse  </text>
+        <text>L’installation silencieuse des contrôles non signés n’est pas prise en charge</text>
+        <text></text>
+        <text>La valeur la plus à droite de la stratégie est un indicateur à masque de bits</text>
+        <text>Les indicateurs servent à ignorer les erreurs de certificat https.</text>
+        <text>La valeur par défaut est 0.</text>
+        <text>En d’autres termes, les connexions https doivent réussir toutes les vérifications de sécurité</text>
+        <text></text>
+        <text>Utilisez une combinaison des valeurs suivantes</text>
+        <text>pour ignorer les erreurs de certificat non valides</text>
+        <text>0x00000100  Ignorer l’autorité de certification inconnue</text>
+        <text>0x00001000  Ignorer le nom CN non valide</text>
+        <text>0x00002000  Ignorer la date de certificat non valide</text>
+        <text>0x00000200  Ignorer l’utilisation incorrecte du certificat</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

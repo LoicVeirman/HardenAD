@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>A Windows Csatlakozáskezelő csoportházirend-beállításai</displayName>
+  <description>A Windows Csatlakozáskezelő csoportházirend-beállításai</description>
+  <resources>
+    <stringTable>
+      <string id="WCM_Category">Windows Csatlakozáskezelő</string>
+      <string id="WCM_BlockNonDomain">Nem tartományi hálózathoz való csatlakozás tiltása tartományban hitelesített hálózattal való kapcsolat esetén</string>
+      <string id="WCM_BlockNonDomain_Help">Ez a házirend-beállítás megakadályozza, hogy a számítógép egyidejűleg kapcsolódjon tartományalapú hálózathoz és nem tartományalapú hálózathoz.
+
+Ha ez a házirend-beállítás engedélyezve van, a számítógép a következő körülmények alapján válaszol az automatikus és manuális hálózati kapcsolódási kísérletekre:
+
+Automatikus kapcsolódási kísérletek
+– Ha a számítógép már kapcsolódik egy tartományalapú hálózathoz, a rendszer blokkolja a nem tartományalapú hálózatokhoz történő automatikus kapcsolódási kísérleteket.
+– Ha a számítógép már kapcsolódik egy nem tartományalapú hálózathoz, a rendszer blokkolja a tartományalapú hálózatokhoz történő automatikus kapcsolódási kísérleteket.
+
+Manuális kapcsolódási kísérletek
+– Ha a számítógép már kapcsolódik egy nem tartományalapú hálózathoz vagy egy tartományalapú hálózathoz adathordozón (nem Ethernet-kapcsolaton) keresztül, és egy felhasználó manuálisan megkísérli a kapcsolódást egy további hálózathoz, megsértve ezzel ezt a házirend-beállítást, a rendszer bontja a meglévő hálózati kapcsolatot, és engedélyezi a manuális csatlakozást.
+– Ha a számítógép már kapcsolódik egy nem tartományalapú hálózathoz vagy egy tartományalapú hálózathoz Ethernet-kapcsolaton keresztül, és egy felhasználó manuálisan megkísérli a kapcsolódást egy további hálózathoz, megsértve ezzel ezt a házirend-beállítást, a rendszer fenntartja a meglévő Ethernet-kapcsolatot, és blokkolja a manuális kapcsolódási kísérletet.
+
+Ha ez a házirend-beállítás nincs konfigurálva vagy le van tiltva, a számítógépek egyidejűleg kapcsolódhatnak tartományalapú és nem tartományalapú hálózatokhoz.
+      </string>
+      <string id="WCM_DisableRoaming">Kapcsolódás tiltása a barangolást biztosító mobil szélessávú hálózatokhoz</string>
+      <string id="WCM_DisableRoaming_Help">Ez a házirend-beállítás megakadályozza a kapcsolódást a mobil szélessávú hálózatokhoz, ha az ügyfél barangolási szolgáltatást nyújtó hálózaton van regisztrálva.
+
+Ha a házirend-beállítás engedélyezett, akkor a rendszer mindaddig letilt minden automatikus és manuális kapcsolódási kísérletet a barangolási szolgáltatást nyújtó hálózatokhoz, amíg az ügyfél nem regisztrál a hazai szolgáltató hálózatán.
+
+Ha a házirend-beállítás nincs konfigurálva vagy le van tiltva, akkor az ügyfelek kapcsolódhatnak a barangolási szolgáltatást nyújtó mobil szélessávú hálózatokhoz.
+      </string>
+      <string id="WCM_MinimizeConnections">Az internettel vagy Windows-tartománnyal való egyidejű kapcsolatok számának minimalizálása</string>
+      <string id="WCM_MinimizeConnections_AllowAllConnections">0 = egyidejű kapcsolatok engedélyezése</string>
+      <string id="WCM_MinimizeConnections_MinimizeSimultaneousConnections">1 = egyidejű kapcsolatok számának minimalizálása</string>
+      <string id="WCM_MinimizeConnections_AlwaysConnectedToCellular">2 = a mobilhálózattal létesített kapcsolat fenntartása</string>
+      <string id="WCM_MinimizeConnections_PreventWifiOnEthernet">3 = a Wi-Fi tiltása az Ethernet-kapcsolat használatakor</string>
+      <string id="WCM_MinimizeConnections_Help">
+        Ez a házirend-beállítás azt határozza meg, hogy egy számítógép rendelkezhet-e több internetkapcsolattal az internethez vagy egy Windows-tartományhoz. Ha több kapcsolat is engedélyezve van, a rendszer meghatározza a hálózati forgalom útválasztását.
+
+        Ha a házirend-beállítás értéke 0, a számítógép egyidejű kapcsolatot tud létesíteni az internettel, a Windows-tartománnyal vagy mindkettővel. Az internetes forgalmat bármely kapcsolaton át lehet vezetni – beleértve a mobilhálózati kapcsolatot és a forgalmi díjas hálózatot. Ez korábban a házirend-beállítás Letiltva állapotára volt érvényes. Ez a beállítás először a Windows 8-ban volt elérhető.
+
+        Ha a házirend-beállítás értéke 1, a rendszer letiltja az új automatikus internetkapcsolatot, ha a számítógép legalább egy aktív internetkapcsolattal rendelkezik a kívánt típusú hálózathoz. Íme a fontossági sorrend (a leginkább preferálttól a legkevésbé preferáltig): Ethernet, WLAN, majd mobilhálózat. Az Ethernet-hálózatot mindig előnyben részesíti a rendszer csatlakozáskor. A felhasználók továbbra is bármikor csatlakozhatnak bármely hálózathoz. Ez korábban a házirend-beállítás Engedélyezve állapotára volt érvényes. Ez a beállítás először a Windows 8-ban volt elérhető.
+
+        Ha a házirend-beállítás értéke 2, a működés hasonló az 1 értékhez. Ha azonban mobil adatátviteli kapcsolat érhető el, a rendszer mindig fenntartja a kapcsolatot a mobilkapcsolatot igénylő szolgáltatások számára. Ha a felhasználó WLAN- vagy Ethernet-kapcsolattal csatlakozik, a rendszer nem irányítja át az internetes forgalmat a mobilkapcsolaton keresztül. Ez a beállítás először a Windows 10-ben (1703-as verzió) volt elérhető.
+
+        Ha a házirend-beállítás értéke 3, a működés hasonló a 2 értékhez. Ha azonban van Ethernet-kapcsolat, a Windows nem engedélyezi, hogy a felhasználók manuálisan kapcsolódjanak a WLAN-hoz. A WLAN-kapcsolat csak akkor csatlakoztatható (automatikusan vagy manuálisan), ha nincs Ethernet-kapcsolat.
+
+        Ez a házirend-beállítás az „Annak engedélyezése, hogy a Windows ideiglenes leválassza a számítógépet a hálózatról” házirend-beállításhoz kapcsolódik.
+      </string>
+      <string id="WCM_DisablePowerManagement">Energiagazdálkodás letiltása csatlakoztatott készenléti módban</string>
+      <string id="WCM_DisablePowerManagement_Help">Ez a házirend-beállítás letiltja az energiagazdálkodást, amikor a számítógép csatlakoztatott készenléti módba lép.
+
+Ha ez a házirend-beállítás engedélyezve van, a Windows Csatlakozáskezelő nem kezeli az adapterrádiókat az energiafogyasztás csökkentése érdekében, amikor a számítógép csatlakoztatott készenléti módba lép.
+
+Ha ez a házirend-beállítás nincs konfigurálva vagy le van tiltva, akkor az energiagazdálkodás engedélyezett, amikor a számítógép csatlakoztatott készenléti módba lép.
+      </string>
+      <string id="WCM_EnableSoftDisconnect">Annak engedélyezése, hogy a Windows ideiglenes leválassza a számítógépet a hálózatról</string>
+      <string id="WCM_EnableSoftDisconnect_Help">Ez a házirend-beállítás meghatározza, hogy a Windows fokozatosan leválasztja-e a számítógépet a hálózatról.
+
+Ha a házirend-beállítás engedélyezve van, vagy nincs konfigurálva, a Windows fokozatosan leválasztja a számítógépet a hálózatról, ha azt állapítja meg, hogy a számítógépnek már nem kell csatlakoznia a hálózathoz.
+
+Ha a házirend-beállítás le van tiltva, a Windows azonnal leválasztja a számítógépet a hálózatról, ha azt állapítja meg, hogy a számítógépnek már nem kell csatlakoznia a hálózathoz.
+
+Ha a fokozatos kapcsolatbontás engedélyezve van:
+– Ha a Windows azt állapítja meg, hogy a számítógépnek már nem kell csatlakoznia a hálózathoz, megvárja, hogy a forgalom rendeződjön az adott hálózaton. A meglévő TCP-munkamenet továbbra is zavartalanul folytatódik.
+– A Windows ezután rendszeres időközönként ellenőrzi a hálózat forgalmi szintjét. Ha a forgalmi szint meghalad egy bizonyos küszöbértéket, nem kerül végrehajtásra további művelet. A számítógép továbbra is csatlakozik a hálózathoz és tovább használja azt. Ha például a hálózati kapcsolatot aktuálisan fájlok internetről való letöltésére használják, a fájlok továbbra is letöltődnek az adott hálózati kapcsolat használatával.
+– Ha a hálózati forgalom ezen küszöbérték alá esik, a számítógép le lesz választva a hálózatról. Azok az alkalmazások, amelyek akkor is fenntartják a hálózati kapcsolatot, amikor nem használják aktívan azt (például a levelezési alkalmazások), elveszíthetik a kapcsolatot. Ilyen esetben az alkalmazásoknak újból kapcsolatot kell létesíteniük egy másik hálózaton keresztül.
+
+Ez a házirend-beállítás a többi csoportházirend-beállítástól függ. Ha például „Az internettel vagy Windows-tartománnyal való egyidejű kapcsolatok számának minimalizálása” beállítás le van tiltva, akkor a Windows egyik hálózattal sem szakítja meg a kapcsolatot.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="WCM_MinimizeConnections">
+        <dropdownList refId="WCM_MinimizeConnections_Options" noSort="true" defaultItem="2">Minimalizálásra vonatkozó házirend-beállítások</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

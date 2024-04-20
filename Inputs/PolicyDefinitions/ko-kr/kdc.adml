@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>KDC 설정</displayName>
+  <description>Kerberos 키 배포 센터에 대한 구성 설정입니다.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">포리스트 검색 순서 사용</string>
+      <string id="forestsearch_explain">이 정책 설정은 두 부분으로 구성된 SPN(서비스 사용자 이름)을 확인하려고 시도할 때 KDC(키 배포 센터)에서 검색할 트러스팅 포리스트 목록을 정의합니다.
+
+이 정책 설정을 사용하면 KDC는 로컬 포리스트에서 두 부분으로 구성된 SPN을 확인할 수 없을 경우 이 목록의 포리스트를 검색합니다. 포리스트 검색은 글로벌 카탈로그나 이름 접미사 힌트를 사용하여 수행됩니다. 일치하는 항목을 찾으면 KDC에서 해당 도메인의 클라이언트에 참조 티켓을 반환합니다.
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 KDC에서 SPN을 확인하기 위해 목록의 포리스트를 검색하지 않습니다. KDC에서 이름을 찾을 수 없어서 SPN을 확인할 수 없는 경우 NTLM 인증이 사용될 수 있습니다.
+
+일관된 동작을 적용하려면 이 정책 설정을 지원해야 하며 도메인의 모든 도메인 컨트롤러에서 동일하게 설정해야 합니다.</string>
+      <string id="emitlili">클라이언트 컴퓨터에 이전 로그온 정보 제공</string>
+      <string id="emitlili_explain">이 정책 설정은 도메인 컨트롤러가 클라이언트 컴퓨터에 이전 로그온에 대한 정보를 제공할지 여부를 제어합니다.
+
+이 정책 설정을 사용하면 도메인 컨트롤러가 이전 로그온에 대한 정보 메시지를 제공합니다.
+
+Windows 로그온에서 이 기능을 활용하려면 Windows 로그온 옵션 노드에 있는 "사용자 로그온 중 이전 로그온 정보 표시" 정책 설정도 사용해야 합니다.
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 "사용자 로그온 중 이전 로그온 정보 표시" 정책 설정을 사용하지 않는 한 도메인 컨트롤러가 이전 로그온 정보를 제공하지 않습니다.
+
+참고: 이전 로그온 정보를 제공하려면 도메인 기능 수준이 Windows Server 2008이어야 합니다. 도메인 기능 수준이 Windows Server 2003, Windows 2000 기본 또는 Windows 2000 혼합인 도메인에서는 도메인 컨트롤러가 이전 로그온에 대한 정보를 제공할 수 없으며 이 정책 설정을 사용해도 아무 효과가 없습니다.
+
+</string>
+      <string id="CbacAndArmor">클레임, 복합 인증 및 Kerberos 아머링(armoring)에 대한 KDC 지원</string>
+      <string id="CbacAndArmor_explain">이 정책 설정을 통해 도메인 컨트롤러가 Kerberos 인증을 사용하여 동적 액세스 제어 및 Kerberos 아머링(armoring)을 지원하도록 구성할 수 있습니다.
+
+이 정책 설정을 사용하면 클레임과 동적 액세스 제어에 대한 복합 인증을 지원하고 Kerberos 아머링(armoring)을 인식하는 클라이언트 컴퓨터가 Kerberos 인증 메시지에 대해 이 기능을 사용합니다. 이 정책은 도메인에 이 정책이 일관되게 적용되도록 모든 도메인 컨트롤러에 적용되어야 합니다. 
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 도메인 컨트롤러가 클레임, 복합 인증 또는 아머링을 지원하지 않습니다.
+
+"지원되지 않음" 옵션을 구성하면 Windows Server 2008 R2 이하 버전의 운영 체제를 실행하는 도메인 컨트롤러에서 기본적으로 사용되는 클레임, 복합 인증 또는 아머링을 도메인 컨트롤러가 지원하지 않습니다.
+
+참고: 이 KDC 정책의 다음 옵션을 적용하려면 지원되는 시스템에서 Kerberos 그룹 정책인 "클레임, 복합 인증 및 Kerberos 아머링(armoring)에 대한 Kerberos 클라이언트 지원"을 사용하도록 설정해야 합니다. Kerberos 정책 설정을 사용하지 않으면 Kerberos 인증 메시지에서 이러한 기능을 사용하지 않습니다. 
+
+"지원됨"을 구성하면 도메인 컨트롤러는 클레임, 복합 인증 및 Kerberos 아머링(armoring)을 지원합니다. 도메인 컨트롤러는 도메인이 동적 액세스 제어 및 Kerberos 아머링(armoring)에 대해 클레임 및 복합 인증을 사용할 수 있음을 클라이언트 컴퓨터에 알립니다. 
+
+도메인 기능 수준 요구 사항
+"항상 클레임 제공" 및 "보호되지 않은 인증 요청 실패" 옵션의 경우 도메인 기능 수준이 Windows Server 2008 R2 이하로 설정되어 있으면 도메인 컨트롤러는 "지원됨" 옵션을 선택한 것처럼 작동합니다. 
+
+도메인 기능 수준이 Windows Server 2012로 설정되어 있으면 도메인 컨트롤러는 도메인이 동적 액세스 제어 및 Kerberos 아머링(armoring)에 대해 클레임 및 복합 인증을 사용할 수 있음을 클라이언트 컴퓨터에 알리고 다음을 수행합니다.
+   - "항상 클레임 제공" 옵션을 설정한 경우는 항상 계정에 대한 클레임을 반환하고 FAST(유동 인증 보안 터널링)를 알리는 RFC 동작을 지원합니다.
+   - "보호되지 않은 인증 요청 실패" 옵션을 설정하면 보호되지 않은 Kerberos 메시지를 거부합니다.
+
+경고: "보호되지 않은 인증 요청 실패"가 설정되면 Kerberos 아머링(armoring)을 지원하지 않는 클라이언트 컴퓨터는 도메인 컨트롤러에서 인증을 받지 못합니다.
+
+이 기능을 적용하려면 동적 액세스 제어에 대해 클레임 및 복합 인증을 지원하며 Kerberos 아머링을 인식하여 인증 요청을 처리하는 도메인 컨트롤러를 충분히 배포합니다. 이 정책을 지원하는 도메인 컨트롤러 수가 부족하면 동적 액세스 제어 또는 Kerberos 아머링(armoring)이 필요할 때마다(즉, "지원됨" 옵션 사용) 인증이 실패합니다.
+
+이 정책 설정이 사용되면 도메인 컨트롤러 성능은 다음과 같은 영향을 받습니다:
+   - 보안 Kerberos 도메인 기능 검색이 필요하므로 추가적인 메시지 교환이 발생합니다.
+   - 동적 액세스 제어에 대한 클레임 및 복합 인증 때문에 메시지의 데이터 크기 및 복잡성이 증가하므로 처리 시간이 늘어나고 Kerberos 서비스 티켓 크기가 더 커집니다.
+   - Kerberos 아머링(armoring)이 Kerberos 메시지를 완전히 암호화하고 Kerberos 오류에 서명하기 때문에 처리 시간이 늘지만 서비스 티켓 크기는 바뀌지 않습니다.
+</string>
+      <string id="NoCbacAndArmor">지원되지 않음</string>
+      <string id="MixModeCbacAndArmor">지원됨</string>
+      <string id="FullModeCbacAndArmor">항상 클레임 제공</string>
+      <string id="FullModeCbacAndRequireArmor">보호되지 않은 인증 요청 실패</string>
+      <string id="TicketSizeThreshold">큰 Kerberos 티켓이 있을 때 경고</string>
+      <string id="TicketSizeThreshold_explain">이 정책 설정을 통해 Kerberos 인증을 수행하는 동안 경고 이벤트를 트리거하는 Kerberos 티켓 크기를 구성할 수 있습니다. 티켓 크기 경고가 시스템 로그에 로깅됩니다.
+
+이 정책 설정을 사용하면 경고 이벤트를 트리거하는 Kerberos 티켓의 임계값 제한을 설정할 수 있습니다. 너무 높은 값으로 설정하면 경고 이벤트가 기록되지 않은 경우에도 인증 실패가 발생할 수 있습니다.  너무 낮게 설정하면 로그에 너무 많은 티켓 경고가 표시되어 분석이 어려울 수 있습니다. 이 값은 Kerberos 정책 "Set maximum 최대 Kerberos SSPI 컨텍스트 토큰 버퍼 크기"와 같은 값으로 설정하거나, 그룹 정책을 사용하여 구성하지 않는 경우 환경에 사용되는 가장 작은 MaxTokenSize와 같게 설정해야 합니다.
+      
+이 정책 설정을 사용하지 않거나 구성하지 않으면 기본 임계값은 Windows 7, Windows Server 2008 R2 및 이전 버전의 기본 Kerberos MaxTokenSize에 해당하는 12,000바이트가 됩니다.
+
+</string>
+      <string id="RequestCompoundId">복합 인증 요청</string>
+      <string id="RequestCompoundId_explain">이 정책 설정을 사용하면 복합 인증을 요청하도록 도메인 컨트롤러를 구성할 수 있습니다.
+
+참고: 도메인 컨트롤러에서 복합 인증을 요청하려면 "클레임, 복합 인증 및 Kerberos 아머링(armoring)에 대한 KDC 지원" 정책을 구성하고 사용하도록 설정해야 합니다. 
+
+이 정책 설정을 사용하면 도메인 컨트롤러에서 복합 인증을 요청합니다. 계정이 명시적으로 구성된 경우에만 반환된 서비스 티켓에 복합 인증이 포함됩니다. 이 정책은 도메인에 이 정책이 일관되게 적용되도록 모든 도메인 컨트롤러에 적용되어야 합니다. 
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 계정 구성에 관계없이 클라이언트가 복합 인증 요청을 보낼 때마다 도메인 컨트롤러에서 복합 인증이 포함된 서비스 티켓을 반환합니다.
+
+</string>
+      <string id="PKINITFreshness">PKInit Freshness Extension에 대한 KDC 지원</string>
+      <string id="PKINITFreshness_explain">PKInit Freshness Extension 지원에는 Windows Server 2016 DFL(도메인 기능 수준)이 필요합니다. 도메인 컨트롤러의 도메인이 Windows Server 2016 DFL 이상이 아니면 이 정책이 적용되지 않습니다.
+
+이 정책 설정을 사용하여 DC(도메인 컨트롤러)에서 PKInit Freshness Extension을 지원하도록 구성할 수 있습니다.
+
+이 정책 설정을 사용하도록 설정하면 다음 옵션이 지원됩니다.
+
+지원: 요청 시 PKInit Freshness Extension이 지원됩니다. PKInit Freshness Extension으로 인증된 Kerberos 클라이언트는 새로운 공개 키 ID SID를 얻습니다.
+
+필수: PKInit Freshness Extension이 인증에 필수입니다. 공개 키 자격 증명을 사용하는 경우 PKInit Freshness Extension을 지원하지 않는 Kerberos 클라이언트는 항상 실패합니다.
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 DC에서 PKInit Freshness Extension을 제공하지 않으며 유효성 확인 없이 유효한 인증 요청을 승인합니다. 사용자에게 새로운 공개 키 ID SID가 제공되지 않습니다.
+</string>
+      <string id="NoPKINITFreshness">사용 안 함</string>
+      <string id="SupportPKINITFreshness">지원</string>
+      <string id="RequirePKINITFreshness">필수</string>
+      <string id="PKINITHashAlgorithmConfiguration">인증서 로그온을 위한 해시 알고리즘 구성</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">이 정책 설정은 인증서 인증을 수행할 때 Kerberos 클라이언트에서 사용하는 해시 또는 체크섬 알고리즘을 제어합니다.
+
+이 정책을 사용하면 각 알고리즘에 대해 다음 네 가지 상태 중 하나를 구성할 수 있습니다.
+
+- "기본값"은 알고리즘을 권장 상태로 설정합니다.
+
+- "지원됨"을 선택하면 알고리즘을 사용할 수 있습니다. 기본적으로 사용하지 않도록 설정된 알고리즘을 사용하면 보안이 저하될 수 있습니다.
+
+- "감사됨"을 선택하면 알고리즘을 사용할 수 있으며 사용할 때마다 이벤트(ID 309)를 보고합니다. 이 상태는 알고리즘이 사용되고 있지 않으며 안전하게 사용되고 있지 않는지 확인하기 위한 것입니다.
+
+- "지원되지 않음"을 선택하면 알고리즘을 사용할 수 없습니다. 이 상태는 안전하지 않은 것으로 간주되는 알고리즘을 위한 것입니다.
+
+이 정책을 사용하지 않거나 구성하지 않으면 각 알고리즘은 "기본값" 상태를 가정합니다.
+Windows Kerberos 클라이언트에서 지원하는 해시 및 체크섬 알고리즘 및 기본 상태에 대한 자세한 내용은 https://go.microsoft.com/fwlink/?linkid=2169037에서 확인할 수 있습니다.
+
+이 구성에 의해 생성된 이벤트: 309, 310
+</string>
+      <string id="PKINITHashAlgorithm_Default">기본값</string>
+      <string id="PKINITHashAlgorithm_Supported">지원됨</string>
+      <string id="PKINITHashAlgorithm_Audited">감사됨</string>
+      <string id="PKINITHashAlgorithm_NotSupported">지원하지 않음</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">모드:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>검색할 포리스트</label>
+        </textBox>
+        <text>구문:</text>
+        <text>이 정책을 사용할 경우 검색할 포리스트 목록을 입력하십시오.</text>
+        <text>FQDN(정규화된 도메인 이름) 이름 지정 형식을 사용하십시오.</text>
+        <text>검색 항목을 여러 개 입력할 경우 각 항목을 세미 콜론 ";"으로 구분하십시오.</text>
+        <text>자세히:</text>
+        <text>포리스트 검색 순서는 글로벌 카탈로그를 먼저 사용한 다음 나열된 순서대로 검색하기 때문에 현재 포리스트를 목록에 추가할 필요가 없습니다.</text>
+        <text>포리스트의 모든 도메인을 개별적으로 나열할 필요는 없습니다.</text>
+        <text>트러스팅 포리스트가 목록에 추가되면 해당 포리스트의 모든 도메인이 검색됩니다.</text>
+        <text>최상의 성능을 위해 검색 가능성이 높은 순서로 포리스트 목록을 작성하십시오.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">동적 액세스 제어에 대한 클레임, 복합 인증 및 Kerberos 아머링(armoring) 옵션:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">티켓 크기 임계값</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">PKInit Freshness Extension 옵션:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

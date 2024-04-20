@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>buraya görünen adı girin</displayName>
+  <description>buraya açıklamayı girin</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Azaltma Seçenekleri</string>
+      <string id="Font_List">Güvenilmeyen Yazı Tipi Engellemesi</string>
+      <string id="Font_List_Help">Bu güvenlik özelliği, programların güvenilmeyen yazı tipleri yüklemesini engellemek amaçlı evrensel bir ayar sunar. Güvenilmeyen yazı tipleri, %windir%\Fonts dizini dışından yüklenen tüm yazı tipleridir. Bu özellik 3 modda olabilecek şekilde yapılandırılabilir: Açık, Kapalı ve Denetim. Varsayılan olarak Kapalı durumundadır ve hiçbir yazı tipi engellenmez. Bu özelliği kuruluşunuzda devreye sokmak için henüz hazır değilseniz, güvenilmeyen yazı tiplerinin engellenmesinin herhangi bir kullanışsızlık veya uyumsuzluk sorununa neden olup olmadığını görmek için Denetim modunda çalıştırabilirsiniz.</string>
+      <string id="FontMitigation_On">Güvenilmeyen yazı tiplerini engelle ve olayları günlüğe kaydet</string>
+      <string id="FontMitigation_Off">Güvenilmeyen yazı tiplerini engelleme</string>
+      <string id="FontMitigation_Audit">Güvenilmeyen yazı tiplerini engellemeden olayları günlüğe kaydet</string>
+
+	  <string id="ProcessMitigationOptions_List">İşlem Risk Azaltma Seçenekleri</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Bu güvenlik özelliği, tek tek işlem MitigationOptions ayarlarını geçersiz kılmak için bir yol sunar. Bu, uygulamalara özel bazı güvenlik ilkelerini zorlamak için kullanılabilir. Uygulama adı, uzantısı da dâhil olmak üzere Değer adı olarak belirlenmiştir. Değer, belli konumlarda bir dizi bayraklı bir bit alanı olarak belirlenmiştir. Bitler 0 (ayar devre dışı kalmaya zorlanır), 1 (ayar etkin kalmaya zorlanır) veya ? (ayar, GPO değerlendirmesinden önceki değerini korur) olarak ayarlanabilir. Tanınan bit konumları şunlardır:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        Alt işlem için veri yürütme engellemesini (DEP) etkinleştirir
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        Alt işlem için DEP-ATL dönüştürücü öykünmesini etkinleştirir. DEP-ATL dönüştürücü öykünmesi, sistemin Etkin Şablon Kütüphanesi (ATL) dönüştürücü katmanı kaynaklı NX hatalarını kesmesine neden olur.
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        Alt işlem için yapılandırılmış özel durum işleyicisi üzerine yazma korumasını (SEHOP) etkinleştirir. SEHOP, yapılandırılmış özel durum işleyicisi (SEH) üzerine yazma tekniğini kullanan açıktan yararlanan yazılımları engeller.
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        Yükleme anında bir görüntü çakışması olmuş gibi davranarak dinamik taban uyumlu olmayan görüntüleri Rasgele Adres Alanı Düzeni (ASLR) ilkesinin zorla yeniden tabanlandırdığı güç. Yeniden konumlandırma gerekiyorsa taban yeniden konumlandırma bölümü olmayan görüntüler yüklenmez.
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        Yığın rasgele seçim seçeneklerini içeren aşağıdan yukarıya rasgele seçim ilkesi, en alt kullanıcı adresi olarak rasgele bir konumun kullanılmasına neden olur.
+
+        Örneğin, PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE ve PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON özelliklerini etkinleştirmek için PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF özelliğini devre dışı bırakın ve diğer tüm seçenekleri varsayılan değerlerinde bırakmak için şunun için bir değer belirleyin:
+        ???????????????0???????1???????1
+
+        Burada belirtilmemiş bayraklar için ? değerinden başka herhangi bir değer belirleme tanımsız davranışa neden olur.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">İlke yenilenirken AD/DFS etki alanı denetleyicisi eşitlemesini etkinleştir</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">Bu ayarın etkinleştirilmesi, Grup İlkesi İstemcisi'nin DFS paylaşımlarında Active Directory için kullanılanla aynı etki alanı denetleyicisine bağlanmasına neden olur.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">Grup İlkesi İstemci Hizmeti AOAC en iyi duruma getirmeyi kapat</string>
+      <string id="DisableAOACProcessing_Help">Bu ilke ayarı, Grup İlkesi İstemci Hizmeti'nin boşta kaldığında durdurulmasını engeller.
+
+
+
+</string>
+      <string id="EnableCDP">Deneyimlere bu cihazda devam et</string>
+      <string id="EnableCDP_Help">
+Bu ilke ayarı, Windows cihazının, cihazlar arası deneyimlere (devam deneyimleri) katılmasına izin olup olmadığını belirler.
+
+Bu ilke ayarını etkinleştirirseniz, Windows cihazı, aynı kullanıcıya ait diğer Windows cihazları tarafından keşfedilebilir olur ve cihazlar arası deneyimlere katılım gösterebilir.
+
+Eğer bu ilke ayarını devre dışı bırakırsanız, Windows cihazı, diğer cihazlar tarafından keşfedilemez ve cihazlar arası deneyimlere katılım gösteremez.
+
+Eğer bu ilke ayarını yapılandırmazsanız, varsayılan davranış Windows sürümüne bağlıdır. Bu ilke üzerindeki değişiklikler yeniden başlatma sonrasında etkin hale gelir.
+      </string>
+      <string id="EnableMMX">Bu cihazda telefon-bilgisayar bağlama</string>
+      <string id="EnableMMX_Help">
+Bu ilke, BT yöneticilerinin okuma, e-posta gönderme ve Telefon ile Bilgisayar arasında bağlantı gerektiren diğer görevlere devam etmek için Bir Telefonu Bilgisayara Bağlama özelliğini kapatmalarını sağlar.
+
+Bu ilke ayarını etkinleştirirseniz Windows cihazı, Telefon-Bilgisayar bağlama işlevine kaydolabilir ve Bilgisayarda Devam Et deneyimlerine katılabilir.
+
+Bu ilke ayarını devre dışı bırakırsanız Windows cihazının Telefonlara bağlanmasına izin verilmez, cihaz kendisini bağlantılı Telefonlar cihaz listesinden kaldırır ve Bilgisayarda Devam Et deneyimlerine katılamaz.
+
+Bu ilke ayarını yapılandırmazsanız varsayılan davranış Windows sürümüne göre değişir. Bu ilkede yapılan değişiklikler, cihaz yeniden başlatıldıktan sonra etkili olur.
+      </string>
+      <string id="EnableAppUriHandlers">Uygulama URI işleyicilerle Web-uygulama bağlantısını yapılandırın</string>
+      <string id="EnableAppUriHandlers_Help">
+Bu ilke ayarı, uygulama URI işleyicilerle Windows'un Web-uygulama bağlantısını destekleyip desteklemediğini belirler.
+
+Bu ilke ayarının etkinleştirilmesi, Web-uygulama bağlantısını etkinleştirerek uygulamaların bir http URI ile başlatılabilmesini sağlar.
+
+Bu ilke ayarının devre dışı bırakılması, Web-uygulama bağlantılarının ve http URI'lerinin ilgili uygulamayı başlatmak yerine varsayılan tarayıcıda açılmasını devre dışı bırakır.
+
+Bu ilke ayarını yapılandırmazsanız varsayılan davranış Windows sürümüne dayalı olur. Bu ilkedeki değişiklikler önyüklemede geçerli olur.
+      </string>
+      <string id="Fonts">Yazı Tipleri</string>
+      <string id="EnableFontProviders">Yazı Tipi Sağlayıcılarını Etkinleştir</string>
+      <string id="EnableFontProviders_Help">
+        Bu ilke ayarı, Windows’un çevrimiçi yazı tipi sağlayıcılarından yazı tipleri ve yazı tipi kataloğu verilerini indirmesine izin verilip verilmeyeceğimi belirler.
+
+        Bu ilke ayarını etkinleştirirseniz Windows, yeni bir yazı tipi kataloğunun kullanılabilir olup olmadığını belirlemek için bir çevrimiçi yazı tipi sağlayıcısını düzenli olarak sorgular. Windows ayrıca, metni biçimlendirmek veya işlemek gerektiğinde yazı tipi verilerini indirebilir.
+
+        Bu ilke ayarını devre dışı bırakırsanız Windows, bir çevrimiçi yazı tipi sağlayıcısına bağlanmaz ve sadece yerel olarak yüklenmiş yazı tiplerini sıralar.
+
+        Bu ilke ayarını yapılandırmazsanız varsayılan davranış Windows sürümüne göre değişir. Bu ilkede yapılan değişiklikler cihaz yeniden başlatıldıktan sonra etkisini gösterir.
+      </string>
+      <string id="EnableLogonOptimization">Grup İlkesi Önbelleğe Almayı Yapılandır</string>
+      <string id="EnableLogonOptimization_Help">
+        Bu ilke ayarı, Grup İlkesi önbelleğe alma davranışını yapılandırmanızı sağlar.
+
+        Bu ilke ayarını etkinleştirir veya yapılandırmazsanız Grup İlkesi, her arka plan işlem oturumundan sonra ilke bilgilerini önbelleğe alır. Bu önbellek, uygun GPO'ları ve bunların içerdiği ayarları kaydeder. Grup İlkesi zaman uyumlu ön plan modunda çalışırken daha hızlı çalışmasını sağlayan bu önbelleğe başvurur. Önbellek okunduğunda Grup İlkesi, bağlantı hızını belirlemek için bir oturum açma etki alanı denetleyicisiyle iletişim kurmayı dener. Grup İlkesi arka plan modunda veya zaman uyumsuz ön plan modunda çalıştığında ilke bilgilerinin en yeni sürümünü indirmeye devam eder ve yavaş bağlantı eşiklerini belirlemek için bir bant genişliği tahmini kullanır. (Zaman uyumsuz ön plan davranışını yapılandırmak için bk. “Grup İlkesi Yavaş Bağlantı Algılama” ilke ayarı.)
+
+        Bu ilke ayarında tanımlanan yavaş bağlantı değeri, Grup İlkesi'nin bir bağlantıyı yavaş olarak bildirmeden önce etki alanı denetleyicisinden ne kadar süre cevap bekleyeceğini belirler. Varsayılan değer 500 milisaniyedir.
+
+        Bu ilke ayarında tanımlanan zaman aşımı değeri, Grup İlkesi'nin ağ bağlantısı olmadığını belirlemeden önce etki alanı denetleyicisinden ne kadar süre cevap bekleyeceğini belirler. Bu, mevcut Grup İlkesi'nin işlenmesini durdurur. Grup İlkesi, bir etki alanı denetleyicisine bir sonraki bağlanışta arka planda çalışır. Buna çok yüksek bir değer atamak, kullanıcının başlangıçta veya oturum açarken daha çok beklemesine yol açabilir. Varsayılan değer 5000 milisaniyedir.
+
+        Bu ilke ayarını devre dışı bırakırsanız Grup İlkesi istemcisi, uygun GPO'ları veya bunların içindeki ayarları önbelleğe almaz. Grup İlkesi zaman uyumlu çalışırken ağdan ilkenin en yeni sürümünü indirir ve yavaş bağlantı eşiklerini belirlemek için bant genişliği tahminlerini kullanır. (Zaman uyumsuz ön plan davranışını yapılandırmak için bk. “Grup İlkesi Yavaş Bağlantı Algılama” ilke ayarı.)
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">Sunucular için Grup İlkesi Önbelleğini Etkinleştir</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        Bu ilke ayarı, Windows Server makinelerinde Grup İlkesi önbelleğe alma davranışını yapılandırmanızı sağlar.
+        Bu ilke ayarını etkinleştirirseniz Grup İlkesi her arka plan işlem oturumundan sonra ilke bilgilerini önbelleğe alır. Bu önbellek, uygun GPO'ları ve bunların içerdiği ayarları kaydeder. Grup İlkesi zaman uyumlu ön plan modunda çalışırken, daha hızlı çalışmasını sağlayan bu önbelleğe başvurur. Önbellek okunduğunda Grup İlkesi, bağlantı hızını belirlemek için bir oturum açma etki alanı denetleyicisiyle iletişim kurmayı dener. Grup İlkesi arka plan modunda veya zaman uyumsuz ön plan modunda çalıştığında, ilke bilgilerinin en yeni sürümünü indirmeye devam eder ve yavaş bağlantı eşiklerini belirlemek için bir bant genişliği tahmini kullanır. (Zaman uyumsuz ön plan davranışını yapılandırmak için bkz. “Grup İlkesi Yavaş Bağlantı Algılama” ilke ayarı.)
+        Bu ilke ayarında tanımlanan yavaş bağlantı değeri, Grup İlkesinin bir bağlantıyı yavaş olarak bildirmeden önce etki alanı denetleyicisinden ne kadar süre cevap bekleyeceğini belirler. Varsayılan değer 500 milisaniyedir.
+        Bu ilke ayarında tanımlanan zaman aşımı değeri, Grup İlkesinin ağ bağlantısı olmadığını belirlemeden önce etki alanı denetleyicisinden ne kadar süre cevap bekleyeceğini belirler. Bu, mevcut Grup İlkesinin işlenmesini durdurur. Grup İlkesi, bir etki alanı denetleyicisine bir sonraki bağlanışta arka planda çalışır. Buna çok yüksek bir değer atamak, kullanıcının başlangıçta veya oturum açarken daha çok beklemesine yol açabilir. Varsayılan değer 5000 milisaniyedir.
+        Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız, Grup İlkesi istemcisi, uygun GPO'ları veya bunların içindeki ayarları önbelleğe almaz. Grup İlkesi zaman uyumlu çalışırken ağdan ilkenin en yeni sürümünü indirir ve yavaş bağlantı eşiklerini belirlemek için bant genişliği tahminlerini kullanır. (Zaman uyumsuz ön plan davranışını yapılandırmak için bkz. “Grup İlkesi Yavaş Bağlantı Algılama” ilke ayarı.)
+      
+      </string>
+
+      <string id="LogonScriptDelay">Oturum Açma Betiği Gecikmesini Yapılandır</string>
+      <string id="LogonScriptDelay_Help">
+        Oturum Açma Betiği Gecikmesi'ni devre dışı bırakmak için "0" yazın.
+
+        Bu ilke ayarı, Grup İlkesi istemcisinin oturum açıldıktan sonra betikleri çalıştırmadan önce ne kadar bekleyeceğini yapılandırmanıza imkân sağlar.
+
+        Varsayılan olarak Grup İlkesi istemcisi oturum açma betiklerini çalıştırmadan önce beş dakika bekler. Bu, disk çekişmesini engelleyerek daha iyi yanıt veren bir masaüstü ortamı oluşturulmasına yardımcı olur.
+
+        Bu ilke ayarını etkinleştirirseniz Grup İlkesi, oturum açma betiklerini çalıştırmadan önce belirtilen zaman kadar bekler.
+
+        Bu ilke ayarını devre dışı bırakırsanız Grup İlkesi, oturum açıldıktan hemen sonra betikleri çalıştırır.
+
+        Bu ilke ayarını yapılandırmazsanız Grup İlkesi, oturum açma betiklerini çalıştırmadan önce beş dakika bekler.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">Doğrudan Erişim bağlantılarını hızlı ağ bağlantısı olarak yapılandır</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">Bu ilke ayarı bir yöneticinin Doğrudan Erişim bağlantısını Grup İlkesi uygulama ve güncelleştirme amaçlarıyla hızlı ağ bağlantısı olarak düşünülecek şekilde tanımlamasını sağlar.
+
+Grup İlkesi bir Doğrudan Erişim bağlantısının bant genişliği hızını algıladığında algılama, bazı durumlarda bant genişliği hızına ilişkin bilgileri veremeyebilir. Grup İlkesi bir bant genişliği hızı algılarsa, Doğrudan Erişim bağlantısının hızlı veya yavaş bir ağ bağlantısı olması durumunda Grup İlkesi normal değerlendirme kurallarını izler. Bant genişliği hızı algılanmazsa Grup İlkesi varsayılan olarak yavaş bir ağ bağlantısına geçer. Bu ilke ayarı, bir ağ bant genişliği hızı belirlenmemesi durumunda yöneticinin yavaş ağ bağlantısı için varsayılanı geçersiz kılıp bunun yerine varsayılan olarak hızlı bir ağ bağlantısı kullanmasına imkân tanır.
+
+Not: Grup İlkesi yavaş bir bağlantı algıladığında yalnızca yavaş bir bağlantıda (yavaş ağ bağlantısı) işlenmek üzere yapılandırılmış istemci tarafı uzantılarını işleme alır.
+
+Bu ilkeyi etkinleştirirseniz Doğrudan Erişim'deki bant genişliği hızı belirlenemediğinde Grup İlkesi, ağ bağlantısını hızlı bir bağlantı olarak değerlendirir ve tüm istemci tarafı uzantılarını işleme alır.
+
+Bu ayarı devre dışı bırakırsanız veya yapılandırmazsanız Grup İlkesi, ağ bağlantısını yavaş bir bağlantı olarak değerlendirir ve yalnızca yavaş bir bağlantı üzerinden işlenecek şekilde yapılandırılmış istemci tarafı uzantılarını işleme alır.
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">Yavaş bir ağ bağlantısı algılandığında, Grup İlkesi işlemini zaman uyumsuz çalışacak şekilde değiştir.</string>
+      <string id="SlowlinkDefaultToAsync_Help">Bu ilke, yavaş bir ağ bağlantısı algılandığında Grup İlkesi işlemini zaman uyumlu işleme gerektiren (diğer bir deyişle, bilgisayarların başlatma veya kullanıcı oturumu açma sırasında ağın tam olarak başlamasını bekleyip beklemeyeceği) istemci tarafı uzantılarını işlemeyi atlamaya yönlendirir.
+
+Bu ilke ayarını etkinleştirirseniz yavaş bir ağ bağlantısı algılandığında Grup İlkesi işlemi mutlaka zaman uyumsuz şekilde çalışır.
+İstemci bilgisayarlar başlangıçta ve kullanıcı oturumunun açılması sırasında ağın tam olarak başlatılmasını beklemez. Mevcut kullanıcılar önbellekteki kimlik bilgilerini kullanarak oturum açarlar,
+bu da daha kısa oturum açma süreleri ile sonuçlanır. Grup İlkesi, ağ kullanılabilir duruma geldikten sonra arka planda uygulanır.
+Bu bir arka plan yenilemesi olduğu için Yazılım Yükleme, Klasör Yeniden Yönlendirme ve Sürücü Eşlemeleri tercih uzantısı gibi
+zaman uyumlu işleme gerektiren uzantılar uygulanmaz.
+
+Not: Bu ilke etkinleştirilse bile Grup İlkesi'nin zaman uyumlu çalışmasını sağlayacak iki koşul vardır:
+1 - İlk bilgisayar başlangıcında istemci bilgisayar etki alanına katıldıktan sonra.
+2 - "Bilgisayar açılışında ve oturum açmada her zaman ağ için bekle" ilke ayarı etkinleştirilirse.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız yavaş bir ağ bağlantısının algılanması, Grup İlkesi işleminin zaman uyumlu veya zaman uyumsuz olmasını etkilemez.
+
+      </string>
+      <string id="DisableLGPOProcessing">Yerel Grup İlkesi Nesneleri işlemini kapat</string>
+      <string id="DisableLGPOProcessing_Help">Bu ilke ayarı Yerel Grup İlkesi Nesnelerinin (Yerel GPO'lar) uygulanmasını engeller.
+
+Varsayılan olarak, Yerel GPO'lardaki ilke ayarları etki alanı tabanlı GPO ilke ayarlarından önce uygulanır. Bu ilke ayarı hem kullanıcılara hem de yerel bilgisayara uygulanabilir. Yalnızca etki alanı tabanlı GPO'ların uygulandığından emin olmak için tüm Yerel GPO'ların işlenmesini ve uygulanmasını devre dışı bırakabilirsiniz.
+
+Bu ilke ayarını etkinleştirirseniz sistem hiçbir Yerel GPO'yu işlemez ve uygulamaz.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız Yerel GPO'lar uygulanmaya devam eder.
+
+Not: Etki alanına katılmış bilgisayarlar için, bu ilke ayarının yalnızca etki alanı tabanlı GPO'larda yapılandırılması kesinlikle önerilir. Bu ilke ayarı, bir çalışma grubuna katılmış bilgisayarlarda yoksayılır.
+
+</string>
+      <string id="SyncWaitTime">Başlatma ilkesi işlemi bekleme zamanını belirt</string>
+      <string id="SyncWaitTime_Help">Bu ilke ayarı, başlatma ilkesi işlemi sırasında ağ kullanılabilirlik bildirimleri için Grup İlkesinin ne kadar beklemesi gerektiğini belirtir. Başlatma zamanı ilkesi işleme zaman uyumluysa, bilgisayar, ağ kullanılabilir oluncaya veya varsayılan bekleme zamanına erişilinceye kadar engellenir. Başlatma ilkesi işleme zaman uyumsuzsa, bilgisayar engellenmez ve ilke işleme arka planda gerçekleşir. Her iki durumda da, bu ilke ayarının yapılandırılması sistem tarafından hesaplanan tüm bekleme zamanlarını geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz Grup İlkesi bu yönetimsel olarak yapılandırılan en fazla bekleme zamanını kullanır ve varsayılan veya sistem tarafından hesaplanan tüm bekleme zamanlarını geçersiz kılar.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız Windows Vista işletim sistemi çalışan bilgisayarlarda Grup İlkesi varsayılan bekleme zamanı olarak 30 saniye kullanır. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Ormanlar arası kullanıcı ilkesine ve gezici kullanıcı profillerine izin ver</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">Bu ilke ayarı, ormanlar arası etkileşimli oturum açma için kullanıcı tabanlı ilke işlenmesine, gezici kullanıcı profillerine ve kullanıcı nesnesi oturum açma betiklerine izin verir.
+
+Bu ilke ayarı, ormanlar arası veya çift yönlü orman güveni var olduğunda, farklı ormandaki bir bilgisayara etkileşimli olarak oturum açan tüm kullanıcı hesaplarını etkiler.
+
+Bu ilke ayarını yapılandırmazsanız:
+-  Kullanıcının ormanından hiçbir kullanıcı tabanlı ilke ayarı uygulanmaz.
+-  Kullanıcılar, gezici profillerini almaz; bilgisayara yerel ormandan yerel bir profil alırlar. Kullanıcıya bir uyarı iletisi gösterilir ve olay günlüğü iletisi (1529) gönderilir.
+-  Kapsamı makine tarafından belirlenen Grup İlkesi Nesneleri (GPO'lar) kullanılarak Geri Döngü Grup İlkesi işlemi uygulanır.
+- Geri döngünün Değiştirme modunda çağırıldığını belirten bir olay günlüğü iletisi (1109) gönderilir.
+
+Bu ilke ayarını etkinleştirirseniz davranış biçimi Windows 2000'dekiyle tamamen aynı olur: kullanıcı ilkesi uygulanır ve güvenilir ormandan gezici kullanıcı profiline izin verilir.
+
+Bu ilke ayarını devre dışı bırakırsanız, davranış biçimi yapılandırılmadığı durumla aynı olur.</string>
+      <string id="CSE_AppMgmt">Yazılım yükleme ilkesi işlemini yapılandır</string>
+      <string id="CSE_AppMgmt_Help">Bu ilke ayarı, yazılım yükleme ilkelerinin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Yazılım Ayarları\Yazılım Yükleme altındaki ilke ayarları gibi Grup İlkesinin yazılım yükleme bileşenini kullanan tüm ilke ayarlarını etkiler. Yalnızca Active Directory'de depolanan Grup İlke Nesneleri için yazılım ilkesi ayarlayabilirsiniz; yerel bilgisayardaki Grup İlkesi Nesneleri için ayarlayamazsınız.
+
+Bu ilke ayarı, programın yüklendiğinde ayarlanan yazılım yükleme ilkesi ayarına uyguladığı özelleştirilmiş ayarları geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz seçenekleri değiştirmek için sağlanan onay kutularını kullanabilirsiniz. Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Yavaş bir ağ bağlantısında işleme izin ver seçeneği, güncelleştirme telefon hattı gibi bir yavaş ağ bağlantısı üzerinden aktarılıyor olsa da, ilkeleri güncelleştirir. Yavaş ağ bağlantısı üzerinden güncelleştirme ciddi gecikmelere neden olabilir.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Birçok ilke ayarı uygulaması, yalnızca değişiklik olduğunda güncelleştirildiklerini belirtir. Bununla birlikte, istenen bir ilkeyi kullanıcının değiştirmiş olması durumunda yeniden uygulamak gibi, değişmeyen ilke ayarlarını da güncelleştirmek isteyebilirsiniz.</string>
+      <string id="CSE_DiskQuota">Disk kotası ilkesi işlemini yapılandır</string>
+      <string id="CSE_DiskQuota_Help">Bu ilke ayarı, disk kotası işlemlerinin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Bilgisayar Yapılandırması\Yönetim Şablonları\Sistem\Disk Kotaları içindekiler gibi, Grup İlkesi'nin disk kotası bileşenini kullanan tüm ilkeleri etkiler.
+
+Bu ilke ayarı, programın yüklendiğinde ayarlanan disk kotası ilkesine uyguladığı özelleştirilmiş özel ayarları geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz seçenekleri değiştirmek için sağlanan onay kutularını kullanabilirsiniz. Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Yavaş bir ağ bağlantısında işleme izin ver seçeneği, güncelleştirme telefon hattı gibi bir yavaş ağ bağlantısı üzerinden aktarılıyor olsa da, ilkeleri güncelleştirir. Yavaş ağ bağlantısı üzerinden güncelleştirme ciddi gecikmelere neden olabilir.
+
+Dönemsel arka plan işleme sırasında uygulama seçeneği sistemin etkilenen ilkeleri bilgisayar kullanımdayken arka planda güncelleştirmesini engeller. Arka plan güncelleştirmeleri devre dışı bırakıldığında, ilke değişiklikleri kullanıcı yeniden oturum açıncaya veya sistem yeniden başlatılıncaya kadar etkili olmaz.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Birçok ilke uygulaması, yalnızca değiştiklerinde güncelleştirildiklerini belirtir. Ancak, değişmeyen ilkeleri güncelleştirmek isteyebilirsiniz (kullanıcının bir ayarı değiştirmesi durumunda istenen ayarı yeniden uygulamak gibi).</string>
+      <string id="CSE_EFSRecovery">EFS kurtarma ilkesi işlemini yapılanır</string>
+      <string id="CSE_EFSRecovery_Help">Bu ilke ayarı, şifreleme ilkelerinin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Windows Ayarları\Güvenlik Ayarları içindeki şifrelemeyle ilgili ilkelerde olduğu gibi, Grup İlkesi şifreleme bileşenini kullanan tüm ilkelerini etkiler.
+
+Bu ayar, şifreleme ilkesini yürüten programın, yüklendiğinde belirlediği özel ayarları geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz seçenekleri değiştirmek için sağlanan onay kutularını kullanabilirsiniz. Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Yavaş bir ağ bağlantısında işleme izin ver seçeneği, güncelleştirme telefon hattı gibi bir yavaş ağ bağlantısı üzerinden aktarılıyor olsa da, ilkeleri güncelleştirir. Yavaş ağ bağlantısı üzerinden güncelleştirme ciddi gecikmelere neden olabilir.
+
+Dönemsel arka plan işleme sırasında uygulama seçeneği sistemin etkilenen ilkeleri bilgisayar kullanımdayken arka planda güncelleştirmesini engeller. Arka plan güncelleştirmeleri devre dışı bırakıldığında, ilke değişiklikleri kullanıcı yeniden oturum açıncaya veya sistem yeniden başlatılıncaya kadar etkili olmaz.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Birçok ilke uygulaması, yalnızca değiştiklerinde güncelleştirildiklerini belirtir. Ancak, değişmeyen ilkeleri güncelleştirmek isteyebilirsiniz (kullanıcının bir ayarı değiştirmesi durumunda istenen ayarı yeniden uygulamak gibi).</string>
+      <string id="CSE_FolderRedirection">Klasör yeniden yönlendirme ilkesi işlemini yapılandır</string>
+      <string id="CSE_FolderRedirection_Help">Bu ilke ayarı, klasör yeniden yönlendirme ilkelerinin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Windows Ayarları\Klasör Yeniden Yönlendirme içindekiler gibi, Grup İlkesi'nin klasör yeniden yönlendirme bileşenini kullanan tüm ilkeleri etkiler. Klasör yeniden yönlendirme ilkesini yalnızca, Active Directory'de saklanan Grup İlkesi nesneleri için belirleyebilirsiniz, yerel bilgisayardaki Grup İlkesi nesneleri için belirleyemezsiniz.
+
+Bu ilke ayarı, programın yüklendiğinde ayarlanan klasör yeniden yönlendirme ilkesi ayarına uyguladığı özelleştirilmiş ayarları geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz seçenekleri değiştirmek için sağlanan onay kutularını kullanabilirsiniz. Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Yavaş bir ağ bağlantısında işleme izin ver seçeneği, güncelleştirme telefon hattı gibi bir yavaş ağ bağlantısı üzerinden aktarılıyor olsa da, ilkeleri güncelleştirir. Yavaş ağ bağlantısı üzerinden güncelleştirme ciddi gecikmelere neden olabilir.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Birçok ilke uygulaması, yalnızca değiştiklerinde güncelleştirildiklerini belirtir. Ancak, değişmeyen ilkeleri güncelleştirmek isteyebilirsiniz (kullanıcının bir ayarı değiştirmesi durumunda istenen ayarı yeniden uygulamak gibi).</string>
+      <string id="CSE_IEM">Internet Explorer Bakım ilkesi işlemini yapılandır</string>
+      <string id="CSE_IEM_Help">Bu ilke ayarı, Internet Explorer Bakım ilkelerinin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Windows Ayarları\Internet Explorer Bakımı içindekiler gibi, Grup ilkesinin Internet Explorer Bakım bileşenini kullanan tüm ilkelerini etkiler.
+
+Bu ilke ayarı, programın yüklendiğinde ayarlanan Internet Explorer Bakım ilkesi ayarına uyguladığı özelleştirilmiş ayarları geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz seçenekleri değiştirmek için sağlanan onay kutularını kullanabilirsiniz. Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Yavaş bir ağ bağlantısında işleme izin ver seçeneği, güncelleştirme telefon hattı gibi bir yavaş ağ bağlantısı üzerinden aktarılıyor olsa da, ilkeleri güncelleştirir. Yavaş ağ bağlantısı üzerinden güncelleştirme ciddi gecikmelere neden olabilir.
+
+Dönemsel arka plan işleme sırasında uygulama seçeneği sistemin etkilenen ilkeleri bilgisayar kullanımdayken arka planda güncelleştirmesini engeller. Arka plan güncelleştirmeleri devre dışı bırakıldığında, ilke değişiklikleri kullanıcı yeniden oturum açıncaya veya sistem yeniden başlatılıncaya kadar etkili olmaz.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Birçok ilke uygulaması, yalnızca değiştiklerinde güncelleştirildiklerini belirtir. Bununla birlikte, değişmeyen ilkeleri güncelleştirmek isteyebilirsiniz (kullanıcının bir ilke ayarını değiştirmesi durumunda istenen ayarı yeniden uygulamak gibi).</string>
+      <string id="CSE_IPSecurity">IP güvenlik ilkesi işlemini yapılandır</string>
+      <string id="CSE_IPSecurity_Help">Bu ilke ayarı, IP güvenlik ilkelerinin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Bilgisayar Yapılandırması\Windows Ayarları\Güvenlik Ayarları\Yerel Makinede Üzerinde IP Güvenlik İlkeleri içindeki ilkeler gibi, Grup İlkesi'nin IP güvenlik bileşeni kullanan tüm ilkelerini etkiler.
+
+Bu ilke ayarı, programın yüklendiğinde ayarlanan IP güvenlik ilkesi ayarına uyguladığı özelleştirilmiş ayarları geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz seçenekleri değiştirmek için sağlanan onay kutularını kullanabilirsiniz. Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Yavaş bir ağ bağlantısında işleme izin ver seçeneği, güncelleştirme telefon hattı gibi bir yavaş ağ bağlantısı üzerinden aktarılıyor olsa da, ilkeleri güncelleştirir. Yavaş ağ bağlantısı üzerinden güncelleştirme ciddi gecikmelere neden olabilir.
+
+Dönemsel arka plan işleme sırasında uygulama seçeneği sistemin etkilenen ilkeleri bilgisayar kullanımdayken arka planda güncelleştirmesini engeller. Arka plan güncelleştirmeleri devre dışı bırakıldığında, ilke değişiklikleri kullanıcı yeniden oturum açıncaya veya sistem yeniden başlatılıncaya kadar etkili olmaz.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Birçok ilke uygulaması, yalnızca değiştiklerinde güncelleştirildiklerini belirtir. Bununla birlikte, değişmeyen ilkeleri güncelleştirmek isteyebilirsiniz (kullanıcının bir ilke ayarını değiştirmesi durumunda istenen ayarı yeniden uygulamak gibi).</string>
+      <string id="CSE_Registry">Kayıt defteri ilkesi işlemini yapılandır</string>
+      <string id="CSE_Registry_Help">Bu ilke ayarı, kayıt defteri ilkelerinin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Yönetim Şablonları klasöründeki tüm ilkeleri ve kayıt defterinde değerler depolayan diğer ilkeleri etkiler. Bu ayar, kayıt defteri ilkesini yürüten programın, yüklendiğinde belirlediği özel ayarları geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz seçenekleri değiştirmek için sağlanan onay kutularını kullanabilirsiniz. Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Dönemsel arka plan işleme sırasında uygulama seçeneği sistemin etkilenen ilkeleri bilgisayar kullanımdayken arka planda güncelleştirmesini engeller. Arka plan güncelleştirmeleri devre dışı bırakıldığında, ilke değişiklikleri kullanıcı yeniden oturum açıncaya veya sistem yeniden başlatılıncaya kadar etkili olmaz.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Birçok ilke uygulaması, yalnızca değiştiklerinde güncelleştirildiklerini belirtir. Bununla birlikte, değişmeyen ilkeleri güncelleştirmek isteyebilirsiniz (kullanıcının bir ilke ayarını değiştirmesi durumunda istenen ayarı yeniden uygulamak gibi).</string>
+      <string id="CSE_Scripts">Betik ilkesi işlemini yapılandır</string>
+      <string id="CSE_Scripts_Help">Bu ilke ayarı, paylaşılan betikler atayan ilkelerinin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Windows Ayarları\Betikler içindekiler gibi, Grup İlkesi'nin betik bileşenini kullanan tüm ilkeleri etkiler. Bu ilke, komut dosyaları ilkesini yürüten programın, yüklendiğinde belirlediği özel ayarları geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz seçenekleri değiştirmek için sağlanan onay kutularını kullanabilirsiniz. Bu ayarı devre dışı bırakırsanız veya yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Yavaş bir ağ bağlantısında işleme izin ver seçeneği, güncelleştirme telefon hattı gibi bir yavaş ağ bağlantısı üzerinden aktarılıyor olsa da, ilkeleri güncelleştirir. Yavaş ağ bağlantısı üzerinden güncelleştirme ciddi gecikmelere neden olabilir.
+
+Dönemsel arka plan işleme sırasında uygulama seçeneği sistemin etkilenen ilkeleri bilgisayar kullanımdayken arka planda güncelleştirmesini engeller. Arka plan güncelleştirmeleri devre dışı bırakıldığında, ilke değişiklikleri kullanıcı yeniden oturum açıncaya veya sistem yeniden başlatılıncaya kadar etkili olmaz.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Birçok ilke uygulaması, yalnızca değiştiklerinde güncelleştirildiklerini belirtir. Bununla birlikte, değişmeyen ilkeleri güncelleştirmek isteyebilirsiniz (kullanıcının bir ilke ayarını değiştirmesi durumunda istenen ayarı yeniden uygulamak gibi).</string>
+      <string id="CSE_Security">Güvenlik ilkesi işlemini yapılandır</string>
+      <string id="CSE_Security_Help">Bu ilke ayarı, güvenlik ilkelerinin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Windows Ayarları\Güvenlik Ayarları içindekiler gibi, Grup İlkesi'nin güvenlik bileşenini kullanan tüm ilkelerini etkiler.
+
+Bu ilke ayarı, programın yüklendiğinde ayarlanan güvenlik ilkesine uyguladığı özelleştirilmiş ayarları geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz seçenekleri değiştirmek için sağlanan onay kutularını kullanabilirsiniz. Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Dönemsel arka plan işleme sırasında uygulama seçeneği sistemin etkilenen ilkeleri bilgisayar kullanımdayken arka planda güncelleştirmesini engeller. Arka plan güncelleştirmeleri devre dışı bırakıldığında, ilke değişiklikleri kullanıcı yeniden oturum açıncaya veya sistem yeniden başlatılıncaya kadar etkili olmaz.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Pek çok ilke uygulaması yalnızca değiştirildiklerinde güncelleştirilmeyi belirtir. Bununla birlikte, değişmeyen ilkeleri güncelleştirmek isteyebilirsiniz (kullanıcının bir ilke ayarını değiştirmesi durumunda istenen ayarı yeniden uygulamak gibi).</string>
+      <string id="CSE_Wireless">Kablosuz ilkesi işlemini yapılandır</string>
+      <string id="CSE_Wireless_Help">Bu ilke ayarı, kablosuz ağ ayarlarını atayan ilkelerin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Windows Ayarları\Kablosuz Ağ İlkeleri içindekiler gibi, Grup İlkesi'nin kablosuz ağ bileşenini kullanan tüm ilkeleri etkiler.
+
+Bu ayar, kablosuz ağı yürüten programın, yüklendiğinde belirlediği özel ayarları geçersiz kılar.
+
+Bu ilkeyi etkinleştirirseniz seçenekleri değiştirmek için sağlanan denetim kutularını kullanabilirsiniz.
+
+Bu ayarı devre dışı bırakır ya da yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Yavaş bir ağ bağlantısında işleme izin ver seçeneği, güncelleştirme telefon hattı gibi bir yavaş ağ bağlantısı üzerinden aktarılıyor olsa da, ilkeleri güncelleştirir. Yavaş ağ bağlantısı üzerinden güncelleştirme ciddi gecikmelere neden olabilir.
+
+Dönemsel arka plan işleme sırasında uygulama seçeneği sistemin etkilenen ilkeleri bilgisayar kullanımdayken arka planda güncelleştirmesini engeller. Arka plan güncelleştirmeleri devre dışı bırakıldığında, ilke değişiklikleri kullanıcı yeniden oturum açıncaya veya sistem yeniden başlatılıncaya kadar etkili olmaz.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Birçok ilke uygulaması, yalnızca değiştiklerinde güncelleştirildiklerini belirtir. Ancak, değişmeyen ilkeleri güncelleştirmek isteyebilirsiniz (kullanıcının bir ayarı değiştirmesi durumunda istenen ayarı yeniden uygulamak gibi).</string>
+      <string id="CSE_Wired">Kablolu ilkesi işlemini yapılandır</string>
+      <string id="CSE_Wired_Help">Bu ilke ayarı, kablolu ağ ayarlarını atayan ilkelerin ne zaman güncelleştirileceğini belirler.
+
+Bu ilke ayarı, Windows Ayarları\Kablolu Ağ İlkeleri içindekiler gibi, Grup İlkesi'nin kablolu ağ bileşenini kullanan tüm ilkelerini etkiler.
+
+Bu ayar, kablolu ağı yürüten programın, yüklendiğinde belirlediği özel ayarları geçersiz kılar.
+
+Bu ilkeyi etkinleştirirseniz seçenekleri değiştirmek için sağlanan denetim kutularını kullanabilirsiniz.
+
+Bu ayarı devre dışı bırakır ya da yapılandırmazsanız sistem üzerinde hiçbir etkisi olmaz.
+
+Yavaş bir ağ bağlantısında işleme izin ver seçeneği, güncelleştirme telefon hattı gibi bir yavaş ağ bağlantısı üzerinden aktarılıyor olsa da, ilkeleri güncelleştirir. Yavaş ağ bağlantısı üzerinden güncelleştirme ciddi gecikmelere neden olabilir.
+
+Dönemsel arka plan işleme sırasında uygulama seçeneği sistemin etkilenen ilkeleri bilgisayar kullanımdayken arka planda güncelleştirmesini engeller. Arka plan güncelleştirmeleri devre dışı bırakıldığında, ilke değişiklikleri kullanıcı yeniden oturum açıncaya veya sistem yeniden başlatılıncaya kadar etkili olmaz.
+
+Grup İlkesi nesneleri değişmemişse bile işle seçeneği, ilkeleri değişmemiş olsalar bile güncelleştirir ve yeniden uygular. Birçok ilke uygulaması, yalnızca değiştiklerinde güncelleştirildiklerini belirtir. Ancak, değişmeyen ilkeleri güncelleştirmek isteyebilirsiniz (kullanıcının bir ayarı değiştirmesi durumunda istenen ayarı yeniden uygulamak gibi).</string>
+
+      <string id="DenyRsopToInteractiveUser">Etkileşimli kullanıcıların İlke Sonuç Kümesi verileri oluşturup oluşturamayacağını belirle</string>
+      <string id="DenyRsopToInteractiveUser_Help">Bu ilke ayarı, kullanıcıların kendi İlke Sonuç Kümesi (RSoP) verilerini görüntüleyip görüntüleyemeyeceğini denetler.
+
+Varsayılan olarak, etkileşimli oturum açan kullanıcılar kendi İlke Sonuç Kümesi (RSoP) verilerini görüntüleyebilirler.
+
+Bu ilke ayarını etkinleştirirseniz etkileşimli kullanıcılar RPoP verileri oluşturamaz.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız etkileşimli kullanıcılar RSoP verileri oluşturabilir.
+
+Not: Bu ilke ayarı yöneticileri etkilemez. Bu ilke ayarını etkinleştirirseniz veya devre dışı bırakırsanız, yöneticiler varsayılan olarak RSoP verilerini görebilir.
+
+Not: RSoP verilerini istemci bilgisayarda görüntülemek için Microsoft Yönetim Konsolu için RSoP ek bileşenini kullanın. Komut satırına RSOP.msc yazarak RSoP ek bileşenini başlatabilirsiniz
+
+Not: Bu ilke ayarı, hem Kullanıcı Yapılandırması hem de Bilgisayar Yapılandırması ayarı olarak vardır.
+
+Ayrıca bkz: Bilgisayar Yapılandırması\Yönetim Şablonları\Sistem\Grupİlkesi içindeki "İlke Sonuç Kümesi'nin günlüğe yazılmasını kapat" ilke ayarı.</string>
+      <string id="DisableAutoADMUpdate">ADM dosyalarının otomatik güncelleştirilmesini kapat</string>
+      <string id="DisableAutoADMUpdate_Help">Grup İlkesi Nesne Düzenleyicisi'ni açtığınızda, sistemin Yönetim Şablonları kaynak dosyalarını otomatik olarak güncelleştirmesini engeller.  Yöneticiler DC'nin sistem biriminde kullanılan alanın boyutuyla ilgileniyorlarsa, bunu kullanmak isteyebilirler.
+
+Varsayılan olarak, Grup İlkesi Nesne Düzenleyicisi'ni başlattığınızda, yerel %SYSTEMROOT%\inf dizinindeki kaynak dosyalarda ve GPO içinde depolanan kaynak dosyalarda bir zaman damgası karşılaştırması gerçekleştirilir.  Yerel dosyalar daha yeniyse, GPO'ya kopyalanırlar.
+
+Bu ayarın durumu Etkin olarak değiştirilirse, GPO'ya herhangi bir kaynak dosyanın kopyalanması engellenir.
+
+Bu ayarın durumu Devre Dışı olarak değiştirilirse, varsayılan davranış biçimi uygulanır.  Daha yeni zaman damgaları varsa, dosyalar her zaman GPO'ya kopyalanır.
+
+NOT: Grup İlke Nesnesi Düzenleyicisi için her zaman yerel ADM dosyaları kullan" Bilgisayar Yapılandırması ilke ayarı etkinse, bu ayarın durumu yoksayılır ve her zaman Etkin durumdaymış gibi davranılır.</string>
+      <string id="DisableBackgroundPolicy">Grup İlkesi'nin arka plan yenilemesini kapat</string>
+      <string id="DisableBackgroundPolicy_Help">Bu ilke ayarı, bilgisayar kullanımdayken Grup İlkesi'nin güncelleştirilmesini engeller. Bu ilke ayarı, bilgisayarlar, kullanıcılar ve etki alanı denetleyicileri için Grup İlkesi'ne uygulanır.
+
+Bu ilke ayarını etkinleştirirseniz sistem, bilgisayar ve kullanıcı ayarlarını güncelleştirmeden önce geçerli kullanıcının oturumu kapatmasını bekler.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız kullanıcılar çalışırken güncelleştirmeler uygulanabilir. Güncelleştirmelerin sıklığı "Bilgisayarlar için Grup İlkesi yenileme aralığını ayarla" ve "Kullanıcılar için Grup İlkesi yenileme aralığı ayarla" ilke ayarları tarafından belirlenir.
+
+Not: Bu ilke ayarında değişiklik yaparsanız, değişikliklerin etkili olması için bilgisayarınızı yeniden başlatmanız gerekir.</string>
+      <string id="DisableUsersFromMachGP">Kullanıcıların makine ilkesi yenileme çağrısı yapabilme yeteneğini kaldır</string>
+      <string id="DisableUsersFromMachGP_Help">Bu ilke ayarı, kullanıcının bilgisayar ilkesi yenileme çağrısı yapabilme yeteneğini denetlemenize olarak tanır.
+
+Bu ilke ayarını etkinleştirirseniz kullanıcılar bilgisayar ilkesi yenilemesini çağıramazlar. Bilgisayar ilkesi başlangıçta veya resmi ilke yenilemesi olduğunda hala uygulanır.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız varsayılan davranış uygulanır. Varsayılan olarak, bilgisayar açıldığında bilgisayar ilkesi uygulanır. Aynı zamanda belirli bir zaman aralığında veya kullanıcı tarafından çağırıldığında yenilenir.
+
+Not: Bu ilke ayarı yalnızca yönetici olmaya kullanıcılara uygulanır. Yöneticiler, bu ilke ayarının yapılandırmasından bağımsız olarak istedikleri zaman bilgisayar ilkesi yenilemesini çağırmaya devam edebilirler.
+
+Ayrıca, ilke yenileme aralığını değiştirmek için "Bilgisayarlar için Grup İlkesi yenileme aralığını ayarla" ilke ayarına bakın.
+
+Not: Bu ilke ayarında değişiklik yaparsanız, değişikliklerin etkili olması için bilgisayarınızı yeniden başlatmanız gerekir.</string>
+      <string id="EnforcePoliciesOnly">Yalnızca İlkeleri Göstermeyi Zorla</string>
+      <string id="EnforcePoliciesOnly_Help">Bu ilke ayarı, yöneticilerin Grup İlkesi tercihlerini görmesini ve kullanmasını engeller.
+
+Bir Grup İlkesi yönetim (.adm) dosyası, hem gerçek ayarlar, hem de tercihler içerebilir. Grup İlkesi tarafından tam olarak desteklenen gerçek ayarlar, Software\Policies veya r Software\Microsoft\Windows\CurrentVersion\Policies kayıt defteri alt anahtarlarındaki kayıt defteri girdilerini kullanmalıdır. Tam olarak desteklenmeyen tercihler, diğer alt anahtarlardaki kayıt defteri girişlerini kullanırlar.
+
+Bu ilke ayarını etkinleştirirseniz "Yalnızca İlkeleri Göster" komutu açılır ve yöneticiler bunu kapatamazlar. Bunun sonucu olarak, Grup İlkesi Nesne Düzenleyicisi yalnızca gerçek ayarları görüntüler; tercihler görünmez.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız "Yalnızca İlkeleri Göster" komutu varsayılan olarak açılır, ancak yöneticiler "Yalnızca İlkeleri Göster" komutunu kapatarak tercihleri görebilirler.
+
+Not: "Yalnızca İlkeleri Göster" komutunu bulmak için, Grup İlkesi Nesne Düzenleyicisi'nde Yönetim Şablonları klasörüne (herhangi birini) tıklayın, aynı klasöre sağ tıklayın ve "Göster"in üzerine gelin.
+
+Grup İlkesi Nesne Düzenleyicisi'nde, mavi simgeye sahip gerçek ayarlardan ayırt edilmesi için tercihler kırmızı simgeye sahiptir.</string>
+      <string id="GPDCOptionAny">Kullanılabilir herhangi bir etki alanı denetleyicisini kullan</string>
+      <string id="GPDCOptionInherit">Active Directory Eklentileri'nden Al</string>
+      <string id="GPDCOptionPDC">Birincil Etki Alanı Denetleyicisini Kullan</string>
+      <string id="GPDCOptions">Grup İlkesi etki alanı denetleyicisi seçimini yapılandır</string>
+      <string id="GPDCOptions_Help">Bu ilke ayarı, Grup İlkesi Nesne Düzenleyicisi eklentisinin kullanacağı etki alanı denetleyicisini belirler.
+
+Bu ayarı etkinleştirirseniz bu seçeneklere göre hangi etki alanı denetleyecisinin kullanılacağını belirtebilirsiniz:
+
+"Birincil Etki Alanı Denetleyicisini Kullan", Grup İlkesi Nesne Düzenleyicisi ek bileşeninin, değişiklikleri etki alanı için PDC İşlem Yöneticisi olarak belirlenen etki alanı denetleyicisinden okuduğunu ve buraya  yazdığını gösterir.
+
+"Active Directory Ek Bileşenlerinden Devral", Grup İlkesi Nesne Düzenleyicisi ek bileşeninin, değişiklikleri Active Directory Kullanıcıları ve Bilgisayarları ya da Active Directory Siteleri ve Hizmetleri ek bileşenlerinin kullandığı etki alanı denetleyicisinden okuduğunu ve buraya yazdığını gösterir.
+
+"Kullanılabilir bir etki alanı denetleyicisini kullan",  Grup İlkesi Nesne Düzenleyicisi ek bileşeninin, kullanılabilir herhangi bir etki alanı denetleyicisinden okuyabileceğini ve buraya yazabileceğini gösterir.
+
+Bu ayarı devre dışı bırakır veya yapılandırmazsanız Grup İlkesi Nesne Düzenleyicisi eklentisi etki alanı için PDC İşlem Yöneteni olarak tasarlanmış etki alanı denetleyicisini kullanır.
+
+Not: Bir etki alanının PDC İşlem Yöneteni'ni değiştirmek için, Active Directory Kullanıcıları ve Bilgisayarları içinden etki alanına sağ tıkladıktan sonra "İşlem Yöneteni" öğesine tıklayın.</string>
+      <string id="GPTransferRate">Grup İlkesi yavaş bağlantı algılamayı yapılandır</string>
+      <string id="GPTransferRate_Help">Bu ilke ayarı, Grup İlkesi'ni uygulamak ve güncelleştirmek amacıyla yavaş bir bağlantı tanımlar.
+
+Bu gruptaki bilgisayarlar için bir ilke güncelleştirmesini sağlayan etki alanı denetleyicisinden verilerin aktarılma hızı, bu ilkenin belirlediği hızdan daha yavaşsa, sistem bağlantının yavaş olduğunu kabul eder.
+
+Sistemin bir yavaş ilke bağlantısına yanıtı ilkelere göre değişir. İlkeyi uygulayan program yavaş bir bağlantıya verilecek yanıtı belirleyebilir. Ayrıca, bu klasördeki ilke işleme ilkeleri, programların yavaş bağlantılar için belirlenen yanıtlarını geçersiz kılmanızı sağlar.
+
+Bu ilke ayarını etkinleştirirseniz kilobit cinsinden bir saniyedeki aktarım hızını göstermek üzere, "Bağlantı hızı" kutusuna 0 ile  4.294.967.200 arasında ondalık sayı yazın. 0 yazarsanız, tüm bağlantılar hızlı sayılır.Bu ayarı devre dışı bırakırsanız ya da yapılandırmazsanız sistem, saniyede 500 kilobit olan varsayılan değeri kullanır.Bu ayar Bilgisayar Yapılandırması ve Kullanıcı Yapılandırması klasörlerinde görünür. 0 yazarsanız, tüm bağlantıların hızlı olduğu kabul edilir.
+
+Bu ayarı devre dışı bırakır veya yapılandırmazsanız sistem saniyede 500 kilobit varsayılan değerini kullanır.
+
+Bu ayar Bilgisayar Yapılandırması ve Kullanıcı Yapılandırması klasörlerinde görünür. Kullanıcı Yapılandırması'ndaki ayarsa, Kullanıcı Yapılandırması klasöründeki ilkeler için yavaş bir bağlantı tanımlar. Kullanıcı Yapılandırması'ndaki ayar, Kullanıcı Yapılandırması klasöründeki ilkeler için yavaş bir bağlantı tanımlar.
+
+Ayrıca, "Yavaş ağ bağlantılarını algılama" ve Bilgisayar Yapılandırması\Yönetim Şablonları\Sistem\Kullanıcı Profili'ndeki ilişkili ilkelere bakın. Not: Profil sunucusunun IP bağlanması varsa, bağlantı hızı ayarı kullanılır. Profil sunucusunun IP bağlanması yoksa, SMB zamanlaması kullanılır.</string>
+      <string id="GroupPolicyRefreshRate">Bilgisayarlar için Grup İlkesi yenileme aralığını ayarla</string>
+      <string id="GroupPolicyRefreshRate_Help">Bu ilke ayarı, bilgisayar kullanımdayken bilgisayarlar için Grup İlkesi'nin hangi sıklıkta güncelleştirileceğini (arka planda) belirtir. Bu ayar, yalnızca Bilgisayar Yapılandırması klasöründeki Grup İlkeleri için bir arka plan güncelleştirme hızı belirler.
+
+Arka plan güncelleştirmelerine ek olarak, sistem başladığında, bilgisayar için Grup İlkesi her zaman güncelleştirilir.
+
+Varsayılan değer olarak, bilgisayar Grup İlkesi arka planda her 90 dakikada bir, 0 - 30 dakikalık rastgele bir konum ile güncelleştirilir.
+
+Bu ilke ayarını etkinleştirirseniz 0 ile 64.800 dakika (45 gün) arasında bir güncelleştirme hızı belirtebilirsiniz. 0 dakikayı seçerseniz, bilgisayar Grup İlkesi'ni her 7 saniyede bir güncelleştirmeye çalışır. Ancak, güncelleştirmeler kullanıcının işini kesebileceği ve iş trafiğini artırabileceğinden, çoğu yüklemeler için çok kısa güncelleştirme aralıkları uygun değildir.
+
+Bu ayarı devre dışı bırakırsanız, kullanıcı Grup İlkesi her 90 dakikada bir güncelleştirilir (varsayılan). Bilgisayar kullanımdayken, Grup İlkesi'nin hiçbir zaman güncelleştirilmemesi gerektiğini belirtmek için, "Grup İlkesi'nin arka plan yenilemesini kapat" ilkesini seçin.
+
+Bilgisayarlar için Grup İlkesi yenileme aralığını ayarla ilkesi, gerçek güncelleştirme aralıklarının ne kadar değiştiğini belirlemenize de olanak tanır. Aynı güncelleştirme aralığındaki istemcilerin aynı anda güncelleştirme istemesini engellemek için, sistem, her istemcinin güncelleştirme aralığını dakika cinsinden rastgele bir sayı ile değiştirir. Rasgele zaman kutusuna yazdığınız sayı, değişim aralığının üst sınırını belirler. Örneğin 30 dakika yazarsanız, sistem 0 ile 30 arasında bir değişim seçer. Büyük bir sayı yazarsanız, aralık genişler ve istemci isteklerinin çakışması olasılığını azaltır. Ancak güncelleştirmeler belirgin biçimde gecikebilir.
+
+Bu ayar, bilgisayar Grup İlkesi için güncelleştirme hızını belirler. Kullanıcı ilkelerine bir güncelleştirme hızı ayarlamak için, "Kullanıcılar için Grup İlkesi yenileme aralığını ayarla" ayarını kullanın (Kullanıcı Yapılandırması\Yönetim Şablonları\Sistem\Grup İlkesi altında).
+
+Bu ayar ancak "Grup İlkesi için arka plan yenilemesini devre dışı bırak" ayarı etkin değilken kullanılır.
+
+Not: Kullanıcıların ilke güncelleştirmesini işaretlerini fark etmesi için, onlara ilkelerinin düzenli aralıklarla güncelleştirildiğini bildirebilirsiniz. Kullanıcıları, ilkelerinin düzenli aralıklarla güncelleştirilmesi konusunda bilgilendirebilirsiniz; Grup İlkesi güncelleştirildiğinde, Windows masaüstü yenilenir; kısaca titreşir ve açık menüler kapanır. Ayrıca, kullanıcının kullanabileceği programlar gibi Grup İlkeleri tarafından belirlenen kısıtlamalar, süren görevlerle çakışabilir.</string>
+      <string id="GroupPolicyRefreshRateDC">Etki alanı denetleyicileri için Grup İlkesi yenileme aralığını ayarla</string>
+      <string id="GroupPolicyRefreshRateDC_Help">Bu ilke ayarı, etki alanı denetleyicileri çalışırken bunlarda Grup İlkesi'nin hangi sıklıkta güncelleştirileceğini (arka planda) belirtir. Bu ilkeyle belirtilen güncelleştirmeler, sistem başladığında gerçekleştirilen güncelleştirmelere ek olarak yapılır.
+
+Varsayılan değer olarak, etki alanı denetleyicilerindeki Grup İlkesi her beş dakikada bir güncelleştirilir.
+
+Bu ilke ayarını etkinleştirirseniz 0 ile 64.800 dakika (45 gün) arasında bir güncelleştirme hızı belirtebilirsiniz. 0 dakikayı seçerseniz, etki alanı denetleyicisi Grup İlkesi'ni her 7 saniyede bir güncelleştirmeye çalışır. Ancak, güncelleştirmeler kullanıcının işini kesebileceği ve iş trafiğini artırabileceğinden, çoğu yüklemeler için çok kısa güncelleştirme aralıkları uygun değildir.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız etki alanı denetleyicisi Grup İlkesi'ni her 5 dakikada bir güncelleştirir (varsayılan). Bilgisayar kullanımdayken, kullanıcı Grup İlkesi'nin hiçbir zaman güncelleştirilmemesi gerektiğini belirtmek için, "Grup İlkesi'nin arka plan yenilemesini kapat" ayarını seçin.
+
+Bu ayar, fiili güncelleştirme aralığının ne kadar değişeceğini de belirlemenizi sağlar. Aynı güncelleştirme aralığındaki etki alanı denetleyicilerinin aynı anda güncelleştirme istemesini engellemek için, sistem, her denetleyicinin güncelleştirme aralığını dakika cinsinden rastgele bir sayı ile değiştirir. Rasgele zaman kutusuna yazdığınız sayı, değişim aralığının üst sınırını belirler. Örneğin 30 dakika yazarsanız, sistem 0 ile 30 arasında bir değişim seçer. Büyük bir sayı yazarsanız, aralık genişler ve isteklerin çakışması olasılığını azaltır. Ancak güncelleştirmeler belirgin biçimde gecikebilir.
+
+Not: Bu ayar ancak, bir etki alanı, site, kuruluş birimi (OU) veya özel bir grup için ayar oluşturulurken kullanılır. Yalnızca yerel bir bilgisayar için ilke oluşturuyorsanız, sistem, ilkeyi yoksayar.</string>
+      <string id="GroupPolicyRefreshRateUser">Kullanıcılar için Grup İlkesi yenileme aralığını ayarla</string>
+      <string id="GroupPolicyRefreshRateUser_Help">Bu ilke ayarı, bilgisayar kullanımdayken kullanıcılar için Grup İlkesi'nin hangi sıklıkta güncelleştirileceğini (arka planda) belirtir. Bu ayar, yalnızca Kullanıcı Yapılandırması klasöründeki Grup İlkeleri için bir arka plan güncelleştirme hızı belirler.
+
+Arka plan güncelleştirmelerine ek olarak, oturum açtıklarında, kullanıcılar için Grup İlkesi her zaman güncelleştirilir.
+
+Varsayılan değer olarak, kullanıcı Grup İlkesi her 90 dakikada bir, 0 - 30 dakikalık rastgele bir konum ile güncelleştirilir.
+
+Bu ilke ayarını etkinleştirirseniz 0 ile 64.800 dakika (45 gün) arasında bir güncelleştirme hızı belirtebilirsiniz. 0 dakikayı seçerseniz, bilgisayar, kullanıcı Grup İlkesi'ni her 7 saniyede bir güncelleştirmeye çalışır. Ancak, güncelleştirmeler kullanıcının işini kesebileceği ve iş trafiğini artırabileceğinden, çoğu yüklemeler için çok kısa güncelleştirme aralıkları uygun değildir.
+
+Bu ayarı devre dışı bırakırsanız, kullanıcı Grup İlkesi her 90 dakikada bir güncelleştirilir (varsayılan). Bilgisayar kullanımdayken, kullanıcı Grup İlkesi'nin hiçbir zaman güncelleştirilmemesi gerektiğini belirtmek için, "Grup İlkesi'nin arka plan yenilemesini kapat" ayarını seçin.
+
+Bu ayar, fiili güncelleştirme aralığının ne kadar değişeceğini de belirlemenizi sağlar. Aynı güncelleştirme aralığındaki istemcilerin aynı anda güncelleştirme istemesini engellemek için, sistem, her istemcinin güncelleştirme aralığını dakika cinsinden rastgele bir sayı ile değiştirir. Rasgele zaman kutusuna yazdığınız sayı, değişim aralığının üst sınırını belirler. Örneğin 30 dakika yazarsanız, sistem 0 ile 30 arasında bir değişim seçer. Büyük bir sayı yazarsanız, aralık genişler ve istemci isteklerinin çakışması olasılığını azaltır. Ancak güncelleştirmeler belirgin biçimde gecikebilir.
+
+Önemli: "Grup İlkesi'nin arka planda yenilemesini kapat" ayarı etkinleştirilmişse, bu ayar yoksayılır.
+
+Not: Bu ayar, kullanıcı Grup İlkeleri için güncelleştirme hızını belirler. Bilgisayar Grup İlkeleri'ne güncelleştirme hızını ayarlamak için, "Bilgisayarlar için Grup İlkesi yenileme aralığı" ayarını kullanın (Bilgisayar Yapılandırması\Yönetim Şablonları\Sistem\Grup İlkesi altında).
+
+İpucu: Kullanıcıların ilke güncelleştirmesini işaretlerini fark etmesi için, onlara ilkelerinin düzenli aralıklarla güncelleştirildiğini bildirebilirsiniz. Kullanıcıları, ilkelerinin düzenli aralıklarla güncelleştirilmesi konusunda bilgilendirebilirsiniz; Grup İlkesi güncelleştirildiğinde, Windows masaüstü yenilenir; kısaca titreşir ve açık menüler kapanır. Ayrıca, kullanıcının kullanabileceği programlar gibi Grup İlkeleri tarafından belirlenen kısıtlamalar, süren görevlerle çakışabilir.</string>
+      <string id="NewGPODisplayName">Yeni Grup İlkesi nesneleri için varsayılan adı ayarla</string>
+      <string id="NewGPODisplayName_Help">Bu ilke ayarı, yeni Grup İlkesi nesneleri için varsayılan görünen adı ayarlamanıza olanak tanır.
+
+Bu ayar, Active Directory araçlarındaki Grup İlkesi sekmesi ve GPO tarayıcısı dahil ilke uyumlu Grup İlkesi Yönetim araçlarından oluşturulan yeni Grup İlkesi nesneleri için varsayılan adı belirtmenize olanak sağlar.
+
+Görünen ad ortam değişkenleri içerebilir ve en fazla 255 karakter uzunluğunda olabilir.
+
+Bu ayar Devre Dışı veya Yapılandırılmadı ise, Yeni Grup İlkesi nesnesinin varsayılan görüntülenen adı kullanılır.</string>
+      <string id="NewGPOLinksDisabled">Varsayılan değer olarak devre dışı bırakılmış yeni Grup İlkesi Nesnesi bağlantıları oluştur</string>
+      <string id="NewGPOLinksDisabled_Help">Bu ilke ayarı, devre dışı bırakılmış durumda yeni Grup İlkesi nesne bağlantıları oluşturmanıza olanak tanır.
+
+Bu ilke ayarını etkinleştirirseniz varsayılan olarak tüm yeni Grup İlkesi nesne bağlantılarını devre dışı bırakılmış durumda oluşturabilirsiniz. Yeni nesne bağlantılarını yapılandırıp sınadıktan sonra Active Directory Kullanıcıları ve Bilgisayarları ya da Active Directory Siteleri ve Hizmetleri gibi ilke uyumlu Grup İlkesi yönetim araçlarını kullanarak nesne bağlantılarını sistemde kullanmak üzere etkinleştirebilirsiniz.
+
+Bu ayarı devre dışı bırakırsanız ya da yapılandırmazsanız yeni Grup İlkesi nesne bağlantıları, etkin durumda oluşturulur. Bağlantıların, yapılandırılıp sınanıncaya kadar geçerlilik kazanmasını istemiyorsanız, nesne bağlantısını devre dışı bırakmalısınız.</string>
+      <string id="OnlyUseLocalAdminFiles">Grup İlkesi Nesne Düzenleyicisi için her zaman yerel ADM dosyalarını kullan</string>
+      <string id="OnlyUseLocalAdminFiles_Help">Bu ilke ayarı, Grup İlkesi ek bileşeni için her zaman yerel ADM dosyalarını kullanmanıza olanak tanır.
+
+Varsayılan olarak, Grup İlke Nesne Düzenleyicisi ek bileşenini kullanarak bir Grup İlkesi Nesnesini (GPO) düzenlediğinizde, ADM dosyaları bu GPO'dan Grup İlke Nesne Düzenleyicisi ek bileşenine yüklenir. Bu, ADM dosyalarının GPO'nun oluşturulmasında kullanılan sürümünü, söz konusu GPO'yu düzenlerken de kullanmanıza olanak tanır.
+
+Bu durum aşağıdaki davranışa yol açar:
+
+-  Örneğin GPO'yu başlangıçta İngilizce bir sistemle oluşturduysanız, GPO İngilizce ADM dosyalarını içerir.
+
+- GPO'yu daha sonra farklı dildeki bir sistemden düzenlediyseniz, GPO'da olduğu gibi İngilizce ADM dosyalarını alırsınız.
+
+Bu ayarı kullanarak, bu davranışı değiştirebilirsiniz.
+
+Bu ayarı etkinleştirirseniz Grup İlke Nesnesi Düzenleyicisi ek bileşeni GPO'ları düzenlerken her zaman %windir%\inf dizininizdeki yerel ADM dosyalarını kullanır.
+
+Bu durum aşağıdaki davranışa yol açar:
+
+-  GPO'yu başlangıçta İngilizce bir sistemle oluşturduysanız ve ardından Japonca bir sistemle düzenlediyseniz, Grup İlke Nesne Düzenleyicisi ek bileşeni yerel Japonca ADM dosyalarını kullanır ve Yönetim Şablonları altında metni Japonca görürsünüz.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız Grup İlke Nesnesi Düzenleyicisi ek bileşeni tüm ADM dosyalarını her zaman gerçek GPO'dan yükler.
+
+Not: İstediğiniz ADM'lerin hepsi yerel olarak %windir%\inf dizininizde bulunmuyorsa, düzenlediğiniz GPO'da yapılandırılmış tüm ayarları göremeyebilirsiniz.</string>
+      <string id="PolicyPolicies">Grup İlkesi</string>
+      <string id="RSoPLogging">İlke Sonuç Kümesi'nin günlüğe yazılmasını kapat</string>
+      <string id="RSoPLogging_Help">Bu ayar, İlke Sonuç Kümesi (RSoP) günlüğünü bir istemci bilgisayarda etkinleştirmenize veya devre dışı bırakmanıza olanak sağlar.
+
+RSoP istemciye uygulanan Grup İlkesi ayarları ile ilgili bilgileri günlüğe kaydeder. Bu bilgiler, uygulanan Grup İlkesi Nesneleri (GPO), nereden geldikleri ve eklenen istemci tarafı uzantı ayarları gibi ayrıntıları içerir.
+
+Bu ayarı etkinleştirirseniz RSoP günlüğü kapatılır.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız RSoP günlüğü açılır. Varsayılan olarak, RSoP günlüğü her zaman açıktır.
+
+Not: İstemci bilgisayardaki RSoP günlük bilgilerini görüntülemek için Microsoft Yönetim Konsolu'ndaki (MMC) RSoP ek bileşenini kullanabilirsiniz.</string>
+      <string id="UserPolicyMode">Kullanıcı Grup İlkesi geri döngü işleme modunu yapılandır</string>
+      <string id="UserPolicyMode_Help">Bu ilke ayarı, bu ayardan etkilenen bilgisayarda bir kullanıcı oturum açtığında, sistemi Grup İlkesi nesneleri kümesini bilgisayara uygulamaya yönlendirir. Kullanılan bilgisayara bağlı olarak kullanıcı ayarını değiştirmeniz gereken genel alanlarda, laboratuvarlarda ve sınıflardaki gibi özel kullanımlı bilgisayarlar için amaçlanmıştır.
+
+Varsayılan olarak, hangi kullanıcı ayarlarının uygulanacağını kullanıcının Grup İlkesi Nesneleri belirler. Bu ilke ayarı etkinleştirilirse bir kullanıcı bu bilgisayarda oturum açtığında, hangi Grup İlkesi Nesneleri kümesinin uygulanacağını bilgisayarın Grup İlkesi Nesneleri belirler.
+
+Bu ayarı etkinleştirirseniz Mod kutusu için aşağıdaki modlardan birini seçebilirsiniz:
+
+"Değiştir", bilgisayarın Grup İlkesi Nesnelerinde tanımlanan kullanıcı ayarlarının, normalde kullanıcıya uygulanan kullanıcı ayarlarıyla değiştirileceğini gösterir.
+
+"Birleştir",  bilgisayarın Grup İlkesi Nesnelerinde tanımlanan kullanıcı ayarlarıyla, normalde kullanıcıya uygulaman kullanıcı ayarlarının birleştirildiğini gösterir. İlke ayarları çakışırsa, bilgisayarın Grup İlkesi Nesnelerindeki kullanıcı ayarları, kullanıcının normal ayarlarından daha önceliklidir.
+
+Bu ayarı devre dışı bırakırsanız ya da yapılandırmazsanız hangi kullanıcı ayarlarının uygulanacağını kullanıcının Grup İlkesi Nesneleri belirler.
+
+Not: Bu ayar yalnızca hem bilgisayar hesabının hem de kullanıcı hesabının en azından Windows 2000 etki alanında bulunduğu durumlarda geçerlidir.</string>
+      <string id="UserPolicyMode_Merge">Birleştir</string>
+      <string id="UserPolicyMode_Replace">Değiştir</string>
+      <string id="CorpConnSyncWaitTime">İlke işlemi için çalışma alanı bağlantısı bekleme süresini belirt</string>
+      <string id="CorpConnSyncWaitTime_Help">Bu ilke ayarı, başlatma ilkesi işlemi sırasında Grup İlkesi'nin çalışma alanı bağlantı bildirimleri için ne kadar beklemesi gerektiğini belirtir. Başlatma ilkesi işlemi zaman uyumluysa, çalışma alanı bağlantısı kullanılabilir duruma gelene veya bekleme süresi bitene kadar bilgisayar engellenir. Başlatma ilkesi işleme zaman uyumsuzsa, bilgisayar engellenmez ve ilke işleme arka planda gerçekleşir. Her iki durumda da, bu ilke ayarının yapılandırılması sistem tarafından hesaplanan tüm bekleme zamanlarını geçersiz kılar.
+
+Bu ilke ayarını etkinleştirirseniz Grup İlkesi çalışma alanı bağlantısı için yönetici tarafından yapılandırılan bekleme süresi üst sınırını kullanır ve varsayılan veya sistem tarafından hesaplanan tüm bekleme sürelerini geçersiz kılar.
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız çalışma alanı bağlantısı için yapılandırılan ve Windows 7'den sonraki Windows işletim sistemlerini çalıştıran bilgisayarlarda Grup İlkesi 60 saniye olan varsayılan bekleme süresini kullanır.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Azaltma Seçenekleri</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">İşlem Risk Azaltma Seçenekleri</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">Windows Yazı Tipi Önbelleği Hizmeti’nin çevrimiçi yazı tipi sağlayıcılarından yazı tipleri ve yazı tipi kataloğu verilerini indirmesine izin verilmelidir.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">Yavaş bağlantı değeri: [sayı alanı] milisaniye</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Zaman aşımı değeri: [sayı alanı] milisaniye</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">dakika:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Bekleme zamanı (saniye olarak):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Yavaş bir ağ bağlantısında işleme izin ver</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Yavaş bir ağ bağlantısında işleme izin ver</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Dönemsel arka plan işleme sırasında uygulama</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Yavaş bir ağ bağlantısında işleme izin ver</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Dönemsel arka plan işleme sırasında uygulama</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Yavaş bir ağ bağlantısında işleme izin ver</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Yavaş bir ağ bağlantısında işleme izin ver</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Dönemsel arka plan işleme sırasında uygulama</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Yavaş bir ağ bağlantısında işleme izin ver</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Dönemsel arka plan işleme sırasında uygulama</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Dönemsel arka plan işleme sırasında uygulama</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Yavaş bir ağ bağlantısında işleme izin ver</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Dönemsel arka plan işleme sırasında uygulama</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Dönemsel arka plan işleme sırasında uygulama</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Yavaş bir ağ bağlantısında işleme izin ver</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Dönemsel arka plan işleme sırasında uygulama</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Yavaş bir ağ bağlantısında işleme izin ver</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Dönemsel arka plan işleme sırasında uygulama</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Grup İlkesi nesneleri değişmemişse bile işle</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Grup İlkesi Nesne Düzenleyicisi kullanmak için etki alanı denetleyicisini seçtiğinde, şunu yapmalıdır:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Bağlantı hızı (Kb/sn):</decimalTextBox>
+        <text> </text>
+        <text>Yavaş bağlantı saptamayı devre dışı bırakmak için 0 girin.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Bağlantı hızı (Kb/sn):</decimalTextBox>
+        <text> </text>
+        <text>Yavaş bağlantı saptamayı devre dışı bırakmak için 0 girin.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">WWAN bağlantılarını her zaman yavaş bağlantı olarak kabul et</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>Bu ayar, Grup İlkesi'nin kullanıcılara ne sıklıkta uygulanacağını</text>
+        <text>özelleştirmenize olanak sağlar. Aralık 0 - 44640 dakika (31 gün).</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Dakika:</decimalTextBox>
+        <text> </text>
+        <text>Bu, tüm istemcilerin Grup İlkesi'ni aynı anda istemelerini engellemek için</text>
+        <text>yenileme aralığına eklenen rastgele bir süredir.</text>
+        <text>Aralık: 0 - 1440 dakika (24 saat)</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Dakika:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>Bu ayar, Grup İlkesi'nin kullanıcılara ne sıklıkta uygulanacağını</text>
+        <text>özelleştirmenize olanak sağlar. Aralık 0 - 44640 dakika (31 gün).</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Dakika:</decimalTextBox>
+        <text> </text>
+        <text>Bu, tüm istemcilerin Grup İlkesi'ni aynı anda istemelerini engellemek için</text>
+        <text>yenileme aralığına eklenen rastgele bir süredir.</text>
+        <text>Aralık: 0 - 1440 dakika (24 saat)</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Dakika:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>Bu ayar, Grup İlkesi'nin kullanıcılara ne sıklıkta uygulanacağını</text>
+        <text>özelleştirmenize olanak sağlar. Aralık 0 - 44640 dakika (31 gün).</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Dakika:</decimalTextBox>
+        <text> </text>
+        <text>Bu, tüm istemcilerin Grup İlkesi'ni aynı anda istemelerini engellemek için</text>
+        <text>yenileme aralığına eklenen rastgele bir süredir.</text>
+        <text>Aralık: 0 - 1440 dakika (24 saat)</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Dakika:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>GPO Adı:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Mod:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Bekleme zamanı (saniye olarak):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Definições de Política de Grupo do Gestor de Ligações do Windows</displayName>
+  <description>Definições de Política de Grupo do Gestor de Ligações do Windows</description>
+  <resources>
+    <stringTable>
+      <string id="WCM_Category">Gestor de Ligações do Windows</string>
+      <string id="WCM_BlockNonDomain">Proibir a ligação a redes que não pertençam a um domínio quando ligado a uma rede autenticada de domínio</string>
+      <string id="WCM_BlockNonDomain_Help">Esta definição de política impede a ligação de computadores em simultâneo a uma rede baseada num domínio e a uma rede não baseada num domínio.
+
+Se esta definição de política for ativada, o computador responderá a tentativas de ligação de rede automática e manual com base nas seguintes circunstâncias:
+
+Tentativas de ligação automática
+- Quando o computador já estiver ligado a uma rede baseada num domínio, todas as tentativas de ligação automática a redes que não pertençam a um domínio serão bloqueadas.
+- Quando o computador já estiver ligado a uma rede não baseada num domínio, as tentativas de ligação automática a redes baseadas num domínio serão bloqueadas.
+
+Tentativas de ligação manual
+- Quando o computador já estiver ligado a uma rede não baseada num domínio ou a uma rede baseada num domínio através de outro suporte que não Ethernet, e se um utilizador tentar criar uma ligação manual a uma rede adicional, infringindo esta definição de política, a ligação de rede existente será desligada e a ligação manual será permitida.
+- Quando o computador já estiver ligado a uma rede não baseada num domínio ou a uma rede baseada num domínio através de Ethernet, e se um utilizador tentar criar uma ligação manual a uma rede adicional, infringindo esta definição de política, a ligação Ethernet existente será mantida e a tentativa de ligação manual será bloqueada.
+
+Se esta definição de política não for configurada ou for desativada, os computadores terão permissão para se ligarem em simultâneo a redes de domínio e a redes que não pertençam a um domínio.
+      </string>
+      <string id="WCM_DisableRoaming">Proibir ligação a redes de Banda Larga Móvel de roaming</string>
+      <string id="WCM_DisableRoaming_Help">Esta definição de política impede que o cliente se ligue a redes de Banda Larga Móvel quando está registado numa rede de fornecedor de roaming.
+
+Se esta definição de política for ativada, todas as tentativas de ligação automática e manual a redes de fornecedor de roaming serão bloqueadas até o cliente se registar numa rede de fornecedor doméstico.
+
+Se esta definição de política não for configurada ou for desativada, os clientes terão permissão para se ligarem a redes de Banda Larga Móvel de fornecedor de roaming.
+      </string>
+      <string id="WCM_MinimizeConnections">Minimizar o número de ligações simultâneas à Internet ou a um Domínio Windows</string>
+      <string id="WCM_MinimizeConnections_AllowAllConnections">0 = permitir ligações simultâneas</string>
+      <string id="WCM_MinimizeConnections_MinimizeSimultaneousConnections">1 = Minimizar ligações simultâneas</string>
+      <string id="WCM_MinimizeConnections_AlwaysConnectedToCellular">2 = Permanecer ligado à rede móvel</string>
+      <string id="WCM_MinimizeConnections_PreventWifiOnEthernet">3 = impedir Wi-Fi quando em Ethernet</string>
+      <string id="WCM_MinimizeConnections_Help">
+        Esta definição de política determina se um computador pode ter múltiplas ligações à Internet ou a um domínio do Windows. Se forem permitidas múltiplas ligações, determinará como o tráfego de rede será encaminhado.
+
+        Se esta definição de política for definida como 0, um computador poderá ter múltiplas ligações à Internet, a um domínio do Windows ou a ambos. O tráfego de Internet pode ser encaminhado através de qualquer ligação, incluindo uma ligação de rede móvel e qualquer rede com tráfego limitado. Anteriormente, este era o estado Desativado para esta definição de política. Esta opção foi disponibilizada pela primeira vez no Windows 8.
+
+        Se esta definição de política for definida como 1, qualquer nova ligação automática à Internet será bloqueada quando o computador tiver pelo menos uma ligação à Internet ativa para um tipo de rede preferencial. Esta é a ordem de preferência (da mais preferencial para a menos preferencial): Ethernet, WLAN e rede móvel. A Ethernet é sempre preferencial quando ligada. Os utilizadores continuam a poder ligar-se manualmente a qualquer rede. Anteriormente, este era o estado Ativado para esta definição de política. Esta opção foi disponibilizada pela primeira vez no Windows 8.
+
+        Se esta definição de política for definida como 2, o comportamento será semelhante a 1. Contudo, se estiver disponível uma ligação de dados via rede móvel, permanecerá sempre ligada para serviços que necessitem de uma ligação de rede móvel. Quando o utilizador estiver ligado a uma ligação WLAN ou Ethernet, nenhum tráfego de Internet será encaminhado através da ligação de rede móvel. Esta opção foi disponibilizada pela primeira vez no Windows 10 (versão 1703).
+
+        Se esta esta definição de política for definida como 3, o comportamento será semelhante a 2. Contudo, se existir uma ligação Ethernet, o Windows não permitirá que os utilizadores se liguem a uma WLAN manualmente. Uma WLAN só pode ser ligada (automática ou manualmente) quando não existe ligação Ethernet.
+
+        Esta definição de política está relacionada com a definição de política "Permitir que o Windows desligue temporariamente um computador de uma rede".
+      </string>
+      <string id="WCM_DisablePowerManagement">Desativar a gestão de energia em modo de espera ligado</string>
+      <string id="WCM_DisablePowerManagement_Help">Esta definição de política especifica que a gestão de energia deverá ser desativada quando o computador entrar em modo de espera ligado.
+
+Se esta definição de política for ativada, o Gestor de Ligações do Windows não fará a gestão de transmissores de rádio de adaptadores para reduzir o consumo de energia quando o computador entrar em modo de espera ligado.
+
+Se esta definição de política não for configurada ou for desativada, a gestão de energia será ativada quando o computador entrar em modo de espera ligado.
+      </string>
+      <string id="WCM_EnableSoftDisconnect">Permitir que o Windows desligue temporariamente um computador de uma rede</string>
+      <string id="WCM_EnableSoftDisconnect_Help">Esta definição de política determina se o Windows irá desligar temporariamente um computador de uma rede.
+
+Se esta definição de política estiver ativada ou não for configurada, o Windows irá desligar temporariamente um computador de uma rede quando determinar que o computador já não deve estar ligado a uma rede.
+
+Se esta definição de política estiver desativada, o Windows irá desligar imediatamente um computador de uma rede quando determinar que o computador já não deve estar ligado a uma rede.
+
+Quando o cancelamento temporário da ligação estiver ativado:
+- Quando o Windows decide que o computador já não deve estar ligado a uma rede, aguardará que o tráfego assente nessa rede. A sessão TCP existente irá continuar sem interrupções.
+- Em seguida, o Windows verifica o nível de tráfego na rede periodicamente. Se o nível de tráfego for superior a um determinado limiar, não são realizadas mais ações. O computador permanece ligado à rede e continuará a utilizá-la. Por exemplo, se a ligação de rede estiver a ser utilizada para transferir ficheiros da Internet, os ficheiros continuarão a ser transferidos utilizando essa ligação de rede.
+- Quando o tráfego de rede for inferior a este limiar, o computador será desligado da rede. As aplicações que mantêm uma ligação de rede ativa mesmo quando não a estão a utilizar ativamente (por exemplo, aplicações de e-mail) podem perder a ligação. Se isto acontecer, estas aplicações devem restabelecer a ligação através de uma rede diferente. 
+
+Esta definição de política depende de outras definições de política de grupo. Por exemplo, se a opção "Minimizar o número de ligações simultâneas à Internet ou a um Domínio Windows" estiver desativada, o Windows não irá desligar-se de quaisquer redes.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="WCM_MinimizeConnections">
+        <dropdownList refId="WCM_MinimizeConnections_Options" noSort="true" defaultItem="2">Minimizar as opções de política</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

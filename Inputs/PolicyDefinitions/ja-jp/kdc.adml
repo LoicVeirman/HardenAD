@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>KDC 設定</displayName>
+  <description>Kerberos キー配布センターの構成設定。</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">フォレストの検索順序を使用する</string>
+      <string id="forestsearch_explain">このポリシー設定では、2 つの部分で構成されるサービス プリンシパル名 (SPN) の解決を試行するときにキー配布センター (KDC) によって検索される信頼する側のフォレストの一覧を定義します。
+
+このポリシー設定を有効にすると、2 つの部分で構成される SPN をローカル フォレストで解決できない場合にこの一覧のフォレストが KDC によって検索されます。フォレストの検索は、グローバル カタログまたは名前サフィックスのヒントを使用して実行されます。一致するものが見つかると、KDC は適切なドメインのクライアントに紹介チケットを返します。
+
+このポリシー設定を無効にした場合、または構成しなかった場合は、SPN を解決するために一覧のフォレストが検索されません。名前が見つからないために KDC で SPN を解決できない場合は、NTLM 認証が使用される場合があります。
+
+一貫した動作を確保するには、ドメイン内のすべてのドメイン コントローラーでこのポリシー設定をサポートして同じ設定にする必要があります。</string>
+      <string id="emitlili">以前のログオンに関する情報をクライアント コンピューターに提供する</string>
+      <string id="emitlili_explain">このポリシー設定では、クライアント コンピューターに以前のログオンに関する情報をドメイン コントローラーから提供するかどうかを指定します。
+
+このポリシー設定を有効にした場合、ドメイン コントローラーは以前のログオンに関する情報メッセージを提供します。
+
+Windows ログオンでこの機能を利用するには、[Windows コンポーネント] の下の [Windows ログオンのオプション] ノードにある [ユーザー ログオン時に以前のログオンに関する情報を表示する] ポリシー設定も有効にする必要があります。
+
+このポリシー設定を無効または未構成にした場合、[ユーザー ログオン時に以前のログオンに関する情報を表示する] ポリシー設定が有効になっている場合を除き、ドメイン コントローラーは以前のログオンに関する情報を提供しません。
+
+注: ドメインの機能レベルが Windows Server 2008 の場合のみ、以前のログオンに関する情報が提供されます。ドメイン機能レベルが Windows Server 2003、Windows 2000 ネイティブ、または Windows 2000 混在のドメインでは、ドメイン コントローラーが以前のログオンに関する情報を提供できません。このポリシー設定を有効にしても同じです。
+
+</string>
+      <string id="CbacAndArmor">KDC で信頼性情報、複合認証、および Kerberos 防御をサポートする</string>
+      <string id="CbacAndArmor_explain">このポリシー設定では、Kerberos 認証を使用して、ダイナミック アクセス制御の信頼性情報と複合認証、および Kerberos 防御をサポートするように、ドメイン コントローラーを構成できます。
+
+このポリシー設定を有効にすると、ダイナミック アクセス制御の信頼性情報と複合認証をサポートする、Kerberos 防御対応のクライアント コンピューターでは、Kerberos 認証メッセージに対してこの機能が使用されます。ドメイン内でこのポリシーを一貫して適用するには、すべてのドメイン コントローラーにこのポリシー設定を適用する必要があります。
+
+このポリシー設定を無効にした場合、または構成しなかった場合、ドメイン コントローラーでは、信頼性情報、複合認証、または防御はサポートされません。
+
+[サポートなし] オプションを構成した場合、ドメイン コントローラーでは信頼性情報、複合認証、防御のいずれもサポートされません。これは、Windows Server 2008 R2 以前のオペレーティング システムを実行しているドメイン コントローラーの既定の動作です。
+
+注: KDC ポリシーの以下のオプションを有効にするには、サポートされるシステムで Kerberos グループ ポリシーの [Kerberos クライアントで信頼性情報、複合認証、および Kerberos 防御をサポートする] を有効にする必要があります。この Kerberos ポリシー設定が有効でない場合、Kerberos 認証メッセージでこれらの機能は使用されません。
+
+[サポート] を構成した場合、ドメイン コントローラーで信頼性情報、複合認証、および Kerberos 防御がサポートされます。ドメイン コントローラーは、ドメインがダイナミック アクセス制御の信頼性情報と複合認証、および Kerberos 防御に対応していることを Kerberos クライアント コンピューターにアドバタイズします。
+
+ドメインの機能レベル要件
+[常に信頼性情報を提供する] および [防御されていない要求を失敗とする] オプションについては、ドメインの機能レベルが Windows Server 2008 R2 以前に設定されている場合、ドメイン コントローラーの動作は [サポート] が選択されているときと同じになります。
+
+ドメインの機能レベルが Windows Server 2012 に設定され、ドメイン コントローラーで、ドメインがダイナミック アクセス制御の信頼性情報と複合認証、および Kerberos 防御に対応していることを Kerberos クライアント コンピューターにアドバタイズする場合:
+   - [常に信頼性情報を提供する] オプションを設定すると、アカウントに関する信頼性情報が必ず返されます。また、フレキシブル認証セキュア トンネリング (FAST: Flexible Authentication Secure Tunneling) のアドバタイズに関する RFC 動作がサポートされます。
+   - [防御されていない要求を失敗とする] オプションを設定すると、防御されていない Kerberos メッセージが拒否されます。
+
+警告: [防御されていない要求を失敗とする] が設定されていると、Kerberos 防御をサポートしていないクライアント コンピューターはドメイン コントローラーに認証されません。
+
+この機能が確実に使用されるようにするには、ダイナミック アクセス制御の信頼性情報と複合認証をサポートする、Kerberos 防御対応のドメイン コントローラーを、認証要求を処理するのに十分な数だけ展開します。このポリシーをサポートするドメイン コントローラーの数が不足している場合に、ダイナミック アクセス制御または Kerberos 防御が要求されると (つまり、[サポート] オプションが有効になると)、認証エラーが発生します。
+
+このポリシー設定が有効になっている場合のドメイン コントローラーのパフォーマンスに対する影響:
+   - セキュリティで保護された Kerberos ドメイン機能の検出が必要になり、メッセージ交換が別途発生します。
+   - ダイナミック アクセス制御の信頼性情報と複合認証によってメッセージのデータのサイズおよび複雑さが増すため、処理時間が長くなるほか、Kerberos サービス チケットのサイズが大きくなります。
+   - Kerberos 防御では Kerberos メッセージを完全に暗号化し、Kerberos のエラーに署名するため、処理時間が長くなります。ただし、サービス チケットのサイズは変わりません。
+</string>
+      <string id="NoCbacAndArmor">サポートなし</string>
+      <string id="MixModeCbacAndArmor">サポート</string>
+      <string id="FullModeCbacAndArmor">常に信頼性情報を提供する</string>
+      <string id="FullModeCbacAndRequireArmor">防御されていない要求を失敗とする</string>
+      <string id="TicketSizeThreshold">サイズの大きな Kerberos チケットの場合は警告する</string>
+      <string id="TicketSizeThreshold_explain">このポリシー設定は、Kerberos 認証時に発行される警告イベントをトリガーする Kerberos チケットのサイズで構成できます。チケットのサイズの警告は、システム ログに記録されます。
+
+このポリシー設定を有効にすると、警告イベントをトリガーする Kerberos チケットのしきい値を設定できます。設定値が高すぎると、警告イベントがログに記録されていなくても認証エラーが発生する場合があります。 設定値が低すぎると、ログのチケット警告の数が多くなり、分析に役立たなくなる場合があります。この値と同じ値を Kerberos のポリシー [Kerberos SSPI コンテキスト トークンのバッファー サイズの最大値を設定する] として設定するか、グループ ポリシーを使用して構成していない場合は、お使いの環境で使用する MaxTokenSize の最小値として設定する必要があります。
+      
+このポリシー設定を無効にした場合または設定しなかった場合のしきい値は、既定で 12,000 バイトになります。これは、Windows 7、Windows Server 2008 R2、およびそれ以前のバージョンでの Kerberos MaxTokenSize の既定値と同じ値です。
+
+</string>
+      <string id="RequestCompoundId">複合認証を要求する</string>
+      <string id="RequestCompoundId_explain">このポリシー設定を使用すると、複合認証を要求するようドメイン コントローラーを構成できます。
+
+注: ドメイン コントローラーが複合認証を要求するためには、"KDC で信頼性情報、複合認証、および Kerberos 防御をサポートする" ポリシーを構成して有効にする必要があります。
+
+このポリシー設定を有効にした場合、ドメイン コントローラーは複合認証を要求します。返されたサービス チケットには、アカウントが明示的に構成されている場合のみ、複合認証が含まれます。ドメイン内でこのポリシーを一貫して適用するには、すべてのドメイン コントローラーにこのポリシー設定を適用する必要があります。
+
+このポリシー設定を無効にした場合、または構成しなかった場合、ドメイン コントローラーは、アカウントの構成にかかわらず、クライアントが複合認証要求を送信するたびに、複合認証を含むサービス チケットを返します。
+
+</string>
+      <string id="PKINITFreshness">PKInit 鮮度拡張機能の KDC サポート</string>
+      <string id="PKINITFreshness_explain">PKInit 鮮度拡張機能のサポートには、Windows Server 2016 のドメイン機能レベル (DFL) が必要です。ドメイン コントローラーのドメインが Windows Server 2016 DFL 以上でない場合、このポリシーは適用されません。
+
+このポリシー設定では、PKInit 鮮度拡張機能をサポートするようにドメイン コントローラー (DC) を構成できます。
+
+このポリシー設定を有効にした場合、次のオプションがサポートされます。
+
+サポート: PKInit 鮮度拡張機能が要求に応じてサポートされます。PKInit 鮮度拡張機能で正常に認証された Kerberos クライアントは、最新の公開キー ID の SID を受け取ります。
+
+必要: 認証には PKInit 鮮度拡張機能が必要です。PKInit 鮮度拡張機能をサポートしていない Kerberos クライアントが公開キー資格情報を使用すると、常に失敗します。
+
+このポリシー設定を無効にした場合、または構成しなかった場合、DC で PKInit 鮮度拡張機能は提供されず、有効な認証要求が、最新かどうか確認されないまま受け付けられます。ユーザーは最新の公開キー ID の SID を受け取りません。
+</string>
+      <string id="NoPKINITFreshness">無効</string>
+      <string id="SupportPKINITFreshness">サポート</string>
+      <string id="RequirePKINITFreshness">必要</string>
+      <string id="PKINITHashAlgorithmConfiguration">証明書ログオンのハッシュ アルゴリズムを構成する</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">このポリシー設定は、証明書認証を実行するときに Kerberos クライアントで使用されるハッシュまたはチェックサムのアルゴリズムを制御します。
+
+このポリシーを有効にした場合、各アルゴリズムで 4 つの状態のうち 1 つを構成できるようになります。
+
+- "既定" の場合、アルゴリズムは推奨されている状態に設定されます。
+
+- "サポート" の場合、アルゴリズムの使用が有効になります。既定で無効にされたアルゴリズムを有効にすると、セキュリティが低下するおそれがあります。
+
+- "監査対象" の場合、アルゴリズムの使用が有効になり、それが使用されるたびにイベント (ID 309) が報告されます。この状態は、そのアルゴリズムが使用されておらず、無効にして差し支えないことを確認することを意図したものです。
+
+- "サポートされない" の場合、アルゴリズムの使用が無効になります。この状態は、安全ではないと見なされるアルゴリズムを対象としています。
+
+このポリシーを無効にした場合、または構成しなかった場合、各アルゴリズムは "既定" 状態と見なされます。
+Windows Kerberos クライアントでサポートされているハッシュおよびチェックサムのアルゴリズムと、その既定の状態の詳細については、https://go.microsoft.com/fwlink/?linkid=2169037 をご覧ください。
+
+この構成によって生成されるイベント: 309、310。
+</string>
+      <string id="PKINITHashAlgorithm_Default">既定値</string>
+      <string id="PKINITHashAlgorithm_Supported">サポート</string>
+      <string id="PKINITHashAlgorithm_Audited">監査対象</string>
+      <string id="PKINITHashAlgorithm_NotSupported">サポートされていません</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">モード:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>検索対象のフォレスト</label>
+        </textBox>
+        <text>構文:</text>
+        <text>このポリシーが有効になっているときに検索するフォレストの一覧を入力してください。</text>
+        <text>完全修飾ドメイン名 (FQDN) の形式を使用してください。</text>
+        <text>複数の検索エントリはセミコロン ";" で区切ってください。</text>
+        <text>詳細:</text>
+        <text>フォレストの検索順序ではまずグローバル カタログが使用され、次に一覧に表示されている順序で検索されるため、現在のフォレストを一覧に含める必要はありません。</text>
+        <text>フォレスト内のすべてのドメインを個別に一覧に含める必要はありません。</text>
+        <text>信頼する側のフォレストを一覧に含めると、フォレスト内のすべてのドメインが検索されます。</text>
+        <text>最適なパフォーマンスを得るためには、一致する可能性が高い順序でフォレストを一覧に含めてください。</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">ダイナミック アクセス制御の信頼性情報と複合認証および Kerberos 防御オプション:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">チケット サイズのしきい値</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">PKInit 鮮度拡張機能のオプション:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

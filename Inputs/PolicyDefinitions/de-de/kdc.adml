@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>KDC-Einstellungen</displayName>
+  <description>Konfigurationseinstellungen für das Kerberos-Schlüsselverteilungscenter</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">Gesamtstruktur-Suchreihenfolge verwenden</string>
+      <string id="forestsearch_explain">Mit dieser Richtlinieneinstellung wird die Liste vertrauender Gesamtstrukturen festgelegt, die beim Versuch des Auflösens von zweiteiligen Dienstprinzipalnamen (Service Principal Names, SPNs) des Schlüsselverteilungscenters (Key Distribution Center, KDC) durchsucht werden.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, durchsucht das KDC die Gesamtstrukturen in dieser Liste, wenn ein zweiteiliger SPN in der lokalen Gesamtstruktur nicht aufgelöst werden kann. Die Gesamtstruktur wird mithilfe eines globalen Katalogs oder mithilfe von Namensuffixhinweisen durchsucht. Wenn eine Übereinstimmung gefunden wird, gibt das KDC ein Referenzticket an den Client für die entsprechende Domäne zurück.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, durchsucht das KDC zum Auflösen des SPN die aufgeführten Gesamtstrukturen nicht. Wenn das KDC den SPN nicht auflösen kann, da der Name nicht gefunden wird, wird möglicherweise die NTLM-Authentifizierung verwendet.
+
+Um konsistentes Verhalten sicherzustellen, muss diese Richtlinieneinstellung von allen Domänencontrollern in der Domäne unterstützt werden und auf denselben Wert festgelegt sein.</string>
+      <string id="emitlili">Informationen zu vorherigen Anmeldungen für Clientcomputer bereitstellen</string>
+      <string id="emitlili_explain">Mit dieser Richtlinieneinstellung wird gesteuert, ob der Domänencontroller Informationen zu vorherigen Anmeldungen für Clientcomputer bereitstellt.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, stellt der Domänencontroller eine Informationsmeldung zu vorherigen Anmeldungen bereit.
+
+Damit die Windows-Anmeldung dieses Feature nutzen kann, muss die Richtlinieneinstellung "Informationen zu vorherigen Anmeldungen bei der Benutzeranmeldung anzeigen" im Knoten "Windows-Anmeldeoptionen" unter "Windows-Komponenten" ebenfalls aktiviert sein.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, stellt der Domänencontroller nur dann Informationen zu vorherigen Anmeldungen bereit, wenn die Richtlinieneinstellung "Informationen zu vorherigen Anmeldungen bei der Benutzeranmeldung anzeigen" aktiviert ist.
+
+Hinweis: Damit Informationen zu vorherigen Anmeldungen bereitgestellt werden können, muss die Domänenfunktionsebene "Windows Server 2008" lauten. Domänencontroller in Domänen mit der Domänenfunktionsebene "Windows Server 2003", "Windows 2000 einheitlich" oder "Windows 2000 gemischt" können keine Informationen zu vorherigen Anmeldungen bereitstellen, und das Aktivieren dieser Richtlinieneinstellung hat keine Auswirkung.
+
+</string>
+      <string id="CbacAndArmor">Unterstützung des Kerberos-Domänencontrollers für Ansprüche, Verbundauthentifizierung und Kerberos-Schutz</string>
+      <string id="CbacAndArmor_explain">Mit dieser Richtlinieneinstellung können Sie einen Domänencontroller für die Unterstützung von Ansprüchen, der Verbundauthentifizierung für die dynamische Zugriffssteuerung (Dynamic Access Control, DAC) und den Kerberos-Schutz durch Verwendung der Kerberos-Authentifizierung konfigurieren.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, verwenden Clientcomputer, von denen Ansprüche, Verbundauthentifizierung für DAC und Kerberos-Schutz unterstützt werden, dieses Feature für Kerberos-Authentifizierungsmeldungen. Diese Richtlinie sollte für alle Domänencontroller angewendet werden, um eine konsistente Anwendung dieser Richtlinie innerhalb der Domäne sicherzustellen. 
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden Ansprüche, Verbundauthentifizierung und Kerberos-Schutz nicht vom Domänencontroller unterstützt.
+
+Wenn Sie die Option "Nicht unterstützt" konfigurieren, werden Ansprüche, Verbundauthentifizierung und Kerberos-Schutz nicht vom Domänencontroller unterstützt. Dabei handelt es sich um das Standardverhalten für Domänencontroller unter Windows Server 2008 R2 oder Vorgängerbetriebssystemen.
+
+Hinweis:  Damit die folgenden Optionen dieser KDC-Richtlinie wirksam werden, muss die Kerberos-Gruppenrichtlinie "Unterstützung des Kerberos-Clients für Ansprüche, Verbundauthentifizierung und Kerberos-Schutz" auf unterstützten Systemen aktiviert werden. Wenn die Kerberos-Richtlinieneinstellung nicht aktiviert wird, werden diese Features nicht von Kerberos-Authentifizierungsmeldungen verwendet.  
+
+Wenn Sie "Unterstützt" konfigurieren, unterstützt der Domänencontroller Ansprüche, Verbundauthentifizierung und Kerberos-Schutz. Der Domänencontroller teilt Kerberos-Clientcomputern mit, dass die Domäne Ansprüche und Verbundauthentifizierung für die dynamische Zugriffssteuerung (DAC) sowie den Kerberos-Schutz unterstützt. 
+
+Anforderungen der Domänenfunktionsebene
+Wenn die Domänenfunktionsebene auf Windows Server 2008 R2 oder eine frühere Version festgelegt wird, verhalten sich Domänencontroller bei den Optionen "Immer Ansprüche liefern" und "Ungeschützte Authentifizierungsanfragen ablehnen", als wäre die Option "Unterstützt" ausgewählt. 
+
+Wenn Sie die Domänenfunktionsebene auf Windows Server 2012 festlegen, teilt der Domänencontroller den Kerberos-Clientcomputern mit, dass von der Domäne Ansprüche, Verbundauthentifizierung für die dynamische Zugriffssteuerung und Kerberos-Schutz unterstützt wird. Außerdem gilt Folgendes:
+  – Falls Sie die Option "Immer Ansprüche liefern" festlegen, werden immer Ansprüche für Konten zurückgegeben, und das RFC-Verhalten für die Ankündigung der flexiblen Authentifizierung über Secure Tunneling (FAST) wird unterstützt.
+  – Wenn Sie die Option "Ungeschützte Authentifizierungsanfragen ablehnen" aktivieren, werden ungeschützte Kerberos-Meldungen abgelehnt.
+
+Warnung: Wenn "Ungeschützte Authentifizierungsanfragen ablehnen" aktiviert ist, können sich Clientcomputer, die den Kerberos-Schutz nicht unterstützen, nicht am Domänencontroller authentifizieren.
+
+Damit dieses Feature wirksam ist, muss eine ausreichende Anzahl an Domänencontrollern bereitgestellt werden, von denen Ansprüche, Verbundauthentifizierung und Kerberos-Schutz unterstützt werden, um die Authentifizierungsanforderungen zu verarbeiten. Wenn zu wenig Domänencontroller vorhanden sind, die diese Richtlinie unterstützen, führt dies zu Authentifizierungsfehlern, sobald DAC oder der Kerberos-Schutz benötigt wird (d. h. die Option "Unterstützt" ist deaktiviert).
+
+Auswirkung auf die Domänencontrollerleistung, wenn diese Richtlinieneinstellung aktiviert ist:
+  – Das sichere Festellen der Kerberos-Domänenfunktion ist erforderlich und führt zum Austausch zusätzlicher Meldungen.
+  – Ansprüche und Verbundauthentifizierung für die dynamische Zugriffssteuerung erhöhen die Größe und Komplexität der in der Meldung enthaltenen Daten, was die Verarbeitungszeit verlängert und das Kerberos-Dienstticket vergrößert.
+   – Kerberos-Meldungen werden vom Kerberos-Schutz vollständig verschlüsselt und Kerberos-Fehler signiert. Dies führt zu einer längeren Verarbeitungszeit, dadurch wird jedoch nicht die Größe des Diensttickets verändert.
+</string>
+      <string id="NoCbacAndArmor">Nicht unterstützt</string>
+      <string id="MixModeCbacAndArmor">Unterstützt</string>
+      <string id="FullModeCbacAndArmor">Immer Ansprüche liefern</string>
+      <string id="FullModeCbacAndRequireArmor">Ungeschützte Authentifizierungsanfragen ablehnen</string>
+      <string id="TicketSizeThreshold">Warnung für große Kerberos-Tickets</string>
+      <string id="TicketSizeThreshold_explain">Mit dieser Richtlinieneinstellung können Sie konfigurieren, bei welcher Größe Kerberos-Tickets das während der Kerberos-Authentifizierung ausgegebene Warnungsereignis auslösen. Die Warnungen für die Ticketgröße werden im Systemprotokoll aufgezeichnet.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie den Schwellenwert für Kerberos-Tickets festlegen, bei dem Warnungsereignisse ausgelöst werden. Wenn Sie einen zu hohen Wert festlegen, treten möglicherweise Authentifizierungsfehler auf, auch wenn keine Warnungsereignisse protokolliert werden.  Wenn Sie einen zu niedrigen Wert festlegen, kann dies zu sehr vielen Ticketwarnungen im Protokoll führen, was die Analyse möglicherweise erschwert. Für diesen Wert sollte der gleiche Wert wie für die Kerberos-Richtlinie "Maximale Puffergröße für Kerberos-SSPI-Kontexttoken festlegen" oder für den kleinsten in Ihrer Umgebung für "MaxTokenSize" verwendeten Wert festgelegt werden, falls für die Konfiguration keine Gruppenrichtlinie verwendet wird.
+      
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, nimmt der Schwellenwert den Standardwert von 12.000 Byte an, was der Standardgröße für Kerberos-MaxTokenSize für Windows 7, Windows Server 2008 R2 und früheren Versionen entspricht.
+
+</string>
+      <string id="RequestCompoundId">Verbundauthentifizierung anfordern</string>
+      <string id="RequestCompoundId_explain">Mit dieser Richtlinieneinstellung können Sie einen Domänencontroller so konfigurieren, dass die Verbundauthentifizierung angefordert wird.
+
+Hinweis: Damit ein Domänencontroller die Verbundauthentifizierung anfordern kann, muss die Richtlinie "KDC-Unterstützung für Ansprüche, Verbundauthentifizierung und Kerberos Armoring" konfiguriert und aktiviert sein. 
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, fordern Domänencontroller die Verbundauthentifizierung an. Das zurückgegebene Dienstticket enthält nur Verbundauthentifizierungsdaten, wenn das Konto explizit dafür konfiguriert ist. Diese Richtlinie sollte für alle Domänencontroller angewendet werden, um eine konsistente Anwendung dieser Richtlinie innerhalb der Domäne sicherzustellen. 
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, geben Domänencontroller unabhängig von der Kontokonfiguration immer Diensttickets zurück, die Verbundauthentifizierungsdaten enthalten, wenn der Client eine Verbundauthentifizierungsanforderung sendet.
+
+</string>
+      <string id="PKINITFreshness">KDC-Unterstützung für PKInit Freshness Extension</string>
+      <string id="PKINITFreshness_explain">Zur Unterstützung von PKInit Freshness Extension ist eine Windows Server 2016-Domänenfunktionsebene erforderlich. Wenn die Domäne des Domänencontrollers keine Windows Server 2016-Domänenfunktionsebene (oder höher) ist, wird die Richtlinie nicht angewendet.
+
+Mit dieser Richtlinieneinstellung kann ein Domänencontroller (DC) für die Unterstützung von PKInit Freshness Extension konfiguriert werden.
+
+Wenn Sie die Richtlinieneinstellung aktivieren, werden die folgenden Optionen unterstützt:
+
+Unterstützt: PKInit Freshness Extension wird auf Anforderung unterstützt. Kerberos-Clients, die erfolgreich mit PKInit Freshness Extension authentifiziert werden, erhalten die Identitäts-SID für den öffentlichen Schlüssel von Freshness.
+
+Erforderlich: PKInit Freshness Extension ist für die erfolgreiche Authentifizierung erforderlich. Kerberos-Clients, die PKInit Freshness Extension nicht unterstützen, verursachen bei der Verwendung von Anmeldeinformationen mit öffentlichem Schlüssel immer einen Fehler.
+
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, bietet der DC PKInit Freshness Extension nie an und akzeptiert gültige Authentifizierungsanforderungen ohne Freshness-Überprüfung. Benutzer empfangen nie die Identitäts-SID für den öffentlichen Schlüssel von Freshness.
+</string>
+      <string id="NoPKINITFreshness">Deaktiviert</string>
+      <string id="SupportPKINITFreshness">Unterstützt</string>
+      <string id="RequirePKINITFreshness">Erforderlich</string>
+      <string id="PKINITHashAlgorithmConfiguration">Hashalgorithmen für die Zertifikatanmeldung konfigurieren</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Diese Richtlinieneinstellung steuert Hash- oder Prüfsummenalgorithmen, die vom Kerberos-Client beim Ausführen der Zertifikatauthentifizierung verwendet werden.
+
+Wenn Sie diese Richtlinie aktivieren, können Sie einen von vier Zuständen für jeden Algorithmus konfigurieren:
+
+"Standard" legt den Algorithmus auf den empfohlenen Zustand fest.
+
+"Unterstützt" aktiviert die Verwendung des Algorithmus. Das Aktivieren von Algorithmen, die standardmäßig deaktiviert wurden, kann die Sicherheit verringern.
+
+"Überwacht" aktiviert die Verwendung des Algorithmus und meldet bei jeder Verwendung ein Ereignis (ID 309). Mit diesem Status soll überprüft werden, ob der Algorithmus nicht verwendet wird und sicher deaktiviert werden kann.
+
+"Nicht unterstützt" deaktiviert die Verwendung des Algorithmus. Dieser Zustand ist für Algorithmen vorgesehen, die als unsicher eingestuft werden.
+
+Wenn Sie diese Richtlinie deaktivieren oder nicht konfigurieren, nimmt jeder Algorithmus den Status "Standard" an.
+Weitere Informationen zu den vom Windows Kerberos-Client unterstützten Hash- und Prüfsummenalgorithmen sowie deren Standardstatus finden Sie unter https://go.microsoft.com/fwlink/?linkid=2169037. 
+
+Von dieser Konfiguration generierte Ereignisse: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Standard</string>
+      <string id="PKINITHashAlgorithm_Supported">Unterstützt</string>
+      <string id="PKINITHashAlgorithm_Audited">Überwacht</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Nicht unterstützt</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Modus:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Zu durchsuchende Gesamtstrukturen</label>
+        </textBox>
+        <text>Syntax:</text>
+        <text>Geben Sie die Liste der Gesamtstrukturen ein, die bei aktivierter Richtlinie durchsucht werden sollen.</text>
+        <text>Verwenden Sie das Namensformat für vollqualifizierte Domänennamen (Fully Qualified Domain Name, FQDN).</text>
+        <text>Trennen Sie mehrere Sucheinträge durch ein Semikolon (";").</text>
+        <text>Details:</text>
+        <text>Die aktuelle Gesamtstruktur muss nicht aufgelistet werden, da die Gesamtstruktur-Suchreihenfolge zunächst den globalen Katalog verwendet und dann in der aufgelisteten Reihenfolge sucht.</text>
+        <text>Sie müssen nicht alle Domänen in der Gesamtstruktur separat auflisten.</text>
+        <text>Wenn eine vertrauende Gesamtstruktur aufgeführt ist, werden alle Domänen in der Gesamtstruktur durchsucht.</text>
+        <text>Um eine optimale Leistung zu erzielen, führen Sie die Gesamtstrukturen nach der höchsten Wahrscheinlichkeit für eine erfolgreiche Suche auf.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Optionen für Ansprüche, Verbundauthentifizierung für die dynamische Zugriffssteuerung und Kerberos-Schutz:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Schwellenwert für die Ticketgröße</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">PKInit Freshness Extension-Optionen:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

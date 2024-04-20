@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (c) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>네트워크 공급자</displayName>
+  <description>다중 UNC 공급자에 대한 정책 정의</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_NetworkProvider">네트워크 공급자</string>
+      <string id="Pol_HardenedPaths">강화된 UNC 경로</string>
+      <string id="Pol_HardenedPaths_Explain">이 정책 설정은 UNC 경로에 대한 보안 액세스를 구성합니다.
+
+이 정책을 사용하면 추가 보안 요구 사항이 충족된 이후에만 Windows에서 지정된 UNC 경로에 액세스할 수 있습니다.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_HardenedPaths">
+        <text>강화된 네트워크 경로를 지정합니다.
+이름 필드에 각 네트워크 리소스에 대한 정규화된 UNC 경로를 입력합니다.
+서버 이름에 상관없이 특정 이름을 가진 공유에 대한 모든 액세스를 보안하려면 서버 이름을 '*'(별표)로 지정합니다. 예: "\\*\NETLOGON".
+서버에 호스트된 모든 공유에 대한 모든 액세스를 보안하려면 UNC 경로의 공유 이름 부분을 생략할 수 있습니다. 예: "\\SERVER".
+
+값 필드에서 다음 옵션 중 하나 이상을 쉼표로 구분하여 지정합니다.
+    'RequireMutualAuthentication=1': 클라이언트와 서버 간에 상호 인증을 수행하려면 클라이언트에서 해당 서버에 연결해야 합니다.
+    'RequireIntegrity=1': 클라이언트와 서버 간의 통신에서 무결성 메커니즘을 사용하여 데이터 변조를 방지해야 합니다.
+    'RequirePrivacy=1': 제3자가 중요한 데이터를 확인하지 못하도록 클라이언트와 서버 간의 통신을 암호화해야 합니다.</text>
+        <listBox refId="Pol_HardenedPaths">강화된 UNC 경로:</listBox>
+        <text> </text>
+        <text>실행 프로그램, 스크립트 파일 또는 보안 정책을 제어하는 파일을 호스트하는 UNC 경로의 경우 무결성과 상호 인증을 모두 요구해야 합니다.
+
+최적의 성능을 위해 무결성 또는 개인 정보가 필요하지 않은 파일과 해당 보안이 반드시 필요한 파일을 서로 다른 공유에 호스트하는 것이 좋습니다.
+
+특정 UNC 경로에 액세스할 때 추가 보안을 요구하도록 Windows 컴퓨터를 구성하는 방법에 대한 자세한 내용은 http://support.microsoft.com/kb/3000483을 참조하십시오.</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0">
+  <displayName>Групповая политика оптимизации доставки</displayName>
+  <description>Данный файл описывает параметры групповой политики оптимизации доставки</description>
+  <resources>
+    <stringTable>
+      <string id="DeliveryOptimizationCat">Оптимизация доставки</string>
+      <string id="DownloadMode">Режим скачивания</string>
+      <string id="DownloadMode_Help">Указывает способ скачивания, который служба оптимизации доставки может использовать при скачивании обновлений Windows, приложений и обновлений для них. 
+
+Поддерживаемые значения: 
+
+0 = только HTTP, без пиринга.
+
+1 = сочетание HTTP с пирингом, осуществляющимся за одним средством преобразования сетевых адресов (NAT). 
+
+2 = сочетание HTTP с пирингом, осуществляющимся в частной группе. По умолчанию пиринг осуществляется на устройствах, находящихся на одном сайте Active Directory (при наличии) или в одном домене. При выборе этого варианта пиринг будет выходить за пределы средств преобразования сетевых адресов (NAT). Чтобы создать настраиваемую группу, используйте идентификатор группы в сочетании с режимом 2.
+
+3 = сочетание HTTP с интернет-пирингом.
+
+99 = режим простого скачивания без пиринга. Служба оптимизации доставки скачивает файлы только с помощью HTTP и не пытается связаться со своими облачными службами.
+
+100 = режим обхода. Windows 10: не использовать оптимизацию доставки, использовать BITS. Windows 11: не рекомендуется, следует использовать простой режим.</string>
+      <string id="DownloadMode_CdnOnly">Только HTTP (0)</string>
+      <string id="DownloadMode_Lan">Локальная сеть (1)</string>
+      <string id="DownloadMode_Group">Группа (2)</string>
+      <string id="DownloadMode_Internet">Интернет (3)</string>
+      <string id="DownloadMode_Simple">Простой (99)</string>
+      <string id="DownloadMode_Bypass">Обход (100)</string>
+      <string id="GroupId">ИД группы</string>
+      <string id="GroupId_Help">Идентификатор группы необходимо задать как идентификатор GUID. Эта политика указывает произвольный идентификатор группы, к которому относится устройство.
+
+Используйте этот идентификатор, если нужно создать единую группу для пиринга локальных сетей при расположении ветвей в разных доменах или нескольких локальных сетях.
+
+Примечание. Это оптимизация с выбором лучших из доступных вариантов, поэтому на нее не следует полагаться при проверке подлинности удостоверения.</string>
+      <string id="MaxCacheSize">Максимальный размер кэша (в процентах)</string>
+      <string id="MaxCacheSize_Help">Указывает максимальный размер кэша, который использует служба оптимизации доставки, как процент от доступной емкости диска (1–100).</string>
+      <string id="AbsoluteMaxCacheSize">Абсолютный максимальный размер кэша (в ГБ)</string>
+      <string id="AbsoluteMaxCacheSize_Help">Максимальный размер кэша оптимизации доставки (в ГБ).
+
+Эта политика переопределяет политику DOMaxCacheSize.
+
+Значение "0" (ноль) означает неограниченный кэш. Служба оптимизации доставки очищает кэш, когда на устройстве заканчивается дисковое пространство.</string>
+      <string id="MaxCacheAge">Максимальный срок хранения в кэше (в секундах)</string>
+      <string id="MaxCacheAge_Help">Максимальный период (в секундах), в течение которого каждый файл хранится в кэше оптимизации доставки после успешного скачивания.
+
+Значение "0" (ноль) означает неограниченный срок. Служба оптимизации доставки будет хранить файлы в кэше дольше и обеспечивать возможность их отправки на другие устройства, пока не будет превышен размер кэша.</string>
+      <string id="MonthlyUploadDataCap">Ограничение ежемесячной передачи данных (в ГБ)</string>
+      <string id="MonthlyUploadDataCap_Help">Максимальное общее число байтов (в ГБ), которые служба оптимизации доставки может отправить на одноранговые узлы в Интернете в каждом календарном месяце.
+
+Значение "0" (ноль) означает неограниченное число, т. е. отсутствие ограничения на отправку в течение месяца.</string>
+      <string id="MinBackgroundQos">Минимальное качество фонового обслуживания (в КБ/с)</string>
+      <string id="MinBackgroundQos_Help">Минимальное качество обслуживания (скорость) для фоновых скачиваний (в килобайтах в секунду).
+
+Эта политика определяет принцип сочетания источников одноранговых узлов и HTTP. Служба оптимизации доставки дополняет скачивание из источника HTTP, чтобы достичь указанного минимального значения качества обслуживания.</string>
+      <string id="ModifyCacheDrive">Изменить диск для хранения кэша</string>
+      <string id="ModifyCacheDrive_Help">Диск, который служба оптимизации доставки должна использовать для своего кэша.
+
+По умолчанию для хранения кэша используется %SystemDrive%. Расположение диска можно указать с помощью переменных среды, буквы диска или полного пути.</string>
+      <string id="MaxBackgroundDownloadBandwidth">Максимальная пропускная способность фонового скачивания (в КБ/с)</string>
+      <string id="MaxBackgroundDownloadBandwidth_Help">Максимальная пропускная способность фонового скачивания (в килобайтах в секунду), которую устройство может использовать для всех одновременных скачиваний, осуществляемых с помощью службы оптимизации доставки.
+
+Значение по умолчанию "0" (ноль) означает, что служба оптимизации доставки динамически корректирует свою работу, чтобы использовать для скачиваний доступную пропускную способность.
+      </string>
+      <string id="MaxForegroundDownloadBandwidth">Максимальная пропускная способность скачивания переднего плана (в КБ/с)</string>
+      <string id="MaxForegroundDownloadBandwidth_Help">Максимальная пропускная способность скачивания переднего плана (в килобайтах в секунду), которую устройство может использовать для всех одновременных скачиваний, осуществляемых с помощью службы оптимизации доставки.
+
+Значение по умолчанию "0" (ноль) означает, что служба оптимизации доставки динамически корректирует свою работу, чтобы использовать для скачиваний доступную пропускную способность.
+      </string>
+      <string id="PercentageMaxBackgroundBandwidth">Максимальная пропускная способность фонового скачивания (в процентах)</string>
+      <string id="PercentageMaxBackgroundBandwidth_Help">Максимальная пропускная способность фонового скачивания, которую служба оптимизации доставки использует для всех параллельных скачиваний. Задается в процентах от доступной пропускной способности скачивания.
+
+Значение по умолчанию "0" (ноль) означает, что служба оптимизации доставки динамически корректирует свою работу, чтобы использовать для фоновых скачиваний доступную пропускную способность.</string>
+      <string id="PercentageMaxForegroundBandwidth">Максимальная пропускная способность скачивания переднего плана (в процентах)</string>
+      <string id="PercentageMaxForegroundBandwidth_Help">Максимальная пропускная способность скачивания переднего плана, которую служба оптимизации доставки использует для всех параллельных операций скачиваний. Задается в процентах от доступной пропускной способности скачивания.
+
+Значение по умолчанию "0" (ноль) означает, что служба оптимизации доставки динамически корректирует свою работу, чтобы использовать для скачивания переднего плана доступную пропускную способность.</string>
+      <string id="MinFileSizeToCache">Минимальный размер файла содержимого однорангового кэширования (в МБ)</string>
+      <string id="MinFileSizeToCache_Help">Минимальный размер файла содержимого (в МБ), при котором можно использовать одноранговое кэширование.
+
+Рекомендуемые значения: от 1 МБ до 100 000 МБ.</string>
+      <string id="AllowVPNPeerCaching">Включить одноранговое кэширование, когда устройство подключается через VPN</string>
+      <string id="AllowVPNPeerCaching_Help">Задайте значение "true", чтобы разрешить устройству участвовать в одноранговом кэшировании при подключении через VPN к доменной сети.
+
+Это означает, что устройство сможет скачивать данные с других сетевых устройств домена или отправлять на них данные через VPN или корпоративную доменную сеть.</string>
+      <string id="MinRAMAllowedToPeer">Минимальная емкость ОЗУ (включительно), требуемая, чтобы обеспечить использование однорангового кэширования (в ГБ)</string>
+      <string id="MinRAMAllowedToPeer_Help">Минимальный размер ОЗУ (в ГБ), требуемый для однорангового кэширования.
+
+Например, если минимальное значение равно 1 ГБ, устройства с доступной оперативной памятью размером 1 ГБ или больше смогут использовать одноранговое кэширование.
+
+Рекомендуемые значения: от 1 ГБ до 4 ГБ.</string>
+      <string id="MinDiskSizeAllowedToPeer">Минимальный размер диска, для которого разрешено использовать одноранговое кэширование (в ГБ)</string>
+      <string id="MinDiskSizeAllowedToPeer_Help">Минимальный размер диска (емкость в ГБ), необходимый устройству для использования однорангового кэширования. Будет использоваться стандартное значение, заданное для облачной службы.
+
+Рекомендуемые значения: от 64 ГБ до 256 ГБ.
+
+Примечание. Если установлена политика DOModifyCacheDrive, к новому рабочему каталогу, заданному этой политикой, будет применяться проверка размера диска.</string>
+      <string id="MinBatteryPercentageAllowedToUpload">Разрешить отправку при работе устройства от батареи и уровне заряда ниже установленного значения (в процентах)</string>
+      <string id="MinBatteryPercentageAllowedToUpload_Help">Чтобы разрешить устройству отправку данных в локальной сети и группе одноранговых узлов при работе от источника питания постоянного тока (батареи), укажите любое значение от 1 до 100 (в процентах).
+
+Если разрешается отправка при питании от батареи, рекомендуемое значение — 40 (40 %). Устройство может выполнять скачивание с одноранговых узлов при работе от батареи независимо от этой политики.
+
+Значение "0" означает "не ограничено". Будет использоваться стандартное значение, заданное для облачной службы.</string>
+      <string id="CacheHost">Имя узла сервера кэша</string>
+      <string id="CacheHost_Help">Этот параметр политики позволяет задать один или несколько серверов Подключенного кэша (Майкрософт), которые будут использоваться вашими клиентами.
+
+Одно или несколько значений могут быть добавлены как полные доменные имена (FQDN) или как IP-адреса. Чтобы добавить несколько значений, отделяйте каждое полное доменное имя или IP-адрес запятыми.
+      </string>
+      <string id="CacheHostSource">Источник имени узла сервера кэша</string>
+      <string id="CacheHostSource_Help">Эта политика позволяет указать, как клиенты могут динамически обнаруживать серверы Подключенного кэша (Майкрософт).
+
+Доступные параметры:
+
+0 = отключить DNS-SD.
+
+1 = DHCP Option 235.
+
+2 = DHCP Option 235 Force.
+
+Если эта политика не настроена, клиент будет пытаться автоматически найти сервер кэша с помощью DNS-SD. Если установлено значение "0", клиент не будет использовать DNS-SD для автоматического поиска сервера кэша. Если установлено значение "1" или "2", клиент будет запрашивать DHCP Option ID 235 и использовать возвращенное значение в качестве имени узла сервера кэша. Параметр "2" переопределяет политику имени узла сервера кэша, если она настроена.</string>
+      <string id="CacheHostSource_DHCP">Параметр DHCP 235</string>
+      <string id="CacheHostSource_DHCP_Force">Параметр DHCP 235 Force</string>
+      <string id="GroupIdSource">Выберите источник идентификаторов группы</string>
+      <string id="GroupIdSource_Help">С помощью этой политики можно ограничить выбор одноранговых объектов одним конкретным источником.
+
+Доступные варианты:
+
+1 = сайт AD.
+
+2 = SID аутентифицированного домена.
+
+3 = ИД DHCP-параметра.
+
+4 = DNS-суффикс.
+
+5 = ИД клиента AAD.
+
+Если политика настроена, автоматически назначается ИД группы из выбранного источника. Эта политика игнорируется, если политика GroupID также настроена.
+
+Варианты, выбранные в этой политике, применяются только к режиму скачивания "Группа (2)". Если этот режим не установлен, эта политика игнорируется.
+
+В случае варианта 3 "ИД DHCP-параметра" клиент запрашивает ИД DHCP-параметра 234 и использует полученное значение GUID в качестве ИД группы.</string>
+      <string id="GroupIdSource_Unset">Не определено (0)</string>
+      <string id="GroupIdSource_AD">Сайт AD (1)</string>
+      <string id="GroupIdSource_SID">ИД безопасности домена, прошедшего проверку подлинности (2)</string>
+      <string id="GroupIdSource_DHCP">ИД параметра DHCP (3)</string>
+      <string id="GroupIdSource_DNS">DNS-суффикс (4)</string>
+      <string id="GroupIdSource_AAD">ИД клиента AAD (5)</string>
+      <string id="DelayBackgroundDownloadFromHttp">Задерживать фоновое скачивание с HTTP-ресурса (в секундах)</string>
+      <string id="DelayBackgroundDownloadFromHttp_Help">Благодаря этой политике вы можете задерживать использование HTTP-источника при фоновом скачивании, для которого можно применять протокол P2P.
+
+Когда достигается максимальное значение задержки, скачивание возобновляется и для него начинает применяться протокол HTTP. При этом либо скачиваются все полезные данные, либо дополняются байты, которые не удалось скачать с одноранговых узлов.
+
+Обратите внимание: если есть скачивание, которое ожидает использования одноранговых источников, пользователю будет казаться, что оно зависло.
+
+Рекомендуемое значение: 1 час (3600).</string>
+      <string id="DelayForegroundDownloadFromHttp">Задерживать интерактивное скачивание с HTTP-ресурса (в секундах)</string>
+      <string id="DelayForegroundDownloadFromHttp_Help">Благодаря этой политике вы можете задерживать использование HTTP-источника при интерактивном скачивании (на переднем плане), для которого можно применять протокол P2P.
+
+Когда достигается максимальное значение задержки, для скачивания начинает применяться протокол HTTP. При этом либо скачиваются все полезные данные, либо дополняются байты, которые не удалось скачать с одноранговых узлов.
+
+Обратите внимание: если есть скачивание, которое ожидает использования одноранговых источников, пользователю будет казаться, что оно зависло.
+
+Рекомендуемое значение: 1 минута (60).</string>
+      <string id="DelayCacheServerFallbackBackground">Задерживать переход с сервера кэширования на резервный источник при фоновом скачивании (в секундах)</string>
+      <string id="DelayCacheServerFallbackBackground_Help">Задайте эту политику, чтобы задерживать на X секунд переход с сервера кэширования на резервный HTTP-источник при фоновом скачивании содержимого.
+
+Примечание. Если задана политика задержки фонового скачивания с HTTP-источника, она будет применяться первой (чтобы данные сначала скачивались с одноранговых узлов).</string>
+      <string id="DelayCacheServerFallbackForeground">Задерживать переход с сервера кэширования на резервный источник при скачивании, которое выполняется на переднем плане (в секундах)</string>
+      <string id="DelayCacheServerFallbackForeground_Help">Задайте эту политику, чтобы задерживать на X секунд переход с сервера кэширования на резервный HTTP-источник при скачивании содержимого, которое выполняется на переднем плане.
+
+Примечание. Если задана политика задержки скачивания, которое выполняется на переднем плане с HTTP-источника, она будет применяться первой (чтобы данные сначала скачивались с одноранговых узлов).</string>
+      <string id="RestrictPeerSelectionBy">Выбрать способ ограничения выбора одноранговых узлов</string>
+      <string id="RestrictPeerSelectionBy_Help">Настройте эту политику, чтобы ограничить выбор узла на основе выбранного параметра.
+
+Доступные варианты:
+0 = NAT.
+1 = маска подсети.
+2 = локальное обнаружение (DNS-SD).
+
+Значение по умолчанию было изменено с 0 (без ограничений) на 1 (ограничение до подсети).
+
+Эти параметры применяются к режимам скачивания "Локальная сеть" (1) и "Группа" (2).</string>
+      <string id="RestrictPeerSelectionBy_None">Преобразование сетевых адресов (NAT)</string>
+      <string id="RestrictPeerSelectionBy_Subnet">Подсеть</string>
+      <string id="RestrictPeerSelectionBy_LinkLocal">Локальное обнаружение</string>
+      <string id="SetHoursToLimitBackgroundDownloadBandwidth">Задать рабочее время, чтобы ограничить пропускную способность для фонового скачивания</string>
+      <string id="SetHoursToLimitBackgroundDownloadBandwidth_Help">Указывает максимальную пропускную способность для фонового скачивания, которая применяется в рамках функции "Оптимизация доставки" в рабочее и нерабочее время ко всем параллельным действиям по скачиванию, в процентах от доступной для него пропускной способности.</string>
+      <string id="SetHoursToLimitForegroundDownloadBandwidth">Задать рабочее время, чтобы ограничить пропускную способность для интерактивного скачивания</string>
+      <string id="SetHoursToLimitForegroundDownloadBandwidth_Help">Указывает максимальную пропускную способность для интерактивного скачивания, которая применяется в рамках функции "Оптимизация доставки" в рабочее и нерабочее время ко всем параллельным действиям по скачиванию, в процентах от доступной для него пропускной способности.</string>
+      <string id="Time1AM">01:00</string>
+      <string id="Time1PM">13:00</string>
+      <string id="Time2AM">02:00</string>
+      <string id="Time2PM">14:00</string>
+      <string id="Time3AM">03:00</string>
+      <string id="Time3PM">15:00</string>
+      <string id="Time4AM">04:00</string>
+      <string id="Time4PM">16:00</string>
+      <string id="Time5AM">05:00</string>
+      <string id="Time5PM">17:00</string>
+      <string id="Time6AM">06:00</string>
+      <string id="Time6PM">18:00</string>
+      <string id="Time7AM">07:00</string>
+      <string id="Time7PM">19:00</string>
+      <string id="Time8AM">08:00</string>
+      <string id="Time8PM">20:00</string>
+      <string id="Time9AM">09:00</string>
+      <string id="Time9PM">21:00</string>
+      <string id="Time10AM">10:00</string>
+      <string id="Time10PM">22:00</string>
+      <string id="Time11AM">11:00</string>
+      <string id="Time11PM">23:00</string>
+      <string id="Time12AM">0:00</string>
+      <string id="Time12PM">12:00</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DownloadMode">
+        <dropdownList defaultItem="1" noSort="true" refId="DownloadMode">Режим скачивания:</dropdownList>
+      </presentation>
+      <presentation id="GroupId">
+        <textBox refId="GroupId">
+          <label>ИД группы:</label>
+        </textBox>
+      </presentation>
+      <presentation id="MaxCacheSize">
+        <decimalTextBox defaultValue="20" refId="MaxCacheSize">Максимальный размер кэша (в процентах):</decimalTextBox>
+        <text>Значение по умолчанию: 20%</text>
+      </presentation>
+      <presentation id="AbsoluteMaxCacheSize">
+        <decimalTextBox defaultValue="10" refId="AbsoluteMaxCacheSize">Абсолютный максимальный размер кэша (в ГБ):</decimalTextBox>
+        <text>Значение по умолчанию: 10 ГБ</text>
+      </presentation>
+      <presentation id="MaxCacheAge">
+        <decimalTextBox defaultValue="604800" refId="MaxCacheAge">Максимальный срок хранения в кэше (в секундах):</decimalTextBox>
+        <text>Значение по умолчанию: 7 дней.</text>
+      </presentation>
+      <presentation id="MonthlyUploadDataCap">
+        <decimalTextBox defaultValue="5120" refId="MonthlyUploadDataCap">Ограничение ежемесячной передачи данных (в ГБ):</decimalTextBox>
+        <text>Значение по умолчанию — 5 ТБ</text>
+      </presentation>
+      <presentation id="MinBackgroundQos">
+        <decimalTextBox defaultValue="20480" refId="MinBackgroundQos">Минимальное качество фонового обслуживания (в КБ/с):</decimalTextBox>
+        <text>Значение по умолчанию — 20 МБ/с</text>
+      </presentation>
+      <presentation id="ModifyCacheDrive">
+        <textBox refId="ModifyCacheDrive">
+          <label>Изменить диск для хранения кэша:</label>
+        </textBox>
+      </presentation>
+      <presentation id="MaxBackgroundDownloadBandwidth">
+        <decimalTextBox defaultValue="0" refId="MaxBackgroundDownloadBandwidth">Максимальная пропускная способность фонового скачивания (в КБ/с):</decimalTextBox>
+        <text>Значение по умолчанию: 0 (без ограничений)</text>
+      </presentation>
+      <presentation id="MaxForegroundDownloadBandwidth">
+        <decimalTextBox defaultValue="0" refId="MaxForegroundDownloadBandwidth">Максимальная пропускная способность скачивания переднего плана (в КБ/с):</decimalTextBox>
+        <text>Значение по умолчанию: 0 (без ограничений)</text>
+      </presentation>
+      <presentation id="PercentageMaxBackgroundBandwidth">
+        <decimalTextBox defaultValue="0" refId="PercentageMaxBackgroundBandwidth">Максимальная пропускная способность фонового скачивания (в процентах):</decimalTextBox>
+        <text>Значение по умолчанию: 0 (без ограничений)</text>
+      </presentation>
+      <presentation id="PercentageMaxForegroundBandwidth">
+        <decimalTextBox defaultValue="0" refId="PercentageMaxForegroundBandwidth">Максимальная пропускная способность скачивания переднего плана (в процентах):</decimalTextBox>
+        <text>Значение по умолчанию: 0 (без ограничений)</text>
+      </presentation>
+      <presentation id="MinFileSizeToCache">
+        <decimalTextBox defaultValue="100" refId="MinFileSizeToCache">Минимальный размер файла содержимого однорангового кэширования (в МБ):</decimalTextBox>
+        <text>Значение по умолчанию: 100 МБ</text>
+      </presentation>
+      <presentation id="AllowVPNPeerCaching">
+        <checkBox defaultChecked="false" refId="AllowVPNPeerCaching">Включить одноранговое кэширование, когда устройство подключается через VPN</checkBox>
+      </presentation>
+      <presentation id="MinRAMAllowedToPeer">
+        <decimalTextBox defaultValue="4" refId="MinRAMAllowedToPeer">Минимальная емкость ОЗУ (включительно), требуемая, чтобы обеспечить использование однорангового кэширования (в ГБ):</decimalTextBox>
+        <text>Значение по умолчанию: 4 ГБ</text>
+      </presentation>
+      <presentation id="MinDiskSizeAllowedToPeer">
+        <decimalTextBox defaultValue="32" refId="MinDiskSizeAllowedToPeer">Минимальный размер диска, для которого разрешено использовать одноранговое кэширование (в ГБ):</decimalTextBox>
+        <text>Значение по умолчанию: 32 ГБ</text>
+      </presentation>
+      <presentation id="MinBatteryPercentageAllowedToUpload">
+        <decimalTextBox defaultValue="0" refId="MinBatteryPercentageAllowedToUpload">Минимальный уровень заряда батареи (в процентах):</decimalTextBox>
+        <text>Значение по умолчанию: 0 (без ограничений)</text>
+      </presentation>
+      <presentation id="CacheHost">
+        <textBox refId="CacheHost">
+          <label>Сервер кэша:</label>
+        </textBox>
+      </presentation>
+      <presentation id="CacheHostSource">
+        <dropdownList defaultItem="0" noSort="true" refId="CacheHostSource">Источник имени узла сервера кэша:</dropdownList>
+      </presentation>
+      <presentation id="GroupIdSource">
+        <dropdownList defaultItem="0" noSort="true" refId="GroupIdSource">Источник ИД группы:</dropdownList>
+      </presentation>
+      <presentation id="DelayBackgroundDownloadFromHttp">
+        <decimalTextBox defaultValue="0" refId="DelayBackgroundDownloadFromHttp">Задерживать фоновое скачивание с HTTP-ресурса (в секундах):</decimalTextBox>
+        <text>Стандартное значение — 0 (без задержки)</text>
+      </presentation>
+      <presentation id="DelayForegroundDownloadFromHttp">
+        <decimalTextBox defaultValue="0" refId="DelayForegroundDownloadFromHttp">Задерживать интерактивное скачивание с HTTP-ресурса (в секундах):</decimalTextBox>
+        <text>Стандартное значение — 0 (без задержки)</text>
+      </presentation>
+      <presentation id="DelayCacheServerFallbackBackground">
+        <decimalTextBox defaultValue="0" refId="DelayCacheServerFallbackBackground">Задерживать переход с сервера кэширования на резервный источник при фоновом скачивании (в секундах):</decimalTextBox>
+        <text>Стандартное значение — 0 (без задержки)</text>
+      </presentation>
+      <presentation id="DelayCacheServerFallbackForeground">
+        <decimalTextBox defaultValue="0" refId="DelayCacheServerFallbackForeground">Задерживать переход с сервера кэширования на резервный источник при скачивании, которое выполняется на переднем плане (в секундах):</decimalTextBox>
+        <text>Стандартное значение — 0 (без задержки)</text>
+      </presentation>
+      <presentation id="RestrictPeerSelectionBy">
+        <dropdownList defaultItem="1" noSort="true" refId="RestrictPeerSelectionBy">Ограничить выбор одноранговых узлов по следующему критерию:</dropdownList>
+      </presentation>
+      <presentation id="SetHoursToLimitBackgroundDownloadBandwidth">
+        <text/>
+        <text>Задать рабочее время, чтобы ограничить пропускную способность для фонового скачивания:</text>
+        <dropdownList defaultItem="8" noSort="true" refId="SetHoursToLimitBackgroundDownloadBandwidthFrom">С:</dropdownList>
+        <dropdownList defaultItem="17" noSort="true" refId="SetHoursToLimitBackgroundDownloadBandwidthTo">До:</dropdownList>
+        <text/>
+        <text>Максимальная пропускная способность для фонового скачивания (в процентах) в рабочее время:</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitBackgroundDownloadBandwidthIn"/>
+        <text>Стандартное значение — 0 (без ограничений)</text>
+        <text/>
+        <text>Максимальная пропускная способность для фонового скачивания (в процентах) в нерабочее время:</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitBackgroundDownloadBandwidthOut"/>
+        <text>Стандартное значение — 0 (без ограничений)</text>
+      </presentation>
+      <presentation id="SetHoursToLimitForegroundDownloadBandwidth">
+        <text/>
+        <text>Задать рабочее время, чтобы ограничить пропускную способность для интерактивного скачивания:</text>
+        <dropdownList defaultItem="8" noSort="true" refId="SetHoursToLimitForegroundDownloadBandwidthFrom">С:</dropdownList>
+        <dropdownList defaultItem="17" noSort="true" refId="SetHoursToLimitForegroundDownloadBandwidthTo">До:</dropdownList>
+        <text/>
+        <text>Максимальная пропускная способность для интерактивного скачивания (в процентах) в рабочее время:</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitForegroundDownloadBandwidthIn"/>
+        <text>Стандартное значение — 0 (без ограничений)</text>
+        <text/>
+        <text>Максимальная пропускная способность для интерактивного скачивания (в процентах) в нерабочее время:</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitForegroundDownloadBandwidthOut"/>
+        <text>Стандартное значение — 0 (без ограничений)</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

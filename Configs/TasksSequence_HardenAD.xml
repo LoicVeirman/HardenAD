@@ -433,9 +433,9 @@
 				> GpoName..: define the group name for applying or denying a group
 		-->
 		<GlobalGpoSettings GroupName="L-S-%tier%-GPO_%GpoName%_%mode%" Tier0="T0" Tier1="T1" Tier2="T2">
-			<GpoTier0 OU="OU=GPO,OU=GroupsT0,OU=_Administration,%DN%" />
-			<GpoTier1 OU="OU=GPO,OU=GroupsT1,OU=_Administration,%DN%" />
-			<GpoTier2 OU="OU=GPO,OU=GroupsT2,OU=_Administration,%DN%" />
+			<GpoTier0 OU="OU=GPO,OU=%OU-ADM-GROUPS-T0%,OU=%OU-ADM%,%DN%" />
+			<GpoTier1 OU="OU=GPO,OU=%OU-ADM-GROUPS-T1%,OU=%OU-ADM%,%DN%" />
+			<GpoTier2 OU="OU=GPO,OU=%OU-ADM-GROUPS-T2%,OU=%OU-ADM%,%DN%" />
 		</GlobalGpoSettings>
 		<!-- 
 			WINDOWS UPDATE 
@@ -1081,21 +1081,30 @@
 			<Member samAccountName="L-S-T0" />
 		</Group>
 		<Group name="L-S-T0_PawT12L_Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the T1, T2 and TLegacy administration stations" Path="OU=Logon,OU=GroupsT0,OU=_Administration,ROOTDN">
+			<Member samAccountName="L-S-T1" />
+			<Member samAccountName="L-S-T2" />
+			<Member samAccountName="L-S-T1L" />
+			<Member samAccountName="L-S-T2L" />
 		</Group>
 		<!--
 			Local Admins Groups
 		-->
 		<Group name="L-S-T0_LocalAdmins_Servers" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=LocalAdmins,OU=GroupsT0,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T0_Operators" />
 		</Group>
 		<Group name="L-S-T1_LocalAdmins_Servers" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=LocalAdmins,OU=GroupsT1,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T1_Operators" />
 		</Group>
 		<Group name="L-S-T1L_LocalAdmins_Servers" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=LocalAdmins,OU=GroupsT1L,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T1L_Operators" />
 		</Group>
 		<Group name="L-S-T0_LocalAdmins_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=LocalAdmins,OU=GroupsT0,OU=_Administration,ROOTDN">
 		</Group>
 		<Group name="L-S-T2_LocalAdmins_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=LocalAdmins,OU=GroupsT2,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T2_Operators" />
 		</Group>
 		<Group name="L-S-T2L_LocalAdmins_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\administrators group" Path="OU=LocalAdmins,OU=GroupsT2L,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T2L_Operators" />
 		</Group>
 		<!--
 			Builtin Groups

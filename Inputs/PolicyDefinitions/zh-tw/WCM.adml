@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Windows 連線管理員群組原則設定</displayName>
+  <description>Windows 連線管理員群組原則設定</description>
+  <resources>
+    <stringTable>
+      <string id="WCM_Category">Windows 連線管理員</string>
+      <string id="WCM_BlockNonDomain">當連線到通過網域驗證的網路時，禁止連線到非網域網路</string>
+      <string id="WCM_BlockNonDomain_Help">此原則設定會禁止電腦同時連線至網域型網路與非網域型網路。
+
+若啟用此原則設定，則電腦會根據以下情況回應自動與手動網路連線嘗試:
+
+自動連線嘗試
+- 當電腦已經連線至網域型網路時，會禁止所有對非網域型網路進行的自動連線嘗試。
+- 當電腦已經連線至非網域型網路時，會禁止對網域型網路進行的自動連線嘗試。
+
+手動連線嘗試
+- 當電腦已透過乙太網路之外的媒體連線至非網域型網路或網域型網路，且使用者嘗試違反此原則設定對其他網路建立手動連線時，現有的網路連線會中斷，而手動連線則會受允許。
+- 當電腦已透過乙太網路媒體連線至非網域型網路或網域型網路，且使用者嘗試違反此原則設定對其他網路建立手動連線時，會維持現有的乙太網路連線而禁止手動連線嘗試。
+
+若此原則設定已停用或未設定，會允許電腦同時連線至網域型網路與非網域型網路。
+      </string>
+      <string id="WCM_DisableRoaming">禁止漫遊行動寬頻網路的連線</string>
+      <string id="WCM_DisableRoaming_Help">這個原則設定會防止用戶端在已於漫遊提供者網路上註冊的情況下連線至行動寬頻網路。
+
+如果已啟用此原則設定，則對漫遊提供者網路的所有自動和手動連線常識都會受到禁止，直到用戶端向主提供者網路註冊為止。
+
+如果此原則設定未設定或已停用，則允許用戶端連線至漫遊提供者行動寬頻網路。
+      </string>
+      <string id="WCM_MinimizeConnections">最小化網際網路或 Windows 網域的同時連線數目</string>
+      <string id="WCM_MinimizeConnections_AllowAllConnections">0 = 允許同時連線</string>
+      <string id="WCM_MinimizeConnections_MinimizeSimultaneousConnections">1 = 將同時連線最小化</string>
+      <string id="WCM_MinimizeConnections_AlwaysConnectedToCellular">2 = 保持行動數據的連線</string>
+      <string id="WCM_MinimizeConnections_PreventWifiOnEthernet">3 = 使用乙太網路時禁止 Wi-Fi</string>
+      <string id="WCM_MinimizeConnections_Help">
+        此原則設定會決定電腦是否能對網際網路或 Windows 網域有多個連線。若允許多個連線，則會接著決定網路流量的路由方式。
+
+        若此原則設定設為 0，電腦就能對網際網路、Windows 網域或兩者具有同時連線。網際網路流量可透過所有連線路由，包括行動數據連線和所有計量付費網路。這在此原則設定原本處於 [已停用] 狀態。此選項最早於 Windows 8 中提供使用。
+
+        若此原則設定設為 1，則會在電腦對慣用類型的網路至少有一個正在使用的網際網路連線時，封鎖所有新的自動化網際網路連線。此為慣用類型的順序 (從最慣用至最不慣用排序): 乙太網路 &gt; WLAN &gt; 行動數據。乙太網路一律是慣用的連線類型，但使用者仍可手動連線至任何網路。這在此原則設定中原本處於 [已啟用] 狀態。此選項最早於 Windows 8 中提供使用。
+
+        若此原則設定設為 2，則行為會與 1 相似。不過，若有行動數據連線可用，則會為需要行動數據連線的服務一律保持連線。當使用者連線至 WLAN 或乙太網路連線時，不會透過行動數據連線路由任何網際網路流量。此選項最早於 Windows 10 (1703 版) 提供使用。
+
+        若此原則設定設為 3，則行為會與 2 相似。不過，若存在乙太網路連線，Windows 就不會允許使用者手動連線至 WLAN。只有不存在乙太網路連線時才能連線 (自動或手動) 至 WLAN。
+
+        此原則設定與 [Enable Windows to soft-disconnect a computer from a network] (允許 Windows 彈性中斷電腦對網路的連線) 原則設定相關。
+      </string>
+      <string id="WCM_DisablePowerManagement">停用連線待命模式的電源管理</string>
+      <string id="WCM_DisablePowerManagement_Help">這個原則設定會指定電腦進入已連線待命模式時是否停用電源管理。
+
+如果已啟用此原則設定，則 Windows 連線管理員不會於電腦進入已連線待命模式時，管理介面卡的無線通訊來降低耗電。
+
+如果此原則設定未設定或已停用，則會在電腦進入已連線待命模式時啟用店員管理。
+      </string>
+      <string id="WCM_EnableSoftDisconnect">可讓 Windows 彈性中斷電腦的網路連線</string>
+      <string id="WCM_EnableSoftDisconnect_Help">這個原則設定會決定 Windows 是否會將電腦從網路彈性中斷連線。
+
+如果此原則設定已啟用或未設定，Windows 就會在認為電腦不應再連線至網路時予以彈性中斷連線。
+
+如果這個原則已停用，則 Windows 會在認為電腦不應再連線至網路時立即予以中斷連線。
+
+當彈性中斷連線啟用時:
+- 當 Windows 決定電腦不應再連線至網路時，會等待該網路上的流量穩定。現有的 TCP 工作階段會繼續而不中斷。
+- Windows 接著會定期檢查網路上的流量等級。如果流量等級超過特定閾值，並不會採取進一步動作。電腦會保持與網路的連線並繼續加以使用。舉例來說，如果網路連線目前正用於從網際網路下載檔案，則會使用該網路連線繼續下載檔案。
+- 當網路流量低於此閾值時，電腦會從網路中斷連線。即使未持續使用網路連線 (例如: 電子郵件應用程式)，但仍會將網路連線保持在使用中狀態的應用程式可能會失去連線。如果發生這種情形，則這些應用程式應透過其他網路重新建立它們的連線。
+
+這個原則設定會因其他群組原則設定變更而受到影響。舉例來說，如果停用 [將對網際網路或 Windows 網域的同時連線數最小化] (Minimize the number of simultaneous connections to the Internet or a Windows Domain)，則 Windows 就不會從任何網路中斷連線。
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="WCM_MinimizeConnections">
+        <dropdownList refId="WCM_MinimizeConnections_Options" noSort="true" defaultItem="2">最小化原則選項</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

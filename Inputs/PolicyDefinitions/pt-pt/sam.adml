@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Definições SAM.</displayName>
+  <description>Definições de configuração para o Gestor de Contas de Segurança</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">Gestor de Contas de Segurança</string>
+      <string id="SamNGCKeyROCAValidation">Configure a validação das chaves do WHpE vulneráveis à ROCA durante a autenticação</string>
+      <string id="SamNGCKeyROCAValidationNone">Ignorar chaves do WHpE vulneráveis à ROCA</string>
+      <string id="SamNGCKeyROCAValidationAudit">Auditar chaves em uso do WHpE vulneráveis à ROCA</string>
+      <string id="SamNGCKeyROCAValidationBlock">Bloquear chaves em uso do WHpE vulneráveis à ROCA</string>
+      <string id="SamNGCKeyROCAValidation_explain">Esta definição de política permite-lhe configurar como os controladores de domínio lidam com as chaves do Windows Hello para Empresas (WHpE) que são vulneráveis à vulnerabilidade "Return of Coppersmith's attack" (ROCA).
+
+Para obter mais informações sobre a vulnerabilidade ROCA, consulte:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361 
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability 
+
+As seguintes opções serão suportadas se ativar esta definição de política:
+
+Ignorar: durante a autenticação, o controlador de domínio não sondará nenhuma chave do WHpE para a vulnerabilidade ROCA.
+
+Auditar: durante a autenticação, o controlador de domínio emitirá eventos de auditoria para chaves do WHpE que estão sujeitas à vulnerabilidade ROCA (as autenticações continuarão a ter sucesso).
+
+Bloquear: durante a autenticação, o controlador de domínio bloqueará a utilização de chaves do WHpE que estão sujeitas à vulnerabilidade ROCA (as autenticações falharão).
+
+Esta definição só entra em vigor nos controladores de domínio.
+
+Se não estiver configurado, os controladores de domínio serão definidos por defeito para utilizar a sua configuração local. A configuração local padrão é Auditar.
+
+Não é necessário reiniciar para que as alterações a esta definição entrem em vigor.
+
+Nota: para evitar perturbações inesperadas, esta definição não deve ser definida para Bloquear até que sejam realizadas mitigações adequadas, por exemplo, a correção de TPMs vulneráveis.
+
+Pode encontrar mais informações em https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Opções para manusear chaves do WHpE vulneráveis à ROCA:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

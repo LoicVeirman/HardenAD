@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Gruppepolitikindstillinger for Windows Forbindelsesstyring</displayName>
+  <description>Gruppepolitikindstillinger for Windows Forbindelsesstyring</description>
+  <resources>
+    <stringTable>
+      <string id="WCM_Category">Windows Forbindelsesstyring</string>
+      <string id="WCM_BlockNonDomain">Forbyd forbindelse til ikke-domænenetværk, når der er forbindelse til domænegodkendt netværk</string>
+      <string id="WCM_BlockNonDomain_Help">Denne politikindstilling forhindrer computere i at oprette forbindelse til både et domænebaseret netværk og et ikke-domænebaseret netværk samtidig.
+
+Hvis denne politikindstilling er aktiveret, reagerer computeren på automatiske og manuelle forsøg på at få netværksforbindelse ud fra følgende betingelser:
+
+Forsøg på automatisk forbindelse
+- Når computeren allerede har forbindelse til et domænebaseret netværk, blokeres alle forsøg på automatisk forbindelse til ikke-domænenetværk.
+- Når computeren allerede har forbindelse til et ikke-domænebaseret netværk, blokeres forsøg på automatisk forbindelse til domænebaseret netværk
+
+Forsøg på manuel forbindelse
+- Når computeren allerede har forbindelse til enten et ikke-domænebaseret netværk eller et domænebaseret netværk via andre medier end Ethernet, og en bruger forsøger at oprette en manuel forbindelse til et ekstra netværk i modstrid med denne politikindstilling, afbrydes den eksisterende netværksforbindelse, og den manuelle forbindelse tillades.
+- Når computeren allerede har forbindelse til enten et ikke-domænebaseret netværk eller et domænebaseret netværk via Ethernet, og en bruger forsøger at oprette en manuel forbindelse til et ekstra netværk i modstrid med denne politikindstilling, bevares den eksisterende Ethernet-forbindelse, og forsøget på manuel forbindelse blokeres.
+
+Hvis denne politikindstilling ikke er konfigureret, eller den er deaktiveret, har computere tilladelse til at oprette samtidig forbindelse til både domæne- og ikke-domænenetværk.
+      </string>
+      <string id="WCM_DisableRoaming">Forbyd forbindelse til roaming af mobile bredbåndsnetværk</string>
+      <string id="WCM_DisableRoaming_Help">Denne politikindstilling forhindrer klienter i at oprette forbindelse til mobile bredbåndsnetværk, når klienten er registreret på et roamingudbydernetværk.
+
+Hvis denne politikindstilling er aktiveret, blokeres alle automatiske og manuelle forsøg på forbindelse til roamingudbydernetværk, indtil klienten er registreret hos hjemmeudbydernetværket.
+
+Hvis denne politikindstilling ikke er konfigureret, eller den er deaktiveret, har klienter tilladelse til at oprette forbindelse til roamingudbyderes mobile bredbåndsnetværk.
+      </string>
+      <string id="WCM_MinimizeConnections">Minimer antallet af samtidige forbindelser til internettet eller et Windows-domæne</string>
+      <string id="WCM_MinimizeConnections_AllowAllConnections">0 = Tillad samtidige forbindelser</string>
+      <string id="WCM_MinimizeConnections_MinimizeSimultaneousConnections">1 = Minimer samtidige forbindelser</string>
+      <string id="WCM_MinimizeConnections_AlwaysConnectedToCellular">2 = Forbliv tilsluttet til mobil</string>
+      <string id="WCM_MinimizeConnections_PreventWifiOnEthernet">3 = Undgå Wi-Fi, når der er forbindelse til Ethernet</string>
+      <string id="WCM_MinimizeConnections_Help">
+        Denne politikindstilling bestemmer, om en computer kan have flere forbindelser til internettet eller til et Windows-domæne. Hvis der tillades flere forbindelser, bestemmer den, hvordan netværkstrafik skal dirigeres.
+
+        Hvis denne politikindstilling er angivet til 0, kan en computer oprette samtidige forbindelser til internettet, til et Windows-domæne eller til begge dele. Internettrafik kan dirigeres via alle forbindelser, herunder mobilforbindelse og ethvert forbrugsbaseret netværk. Dette var tidligere den deaktiverede tilstand for denne politikindstilling. Denne indstilling var først tilgængelig i Windows 8.
+
+        Hvis denne politikindstilling er indstillet til 1, blokeres enhver ny automatisk internetforbindelse, når computeren har mindst én aktiv internetforbindelse til en foretrukken type netværk. Her er den foretrukne rækkefølge (fra det mest foretrukne til det mindst foretrukne): Ethernet, WLAN, så mobil. Ethernet er altid foretrukket, når forbindelsen er oprettet. Brugerne kan stadig oprette forbindelse til et netværk manuelt. Dette tidligere den aktiverede tilstand for denne politikindstilling. Denne indstilling var først tilgængelig i Windows 8
+
+        Hvis denne politikindstilling er angivet til 2, svarer funktionsmåden til 1. Men hvis en mobildataforbindelse er tilgængelig, vil den altid bevare forbindelsen for tjenester, der kræver en mobilforbindelse. Når brugeren har oprettet forbindelse til en WLAN- eller Ethernet-forbindelse, bliver der ikke dirigeret internettrafik over mobilforbindelsen. Denne indstilling var først tilgængelig i Windows 10 (version 1703).
+
+        Hvis denne politikindstilling er angivet til 3, svarer funktionsmåden til 2. Men hvis der er en Ethernet-forbindelse, giver Windows ikke brugerne mulighed for at oprette forbindelse til et WLAN manuelt. Et WLAN kan kun tilsluttes (automatisk eller manuelt), når der ikke er nogen Ethernet-forbindelse.
+
+        Denne politikindstilling er relateret til politikindstillingen "Gør det muligt for Windows at foretage en blød afbrydelse af forbindelsen til en computer fra et netværk".
+      </string>
+      <string id="WCM_DisablePowerManagement">Deaktiver strømstyring i tilsluttet standbytilstand</string>
+      <string id="WCM_DisablePowerManagement_Help">Denne politikindstilling angiver, at strømstyring deaktiveres, når computeren går i tilsluttet standbytilstand. 
+
+Hvis denne politikindstilling er aktiveret, får Windows Forbindelsesstyring ikke adapterradioer til at reducere strømforbruget, når computeren går i tilsluttet standbytilstand.
+
+Hvis denne politikindstilling ikke er konfigureret, eller den er deaktiveret, aktiveres strømstyring, når computeren går i tilsluttet standbytilstand.
+      </string>
+      <string id="WCM_EnableSoftDisconnect">Gør det muligt for Windows at foretage en blød afbrydelse af forbindelsen til en computer fra et netværk</string>
+      <string id="WCM_EnableSoftDisconnect_Help">Denne politikindstilling bestemmer, om Windows foretager en blød afbrydelse af forbindelsen mellem en computer og et netværk..
+
+Hvis denne politikindstilling er aktiveret eller ikke er konfigureret, foretages en blød afbrydelse af forbindelsen mellem en computer og et netværk, når Windows afgør, at computeren ikke længere skal have forbindelse til et netværk.
+
+Hvis politikindstillingen er deaktiveret, afbryder Windows forbindelsen mellem en computer og et netværk så snart, når Windows afgør, at computeren ikke længere skal have forbindelse til netværket.
+
+Når blød afbrydelse er aktiveret:
+- Når Windows afgør, at computeren ikke længere skal have forbindelse til et netværk, afventes, at trafikken falder til ro på dette netværk. Den eksisterende TCP-session fortsætter uden afbrydelse.
+- Derefter kontrollerer Windows trafikniveauet på netværket med jævne mellemrum. Hvis trafikniveauet er over en bestemt grænse, udføres der ingen yderligere handling. Computeren bevarer forbindelsen til netværket og fortsætter med at bruge det. Hvis netværksforbindelsen f.eks. i øjeblikket bruges til at downloade filer fra internettet, vil filerne fortsat blive downloadet ved hjælp af denne netværksforbindelse.
+- Når netværkstrafikken falder til under denne grænse, afbrydes computerens forbindelse til netværket. Apps, der bevarer en netværksforbindelse aktiv, også selvom de ikke bruger den aktivt (for eksempel mailapps) risikerer at miste forbindelsen. Hvis dette sker, skal disse apps genoprette deres forbindelse via et andet netværk.
+
+Denne politikindstilling afhænger af andre indstillinger for gruppepolitik. Hvis "Minimer antallet af samtidige forbindelser til internettet eller et Windows-domæne" f.eks. er deaktiveret, vil Windows ikke afbryde forbindelsen til noget netværk.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="WCM_MinimizeConnections">
+        <dropdownList refId="WCM_MinimizeConnections_Options" noSort="true" defaultItem="2">Minimer politikindstillinger</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

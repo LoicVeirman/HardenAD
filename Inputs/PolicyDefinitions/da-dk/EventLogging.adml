@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Hændelseslogføring</displayName>
+    <description>Denne fil indeholder konfigurationsindstillingerne for Windows-hændelseslogføring</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Hændelseslogføring</string>
+            <string id="EnableProtectedEventLogging">Aktivér beskyttet hændelseslogføring</string>
+            <string id="EnableProtectedEventLogging_Explain">
+Denne politik gør det muligt at konfigurere Beskyttet hændelseslogføring.
+
+Hvis du aktiverer denne indstilling, bruger komponenter, som understøtter den, det certifikat, du leverer til at kryptere potentielt følsomme hændelseslogdata, før de skrives til hændelseslogfilen. Data krypteres ved hjælp af CMS-standarden (Cryptographic Message Syntax) og den offentlige nøgle, du giver. Du kan bruge Unprotect-CmsMessage PowerShell-cmdlet'en til at dekryptere krypterede meddelelser, under forudsætning af at du har adgang til den private nøgle, der svarer til den offentlige nøgle, de blev krypteret med.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, krypterer komponenter ikke hændelseslogmeddelelser, før de skrives til hændelseslogfilen.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+Angiv et krypteringscertifikat, der skal bruges af Beskyttet hændelseslogføring. Du kan angive enten:
+
+    - Indholdet af et base-64-kodet X.509-certifikat
+    - Aftrykket af et certifikat, der kan findes i den lokale maskines certifikatbutik (som regel implementeret af PKI-infrastruktur)
+    - Den fulde sti til et certifikat (kan være lokalt eller på et fjernshare)
+    - Stien til en mappe, der indeholder et certifikat eller flere certifikater (kan være lokalt eller på et fjernshare)
+    - Emnenavnet på et certifikat, der kan findes i den lokale maskines certifikatbutik (som regel implementeret af PKI-infrastruktur)
+
+Det endelige certifikat skal have "dokumentkryptering" som en udvidet nøglebrug (1.3.6.1.4.1.311.80.1) samt enten nøgleanvendelsen Kodeomsætning af data eller Kodeomsætning af nøgler aktiveret.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

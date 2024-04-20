@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>文件分类基础结构组策略定义</displayName>
+  <description></description>
+  <resources>
+    <stringTable>
+      <string id="AdrCat">访问被拒绝协助</string>
+      <string id="FciCat">文件分类基础结构</string>
+      <string id="EnableManualUXDisplay">文件分类基础结构: 在文件资源管理器中显示“分类”选项卡</string>
+      <string id="EnableShellExecuteFileStreamCheck">在客户端上对所有文件类型启用访问被拒绝协助</string>
+      <string id="EnableShellExecuteFileStreamCheck_Descr">应在 Windows 客户端上设置此组策略设置，以便对所有文件类型启用访问被拒绝协助</string>
+      <string id="EnableManualUXExplain">此策略设置控制是否在文件资源管理器的“属性”对话框中显示“分类”选项卡。
+
+使用“分类”选项卡，用户可以通过从列表中选择属性对文件进行手动分类。管理员可通过使用“组策略”来定义组织的属性，并可利用作为“文件服务器资源管理器”角色服务一部分的“文件分类基础结构”使用在各个文件服务器上定义的属性对这些属性进行补充。
+
+如果启用此策略设置，则会显示“分类”选项卡。
+
+如果禁用或未配置此策略设置，则隐藏“分类”选项卡。</string>
+      <string id="CentralClassificationListDisplay">文件分类基础结构: 指定分类属性列表</string>
+      <string id="CentralClassificationListExplain">此策略设置控制可使用哪个属性集对受影响计算机上的文件进行分类。
+
+管理员可通过使用 Active Directory 域服务(AD DS)来定义组织的属性，然后将这些属性分组为列表。管理员可使用作为“文件服务器资源管理器”角色服务一部分的“文件分类基础结构”在各个文件服务器上对这些属性进行补充。
+
+如果启用此策略设置，则可以选择可供受影响计算机上分类使用的属性列表。
+
+如果禁用或未配置此策略设置，则 AD DS 中的“全局资源属性列表”将提供默认的属性集。</string>
+      <string id="AccessDeniedConfigurationDisplay">自定义“访问被拒绝”错误消息</string>
+      <string id="AccessDeniedConfigurationExplain">此策略设置指定当拒绝用户访问文件或文件夹时要显示的消息。可以自定义“访问被拒绝”消息以包含附加文本和链接。还可为用户提供以下功能: 发送电子邮件以请求对拒绝访问的文件或文件夹进行访问。
+
+如果启用此策略设置，则用户将从应用此策略设置的文件服务器上接收到一条自定义的“访问被拒绝”消息。
+
+如果禁用此策略设置，则用户会看到一条标准的“访问被拒绝”消息，不管文件服务器如何配置，该消息不会提供任何受此策略设置控制的功能。
+
+如果未配置此策略设置，则用户会看到一条标准的“访问被拒绝”消息，除非将文件服务器配置为显示自定义的“访问被拒绝”消息。默认情况下，用户会看到标准的“访问被拒绝”消息。
+
+</string>
+      <string id="FileNotFoundConfigurationDisplay">自定义“找不到文件”错误消息</string>
+      <string id="FileNotFoundConfigurationExplain">此策略设置指定当用户接收到“找不到文件”错误时所显示的消息。可以自定义“找不到文件”消息以包含附加文本和链接。还可为用户提供发送电子邮件以请求帮助的功能。这样，管理员可以针对“找不到文件”错误(因用户对启用了基于访问的枚举的文件夹没有读取权限而导致的错误)提供帮助。
+
+如果启用此策略设置，则用户将从应用此策略设置的文件服务器上接收到一条自定义的“找不到文件”消息。
+
+如果禁用此策略设置，则用户会看到一条标准的“找不到文件”消息，不管文件服务器如何配置，该消息不会提供任何受此策略设置控制的功能。
+
+如果未配置此策略设置，则用户会看到一条标准的“找不到文件”消息，除非将文件服务器配置为显示自定义的“找不到文件”消息。默认情况下，用户会看到标准的“找不到文件”消息。
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CentralClassificationListPresentation">
+        <textBox refId="CentralClassificationListTextElement">
+          <label>分类属性列表:</label>
+        </textBox>
+      </presentation>
+      <presentation id="AccessDeniedConfigurationPresentation">
+        <text>为拒绝访问的用户显示以下消息:</text>
+        <multiTextBox refId="ErrorMessageText"/>
+        <checkBox refId="AllowEmailRequestsCheck" defaultChecked="false">允许用户请求协助</checkBox>
+        <text>将以下文本添加到电子邮件的末尾:</text>
+        <multiTextBox refId="EmailMessageText"/>
+        <text> </text>
+        <text>电子邮件收件人:</text>
+        <checkBox refId="PutDataOwnerOnToCheck" defaultChecked="true">文件夹所有者</checkBox>
+        <checkBox refId="PutAdminOnToCheck" defaultChecked="true">文件服务器管理员</checkBox>
+        <textBox refId="AdditonalEmailToText">
+          <label>其他收件人:</label>
+        </textBox>
+        <text> </text>
+        <text>电子邮件设置:</text>
+        <checkBox refId="IncludeDeviceClaimsCheck" defaultChecked="true">包括设备声明</checkBox>
+        <checkBox refId="IncludeUserClaimsCheck" defaultChecked="true">包括用户声明</checkBox>
+        <checkBox refId="GenerateLogCheck" defaultChecked="true">在应用程序和服务事件日志中记录电子邮件</checkBox>
+      </presentation>
+      <presentation id="FileNotFoundConfigurationPresentation">
+        <text>“找不到文件”消息设置</text>
+        <text>“找不到文件”消息补充文本:</text>
+        <multiTextBox refId="ErrorMessageText"/>
+        <checkBox refId="AllowEmailRequestsCheck" defaultChecked="false">允许用户请求协助</checkBox>
+        <text>“找不到文件”电子邮件补充文本:</text>
+        <multiTextBox refId="EmailMessageText"/>
+        <text> </text>
+        <text>电子邮件收件人</text>
+        <checkBox refId="PutDataOwnerOnToCheck" defaultChecked="true">文件夹所有者</checkBox>
+        <checkBox refId="PutAdminOnToCheck" defaultChecked="true">文件服务器管理员</checkBox>
+        <textBox refId="AdditonalEmailToText">
+          <label>其他收件人:</label>
+        </textBox>
+        <text> </text>
+        <text>电子邮件设置</text>
+        <checkBox refId="IncludeDeviceClaimsCheck" defaultChecked="true">包括设备声明</checkBox>
+        <checkBox refId="IncludeUserClaimsCheck" defaultChecked="true">包括用户声明</checkBox>
+        <checkBox refId="GenerateLogCheck" defaultChecked="true">在应用程序和服务日志中记录电子邮件</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

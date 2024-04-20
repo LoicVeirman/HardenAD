@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (c) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>NetworkProvider</displayName>
+  <description>Politikdefinitioner for Multiple UNC Provider</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_NetworkProvider">Netværksprovider</string>
+      <string id="Pol_HardenedPaths">Hærdede UNC-stier</string>
+      <string id="Pol_HardenedPaths_Explain">Denne politikindstilling konfigurerer sikker adgang til UNC-stier.
+
+Hvis du aktiverer denne politik, tillader Windows kun adgang til de angivne UNC-stier, efter at yderligere sikkerhedskrav er opfyldt.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_HardenedPaths">
+        <text>Angiv hærdede netværksstier.
+I navnefeltet skal du skrive en fuldt kvalificeret UNC-sti til hver enkelt netværksressource.
+For at sikre fuld adgang til et share med et bestemt navn, uanset servernavn, skal du angive servernavnet  '*' (stjerne). F.eks. "\\*\NETLOGON".
+For at sikre fuld adgang til alle shares, der hostes på en server, kan sharenavnet udelades fra UNC-stien. F.eks. "\\SERVER".
+
+I værdifeltet skal du angive en eller flere af følgende indstillinger adskilt af komma:
+    'RequireMutualAuthentication=1': Gensidig godkendelse mellem klienten og serveren kræves for at sikre, at klienten opretter forbindelse til den rigtige server.
+    'RequireIntegrity=1': Kommunikation mellem klienten og serveren skal bruge en integritetsmekanisme til at forhindre misbrug af data.
+    'RequirePrivacy=1': Kommunikation mellem klienten og serveren skal krypteres for at forhindre, at tredjeparter får adgang til følsomme data.</text>
+        <listBox refId="Pol_HardenedPaths">Hærdede UNC-stier:</listBox>
+        <text> </text>
+        <text>Du bør kræve både integritetsgodkendelse og gensidig godkendelse for alle UNC-stier, der hoster exe-filer, scriptfiler eller filer, der styrer sikkerhedspolitikker.
+
+Overvej at hoste filer, der ikke kræver integritet eller beskyttelse af personlige oplysninger, på separate shares i forhold til dem, der absolut kræver sikkerhed for at fungere optimalt.
+
+For oplysninger om konfiguration af Windows-computere til at kræve ekstra sikkerhed ved adgang til bestemte UNC-stier, skal du se http://support.microsoft.com/kb/3000483.</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

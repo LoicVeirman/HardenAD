@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>在此輸入顯示名稱</displayName>
+  <description>在此輸入描述</description>
+  <resources>
+    <stringTable>
+      <string id="WF_AllowedPrograms_Help">允許您檢視及變更由群組原則所定義的程式例外清單。Windows Defender 防火牆使用兩個程式例外清單: 一個是由群組原則設定所定義的清單，另一個是由 [控制台] 中 [Windows Defender 防火牆] 元件所定義的清單。
+
+如果啟用這個原則設定，您可以檢視及變更群組原則所定義的程式例外清單。如果將程式新增到這個清單，並將狀態設定為 [啟用]，該程式可以在它要求 Windows Defender 防火牆開放的任何連接埠上接收未經要求的傳入訊息，即使該連接埠被其他原則設定 (例如「Windows Defender 防火牆: 定義輸入的連接埠例外」原則設定) 封鎖。若要檢視程式清單，請啟用原則設定，然後按一下 [顯示] 按鈕。若要新增程式，請啟用原則設定並記下語法，按一下 [顯示] 按鈕。在 [顯示內容] 對話方塊中輸入使用語法格式的定義字串。若要移除程式，請按一下該程式的定義，然後按 DELETE 鍵。若要編輯定義，請從清單中移除目前的定義，然後新增一個具有不同參數的新定義。若要允許系統管理員新增程式至 [控制台] 中、由 [Windows Defender 防火牆] 元件所定義的本機程式例外清單，請一併啟用 [Windows Defender 防火牆: 允許本機程式例外] 原則設定。
+
+如果停用這個原則設定，將會刪除由群組原則定義的程式例外清單。如果有本機程式例外清單，則除非已啟用 [Windows Defender 防火牆: 允許本機程式例外] 原則設定，否則會略過該清單。
+
+如果未設定這個原則設定，則 Windows Defender 防火牆只會使用系統管理員用 [控制台] 的 [Windows Defender 防火牆] 元件所定義的本機程式例外清單。
+
+注意: 如果輸入無效的定義字串，Windows Defender 防火牆不會檢查是否有誤，就會將字串新增到清單中。因此您可以新增尚未安裝的程式，但是請注意，您可能會不小心為同一個程式建立領域或狀態值相衝突的多個項目。在多個項目的情況下，領域參數會結合。
+
+注意: 如果將定義字串的狀態參數設為 [停用]，Windows Defender 防火牆會忽略該程式所發出的連接埠要求，並且忽略將該程式之狀態設為 [啟用] 的其他定義。因此，如果將狀態設為 [停用]，就可以防止系統管理員允許程式要求 Windows Defender 防火牆開啟其他連接埠。但是，即使狀態為 [停用]，如果其他原則設定開啟連接埠，程式仍可以透過該連接埠接收未經要求就傳入的訊息。
+
+注意: 只有當程式在執行中且正在「接聽」傳入訊息時，Windows Defender 防火牆才會為程式開啟連接埠。如果程式不在執行中，或在執行中但不在接聽訊息中，Windows Defender 防火牆就不會開啟連接埠。</string>
+      <string id="WF_AllowedPrograms_Name">Windows Defender 防火牆: 定義輸入的程式例外</string>
+      <string id="WF_AllowedProgramsLocal_Help">允許系統管理員使用 [控制台] 中的 [Windows Defender 防火牆] 元件，定義本機程式例外清單。Windows Defender 防火牆使用兩個程式例外清單; 另一個是由 [Windows Defender 防火牆: 定義輸入的程式例外] 原則設定所定義的清單。
+
+如果啟用這個原則設定，[控制台] 中的 [Windows Defender 防火牆] 元件會允許系統管理員定義本機程式例外清單。
+
+如果停用這個原則設定，[控制台] 中的 [Windows Defender 防火牆] 元件就不會允許系統管理員定義本機程式例外清單。但是，仍會允許本機系統管理員在「具有進階安全性的 Windows Defender 防火牆」嵌入式管理單元中建立防火牆規則。如果您希望禁止套用所有本機建立的規則，請使用「群組原則物件編輯器」嵌入式管理單元，並設定 [電腦設定\Windows 設定\安全性設定\具有進階安全性的 Windows Defender 防火牆] 來指定不應該套用的本機防火牆規則。</string>
+      <string id="WF_AllowedProgramsLocal_Name">Windows Defender 防火牆: 允許本機程式例外</string>
+      <string id="WF_AuthenticatedBypass_Help">允許使用 IPSec 傳輸進行驗證的指定系統，未經要求就傳入訊息。
+
+如果啟用這個原則設定，您必須輸入包含電腦或電腦群組清單的安全性描述元。如果該清單上的電腦使用 IPSec 進行驗證，Windows Defender 防火牆不會封鎖該電腦未經要求的訊息。這個原則設定會覆寫其他封鎖那些訊息的原則設定。
+
+如果停用或未設定這個原則設定，Windows Defender 防火牆會一律封鎖使用 IPSec 進行驗證之電腦所傳送的訊息。如果啟用這個原則設定，並在清單中新增系統，之後只要一停用這個原則，Windows Defender 防火牆就會刪除清單。
+
+注意: 您可以使用 Security Descriptor Definition Language (SDDL) 字串，定義清單中的項目。如需有關 SDDL 格式的詳細資訊，請參閱 Microsoft 網站 (http://go.microsoft.com/fwlink/?LinkId=25131) 的 Windows Defender 防火牆部署資訊。</string>
+      <string id="WF_AuthenticatedBypass_Name">Windows Defender 防火牆: 允許經過驗證的 IPSec 繞道</string>
+      <string id="WF_Category">Windows Defender 防火牆</string>
+      <string id="WF_EnableFirewall_Help">開啟 Windows Defender 防火牆。
+
+如果您啟用此原則設定，Windows Defender 防火牆就會執行，並且忽略 [電腦設定\系統管理範本\網路\網路連線\禁止在您的 DNS 網域網路上使用網際網路連線防火牆] 原則設定。
+
+如果您停用此原則設定，Windows Defender 防火牆就不會執行。這是唯一可以確保 Windows Defender 防火牆不會執行，且登入本機的系統管理員無法啟動防火牆的方法。
+
+如果沒有進行此原則設定，除非 [禁止在您的 DNS 網域網路上使用網際網路連線防火牆] 原則設定覆寫，否則系統管理員可以使用 [控制台] 中的 [Windows Defender 防火牆] 元件，開啟或關閉 Windows Defender 防火牆。</string>
+      <string id="WF_EnableFirewall_Name">Windows Defender 防火牆:保護所有網路連線</string>
+      <string id="WF_EnableShield_Help">指定 Windows Defender 防火牆封鎖所有未經要求就傳入的訊息。這個原則設定會覆寫所有允許這類訊息的其他 Windows Defender 防火牆原則設定。
+
+如果啟用這個原則設定，在 [控制台] 的 [Windows Defender 防火牆] 元件中，[封鎖所有連入連線] 核取方塊會是已選取狀態，而且系統管理員無法將其清除。您應該一併啟用「Windows Defender 防火牆:保護所有網路連線」原則設定，否則，本機登入的系統管理員可以透過關閉防火牆來迴避「Windows Defender 防火牆:不允許例外」原則設定。
+
+如果停用這個原則設定，Windows Defender 防火牆會套用其他允許未經要求就傳入訊息的原則設定。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[封鎖所有連入連線] 核取方塊為清除狀態，而且系統管理員無法加以選取。
+
+如果未設定這個原則設定，Windows Defender 防火牆會套用其他允許未經要求就傳入訊息的原則設定。根據預設，在 [控制台] 的 [Windows Defender 防火牆] 元件中，[封鎖所有連入連線] 核取方塊為清除狀態，但是系統管理員可加以變更。</string>
+      <string id="WF_EnableShield_Name">Windows Defender 防火牆:不允許例外</string>
+      <string id="WF_FileAndPrint_Help">允許輸入的檔案及印表機共用。為了做到上述事項，Windows Defender 防火牆會開啟 UDP 連接埠 137 和 138，以及 TCP 連接埠 139 和 445。
+
+如果您啟用此原則設定，Windows Defender 防火牆會開啟這些連接埠，如此這部電腦才能接收列印工作與存取共用檔案的要求。您必須指定允許這些傳入訊息的 IP 位址或子網路。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[檔案及印表機共用] 核取方塊為選取狀態，而且系統管理員無法將其清除。
+
+如果您停用此原則設定，Windows Defender 防火牆就會封鎖這些連接埠，進而防止這部電腦共用檔案及印表機。如果系統管理員將這些連接埠新增到本機連接埠例外清單中，嘗試開啟其中任何的連接埠，Windows Defender 防火牆還是不會開啟連接埠。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[檔案及印表機共用] 核取方塊為清除狀態，而且系統管理員無法加以選取。
+
+如果沒有進行此原則設定，Windows Defender 防火牆就不會開啟這些連接埠。因此，除非系統管理員使用其他原則設定來開啟必要的連接埠，否則電腦無法共用檔案或印表機。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[檔案及印表機共用] 核取方塊為清除狀態。系統管理員可以變更這個核取方塊。
+
+請注意: 如果任何原則設定開啟 TCP 連接埠 445，Windows Defender 防火牆會允許輸入 ICMP 回應要求 (由 Ping 公用程式傳送的訊息)，即使 [Windows Defender 防火牆: 允許 ICMP 例外] 原則設定會阻擋它們。可以開啟 TCP 連接埠 445 的原則設定包括 [Windows Defender 防火牆: 允許輸入的檔案和印表機共用例外]、[Windows Defender 防火牆: 允許輸入的遠端系統管理例外] 以及 [Windows Defender 防火牆: 定義輸入的連接埠例外]。</string>
+      <string id="WF_FileAndPrint_Name">Windows Defender 防火牆: 允許輸入的檔案和印表機共用例外</string>
+      <string id="WF_IcmpSettings_Help">定義 Windows Defender 防火牆所允許的「網際網路控制訊息通訊協定」(ICMP) 訊息類型組。公用程式能夠使用 ICMP 訊息判斷其他電腦的狀態。例如，Ping 會使用回應要求訊息。如果未啟用「允許輸入回應要求」訊息類型，Windows Defender 防火牆會封鎖在其他電腦上執行的 Ping 所傳送的回應要求訊息，但是不會封鎖在這部電腦上執行的 Ping 所傳送的輸出回應要求。
+
+如果啟用這個原則設定，您必須指定 Windows Defender 防火牆允許這部電腦傳送或接收的 ICMP 訊息類型。
+
+如果停用這個原則設定，Windows Defender 防火牆會封鎖所有列示的傳入和傳出 ICMP 訊息類型。如此一來，公用程式如果使用被封鎖的 ICMP 訊息，就無法利用這部電腦傳送或接收那些訊息。如果啟用這個原則設定，並允許某些訊息類型，之後只要停用這個原則設定，Windows Defender 防火牆就會刪除原先已啟用的訊息類型清單。
+
+如果未設定這個原則設定，Windows Defender 防火牆會當做已停用該設定。
+
+注意: 如果任何原則設定開啟 TCP 連接埠 445，則即使「Windows Defender 防火牆: 允許 ICMP 例外」原則設定封鎖輸入回應要求，Windows Defender 防火牆仍會允許這類要求。可以開啟 TCP 連接埠 445 的原則設定包括「Windows Defender 防火牆: 允許檔案和印表機共用例外」、「Windows Defender 防火牆: 允許遠端系統管理例外」及「Windows Defender 防火牆: 定義輸入的連接埠例外」。
+
+注意: 其他 Windows Defender 防火牆原則設定只會影響傳入訊息，但「Windows Defender 防火牆: 允許 ICMP 例外」原則設定的幾個選項會影響傳出通訊。</string>
+      <string id="WF_IcmpSettings_Name">Windows Defender 防火牆: 允許 ICMP 例外</string>
+      <string id="WF_Logging_Help">允許 Windows Defender 防火牆記錄它所接收之未經要求就傳入訊息的相關資訊。
+
+如果啟用這個原則設定，Windows Defender 防火牆會將資訊寫入記錄檔。您必須提供記錄檔的名稱、位置及大小上限。位置可以包含環境變數。您也必須指定是否要記錄防火牆所封鎖 (丟棄) 之傳入訊息的相關資訊，以及成功傳入和傳出連線的相關資訊。Windows Defender 防火牆不提供記錄成功傳入訊息的選項。
+
+如果要設定記錄檔名稱，請確定 Windows Defender 防火牆服務帳戶對包含記錄檔的資料夾擁有寫入權限。記錄檔的預設路徑是 %systemroot%\system32\LogFiles\Firewall\pfirewall.log。
+
+如果停用這個原則設定，Windows Defender 防火牆不會將資訊記錄在記錄檔中。如果啟用這個原則設定，而且 Windows Defender 防火牆建立了記錄檔並新增資訊，之後如果停用這個原則設定，Windows Defender 防火牆會保留完整的記錄檔。
+
+如果未設定這個原則設定，Windows Defender 防火牆會當做已停用這個原則設定。
+
+</string>
+      <string id="WF_Logging_Name">Windows Defender 防火牆: 允許記錄</string>
+      <string id="WF_Notifications_Help">當程式要求 Windows Defender 防火牆將程式新增到程式例外清單上時，會防止 Windows Defender 防火牆對使用者顯示通知。
+
+如果啟用這個原則設定，Windows Defender 防火牆會防止顯示這些通知。
+
+如果停用這個原則設定，Windows Defender 防火牆就會允許顯示這些通知。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[當 Windows Defender 防火牆封鎖新的程式時請通知我] 核取方塊為選取狀態，而且系統管理員無法將其清除。
+
+如果未設定這個原則設定，Windows Defender 防火牆會當做已停用這個原則設定，但在 [控制台] 的 [Windows Defender 防火牆] 元件中，[當 Windows Defender 防火牆封鎖新的程式時請通知我] 核取方塊仍預設為選取狀態，系統管理員可加以變更。</string>
+      <string id="WF_Notifications_Name">Windows Defender 防火牆:禁止通知</string>
+      <string id="WF_OpenPorts_Help">允許您檢視及變更群組原則所定義的輸入連接埠例外清單。Windows Defender 防火牆使用兩個連接埠例外清單: 一個是由群組原則設定所定義的清單，另一個是由 [控制台] 中 [Windows Defender 防火牆] 元件所定義的清單。
+
+如果啟用這個原則設定，您可以檢視及變更群組原則所定義的輸入連接埠例外清單。若要檢視這個連接埠例外清單，請啟用原則設定，然後按一下 [顯示] 按鈕。若要新增連接埠，請啟用原則設定並記下語法，按一下 [顯示] 按鈕。在 [顯示內容] 對話方塊中輸入使用語法格式的定義字串。若要移除連接埠，請按一下該連接埠的定義，然後按 DELETE 鍵。若要編輯定義，請從清單中移除目前的定義，然後新增一個具有不同參數的新定義。若要允許系統管理員新增連接埠到 [控制台] 中由 [Windows Defender 防火牆] 元件所定義的本機連接埠例外清單，請一併啟用 [Windows Defender 防火牆: 允許本機連接埠例外] 原則設定。
+
+如果停用這個原則設定，將會刪除由群組原則所定義的連接埠例外清單，但是其他原則設定可以繼續開啟或封鎖連接埠。此外，如果有本機連接埠例外清單，則除非已啟用 [Windows Defender 防火牆: 允許本機連接埠例外] 原則設定，否則會略過該清單。
+
+如果未設定這個原則設定，則 Windows Defender 防火牆只會使用系統管理員用 [控制台] 的 [Windows Defender 防火牆] 元件所定義的本機連接埠例外清單。其他原則設定可以繼續開啟或封鎖連接埠。
+
+注意: 如果輸入無效的定義字串，Windows Defender 防火牆不會檢查是否有誤，就會將字串新增到清單中。因此您可以新增尚未安裝的程式，但是請注意，您可能會不小心為同一個程式建立領域或狀態值相衝突的多個項目。在多個項目的情況下，領域參數會結合。如果項目有不同的狀態值，則任何狀態設為 [停用] 的定義，會覆寫所有狀態設為 [啟用] 的定義，而且連接埠不會接收訊息。因此，如果將連接埠的狀態設為 [停用]，便可以防止系統管理員使用 [控制台] 中的 [Windows Defender 防火牆] 元件啟用連接埠。
+
+注意: 將狀態值設為 [停用] 的唯一影響是，Windows Defender 防火牆會忽略該連接埠中，狀態設為 [啟用] 的其他定義。如果其他原則設定開啟連接埠，或如果程式例外清單中的程式要求 Windows Defender 防火牆開啟連接埠，Windows Defender 防火牆就會開啟連接埠。
+
+注意: 如果任何原則設定開啟 TCP 連接埠 445，則即使「Windows Defender 防火牆: 允許 ICMP 例外」原則設定封鎖輸入 ICMP 回應要求訊息 (由 Ping 公用程式傳送的訊息)，Windows Defender 防火牆仍會允許這類要求。可以開啟 TCP 連接埠 445 的原則設定包含「Windows Defender 防火牆: 允許輸入檔案和印表機共用例外」、「Windows Defender 防火牆: 允許輸入遠端系統管理例外」及「Windows Defender 防火牆: 定義輸入的連接埠例外」。</string>
+      <string id="WF_OpenPorts_Name">Windows Defender 防火牆: 定義輸入的連接埠例外</string>
+      <string id="WF_OpenPortsLocal_Help">允許系統管理員使用 [控制台] 中的 [Windows Defender 防火牆] 元件，定義本機連接埠例外清單。Windows Defender 防火牆使用兩個連接埠例外清單; 另一個是由 [Windows Defender 防火牆: 定義輸入的連接埠例外] 原則設定所定義的清單。
+
+如果啟用這個原則設定，[控制台] 中的 [Windows Defender 防火牆] 元件會允許系統管理員定義本機連接埠例外清單。
+
+如果停用這個原則設定，[控制台] 中的 [Windows Defender 防火牆] 元件就不會允許系統管理員定義本機連接埠例外清單。但是，仍會允許本機系統管理員在「具有進階安全性的 Windows Defender 防火牆」嵌入式管理單元中建立防火牆規則。如果您希望禁止套用所有本機建立的規則，請使用「群組原則物件編輯器」嵌入式管理單元，並設定 [電腦設定\Windows 設定\安全性設定\具有進階安全性的 Windows Defender 防火牆] 來指定不應該套用的本機防火牆規則。</string>
+      <string id="WF_OpenPortsLocal_Name">Windows Defender 防火牆: 允許本機連接埠例外</string>
+      <string id="WF_Profile_Domain">網域設定檔</string>
+      <string id="WF_Profile_Standard">標準設定檔</string>
+      <string id="WF_RemoteAdmin_Help">允許這部電腦的遠端系統管理，使用像是 Microsoft Management Console (MMC)，以及 Windows Management Instrumentation (WMI) 的系統管理工具。為了允許遠端系統管理，Windows Defender 防火牆會開啟 TCP 連接埠 135 及 445。服務一般會使用這些連接埠，藉由遠端程序呼叫 (RPC) 和分散式元件物件模式 (DCOM) 來通訊。此外，在 Windows XP Professional (至少需 SP2) 與 Windows Server 2003 (至少需 SP1)，此原則設定也會允許 SVCHOST.EXE 與 LSASS.EXE 接收未經要求之傳入訊息，並允許承載的服務開啟額外動態指派的連接埠，通常是在 1024 到 1034 的範圍內。在 Windows Vista 上，此原則設定不會控制到 SVCHOST.EXE 與 LSASS.EXE 的連線。
+
+如果您啟用此原則設定，Windows Defender 防火牆會允許電腦接收與遠端系統管理有關的未經要求之傳入訊息。您必須指定允許這些傳入訊息的 IP 位址或子網路。
+
+如果您停用或不設定這個原則設定，Windows Defender 防火牆將不會開啟 TCP 連接埠 135 或 445。而在 在 Windows XP Professional (至少需 SP2) 與 Windows Server 2003 (至少需 SP1) 上，Windows Defender 防火牆會防止 SVCHOST.EXE 與 LSASS.EXE 接收未經要求之傳入訊息，並防止承載的服務開啟另外動態指派的連接埠。因為停用這個原則設定並不會封鎖 TCP 連接埠 445，它不會和 [Windows Defender 防火牆: 允許檔案和印表機共用例外] 原則設定相衝突。
+
+請注意: 心懷不軌的使用者常會使用 RPC 和 DCOM，企圖攻擊網路及電腦。我們建議您連絡重要程式的製造商，以判斷是否要使用 SVCHOST.exe 或 LSASS.exe 來裝載程式，或是否需要 RPC 及 DCOM 通訊。如果不需要，則請不要啟用此原則設定。
+
+請注意: 如果任何原則設定開啟 TCP 連接埠 445，Windows Defender 防火牆會允許輸入 ICMP 回應要求訊息 (由 Ping 公用程式傳送的訊息)，即使 [Windows Defender 防火牆: 允許 ICMP 例外] 原則設定會阻擋它們。可以開啟 TCP 連接埠 445 的原則設定包含 [Windows Defender 防火牆: 允許輸入檔案和印表機共用例外]、[Windows Defender 防火牆: 允許輸入遠端系統管理例外] 以及 [Windows Defender 防火牆: 定義輸入連接埠例外]。</string>
+      <string id="WF_RemoteAdmin_Name">Windows Defender 防火牆: 允許輸入的遠端系統管理例外 </string>
+      <string id="WF_RemoteDesktop_Help">允許此電腦接收輸入的遠端桌面要求。為了達到此目的，Windows Defender 防火牆會開啟 TCP 連接埠 3389。
+
+如果您啟用此原則設定，Windows Defender 防火牆就會開啟此連接埠，這樣電腦才能接收遠端桌面要求。您必須指定允許這些傳入訊息的 IP 位址或子網路。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[遠端桌面] 核取方塊為選取狀態，而且系統管理員無法將其清除。
+
+如果您停用此原則設定，Windows Defender 防火牆就會封鎖此連接埠，進而防止這部電腦接收遠端桌面要求。如果系統管理員將此連接埠新增到本機連接埠例外清單中，藉以嘗試開啟此連接埠，Windows Defender 防火牆還是不會開啟連接埠。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[遠端桌面] 核取方塊為清除狀態，而且系統管理員無法加以選取。
+
+如果沒有進行此原則設定，Windows Defender 防火牆就不會開啟此連接埠。因此，除非系統管理員使用其他原則設定來開啟連接埠，否則電腦無法接收遠端桌面要求。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[遠端桌面] 核取方塊為清除狀態。系統管理員可以變更這個核取方塊。</string>
+      <string id="WF_RemoteDesktop_Name">Windows Defender 防火牆: 允許輸入的遠端桌面例外</string>
+      <string id="WF_UnicastResponseToMulticast_Help">防止此電腦接收其傳出之多點傳送或廣播訊息的單點傳播回應。
+
+如果您啟用此原則設定，且這部電腦將多點傳送或廣播訊息傳送到其他電腦，則 Windows Defender 防火牆會封鎖由其他電腦傳送的單點傳播回應。
+
+如果停用或沒有進行此原則設定，且這部電腦將多點傳送或廣播訊息傳送到其他電腦，則 Windows Defender 防火牆會等候來自其他電腦的單點傳播回應三秒鐘，然後就會封鎖所有回應。
+
+請注意: 如果單點傳播訊息為此電腦傳送之「動態主機設定通訊協定 (DHCP)」廣播訊息的回應，則此原則設定無效。Windows Defender 防火牆會永遠允許那些 DHCP 單點傳播回應。但是此原則設定可能會干擾偵測名稱衝突的 NetBIOS 訊息。</string>
+      <string id="WF_UnicastResponseToMulticast_Name">Windows Defender 防火牆:禁止單點傳播回應到多點傳送或廣播要求</string>
+      <string id="WF_UniversalPlugAndPlay_Help">允許這部電腦接收網路裝置 (例如具內建防火牆的路由器) 所傳送，未經要求就傳入的隨插即用訊息。為了達到此目的，Windows Defender 防火牆會開啟 TCP 連接埠 2869 及 UDP 連接埠 1900。
+
+如果您啟用此原則設定，Windows Defender 防火牆就會開啟這些連接埠，這樣電腦才能接收隨插即用的訊息。您必須指定允許這些傳入訊息的 IP 位址或子網路。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[UPnP 架構] 核取方塊為選取狀態，而且系統管理員無法將其清除。
+
+如果您停用此原則設定，Windows Defender 防火牆就會封鎖這些連接埠，進而防止這部電腦接收隨插即用的訊息。如果系統管理員將這些連接埠新增到本機連接埠例外清單中，藉以嘗試開啟連接埠，Windows Defender 防火牆還是不會開啟連接埠。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[UPnP 架構] 核取方塊為清除狀態，而且系統管理員無法加以選取。
+
+如果沒有進行此原則設定，Windows Defender 防火牆就不會開啟這些連接埠。因此，除非系統管理員使用其他原則設定來開啟必要的連接埠，或啟用必要的程式，否則電腦無法接收隨插即用的訊息。在 [控制台] 的 [Windows Defender 防火牆] 元件中，[UPnP 架構] 核取方塊為清除狀態。系統管理員可以變更這個核取方塊。</string>
+      <string id="WF_UniversalPlugAndPlay_Name">Windows Defender 防火牆: 允許輸入的 UPnP 架構例外</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="WF_AllowedPrograms_Name_1">
+        <listBox refId="WF_AllowedPrograms_Show">定義程式例外:</listBox>
+        <text>指定要允許或封鎖的程式。</text>
+        <text>語法:</text>
+        <text>  &lt;路徑&gt;:&lt;範圍&gt;:&lt;狀態&gt;:&lt;名稱&gt;</text>
+        <text>    &lt;路徑&gt; 是程式路徑與檔案名稱</text>
+        <text>    &lt;範圍&gt; 是 "*" (代表所有網路) 或</text>
+        <text>      逗號分隔清單，其中包含</text>
+        <text>      任何數字或下列項目的組合:</text>
+        <text>        IP 位址，例如 10.0.0.1</text>
+        <text>        子網路描述，例如 10.2.3.0/24</text>
+        <text>        字串 "localsubnet"</text>
+        <text>    &lt;狀態&gt; 是 "enabled" 或 "disabled"</text>
+        <text>    &lt;名稱&gt; 是文字字串</text>
+        <text>例如:</text>
+        <text>下列定義字串會新增</text>
+        <text>TEST.EXE 程式到程式例外清單</text>
+        <text>並允許它接收來自 10.0.0.1 的訊息，</text>
+        <text>或是來自 10.3.4.x 子網路上任何系統的訊息:</text>
+        <text>  %programfiles%\test.exe:10.0.0.1,10.3.4.0/24:enabled:測試程式</text>
+      </presentation>
+      <presentation id="WF_AllowedPrograms_Name_2">
+        <listBox refId="WF_AllowedPrograms_Show">定義程式例外:</listBox>
+        <text>指定要允許或封鎖的程式。</text>
+        <text>語法:</text>
+        <text>  &lt;路徑&gt;:&lt;範圍&gt;:&lt;狀態&gt;:&lt;名稱&gt;</text>
+        <text>    &lt;路徑&gt; 是程式路徑與檔案名稱</text>
+        <text>    &lt;範圍&gt; 是 "*" (代表所有網路) 或</text>
+        <text>      逗號分隔清單，其中包含</text>
+        <text>      任何數字或下列項目的組合:</text>
+        <text>        IP 位址，例如 10.0.0.1</text>
+        <text>        子網路描述，例如 10.2.3.0/24</text>
+        <text>        字串 "localsubnet"</text>
+        <text>    &lt;狀態&gt; 是 [啟用] 或 [停用]</text>
+        <text>    &lt;名稱&gt; 是文字字串</text>
+        <text>例如:</text>
+        <text>下列定義字串會新增</text>
+        <text>TEST.EXE 程式到程式例外清單</text>
+        <text>並允許它接收來自 10.0.0.1 的訊息，</text>
+        <text>或是來自 10.3.4.x 子網路上任何系統的訊息:</text>
+        <text>  %programfiles%\test.exe:10.0.0.1,10.3.4.0/24:啟用:測試程式</text>
+      </presentation>
+      <presentation id="WF_AuthenticatedBypass_Name">
+        <textBox refId="WF_AuthenticatedBypass_List_Name">
+          <label>定義不受防火牆原則限制的 IPSec 對等:</label>
+        </textBox>
+        <text>指定要豁免的 IPSec 對等</text>
+        <text>使用 SDDL 字串。</text>
+        <text>語法:</text>
+        <text>  O:&lt;OwnerSID&gt;G:&lt;GroupSID&gt;D:&lt;DACLflags&gt;</text>
+        <text>    &lt;OwnerSID&gt; 是擁有者安全性描述元</text>
+        <text>    &lt;GroupSID&gt; 是群組安全性描述元</text>
+        <text>    &lt;DACLflags&gt; 是 ACE 的清單</text>
+        <text>範例:</text>
+        <text>  O:DAG:DAD:(A;;RCGW;;;S-1-5-21-2157571284-1609012320)</text>
+      </presentation>
+      <presentation id="WF_FileAndPrint_Name_1">
+        <textBox refId="WF_Scope_Name">
+          <label>允許來自這些 IP 位址的未經要求傳入訊息:</label>
+        </textBox>
+        <text>語法:</text>
+        <text>輸入 "*" 以允許來自任何網路的訊息，或是</text>
+        <text>輸入逗號分隔清單，其中包含</text>
+        <text>任何數字或下列項目的組合:</text>
+        <text>   IP 位址，例如 10.0.0.1</text>
+        <text>   子網路描述，例如 10.2.3.0/24</text>
+        <text>   字串 "localsubnet"</text>
+        <text>例如: 以允許來自 10.0.0.1、</text>
+        <text>10.0.0.2 以及本機子網路</text>
+        <text>或 10.3.4.x 子網路上任何系統的訊息，</text>
+        <text>在 [允許 </text>
+        <text>來自這些 IP 位址的未經要求傳入訊息] 中輸入:</text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_FileAndPrint_Name_2">
+        <textBox refId="WF_Scope_Name">
+          <label>允許來自這些 IP 位址的未經要求傳入訊息:</label>
+        </textBox>
+        <text>語法:</text>
+        <text>輸入 "*" 以允許來自任何網路的訊息，或是</text>
+        <text>輸入逗號分隔清單，其中包含</text>
+        <text>任何數字或下列項目的組合:</text>
+        <text>   IP 位址，例如 10.0.0.1</text>
+        <text>   子網路描述，例如 10.2.3.0/24</text>
+        <text>   字串 "localsubnet"</text>
+        <text>例如: 以允許來自 10.0.0.1、</text>
+        <text>10.0.0.2 以及本機子網路</text>
+        <text>或 10.3.4.x 子網路上任何系統的訊息，</text>
+        <text>在 [允許 </text>
+        <text>來自這些 IP 位址的未經要求連入訊息] 中輸入:</text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_IcmpSettings_Name_1">
+        <checkBox refId="WF_IcmpSettings_AllowOutboundDestinationUnreachable">允許無法到達輸出目的地</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundSourceQuench">允許輸出來源抑制</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowRedirect">允許重新導向</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundEchoRequest">允許輸入回應要求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundRouterRequest">允許輸入路由器要求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundTimeExceeded">允許超出輸出時間</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundParameterProblem">允許輸出參數問題</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundTimestampRequest">允許輸入時間戳記要求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundMaskRequest">允許輸入遮罩要求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundPacketTooBig">允許輸出封包太大</checkBox>
+      </presentation>
+      <presentation id="WF_IcmpSettings_Name_2">
+        <checkBox refId="WF_IcmpSettings_AllowOutboundDestinationUnreachable">允許無法到達輸出目的地</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundSourceQuench">允許輸出來源抑制</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowRedirect">允許重新導向</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundEchoRequest">允許輸入回應要求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundRouterRequest">允許輸入路由器要求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundTimeExceeded">允許超出輸出時間</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundParameterProblem">允許輸出參數問題</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundTimestampRequest">允許輸入時間戳記要求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundMaskRequest">允許輸入遮罩要求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundPacketTooBig">允許輸出封包太大</checkBox>
+      </presentation>
+      <presentation id="WF_Logging_Name_1">
+        <checkBox refId="WF_Logging_LogDroppedPackets">記錄丟棄的封包</checkBox>
+        <checkBox refId="WF_Logging_LogSuccessfulConnections">記錄成功的連線</checkBox>
+        <textBox refId="WF_Logging_LogFilePathAndName">
+          <label>記錄檔路徑和名稱:</label>
+          <defaultValue>%systemroot%\system32\LogFiles\Firewall\pfirewall.log</defaultValue>
+        </textBox>
+        <decimalTextBox refId="WF_Logging_SizeLimit" defaultValue="4096" spinStep="128">大小限制 (KB):</decimalTextBox>
+      </presentation>
+      <presentation id="WF_Logging_Name_2">
+        <checkBox refId="WF_Logging_LogDroppedPackets">記錄丟棄的封包</checkBox>
+        <checkBox refId="WF_Logging_LogSuccessfulConnections">記錄成功的連線</checkBox>
+        <textBox refId="WF_Logging_LogFilePathAndName">
+          <label>記錄檔路徑和名稱:</label>
+          <defaultValue>%systemroot%\system32\LogFiles\Firewall\pfirewall.log</defaultValue>
+        </textBox>
+        <decimalTextBox refId="WF_Logging_SizeLimit" defaultValue="4096" spinStep="128">大小限制 (KB):</decimalTextBox>
+      </presentation>
+      <presentation id="WF_OpenPorts_Name_1">
+        <listBox refId="WF_OpenPorts_Show">定義連接埠例外:</listBox>
+        <text>指定要開啟或封鎖的連接埠。</text>
+        <text>語法:</text>
+        <text>  &lt;連接埠&gt;:&lt;傳輸&gt;:&lt;範圍&gt;:&lt;狀態&gt;:&lt;名稱&gt;</text>
+        <text>    &lt;連接埠&gt; 是十進位的連接埠號碼</text>
+        <text>    &lt;傳輸&gt; 是 "TCP" 或 "UDP"</text>
+        <text>    &lt;範圍&gt; 是 "*" (代表所有網路) 或</text>
+        <text>      逗號分隔清單，其中包含</text>
+        <text>      任何數字或下列項目的組合:</text>
+        <text>        IP 位址，例如 10.0.0.1</text>
+        <text>        子網路描述，例如 10.2.3.0/24</text>
+        <text>        字串 "localsubnet"</text>
+        <text>    &lt;狀態&gt; 是 [啟用] 或 [停用]</text>
+        <text>    &lt;名稱&gt; 是文字字串</text>
+        <text>例如:</text>
+        <text>下列定義字串會新增 TCP 連接埠 80</text>
+        <text>到連接埠例外清單並允許它</text>
+        <text>接收來自 10.0.0.1、10.0.0.2 或是</text>
+        <text>來自 10.3.4.x 子網路上任何系統的訊息:</text>
+        <text>  80:TCP:10.0.0.1,10.0.0.2,10.3.4.0/24:enabled:Web 服務</text>
+      </presentation>
+      <presentation id="WF_OpenPorts_Name_2">
+        <listBox refId="WF_OpenPorts_Show">定義連接埠例外:</listBox>
+        <text>指定要開啟或封鎖的連接埠。</text>
+        <text>語法:</text>
+        <text>  &lt;連接埠&gt;:&lt;傳輸&gt;:&lt;範圍&gt;:&lt;狀態&gt;:&lt;名稱&gt;</text>
+        <text>    &lt;連接埠&gt; 是十進位的連接埠號碼</text>
+        <text>    &lt;傳輸&gt; 是 "TCP" 或 "UDP"</text>
+        <text>    &lt;範圍&gt; 是 "*" (代表所有網路) 或</text>
+        <text>      逗號分隔清單，其中包含</text>
+        <text>      任何數字或下列項目的組合:</text>
+        <text>        IP 位址，例如 10.0.0.1</text>
+        <text>        子網路描述，例如 10.2.3.0/24</text>
+        <text>        字串 "localsubnet"</text>
+        <text>    &lt;狀態&gt; 是 [啟用] 或 [停用]</text>
+        <text>    &lt;名稱&gt; 是文字字串</text>
+        <text>例如:</text>
+        <text>下列定義字串會新增 TCP 連接埠 80</text>
+        <text>到連接埠例外清單並允許它</text>
+        <text>接收來自 10.0.0.1、10.0.0.2 或是</text>
+        <text>來自 10.3.4.x 子網路上任何系統的訊息:</text>
+        <text>  80:TCP:10.0.0.1,10.0.0.2,10.3.4.0/24:啟用:Web 服務</text>
+      </presentation>
+      <presentation id="WF_RemoteAdmin_Name_1">
+        <textBox refId="WF_Scope_Name">
+          <label>允許來自這些 IP 位址的未經要求傳入訊息:</label>
+        </textBox>
+        <text>語法:</text>
+        <text>輸入 "*" 以允許來自任何網路的訊息，或是</text>
+        <text>輸入逗號分隔清單，其中包含</text>
+        <text>任何數字或下列項目的組合:</text>
+        <text>   IP 位址，例如 10.0.0.1</text>
+        <text>   子網路描述，例如 10.2.3.0/24</text>
+        <text>   字串 "localsubnet"</text>
+        <text>例如: 以允許來自 10.0.0.1、</text>
+        <text>10.0.0.2 以及本機子網路</text>
+        <text>或 10.3.4.x 子網路上任何系統的訊息，</text>
+        <text>在 [允許 </text>
+        <text>來自這些 IP 位址的未經要求連入訊息] 中輸入:</text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_RemoteAdmin_Name_2">
+        <textBox refId="WF_Scope_Name">
+          <label>允許來自這些 IP 位址的未經要求傳入訊息:</label>
+        </textBox>
+        <text>語法:</text>
+        <text>輸入 "*" 以允許來自任何網路的訊息，或是</text>
+        <text>輸入逗號分隔清單，其中包含</text>
+        <text>任何數字或下列項目的組合:</text>
+        <text>   IP 位址，例如 10.0.0.1</text>
+        <text>   子網路描述，例如 10.2.3.0/24</text>
+        <text>   字串 "localsubnet"</text>
+        <text>例如: 以允許來自 10.0.0.1、</text>
+        <text>10.0.0.2 以及本機子網路</text>
+        <text>或 10.3.4.x 子網路上任何系統的訊息，</text>
+        <text>在 [允許 </text>
+        <text>來自這些 IP 位址的未經要求連入訊息] 中輸入:</text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_RemoteDesktop_Name_1">
+        <textBox refId="WF_Scope_Name">
+          <label>允許來自這些 IP 位址的未經要求傳入訊息:</label>
+        </textBox>
+        <text>語法:</text>
+        <text>輸入 "*" 以允許來自任何網路的訊息，或是</text>
+        <text>輸入逗號分隔清單，其中包含</text>
+        <text>任何數字或下列項目的組合:</text>
+        <text>   IP 位址，例如 10.0.0.1</text>
+        <text>   子網路描述，例如 10.2.3.0/24</text>
+        <text>   字串 "localsubnet"</text>
+        <text>例如: 以允許來自 10.0.0.1、</text>
+        <text>10.0.0.2 以及本機子網路</text>
+        <text>或 10.3.4.x 子網路上任何系統的訊息，</text>
+        <text>在 [允許 </text>
+        <text>來自這些 IP 位址的未經要求連入訊息] 中輸入:</text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_RemoteDesktop_Name_2">
+        <textBox refId="WF_Scope_Name">
+          <label>允許來自這些 IP 位址的未經要求傳入訊息:</label>
+        </textBox>
+        <text>語法:</text>
+        <text>輸入 "*" 以允許來自任何網路的訊息，或是</text>
+        <text>輸入逗號分隔清單，其中包含</text>
+        <text>任何數字或下列項目的組合:</text>
+        <text>   IP 位址，例如 10.0.0.1</text>
+        <text>   子網路描述，例如 10.2.3.0/24</text>
+        <text>   字串 "localsubnet"</text>
+        <text>例如: 以允許來自 10.0.0.1、</text>
+        <text>10.0.0.2 以及本機子網路</text>
+        <text>或 10.3.4.x 子網路上任何系統的訊息，</text>
+        <text>在 [允許 </text>
+        <text>來自這些 IP 位址的未經要求連入訊息] 中輸入:</text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_UniversalPlugAndPlay_Name_1">
+        <textBox refId="WF_Scope_Name">
+          <label>允許來自這些 IP 位址的未經要求傳入訊息:</label>
+        </textBox>
+        <text>語法:</text>
+        <text>輸入 "*" 以允許來自任何網路的訊息，或是</text>
+        <text>輸入逗號分隔清單，其中包含</text>
+        <text>任何數字或下列項目的組合:</text>
+        <text>   IP 位址，例如 10.0.0.1</text>
+        <text>   子網路描述，例如 10.2.3.0/24</text>
+        <text>   字串 "localsubnet"</text>
+        <text>例如: 以允許來自 10.0.0.1、</text>
+        <text>10.0.0.2 以及本機子網路</text>
+        <text>或 10.3.4.x 子網路上任何系統的訊息，</text>
+        <text>在 [允許 </text>
+        <text>來自這些 IP 位址的未經要求連入訊息] 中輸入:</text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_UniversalPlugAndPlay_Name_2">
+        <textBox refId="WF_Scope_Name">
+          <label>允許來自這些 IP 位址的未經要求傳入訊息:</label>
+        </textBox>
+        <text>語法:</text>
+        <text>輸入 "*" 以允許來自任何網路的訊息，或是</text>
+        <text>輸入逗號分隔清單，其中包含</text>
+        <text>任何數字或下列項目的組合:</text>
+        <text>   IP 位址，例如 10.0.0.1</text>
+        <text>   子網路描述，例如 10.2.3.0/24</text>
+        <text>   字串 "localsubnet"</text>
+        <text>例如: 以允許來自 10.0.0.1、</text>
+        <text>10.0.0.2 以及本機子網路</text>
+        <text>或 10.3.4.x 子網路上任何系統的訊息，</text>
+        <text>在 [允許 </text>
+        <text>來自這些 IP 位址的未經要求連入訊息] 中輸入:</text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

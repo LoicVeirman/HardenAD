@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ActiveX-telepítő szolgáltatás</displayName>
+  <description>Az ActiveX-vezérlő telepítése jóváhagyott telepítési helyekről</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">ActiveX-telepítő szolgáltatás</string>
+      <string id="AxISURLZonePolicies">ActiveX-telepítési házirend létesítése a megbízható zónákban lévő helyek számára</string>        
+      <string id="AxISURLZonePolicies_explain">Ez a házirend-beállítás határozza meg az ActiveX-vezérlők telepítését a megbízható zónákban lévő helyek esetén. 
+
+Ha engedélyezi ezt a házirend-beállítást, akkor az ActiveX-vezérlők telepítése az ebben a házirend-beállításban lévő beállításoknak megfelelően fog történni. 
+      
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, akkor az ActiveX-vezérlők telepítését jóvá kell hagynia a felhasználónak. 
+
+Ha a megbízható hely a HTTPS protokollt használja, akkor ez a házirend-beállítás azt is befolyásolhatja, hogy az ActiveX-telepítő szolgáltatás hogyan válaszol a tanúsítványhibákra. Alapértelmezés szerint minden HTTPS-kapcsolatnak be kell mutatnia egy kiszolgálótanúsítványt, amely megfelel az összes érvényesítési feltételnek. Ha tisztában van azzal, hogy egy megbízható hely esetében tanúsítványhiba áll fenn, de így is meg szeretne bízni benne, akkor kiválaszthatja a figyelmen kívül hagyni kívánt tanúsítványhibákat. 
+    
+Megjegyzés: Ez a házirend-beállítás a megbízható zónákban lévő összes helyre érvényes.
+
+</string>
+      <string id="TrustedZoneDisabled">Telepítés mellőzése</string>
+      <string id="TrustedZonePrompt">A felhasználó megkérdezése</string>
+      <string id="TrustedZoneSilentInstall">Csendes telepítés</string>
+      <string id="ApprovedActiveXInstallSites">Jóváhagyott telepítési helyek az ActiveX-vezérlőhöz</string>
+      <string id="ApprovedActiveXInstallSites_explain">Ez a házirend-beállítás határozza meg, hogy melyik ActiveX-telepítési helyeket használhatják a vállalat normál felhasználói az ActiveX-vezérlők telepítéséhez a saját számítógépükön. Ha ez a beállítás engedélyezett, akkor a rendszergazda létrehozhat egy listát az elfogadott ActiveX telepítési helyekről, amelyeket a gazda URL-cím határoz meg. 
+
+Ha engedélyezi ezt a beállítást, akkor a rendszergazda létrehozhat egy listát az elfogadott ActiveX telepítési helyekről, amelyeket a gazda URL-cím határoz meg. 
+      
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, akkor az ActiveX-vezérlők telepítéséhez rendszergazdaként kell hitelesítenie magát a felhasználónak. 
+
+Megjegyzés: Helyettesítő karakterek nem használhatók a gazda URL-címek megadásakor.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Telepítési házirend megbízható közzétevő által aláírt ActiveX-vezérlőhöz</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Telepítési házirend aláírt ActiveX-vezérlőhöz</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Telepítési házirend aláíratlan ActiveX-vezérlőhöz</dropdownList>
+        <text>Csatlakozás engedélyezése a következő kiszolgálótanúsítvány-hibákat tartalmazó megbízható helyekhez.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Ismeretlen hitelesítésszolgáltató (CA)</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Érvénytelen tanúsítványnév (CN)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Lejárt érvényességű tanúsítvány</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Nem megfelelő tanúsítványhasználat</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">Gazda URL-címek</listBox>
+        <text>A gazda URL-címekre vonatkozó házirendet tartalmazza.</text>
+        <text>Például  </text>
+        <text>Állomásnév: http://activex.microsoft.com</text>
+        <text>Érték: 2,1,0,0</text>
+        <text>Az egyes gazda URL-címek értéke négy CSV-formátumban megadott beállítás.</text>
+        <text>Ezek a következők: TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy</text>
+        <text>A házirend bal szélén megjelenő három érték vezérli az aláírásra alapozott ActiveX-vezérlők telepítését.</text>
+        <text>Az értékek a következők lehetnek.</text>
+        <text>0: Az ActiveX-vezérlőt a rendszer nem telepíti</text>
+        <text>1: A rendszer rákérdez az ActiveX-vezérlő telepítésére</text>
+        <text>2: A rendszer értesítés nélkül telepíti az ActiveX-vezérlőt</text>
+        <text>A megbízható közzétevők tárolójában lévő tanúsítványokkal aláírt vezérlők csendesen települnek  </text>
+        <text>Az aláíratlan vezérlők interaktív telepítése nem támogatott</text>
+        <text></text>
+        <text>A házirend jobb szélén megjelenő érték egy bitmaszk jelző</text>
+        <text>A jelzők a HTTPS-tanúsítványokkal kapcsolatos hibák figyelmen kívül hagyására használhatók.</text>
+        <text>Az alapértelmezett érték 0.</text>
+        <text>Ez azt jelenti, hogy a https kapcsolatoknak át kell mennie az összes biztonsági ellenőrzésen</text>
+        <text></text>
+        <text>Használja az alábbi értékek kombinációját</text>
+        <text>az érvénytelen tanúsítványokkal kapcsolatos hibák figyelmen kívül hagyására</text>
+        <text>0x00000100  Ismeretlen CA mellőzése</text>
+        <text>0x00001000  Érvénytelen CN mellőzése</text>
+        <text>0x00002000  Érvénytelen tanúsítvány-dátum mellőzése</text>
+        <text>0x00000200  Helytelen tanúsítvány-használat mellőzése</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

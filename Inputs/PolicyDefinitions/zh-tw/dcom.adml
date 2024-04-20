@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>在此輸入顯示名稱</displayName>
+  <description>在此輸入描述</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">分散式 COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">允許本機啟動安全性檢查豁免</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">可讓您指定本機電腦系統管理員可以補充「定義啟動安全性檢查豁免」清單。
+
+如果啟用這個原則設定，而且 DCOM 在「定義啟動安全性檢查豁免」原則 (如果啟用) 中找不到 DCOM 伺服器應用程式識別碼 (appid) 的明確項目，則 DCOM 會在本機設定的清單中尋找項目。
+
+如果停用這個原則設定，DCOM 不會在本機設定的 DCOM 啟動安全性檢查豁免清單中尋找項目。
+
+如果未設定這個原則設定，而且也未設定「定義啟動安全性檢查豁免」原則，則 DCOM 只會在本機設定的豁免清單中尋找項目。
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">定義啟動安全性檢查豁免</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">允許您檢視和變更已經由 [DCOM 啟動] 安全性檢查豁免的 DCOM 伺服器應用程式識別碼 (appid) 清單。DCOM 使用兩種清單，一種是透過這個原則設定由 [群組原則] 所設定，另一種則是透過本機電腦系統管理員的動作而設定。當這個原則設定已設定時，除非已啟用 [允許本機啟動安全性檢查豁免] 原則，否則 DCOM 會略過第二種清單。
+
+新增到這個原則的 DCOM 伺服器應用程式識別碼必須以大括號格式列出。例如: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}。如果您輸入一個不存在或格式不正確的應用程式識別碼，DCOM 不會檢查是否有錯誤便將它新增到清單。
+
+如果您啟用這個原則設定，將可以檢視和變更由 [群組原則] 設定所定義的 DCOM 啟動安全性檢查豁免清單。如果您將一個應用程式識別碼新增到這個清單並將它的值設為 1，則 DCOM 將不會針對該 DCOM 伺服器強制執行啟動安全性檢查。如果您將一個應用程式識別碼新增到這個清單並將它的值設為 0，則不論本機設定為何，DCOM 一律會針對該 DCOM 伺服器強制執行啟動安全性檢查。
+
+如果您停用這個原則設定，將會刪除由 [群組原則] 定義的應用程式識別碼豁免清單，然後使用由本機電腦系統管理員定義的清單。
+
+如果您未設定這個原則設定，則會使用由本機電腦系統管理員定義的應用程式識別碼豁免清單。
+
+備註:
+
+DCOM 啟動安全性檢查會在 DCOM 伺服器處理啟動之後，但是在物件啟動要求傳遞到伺服器處理之前執行。如果 DCOM 伺服器的自訂啟動權限安全性描述元存在，便根據它來執行存取檢查，否則會根據設定的預設值來執行。
+
+如果 DCOM 伺服器的自訂啟動權限包含明確的 DENY 項目，這可能意謂著當 DCOM 伺服器處理啟動並執行時，先前為該特定使用者成功地啟動的物件現在可能失敗。在這種情況下的正確動作是將 DCOM 伺服器的自訂啟動權限設定值重新設定成正確的安全性設定值，但是這個原則設定可能會在短期內被用來當做應用程式相容性部署輔助。
+
+新增到這個豁免清單的 DCOM 伺服器只有在它們的自訂啟動權限未針對任何使用者或群組包含特定的 LocalLaunch、RemoteLaunch、LocalActivate 或 RemoteActivate 授與或拒絕項目時，才會被豁免。而且請注意，如果存在 32 位元和 64 位元版本的伺服器，則新增到這個清單的 DCOM 伺服器應用程式識別碼的豁免會同時套用到這兩種版本的伺服器。</string>
+      <string id="DCOMAppCompatPolicies">應用程式相容性設定</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>輸入對應到下列動作值的 DCOM 伺服器應用程式識別碼。</text>
+        <text>應用程式識別碼應該包括左右大括弧。</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">對豁免清單新增\移除 DCOM 伺服器: </listBox>
+        <text> </text>
+        <text>值:</text>
+        <text>0 = 指定的應用程式識別碼並未從啟用安全性檢查中豁免</text>
+        <text>1 = 指定的應用程式識別碼已從啟用安全性檢查中豁免</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

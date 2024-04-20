@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Zasady obsługi systemu Windows</displayName>
+  <description>Zasady obsługi systemu Windows</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">Określ ustawienia instalacji składników opcjonalnych i naprawy składników</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+To ustawienie zasad określa lokalizacje sieciowe, które zostaną użyte na potrzeby naprawy uszkodzeń systemu operacyjnego oraz włączenia funkcji opcjonalnych, których pliki ładunku zostały usunięte.
+
+Jeśli to ustawienie zasad zostanie włączone i zostanie określona nowa lokalizacja, pliki znajdujące się w tej lokalizacji zostaną użyte do naprawy uszkodzeń systemu operacyjnego oraz do włączenia funkcji opcjonalnych, których pliki ładunku zostały usunięte. W polu tekstowym „Alternatywna ścieżka plików źródłowych” należy wprowadzić w pełni kwalifikowaną ścieżkę do nowej lokalizacji. Aby określić wiele lokalizacji, poszczególne ścieżki należy oddzielić średnikami. 
+
+Lokalizacją sieciową może być folder lub plik WIM. W przypadku pliku WIM lokalizacja powinna być określona przez dodanie do ścieżki prefiksu „wim” i dołączenie indeksu obrazu, który ma być używany w pliku WIM. Na przykład: „wim:\\serwer\udział\install.wim:3”.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane albo jeśli w lokalizacjach określonych w tym ustawieniu zasad nie będzie można znaleźć wymaganych plików, pliki zostaną pobrane z witryny Windows Update, jeśli zezwalają na to ustawienia zasad dla tego komputera.
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>Alternatywna ścieżka plików źródłowych</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">Nigdy nie podejmuj próby pobrania ładunku z witryny Windows Update</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">Pobierz zawartość naprawczą i funkcje opcjonalne bezpośrednio z usługi Windows Update (a nie z programu Windows Server Update Services)</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

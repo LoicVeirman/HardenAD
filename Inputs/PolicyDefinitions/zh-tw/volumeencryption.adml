@@ -1,0 +1,1086 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>在此輸入顯示名稱</displayName>
+  <description>在此輸入描述</description>
+  <resources>
+    <stringTable>
+      <string id="ActiveDirectoryBackup_Help">這個原則設定可讓您管理 BitLocker 磁碟機加密修復資訊的 Active Directory 網域服務 (AD DS) 備份。它提供了系統管理的方法來修復由 BitLocker 加密的資料，以防止因為缺少金鑰資訊而遺失資料。這個原則設定只適用於執行 Windows Server 2008 或 Windows Vista 的電腦。
+
+如果您啟用這個原則設定，且電腦的 BitLocker 已開啟，則 BitLocker 修復資訊會自動以無訊息的方式備份到 AD DS。開啟 BitLocker 時會套用這個原則設定。
+
+注意: 您必須先設定適當的架構延伸並存取網域上的控制項設定，AD DS 備份才能順利執行。如需設定 BitLocker AD DS 備份的詳細資訊，請參閱 Microsoft TechNet。
+
+BitLocker 修復資訊包含修復密碼以及某些唯一識別碼資料。您也可以納入一個包含受 BitLocker 保護之磁碟機的加密金鑰封裝。這個金鑰封裝受到一個或多個修復密碼的安全保護，可在磁碟損壞或損毀時，協助執行特殊修復。
+
+如果選取 [需要 BitLocker 備份至 AD DS] 選項，除非電腦連接到網域且 BitLocker 修復資訊成功備份至 AD DS，否則無法開啟 BitLocker。這個選項預設為選取狀態，以協助確保 BitLocker 修復可執行。如果未選取這個選項，系統會嘗試 AD DS 備份，但網路或其他備份失敗不會影響 BitLocker 安裝。在 BitLocker 安裝期間，不會自動重新嘗試備份，而且修復密碼可能未儲存至 AD DS。
+
+如果您停用或未設定這個原則設定，BitLocker 修復資訊不會備份至 AD DS。
+
+注意: 在 BitLocker 安裝期間，可能會初始化信賴平台模組 (TPM)。請在 [系統\信賴平台模組服務] 中啟用 [開啟 TPM 備份至 Active Directory 網域服務] 原則設定，以確保會一併備份 TPM 資訊。
+      
+      </string>
+      <string id="ActiveDirectoryBackup_Name">將 BitLocker 修復資訊儲存在 Active Directory 網域服務 (Windows Server 2008 和 Windows Vista)</string>
+      <string id="ActiveDirectoryBackupDropDown_1">修復密碼及金鑰封裝</string>
+      <string id="ActiveDirectoryBackupDropDown_2">僅修復密碼</string>
+
+      <string id="ConfigureStartupUsage_Help">這個原則設定可讓您控制 BitLocker 磁碟機加密安裝精靈能否設定每次啟動電腦時所需的額外驗證方法。開啟 BitLocker 時會套用這個原則設定。
+
+注意: 這個原則只適用於執行 Windows Server 2008 或 Windows Vista 的電腦。
+
+在具有相容信賴平台模組 (TPM) 的電腦上，啟動時可以使用兩種驗證類型，為加密資料提供額外的保護。電腦啟動時，可以要求使用者插入包含啟動金鑰的 USB 快閃磁碟機。也可以要求使用者輸入 4 位數到 20 位數的啟動個人識別碼 (PIN)。
+
+在不含相容 TPM 的電腦上，必須使用包含啟動金鑰的 USB 快閃磁碟機。如果沒有 TPM，BitLocker 加密的資料僅受到這個 USB 快閃磁碟機上的金鑰資料保護。
+
+如果您啟用這個原則設定，精靈會顯示供使用者設定 BitLocker 進階啟動選項的頁面。您可以針對含 TPM 或不含 TPM 的電腦進一步設定選項。
+
+如果您停用或未設定這個原則設定，BitLocker 安裝精靈會顯示可供使用者在含有 TPM 的電腦上開啟 BitLocker 的基本步驟。在這個基本精靈中，不能設定額外的啟動金鑰或啟動 PIN。
+
+</string>
+
+      <string id="ConfigureStartupUsage_Name">啟動時需要其他驗證 (Windows Server 2008 與 Windows Vista)</string>
+      <string id="ConfigureAdvancedStartup_Name">啟動時需要其他驗證</string>
+
+      <string id="ConfigureAdvancedStartup_Help">這個原則設定可讓您設定 BitLocker 是否要求每次啟動電腦時都需要額外的驗證，以及您使用的 BitLocker 含或不含信賴平台模組 (TPM)。開啟 BitLocker 時會套用這個原則設定。
+
+注意: 啟動時只能要求其中一個額外的驗證選項，否則會發生原則錯誤。
+
+如果要在不含 TPM 的電腦上使用 BitLocker，請選取 [在不含相容 TPM 的情形下允許使用 BitLocker] 核取方塊。在這個模式下，必須有密碼或 USB 磁碟機才能啟動。使用啟動金鑰時，用來加密磁碟機的金鑰資訊會儲存在 USB 磁碟機上，建立 USB 金鑰。插入 USB 金鑰時，存取磁碟機的動作會經過驗證，使磁碟機成為可供存取。如果 USB 金鑰遺失或無法使用，或者忘記密碼，您必須使用 BitLocker 的其中一個修復選項來存取磁碟機。
+
+在具有相容 TPM 的電腦上，啟動時可以使用 6 種類型的驗證方法，為加密資料提供額外的保護。電腦啟動時，可以只使用 TPM 進行驗證，也可以要求插入包含啟動金鑰的 USB 快閃磁碟機、輸入 6 位數到 20 位數的啟動個人識別碼 (PIN) 或同時要求兩者。
+
+如果您啟用這個原則設定，使用者可以在 BitLocker 安裝精靈中設定進階啟動選項。
+
+如果您停用或未設定這個原則設定，則使用者只能在具有 TPM 的電腦上設定基本選項。
+
+注意: 如果想要求使用啟動 PIN 和 USB 快閃磁碟機，您必須使用命令列工具 manage-bde 設定 BitLocker 設定，無法使用 BitLocker 磁碟機加密安裝精靈。
+
+</string>
+      <string id="AllowNetworkUnlockAtStartup_Name">允許啟動時網路解除鎖定</string>
+      <string id="AllowNetworkUnlockAtStartup_Help">這個原則設定可控制連線到受信任的有線區域網路 (LAN) 且加入網域的受 BitLocker 保護的電腦，是否可以建立和使用啟用 TPM 電腦上的網路金鑰保護裝置，以便在電腦啟動時自動解除作業系統磁碟機的鎖定。
+
+如果您啟用這個原則，設有 BitLocker 網路解除鎖定憑證的用戶端將可建立和使用網路金鑰保護裝置。
+
+若要使用網路金鑰保護裝置解除鎖定電腦，電腦和 BitLocker 磁碟機加密網路解除鎖定伺服器都必須使用網路解除鎖定憑證進行佈建。網路解除鎖定憑證可用來建立網路金鑰保護裝置，以及保護與伺服器交換的資訊以解除鎖定電腦。您可以使用網域控制站上的 [電腦設定\Windows 設定\安全性設定\公開金鑰原則\BitLocker 磁碟機加密網路解除鎖定憑證] 群組原則設定，將這個憑證發佈到組織中電腦。這個解除鎖定方法使用電腦上的 TPM，因此沒有 TPM 的電腦無法建立網路金鑰保護裝置透過網路解除鎖定自動解除鎖定。
+
+如果您停用或未設定這個原則設定，BitLocker 用戶端將無法建立和使用網路金鑰保護裝置。
+
+注意: 為了確保可靠性和安全性，電腦也應具備 TPM 啟動 PIN，以便電腦在啟動時如果與有線網路或伺服器中斷連線時可以使用。
+
+
+
+</string>
+
+      <string id="ConfigureTPMPINKeyUsageDropDown_Optional">允許啟動金鑰和 PIN 搭配 TPM</string>
+      <string id="ConfigureTPMPINKeyUsageDropDown_Require">需要啟動金鑰和 PIN 搭配 TPM</string>
+      <string id="ConfigureTPMPINKeyUsageDropDown_Disallow">不允許啟動金鑰和 PIN 搭配 TPM</string>
+
+      <string id="ConfigureTPMUsageDropDown_Optional">允許 TPM</string>
+      <string id="ConfigureTPMUsageDropDown_Require">需要 TPM</string>
+      <string id="ConfigureTPMUsageDropDown_Disallow">不允許 TPM</string>
+
+      <string id="ConfigurePINUsageDropDown_Optional">允許啟動 PIN 搭配 TPM</string>
+      <string id="ConfigurePINUsageDropDown_Require">需要啟動 PIN 搭配 TPM</string>
+      <string id="ConfigurePINUsageDropDown_Disallow">不允許啟動 PIN 搭配 TPM</string>
+
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Optional">允許啟動金鑰搭配 TPM</string>
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Require">需要啟動金鑰搭配 TPM</string>
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Disallow">不允許啟動金鑰搭配 TPM</string>
+
+
+      <string id="ConfigureRecoveryUsage_Help">這個原則設定可讓您控制 BitLocker 磁碟機加密安裝精靈能否顯示和指定 BitLocker 修復選項。這個原則只適用於執行 Windows Server 2008 或 Windows Vista 的電腦。開啟 BitLocker 時會套用這個原則設定。
+
+在沒有必要的啟動金鑰資訊時，有兩個修復選項可用來解除鎖定 BitLocker 加密的資料。使用者可以輸入 48 位數的數字修復密碼，或插入內含 256 位元修復金鑰的 USB 快閃磁碟機。
+
+如果您啟用這個原則設定，您可以設定安裝精靈向使用者顯示用於修復 BitLocker 加密資料的選項。若儲存到 USB 快閃磁碟機，48 位數的修復密碼會儲存成文字檔，而 256 位元的修復金鑰則會儲存成隱藏檔。若儲存至資料夾，則會將 48 位數的修復密碼儲存成文字檔。列印會將 48 位數的修復密碼傳送到預設印表機。例如，不允許使用 48 位數的修復密碼會導致使用者無法列印修復資訊或將修復資訊儲存至資料夾。
+
+如果您停用或未設定這個原則設定，BitLocker 安裝精靈會顯示儲存修復選項的方式。
+
+注意: 如果在 BitLocker 安裝期間必須初始化信賴平台模組 (TPM)，TPM 擁有者資訊會與 BitLocker 修復資訊一起儲存或列印。
+
+注意: 在 FIPS 相容模式中無法使用 48 位數的修復密碼。
+
+重要事項: 這個原則設定提供了系統管理的方法來修復由 BitLocker 加密的資料，以防止因為缺少金鑰資訊而遺失資料。如果兩個使用者修復選項都不允許，您必須啟用 [將 BitLocker 修復資訊儲存在 Active Directory 網域服務中 (Windows Server 2008 與 Windows Vista)] 原則設定，以免發生原則錯誤。
+
+      
+
+      </string>
+
+      <string id="ConfigureRecoveryUsage_Name">選擇使用者如何修復受 BitLocker 保護的磁碟機 (Windows Server 2008 與 Windows Vista)</string>
+      <string id="ConfigureRecoveryPasswordUsageDropDown_Require">需要修復密碼 (預設)</string>
+      <string id="ConfigureRecoveryPasswordUsageDropDown_Disallow">不允許修復密碼</string>
+
+      <string id="ConfigureRecoveryKeyUsageDropDown_Require">需要修復金鑰 (預設)</string>
+      <string id="ConfigureRecoveryKeyUsageDropDown_Disallow">不允許修復金鑰</string>
+
+
+      <string id="OSRecoveryUsage_Name">選擇如何修復受 BitLocker 保護的作業系統磁碟機</string>
+
+      <string id="OSRecoveryUsage_Help">這個原則設定可讓您控制在沒有必要的啟動金鑰資訊時，如何修復受 BitLocker 保護的作業系統磁碟機。開啟 BitLocker 時會套用這個原則設定。
+
+[允許憑證式資料修復代理] 核取方塊是用來指定能否將資料修復代理用於受 BitLocker 保護的作業系統磁碟機。使用資料修復代理之前，必須先在群組原則管理主控台或本機群組原則編輯器的 [公開金鑰原則] 項目中新增該資料修復代理。如需有關新增資料修復代理的詳細資訊，請參閱 Microsoft TechNet 上的 BitLocker 磁碟機加密部署指南。
+
+在 [設定 BitLocker 修復資訊的使用者存放裝置] 中選取使用者為允許、必須或不允許產生 48 位數的修復密碼或 256 位元的修復金鑰。
+
+選取 [在 BitLocker 安裝精靈中省略修復選項] 以防止使用者在磁碟機上開啟 BitLocker 時指定修復選項。這表示您無法在開啟 BitLocker 時指定要使用哪個修復選項，而是由原則設定決定該磁碟機的 BitLocker 修復選項。
+
+在 [儲存 BitLocker 修復資訊到 Active Directory 網域服務] 中，選擇要將作業系統磁碟機的哪些 BitLocker 修復資訊儲存到 AD DS。如果選取 [備份修復密碼和金鑰封裝]，則 BitLocker 修復密碼和金鑰封裝都會儲存到 AD DS。儲存金鑰封裝可支援從硬體損毀的磁碟機修復資料。如果選取 [只備份修復密碼]，則只有修復密碼會儲存到 AD DS。
+
+如果要求電腦必須連接到網域且 BitLocker 修復資訊成功備份至 AD DS，否則使用者無法開啟 BitLocker，請選取 [勿啟用 BitLocker，除非作業系統磁碟機的修復資訊已儲存到 AD DS] 核取方塊。
+
+注意: 如果選取 [勿啟用 BitLocker，除非作業系統磁碟機的修復資訊已儲存到 AD DS] 核取方塊，會自動產生修復密碼。
+
+如果您啟用這個原則設定，您可以控制使用者可用來從受 BitLocker 保護的作業系統磁碟機修復資料的方法。
+
+如果您停用或未設定這個原則設定，則支援以預設修復選項用於 BitLocker 修復。預設為允許 DRA，使用者可指定包含修復密碼和修復金鑰在內的修復選項，而且修復資訊不會備份到 AD DS。
+
+
+
+</string>
+
+      <string id="OSRecoveryPasswordUsageDropDown_Require">需要 48 位數的修復密碼</string>
+      <string id="OSRecoveryPasswordUsageDropDown_Allow">允許 48 位數的修復密碼</string>
+      <string id="OSRecoveryPasswordUsageDropDown_Disallow">不允許 48 位數的修復密碼</string>
+
+      <string id="OSRecoveryKeyUsageDropDown_Require">需要 256 位元的修復金鑰</string>
+      <string id="OSRecoveryKeyUsageDropDown_Disallow">不允許 256 位元的修復金鑰</string>
+      <string id="OSRecoveryKeyUsageDropDown_Allow">允許 256 位元的修復金鑰</string>
+
+      <string id="FDVRecoveryUsage_Name">選擇如何修復受 BitLocker 保護的固定磁碟機</string>
+      <string id="FDVRecoveryUsage_Help">這個原則設定可讓您控制在沒有必要的認證時，如何修復受 BitLocker 保護的固定式資料磁碟機。開啟 BitLocker 時會套用這個原則設定。
+
+[允許資料修復代理] 核取方塊是用來指定能否將資料修復代理搭配使用受 BitLocker 保護的固定式資料磁碟機。使用資料修復代理之前，必須先在群組原則管理主控台或本機群組原則編輯器的 [公開金鑰原則] 項目中新增該資料修復代理。如需有關新增資料修復代理的詳細資訊，請參閱 Microsoft TechNet 上的 BitLocker 磁碟機加密部署指南。
+
+在 [設定 BitLocker 修復資訊的使用者存放裝置] 中選取使用者為允許、必須或不允許產生 48 位數的修復密碼或 256 位元的修復金鑰。
+
+選取 [在 BitLocker 安裝精靈中省略修復選項] 以防止使用者在磁碟機上開啟 BitLocker 時指定修復選項。這表示您無法在開啟 BitLocker 時指定要使用哪個修復選項，而是由原則設定決定該磁碟機的 BitLocker 修復選項。
+
+在 [儲存 BitLocker 修復資訊到 Active Directory 網域服務] 中，選擇要將固定式資料磁碟機的哪些 BitLocker 修復資訊儲存到 AD DS。如果選取 [備份修復密碼和金鑰封裝]，則 BitLocker 修復密碼和金鑰封裝都會儲存到 AD DS。儲存金鑰封裝可支援從硬體損毀的磁碟機修復資料。如果選取 [只備份修復密碼]，則只有修復密碼會儲存到 AD DS。
+
+如果要求電腦必須連接到網域且 BitLocker 修復資訊成功備份至 AD DS，否則使用者無法開啟 BitLocker，請選取 [勿啟用 BitLocker，除非固定式資料磁碟機的修復資訊已儲存到 AD DS] 核取方塊。
+
+注意: 如果選取 [勿啟用 BitLocker，除非固定式資料磁碟機的修復資訊已儲存到 AD DS] 核取方塊，會自動產生修復密碼。
+
+如果您啟用這個原則設定，您可以控制使用者可用來從受 BitLocker 保護的固定式資料磁碟機修復資料的方法。
+
+如果未設定或停用這個原則設定，則支援以預設修復選項用於 BitLocker 修復。預設為允許 DRA，使用者可指定包含修復密碼和修復金鑰在內的修復選項，而且修復資訊不會備份到 AD DS
+
+
+
+</string>
+
+      <string id="FDVRecoveryPasswordUsageDropDown_Require">需要 48 位數的修復密碼</string>
+      <string id="FDVRecoveryPasswordUsageDropDown_Allow">允許 48 位數的修復密碼</string>
+      <string id="FDVRecoveryPasswordUsageDropDown_Disallow">不允許 48 位數的修復密碼</string>
+
+      <string id="FDVRecoveryKeyUsageDropDown_Require">需要 256 位元的修復金鑰</string>
+      <string id="FDVRecoveryKeyUsageDropDown_Disallow">不允許 256 位元的修復金鑰</string>
+      <string id="FDVRecoveryKeyUsageDropDown_Allow">允許 256 位元的修復金鑰</string>
+
+      <string id="RDVRecoveryUsage_Name">選擇如何修復受 BitLocker 保護的抽取式磁碟機</string>
+
+      <string id="RDVRecoveryUsage_Help">這個原則設定可讓您控制在沒有必要的認證時，如何修復受 BitLocker 保護的抽取式資料磁碟機。開啟 BitLocker 時會套用這個原則設定。
+
+[允許資料修復代理] 核取方塊是用來指定能否將資料修復代理用於受 BitLocker 保護的抽取式資料磁碟機。使用資料修復代理之前，必須先在群組原則管理主控台或本機群組原則編輯器的 [公開金鑰原則] 項目中新增該資料修復代理。如需有關新增資料修復代理的詳細資訊，請參閱 Microsoft TechNet 上的 BitLocker 磁碟機加密部署指南。
+
+在 [設定 BitLocker 修復資訊的使用者存放裝置] 中選取使用者為允許、必須或不允許產生 48 位數的修復密碼或 256 位元的修復金鑰。
+
+選取 [在 BitLocker 安裝精靈中省略修復選項] 以防止使用者在磁碟機上開啟 BitLocker 時指定修復選項。這表示您無法在開啟 BitLocker 時指定要使用哪個修復選項，而是由原則設定決定該磁碟機的 BitLocker 修復選項。
+
+在 [儲存 BitLocker 修復資訊到 Active Directory 網域服務] 中，選擇要將抽取式資料磁碟機的哪些 BitLocker 修復資訊儲存到 AD DS。如果選取 [備份修復密碼和金鑰封裝]，則 BitLocker 修復密碼和金鑰封裝都會儲存到 AD DS。如果選取 [只備份修復密碼]，則只有修復密碼會儲存到 AD DS。
+
+如果要求電腦必須連接到網域且 BitLocker 修復資訊成功備份至 AD DS，否則使用者無法開啟 BitLocker，請選取 [勿啟用 BitLocker，除非抽取式資料磁碟機的修復資訊已儲存到 AD DS] 核取方塊。
+
+注意: 如果選取 [勿啟用 BitLocker，除非固定式資料磁碟機的修復資訊已儲存到 AD DS] 核取方塊，會自動產生修復密碼。
+
+如果您啟用這個原則設定，您可以控制使用者可用來從受 BitLocker 保護的抽取式資料磁碟機修復資料的方法。
+
+如果未設定或停用這個原則設定，則支援以預設修復選項用於 BitLocker 修復。預設為允許 DRA，使用者可指定包含修復密碼和修復金鑰在內的修復選項，而且修復資訊不會備份到 AD DS
+      
+      </string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Require">需要 48 位數的修復密碼</string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Allow">允許 48 位數的修復密碼</string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Disallow">不允許 48 位數的修復密碼</string>
+
+      <string id="RDVRecoveryKeyUsageDropDown_Require">需要 256 位元的修復金鑰</string>
+      <string id="RDVRecoveryKeyUsageDropDown_Disallow">不允許 256 位元的修復金鑰</string>
+      <string id="RDVRecoveryKeyUsageDropDown_Allow">允許 256 位元的修復金鑰</string>
+
+
+      <string id="ConfigureRecoveryFolder_Help">這個原則設定可讓您指定 BitLocker 磁碟機加密安裝精靈提示使用者輸入儲存修復密碼的資料夾位置時所顯示的預設路徑。開啟 BitLocker 時會套用這個原則設定。
+
+如果您啟用這個原則設定，您可以指定當使用者選擇將修復密碼儲存至資料夾的選項時，用來做為預設資料夾位置的路徑。您可以指定完整路徑或在路徑中包含目標電腦的環境變數。如果路徑無效，BitLocker 安裝精靈會顯示電腦的最上層資料夾檢視。
+
+如果您停用或未設定這個原則設定，當使用者選擇將修復密碼儲存至資料夾的選項時，BitLocker 安裝精靈會顯示電腦的最上層資料夾檢視。
+
+注意: 這個原則設定不會禁止使用者將修復密碼儲存至其他資料夾。
+
+
+
+</string>
+
+      <string id="ConfigureRecoveryFolder_Name">選擇修復密碼的預設資料夾</string>
+
+      <string id="EncryptionMethod_Help">這個原則設定可讓您設定 BitLocker 磁碟機加密所使用的演算法及加密強度。開啟 BitLocker 時會套用這個原則設定。如果磁碟機已經加密，或是正在進行加密，則變更加密方法沒有作用。如需有關可用加密方法的詳細資訊，請參閱 Microsoft TechNet 上的 BitLocker 磁碟機加密部署指南。這個原則只適用於執行 Windows Server 2008、Windows Vista、Windows Server 2008 R2 或 Windows 7 的電腦。
+
+如果您啟用這個原則設定，您可以選擇用於加密磁碟機的 BitLocker 加密演算法及金鑰加密強度。
+
+如果您停用或未設定這個原則設定，BitLocker 將使用預設的加密方法 (即具有 Diffuser 的 AES 128 位元)，或是安裝指令碼所指定的加密方法。
+
+      
+
+      </string>
+      <string id="EncryptionMethodNoDiffuser_Help">這個原則設定可讓您設定 BitLocker 磁碟機加密所使用的演算法及加密強度。開啟 BitLocker 時會套用這個原則設定。如果磁碟機已經加密，或是正在進行加密，則變更加密方法不會生效。如需有關可用加密方法的詳細資訊，請參閱 Microsoft TechNet 上的 BitLocker 磁碟機加密部署指南。這個原則只適用於執行 Windows 8 和更新版本的電腦。
+
+如果您啟用這個原則設定，您可以選擇用於加密磁碟機的 BitLocker 加密演算法及金鑰加密強度。
+
+如果您停用或未設定這個原則設定，若已設定「選擇磁碟機加密方法和加密強度 (Windows Vista、Windows Server 2008、Windows 7)」原則設定，BitLocker 會以相同的位元強度使用 AES (128 位元或 256 位元)。如果兩個原則都沒有設定，BitLocker 將使用預設的加密方法 (AES 128 位元)，或是安裝指令碼所指定的加密方法。
+
+      </string>
+      <string id="EncryptionMethodWithXts_Help">此原則設定可讓您設定「BitLocker 磁碟機加密」所使用的演算法與加密強度。當您開啟 BitLocker 時，會套用此原則設定。若磁碟機已加密或正在進行加密，變更加密方法沒有效果。
+
+若啟用此原則設定，您將可以個別針對固定式資料磁碟機、作業系統磁碟機與抽取式資料磁碟機設定加密演算法與金鑰加密強度。對於固定式與作業系統磁碟機，建議您使用 XTS-AES 演算法。對於抽取式磁碟機，您應該使用 AES-CBC 128 位元或 AES-CBC 256 位元 (若磁碟機將用於並非執行 Windows 10 (1511 版本) 的其他裝置)。
+
+若停用或未設定此原則設定，BitLocker 將會使用 AES 搭配與「選擇磁碟機加密方法和加密強度」(Windows Vista、Windows Server 2008、Windows 7) 和「選擇磁碟機加密方法和加密強度」原則設定 (以該順序) 相同的位元強度 (128 位元或 256 位元) (若已設定)。若未設定任一原則，BitLocker 將會使用 XTS-AES 128 位元的預設加密方法或設定指令碼所指定的加密方法。”
+
+      </string>
+      <string id="EncryptionMethod_Name">選擇磁碟機加密方法和加密強度 (Windows Vista、Windows Server 2008、Windows 7、Windows Server 2008 R2)</string>
+      <string id="EncryptionMethodNoDiffuser_Name">選擇磁碟機加密方法和加密強度 (Windows 8、Windows Server 2012、Windows 8.1、Windows Server 2012 R2、Windows 10 [版本 1507])</string>
+      <string id="EncryptionMethodWithXts_Name">選擇磁碟機加密方法和加密強度 (Windows 10 [版本 1511] 與更新的版本)</string>
+      <string id="EncryptionMethodDropDown_AES128Diffuser_Name">具有 Diffuser 的 AES 128 位元</string>
+      <string id="EncryptionMethodDropDown_AES256Diffuser_Name">具有 Diffuser 的 AES 256 位元</string>
+      <string id="EncryptionMethodDropDown_AES128_Name">AES 128 位元 (預設)</string>
+      <string id="EncryptionMethodDropDown_AES128_Name2">AES-CBC 128 位元</string>
+      <string id="EncryptionMethodDropDown_AES128_Name3">AES-CBC 128 位元 (預設值)</string>
+      <string id="EncryptionMethodDropDown_AES256_Name">AES 256 位元</string>
+      <string id="EncryptionMethodDropDown_AES256_Name2">AES-CBC 256 位元</string>
+      <string id="EncryptionMethodDropDown_XTS_AES128_Name">XTS-AES 128 位元 (預設值)</string>
+      <string id="EncryptionMethodDropDown_XTS_AES128_Name2">XTS-AES 128 位元</string>
+      <string id="EncryptionMethodDropDown_XTS_AES256_Name">XTS-AES 256 位元</string>
+
+      <string id="FVECategory">BitLocker 磁碟機加密</string>
+      <string id="PlatformValidation_Deprecated_Help">這個原則設定可讓您設定電腦的信賴平台模組 (TPM) 安全性硬體保護 BitLocker 加密金鑰的方式。如果電腦不含相容的 TPM，或是已開啟具有 TPM 保護的 BitLocker，則這個原則設定不適用。
+
+如果在開啟 BitLocker 前啟用這個原則設定，您可以設定 TPM 在解除鎖定對 BitLocker 加密作業系統磁碟機的存取之前所驗證的開機元件。如果在 BitLocker 保護有效的狀態下，對其中任一元件進行變更，TPM 將不會釋出解除鎖定磁碟機的加密金鑰，而是電腦將顯示 BitLocker 修復主控台，並要求提供修復密碼或修復金鑰，以解除鎖定磁碟機。
+
+如果您停用或未設定這個原則設定，TPM 會使用預設的平台驗證設定檔或安裝指令碼所指定的平台驗證設定檔。平台驗證設定檔由一組平台設定暫存器 (PCR) 索引組成，範圍從 0 到 23。預設的平台驗證設定檔可保護加密金鑰，防止變更 Core Root of Trust of Measurement (CRTM)、BIOS 及 Platform Extensions (PCR 0)、Option ROM 碼 (PCR 2)、主開機記錄 (MBR) 碼 (PCR 4)、NTFS 開機磁區 (PCR 8)、NTFS 啟動區 (PCR 9)、開機管理程式 (PCR 10)，以及 BitLocker 存取控制 (PCR 11)。使用可延伸韌體介面 (EFI) 之電腦的 PCR 設定描述不同於使用標準 BIOS 之電腦的 PCR 設定描述。
+
+警告: 對預設平台驗證設定檔進行變更將會影響電腦的安全性及管理性。BitLocker 對 (惡意或授權的) 平台修改敏感度的增加或減少，須視其包含或排除 (分別) 的 PCR 項目而定。
+      
+      </string>
+
+      <string id="PlatformValidation_Deprecated_Name">設定 TPM 平台驗證設定檔 (Windows Vista、Windows Server 2008、Windows 7、Windows Server 2008 R2)</string>
+
+      <string id="PlatformValidation_BIOS_Help">這個原則設定可讓您設定電腦的信賴平台模組 (TPM) 安全性硬體保護 BitLocker 加密金鑰的方式。如果電腦不含相容的 TPM，或是已開啟具有 TPM 保護的 BitLocker，則這個原則設定不適用。
+
+重要事項: 這個群組原則僅適用於含有 BIOS 設定的電腦，或含有啟用相容性服務模組 (CSM) 之UEFI 韌體的電腦。 使用原生 UEFI 韌體設定的電腦會在平台設定暫存器 (PCR) 儲存不同的值。 使用「設定原生 UEFI 韌體設定的 TPM 平台驗證設定檔」群組原則設定，為使用原生 UEFI 韌體的電腦設定 TPM PCR 設定檔。
+
+如果在開啟 BitLocker 前啟用這個原則設定，您可以設定 TPM 在解除鎖定對 BitLocker 加密作業系統磁碟機的存取之前所驗證的開機元件。如果在 BitLocker 保護有效的狀態下，對其中任一元件進行變更，TPM 將不會釋出解除鎖定磁碟機的加密金鑰，而是電腦將顯示 BitLocker 修復主控台，並要求提供修復密碼或修復金鑰，以解除鎖定磁碟機。
+
+如果您停用或未設定這個原則設定，BitLocker 會使用預設的平台驗證設定檔或安裝指令碼所指定的平台驗證設定檔。平台驗證設定檔由一組平台設定暫存器 (PCR) 索引組成，範圍從 0 到 23。預設的平台驗證設定檔可保護加密金鑰，防止變更 Core Root of Trust of Measurement (CRTM)、BIOS 及 Platform Extensions (PCR 0)、Option ROM 碼 (PCR 2)、主開機記錄 (MBR) 碼 (PCR 4)、NTFS 開機磁區 (PCR 8)、NTFS 啟動區 (PCR 9)、開機管理程式 (PCR 10)，以及 BitLocker 存取控制 (PCR 11)。
+
+警告: 對預設平台驗證設定檔進行變更將會影響電腦的安全性及管理性。BitLocker 對 (惡意或授權的) 平台修改敏感度的增加或減少，須視其包含或排除 (分別) 的 PCR 項目而定。
+      
+      </string>
+
+      <string id="PlatformValidation_BIOS_Name">設定 BIOS 韌體設定的 TPM 平台驗證設定檔</string>
+
+      <string id="PlatformValidation_UEFI_Help">此原則設定可讓您設定電腦的信賴平台模組 (TPM) 安全性軟體如何保護 BitLocker 加密金鑰。若電腦沒有相容的 TPM，或是已透過 TPM 保護啟用 BitLocker，則此原則設定不會套用。
+
+重要: 此群組原則僅適用於具有原生 UEFI 韌體設定的電腦。使用 BIO 或 UEFI 韌體且具已啟用相容性服務模組 (CSM) 的電腦，會將不同的值儲存至平台設定暫存器 (PCR)。您可以使用 [為 BIOS 式韌體設定進行 TPM 平台驗證設定檔設定] 群組原則，為使用 BIOS 設定或具已啟用 CSM 之 UEFI 韌體的電腦設定 TPM PCR 設定檔。
+
+若您在開啟 BitLocker 前啟用此原則設定，即可在將 BitLocker 加密的作業系統驅動程式存取權解除鎖定前，設定 TPM 將驗證的開機元件。若在 BitLocker 保護生效期間，這些元件有任一個變動，則 TPM 將不會釋放用於將驅動程式和電腦解除鎖定的加密金鑰，而會改為顯示 BitLocker 修復主控台並要求提供修復密碼或修復金鑰以將驅動程式解除鎖定。
+
+若您停用或未設定此原則設定，則 BitLocker 會使用可用硬體的預設平台驗證設定檔，或由安裝指令碼指定的平台驗證設定檔。平台驗證設定檔由一組範圍介於 0 至 23 的平台設定暫存器 (PCR) 組成。
+
+在缺少安全開機狀態 (PCR 7) 支援的電腦上，預設平台驗證設定檔會針對核心系統韌體可執行程式碼 (PCR 0)、擴充或插入式可執行程式碼 (PCR 2)、開機管理程式 (PCR 4) 和 BitLocker 存取控制 (PCR 11) 保護加密金鑰。
+
+當安全開機狀態 (PCR7) 支援可用時，預設平台驗證設定檔會保護使用安全開機狀態 (PCR 7) 和 BitLocker 存取控制 (PCR 11) 的加密金鑰。
+
+警告: 變更預設平台驗證設定檔會影響您電腦的安全性與管理性。根據包含或排除 (各自地) 的 PCR 而定，BitLocker 對平台修改 (惡意或授權) 的敏感度會有所增減。具體來說，設定此原則但省略 PCR 7，將會覆寫 [允許使用安全開機來進行完整性驗證] 群組原則，防止 BitLocker 使用平台的安全開機，或開機設定資料 (BCD) 完整性驗證。設定此原則可能會使 BitLocker 在韌體更新時復原。若您將此原則設定為包含 PCR 0，請在套用韌體更新前暫止 BitLocker。
+
+建議不要設定此原則，讓 Windows 根據各電腦上的可用硬體來選取 PCR 設定檔，以達安全性與可用性的最佳組合。
+      </string>
+
+      <string id="PlatformValidation_UEFI_Name">設定原生 UEFI 韌體設定的 TPM 平台驗證設定檔</string>
+
+      <string id="MorBehavior_Help">這個原則設定可控制電腦重新啟動效能，但可能會有暴露 BitLocker 祕密的風險。開啟 BitLocker 時會套用這個原則設定。BitLocker 祕密包括用來加密資料的金鑰資訊。只有已啟用 BitLocker 保護功能時，才會套用這個原則設定。
+
+如果您啟用這個原則設定，電腦重新啟動時不會覆寫記憶體。不覆寫記憶體或許可以提高重新啟動的效能，但是會增加暴露 BitLocker 祕密的風險。
+
+如果您停用或未設定這個原則設定，電腦重新啟動時會從記憶體中移除 BitLocker 祕密。
+
+      
+
+      </string>
+      <string id="MorBehavior_Name">重新啟動時防止記憶體覆寫</string>
+
+      <string id="DisableExternalDMAUnderLock_Help">此原則設定可讓您在使用者登入 Windows 之前，封鎖所有 Thunderbolt 隨插即用 PCI 下游連接埠的直接記憶體存取 (DMA)。使用者一登入，Windows 就會列舉連線至主機 Thunderbolt PCI 連接埠的 PCI 裝置。每當使用者鎖定電腦時，沒有子裝置的隨插即用 Thunderbolt PCI 連接埠上的 DMA 將遭到封鎖，直到使用者再次登入。在電腦解除鎖定時已列舉的裝置可繼續運作，除非將其拔除，或是系統重新啟動或休眠。此原則設定僅會在啟用 BitLocker 或裝置加密時強制使用。
+
+注意: 有些電腦的系統韌體會為新連結的 Thunderbolt 裝置啟用 DMA，然後再將新裝置公開給 Windows，這些電腦可能與此原則不相容。
+
+      </string>
+      <string id="DisableExternalDMAUnderLock_Name">當此電腦處於鎖定狀態時停用新的 DMA 裝置</string>
+
+      <string id="FVEOSCategory">作業系統磁碟機</string>
+      <string id="FVEFDVCategory">固定式資料磁碟機</string>
+      <string id="FVERDVCategory">抽取式資料磁碟機</string>
+
+      <string id="IdentificationField_Name">為組織提供唯一識別碼</string>
+      <string id="IdentificationField_Help">這個原則設定可讓您將組織識別碼與已啟用 BitLocker 的新磁碟機建立關聯。這些識別碼儲存為「識別欄位」和「允許的識別欄位」。識別欄位讓您可以將唯一的組織識別碼與受 BitLocker 保護的磁碟機建立關聯。這個識別碼會自動新增到受 BitLocker 保護的新磁碟機，而且使用 manage-bde 命令列工具即可更新現有受 BitLocker 保護的磁碟機上的識別碼。使用者需要識別欄位才能在受 BitLocker 保護的磁碟機上管理憑證式資料修復代理，以及能夠更新 BitLocker To Go 讀取工具。只有當磁碟機上的識別欄位符合在識別欄位中設定的值時，BitLocker 才會管理和更新資料修復代理。同樣的，只有當磁碟機上的識別欄位符合為識別欄位設定的值時，BitLocker 才會更新 BitLocker To Go 讀取工具。
+
+允許的識別欄位是用來搭配「拒絕未受 BitLocker 保護之抽取式磁碟機的寫入存取權」原則設定一起使用，以管制在組織中使用抽取式磁碟機。這個欄位是以逗號分隔的清單，內含來自組織內部或其他外部組織的識別欄位。
+
+您可以使用 manage-bde.exe 在現有磁碟機上設定識別欄位。
+
+如果您啟用這個原則設定，您可以設定受 BitLocker 保護之磁碟機上的識別欄位，以及供組織使用的任何允許的識別欄位。
+
+當受 BitLocker 保護的磁碟機掛接到另一部受 BitLocker 保護的電腦上時，系統會使用識別欄位和允許的識別欄位來決定該磁碟機是否來自外部組織。
+
+如果您停用或未設定這個原則設定，則不需要識別欄位。
+
+注意: 必須有識別欄位才能在受 BitLocker 保護的磁碟機上管理憑證式資料修復代理。只有當磁碟機上有識別欄位，而且該識別欄位與在電腦上設定的值相同時，BitLocker 才會管理和更新憑證式資料修復代理。識別欄位可以是最多 260 個字元的任何值。
+
+      
+
+      </string>
+
+
+      <string id="UserCertificateOID_Name">驗證智慧卡憑證使用規則相符性</string>
+     <string id="UserCertificateOID_Help">這個原則設定可讓您將智慧卡憑證中的物件識別碼與受 BitLocker 保護的磁碟機建立關聯。開啟 BitLocker 時會套用這個原則設定。
+
+物件識別碼是在憑證的增強金鑰使用方法 (EKU) 中指定。 BitLocker 可以藉由比對物件識別碼中的憑證與這個原則設定所定義的物件識別碼，來識別哪些憑證可用來驗證使用者憑證能否存取受 BitLocker 保護的磁碟機。
+
+預設的物件識別碼是 1.3.6.1.4.1.311.67.1.1
+
+注意: BitLocker 不要求憑證須具備 EKU 屬性，但如果已為憑證設定該屬性，就必須將該屬性的物件識別碼 (OID) 設定為符合 BitLocker 的設定 OID。
+
+如果您啟用這個原則設定，在 [物件識別碼] 方塊中指定的物件識別碼必須符合智慧卡憑證中的物件識別碼。
+
+如果您停用或未設定這個原則設定，則使用預設物件識別碼。
+
+     
+
+     </string>
+
+      <string id="UseEnhancedBcdProfile_Name">使用增強的開機設定資料驗證設定檔</string>
+      <string id="UseEnhancedBcdProfile_Help">這個原則設定可讓您在平台驗證期間選擇特定的開機設定資料 (BCD) 設定進行驗證。
+
+如果您啟用這個原則設定，您將可以新增其他設定、移除預設設定或同時執行這兩個動作。
+
+如果您停用這個原則設定，電腦將會還原為 BCD 設定檔，這個設定檔與 Windows 7 使用的預設 BCD 設定檔類似。
+
+如果您未設定這個原則設定，電腦將會驗證預設的 Windows BCD 設定。
+
+注意: 當 BitLocker 在平台和開機設定資料 (BCD) 完整性驗證使用安全開機時，如同 [允許使用安全開機來進行完整性驗證] 群組原則中所定義，會忽略 [使用增強的開機設定資料驗證設定檔] 群組原則。
+
+控制開機偵錯 (0x16000010) 的設定一律都會經過驗證，如果將該設定包含在提供的欄位中，將不會發揮作用。  
+      </string>
+
+      <string id="OSActiveDirectoryBackupDropDown_1">儲存修復密碼和金鑰封裝</string>
+      <string id="OSActiveDirectoryBackupDropDown_2">只儲存修復密碼</string>
+
+
+      <string id="MinimumPINLength_Name">設定用於啟動的最小 PIN 長度</string>
+      <string id="MinimumPINLength_Help">
+          此原則設定可讓您設定信賴平台模組 (TPM) 啟動 PIN 的最小長度。開啟 BitLocker 時會套用此原則設定。啟動 PIN 的長度至少必須是 4 位數字，最長可以有 20 位數字。
+
+          如果您啟用這個原則設定，則可以要求在設定啟動 PIN 時必須使用的最少位數字。
+
+          如果您停用或未設定此原則設定，則使用者可以設定介於 6 到 20 位數字之間任何長度的啟動 PIN。
+
+          注意: 如果將最小 PIN 長度設定為少於 6 位數字，Windows 就會在 PIN 變更時，嘗試將 TPM 2.0 鎖定期間更新為大於預設值。如果更新成功，Windows 只會在重設 TPM 時將 TPM 鎖定期間重設回預設值。
+
+      </string>
+
+      <string id="OSAllowDRA_Name">允許憑證式資料修復代理</string>
+
+      <string id="FDVDenyWriteAccess_Name">拒絕未受 BitLocker 保護之固定磁碟機的寫入存取權</string>
+      <string id="FDVDenyWriteAccess_Help">此原則設定會決定電腦是否需要 BitLocker 保護才能寫入固定式資料磁碟機。
+
+若啟用此原則設定，未受 BitLocker 保護的所有固定式資料磁碟機都會以唯讀方式掛接。若磁碟機受 BitLocker 保護，則會以具有讀取和寫入存取權的方式掛接。
+
+若停用或未設定此原則設定，電腦上的所有固定式資料磁碟機都會以具有讀取和寫入存取權的方式掛接。
+
+      </string>
+
+      <string id="FDVPassphrase_Name">設定固定式資料磁碟機的密碼使用方式</string>
+      <string id="FDVPassphrase_Help">這個原則設定會指定是否需要密碼來解除鎖定受 Bitlocker 保護的固定式資料磁碟機。如果選擇允許使用密碼，您可以要求必須使用密碼、對密碼強制執行複雜性需求，以及設定密碼的最小長度。複雜性需求設定若要有效，必須一併啟用「電腦設定\Windows 設定\安全性設定\帳戶原則\密碼原則\」中的「密碼必須符合複雜性需求」群組原則設定。
+
+注意: 這些設定是在開啟 BitLocker 時強制執行，而不是在解除鎖定磁碟區時強制執行。BitLocker 會允許使用磁碟機上可用的任何保護裝置來解除鎖定該磁碟機。
+
+如果您啟用這個原則設定，使用者可以設定符合您所定義之需求的密碼。若必須使用密碼，請選取 [固定式資料磁碟機需要密碼]。若要對密碼強制執行複雜性需求，請選取 [需要密碼複雜性]。
+
+若設為 [需要密碼複雜性]，在啟用 BitLocker 以驗證密碼複雜性時，必須與網域控制站連線。若設為 [允許密碼複雜性]，系統會嘗試與網域控制站連線，以驗證複雜性是否符合原則所設定的規則，但是如果找不到網域控制站，則不論實際的密碼複雜性如何，都會接受密碼，並使用該密碼做為保護裝置將磁碟機加密。若設為 [不允許密碼複雜性]，則不會進行任何密碼複雜性驗證。
+
+密碼必須至少有 8 個字元。若要為密碼設定較長的最小長度，請在 [最小密碼長度] 方塊中輸入需要的字元數目。
+
+如果您停用這個原則設定，使用者不得使用密碼。
+
+如果您未設定這個原則設定，則支援具有預設值的密碼，也就是不包含密碼複雜性需求，而且只需要 8 個字元。
+
+注意: 如果啟用 FIPS 相容，就不能使用密碼。「電腦設定\Windows 設定\安全性設定\本機原則\安全性選項」中的「系統加密編譯: 使用 FIPS 相容方法於加密，雜湊，以及簽章」原則設定會指定是否已啟用 FIPS 相容。
+
+
+
+</string>
+
+      <string id="OSPassphrase_Name">設定作業系統磁碟機的密碼使用方式</string>
+      <string id="OSPassphrase_Help">這個原則設定可指定用來解除鎖定受 BitLocker 保護之作業系統磁碟機的密碼限制。如果允許在作業系統磁碟機上使用非 TPM 保護裝置，您可以佈建一個密碼、對密碼強制執行複雜性需求，以及設定密碼的最小長度。複雜性需求設定若要有效，必須一併啟用「電腦設定\Windows 設定\安全性設定\帳戶原則\密碼原則\」中的「密碼必須符合複雜性需求」群組原則設定。
+
+注意: 這些設定是在開啟 BitLocker 時強制執行，而不是在解除鎖定磁碟區時強制執行。BitLocker 會允許使用磁碟機上可用的任何保護裝置來解除鎖定該磁碟機。
+
+如果您啟用這個原則設定，使用者可以設定符合您所定義之需求的密碼。若要對密碼強制執行複雜性需求，請選取 [需要密碼複雜性]。
+
+若設為 [需要密碼複雜性]，在啟用 BitLocker 以驗證密碼複雜性時，必須與網域控制站連線。若設為 [允許密碼複雜性]，系統會嘗試與網域控制站連線，以驗證複雜性是否符合原則所設定的規則，但是如果找不到網域控制站，則不論實際的密碼複雜性如何，都會接受密碼，並使用該密碼做為保護裝置將磁碟機加密。若設為 [不允許密碼複雜性]，則不會進行任何密碼複雜性驗證。
+
+密碼必須至少有 8 個字元。若要為密碼設定較長的最小長度，請在 [最小密碼長度] 方塊中輸入需要的字元數目。
+
+如果您停用或未設定這個原則設定，將會對作業系統磁碟機密碼套用 8 個字元的預設長度限制，且不會執行複雜性檢查。
+
+注意: 如果啟用 FIPS 相容，就不能使用密碼。「電腦設定\Windows 設定\安全性設定\本機原則\安全性選項」中的「系統加密編譯: 使用 FIPS 相容方法於加密，雜湊，以及簽章」原則設定會指定是否已啟用 FIPS 相容。
+
+
+
+</string>
+
+
+      <string id="PassphraseComplexityDropDown_2">允許密碼複雜性</string>
+      <string id="PassphraseComplexityDropDown_0">不允許密碼複雜性</string>
+      <string id="PassphraseComplexityDropDown_1">需要密碼複雜性</string>
+
+      <string id="FDVActiveDirectoryBackupDropDown_1">備份修復密碼和金鑰封裝</string>
+      <string id="FDVActiveDirectoryBackupDropDown_2">只備份修復密碼</string>
+
+
+      <string id="FDVHybrid_Name">允許從舊版 Windows 存取受 BitLocker 保護的固定式資料磁碟機</string>
+      <string id="FDVHybrid_Help">這個原則設定會設定能否在執行 Windows Server 2008、Windows Vista、Windows XP Service Pack 3 (SP3) 或 Windows XP Service Pack 2 (SP2) 作業系統的電腦上解除鎖定和檢視 FAT 檔案系統格式的固定式資料磁碟機。
+
+如果您啟用或未設定這個原則設定，就可以在執行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的電腦上解除鎖定 FAT 檔案系統格式的固定式資料磁碟機，及檢視其內容。這些作業系統對受 BitLocker 保護的磁碟機只具有唯讀存取權。
+
+在啟用這個原則設定的狀態下，選取 [不要在 FAT 格式的固定磁碟機上安裝 BitLocker To Go 讀取工具] 核取方塊有助於防止使用者從他們的固定磁碟機執行 BitLocker To Go 讀取工具。如果在未指定識別欄位的磁碟機上有 BitLocker To Go 讀取工具 (bitlockertogo.exe)，或者如果磁碟機的識別欄位與「為組織提供唯一識別碼」原則設定中指定的識別欄位相同，系統會提示使用者更新 BitLocker，並將 BitLocker To Go 讀取工具從磁碟機中刪除。在這種狀況下，若要在執行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的電腦上將固定磁碟機解除鎖定，就必須在該電腦上安裝 BitLocker To Go 讀取工具。如果未選取這個核取方塊，BitLocker To Go 讀取工具會安裝在固定磁碟機上，讓使用者能夠在執行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2，卻未安裝 BitLocker To Go 讀取工具的電腦上解除鎖定固定磁碟機。
+
+如果您停用這個原則設定，受 BitLocker 保護的 FAT 檔案系統格式固定式資料磁碟機無法在執行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的電腦上解除鎖定。系統不會安裝 Bitlockertogo.exe。
+
+注意: 這個原則設定不適用於 NTFS 檔案系統格式的磁碟機。
+
+      
+
+      </string>
+
+
+      <string id="FDVAllowDRA_Name">允許憑證式資料修復代理</string>
+
+      <string id="FDVConfigureSmartCard_Name">設定固定式資料磁碟機的智慧卡使用方式</string>
+      <string id="FDVConfigureSmartCard_Help">這個原則設定可讓您指定能否使用智慧卡驗證使用者對電腦上受 Bitlocker 保護的固定式資料磁碟機是否具有存取權。
+
+如果您啟用這個原則設定，就能夠使用智慧卡驗證使用者對磁碟機是否具有存取權。您可以選取 [在固定式資料磁碟機上必須使用智慧卡] 核取方塊，以要求使用智慧卡驗證。
+
+注意: 這些設定是在開啟 BitLocker 時強制執行，而不是在解除鎖定磁碟機時。BitLocker 會允許使用磁碟機上可用的任何保護裝置來解除鎖定該磁碟機。
+
+如果您停用這個原則設定，使用者不得使用智慧卡驗證受 Bitlocker 保護之固定式資料磁碟機的存取權。
+
+如果您未設定這個原則設定，則可以使用智慧卡驗證受 Bitlocker 保護之磁碟機的存取權。
+
+      
+
+      </string>
+
+      <string id="RDVPassphrase_Name">設定抽取式資料磁碟機的密碼使用方式</string>
+      <string id="RDVPassphrase_Help">這個原則設定會指定是否需要密碼來解除鎖定受 Bitlocker 保護的抽取式資料磁碟機。如果選擇允許使用密碼，您可以要求必須使用密碼、強制執行複雜性需求，以及設定最小長度。複雜性需求設定若要有效，必須一併啟用「電腦設定\Windows 設定\安全性設定\帳戶原則\密碼原則\」中的「密碼必須符合複雜性需求」群組原則設定。
+
+注意: 這些設定是在開啟 BitLocker 時強制執行，而不是在解除鎖定磁碟區時強制執行。BitLocker 會允許使用磁碟機上可用的任何保護裝置來解除鎖定該磁碟機。
+
+如果您啟用這個原則設定，使用者可以設定符合您所定義之需求的密碼。若必須使用密碼，請選取 [抽取式資料磁碟機需要密碼]。若要對密碼強制執行複雜性需求，請選取 [需要密碼複雜性]。
+
+若設為 [需要密碼複雜性]，在啟用 BitLocker 以驗證密碼複雜性時，必須與網域控制站連線。若設為 [允許密碼複雜性]，系統會嘗試與網域控制站連線，以驗證複雜性是否符合原則所設定的規則，但是如果找不到網域控制站，則不論實際的密碼複雜性如何，都會接受密碼，並使用該密碼做為保護裝置將磁碟機加密。若設為 [不允許密碼複雜性]，則不會進行任何密碼複雜性驗證。
+
+密碼必須至少有 8 個字元。若要為密碼設定較長的最小長度，請在 [最小密碼長度] 方塊中輸入需要的字元數目。
+
+如果您停用這個原則設定，使用者不得使用密碼。
+
+如果您未設定這個原則設定，則支援具有預設值的密碼，也就是不包含密碼複雜性需求，而且只需要 8 個字元。
+
+注意: 如果啟用 FIPS 相容，就不能使用密碼。「電腦設定\Windows 設定\安全性設定\本機原則\安全性選項」中的「系統加密編譯: 使用 FIPS 相容方法於加密，雜湊，以及簽章」原則設定會指定是否已啟用 FIPS 相容。
+
+      
+
+      </string>
+
+      <string id="RDVDenyWriteAccess_Name">拒絕未受 BitLocker 保護之抽取式磁碟機的寫入存取權</string>
+      <string id="RDVDenyWriteAccess_Help">這個原則設定會設定電腦是否需要 BitLocker 保護才能將資料寫入抽取式資料磁碟機。
+
+如果您啟用這個原則設定，未受 BitLocker 保護的所有抽取式資料磁碟機都會以唯讀方式掛接。如果磁碟機受 BitLocker 保護，則會以具有讀取和寫入存取權的方式掛接。
+
+如果已選取 [拒絕在其他組織中設定之裝置的寫入存取權] 選項，只有識別欄位與電腦識別欄位相符的磁碟機才會具有寫入存取權。存取抽取式資料磁碟機時，系統會檢查該磁碟機是否有有效的識別欄位和允許的識別欄位。這些欄位由「為組織提供唯一識別碼」原則設定定義。
+
+如果您停用或未設定這個原則設定，電腦上的所有抽取式資料磁碟機都會以具有讀取和寫入存取權的方式掛接。
+
+注意: 這個原則設定可以用「使用者設定\系統管理範本\系統\抽取式存放裝置存取權」底下的原則設定覆寫。如果已啟用「抽取式磁碟: 拒絕寫入存取權」原則設定，則會忽略這個原則設定。
+
+      
+
+      </string>
+
+      <string id="RDVConfigureBDE_Name">控制抽取式磁碟機上 BitLocker 的使用方式</string>
+      <string id="RDVConfigureBDE_Help">這個原則設定會控制抽取式資料磁碟機上 BitLocker 的使用方式。開啟 BitLocker 時會套用這個原則設定。
+
+在啟用這個原則設定的狀態下，您可以選取用於控制使用者如何設定 BitLocker 的內容設定。選擇 [允許使用者在抽取式資料磁碟機上套用 BitLocker 保護] 會允許使用者在抽取式資料磁碟機上執行 BitLocker 安裝精靈。選擇 [允許使用者在抽取式資料磁碟機上暫停和解密 BitLocker] 會允許使用者將 BitLocker 磁碟機加密從磁碟機中移除，或在執行維護時暫停加密。如需有關暫停 BitLocker 保護的詳細資訊，請參閱 Microsoft TechNet 上的 BitLocker 磁碟機加密部署指南。
+
+如果您未設定這個原則設定，使用者可以在抽取式資料磁碟機上使用 BitLocker。
+
+如果您停用這個原則設定，則使用者無法在抽取式資料磁碟機上使用 BitLocker。
+
+      
+
+      </string>
+
+
+      <string id="RDVActiveDirectoryBackupDropDown_1">備份修復密碼和金鑰封裝</string>
+      <string id="RDVActiveDirectoryBackupDropDown_2">只備份修復密碼</string>
+
+      <string id="RDVHybrid_Name">允許從舊版 Windows 存取受 BitLocker 保護的抽取式資料磁碟機</string>
+      <string id="RDVHybrid_Help">這個原則設定會設定能否在執行 Windows Server 2008、Windows Vista、Windows XP Service Pack 3 (SP3) 或 Windows XP Service Pack 2 (SP2) 作業系統的電腦上解除鎖定和檢視 FAT 檔案系統格式的抽取式資料磁碟機。
+
+如果您啟用或未設定這個原則設定，就可以在執行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的電腦上解除鎖定 FAT 檔案系統格式的抽取式資料磁碟機，及檢視其內容。這些作業系統對受 BitLocker 保護的磁碟機只具有唯讀存取權。
+
+在啟用這個原則設定的狀態下，選取 [不要在 FAT 格式的抽取式磁碟機上安裝 BitLocker To Go 讀取工具] 核取方塊有助於防止使用者從他們的抽取式磁碟機執行 BitLocker To Go 讀取工具。如果在未指定識別欄位的磁碟機上有 BitLocker To Go 讀取工具 (bitlockertogo.exe)，或者如果磁碟機的識別欄位與「為組織提供唯一識別碼」原則設定中指定的識別欄位相同，系統會提示使用者更新 BitLocker，並將 BitLocker To Go 讀取工具從磁碟機中刪除。在這種狀況下，若要在執行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的電腦上將抽取式磁碟機解除鎖定，就必須在該電腦上安裝 BitLocker To Go 讀取工具。如果未選取這個核取方塊，BitLocker To Go 讀取工具會安裝在抽取式磁碟機上，讓使用者能夠在執行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2，卻未安裝 BitLocker To Go 讀取工具的電腦上解除鎖定抽取式磁碟機。
+
+如果您停用這個原則設定，受 BitLocker 保護的 FAT 檔案系統格式抽取式資料磁碟機無法在執行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的電腦上解除鎖定。系統不會安裝 Bitlockertogo.exe。
+
+注意: 這個原則設定不適用於 NTFS 檔案系統格式的磁碟機。
+
+      
+
+      </string>
+
+      <string id="RDVAllowDRA_Name">允許憑證式資料修復代理</string>
+
+      <string id="RDVConfigureSmartCard_Name">設定抽取式資料磁碟機的智慧卡使用方式</string>
+      <string id="RDVConfigureSmartCard_Help">這個原則設定可讓您指定能否使用智慧卡驗證使用者對電腦上受 Bitlocker 保護的抽取式資料磁碟機是否具有存取權。
+
+如果您啟用這個原則設定，就能夠使用智慧卡驗證使用者對磁碟機是否具有存取權。您可以選取 [在抽取式資料磁碟機上必須使用智慧卡] 核取方塊，以要求使用智慧卡驗證。
+
+注意: 這些設定是在開啟 BitLocker 時強制執行，而不是在解除鎖定磁碟機時。BitLocker 會允許使用磁碟機上可用的任何保護裝置來解除鎖定該磁碟機。
+
+如果您停用這個原則設定，使用者不得使用智慧卡驗證受 Bitlocker 保護之抽取式資料磁碟機的存取權。
+
+如果您未設定這個原則設定，則可以使用智慧卡驗證受 Bitlocker 保護之抽取式資料磁碟機的存取權。
+
+      
+
+      </string>
+
+      <string id="EnhancedPIN_Name">允許用於啟動的增強 PIN</string>
+      <string id="EnhancedPIN_Help">這個原則設定可讓您設定是否將增強啟動 PIN 搭配 BitLocker 一起使用。
+
+增強啟動 PIN 讓您可以使用包含大小寫英文字母、符號、數字和空格等字元。開啟 BitLocker 時會套用這個原則設定。
+
+如果您啟用這個原則設定，所有新的 BitLocker 啟動 PIN 組都會是增強 PIN。
+
+注意: 並非所有電腦在開機前環境中都支援增強 PIN。因此強烈建議使用者在 BitLocker 安裝期間執行系統檢查。
+
+如果您停用或未設定這個原則設定，將不會使用增強 PIN。
+
+      
+
+      </string>
+
+      <string id="TPMAutoReseal_Name">BitLocker 修復結束後重設平台驗證資料</string>
+      <string id="TPMAutoReseal_Help">這個原則設定可讓您控制在 BitLocker 修復結束後啟動 Windows 時，是否要重新整理平台驗證資料。
+
+如果您啟用這個原則設定，當 BitLocker 修復結束後啟動 Windows 時，會重新整理平台驗證資料。
+
+如果您停用這個原則設定，當 BitLocker 修復結束後啟動 Windows 時，不會重新整理平台驗證資料。
+
+如果您未設定這個原則設定，當 BitLocker 修復結束後啟動 Windows 時，會重新整理平台驗證資料。
+
+      
+
+      </string>
+
+      <string id="OSEncryptionType_Name">強制作業系統磁碟機的磁碟機加密類型</string>
+
+      <string id="FDVEncryptionType_Name">強制固定式資料磁碟機的磁碟機加密類型</string>
+
+      <string id="RDVEncryptionType_Name">強制抽取式資料磁碟機的磁碟機加密類型</string>
+
+      <string id="EncryptionType_Help">這個原則設定可讓您設定 BitLocker 磁碟機加密所使用的加密類型。開啟 BitLocker 時會套用這個原則設定。如果磁碟機已經加密，或是正在進行加密，則變更加密類型沒有作用。選擇 [完整加密]，要求 BitLocker 開啟時針對整個磁碟機進行加密。選擇 [僅加密已使用空間]，要求 BitLocker 開啟時只針對儲存資料的磁碟機部分進行加密。
+
+如果您啟用這個原則設定，BitLocker 用來加密磁碟機的加密類型會定義在這個原則中，且 BitLocker 安裝精靈不會顯示加密類型選項。
+
+如果您停用或未設定這個原則設定，BitLocker 安裝精靈會在開啟 BitLocker 前，要求使用者選擇加密類型。
+
+      
+
+      </string>
+
+      <string id="EncryptionTypeDropDown_UserChooses_Name">允許使用者選擇 (預設)</string>
+      <string id="EncryptionTypeDropDown_FullEncryption_Name">完整加密</string>
+      <string id="EncryptionTypeDropDown_DataOnlyEncryption_Name">僅加密已使用空間</string>
+
+      <string id="DisallowStandardUsersCanChangePIN_Name">不允許標準使用者變更 PIN 或密碼</string>
+      <string id="DisallowStandardUsersCanChangePIN_Help">這個原則設定可讓您設定是否允許標準使用者變更 BitLocker 磁碟區 PIN，前提是他們要能夠先提供現有的 PIN。
+
+開啟 BitLocker 時會套用這個原則設定。
+
+如果您啟用這個原則設定，便不允許標準使用者變更 BitLocker PIN 或密碼。
+
+如果您停用或未設定這個原則設定，則標準使用者可以變更 BitLocker PIN 和密碼。
+
+      
+
+      </string>
+
+      <string id="OSEDrive_Name">設定作業系統磁碟機使用硬體式加密</string>
+
+      <string id="FDVEDrive_Name">設定固定式資料磁碟機使用硬體式加密</string>
+
+      <string id="RDVEDrive_Name">設定抽取式資料磁碟機使用硬體式加密</string>
+
+      <string id="OSEDrive_Help">這個原則設定可讓您管理 BitLocker 在作業系統磁碟機上使用硬體式加密的方式，以及其可搭配硬體式加密使用的加密演算法。使用硬體式加密，能夠讓經常對磁碟機進行資料讀取或寫入的磁碟機作業獲得效能提升。
+
+如果您啟用此原則設定就能指定其他選項，來控制是否要在不支援硬體式加密的電腦上使用 BitLocker 軟體型加密來取代硬體式加密，以及是否要限制與硬體式加密搭配使用的加密演算法和加密套件。
+
+如果您停用此原則設定，BitLocker 就無法以作業系統磁碟區使用硬體式加密，且預設會在加密磁碟機時使用軟體型加密。
+
+如果您未設定此原則設定，BitLocker 將會使用軟體型加密而不論硬體式加密是否可用。
+
+注意:「選擇磁碟機加密方式和加密強度」原則設定不會套用至硬體式加密。硬體式加密所使用的加密演算法，會在分割磁碟區時設定完成。根據預設，BitLocker 會使用磁碟機上設定的演算法來加密磁碟機。[限制硬體式加密允許的加密演算法和加密套件] 選項能讓您限制 BitLocker 能搭配硬體式加密使用的加密演算法。如果為磁碟區設定的演算法無法使用，BitLocker 就會停用硬體式加密的使用。
+加密演算法由物件識別碼 (OID) 指定。範例:
+- AES 128，CBC 模式 OID: 2.16.840.1.101.3.4.1.2
+- AES 256，CBC 模式 OID: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="FDVEDrive_Help">這個原則設定可讓您管理 BitLocker 在固定資料磁碟機上使用硬體式加密的方式，以及其可搭配硬體式加密使用的加密演算法。使用硬體式加密，能夠讓經常對磁碟機進行資料讀取或寫入的磁碟機作業獲得效能提升。
+
+如果您啟用此原則設定就能指定其他選項，來控制是否要在不支援硬體式加密的電腦上使用 BitLocker 軟體型加密來取代硬體式加密，以及是否要限制與硬體式加密搭配使用的加密演算法和加密套件。
+
+如果您停用此原則設定，BitLocker 就無法以作業系統磁碟區使用硬體式加密，且預設會在加密磁碟機時使用軟體型加密。
+
+如果您未設定此原則設定，BitLocker 將會使用軟體型加密而不論硬體式加密是否可用。
+
+注意:「選擇磁碟機加密方式和加密強度」原則設定不會套用至硬體式加密。硬體式加密所使用的加密演算法，會在分割磁碟區時設定完成。根據預設，BitLocker 會使用磁碟機上設定的演算法來加密磁碟機。[限制硬體式加密允許的加密演算法和加密套件] 選項能讓您限制 BitLocker 能搭配硬體式加密使用的加密演算法。如果為磁碟區設定的演算法無法使用，BitLocker 就會停用硬體式加密的使用。
+加密演算法由物件識別碼 (OID) 指定。範例:
+- AES 128，CBC 模式 OID: 2.16.840.1.101.3.4.1.2
+- AES 256，CBC 模式 OID: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="RDVEDrive_Help">這個原則設定可讓您管理 BitLocker 在抽取式資料磁碟機上使用硬體式加密的方式，以及其可搭配硬體式加密使用的加密演算法。使用硬體式加密，能夠讓經常對磁碟機進行資料讀取或寫入的磁碟機作業獲得效能提升。
+
+如果您啟用此原則設定就能指定其他選項，來控制是否要在不支援硬體式加密的電腦上使用 BitLocker 軟體型加密來取代硬體式加密，以及是否要限制與硬體式加密搭配使用的加密演算法和加密套件。
+
+如果您停用此原則設定，BitLocker 就無法以作業系統磁碟區使用硬體式加密，且預設會在加密磁碟機時使用軟體型加密。
+
+如果您未設定此原則設定，BitLocker 將會使用軟體型加密而不論硬體式加密是否可用。
+
+注意:「選擇磁碟機加密方式和加密強度」原則設定不會套用至硬體式加密。硬體式加密所使用的加密演算法，會在分割磁碟區時設定完成。根據預設，BitLocker 會使用磁碟機上設定的演算法來加密磁碟機。[限制硬體式加密允許的加密演算法和加密套件] 選項能讓您限制 BitLocker 能搭配硬體式加密使用的加密演算法。如果為磁碟區設定的演算法無法使用，BitLocker 就會停用硬體式加密的使用。
+加密演算法由物件識別碼 (OID) 指定。範例:
+- AES 128，CBC 模式 OID: 2.16.840.1.101.3.4.1.2
+- AES 256，CBC 模式 OID: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="EnablePrebootInputProtectorsOnSlates_Name">啟用需要平板電腦開機前鍵盤輸入使用 BitLocker 驗證</string>
+      <string id="EnablePrebootInputProtectorsOnSlates_Help">這個原則設定可讓使用者即使在平台缺少開機前輸入功能時，也能開啟需要來自開機前環境的使用者輸入的驗證選項。
+
+Windows 觸控式鍵盤 (如平板電腦使用的鍵盤) 無法在開機前環境使用，因為 BitLocker 需要 PIN 或密碼等其他資訊。
+
+如果您啟用這個原則設定，裝置必須有其他方法進行開機前輸入 (如附加 USB 鍵盤)。
+
+如果未啟用這個原則，必須在平板電腦上啟用 Windows 修復環境，才能支援輸入 BitLocker 修復密碼。未啟用 Windows 修復環境以及這個原則時，您無法在使用 Windows 觸控式鍵盤的裝置上開啟 BitLocker。
+
+請注意，如果您沒有啟用這個原則設定，則這類裝置的「啟動時需要其他驗證」原則中的選項將無法使用。這些選項包含:
+- 設定 TPM 啟動 PIN: 必要/允許
+- 設定 TPM 啟動金鑰和 PIN: 必要/允許
+- 設定作業系統磁碟機的密碼使用方式。
+      
+      </string>
+
+      <string id="EnablePreBootPinExceptionOnDECapableDevice_Name">允許與 InstantGo 或 HSTI 相容的裝置不需輸入開機前 PIN。</string>
+      <string id="EnablePreBootPinExceptionOnDECapableDevice_Help">此原則設定允許 InstantGo 或 Microsoft 硬體安全性測試介面 (HSTI) 相容裝置上的使用者不需要 PIN 以進行開機前驗證。這會覆寫相容硬體上 [啟動時需要其他驗證] 原則的 [需要啟動 PIN 搭配 TPM] 和 [需要啟動金鑰和 PIN 搭配 TPM] 選項。
+
+如果您啟用此原則設定，InstantGo 和 HSTI 相容裝置上的使用者將可以選擇開啟 BitLocker，而不進行開機前驗證。
+
+如果未啟用此原則，則會套用 [啟動時需要其他驗證] 原則的選項。
+      </string>
+
+      <string id="AllowSecureBootForIntegrity_Name">允許使用安全開機來進行完整性驗證</string>
+      <string id="AllowSecureBootForIntegrity_Help">這個原則設定可讓您設定是否允許安全開機做為 BitLocker 作業系統磁碟機的平台完整性提供者。
+
+安全開機可確保電腦的開機前環境只會載入由已授權軟體發行者數位簽署的韌體。同時安全開機還可提供比傳統 BitLocker 完整性檢查更多的彈性來管理開機前設定。
+
+如果您啟用或未設定這個原則設定，BitLocker 會在平台可進行安全開機完整性驗證時，針對平台完整性使用安全開機。
+
+如果您停用這個原則設定，即使在可進行安全開機完整性驗證的系統上，BitLocker 還是會使用傳統平台完整性驗證。
+
+啟用這個原則且硬體可以在 BitLocker 案例使用安全開機時，會忽略 [使用增強的開機設定資料驗證設定檔] 群組原則設定，且安全開機會根據安全開機原則設定 (與 BitLocker 分開設定) 驗證 BCD 設定。
+
+注意: 如果啟用 [設定原生 UEFI 韌體設定的 TPM 平台驗證設定檔] 群組原則設定且省略 PCR 7，Bitlocker 將無法使用平台的安全開機或開機設定資料 (BCD) 完整性驗證。
+
+警告: 停用這個原則可能導致韌體更新時進行 BitLocker 修復。如果您停用這個原則，在套用韌體更新之前請先暫停 BitLocker。
+      </string>
+      <string id="SUPPORTED_Windows8NoARM">至少需要 Windows Server 2012 或 Windows 8</string>  
+      <string id="SUPPORTED_Windows_6_3ToVista">Windows Server 2012 R2、Windows 8.1、Windows Server 2012、Windows 8、Windows Server 2008、Windows 7 和 Windows Vista</string>
+      <string id="PrebootRecoveryInfo_Name">設定開機前修復訊息及 URL</string>
+      <string id="PrebootRecoveryInfoEmpty"></string>
+      <string id="PrebootRecoveryInfoUseDefault">使用預設修復訊息及 URL</string>
+      <string id="PrebootRecoveryInfoUseMessage">使用自訂復原訊息</string>
+      <string id="PrebootRecoveryInfoUseUrl">使用自訂復原 URL</string>
+      <string id="PrebootRecoveryInfo_Help">這個原則設定可讓您設定當 OS 磁碟機鎖定時，顯示在開機前金鑰復原畫面的完整復原訊息，或取代現存的 URL。
+
+如果選取 [使用預設修復訊息及 URL] 選項，預設的 BitLocker 復原訊息和 URL 會顯示在開機前金鑰復原畫面。如果您先前已經設定自訂復原訊息或 URL，並想要還原為預設的訊息，您必須保持原則啟用，然後選取 [使用預設修復訊息及 URL] 選項。
+
+如果選取 [使用自訂復原訊息] 選項，您在 [自訂復原訊息選項] 文字輸入框中輸入的訊息將會顯示在開機前金鑰復原畫面。若有可用的復原 URL，則會包含在訊息中。
+
+如果選取 [使用自訂復原 URL] 選項，您在 [自訂復原 URL 選項] 文字輸入框中輸入的 URL 會取代預設 URL，顯示在開機前金鑰修復畫面中。
+
+注意事項: 開機前並非支援所有的字元和語言。強烈建議您測試自訂訊息或 URL 使用的字元，可以正確地顯示開機前修復畫面上。
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="ActiveDirectoryBackup_Name">
+        <checkBox refId="RequireActiveDirectoryBackup_Name" defaultChecked="true">需要 BitLocker 備份至 AD DS</checkBox>
+        <text>如果已選取，則備份失敗時不能開啟 BitLocker (建議的預設值)。 </text>
+        <text>如果未選取，即使備份失敗，仍然可以開啟 BitLocker。不自動重新嘗試備份。</text>
+        <dropdownList refId="ActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">選取要儲存的 BitLocker 修復資訊:</dropdownList>
+        <text/>
+        <text>修復密碼是 48 位數的數字，可將受 BitLocker 保護的磁碟機解除存取鎖定。</text>
+        <text>金鑰封裝包含受到一個或多個修復密碼保護的磁碟機 BitLocker 加密金鑰</text>
+            <text>金鑰封裝可在磁碟損壞或損毀時，協助執行特殊修復。 </text>
+      </presentation>
+
+      <presentation id="ConfigureStartupUsage_Name">
+        <checkBox refId="ConfigureNonTPMStartupKeyUsage_Name" defaultChecked="true">在不含相容 TPM 的情形下允許使用 BitLocker (USB 快閃磁碟機需要有密碼或啟動金鑰)</checkBox>
+        <text>針對含有 TPM 的電腦進行設定:</text>
+        <dropdownList refId="ConfigureTPMStartupKeyUsageDropDown_Name" noSort="true" defaultItem="0">設定 TPM 啟動金鑰:</dropdownList>
+        <dropdownList refId="ConfigurePINUsageDropDown_Name" noSort="true" defaultItem="0">設定 TPM 啟動 PIN:</dropdownList>
+        <text>重要事項: 如果需要啟動金鑰，就不能允許啟動 PIN。 </text>
+        <text>如果需要啟動 PIN，就不能允許啟動金鑰。否則會發生原則錯誤。</text>
+        <text>注意: 請勿允許同時啟動 PIN 和啟動金鑰選項以在具有 TPM 的電腦上隱藏 [進階] 頁。</text>
+      </presentation>
+
+      <presentation id="ConfigureAdvancedStartup_Name">
+        <checkBox refId="ConfigureNonTPMStartupKeyUsage_Name" defaultChecked="true">在不含相容 TPM 的情形下允許使用 BitLocker (USB 快閃磁碟機需要有密碼或啟動金鑰)</checkBox>
+        <text>針對含有 TPM 的電腦進行設定:</text>
+        <dropdownList refId="ConfigureTPMUsageDropDown_Name" noSort="true" defaultItem="0">設定 TPM 啟動:</dropdownList>
+        <dropdownList refId="ConfigurePINUsageDropDown_Name" noSort="true" defaultItem="0">設定 TPM 啟動 PIN:</dropdownList>
+        <dropdownList refId="ConfigureTPMStartupKeyUsageDropDown_Name" noSort="true" defaultItem="0">設定 TPM 啟動金鑰:</dropdownList>
+        <dropdownList refId="ConfigureTPMPINKeyUsageDropDown_Name" noSort="true" defaultItem="0">設定 TPM 啟動金鑰和 PIN:</dropdownList>
+        <text/>
+      </presentation>
+
+      <presentation id="ConfigureRecoveryUsage_Name">
+        <text>重要事項: 為防止資料遺失，您必須具有修復 BitLocker 加密金鑰的方法。如果不允許下列兩個修復選項，您必須啟用將 BitLocker 修復資訊備份到 AD DS。否則會發生原則錯誤。</text>
+        <dropdownList refId="ConfigureRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0">設定 48 位數的修復密碼:</dropdownList>
+        <dropdownList refId="ConfigureRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0">設定 256 位元的修復金鑰:</dropdownList>
+        <text>注意: 如果不允許修復密碼，且需要修復金鑰，使用者就必須儲存到 USB，才能開啟 BitLocker。</text>
+        <text/>
+      </presentation>
+
+      <presentation id="OSRecoveryUsage_Name">
+        <checkBox refId="OSAllowDRA_Name" defaultChecked="true">允許資料修復代理</checkBox>
+        <text>設定 BitLocker 修復資訊的使用者存放裝置:</text>
+        <dropdownList refId="OSRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="OSRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="OSHideRecoveryPage_Name" defaultChecked="false">在 BitLocker 安裝精靈中省略修復選項</checkBox>
+        <checkBox refId="OSActiveDirectoryBackup_Name" defaultChecked="true">儲存作業系統磁碟機的 BitLocker 修復資訊到 AD DS</checkBox>
+        <dropdownList refId="OSActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">設定 BitLocker 修復資訊的存放裝置到 AD DS:</dropdownList>
+        <checkBox refId="OSRequireActiveDirectoryBackup_Name">勿啟用 BitLocker，除非作業系統磁碟機的修復資訊已儲存到 AD DS</checkBox>
+       </presentation>
+
+      <presentation id="FDVRecoveryUsage_Name">
+        <checkBox refId="FDVAllowDRA_Name" defaultChecked="true">允許資料修復代理</checkBox>
+        <text>設定 BitLocker 修復資訊的使用者存放裝置:</text>
+        <dropdownList refId="FDVRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="FDVRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="FDVHideRecoveryPage_Name" defaultChecked="false">在 BitLocker 安裝精靈中省略修復選項</checkBox>
+        <checkBox refId="FDVActiveDirectoryBackup_Name" defaultChecked="true">儲存固定式資料磁碟機的 BitLocker 修復資訊到 AD DS</checkBox>
+        <dropdownList refId="FDVActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">設定 BitLocker 修復資訊的存放裝置到 AD DS:</dropdownList>
+        <checkBox refId="FDVRequireActiveDirectoryBackup_Name">勿啟用 BitLocker，除非固定式資料磁碟機的修復資訊已儲存到 AD DS</checkBox>
+      </presentation>
+
+      <presentation id="RDVRecoveryUsage_Name">
+        <checkBox refId="RDVAllowDRA_Name" defaultChecked="true">允許資料修復代理</checkBox>
+        <text>設定 BitLocker 修復資訊的使用者存放裝置:</text>
+        <dropdownList refId="RDVRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="RDVRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="RDVHideRecoveryPage_Name" defaultChecked="false">在 BitLocker 安裝精靈中省略修復選項</checkBox>
+        <checkBox refId="RDVActiveDirectoryBackup_Name" defaultChecked="true">儲存抽取式資料磁碟機的 BitLocker 修復資訊到 AD DS</checkBox>
+        <dropdownList refId="RDVActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">設定 BitLocker 修復資訊的存放裝置到 AD DS:</dropdownList>
+        <checkBox refId="RDVRequireActiveDirectoryBackup_Name">勿啟用 BitLocker，除非抽取式資料磁碟機的修復資訊已儲存到 AD DS</checkBox>
+      </presentation>
+
+      <presentation id="ConfigureRecoveryFolder_Name">
+        <textBox refId="ConfigureRecoveryFolderPath_Input">
+          <label>設定預設的資料夾路徑:</label>
+          <defaultValue/>
+        </textBox>
+        <text>指定完整合格路徑或在路徑中包含電腦的環境變數。 </text>
+        <text>例如，輸入 "\\server\backupfolder" 或 "%SecureDriveEnvironmentVariable%\backupfolder"</text>
+        <text>注意: 在任何情況下，使用者都可以選擇其他資料夾來儲存修復密碼。</text>
+        <text/>
+      </presentation>
+
+      <presentation id="EncryptionMethod_Name">
+        <dropdownList refId="EncryptionMethodDropDown_Name" noSort="true" defaultItem="2">選取加密方法:</dropdownList>
+      </presentation>
+
+      <presentation id="EncryptionMethodNoDiffuser_Name">
+        <dropdownList refId="EncryptionMethodNoDiffDropDown_Name" noSort="true" defaultItem="0">選取加密方法:</dropdownList>
+      </presentation>
+
+      <presentation id="EncryptionMethodWithXts_Name">
+        <dropdownList refId="EncryptionMethodWithXtsOsDropDown_Name" noSort="true" defaultItem="2">選取作業系統磁碟機的加密方法:</dropdownList>
+        <dropdownList refId="EncryptionMethodWithXtsFdvDropDown_Name" noSort="true" defaultItem="2">選取固定式資料磁碟機的加密方法:</dropdownList>
+        <dropdownList refId="EncryptionMethodWithXtsRdvDropDown_Name" noSort="true" defaultItem="0">選取抽取式資料磁碟機的加密方法:</dropdownList>
+      </presentation>
+
+      <presentation id="OSEncryptionType">
+        <dropdownList refId="OSEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">選取加密類型:</dropdownList>
+      </presentation>
+
+      <presentation id="FDVEncryptionType">
+        <dropdownList refId="FDVEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">選取加密類型:</dropdownList>
+      </presentation>
+
+      <presentation id="RDVEncryptionType">
+        <dropdownList refId="RDVEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">選取加密類型:</dropdownList>
+      </presentation>
+
+      <presentation id="PlatformValidation_Deprecated_Name">
+        <text>平台驗證設定檔由一組平台設定暫存器 (PCR) 索引組成。每個 PCR 索引與 Windows 啟動時執行的元件相關聯。</text>
+        <text>使用下列核取方塊選擇要包括在設定檔中的 PCR 索引。</text>
+        <text>變更此設定時請務必小心謹慎。</text>
+        <text>建議使用預設的 PCR 0、2、4、8、9、10 及 11。</text>
+        <text>若要讓 BitLocker 保護生效，必須包含 PCR 11。</text>
+
+        <text>如需有關變更預設 TPM 平台驗證設定檔之優點和風險的詳細資訊，請參閱線上文件。</text>
+
+        <checkBox refId="PlatformValidation_Deprecated_Setting0" defaultChecked="true">PCR 0:Core Root of Trust of Measurement (CRTM)、BIOS 及 Platform Extensions</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting1">PCR 1:平台及主機板設定及資料</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting2" defaultChecked="true">PCR 2:Option ROM 碼</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting3">PCR 3:Option ROM 設定及資料</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting4" defaultChecked="true">PCR 4:主開機記錄 (MBR) 碼</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting5">PCR 5:主開機記錄 (MBR) 磁碟分割表格</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting6">PCR 6:狀態轉換及喚醒事件</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting7">PCR 7:電腦製造商特有的</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting8" defaultChecked="true">PCR 8:NTFS 開機磁區</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting9" defaultChecked="true">PCR 9:NTFS 啟動區</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting10" defaultChecked="true">PCR 10:開機管理程式</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting11" defaultChecked="true">PCR 11: BitLocker 存取控制</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting12">PCR 12: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting13">PCR 13: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting14">PCR 14: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting15">PCR 15: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting16">PCR 16: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting17">PCR 17: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting18">PCR 18: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting19">PCR 19: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting20">PCR 20: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting21">PCR 21: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting22">PCR 22: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting23">PCR 23: 保留供以後使用</checkBox>
+      </presentation>
+
+      <presentation id="PlatformValidation_BIOS_Name">
+        <text>平台驗證設定檔由一組平台設定暫存器 (PCR) 索引組成。每個 PCR 索引與 Windows 啟動時執行的元件相關聯。</text>
+        <text>使用下列核取方塊選擇要包括在設定檔中的 PCR 索引。</text>
+        <text>變更此設定時請務必小心謹慎。</text>
+        <text>建議使用預設的 PCR 0、2、4、8、9、10 及 11。</text>
+        <text>若要讓 BitLocker 保護生效，必須包含 PCR 11。</text>
+
+        <text>如需有關變更預設 TPM 平台驗證設定檔之優點和風險的詳細資訊，請參閱線上文件。</text>
+
+        <checkBox refId="PlatformValidation_BIOS_Setting0" defaultChecked="true">PCR 0:Core Root of Trust of Measurement (CRTM)、BIOS 及 Platform Extensions</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting1">PCR 1:平台及主機板設定及資料</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting2" defaultChecked="true">PCR 2:Option ROM 碼</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting3">PCR 3:Option ROM 設定及資料</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting4" defaultChecked="true">PCR 4:主開機記錄 (MBR) 碼</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting5">PCR 5:主開機記錄 (MBR) 磁碟分割表格</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting6">PCR 6:狀態轉換及喚醒事件</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting7">PCR 7:電腦製造商特有的</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting8" defaultChecked="true">PCR 8:NTFS 開機磁區</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting9" defaultChecked="true">PCR 9:NTFS 啟動區</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting10" defaultChecked="true">PCR 10:開機管理程式</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting11" defaultChecked="true">PCR 11: BitLocker 存取控制</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting12">PCR 12: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting13">PCR 13: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting14">PCR 14: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting15">PCR 15: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting16">PCR 16: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting17">PCR 17: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting18">PCR 18: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting19">PCR 19: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting20">PCR 20: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting21">PCR 21: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting22">PCR 22: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting23">PCR 23: 保留供以後使用</checkBox>
+      </presentation>
+
+      <presentation id="PlatformValidation_UEFI_Name">
+        <text>平台驗證設定檔由一組平台設定暫存器 (PCR) 索引組成。每個 PCR 索引與 Windows 啟動時執行的元件相關聯。</text>
+        <text>使用下列核取方塊選擇要包括在設定檔中的 PCR 索引。</text>
+        <text>變更此設定時請務必小心謹慎。</text>
+        <text>建議使用預設的 PCR 0、2、4 及 11。</text>
+        <text>若要讓 BitLocker 保護生效，必須包含 PCR 11。</text>
+
+        <text>如需有關變更預設 TPM 平台驗證設定檔之優點和風險的詳細資訊，請參閱線上文件。</text>
+
+        <checkBox refId="PlatformValidation_UEFI_Setting0" defaultChecked="true">PCR 0: 核心系統韌體可執行程式碼</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting1">PCR 1: 核心系統韌體資料</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting2" defaultChecked="true">PCR 2: 延伸或可插式可執行程式碼</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting3">PCR 3: 延伸或可插式韌體資料</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting4" defaultChecked="true">PCR 4: 開機管理程式</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting5">PCR 5: GPT / 磁碟分割表格</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting6">PCR 6: 從 S4 和 S5 電源狀態事件繼續</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting7">PCR 7: 安全開機狀態</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting8">PCR 8: 初始化至 0 無延伸 (保留供以後使用)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting9">PCR 9: 初始化至 0 無延伸 (保留供以後使用)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting10">PCR 10: 初始化至 0 無延伸 (保留供以後使用)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting11" defaultChecked="true">PCR 11: BitLocker 存取控制</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting12">PCR 12: 資料事件和高度變動事件</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting13">PCR 13: 開機模組詳細資料</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting14">PCR 14: 開機授權單位</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting15">PCR 15: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting16">PCR 16: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting17">PCR 17: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting18">PCR 18: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting19">PCR 19: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting20">PCR 20: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting21">PCR 21: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting22">PCR 22: 保留供以後使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting23">PCR 23: 保留供以後使用</checkBox>
+      </presentation>
+
+      <presentation id="MorBehavior_Name">
+
+      </presentation>
+
+      <presentation id="IdentificationField">
+        <textBox refId="IdentificationField">
+          <label>BitLocker 識別欄位:</label>
+        </textBox>
+        <textBox refId="SecIdentificationField">
+          <label>允許的 BitLocker 識別欄位:</label>
+        </textBox>
+      </presentation>
+
+      <presentation id="UserCertificateOID">
+        <textBox refId="UserCertificateOID">
+          <label>物件識別碼:</label>
+          <defaultValue>1.3.6.1.4.1.311.67.1.1</defaultValue>
+        </textBox>
+        </presentation>
+
+      <presentation id="UseEnhancedBcdProfile">
+        <text>驗證下列其他 BCD 設定:</text>
+        <multiTextBox refId="EnhancedBcdProfile_AdditionalSecurityCriticalSettings"/>
+        <text>排除下列其他 BCD 設定:</text>
+        <multiTextBox refId="EnhancedBcdProfile_AdditionalExcludedSettings"/>
+      </presentation>
+
+     <presentation id="MinimumPINLength">
+        <decimalTextBox refId="MinPINLength" defaultValue="6">最少字元:</decimalTextBox>
+      </presentation>
+
+     <presentation id="FDVPassphrase_Name">
+        <checkBox refId="FDVRequirePassphrase">固定式資料磁碟機需要密碼</checkBox>
+        <dropdownList refId="FDVPassphraseComplexity" noSort="true" defaultItem="0">設定固定式資料磁碟機的密碼複雜性:</dropdownList>
+        <decimalTextBox refId="FDVMinPassphraseLength" defaultValue="8">固定式資料磁碟機的最小密碼長度:</decimalTextBox>
+       <text>注意: 必須啟用「密碼必須符合複雜性需求」原則設定，密碼複雜性才會生效。</text>
+      </presentation>
+
+     <presentation id="OSPassphrase_Name">
+       <dropdownList refId="OSPassphraseComplexity_Name" noSort="true" defaultItem="0">設定作業系統磁碟機的密碼複雜性:</dropdownList>
+       <decimalTextBox refId="OSPassphraseLength_Name" defaultValue="8">作業系統磁碟機的最小密碼長度:</decimalTextBox>
+       <text>注意: 必須啟用「密碼必須符合複雜性需求」原則設定，密碼複雜性才會生效。</text>
+       <checkBox refId="OSPassphraseASCIIOnly_Name">需要抽取式 OS 磁碟機的純 ASCII 密碼</checkBox>
+     </presentation>
+
+     <presentation id="FDVConfigureSmartCard">
+       <checkBox refId="FDVRequireSmartCard_Name">在固定式資料磁碟機上必須使用智慧卡</checkBox>
+     </presentation>
+
+     <presentation id="RDVPassphrase_Name">
+        <checkBox refId="RDVRequirePassphrase">抽取式資料磁碟機需要密碼</checkBox>
+       <dropdownList refId="RDVPassphraseComplexity" noSort="true" defaultItem="0">設定抽取式資料磁碟機的密碼複雜性:</dropdownList>
+        <decimalTextBox refId="RDVMinPassphraseLength" defaultValue="8">抽取式資料磁碟機的最小密碼長度:</decimalTextBox>
+<text>注意: 必須啟用「密碼必須符合複雜性需求」原則設定，密碼複雜性才會生效。</text>
+      </presentation>
+
+      <presentation id="RDVConfigureBDE">
+        <checkBox refId="RDVAllowBDE_Name" noSort="true" defaultChecked="true">允許使用者在抽取式資料磁碟機上套用 BitLocker 保護</checkBox>
+        <checkBox refId="RDVDisableBDE_Name" noSort="true" defaultChecked="true">允許使用者在抽取式資料磁碟機上暫停和解密 BitLocker 保護</checkBox>
+      </presentation>
+
+      <presentation id="RDVDenyWriteAccess">
+        <checkBox refId="RDVCrossOrg" noSort="true" defaultChecked="false">不容許在其他組織中設定之裝置的寫入存取權</checkBox>
+      </presentation>
+
+
+      <presentation id="RDVConfigureSmartCard">
+        <checkBox refId="RDVRequireSmartCard_Name" noSort="true" defaultItem="0">在抽取式資料磁碟機上必須使用智慧卡</checkBox>
+        </presentation>
+
+      <presentation id="EnhancedPIN">
+
+      </presentation>
+
+      <presentation id="TPMAutoReseal">
+
+      </presentation>
+
+      <presentation id="DisallowStandardUsersCanChangePIN">
+
+      </presentation>
+
+      <presentation id="FDVDiscoveryVolumeType">
+        <checkBox refId="FDVNoBitLockerToGoReader_Name" noSort="true" defaultChecked="false">不要在 FAT 格式的固定磁碟機上安裝 BitLocker To Go 讀取工具</checkBox>
+      </presentation>
+
+      <presentation id="RDVDiscoveryVolumeType">
+        <checkBox refId="RDVNoBitLockerToGoReader_Name" noSort="true" defaultChecked="false">不要在 FAT 格式的抽取式磁碟機上安裝 BitLocker To Go 讀取工具</checkBox>
+      </presentation>
+
+      <presentation id="OSEDrive_Name">
+        <checkBox refId="OSUseSW" noSort="true" defaultChecked="true">無法使用硬體式加密則使用 BitLocker 軟體式加密</checkBox>
+        <checkBox refId="OSRestrictAlgos" noSort="true" defaultChecked="false">限制硬體式加密允許的加密演算法和加密套件</checkBox>
+        <textBox refId="OSAllowedAlgos">
+          <label>將加密編譯演算法或加密套件限制為下列項目:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="FDVEDrive_Name">
+        <checkBox refId="FDVUseSW" noSort="true" defaultChecked="true">無法使用硬體式加密則使用 BitLocker 軟體式加密</checkBox>
+        <checkBox refId="FDVRestrictAlgos" noSort="true" defaultChecked="false">限制硬體式加密允許的加密演算法和加密套件</checkBox>
+        <textBox refId="FDVAllowedAlgos">
+          <label>將加密編譯演算法或加密套件限制為下列項目:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="RDVEDrive_Name">
+        <checkBox refId="RDVUseSW" noSort="true" defaultChecked="true">無法使用硬體式加密則使用 BitLocker 軟體式加密</checkBox>
+        <checkBox refId="RDVRestrictAlgos" noSort="true" defaultChecked="false">限制硬體式加密允許的加密演算法和加密套件</checkBox>
+        <textBox refId="RDVAllowedAlgos">
+          <label>將加密編譯演算法或加密套件限制為下列項目:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="PrebootRecoveryInfo">
+        <dropdownList refId="PrebootRecoveryInfoDropDown_Name" noSort="true" defaultItem="0">選取開機前復原訊息的選項:</dropdownList>
+        <textBox refId="RecoveryMessage_Input">
+          <label>自訂復原訊息選項:</label>
+          <defaultValue/>
+        </textBox>
+        <textBox refId="RecoveryUrl_Input">
+          <label>自訂復原 URL 選項:</label>
+          <defaultValue/>
+        </textBox>
+      </presentation>
+
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

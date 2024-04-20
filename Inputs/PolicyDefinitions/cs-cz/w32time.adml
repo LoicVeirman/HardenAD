@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Sem zadejte zobrazovaný název.</displayName>
+  <description>Sem zadejte popis.</description>
+  <resources>
+    <stringTable>
+      <string id="W32TIME_CONFIG_EXPLAIN">Tato zásada umožňuje určit disciplínu hodin a obecné hodnoty pro službu Systémový čas Windows (W32time) pro řadiče domény, včetně těch jen pro čtení.
+
+Pokud tuto zásadu povolíte, bude služba W32time na cílových počítačích používat tady zadané nastavení. V opačném případě bude služba na cílových počítačích používat místně nakonfigurované nastavení.
+
+Další podrobnosti o jednotlivých parametrech a kombinacích jejich hodnot, jakož i definice příznaků najdete v tématu https://go.microsoft.com/fwlink/?linkid=847809.
+
+        FrequencyCorrectRate
+Tento parametr řídí, jak často služba W32time provádí korekci frekvence místních hodin. Nižší hodnoty způsobí větší korekce, vyšší hodnoty způsobí menší korekce. Výchozí hodnota: 4 (skalární).
+
+        HoldPeriod
+Tento parametr značí, kolik konzistentních časových vzorků v řadě musí klientský počítač přijmout před tím, než se následné časové vzorky vyhodnotí jako potenciální špičky. Výchozí hodnota: 5.
+
+        LargePhaseOffset
+Pokud se časový vzorek odchyluje od místních hodin klientského počítače o více, než je hodnota LargePhaseOffset, považují se místní hodiny za výrazně odchýlené (mají špičku). Výchozí hodnota: 50 000 000 jednotek v délce 100 ns, což je 5 sekund.
+
+        MaxAllowedPhaseOffset
+Pokud přijde odezva s časovou odchylkou větší, než je tato hodnota, nastaví služba W32time místní čas klientského počítače okamžitě na čas, který se akceptuje jako přesný ze serveru NTP (Network Time Protocol). Pokud je časová odchylka menší než tato hodnota, provádí se korekce místního času klientského počítače postupně. Výchozí hodnota: 300 sekund.
+
+        MaxNegPhaseCorrection
+Pokud přijde časový vzorek udávající čas v minulosti (v porovnání s místním časem klientského počítače), jehož časový rozdíl je větší, než určuje hodnota parametru MaxNegPhaseCorrection, bude se tento vzorek ignorovat. Výchozí hodnota: 172 800 sekund.
+
+        MaxPosPhaseCorrection
+Pokud přijde časový vzorek udávající čas v budoucnosti (v porovnání s místním časem klientského počítače), jehož časový rozdíl je větší, než určuje hodnota parametru MaxPosPhaseCorrection, bude se tento vzorek ignorovat. Výchozí hodnota: 172 800 sekund.
+
+        PhaseCorrectRate
+Tento parametr určuje, jak rychle bude služba W32time provádět korekce odchylky od místního času klientského počítače, aby se zajistila shoda s časovými vzorky, které se ze serveru NTP akceptují jako přesné. Nižší hodnoty způsobí, že se bude čas upravovat rychleji; větší hodnoty budou znamenat pomalejší úpravu času. Výchozí hodnota: 7 (skalární).
+
+        PollAdjustFactor
+Tento parametr řídí, jak rychle bude služba W32time měnit intervaly dotazování. Pokud se odezvy považují za přesné, interval dotazování se automaticky prodlouží. Pokud se odpovědi považují za nepřesné, interval dotazování se automaticky zkrátí. Výchozí hodnota: 5 (skalární).
+
+        SpikeWatchPeriod
+Tento parametr určuje, po jakou dobu se přijímají vzorky s časovou odchylkou větší než LargePhaseOffset, než se akceptují jako přesné. Hodnota SpikeWatchPeriod se používá ve spojení s hodnotou HoldPeriod, čímž jde eliminovat sporadické, nepřesné časové vzorky vracené z partnerského počítače. Výchozí hodnota: 900 sekund.
+
+        UpdateInterval
+Tento parametr určuje dobu, po kterou bude služba W32time čekat mezi korekcemi při postupném provádění korekcí času. Pokud provádí postupnou opravu času, mírně upraví čas, počká tuto dobu a následně zkontroluje, jestli je potřeba provést další opravu. Tento postup se opakuje až do dokončení korekce. Výchozí hodnota: 100 jednotek v délce jedné setiny sekundy, což je 1 sekunda.
+
+        Obecné parametry:
+
+        AnnounceFlags
+Tento parametr je hodnota bitové masky, která řídí, jak se dostupnost časové služby inzeruje prostřednictvím služby NetLogon. Výchozí hodnota: 0x0a (hexadecimální).
+
+        EventLogFlags
+Tento parametr řídí speciální události, které se můžou zaprotokolovat do systémového protokolu Prohlížeče událostí. Výchozí hodnota: hexadecimální bitová maska 0x02.
+
+        LocalClockDispersion
+Tento parametr udává maximální chybu v sekundách, která se hlásí serverem NTP klientům vyžadujícím časový vzorek. (Platí jen v případě, že server NTP používá místní čas CMOS.) Výchozí hodnota: 10 sekund.
+
+        MaxPollInterval
+Tento parametr řídí maximální interval dotazování, který definuje maximální dobu mezi dotazováními partnerského počítače. Výchozí hodnota: 10 ve dvojkovém logaritmu, což je 1024 sekund. (Nenastavujte na vyšší hodnotu než 15.)
+
+        MinPollInterval
+Tento parametr řídí minimální interval dotazování, který definuje minimální dobu mezi dotazováními partnerského počítače. Výchozí hodnota: 6 ve dvojkovém logaritmu, což je 64 sekund.
+
+        ClockHoldoverPeriod
+Tento parametr udává maximální počet sekund, po který dokážou systémové hodiny udržet svou přesnost bez synchronizace se zdrojem času. Pokud tato doba uběhne, aniž by služba W32time získala nové vzorky od kteréhokoli ze svých vstupních poskytovatelů, zahájí opětovné zjišťování zdrojů času. Výchozí hodnota: 7800 sekund.
+
+        RequireSecureTimeSyncRequests
+Tento parametr řídí, jestli bude řadič domény reagovat na požadavek synchronizace času využívající starší ověřovací protokol. Pokud je povolený (nastavení na 1), nebude řadič domény při použití takových protokolů na požadavky reagovat. Výchozí hodnota: 0 (logická hodnota).
+
+        UtilizeSslTimeData
+Tento parametr řídí, jestli bude W32time používat časová data vypočítaná z přenosů SSL v počítači jako doplňující vstup pro korekci místních hodin. Výchozí hodnota: 1 (povoleno, logická hodnota).
+
+        ClockAdjustmentAuditLimit
+Tento parametr určuje nejmenší úpravy místních hodin, které je možné zaznamenat do protokolu událostí služby W32time na cílovém počítači. Výchozí hodnota: 800 miliontin (PPM).
+
+       Parametry řadiče domény jen pro čtení:
+
+        ChainEntryTimeout
+Tento parametr určuje maximální dobu, po kterou může záznam zůstat v tabulce řetězení, než se bude považovat za záznam, jehož platnost vypršela. Takovéto neplatné položky se můžou odebrat při zpracování dalších požadavků nebo odpovědí. Výchozí hodnota: 16 sekund.
+
+        ChainMaxEntries
+Tento parametr řídí maximální počet záznamů, které jsou povolené v tabulce řetězení. Jestliže je tabulka řetězení plná a žádné položky, jejichž platnost vypršela, nejde odebrat, budou se všechny příchozí požadavky ignorovat. Výchozí hodnota: 128 záznamů.
+
+        ChainMaxHostEntries
+Tento parametr řídí maximální počet záznamů, které jsou povolené v tabulce řetězení pro konkrétního hostitele. Výchozí hodnota: 4 záznamy.
+
+        ChainDisable
+Tento parametr řídí, jestli je mechanismus řetězení povolený, nebo zakázaný. Pokud je zakázaný (nastavený na 0), jde řadič domény jen pro čtení synchronizovat s libovolným řadičem domény, ale hostitele, jejichž hesla se neukládají do mezipaměti na tomto řadiči domény, nebude možné s řadičem synchronizovat. Výchozí hodnota: 0 (logická hodnota).
+
+        ChainLoggingRate
+Tento parametr řídí četnost, s jakou se událost udávající počet úspěšných a neúspěšných pokusů o řetězení protokoluje do systémového protokolu v Prohlížeči událostí. Výchozí hodnota: 30 minut.
+      </string>
+
+<string id="W32TIME_CONFIGURE_NTPCLIENT_EXPLAIN">Toto nastavení zásad určuje sadu parametrů pro řízení klienta protokolu NTP systému Windows.
+
+Pokud toto nastavení zásad povolíte, můžete určit výchozí parametry pro klienta protokolu NTP systému Windows.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, klient protokolu NTP systému Windows pro každý z následujících parametrů použije výchozí hodnoty.
+
+NtpServer
+Název DNS (Domain Name System) nebo IP adresa zdroje času protokolu NTP. Tato hodnota má tvar ""dnsName,flags"", kde ""flags"" představují hexadecimální bitovou masku příznaků pro daného hostitele. Další informace naleznete v článku Nastavení zásad skupiny pro klienta protokolu NTP spojená s částí Systémový čas nastavení zásad skupiny pro službu Systémový čas. Výchozí hodnota je ""time.windows.com,0x09"". 
+
+Typ
+Tato hodnota řídí ověřování, které služba W32time využívá. Výchozí hodnota je NT5DS.
+
+CrossSiteSyncFlags
+Tato hodnota, vyjádřená v podobě bitové masky, určuje, jakým způsobem služba W32time volí zdroje času mimo vlastní lokalitu. Možné hodnoty jsou 0, 1 a 2. Nastavení této hodnoty na hodnotu 0 (Žádné) udává, že se klient času nemá pokoušet o synchronizaci mimo vlastní lokalitu. Nastavení této hodnoty na hodnotu 1 (PdcOnly) značí, že pouze počítače, které fungují jako hlavní operační servery pro emulaci primárního řadiče domény v jiných doménách, lze používat jako partnery synchronizace, když klient musí synchronizovat čas s partnerem mimo svou vlastní lokalitu. Nastavení hodnoty 2 (Vše) udává, že lze použít libovolného partnera synchronizace. Pokud není nastavena hodnota NT5DS, je tato hodnota ignorována. Výchozí hodnota je 2 v desítkové soustavě (0x02 hexadecimálně).
+
+ResolvePeerBackoffMinutes
+Tato hodnota v minutách určuje, jak dlouho bude služba W32time čekat, než se pokusí přeložit název DNS v případě, že se předchozí pokus nezdařil. Výchozí hodnota je 15 minut.
+
+ResolvePeerBackoffMaxTimes
+Tato hodnota řídí, kolikrát se služba W32time pokusí přeložit název DNS, než je restartován proces zjišťování. Vždy, když se překlad názvu DNS nezdaří, bude doba čekání před dalším pokusem nastavena na dvojnásobek předchozí doby. Výchozí hodnota je sedm pokusů.
+
+SpeciálníDotazovacíInterval
+Tato hodnota klienta protokolu NTP vyjádřená v sekundách řídí, jak často je prováděno dotazování na ručně nakonfigurovaný zdroj času, pokud je zdroj času nakonfigurován na používání zvláštního intervalu dotazování. Jestliže je v nastavení NTPServer povolen příznak SpeciálníInterval, používá klient místo proměnného intervalu mezi hodnotami MinPollInterval a MaxPollInterval hodnotu, která je nastavena jako SpecialPollInterval, a s její pomocí určuje, jak často se má provádět dotazování na zdroj času. SpecialPollInterval musí být v rozsahu [MinPollInterval, MaxPollInterval], jinak bude vybrána hodnota, která je rozsahu nejblíže. Výchozí hodnota: 1024 sekund.
+
+EventLogFlags
+Tato hodnota představuje bitovou masku, která řídí události, které lze zaprotokolovat do systémového protokolu v Prohlížeči událostí. Nastavení této hodnoty na hodnotu 0x1 udává, že služba W32time vytvoří událost vždy, když je detekována změna času. Nastavení této hodnoty na hodnotu 0x2 udává, že služba W32time vytvoří událost vždy, když dojde ke změně zdroje času. Vzhledem k tomu, že se jedná o hodnotu bitové masky, udává nastavení hodnoty 0x3 (kromě hodnot 0x1 a 0x2), že budou zaprotokolovány jak změny času, tak i změny zdroje času.
+      </string>
+      <string id="W32TIME_ENABLE_NTPCLIENT_EXPLAIN">Toto nastavení zásad určuje, zda je povolen klient protokolu NTP systému Windows.
+
+Povolení klienta NTP systému Windows umožní počítači synchronizovat své hodiny s jinými servery NTP. Pokud se rozhodnete používat jiného poskytovatele času, je možné tuto službu zakázat.
+
+Pokud toto nastavení zásad povolíte, můžete nastavit, aby se čas v místním počítači synchronizoval se servery NTP.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, čas v místním počítači nebude synchronizovat čas se servery NTP.
+      
+      </string>
+      <string id="W32TIME_ENABLE_NTPSERVER_EXPLAIN">Toto nastavení zásad umožňuje určit, zda je povolen klient protokolu NTP systému Windows.
+
+Pokud toto nastavení zásad pro server NTP systému Windows povolíte, může váš počítač spravovat požadavky protokolu NTP z ostatních počítačů.
+
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, váš počítač nebude moci spravovat požadavky protokolu NTP z ostatních počítačů.
+
+
+
+</string>
+      <string id="W32TIME_POLICY_CONFIG">Globální nastavení konfigurace</string>
+      <string id="W32TIME_POLICY_CONFIGURE_NTPCLIENT">Konfigurovat klienta protokolu NTP systému Windows</string>
+      <string id="W32TIME_POLICY_ENABLE_NTPCLIENT">Povolit klienta protokolu NTP systému Windows</string>
+      <string id="W32TIME_POLICY_ENABLE_NTPSERVER">Povolit server protokolu NTP systému Windows</string>
+      <string id="W32TIME_ROOT">Systémový čas</string>
+      <string id="W32TIME_TIMEPROVIDERS">Poskytovatelé času</string>
+      <string id="W32TIME_Type_AllSync">AllSync</string>
+      <string id="W32TIME_Type_NoSync">NoSync</string>
+      <string id="W32TIME_Type_NT5DS">NT5DS</string>
+      <string id="W32TIME_Type_Ntp">NTP</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="W32TIME_POLICY_CONFIG">
+        <text>Parametry disciplíny hodin</text>
+        <decimalTextBox refId="W32TIME_FrequencyCorrectRate" defaultValue="4">FrequencyCorrectRate</decimalTextBox>
+        <decimalTextBox refId="W32TIME_HoldPeriod" defaultValue="5">HoldPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_LargePhaseOffset" defaultValue="50000000">LargePhaseOffset</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxAllowedPhaseOffset" defaultValue="300">MaxAllowedPhaseOffset</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxNegPhaseCorrection" defaultValue="172800">MaxNegPhaseCorrection</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxPosPhaseCorrection" defaultValue="172800">MaxPosPhaseCorrection</decimalTextBox>
+        <decimalTextBox refId="W32TIME_PhaseCorrectRate" defaultValue="1">PhaseCorrectRate</decimalTextBox>
+        <decimalTextBox refId="W32TIME_PollAdjustFactor" defaultValue="5">PollAdjustFactor</decimalTextBox>
+        <decimalTextBox refId="W32TIME_SpikeWatchPeriod" defaultValue="900">SpikeWatchPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_UpdateInterval" defaultValue="100">UpdateInterval</decimalTextBox>
+        <text>Obecné parametry</text>
+        <decimalTextBox refId="W32TIME_AnnounceFlags" defaultValue="10">AnnounceFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_EventLogFlags" defaultValue="2">EventLogFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_LocalClockDispersion" defaultValue="10">LocalClockDispersion</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxPollInterval" defaultValue="10">MaxPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MinPollInterval" defaultValue="6">MinPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ClockHoldoverPeriod" defaultValue="7800">ClockHoldoverPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_RequireSecureTimeSyncRequests" defaultValue="0">RequireSecureTimeSyncRequests</decimalTextBox>
+        <decimalTextBox refId="W32TIME_UtilizeSslTimeData" defaultValue="1">UtilizeSslTimeData</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ClockAdjustmentAuditLimit" defaultValue="800">ClockAdjustmentAuditLimit</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainEntryTimeout" defaultValue="16">ChainEntryTimeout</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainMaxEntries" defaultValue="128">ChainMaxEntries</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainMaxHostEntries" defaultValue="4">ChainMaxHostEntries</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainDisable" defaultValue="0">ChainDisable</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainLoggingRate" defaultValue="30">ChainLoggingRate</decimalTextBox>
+      </presentation>
+      <presentation id="W32TIME_POLICY_CONFIGURE_NTPCLIENT">
+        <textBox refId="W32TIME_NtpServer">
+          <label>NtpServer</label>
+          <defaultValue>time.windows.com,0x9</defaultValue>
+        </textBox>
+        <dropdownList refId="W32TIME_Type" noSort="true" defaultItem="2">Typ</dropdownList>
+        <decimalTextBox refId="W32TIME_CrossSiteSyncFlags" defaultValue="2">CrossSiteSyncFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ResolvePeerBackoffMinutes" defaultValue="15">ResolvePeerBackoffMinutes</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ResolvePeerBackoffMaxTimes" defaultValue="7">ResolvePeerBackoffMaxTimes</decimalTextBox>
+        <decimalTextBox refId="W32TIME_SpecialPollInterval" defaultValue="1024">SpecialPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_NtpClientEventLogFlags" defaultValue="0">EventLogFlags</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Windows サービス ポリシー</displayName>
+  <description>Windows サービス ポリシー</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">オプション コンポーネントのインストールおよびコンポーネントの修復のための設定を指定する</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+このポリシー設定では、オペレーティング システムの破損の修復、およびペイロード ファイルが削除されているオプション機能を有効にするために使用されるネットワークの場所を指定します。
+
+このポリシー設定を有効にして新しい場所を指定した場合、その場所にあるファイルが、オペレーティング システムの破損の修復、およびペイロード ファイルが削除されているオプション機能を有効にするために使用されます。[代替ソース ファイルのパス] テキスト ボックスに新しい場所への完全修飾パスを入力する必要があります。各パスをセミコロンで区切って、複数の場所を指定できます。
+
+ネットワークの場所には、フォルダーまたは WIM ファイルのいずれかを指定できます。WIM ファイルを指定した場合、場所はパスの先頭に "wim:" を付けて指定し、その場所には WIM ファイルで使用するイメージのインデックスが含まれている必要があります。たとえば、「wim:\\server\share\install.wim:3」と指定します。
+
+このポリシー設定を無効にした場合、構成しなかった場合、またはこのポリシー設定で指定された場所に必要なファイルが見つからなかった場合、コンピューターのポリシー設定で許可されているときは Windows Update からのファイルのダウンロードが実行されます。
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>代替ソース ファイルのパス</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">Windows Update からペイロードのダウンロードを試行しない</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">Windows Server Update Services (WSUS) の代わりに、Windows Update から修復コンテンツとオプションの機能を直接ダウンロードする</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

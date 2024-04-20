@@ -1,0 +1,188 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>
+  </displayName>
+  <description>
+  </description>
+  <resources>
+    <stringTable>
+      <string id="LAPS">LAPS</string>
+      <string id="LAPS_BackupDirectory">Configurare la directory di backup delle password</string>
+      <string id="LAPS_BackupDirectory_Help">Utilizzare questa impostazione per configurare la directory in cui viene eseguito il backup della password dell'account amministratore locale.
+
+Le impostazioni consentite sono:
+
+0=Disabilitato (non verrà eseguito il backup della password)
+
+1=Eseguire il backup della password per Azure Active Directory
+
+2=Eseguire il backup della password in Active Directory
+
+Se non è specificata, l'impostazione predefinita sarà 0 (Disabilitato).
+
+Se questa impostazione è configurata su 1 e il dispositivo gestito non è aggiunto a Azure Active Directory, la password dell'amministratore locale non verrà gestita.
+
+Se questa impostazione è configurata su 2 e il dispositivo gestito non è aggiunto ad Active Directory, la password dell'amministratore locale non verrà gestita.
+
+Se questa impostazione è disabilitata o non configurata, la password dell'amministratore locale non verrà gestita.
+
+Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="LAPS_BackupDirectoryDisabled">Disabilitato</string>
+      <string id="LAPS_BackupDirectoryAzure">Azure Active Directory</string>
+      <string id="LAPS_BackupDirectoryAD">Active Directory</string>
+      <string id="LAPS_PasswordSettings">Impostazioni password</string>
+      <string id="LAPS_PasswordSettings_Help">Configura i parametri della password
+
+Complessità della password: caratteri utilizzati per la generazione di una nuova password
+  Impostazione predefinita: lettere grandi + lettere piccole + numeri + caratteri speciali
+
+Lunghezza password
+  Minimo: 8 caratteri
+  Massimo: 64 caratteri
+  Impostazione predefinita: 14 caratteri
+
+Validità password in giorni
+  Minimo: 1 giorno (7 giorni in cui la directory di backup è configurata per essere Azure AD)
+  Massimo: 365 giorni
+  Impostazione predefinita: 30 giorni
+
+Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="LAPS_PwdComplexity_Item_1">Lettere grandi</string>
+      <string id="LAPS_PwdComplexity_Item_2">Lettere grandi e lettere piccole</string>
+      <string id="LAPS_PwdComplexity_Item_3">Lettere grandi, lettere piccole e numeri</string>
+      <string id="LAPS_PwdComplexity_Item_4">Lettere grandi, lettere piccole, numeri e caratteri speciali</string>
+      <string id="LAPS_AdminName">Nome dell'account amministratore da gestire</string>
+      <string id="LAPS_AdminName_Help">Questa impostazione dei criteri specifica un nome di account amministratore personalizzato per cui gestire la password.
+
+Se questa impostazione dei criteri è abilitata, LAPS gestirà la password per un account locale con questo nome.
+
+Se questa impostazione dei criteri è disabilitata o non configurata, LAPS gestirà la password per l'account amministratore noto.
+
+NON abilitare questa impostazione dei criteri per gestire l'account amministratore predefinito. L'account amministratore predefinito viene rilevato automaticamente dal SID noto e non dipende dal nome dell'account.
+
+Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy">Non consentire la scadenza della password per un periodo di tempo superiore a quello richiesto dai criteri</string>
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Se questa impostazione è abilitata o non configurata, la scadenza pianificata della password più lunga della validità della password dettata dal criterio "Impostazioni password" NON è consentita. Quando viene rilevata tale scadenza, la password viene modificata immediatamente e la scadenza della password viene impostata in base ai criteri.
+
+Se questa impostazione è disabilitata, la scadenza della password potrebbe essere più lunga di quanto richiesto dal criterio "Impostazioni password".
+
+Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="LAPS_ADPasswordEncryptionEnabled">Abilitare la crittografia delle password</string>
+      <string id="LAPS_ADPasswordEncryptionEnabled_Help">Quando si abilita questa impostazione, la password gestita viene crittografata prima dell'invio ad Active Directory.
+
+L'abilitazione di questa impostazione ha effetto solo se 1) la password è stata configurata per il backup in Active Directory e 2) il livello di funzionalità del dominio di Active Directory è Windows Server 2016 o superiore.
+
+Se questa impostazione è abilitata e il livello di funzionalità del dominio è pari o superiore a Windows Server 2016, la password dell'account gestito verrà crittografata.
+
+Se questa impostazione è abilitata e il livello di funzionalità del dominio è inferiore a Windows Server 2016, non verrà eseguito il backup della password dell'account gestito nella directory.
+
+Se questa impostazione è disabilitata, la password dell'account gestito non verrà crittografata.
+
+Se non è configurata, questa impostazione verrà abilitata per impostazione predefinita.
+
+Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="LAPS_ADPasswordEncryptionPrincipal">Configurare coloro che sono autorizzati a decrittografare le password</string>
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Configurare questa impostazione per controllare l'utente o il gruppo specifico autorizzato a decrittografare le password crittografate.
+
+La configurazione di questa impostazione non ha alcun effetto a meno che la crittografia delle password non sia stata abilitata.
+
+Se questa impostazione è abilitata, le password crittografate potranno essere decrittografate dal gruppo specificato.
+
+Se questa impostazione è disabilitata o non configurata, le password crittografate potranno essere decrittografate dal gruppo Domain Admins.
+
+Questa impostazione deve essere configurata con un SID in formato stringa ("S-1-5-21-2127521184-1604012920-1887927527-35197") o con il nome di un gruppo o di un utente in formato "dominio\(gruppo o utente)". L'utente o il gruppo specificato deve essere risolvibile dal dispositivo gestito. In caso contrario, non verrà eseguito il backup delle password.
+
+Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="LAPS_ADEncryptedPasswordHistorySize">Configurare le dimensioni della cronologia delle password crittografate</string>
+      <string id="LAPS_ADEncryptedPasswordHistorySize_Help">Utilizzare questa impostazione per configurare il numero di password crittografate precedenti che verranno archiviate in Active Directory.
+
+La configurazione di questa impostazione non ha alcun effetto a meno che 1) la password sia stata configurata per il backup in Active Directory e 2) la crittografia delle password sia stata abilitata.
+
+Se questa impostazione è abilitata, il numero specificato di password meno recenti verrà archiviato in Active Directory.
+
+Se questa impostazione è disabilitata o non configurata, non verrà archiviata alcuna password meno recente in Active Directory.
+
+Questa impostazione ha un valore minimo consentito di 0 password.
+
+Questa impostazione ha un valore massimo consentito di 12 password.
+
+Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="LAPS_ADBackupDSRMPassword">Abilita il backup delle password per gli account DSRM</string>
+      <string id="LAPS_ADBackupDSRMPassword_Help">Quando si abilita questa impostazione, la password dell'account amministratore DSRM verrà gestita e ne verrà eseguito il backup in Active Directory.
+
+L'abilitazione di questa impostazione non ha effetto a meno che il dispositivo gestito non sia un controller di dominio e non sia abilitata anche la crittografia delle password.
+
+Se questa impostazione è abilitata, verrà eseguito il backup in Active Directory della password dell'account amministratore DSRM nel controller di dominio.
+
+Se si disabilita o non si configura questa impostazione, non verrà eseguito il backup in Active Directory della password dell'account amministratore DSRM nel controller di dominio.
+
+Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="LAPS_PostAuthenticationActions">Azioni post-autenticazione</string>
+      <string id="LAPS_PostAuthenticationActions_Help">Questo criterio configura le azioni post-autenticazione che verranno eseguite dopo il rilevamento di un'autenticazione da parte dell'account gestito.
+
+Periodo di prova: specifica il periodo di tempo (in ore) di attesa dopo l'autenticazione prima di poter eseguire le azioni post-autenticazione specificate.
+
+Se tale impostazione è abilitata ed è maggiore di zero, le azioni post-autenticazione specificate verranno eseguite alla scadenza del periodo di prova.
+
+Se l’impostazione è disabilitata o non configurata, le azioni post-autenticazione specificate verranno eseguite dopo un periodo di prova predefinito di 24 ore.
+
+Se l’impostazione è uguale a zero, non verrà eseguita alcuna azione di post-autenticazione.
+
+Azioni: specifica le azioni da eseguire alla scadenza del periodo di prova.
+
+Reimposta password: alla scadenza del periodo di prova, la password dell'account gestito verrà reimpostata.
+
+Reimposta password e disattiva l'account gestito: allo scadere del periodo di prova, la password dell'account gestito verrà reimpostata e tutte le sessioni di accesso interattivo che usano l'account gestito verranno annullate.
+
+(NOTA: dopo l’annullamento delle sessioni di accesso interattive, potrebbero essere ancora in uso altre sessioni autenticate dall'account gestito. L'unico modo efficace per assicurarsi che la password precedente non sia più in uso è quello di riavviare il dispositivo.)
+
+Reimposta password e riavvia: alla scadenza del periodo di prova, la password dell'account gestito verrà reimpostata e il dispositivo gestito verrà immediatamente riavviato.
+
+Se questa impostazione è disabilitata o non configurata, le azioni post-autenticazione verranno impostate su "Reimposta la password e disconnetti l'account gestito".
+
+Nota: non è possibile configurare l'account DSRM nei controller di dominio per le azioni post-autenticazione. Questo criterio non ha effetto sui controller di dominio e verrà ignorato anche se configurato per il controller di dominio.
+
+Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="PostAuthenticationActions_Item0">Disabilitato - Non eseguire alcuna azione</string>
+      <string id="PostAuthenticationActions_Item1">Reimposta la password</string>
+      <string id="PostAuthenticationActions_Item3">Reimpostare la password e disconnettere l'account gestito</string>
+      <string id="PostAuthenticationActions_Item5">Reimpostare la password e riavviare il dispositivo</string>
+      <string id="SUPPORTED_Windows10">Almeno Microsoft Windows 10 o versione successiva</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="LAPS_BackupDirectory">
+        <dropdownList refId="LAPS_BackupDirectory" defaultItem="1">Directory di backup</dropdownList>
+      </presentation>
+      <presentation id="LAPS_PasswordSettings">
+        <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Complessità password</dropdownList>
+        <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Lunghezza password</decimalTextBox>
+        <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Validità password (Giorni)</decimalTextBox>
+      </presentation>
+      <presentation id="LAPS_AdminName">
+        <textBox refId="TEXT_AdminAccountName">
+          <label>Nome account amministratore</label>
+        </textBox>
+      </presentation>
+      <presentation id="LAPS_ADPasswordEncryptionPrincipal">
+        <textBox refId="TEXT_ADPasswordEncryptionPrincipal">
+          <label>Decrittografia password autorizzata</label>
+        </textBox>
+      </presentation>
+      <presentation id="LAPS_ADEncryptedPasswordHistorySize">
+        <decimalTextBox refId="LAPS_ADEncryptedPasswordHistorySize_INT" defaultValue="0">Dimensioni cronologia delle password crittografate</decimalTextBox>
+      </presentation>
+      <presentation id="LAPS_PostAuthenticationActions">
+        <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Periodo di prova (ore):</decimalTextBox>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Azioni:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

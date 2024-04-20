@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>KDC 设置</displayName>
+  <description>Kerberos 密钥发行中心的配置设置。</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">使用林搜索顺序</string>
+      <string id="forestsearch_explain">此策略设置定义在尝试解析由两部分组成的服务主体名称(SPN)时密钥发行中心(KDC)搜索的信任林列表。
+
+如果启用此策略设置，则当 KDC 无法在本地林中解析由两部分组成的 SPN 时，该 KDC 将在此列表中搜索林。林搜索使用全局编录或名称后缀提示执行。如果找到匹配项，则 KDC 向客户端返回用于访问相应域的参照票证。
+
+如果禁用或未配置此策略设置，则 KDC 不会搜索列出的林来解析 SPN。如果 KDC 由于找不到名称而无法解析 SPN，则可能会使用 NTLM 身份验证。
+
+若要确保操作的一致性，则必须支持此策略设置，且域中的所有域控制器对此策略的设置必须相同。</string>
+      <string id="emitlili">提供有关以前登录到客户端计算机的信息</string>
+      <string id="emitlili_explain">此策略设置控制域控制器是否提供有关以前登录到客户端计算机的信息。
+
+如果启用此策略设置，则域控制器将提供有关以前登录的信息。
+
+若要使 Windows 登录时利用此功能，则还需启用 Windows 组件下“Windows 登录选项”节点中的“在用户登录期间显示有关以前登录的信息”策略设置。
+
+如果禁用或未配置此策略设置，则仅当启用“在用户登录期间显示有关以前登录的信息”策略设置后，域控制器才提供有关以前登录的信息。
+
+注意: 仅当域功能级别为 Windows Server 2008 时，才会提供有关以前登录的信息。在域功能级别为 Windows Server 2003、Windows 2000 纯模式或 Windows 2000 混合模式的域中，域控制器无法提供有关以前登录的信息，并且启用此策略设置不会影响任何操作。
+
+</string>
+      <string id="CbacAndArmor">KDC 支持声明、复合身份验证和 Kerberos Armoring</string>
+      <string id="CbacAndArmor_explain">使用此策略设置，可配置域控制器以支持用于动态访问控制的声明和复合身份验证，以及使用 Kerberos 身份验证的 Kerberos Armoring。
+
+如果启用此策略设置，则支持用于动态访问控制的声明和复合身份验证以及 Kerberos Armor 感知的客户端计算机将使用此功能接收 Kerberos 身份验证消息。应将此策略应用于所有域控制器以确保在域中一致应用此策略。
+
+如果禁用或不配置此策略设置，则域控制器不支持声明、复合身份验证或 Armoring。
+
+如果配置“不支持”选项，则域控制器不支持声明、复合身份验证或 Armoring，这是运行 Windows Server 2008 R2 或更早版本的操作系统的域控制器的默认行为。
+
+注意: 为了使此 KDC 策略的以下选项生效，必须在支持的系统上启用 Kerberos 组策略“Kerberos 客户端支持声明、复合身份验证和 Kerberos Armoring”。如果 Kerberos 策略设置未启用，Kerberos 身份验证消息不会使用这些功能。
+
+如果配置“支持”，则域控制器支持声明、复合身份验证以及 Kerberos Armoring。域控制器通知 Kerberos 客户端计算机，该域支持用于动态访问控制的声明和复合身份验证以及 Kerberos Armoring。
+
+域功能级别要求
+对于选项“始终提供声明”和“失败的非 Armoring 身份验证请求”，当域功能级别设置为 Windows Server 2008 R2 或更早版本时，域控制器的行为与选择“支持”选项后的行为一致。
+
+当域功能级别设置为 Windows Server 2012 时，域控制器通知 Kerberos 客户端计算机该域支持用于动态访问控制的声明和复合身份验证以及 Kerberos Armoring，并且:
+   - 如果设置“始终提供声明”选项，则始终为帐户返回声明并且支持通知灵活身份验证安全隧道(FAST)的 RFC 行为。
+   - 如果设置“失败的非 Armoring 身份验证请求”选项，则会拒绝非 Kerberos Armoring 消息。
+
+警告: 如果设置“失败的非 Armoring 身份验证请求”，则不支持 Kerberos Armoring 的客户端计算机将不能通过域控制器的身份验证。
+
+要确保该功能有效，请部署支持足够的用于动态访问控制的声明和复合身份验证以及 Kerberos Armor 感知的域控制器来处理身份验证请求。如果支持此策略的域控制器数量不足，则会导致需要动态访问控制或 Kerberos Armoring 时(即启用“支持”选项)身份验证失败。
+
+启用此策略设置后对域控制器性能的影响:
+   - 要交换其他消息，则需要安全的 Kerberos 域功能发现。
+   - 用于动态访问控制的声明和复合身份验证会增加消息中数据的大小和复杂度，从而导致处理时间延长并增加 Kerberos 服务票证大小。
+   - Kerberos Armoring 完全加密 Kerberos 消息并签署导致处理时间延长，但不更改服务票证大小的 Kerberos 错误。
+</string>
+      <string id="NoCbacAndArmor">不支持</string>
+      <string id="MixModeCbacAndArmor">支持</string>
+      <string id="FullModeCbacAndArmor">始终提供声明</string>
+      <string id="FullModeCbacAndRequireArmor">失败的非 Armoring 身份验证请求</string>
+      <string id="TicketSizeThreshold">Kerberos 票证过大时发出警告</string>
+      <string id="TicketSizeThreshold_explain">使用此策略设置，可以配置将触发在 Kerberos 身份验证期间发出警告事件的 Kerberos 票证的大小。在系统日志中记录票证大小警告。
+
+如果启用此策略设置，则可以为触发警告事件的 Kerberos 票证设置阈值限制。如果阈值设置得过高，则即使未记录警告事件，身份验证也可能会失败。 如果阈值设置得过低，则日志中会有过多票证警告用于分析。应该将该值设为 Kerberos 策略的“设置最大 Kerberos SSPI 上下文令牌缓冲区大小”的值，或你的环境中所使用的最小 MaxTokenSize 的值(如果未使用组策略进行配置)。
+      
+如果禁用或未配置此策略设置，则阈值的值默认为 12,000 字节，这是 Windows 7、Windows Server 2008 R2 和更早版本的默认 Kerberos MaxTokenSize。
+
+</string>
+      <string id="RequestCompoundId">请求复合身份验证</string>
+      <string id="RequestCompoundId_explain">此策略设置允许你配置域控制器来请求复合身份验证。
+
+注意：对于要请求复合身份验证的域控制器而言，必须配置并启用策略“KDC 支持声明、复合身份验证和 Kerberos 保护”。
+
+如果启用此策略设置，那么域控制器会请求复合身份验证。只有显式配置该帐户后，返回的服务票证才会包括复合身份验证。应将此策略应用于所有域控制器以确保在域中一致应用此策略。
+
+如果禁用或未配置此策略设置，那么无论帐户配置如何，只要客户端发送复合身份验证请求，域控制器都会返回包含复合身份验证的服务票证。
+
+</string>
+      <string id="PKINITFreshness">对 PKInit Freshness Extension 的 KDC 支持</string>
+      <string id="PKINITFreshness_explain">若要提供对 PKInit Freshness Extension 的支持，则需达到 Windows Server 2016 域功能级别(DFL)。如果域控制器的域未达到 Windows Server 2016 DFL 或更高级别，则不会应用此策略。
+
+此策略设置允许你将域控制器(DC)配置为支持 PKInit Freshness Extension。
+
+如果启用此策略设置，则支持以下选项:
+
+支持: 请求支持 PKInit Freshness Extension。使用 PKInit Freshness Extension 成功进行身份验证的 Kerberos 客户端将获得新的公钥标识 SID。
+
+必需: 需要 PKInit Freshness Extension 才能成功进行身份验证。不支持 PKInit Freshness Extension 的 Kerberos 客户端在使用公钥凭据时将始终失败。
+
+如果禁用或未配置此策略设置，则 DC 绝不会提供 PKInit Freshness Extension 并在不检查新鲜度的情况下接受有效的身份验证请求。用户将从不会获得新的公钥标识 SID。
+</string>
+      <string id="NoPKINITFreshness">已禁用</string>
+      <string id="SupportPKINITFreshness">支持</string>
+      <string id="RequirePKINITFreshness">必需</string>
+      <string id="PKINITHashAlgorithmConfiguration">为证书登录配置哈希算法</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">此策略设置控制 Kerberos 客户端执行证书身份验证时使用的哈希算法或校验和算法。
+
+如果启用此策略，你将能够为每种算法配置四种状态之一：
+
+-“默认”将算法设置为建议的状态。
+
+-“受支持”允许使用算法。启用默认情况下禁用的算法可能会降低安全性。
+
+-“已审核”允许使用算法在每次使用该算法时报告事件(ID 309)。此状态用于验证是否未使用算法，且可以安全禁用该算法。
+
+-“不受支持”不允许使用算法。此状态针对被视为不安全的算法。
+
+如果禁用或未配置此策略，则每种算法都将采用“默认”状态。
+有关 Windows Kerberos 客户端支持的哈希算法和校验和算法及其默认状态的详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2169037。
+
+此配置生成的事件: 309、310。
+</string>
+      <string id="PKINITHashAlgorithm_Default">默认</string>
+      <string id="PKINITHashAlgorithm_Supported">支持</string>
+      <string id="PKINITHashAlgorithm_Audited">已审核</string>
+      <string id="PKINITHashAlgorithm_NotSupported">不支持</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">模式:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>要搜索的林</label>
+        </textBox>
+        <text>语法:</text>
+        <text>输入启用此策略时要搜索的林的列表。</text>
+        <text>使用完全限定的域名(FQDN)命名格式。</text>
+        <text>使用分号“;”分隔多个搜索项。</text>
+        <text>详细信息:</text>
+        <text>不需要列出当前林，因为林搜索顺序先使用全局编录搜索，然后才按列出的顺序搜索。</text>
+        <text>不必分别列出林中的所有域。</text>
+        <text>如果列出了信任林，则将搜索该林中的所有域。</text>
+        <text>为获得最佳性能，应按成功可能性大小顺序列出林。</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">用于动态访问控制的声明、复合身份验证以及 Kerberos Armoring 选项:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">票证大小阈值</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">PKInit Freshness Extension 选项:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,132 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>DirectAccess 用戶端經驗設定群組原則範本</displayName>
+  <description>這個 admx 檔案描述 DirectAccess 用戶端 NCA 元件的原則範本</description>
+  <resources>
+    <stringTable>
+      <string id="NCA">DirectAccess 用戶端經驗設定</string>
+      <string id="NCA_Help">這是 DirectAccess 用戶端經驗設定的群組原則範本。如需詳細資訊，請參閱 DirectAccess 部署指南。</string>
+      <string id="SupportEmail">支援電子郵件地址</string>
+      <string id="SupportEmail_Help">指定將 NCA 產生的記錄檔傳送給網路系統管理員時所要使用的電子郵件地址。
+
+當使用者將記錄檔傳送給系統管理員時，NCA 會使用預設電子郵件用戶端開啟新訊息，該訊息的 [收件者:] 欄位會填入支援電子郵件地址，然後將產生的記錄檔以 .html 檔案格式附加到訊息中。使用者可以在傳送訊息前，檢閱訊息並加入其他資訊。
+
+</string>
+      <string id="FriendlyName">易記名稱</string>
+      <string id="FriendlyName_Help">指定當使用者按一下網路通知區域圖示時，用來代表 DirectAccess 連線的顯示字串。例如，您可以指定「Contoso 內部網路存取」來代表 Contoso 公司的 DirectAccess 用戶端。
+
+如果沒有設定這個設定，將會顯示「公司連線」字串來代表 DirectAccess 連線。
+
+</string>
+      <string id="ShowUI">使用者介面</string>
+      <string id="ShowUI_Help">指定當使用者按一下網路通知區域圖示時，是否會顯示代表 DirectAccess 連線的項目。
+
+當您只是使用 DirectAccess 遠端管理內部網路的 DirectAccess 用戶端電腦，而非提供順暢的內部網路存取時，設為 [已停用]，可以避免使用者混淆。
+
+如果沒有設定這個設定，則會顯示代表 DirectAccess 連線的項目。
+
+</string>
+      <string id="PassiveMode">DirectAccess 被動模式</string>
+      <string id="PassiveMode_Help">指定是否要以被動模式執行 NCA 服務。
+
+設為 [已停用]，可以讓 NCA 探查保持在主動狀態。如果沒有設定這個設定，預設會以主動模式執行 NCA 探查。
+
+</string>
+      <string id="LocalNamesOn">允許慣用本機名稱</string>
+      <string id="LocalNamesOn_Help">指定當使用者按一下網路通知區域圖示時，是否會提供使用者 DirectAccess 項目的 [連線] 和 [中斷連線] 選項。
+
+如果使用者按一下 [中斷連線] 選項，NCA 會移除名稱解析原則表格 (NRPT) 中的 DirectAccess 規則，DirectAccess 用戶端電腦將使用目前網路設定中任何用戶端電腦可用的一般名稱解析，包含本機內部網路的所有 DNS 查詢或網際網路 DNS 伺服器。請注意，NCA 不會移除現有的 IPsec 通道，使用者仍然可以透過指定 IPv6 位址而非名稱，來存取 DirectAccess 伺服器間的內部網路資源。
+
+中斷連線功能可以讓使用者連線到不同的內部網路時，為本機資源指定不完整的單一標籤名稱 (例如 “PRINTSVR”)，該名稱還可以在網路位置偵測未正確判斷 DirectAccess 用戶端電腦已連線到其本身內部網路時，用來暫時存取內部網路資源。
+
+若要將 DirectAccess 規則還原為 NRPT，並繼續執行一般 DirectAccess 功能，使用者可按一下 [連線]。
+
+注意:
+如果 DirectAccess 用戶端電腦位於內部網路且已正確判斷其網路位置，則 [中斷連線] 選項將不會發揮作用，因為 DirectAccess 規則已從 NRPT 移除。
+
+如果沒有設定這個設定，使用者將不會有 [連線] 或 [中斷連線] 選項。
+
+</string>
+      <string id="DTEs">IPsec 通道端點</string>
+      <string id="DTEs_Help">指定啟用 DirectAccess 的網際網路通訊協定安全性 (IPsec) 通道端點的 IPv6 位址。NCA 會嘗試透過這些已設定的通道端點，存取公司資源設定中指定的資源。
+
+根據預設，NCA 會使用與 DirectAccess 用戶端電腦連線相同的 DirectAccess 伺服器。在預設的 DirectAccess 設定中通常會有兩個 IPsec 通道端點: 一個用於基礎結構通道，另一個則用於內部網路通道。您應該分別為每個通道設定一個端點。
+	  
+每個項目都有文字 PING:，後面接著 IPsec 通道端點的 IPv6 位址。範例: PING:2002:836b:1::836b:1。
+
+您必須設定這個設定才能取得完整的 NCA 功能。
+
+</string>
+      <string id="CorporateResources">公司資源</string>
+      <string id="CorporateResources_Help">指定內部網路資源，通常可由 DirectAccess 用戶端存取。每個項目都是一個字串，可識別資源的類型和位置。
+
+每個字串都可以是下列其中一個類型:
+	  
+-  NCA ping 的 DNS 名稱或 IPv6 位址。語法為 “PING:” 後面接解析為 IPv6 位址的完整網域名稱 (FQDN) 或 IPv6 位址。範例: PING:myserver.corp.contoso.com 或 PING:2002:836b:1::1。
+ 
+注意:
+
+建議您儘可能使用 FQDN 而不要使用 IPv6 位址。
+
+重要事項:
+
+至少必須有一個項目是 PING: 資源。
+
+-	NCA 使用超文字傳輸通訊協定 (HTTP) 要求查詢的統一資源定位器 (URL)。網頁的內容不重要。語法為 “HTTP:” 後面接 URL。URL 的主機部分必須解析為網頁伺服器的 IPv6 位址或包含 IPv6 位址。範例: HTTP:http://myserver.corp.contoso.com/ 或 HTTP:http://2002:836b:1::1/。
+
+-	NCA 檢查是否存在之檔案的通用命名慣例 (UNC) 路徑。檔案的內容不重要。語法為 “FILE:” 後面接 UNC 路徑。UNC 路徑的電腦名稱部分必須解析為 IPv6 位址或包含 IPv6 位址。範例: FILE:\\myserver\myshare\test.txt 或 FILE:\\2002:836b:1::1\myshare\test.txt。
+
+您必須設定這個設定才能取得完整的 NCA 功能。
+
+</string>
+
+      <string id="CustomCommands">自訂命令</string>
+      <string id="CustomCommands_Help">指定系統管理員設定的自訂記錄命令。這些命令會與預設記錄命令一起執行。</string>
+
+    </stringTable>
+    
+    <presentationTable>
+      <presentation id="POL_08EF8AE6_3960_4852_93B5_3E068D6C2E6B">
+        <textBox refId="TXT_60660913_5491_4D50_AF96_770639FF243D">
+          <label>疑難排解入口網站</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="SupportEmail">
+        <textBox refId="SupportEmail_Control">
+          <label>支援電子郵件</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="FriendlyName">
+        <textBox refId="FriendlyName_Control">
+          <label>易記名稱</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="LocalNamesOn"/>
+      <presentation id="ShowUI"/>
+      <presentation id="CorporateResources">
+        <listBox refId="CorporateResources_Control">公司資源</listBox>
+      </presentation>
+      <presentation id="PortalName">
+        <textBox refId="PortalName_Control">
+          <label>入口網站名稱</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="DTEs">
+        <listBox refId="DTEs_Control">DTE</listBox>
+      </presentation>
+      <presentation id="PassiveMode"/>
+      <presentation id="CoporatePortalSite">
+        <textBox refId="CoporatePortalSite_Control">
+          <label>公司入口網站 - URL</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="CustomCommands">
+        <listBox refId="CustomCommands_Control">自訂命令</listBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

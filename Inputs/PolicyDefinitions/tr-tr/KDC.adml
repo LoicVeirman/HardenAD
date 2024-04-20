@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>KDC Ayarları</displayName>
+  <description>Kerberos Anahtar Dağıtım Merkezi için yapılandırma ayarları.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">Orman arama sırasını kullan</string>
+      <string id="forestsearch_explain">Bu ilke ayarı, iki parçalı hizmet asıl adlarını (SPN) çözümlemeye çalışırken Anahtar Dağıtım Merkezi'nin (KDC) aradığı güvenen ormanların listesini tanımlar.
+
+Bu ilke ayarını etkinleştirirseniz, yerel bir ormanda iki parçalı bir SPN çözümlenemezse KDC bu listedeki ormanları arar. Orman araması genel bir katalog veya ad soneki ipuçları kullanılarak yapılır. Bir eşleşme bulunursa, uygun bir etki alanı için KDC istemciye bir başvuru anahtarı döndürür.
+
+Bu ilke ayarını devre dışı bırakır veya yapılandırmazsanız, KDC, SPN'yi çözümlemek için listelenen ormanları aramaz. KDC SPN'yi ad bulunamadığı için çözümleyemiyorsa, NTLM kimlik doğrulaması kullanılabilir.
+
+Tutarlı davranış sağlamak için bu ilke ayarının etki alanındaki tüm etki alanı denetleyicilerinde desteklenmesi ve aynı şekilde ayarlanması gerekir.</string>
+      <string id="emitlili">İstemci bilgisayarlara önceki oturum açmalar hakkında bilgi sağla</string>
+      <string id="emitlili_explain">Bu ilke ayarı, etki alanı denetleyicisinin istemci bilgisayarlara önceki oturum açmalar hakkında bilgi sağlayıp sağlamadığını denetler.
+
+Bu ilke ayarını etkinleştirirseniz, bu etki alanı denetleyicisi önceki oturum açmalar hakkında bilgi iletisi sağlar.
+
+Windows Oturum Açma'nın bu özelliği kullanması için Windows Bileşenleri altındaki Windows Oturum Açma Seçenekleri düğümünde bulunan "Kullanıcının oturum açması sırasında daha önceki oturumlar hakkındaki bilgileri görüntüle" ilke ayarının da etkin olması gerekir.
+
+Bu ilke ayarını devre dışı bırakır veya yapılandırmazsanız, etki alanı denetleyicisi "Kullanıcının oturum açması sırasında daha önceki oturumlar hakkındaki bilgileri görüntüle" ilke ayarı etkin olmadıkça önceki oturum açmalar hakkında bilgi sağlamaz.
+
+Not: Yalnızca etki alanı işlev düzeyi Windows Server 2008 ise önceki oturum açmalar hakkında bilgi sağlanır. Etki alanı işlev düzeyi Windows Server 2003, Windows 2000 asıl veya Windows 2000 karma olan etki alanlarındaki etki alanı denetleyicileri önceki oturum açmalar hakkında bilgi sağlayamaz ve bu ilke ayarının etkinleştirilmesi hiçbir şeyi etkilemez.
+
+</string>
+      <string id="CbacAndArmor">Talepler, bileşik kimlik doğrulaması ve Kerberos koruması için KDC desteği</string>
+      <string id="CbacAndArmor_explain">Bu ilke ayarı, etki alanı denetleyicisini, Dinamik Erişim Denetimi için talepleri ve bileşik kimlik doğrulamasını ve Kerberos kimlik doğrulaması kullanan Kerberos korumasını destekleyecek şekilde yapılandırmanıza olanak verir.
+
+Bu ilke ayarını etkinleştirirseniz, Dinamik Erişim Denetimi için talepleri ve bileşik kimlik doğrulamasını destekleyen ve Kerberos korumasını kullanabilen istemci bilgisayarlar, Kerberos kimlik doğrulaması iletileri için bu özelliği kullanır. İlkenin etki alanında tutarlı bir şekilde uygulanmasını sağlamak için bu ilke tüm etki alanı denetleyicilerine uygulanmalıdır. 
+
+Bu ilke ayarını devre dışı bırakır veya yapılandırmazsanız, etki alanı denetleyicisi talepleri, bileşik kimlik doğrulamasını veya korumayı desteklemez.
+
+"Desteklenmiyor" seçeneğini yapılandırırsanız, etki alanı denetleyicisi talepleri, bileşik kimlik doğrulamasını veya korumayı desteklemez; bu, Windows Server 2008 R2 veya önceki işletim sistemlerini çalıştıran etki alanı denetleyicileri için varsayılan davranıştır.
+
+Not:  Bu KDC ilkesinin aşağıdaki seçeneklerinin etkili olabilmesi için, Kerberos Grup İlkesi "Talepler, bileşik kimlik doğrulaması ve Kerberos koruması için Kerberos istemci desteği", desteklenen sistemlerde etkinleştirilmelidir. Kerberos ilke ayarı etkinleştirilmezse, Kerberos kimlik doğrulama iletileri bu özellikleri kullanmaz.  
+
+"Destekleniyor" olarak yapılandırırsanız, etki alanı denetleyicisi talepleri, bileşik kimlik doğrulamasını ve Kerberos korumasını destekler. Etki alanı denetleyicisi, etki alanının Dinamik Erişim Denetimi için talepleri ve bileşik kimlik doğrulamasını ve Kerberos korumasını desteklediğini Kerberos istemci bilgisayarlarına duyurur. 
+
+Etki alanı işlev düzeyi gereksinimleri
+
+ "Talepleri her zaman sağla" ve "Korumasız kimlik doğrulaması istekleri başarısız olsun" seçeneklerinde, etki alanı işlev düzeyi Windows Server 2008 R2 veya önceki sürümüne ayarlanırsa, etki alanı denetleyicileri "Destekleniyor" seçeneği belirlenmiş gibi davranır. 
+Etki alanı işlev düzeyi Windows Server 2012 olarak ayarlanırsa, etki alanı denetleyicisi Kerberos istemci bilgisayarlarına etki alanının Dinamik Erişim Denetimi için talepleri ve bileşik kimlik doğrulamasını ve Kerberos korumasını desteklediğini duyurur ve:
+- "Talepleri her zaman sağla" seçeneğini ayarlarsanız, hesaplar için her zaman talep döndürür ve esnek kimlik doğrulaması güvenli tünelini (FAST) duyurmak için RFC davranışını destekler.
+- "Korumasız kimlik doğrulaması istekleri başarısız olsun" seçeneğini ayarlarsanız, korumasız Kerberos iletilerini her zaman reddeder.
+
+Uyarı: "Korumasız kimlik doğrulaması istekleri başarısız olsun" ayarlandığında, Kerberos korumasını desteklemeyen istemci bilgisayarlar etki alanı denetleyicisinin kimliğini doğrulayamaz.
+
+Bu özelliğin etkili olduğundan emin olmak için Dinamik Erişim Denetimi için talepleri ve bileşik kimlik doğrulamasını destekleyen ve kimlik doğrulama isteklerini işlemek üzere Kerberos koruması kullanabilen yeterli sayıda etki alanı denetleyicisi dağıtın. Bu ilkeyi destekleyen etki alanı denetleyicilerinin sayısının yetersiz olması, Dinamik Erişim Denetimi veya Kerberos korumasının gerekli olduğu her durumda kimlik doğrulama hatalarına neden olur (yani, "Destekleniyor" seçeneğinin etkinleştirildiği durum).
+
+Bu ilke ayarı etkinleştirildiğinde etki alanı denetleyicisinin performansı üzerindeki etkisi:
+- Güvenli Kerberos etki alanı özelliği bulunması gerekir ve bu da ek ileti alışverişlerine neden olur.
+- Dinamik Erişim Denetimi'ne yönelik talepler ve bileşik kimlik doğrulaması, iletideki verilerin boyutunu ve karmaşıklığını artırır ve bu da daha fazla işlem süresine ve daha büyük Kerberos hizmeti anahtar boyutuna yol açar.
+- Kerberos koruması Kerberos iletilerini tamamen şifreler ve Kerberos hatalarını işaretler; bu, işleme süresinin artmasına neden olur ancak hizmet anahtar boyutunu değiştirmez.
+</string>
+      <string id="NoCbacAndArmor">Desteklenmiyor</string>
+      <string id="MixModeCbacAndArmor">Destekleniyor</string>
+      <string id="FullModeCbacAndArmor">Talepleri her zaman sağla</string>
+      <string id="FullModeCbacAndRequireArmor">Korumasız kimlik doğrulaması istekleri başarısız olsun</string>
+      <string id="TicketSizeThreshold">Büyük Kerberos anahtarları için uyarı</string>
+      <string id="TicketSizeThreshold_explain">Bu ilke ayarı, Kerberos kimlik doğrulaması sırasında uyarı olayı verildiğinde tetiklenecek Kerberos anahtarları boyutunu yapılandırmanıza olanak tanır. Anahtar boyutu uyarıları Sistem günlüğüne kaydedilir.
+
+Bu ilke ayarını etkinleştirirseniz, uyarı olaylarını tetikleyen Kerberos anahtarı için eşik sınırı ayarlayabilirsiniz. Çok yüksek bir eşik ayarlanırsa, uyarı olayları günlüğe kaydedilmese bile kimlik doğrulaması hataları oluşabilir.  Çok düşük bir eşik ayarlanırsa, günlükte çözümleme için yararlı olamayacak kadar çok anahtar uyarısı olur. Grup İlkesi kullanarak yapılandırmıyorsanız, bu değer "En yüksek Kerberos SSPI bağlam belirteci arabellek boyutunu ayarla" Kerberos ilkesiyle aynı değere veya ortamınızda kullanılan en küçük MaxTokenSize değerine ayarlanmalıdır.
+      
+Bu ilke ayarını devre dışı bırakır veya yapılandırmazsanız, eşik değeri varsayılan olarak 12.000 bayta ayarlanır; bu, Windows 7, Windows Server 2008 R2 ve önceki sürümlerin varsayılan Kerberos MaxTokenSize değeridir.
+
+</string>
+      <string id="RequestCompoundId">Bileşik kimlik doğrulaması iste</string>
+      <string id="RequestCompoundId_explain">Bu ilke ayarı, etki alanı denetleyicisini bileşik kimlik doğrulaması isteyecek şekilde yapılandırmanıza olanak tanır.
+
+Not: Etki alanı denetleyicisinin bileşik kimlik doğrulaması istemesi için, "Talepler, bileşik kimlik doğrulaması ve Kerberos koruması için KDC desteği" ilkesinin yapılandırılmış ve etkinleştirilmiş olması gerekir. 
+
+Bu ilke ayarını etkinleştirirseniz, etki alanı denetleyicileri  bileşik kimlik doğrulaması ister. Döndürülen hizmet anahtarının bileşik kimlik doğrulamasını içermesi için, hesabın açıkça yapılandırılmış olması gerekir. İlkenin etki alanında tutarlı bir şekilde uygulanmasını sağlamak için, bu ilke tüm etki alanı denetleyicilerine uygulanmalıdır. 
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız, istemci her bileşik kimlik doğrulaması isteği gönderdiğinde, hesap yapılandırmasına bakılmaksızın etki alanı denetleyicileri bileşik kimlik doğrulamasını içeren hizmet anahtarları döndürürler.
+
+</string>
+      <string id="PKINITFreshness">PKInit Yenilik Uzantısı için KDC desteği</string>
+      <string id="PKINITFreshness_explain">PKInit Yenilik Uzantısı desteği için Windows Server 2016 etki alanı işlev düzeyi (DFL) gereklidir. Etki alanı denetleyicisinin etki alanı Windows Server 2016 DFL veya daha yüksek değilse, bu ilke uygulanmaz.
+
+Bu ilke ayarı, PKInit Yenilik Uzantısı’nı destekleyecek şekilde bir etki alanı denetleyicisi (DC) yapılandırmanıza olanak sağlar.
+
+Bu ilke ayarını etkinleştirirseniz, aşağıdaki seçenekler desteklenir:
+
+Desteklenen: PKInit Yenilik Uzantısı istenildiği takdirde desteklenir. PKInit Yenilik Uzantısı ile başarılı bir şekilde kimlik doğrulaması yapan Kerberos istemcileri, yeni ortak anahtar kimliği SID’sini alır.
+
+Gerekli: PKInit Yenilik Uzantısı, başarılı kimlik doğrulama için gereklidir. PKInit Yenilik Uzantısı’nı desteklemeyen Kerberos işlemcileri, ortak anahtar kimlik bilgilerini her kullandığında başarısız olur.
+
+Bu ilke ayarını devre dışı bırakır veya yapılandırmazsanız, DC, PKInit Yenilik Uzantısı’nı bir daha önermez ve yeniliğine bakmadan geçerli kimlik doğrulama isteklerini kabul eder. Kullanıcılar da bir daha yeni ortak anahtar kimlik SID’si almazlar.
+</string>
+      <string id="NoPKINITFreshness">Devre dışı</string>
+      <string id="SupportPKINITFreshness">Destekleniyor</string>
+      <string id="RequirePKINITFreshness">Gerekli</string>
+      <string id="PKINITHashAlgorithmConfiguration">Sertifika oturum açma için karma algoritmalarını yapılandır</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Bu ilke ayarı, sertifika doğrulaması yapılırken Kerberos istemcisi tarafından kullanılan karma veya sağlama toplamı algoritmalarını denetler.
+
+Bu ilkeyi etkinleştirirseniz her bir algoritmada dört durumdan birini yapılandırabilirsiniz:
+
+- “Varsayılan”, algoritmayı önerilen duruma ayarlar.
+
+- “Destekleniyor”, algoritmanın kullanılmasını sağlar. Varsayılan olarak devre dışı bırakılan algoritmaların etkinleştirilmesi güvenliğinizi azaltabilir.
+
+- “Denetlenmiyor”, algoritmanın kullanılmasını sağlar ve algoritma her kullanıldığında bir olay (ID 309) raporlar. Bu durum, algoritmanın kullanılmadığını ve güvenli bir şekilde devre dışı bırakılabileceğini doğrulamaya yöneliktir.
+
+- “Desteklenmiyor”, algoritmanın kullanımını devre dışı bırakır. Bu durum, güvenli olmadığı düşünülen algoritmalara yöneliktir.
+
+Bu ilkeyi devre dışı bırakırsanız veya yapılandırmazsanız, her bir algoritma “Varsayılan” durumunu alır.
+Windows Kerberos istemcisi tarafından desteklenen karma ve sağlama toplamı algoritmaları ile bunların varsayılan durumları hakkında daha fazla bilgiyi https://go.microsoft.com/fwlink/?linkid=2169037 adresinde bulabilirsiniz.
+
+Bu yapılandırma tarafından oluşturulan olaylar: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Varsayılan</string>
+      <string id="PKINITHashAlgorithm_Supported">Destekleniyor</string>
+      <string id="PKINITHashAlgorithm_Audited">Denetlendi</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Desteklenmiyor</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Mod:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Aranacak Ormanlar</label>
+        </textBox>
+        <text>Sözdizimi:</text>
+        <text>Bu ilke etkinleştirildiğinde aranacak ormanların listesini girin.</text>
+        <text>Tam Etki Alanı Adı (FQDN) adlandırma biçimini kullanın.</text>
+        <text>Birden fazla arama girişini noktalı virgülle ";" ayırın.</text>
+        <text>Ayrıntılar:</text>
+        <text>Orman Arama Sırası önce genel kataloğu, sonra listelenen sırayı aradığından geçerli ormanın listelenmesi gerekmez.</text>
+        <text>Ormandaki tüm etki alanlarını ayrı olarak listelemeniz gerekmez.</text>
+        <text>Güvenen bir orman listelendiyse, söz konusu ormandaki tüm etki alanları aranır.</text>
+        <text>En iyi performans için ormanları başarı olasılığı sırasına göre listeleyin.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Dinamik Erişim Denetimi için talepler ve bileşik kimlik doğrulaması ve Kerberos koruması seçenekleri:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Anahtar Boyutu Eşiği</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">PKInit Yenilik Uzantısı seçenekleri:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

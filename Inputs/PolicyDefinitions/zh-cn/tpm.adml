@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>请在此处输入显示名称</displayName>
+  <description>请在此处输入描述</description>
+  <resources>
+    <stringTable>
+      <string id="BlockedCommandsList_Help">使用此策略设置，可以管理 Windows 所阻止的受信任的平台模块(TPM)命令的组策略列表。
+
+如果启用此策略设置，Windows 将阻止指定的命令被发送到计算机上的 TPM。TPM 命令通过命令编号引用。例如，命令编号 129 是 TPM_OwnerReadInternalPub，而命令编号 170 是 TPM_FieldUpgrade。若要使用 TPM 1.2 查找与每个 TPM 命令关联的命令编号，请运行 "tpm.msc" 并导航到“命令管理”部分。
+
+如果禁用或未配置此策略设置，则 Windows 只能阻止通过默认或本地列表指定的那些 TPM 命令。被阻止的 TPM 命令的默认列表由 Windows 预先进行配置。若要查看默认列表，你可以运行 "tpm.msc"，导航到“命令管理”部分，然后使“在默认阻止列表上”列可见。通过运行 "tpm.msc" 或对 Win32_Tpm 界面编写脚本，可在组策略之外配置被阻止的 TPM 命令的本地列表。请参阅相关策略设置来强制实施或忽略被阻止的 TPM 命令的默认列表和本地列表。</string>
+      <string id="BlockedCommandsList_Name">配置阻止的 TPM 命令的列表</string>
+      <string id="IgnoreDefaultList_Help">使用此策略设置，可强制实施或忽略计算机被阻止的受信任的平台模块(TPM)命令的默认列表。
+
+如果启用此策略设置，则 Windows 将忽略计算机被阻止的 TPM 命令的默认列表，而且只阻止那些由组策略或本地列表指定的 TPM 命令。
+
+被阻止的 TPM 命令的默认列表由 Windows 预先进行配置。若要查看默认列表，你可以运行 "tpm.msc"，导航到“命令管理”部分，然后使“在默认阻止列表上”列可见。通过运行 "tpm.msc" 或对 Win32_Tpm 界面编写脚本，可在组策略之外配置被阻止的 TPM 命令的本地列表。请参阅相关策略设置来配置被阻止的 TPM 命令的组策略列表。
+
+如果禁用或未配置此策略设置，则除被阻止的 TPM 命令的组策略和本地列表中的命令外，Windows 还将阻止默认列表中的 TPM 命令。 </string>
+      <string id="IgnoreDefaultList_Name">忽略阻止的 TPM 命令的默认列表</string>
+      <string id="IgnoreLocalList_Help">使用此策略设置，可强制实施或忽略计算机被阻止的受信任的平台模块(TPM)命令的本地列表。
+
+如果启用此策略设置，则 Windows 将忽略计算机被阻止的 TPM 命令的本地列表，而且只阻止那些由组策略或默认列表指定的 TPM 命令。
+
+通过运行 "tpm.msc" 或对 Win32_Tpm 界面编写脚本，可在组策略之外配置被阻止的 TPM 命令的本地列表。被阻止的 TPM 命令的默认列表由 Windows 预先进行配置。请参阅相关策略设置来配置被阻止的 TPM 命令的组策略列表。
+
+如果禁用或未配置此策略设置，则除被阻止的 TPM 命令的组策略和默认列表中的命令外，Windows 还将阻止本地列表中找到的 TPM 命令。</string>
+      <string id="IgnoreLocalList_Name">忽略阻止的 TPM 命令的本地列表</string>
+      <string id="TPMCategory">受信任的平台模块服务</string>
+      <string id="OSManagedAuth_Name">配置操作系统可用的 TPM 所有者授权信息级别</string>
+      <string id="OSManagedAuth_Help">此策略设置配置存储在本地计算机的注册表中的 TPM 所有者授权信息数量。根据本地存储的 TPM 所有者授权信息数量，操作系统和基于 TPM 的应用程序可以执行需要 TPM 所有者授权的某些 TPM 操作，而无需用户输入 TPM 所有者密码。
+
+可以选择让操作系统存储完整的 TPM 所有者授权值、TPM 管理委派 Blob 和 TPM 用户委派 Blob，或者不存储任何内容。
+
+如果启用此策略设置，则 Windows 将根据所选的操作系统托管的 TPM 身份验证设置，在本地计算机的注册表中存储 TPM 所有者授权。
+
+选择操作系统托管的 TPM 身份验证设置“完全”可在本地注册表中存储完整的 TPM 所有者授权、TPM 管理委派 Blob 和 TPM 用户委派 Blob。使用此设置，可以使用 TPM 而无需 TPM 所有者授权值的远程或外部存储。此设置适用于以下情况: 不依赖阻止 TPM 反攻击逻辑的重置或更改 TPM 所有者授权值。某些基于 TPM 的应用程序可能需要更改此设置，然后才能使用依赖 TPM 反攻击逻辑的功能。
+
+选择操作系统托管的 TPM 身份验证设置“已委派”可在本地注册表中仅存储 TPM 管理委派 Blob 和 TPM 用户委派 Blob。此设置适合与依赖 TPM 反攻击逻辑的基于 TPM 的应用程序一起使用。
+
+选择操作系统托管的 TPM 身份验证设置“无”，可实现与以前的操作系统和应用程序兼容，或用于需要不在本地存储 TPM 所有者授权的方案。使用此设置可能会导致某些基于 TPM 的应用程序出现问题。
+
+注意: 如果操作系统托管的 TPM 身份验证设置从“完全”更改为“已委派”，则将重新生成完整的 TPM 所有者授权值并且初始 TPM 所有者授权值的所有副本都将无效。
+</string>
+      <string id="OSManagedAuth-TpmAuthFull">完全</string>
+      <string id="OSManagedAuth-TpmAuthAdminPlusUser">已委派</string>
+      <string id="OSManagedAuth-TpmAuthNone">无</string>
+      <string id="StandardUserAuthorizationFailureDuration_Name">标准用户锁定持续时间</string>
+      <string id="StandardUserAuthorizationFailureDuration_Name_Help">使用此策略设置，可以管理计算需要授权的受信任的平台模块(TPM)命令的标准用户授权失败次数的持续时间(以分钟为单位)。如果持续时间内授权失败的 TPM 命令数等于阈值，则会阻止标准用户向 TPM 发送需要授权的命令。
+
+此设置可帮助管理员阻止 TPM 硬件进入锁定模式，因为它会降低标准用户向 TPM 发送需要授权的命令的速率。
+
+如果标准用户向 TPM 发送命令并收到指示授权失败的错误响应，则说明授权失败。早于此持续时间的授权失败将被忽略。
+
+对于每个标准用户，将应用两个阈值。超过任一阈值都会阻止标准用户向 TPM 发送需要授权的命令。
+
+“标准用户锁定阈值(单个)”值为每个标准用户可以授权失败的最大次数，超过此值后将不允许该用户向 TPM 发送需要授权的命令。
+
+“标准用户锁定总阈值”值为所有标准用户可以授权失败的最大总次数，超过此值后将不允许所有标准用户向 TPM 发送需要授权的命令。
+
+根据设计，TPM 在收到过多授权值不正确的命令时会进入硬件锁定模式，避免自身受到密码猜测攻击。当 TPM 进入锁定模式时，所有用户(包括管理员)和 Windows 功能(例如 BitLocker 驱动器加密)都会受到影响。TPM 允许的授权失败次数以及锁定持续时间因 TPM 制造商而异。某些 TPM 可能会根据以前的失败次数，采用更少的授权失败次数进入持续时间更长的锁定模式。某些 TPM 可能需要系统重新启动才能退出锁定模式。其他 TPM 则可能需要系统经过足够多的时钟周期数，才能退出锁定模式。
+
+拥有 TPM 所有者密码的管理员可以使用 TPM 管理控制台(tpm.msc)完全重置 TPM 的硬件锁定逻辑。每次管理员重置 TPM 的硬件锁定逻辑后，所有之前的标准用户 TPM 授权失败都将被忽略，标准用户可以立即再次正常使用 TPM。
+
+如果未配置此值，则使用默认值 480 分钟(8 小时)。
+      </string>
+      <string id="StandardUserAuthorizationFailureIndividualThreshold_Name">标准用户单锁定阈值</string>
+      <string id="StandardUserAuthorizationFailureIndividualThreshold_Name_Help">使用此策略设置，可以管理对于受信任的平台模块(TPM)每个标准用户的授权失败最大次数。如果在“标准用户锁定持续时间”的持续时间内用户的授权失败次数等于此值，则会阻止该标准用户向受信任的平台模块(TPM)发送需要授权的命令。
+
+此设置可帮助管理员阻止 TPM 硬件进入锁定模式，因为它会降低标准用户向 TPM 发送需要授权的命令的速率。
+
+如果标准用户向 TPM 发送命令并收到指示授权失败的错误响应，则说明授权失败。早于该持续时间的授权失败将被忽略。
+
+对于每个标准用户，将应用两个阈值。超过任一阈值都会阻止标准用户向 TPM 发送需要授权的命令。
+
+此值为每个标准用户可以授权失败的最大次数，超过此值后将不允许该用户向 TPM 发送需要授权的命令。
+
+“标准用户锁定总阈值”值为所有标准用户可以授权失败的最大总次数，超过此值后将不允许所有标准用户向 TPM 发送需要授权的命令。
+
+根据设计，TPM 在收到过多授权值不正确的命令时会进入硬件锁定模式，避免自身受到密码猜测攻击。当 TPM 进入锁定模式时，所有用户(包括管理员)和 Windows 功能(例如 BitLocker 驱动器加密)都会受到影响。TPM 允许的授权失败次数以及锁定持续时间因 TPM 制造商而异。某些 TPM 可能会根据以前的失败次数，采用更少的授权失败次数进入持续时间更长的锁定模式。某些 TPM 可能需要系统重新启动才能退出锁定模式。其他 TPM 则可能需要系统经过足够多的时钟周期数，才能退出锁定模式。
+
+拥有 TPM 所有者密码的管理员可以使用 TPM 管理控制台(tpm.msc)完全重置 TPM 的硬件锁定逻辑。每次管理员重置 TPM 的硬件锁定逻辑后，所有之前的标准用户 TPM 授权失败都将被忽略，标准用户可以立即再次正常使用 TPM。
+
+如果未配置此值，则使用默认值 4。
+
+值为零表示 OS 不允许标准用户向 TPM 发送可能导致授权失败的命令。
+      </string>
+
+      <string id="StandardUserAuthorizationFailureTotalThreshold_Name">标准用户锁定总阈值</string>
+      <string id="StandardUserAuthorizationFailureTotalThreshold_Name_Help">使用此策略设置，可以管理对于受信任的平台模块(TPM)所有标准用户的授权失败最大次数。如果在“标准用户锁定持续时间”的持续时间内所有标准用户的授权失败总次数等于此值，则会阻止所有标准用户向受信任的平台模块(TPM)发送需要授权的命令。
+
+此设置可帮助管理员阻止 TPM 硬件进入锁定模式，因为它会降低标准用户向 TPM 发送需要授权的命令的速率。
+
+如果标准用户向 TPM 发送命令并收到指示授权失败的错误响应，则说明授权失败。早于该持续时间的授权失败将被忽略。
+
+对于每个标准用户，将应用两个阈值。超过任一阈值都会阻止标准用户向 TPM 发送需要授权的命令。
+
+“标准用户单锁定”值为每个标准用户可以授权失败的最大次数，超过此值后将不允许该用户向 TPM 发送需要授权的命令。
+
+此值为所有标准用户可以授权失败的最大总次数，超过此值后将不允许所有标准用户向 TPM 发送需要授权的命令。
+
+根据设计，TPM 在收到过多授权值不正确的命令时会进入硬件锁定模式，避免自身受到密码猜测攻击。当 TPM 进入锁定模式时，所有用户(包括管理员)和 Windows 功能(例如 BitLocker 驱动器加密)都会受到影响。TPM 允许的授权失败次数以及锁定持续时间因 TPM 制造商而异。某些 TPM 可能会根据以前的失败次数，采用更少的授权失败次数进入持续时间更长的锁定模式。某些 TPM 可能需要系统重新启动才能退出锁定模式。其他 TPM 则可能需要系统经过足够多的时钟周期数，才能退出锁定模式。
+
+拥有 TPM 所有者密码的管理员可以使用 TPM 管理控制台(tpm.msc)完全重置 TPM 的硬件锁定逻辑。每次管理员重置 TPM 的硬件锁定逻辑后，所有之前的标准用户 TPM 授权失败都将被忽略，标准用户可以立即再次正常使用 TPM。
+
+如果未配置此值，则使用默认值 9。
+
+值为零表示 OS 不允许标准用户向 TPM 发送可能导致授权失败的命令。
+
+      </string>
+      <string id="UseLegacyDAP_Name">将系统配置为使用 TPM 2.0 的旧版字典攻击防护参数设置。</string>
+      <string id="UseLegacyDAP_Help">此策略设置将 TPM 配置为使用字典攻击防护参数(锁定阈值和恢复时间)并将其值设置为用于 Windows 10 版本 1607 及更低版本的值。设置此策略仅在以下情况下生效: a) TPM 最初是使用 Windows 10 版本 1607 之后的 Windows 版本准备的，且 b) 系统使用 TPM 2.0。请注意，启用此策略的设置将仅在 TPM 维护任务运行(通常在系统重启后发生)后生效。此策略在系统上启用并已生效(在系统重启后)后，禁用它将不会产生任何影响，系统的 TPM 仍将使用旧版字典攻击防护参数进行配置，而不管此组策略的值如何。使此策略的禁用设置在曾经启用它的系统上生效的唯一方法是: a) 从组策略中禁用它，b) 清除系统上的 TPM。</string>
+      <string id="DSHACategory">设备运行状况证明服务</string>
+      <string id="OptIntoDSHA_Name">启用设备运行状况证明监视和报告</string>
+      <string id="OptIntoDSHA_Help">此组策略在受支持的设备上支持设备运行状况证明报告（DHA 报告）。它让受支持的设备在每次启动时将设备运行状况证明相关信息（设备启动日志、PCR 值、TPM 证书等）发送到设备运行状况证明服务（DHA 服务）。设备运行状况证明服务验证设备的安全状态和运行状况，并让企业管理员可以通过基于云的报告门户访问找到的信息。此策略独立于设备可管理性解决方案（如 MDM 或 SCCM）启动的 DHA 报告，且不会干扰这些报告的工作流。</string>
+      <string id="ClearTPMIfNotReady_Name">配置系统，以在 TPM 未处于“就绪”状态时将其清除。</string>
+      <string id="ClearTPMIfNotReady_Help">此策略设置配置系统，以提示用户在检测到 TPM 处于“就绪”状态以外任何状态时将其删除。此策略仅在系统的 TPM 处于“就绪”以外的状态时生效，包括 TPM 处于“已就绪，但功能有所减少”状态。清除 TPM 的提示将在用户下一次重新启动并登录后开始出现，且登录用户必须是系统管理员组的成员。此提示可以取消，但会在每次重新启动并登录后再次出现，除非禁用策略或 TPM 处于“就绪”状态。</string>
+        
+    </stringTable>
+    <presentationTable>
+      <presentation id="BlockedCommandsList_Name">
+        <text>通过向列表中添加命令编号可以指定要阻止的命令。</text>
+        <listBox refId="BlockedCommandsList_Ordinals2">被阻止的 TPM 命令列表: </listBox>
+        <text>例如，若要阻止命令 TPM_OwnerReadInternalPub</text>
+        <text>和 TPM_FieldUpgrade，请向列表中添加项目 129 和 170。</text>
+      </presentation>
+      <presentation id="OSManagedAuth_Name">
+        <dropdownList refId="SelectOSManagedAuthLevel" noSort="true" defaultItem="1">操作系统托管的 TPM 授权级别:</dropdownList>
+      </presentation>
+      <presentation id="StandardUserAuthorizationFailureDuration_Name">
+        <decimalTextBox refId="DXT_StandardUserAuthorizationFailureDuration_Name" defaultValue="480">计算 TPM 授权失败的持续时间(以分钟计):</decimalTextBox>
+      </presentation>
+      <presentation id="StandardUserAuthorizationFailureIndividualThreshold_Name">
+        <decimalTextBox refId="DXT_StandardUserAuthorizationFailureIndividualThreshold_Name" defaultValue="4">每个持续时间的最大授权失败次数:</decimalTextBox>
+      </presentation>
+      <presentation id="StandardUserAuthorizationFailureTotalThreshold_Name">
+        <decimalTextBox refId="DXT_StandardUserAuthorizationFailureTotalThreshold_Name" defaultValue="9">每个持续时间的最大授权失败次数:</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

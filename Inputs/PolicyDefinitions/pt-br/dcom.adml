@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>digite o nome para exibição aqui</displayName>
+  <description>digite a descrição aqui</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">COM Distribuída</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Permitir isolamentos de verificação de segurança de ativação local</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Permite especificar que os administradores do computador local podem suplementar a lista Definir isolamentos de Verificação de Segurança de Ativação.
+
+Se você habilitar esta configuração de diretiva, e o DCOM não encontrar uma entrada explícita para uma id de aplicativo de servidor DCOM (IDApl) na diretiva Definir isolamentos de Verificação de Segurança de Ativação (caso ativada), o DCOM irá procurar uma entrada na lista configurada localmente.
+
+Se você desabilitar esta configuração de diretiva, o DCOM não irá procurar na lista de isolamentos de verificação de segurança de ativação do DCOM configurada localmente.
+
+Se você não configurar esta configuração de diretiva, o DCOM só irá procurar na lista de isolamentos configurada localmente caso a diretiva Definir isolamentos de Verificação de Segurança de Ativação não esteja configurada.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Definir isolamentos de Verificação de Segurança de Ativação</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Permite exibir e alterar uma lista de IDs de aplicativo de servidor DCOM (IDsApl) que estão isolados da verificação de segurança de Ativação do DCOM. O DCOM usa duas listas desse tipo, uma configurada pela Diretiva de Grupo por meio desta configuração de diretiva, e a outra pelas ações de administradores do computador local. O DCOM ignora a segunda lista quando esta configuração de diretiva é definida, a menos que a diretiva Permitir isolamentos de verificação de segurança de ativação local esteja habilitada.
+
+As IDsApl do servidor DCOM adicionadas a esta diretiva devem ser listadas entre chaves. Por exemplo: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}. Se você definir uma IDApl que não existe ou cuja formatação é incorreta, o DCOM irá adicioná-la à lista sem procurar erros.
+
+Se você habilitar esta configuração de diretiva, poderá exibir e alterar a lista de isolamentos de verificação de segurança de ativação do DCOM definida pelas configurações da Diretiva de Grupo. Se você adicionar uma IDApl a esta lista e definir seu valor como 1, o DCOM não irá reforçar a verificação de segurança de Ativação para esse servidor DCOM. Se você adicionar uma IDApl a esta lista e definir seu valor como 0, o DCOM sempre reforçará a verificação de segurança de Ativação para esse servidor DCOM, independentemente das configurações locais.
+
+Se você desabilitar esta configuração de diretiva, a lista de isolamentos de IDApl definida pela Diretiva de Grupo será excluída, e a lista definida pelos administradores do computador local será utilizada.
+
+Se você não definir esta configuração de diretiva, a lista de isolamentos de IDApl definida pelos administradores do computador local será utilizada.
+
+Observações:
+
+a verificação de segurança de Ativação do DCOM é executada depois que um processo do servidor DCOM é iniciado, mas antes de uma solicitação de ativação de objeto ser distribuída para o processo do servidor. Esta verificação de acesso é executada no descritor de segurança de permissão de inicialização personalizado do servidor DCOM, caso exista, ou nos padrões configurados.
+
+Se a permissão de inicialização personalizada do servidor DCOM contiver entradas de negação explícitas, isso poderá significar que ativações de objeto que teriam tido êxito anteriormente para determinados usuários, uma vez que o processo do servidor DCOM estivesse em execução, poderão falhar agora. A ação correta a ser tomada nesta situação é reconfigurar as definições de permissão de inicialização personalizada do servidor DCOM com as definições de segurança corretas, mas esta configuração de diretiva pode ser usada a curto prazo como auxiliar de implantação de compatibilidade de aplicativos.
+
+Os servidores DCOM adicionados a esta lista de isolamentos serão isolados apenas se as permissões de inicialização personalizadas não contiverem entradas de negação ou de concessão LocalLaunch, RemoteLaunch, LocalActivate ou RemoteActivate específicas para quaisquer usuários ou grupos. Observe que os isolamentos das IDsApl do Servidor DCOM adicionadas a esta lista serão aplicados às versões de 32 e 64 bits do servidor, caso presentes.</string>
+      <string id="DCOMAppCompatPolicies">Configurações de Compatibilidade de Aplicativos</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Digitar IDsApl do servidor DCOM acompanhadas de um valor de ação listado abaixo.</text>
+        <text>A IDApl deve incluir chaves de abertura e de fechamento.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Adicionar ou remover servidores DCOM da lista de isolamentos: </listBox>
+        <text> </text>
+        <text>Valores:</text>
+        <text>0 = A IDApl especificada não está isolada da verificação de segurança de Ativação</text>
+        <text>1 = A IDApl especificada está isolada da verificação de segurança de Ativação</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

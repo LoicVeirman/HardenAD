@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Windows 服务策略</displayName>
+  <description>Windows 服务策略</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">指定可选组件安装和组件修复的设置</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+此策略设置可指定为修复操作系统损坏或启用已删除其负载文件的可选功能而使用的网络位置。
+
+如果启用此策略设置并指定新位置，则会使用该位置中的文件来修复操作系统损坏或启用已删除其负载文件的可选功能。必须在“备用源文件路径”文本框中输入新位置的完全限定路径。可指定以分号分隔的多个位置。
+
+网络位置可以是文件夹，也可以是 WIM 文件。如果是 WIM 文件，则指定位置时位置路径应以“wim:”为前缀，且位置中应包含要在 WIM 文件中使用的图片的索引。例如“wim:\\server\share\install.wim:3”。
+
+如果禁用或未配置此策略设置，或者无法在此策略设置中所指定的位置找到所需的文件，则会从“Windows 更新”下载文件，前提是该计算机的策略设置允许这样做。
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>备用源文件路径</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">从不尝试从“Windows 更新”下载负载</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">直接从“Windows 更新”而不是“Windows Server 更新服务(WSUS)”下载修复内容和可选功能</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

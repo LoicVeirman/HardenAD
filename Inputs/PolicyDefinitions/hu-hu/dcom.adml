@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>itt adja meg a megjelenítendő nevet</displayName>
+  <description>itt adja meg a leírást</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">Elosztott COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Aktiválásbiztonsági ellenőrzés alóli kivételek helyi számítógépen való megadásának engedélyezése</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Az „Aktiválásbiztonsági ellenőrzés alóli kivételek megadása” lista helyi rendszergazdák általi kiegészítésének engedélyezését teszi lehetővé.
+
+Ha engedélyezi ezt a házirend-beállítást és a DCOM nem talál egy explicit DCOM-kiszolgálói alkalmazásazonosítót (appid) az „Aktiválásbiztonsági ellenőrzés alóli kivételek megadása” házirendben (ha engedélyezve van), a DCOM a helyben konfigurált listában fog bejegyzést keresni.
+
+Ha letiltja ezt a házirend-beállítást, akkor a DCOM nem fog a helyben konfigurált DCOM aktiválásbiztonsági ellenőrzés alóli kivételek megadása listában keresni.
+
+Ha nem konfigurálja ezt a házirend-beállítást és az „Aktiválásbiztonsági ellenőrzés alóli kivételek megadása” házirend sincs konfigurálva, a DCOM csak a helyben konfigurált kivételek listában fog keresni.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Aktiválásbiztonsági ellenőrzés alóli kivételek megadása</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Ezzel a házirend-beállítással lehetővé teheti azon DCOM-kiszolgálói alkalmazások azonosítójának (appid) megtekintését és módosítását, amelyekre a DCOM aktiválásbiztonsági ellenőrzése nem vonatkozik.  A DCOM szolgáltatás két ilyen listát használ. Az egyiket az ezen a beállításon keresztül konfigurálható Csoportházirend definiálja, a másikat a helyi számítógép rendszergazdája adhatja meg.  A DCOM mellőzi a második listát amennyiben ez a házirend-beállítás konfigurálta, kivéve ha az „Aktiválásbiztonsági ellenőrzés alóli kivételek helyi számítógépen való megadásának engedélyezése” házirend engedélyezett.
+
+Ehhez a házirendhez adott DCOM-kiszolgáló alkalmazásazonosító értékeinek a listában kapcsos-zárójeles formátumban kell megjelenniük.  Például: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}.  Nem létező vagy helytelenül formázott alkalmazásazonosító-érték bevitele esetén a DCOM a hibák ellenőrzése nélkül fogja azt a listához hozzáadni.
+
+Ezen házirend-beállítás engedélyezésével megtekintheti és módosíthatja a Csoportházirend által meghatározott DCOM aktiválásbiztonsági ellenőrzés alóli kivételek listáját. Ha egy, a listába felvett alkalmazásazonosító értékét 1-re állítja, a DCOM nem követeli meg az adott DCOM-kiszolgáló aktiválásbiztonsági ellenőrzését.   Ha egy, a listába felvett alkalmazásazonosító értékét 0-ra állítja, a DCOM a helyi beállításoktól függetlenül mindig megköveteli az adott DCOM-kiszolgáló aktiválásbiztonsági ellenőrzését.
+
+Ezen házirend-beállítások letiltásával a Csoportházirend által meghatározott alkalmazásazonosító kivételek listáját a rendszer törli és a helyi rendszergazdák által megadott listát használja.
+
+Ha ezt a házirend-beállítást nem konfigurálja, a rendszer a helyi rendszergazdák által megadott alkalmazásazonító kivételek listáját használja.
+
+Megjegyzések:
+
+A DCOM aktiválásbiztonsági ellenőrzést a rendszer a DCOM-kiszolgáló folyamat kezdete után, de az objektumaktiválási kérelem kiszolgálófolyamathoz történő elküldése előtt hajtja végre.   A rendszer a DCOM-kiszolgáló egyéni indítási engedélyének biztonsági leíróján végez hozzáférés-ellenőrzést, amennyiben az létezik, ha pedig nem, akkor a konfigurált alapértelmezések lesznek használatban.
+
+Ha a DCOM-kiszolgáló egyéni indítási engedélyéhez tartozó bejegyzés kifejezett MEGTAGADÁS-t tartalmaz, jelentheti azt, hogy a meghatározott felhasználók számára korábban, a DCOM-kiszolgálófolyamat futtatásakor sikerült objektumaktiválások jelen esetben sikertelenek.   Ebben a helyzetben a helyes megoldás a megfelelő biztonsági beállítások érdekében a DCOM-kiszolgáló egyéni indítási engedélyek beállításainak újrakonfigurálása, de alkalmazáskompatibilitási telepítési segítségként rövid távon ez a házirend-beállítás is használható.
+
+Az ebbe a kivétellistába felvett DCOM-kiszolgálók csak abban az esetben élveznek mentességet, ha az azokhoz tartozó egyéni indítási engedélyek nem tartalmaznak konkrét LocalLaunch, RemoteLaunch, LocalActivate vagy RemoteActivate engedélyezéseket vagy megtagadásokat egyetlen felhasználó vagy csoport számára sem.  Megjegyzendő továbbá, hogy a DCOM-kiszolgálói alkalmazások azonosítói számára megadott kivételek a kiszolgáló 32 bites és 64 bites verzióira egyaránt vonatkoznak, ha azok megtalálhatók a rendszerben.</string>
+      <string id="DCOMAppCompatPolicies">Alkalmazáskompatibilitási beállítások</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Adja meg a DCOM-kiszolgáló alkalmazásazonosítóit, és rendeljen hozzájuk egy-egy műveletértéket az alábbi listából.</text>
+        <text>Az alkalmazásazonosítókat kapcsos zárójelek közé kell foglalni.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">DCOM-kiszolgálók hozzáadása és eltávolítása a kivételek listájáról: </listBox>
+        <text> </text>
+        <text>Értékek:</text>
+        <text>0 = A meghatározott alkalmazásazonosítók nem kapnak mentességet az Aktiválásbiztonsági ellenőrzés alól</text>
+        <text>1 = A meghatározott alkalmazásazonosítók mentességet kapnak az Aktiválásbiztonsági ellenőrzés alól</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

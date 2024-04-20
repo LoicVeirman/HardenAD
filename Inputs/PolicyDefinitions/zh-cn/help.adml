@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>请在此处输入显示名称</displayName>
+  <description>请在此处输入描述</description>
+  <resources>
+    <stringTable>
+      <string id="HelpQualifiedRootDir_Comp">将可能不安全的“HTML 帮助”功能限制为对指定的文件夹起作用</string>
+      <string id="HelpQualifiedRootDir_Help">使用此策略设置，你可以将某些 HTML 帮助命令限制为仅在指定文件夹及其子文件夹中的 HTML 帮助(.chm)文件中起作用。或者，你可以在整个系统上禁用这些命令。强烈建议只将那些需要管理权限的文件夹添加到此策略设置中。
+
+        如果启用此策略设置，则这些命令只会对指定文件夹及其子文件夹中的 .chm 文件起作用。
+
+        若要将这些命令限制为只对一个或多个文件夹起作用，请启用该策略设置，并在“策略属性”对话框的“设置”选项卡上的文本框中输入所需的文件夹。使用分号分隔多个文件夹。例如，要将命令限制为只对 %windir%\help 和 D:\somefolder 文件夹中的 .chm 文件起作用，请在编辑框中输入下列字符串:“%windir%\help;D:\somefolder”。
+
+        注意: 只要在系统上定义了环境变量(例如 %windir%)，就可以使用该环境变量。例如，在一些早期版本的 Windows 上没有定义 %programfiles%。
+
+        “Shortcut”命令用于将链接添加到帮助主题，并且运行帮助文件外部的可执行文件。“WinHelp”命令用于将链接添加到帮助主题，并且运行 WinHLP32.exe 帮助(.hlp)文件。
+
+        若要在整个本地系统上禁用“Shortcut”和“WinHelp”命令，请启用该策略设置，并将“策略属性”对话框的“设置”选项卡上的文本框留空。
+
+        如果禁用或未配置此策略设置，则这些命令会对所有帮助文件完全起作用。
+
+        注意: 在此策略中只能指定本地计算机上的文件夹。对于存储在映射驱动器上或通过 UNC 路径访问的 .chm 文件，无法使用此策略设置启用“Shortcut”和“WinHelp”命令。
+
+        有关其他选项，请参阅“限制这些程序从帮助启动”策略。
+      
+      </string>
+      <string id="RestrictRunFromHelp">限制这些程序从帮助启动</string>
+      <string id="RestrictRunFromHelp_Comp">限制这些程序从帮助启动</string>
+      <string id="RestrictRunFromHelp_Help">
+        
+        使用此策略设置，可以限制从联机帮助运行程序。
+        
+        如果启用此策略设置，则可阻止从“帮助”运行指定的程序。如果启用此策略设置，请输入你希望限制的程序的文件名，多个文件名之间用逗号分隔。
+        
+        如果禁用或未配置此策略设置，则用户可以从联机帮助运行所有应用程序。
+        
+        注意: 使用“计算机配置\安全设置”中的“软件限制”策略设置也可以限制用户运行应用程序。
+        
+        注意:“计算机配置”和“用户配置”中均提供了此策略设置。如果在这两个位置处都进行了设置，则某个程序只要在其中任一位置处列出，该程序就无法从帮助启动。
+      
+      </string>
+        <string id="DisableHHDEP">为 HTML 帮助可执行文件关闭数据执行保护</string>
+        <string id="DisableHHDEPText">使用此策略设置，可以使软件实施的数据执行保护不对 HTML 帮助可执行文件进行监控。
+
+          数据执行保护(DEP)旨在阻止恶意代码利用 Windows 的例外处理机制。它通过对程序进行监控并确保其安全地使用系统内存来实现这一目的。
+
+          如果启用此策略设置，则关闭对 HTML 帮助可执行文件的 DEP。这将使一些旧的 ActiveX 控件能起作用，HTML 帮助可执行文件不会因 DEP 而关闭。
+
+          如果禁用或未配置此策略设置，则开启对 HTML 帮助可执行文件的 DEP。这样提供了附加的安全性，但 HTLM 帮助会在 DEP 检测到系统内存异常时停止。
+        
+        </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="HelpQualifiedRootDir_Comp">
+        <textBox refId="HelpQualifiedRootDir_Edit">
+          <label>输入以分号分隔的文件夹名称: </label>
+        </textBox>
+        <text>示例: %windir%\Help;%windir%\pchealth;%programfiles%</text>
+      </presentation>
+      <presentation id="RestrictRunFromHelp">
+        <textBox refId="RestrictRunFromHelp_Edit">
+          <label>输入以逗号分隔的可执行文件: </label>
+        </textBox>
+        <text>示例: calc.exe,paint.exe</text>
+      </presentation>
+      <presentation id="RestrictRunFromHelp_Comp">
+        <textBox refId="RestrictRunFromHelp_Edit">
+          <label>输入以逗号分隔的可执行文件: </label>
+        </textBox>
+        <text>示例: calc.exe,paint.exe</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

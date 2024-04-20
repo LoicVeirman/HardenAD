@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>introduza o nome a apresentar aqui</displayName>
+  <description>introduza a descrição aqui</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">Estação de trabalho Lanman</string>
+      <string id="Pol_CipherSuiteOrder_Name">Ordem do conjunto de cifras</string>
+      <string id="Pol_CipherSuiteOrder_Help">Esta definição de política determina os conjuntos de cifras utilizados pelo cliente SMB.
+
+Se ativar esta definição de política, os conjuntos de cifras são priorizados na ordem especificada.
+
+Se ativar esta definição de política e não especificar pelo menos um conjunto de cifras suportado ou se desativar ou não configurar esta definição de política, a ordem do conjunto de cifras predefinida é utilizada.
+
+Conjunto de cifras SMB 3.11:
+
+AES_128_GCM
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+Conjuntos de cifras SMB 3.0 e 3.02:
+
+AES_128_CCM
+
+Como modificar esta definição:
+
+Organize os conjuntos de cifras desejados na caixa de edição, um conjunto de cifras por linha, na ordem decrescente de preferência, com o conjunto de cifras preferido no topo. Retire quaisquer conjuntos de cifras que não pretenda utilizar.
+
+Nota: ao configurar esta definição de segurança, as alterações só entrarão em vigor quando reiniciar o Windows.</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">Permitir inícios de sessão de convidados não seguros</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">Esta definição de política determina se o cliente SMB irá permitir que convidados não seguros iniciem sessão num servidor SMB.
+
+Se ativar esta definição de política ou se não a configurar, o cliente SMB irá permitir inícios de sessão de convidados não seguros.
+
+Se desativar esta definição de política, o cliente SMB irá rejeitar inícios de sessão de convidados não seguros.
+
+Os inícios de sessão de convidados não seguros são utilizados por servidores de ficheiros para permitir o acesso não autenticado a pastas partilhadas. Apesar de não serem comuns num ambiente empresarial, os inícios de sessão de convidados não seguros são frequentemente utilizados por equipamentos de Armazenamento Ligados à Rede (NAS) de consumidor a funcionar como servidores de ficheiros. Por predefinição, os servidores de ficheiros do Windows necessitam de autenticação e não utilizam inícios de sessão de convidados não seguros. Uma vez que os inícios de sessão de convidados não seguros não são autenticados, funcionalidades de segurança importantes como a Assinatura SMB e Encriptação SMB estão desativadas. Como resultado, os clientes que permitam inícios de sessão de convidados não seguros estão vulneráveis a uma variedade de ataques man-in-the-middle que podem resultar em perda de dados, corrupção de dados e exposição a software maligno. Adicionalmente, quaisquer dados introduzidos num servidor de ficheiros utilizando um início de sessão de convidado não seguro são potencialmente acessíveis a qualquer pessoa na rede. A Microsoft recomenda a desativação de inícios de sessão de convidados não seguros e a configuração dos servidores de ficheiros de forma a ser necessário acesso autenticado."
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">Disponibilidade de Ficheiros Offline em Partilhas de Disponibilidade Contínua</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        Esta definição de política determina o comportamento de Ficheiros Offline em clientes com ligação a uma partilha de SMB em que o sinalizador de Disponibilidade Contínua (CA - Continuous Availability) está ativado.
+
+        Se ativar esta definição de política, a opção "Sempre disponíveis offline" aparecerá no menu do Explorador de Ficheiros num computador com Windows ao estabelecer ligação a uma partilha com CA ativada. A afixação de ficheiros em partilhas com CA ativada utilizando a colocação em cache do lado do cliente também será possível.
+
+        Se desativar ou não configurar esta definição de política, o Windows impedirá a utilização de Ficheiros Offline com partilhas com CA ativada.
+
+        Nota: A Microsoft não recomenda a ativação desta política de grupo. A utilização da CA com Ficheiros Offline provocará tempos de transição muito longos entre os estados online e offline.
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">Colocação em Cache do Identificador em Partilhas de Disponibilidade Contínua</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        Esta definição de política determina o comportamento de colocação em cache do identificador do SMB para clientes com ligação a uma partilha de SMB em que o sinalizador de Disponibilidade Contínua (CA - Continuous Availability) está ativado. Se ativar esta definição de política, o cliente do SMB permitirá identificadores em cache para ficheiros em partilhas de CA. Isto pode proporcionar um melhor desempenho ao aceder repetidamente a um grande número de ficheiros de dados não estruturados em partilhas de CA em execução em Ficheiros do Microsoft Azure. Se desativar ou não configurar esta definição de política, o Windows impedirá a utilização de identificadores em cache para ficheiros abertos através de partilhas de CA. Nota: Esta política não tem efeito ao estabelecer ligação a partilhas de Servidor de Ficheiros de Escalamento Horizontal fornecidas por um Windows Server. A Microsoft não recomenda a ativação desta política para clientes que costumem estabelecer ligação a ficheiros alojados num Cluster de Ativação Pós-falha do Windows com o Servidor de Ficheiros para a função de Utilização Geral, uma vez que pode levar a tempos para a ativação pós-falha adversos e maior utilização de memória e CPU.
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Pelo menos Windows Server 2022, Windows 11</string>
+      <string id="Pol_EnableCompressedTraffic_Name">Utilizar compressão SMB por predefinição</string>
+      <string id="Pol_EnableCompressedTraffic_Help">Esta política decide se o cliente SMB utiliza compressão de tráfego por predefinição.
+
+Se ativar esta definição de política, o cliente SMB tentará comprimir tráfego por predefinição quando a compressão SMB estiver ativada.
+
+Se desativar ou não configurar esta definição de política, o cliente SMB não tentará comprimir o tráfego por predefinição. Contudo, a compressão de tráfego poderá ser pedida por outros meios. Consulte as notas abaixo.
+
+Nota: Esta política é combinada com propriedades de identificador por partilha e por ficheiro, através das quais poderá ser pedida compressão de tráfego. Além disso, o servidor SMB tem de suportar e ativar a compressão. Por exemplo, se esta política for desativada (ou não configurada), o cliente SMB continuará a poder efetuar a compressão, se tiver sido solicitada a compressão de uma partilha do servidor SMB. Se tal for indesejável e quiser desativar completamente a compressão, configure a política associada "Desativar a compressão SMB".
+      </string>
+      <string id="Pol_DisableCompression_Name">Desativar compressão SMB</string>
+      <string id="Pol_DisableCompression_Help">Esta política decide se o cliente SMB irá desativar (impedir completamente) a compressão de tráfego.
+
+Se ativar esta definição da política, o cliente SMB nunca irá comprimir dados, independentemente de outras políticas (como a política "Utilizar a compressão SMB por predefinição" ou a propriedade por partilha).
+
+Se desativar ou não configurar esta definição de política, o cliente SMB poderá comprimir o tráfego (dependendo de uma combinação de outras políticas e condições).
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>Conjuntos de cifras:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

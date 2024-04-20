@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>introduza o nome a apresentar aqui</displayName>
+  <description>introduza a descrição aqui</description>
+  <resources>
+    <stringTable>
+      <string id="W32TIME_CONFIG_EXPLAIN">Esta definição de política permite especificar valores de disciplina de Relógio e Geral para o serviço Hora do Windows (W32time) para controladores de domínio, incluindo RODCs.
+
+Se ativar esta definição de política, o Serviço W32time em computadores de destino utiliza as definições fornecidas aqui. Caso contrário, o serviço em computadores de destino utiliza os valores de definição configurados localmente.
+
+Para obter mais informações sobre parâmetros individuais, combinações de valores de parâmetros e definições de sinalizadores, consulte https://go.microsoft.com/fwlink/?linkid=847809.
+
+        FrequencyCorrectRate
+Este parâmetro controla a regularidade com que o W32time corrige a frequência do relógio local. Valores inferiores dão origem a correções maiores; valores superiores dão origem a correções menores. Predefinição: 4 (escalar).
+
+        HoldPeriod
+Este parâmetro indica quantas amostras de hora consistentes o computador cliente tem de receber em série para que amostras de hora subsequentes sejam avaliadas como potenciais picos. Predefinição: 5
+
+        LargePhaseOffset
+Se uma amostra de hora for diferente do relógio local do computador cliente num valor superior ao de LargePhaseOffset, considera-se que o relógio local se desviou consideravelmente ou, por outras palavras, atingiu um pico. Predefinição: 50.000.000 unidades de 100 nanossegundos (ns), que são 5 segundos.
+
+        MaxAllowedPhaseOffset
+Se for recebida uma resposta que tenha uma variação horária superior a este valor de parâmetro, o W32time definirá imediatamente o relógio local do computador cliente com a hora aceite como certa do servidor NTP (Network Time Protocol). Se a variação horária for inferior a este valor, o relógio local do computador cliente será corrigido gradualmente. Predefinição: 300 segundos.
+
+        MaxNegPhaseCorrection
+Se for recebida uma amostra de hora que indique uma hora no passado (em comparação com o relógio local do computador cliente) e tenha uma diferença horária superior ao valor de MaxNegPhaseCorrection, a amostra de hora será eliminada. Predefinição: 172.800 segundos.
+
+        MaxPosPhaseCorrection
+Se for recebida uma amostra de hora que indique uma hora no futuro (em comparação com o relógio local do computador cliente) e tenha uma diferença horária superior ao valor de MaxPosPhaseCorrection, a amostra de hora será eliminada. Predefinição: 172.800 segundos.
+
+        PhaseCorrectRate
+Este parâmetro controla a rapidez com que o W32time corrige a diferença do relógio local do computador cliente de forma a coincidir com as amostras de hora aceites como precisas do servidor NTP. Valores inferiores fazem com que o relógio seja corrigido mais rapidamente; valores superiores fazem com que o relógio seja corrigido mais lentamente. Predefinição: 7 (escalar).
+
+        PollAdjustFactor
+Este parâmetro controla a rapidez com que o W32time altera os intervalos de consulta. Quando as respostas são consideradas precisas, o intervalo de consulta é automaticamente expandido. Quando as respostas são consideradas imprecisas, o intervalo de consulta é automaticamente encurtado. Predefinição: 5 (escalar).
+
+        SpikeWatchPeriod
+Este parâmetro especifica o período de tempo em que são recebidas amostras com um desvio de tempo superior a LargePhaseOffset antes de serem aceites como precisas. SpikeWatchPeriod é utilizado em conjunto com HoldPeriod para ajudar a eliminar amostras de hora não precisas e esporádicas devolvidas por um elemento da rede. Predefinição: 900 segundos.
+
+        UpdateInterval
+Este parâmetro especifica o período de tempo que o W32time aguarda entre correções quando o relógio está a ser corrigido gradualmente. Quando efetua uma correção gradual, o serviço ajusta ligeiramente o relógio, aguarda este período de tempo e, em seguida, verifica se é necessário outro ajuste, até à conclusão da correção. Predefinição: 100 unidades de 1/100 de segundo, que corresponde a 1 segundo.
+
+        Parâmetros gerais:
+
+        AnnounceFlags
+Este parâmetro é um valor de máscara de bits que controla o modo como a disponibilidade do serviço de hora é anunciada através de NetLogon. Predefinição: 0x0a hexadecimal.
+
+        EventLogFlags
+Este parâmetro controla eventos especiais que poderão ser registados no registo do Sistema do Visualizador de Eventos. Predefinição: 0x02 máscara de bits hexadecimal.
+
+        LocalClockDispersion
+Este parâmetro indica o erro máximo em segundos que é reportado pelo servidor NTP a clientes que estejam a pedir uma amostra de hora. (Aplica-se apenas quando o servidor NTP utiliza a hora do relógio CMOS local.) Predefinição: 10 segundos.
+
+        MaxPollInterval
+Este parâmetro controla o intervalo de consulta máximo, que define o período de tempo máximo entre consultas de um elemento da rede. Predefinição: 10 logaritmo de base 2, que corresponde a 1024 segundos. (Não deve ser superior a 15.)
+
+        MinPollInterval
+Este parâmetro controla o intervalo de consulta mínimo, que define o período de tempo mínimo entre consultas de um elemento da rede. Predefinição: 6 logaritmo de base 2, que corresponde a 64 segundos.
+
+        ClockHoldoverPeriod
+Este parâmetro indica o número máximo de segundos que o relógio do sistema consegue manter a exatidão sem sincronização com uma origem de hora. Se este período de tempo passar sem que o W32time obtenha novas amostras a partir de qualquer um dos fornecedores de entrada, o W32time inicia uma nova deteção de origens de hora. Predefinição: 7800 segundos.
+
+        RequireSecureTimeSyncRequests
+Este parâmetro controla se o DC responderá ou não a pedidos de sincronização de hora que utilizem protocolos de autenticação mais antigos. Se ativado (definido como 1), o DC não responderá a pedidos que utilizem tais protocolos. Predefinição: 0 booleano.
+
+        UtilizeSslTimeData
+Este parâmetro controla se o W32time utiliza dados de hora calculados a partir de tráfego SSL na máquina como dados adicionais para corrigir o relógio local. Predefinição: 1 booleano (ativado)
+
+        ClockAdjustmentAuditLimit
+Este parâmetro especifica os menores ajustes do relógio local que podem ser registados no registo de eventos do serviço W32time nos computadores de destino. Por defeito: 800 partes por milhão (PPM).
+
+        Parâmetros RODC:
+
+        ChainEntryTimeout
+Este parâmetro especifica o período de tempo máximo que uma entrada pode permanecer na tabela de encadeamento antes de ser considerada expirada. As entradas expiradas poderão ser removidas quando o pedido ou resposta seguinte for processado. Predefinição: 16 segundos.
+
+        ChainMaxEntries
+Este parâmetro controla o número máximo de entradas permitidas na tabela de encadeamento. Se a tabela de encadeamento estiver cheia e não for possível remover entradas expiradas, qualquer pedido recebido será eliminado. Predefinição: 128 entradas.
+
+        ChainMaxHostEntries
+Este parâmetro controla o número máximo de entradas permitidas na tabela de encadeamento para um determinado sistema anfitrião. Predefinição: 4 entradas.
+
+        ChainDisable
+Este parâmetro controla se o mecanismo de encadeamento deve ou não estar desativado. Se o encadeamento estiver desativado (definido como 0), o RODC poderá sincronizar com qualquer controlador de domínio, mas os sistemas anfitrião que não tenham as palavras-passe em cache no RODC não conseguirão sincronizar com o RODC. Predefinição: 0 booleano.
+
+        ChainLoggingRate
+Este parâmetro controla a frequência com que um evento que indica o número de tentativas de encadeamento com e sem êxito é registado no registo do Sistema do Visualizador de Eventos. Predefinição: 30 minutos.
+      </string>
+
+<string id="W32TIME_CONFIGURE_NTPCLIENT_EXPLAIN">Esta definição de política especifica um conjunto de parâmetros para controlar o cliente NTP do Windows.
+
+Se ativar esta definição de política, pode especificar os seguintes parâmetros para o Windows NTP Client.
+
+Se desativar ou não configurar esta definição de política, o WIndows NTP Client utiliza as predefinições de cada um dos seguintes parâmetros.
+
+NtpServer
+O nome DNS (Sistema de Nomes de Domínio) ou o endereço IP de uma origem de hora NTP. Este valor tem o formato ""NomeDns,sinalizadores"", em que ""sinalizadores"" é uma máscara hexadecimal dos sinalizadores desse anfitrião. Para mais informações, consulte a secção Definições de Política de Grupo do NTP Client Associadas à Hora do Windows de Definições de Política de Grupo do Serviço Hora do Windows. O valor predefinido é ""time.windows.com,0x09"". 
+
+Type
+Este valor controla a autenticação utilizada pelo W32time. O valor predefinido é NT5DS.
+
+CrossSiteSyncFlags
+Este valor, expresso como uma máscara de bits, controla o modo como o W32time escolhe origens de hora fora do próprio site. Os valores possíveis são 0, 1 e 2. A definição deste valor como 0 (Nenhuma) indica que o cliente de hora não deve tentar sincronizar a hora fora do próprio site. A definição deste valor como 1 (PdcOnly) indica que apenas os computadores que funcionem como mestres de operações de emulador de controlador de domínio primário (PDC) noutros domínios podem ser utilizados como parceiros de sincronização quando o cliente tiver de sincronizar a hora com um parceiro fora do próprio site. A definição de um valor de 2 (All) indica que pode ser utilizado qualquer parceiro de sincronização. Este valor é ignorado se o valor NT5DS não estiver definido. O valor predefinido é 2 decimal (0x02 hexadecimal).
+
+ResolvePeerBackoffMinutes
+Este valor, expresso em minutos, controla o tempo que W32time aguarda antes de tentar resolver um nome DNS depois de uma tentativa falhada. O valor predefinido é 15 minutos.
+
+ResolvePeerBackoffMaxTimes
+Este valor controla o número de vezes que W32time tenta resolver um nome DNS antes de o processo de deteção ser reiniciado. De cada vez que a resolução de nomes DNS falhar, o período de tempo a aguardar antes da próxima tentativa será duplicado. O valor predefinido é sete tentativas.
+
+SpecialPollInterval
+Este valor de NTP Client, expresso em segundos, controla a frequência de consulta de uma origem de hora configurada manualmente quando a origem e hora estiver configurada para utilizar um intervalo de consulta especial. Se o sinalizador SpecialInterval estiver ativado na definição NTPServer, o cliente utiliza o valor definido como SpecialPollInterval, em vez de um intervalo de variáveis entre os valores MinPollInterval e MaxPollInterval, para determinar a frequência de consulta à origem de hora. O SpecialPollInterval tem de estar no intervalo [MinPollInterval, MaxPollInterval]; caso contrário, é escolhido o valor mais próximo do intervalo. Predefinição: 1.024 segundos.
+
+EventLogFlags
+Este valor é uma máscara de bits que controla eventos que poderão ser registados no registo do Sistema do Visualizador de Eventos. A definição deste valor como 0x1 indica que o W32time criará um evento sempre que for detetado um salto de hora. A definição deste valor como 0x2 indica que o W32time criará um evento sempre que for efetuada uma alteração da origem de hora. Uma vez que se trata de uma máscara de bits, definir 0x3 (a adição de 0x1 e 0x2) indica que serão registados saltos de hora e alterações da origem de hora.
+      </string>
+      <string id="W32TIME_ENABLE_NTPCLIENT_EXPLAIN">Esta definição de política especifica se o Cliente NTP do Windows está ativado.
+
+Se ativar o Cliente NTP do Windows, o computador poderá sincronizar o relógio de computador com outros servidores NTP. É aconselhável desativar este serviço se decidir utilizar um fornecedor de data/hora de terceiros.
+
+Se ativar esta definição de política, poderá definir o relógio do computador local para sincronizar a hora com servidores NTP.
+
+Se desativar ou não configurar esta definição de política, o relógio do computador local não sincronizará a hora com servidores NTP.
+      
+      </string>
+      <string id="W32TIME_ENABLE_NTPSERVER_EXPLAIN">Esta definição de política permite especificar se o Servidor NTP do Windows está ativado.
+
+Se ativar esta definição de política para o Servidor NTP do Windows, o computador poderá processar pedidos NTP de outros computadores.
+
+
+Se desativar ou não configurar esta definição de política, o computador não poderá processar pedidos NTP de outros computadores.
+
+
+
+</string>
+      <string id="W32TIME_POLICY_CONFIG">Definições de Configuração Global</string>
+      <string id="W32TIME_POLICY_CONFIGURE_NTPCLIENT">Configurar o Windows NTP Client</string>
+      <string id="W32TIME_POLICY_ENABLE_NTPCLIENT">Ativar Windows NTP Client</string>
+      <string id="W32TIME_POLICY_ENABLE_NTPSERVER">Ativar Windows NTP Server</string>
+      <string id="W32TIME_ROOT">Serviço de Hora do Windows</string>
+      <string id="W32TIME_TIMEPROVIDERS">Fornecedores de Hora</string>
+      <string id="W32TIME_Type_AllSync">AllSync</string>
+      <string id="W32TIME_Type_NoSync">NoSync</string>
+      <string id="W32TIME_Type_NT5DS">NT5DS</string>
+      <string id="W32TIME_Type_Ntp">NTP</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="W32TIME_POLICY_CONFIG">
+        <text>Parâmetros de Disciplina de Relógio</text>
+        <decimalTextBox refId="W32TIME_FrequencyCorrectRate" defaultValue="4">FrequencyCorrectRate</decimalTextBox>
+        <decimalTextBox refId="W32TIME_HoldPeriod" defaultValue="5">HoldPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_LargePhaseOffset" defaultValue="50000000">LargePhaseOffset</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxAllowedPhaseOffset" defaultValue="300">MaxAllowedPhaseOffset</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxNegPhaseCorrection" defaultValue="172800">MaxNegPhaseCorrection</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxPosPhaseCorrection" defaultValue="172800">MaxPosPhaseCorrection</decimalTextBox>
+        <decimalTextBox refId="W32TIME_PhaseCorrectRate" defaultValue="1">PhaseCorrectRate</decimalTextBox>
+        <decimalTextBox refId="W32TIME_PollAdjustFactor" defaultValue="5">PollAdjustFactor</decimalTextBox>
+        <decimalTextBox refId="W32TIME_SpikeWatchPeriod" defaultValue="900">SpikeWatchPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_UpdateInterval" defaultValue="100">UpdateInterval</decimalTextBox>
+        <text>Parâmetros Gerais</text>
+        <decimalTextBox refId="W32TIME_AnnounceFlags" defaultValue="10">AnnounceFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_EventLogFlags" defaultValue="2">EventLogFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_LocalClockDispersion" defaultValue="10">LocalClockDispersion</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxPollInterval" defaultValue="10">MaxPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MinPollInterval" defaultValue="6">MinPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ClockHoldoverPeriod" defaultValue="7800">ClockHoldoverPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_RequireSecureTimeSyncRequests" defaultValue="0">RequireSecureTimeSyncRequests</decimalTextBox>
+        <decimalTextBox refId="W32TIME_UtilizeSslTimeData" defaultValue="1">UtilizeSslTimeData</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ClockAdjustmentAuditLimit" defaultValue="800">ClockAdjustmentAuditLimit</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainEntryTimeout" defaultValue="16">ChainEntryTimeout</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainMaxEntries" defaultValue="128">ChainMaxEntries</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainMaxHostEntries" defaultValue="4">ChainMaxHostEntries</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainDisable" defaultValue="0">ChainDisable</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainLoggingRate" defaultValue="30">ChainLoggingRate</decimalTextBox>
+      </presentation>
+      <presentation id="W32TIME_POLICY_CONFIGURE_NTPCLIENT">
+        <textBox refId="W32TIME_NtpServer">
+          <label>NtpServer</label>
+          <defaultValue>time.windows.com,0x9</defaultValue>
+        </textBox>
+        <dropdownList refId="W32TIME_Type" noSort="true" defaultItem="2">Type</dropdownList>
+        <decimalTextBox refId="W32TIME_CrossSiteSyncFlags" defaultValue="2">CrossSiteSyncFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ResolvePeerBackoffMinutes" defaultValue="15">ResolvePeerBackoffMinutes</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ResolvePeerBackoffMaxTimes" defaultValue="7">ResolvePeerBackoffMaxTimes</decimalTextBox>
+        <decimalTextBox refId="W32TIME_SpecialPollInterval" defaultValue="1024">SpecialPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_NtpClientEventLogFlags" defaultValue="0">EventLogFlags</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

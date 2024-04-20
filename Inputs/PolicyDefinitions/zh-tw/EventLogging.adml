@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>事件記錄</displayName>
+    <description>這個檔案包含 Windows 事件記錄的設定選項</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">事件記錄</string>
+            <string id="EnableProtectedEventLogging">啟用受保護的事件記錄</string>
+            <string id="EnableProtectedEventLogging_Explain">
+這個原則設定可讓您設定「受保護的事件記錄」。
+
+如果您啟用這個原則設定，支援的元件在寫入事件記錄檔之前，將會使用您提供用來加密可能的敏感性事件記錄檔資料的憑證。資料將使用密碼編譯訊息語法 (CMS) 標準和您提供的公開金鑰加密。您可以使用 Unprotect-CmsMessage PowerShell cmdlet 來解密這些加密後的檔案，它提供您存取私密金鑰的權限，對應用來加密的公開金鑰。
+
+如果您停用或是未設定這個原則設定，元件寫入事件記錄檔訊息之前將不會加密。
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+由「受保護的事件記錄」提供要使用的加密憑證。您可以提供下列任一:
+
+    - Base 64 編碼 X.509 憑證的內容
+    - 可在本機電腦憑證存放區找到的指紋憑證 (通常以 PKI 基礎結構部署)
+    - 憑證的完整路徑 (可以是本機，或是遠端共用)
+    - 包含憑證的資料夾路徑 (可以是本機，或是遠端共用)
+    - 可在本機電腦憑證存放區找到的憑證主體名稱 (通常以 PKI 基礎結構部署)
+
+金鑰使用方法啟用除了「資料編密」或「金鑰編密」外，產生的憑證必須有「文件加密」作為增強金鑰使用方法 (1.3.6.1.4.1.311.80.1)。
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

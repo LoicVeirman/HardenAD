@@ -1,0 +1,1087 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>请在此处输入显示名称</displayName>
+  <description>请在此处输入描述</description>
+  <resources>
+    <stringTable>
+      <string id="ActiveDirectoryBackup_Help">使用此策略设置，可以管理将 BitLocker 驱动器加密恢复信息备份到 Active Directory 域服务(AD DS)中的工作。它提供了一种恢复 BitLocker 加密数据的管理方法，防止因缺少密钥信息而发生数据丢失。此策略设置仅适用于运行 Windows Server 2008 或 Windows Vista 的计算机。
+
+如果启用此策略设置，则为计算机打开 BitLocker 时，BitLocker 恢复信息将自动且无提示地备份到 AD DS 中。此策略设置将在打开 BitLocker 时应用。
+
+注意: 需要先设置域中相应的架构扩展和访问控制设置，AD DS 备份才能成功。有关为 BitLocker 设置 AD DS 备份的详细信息，请参阅 Microsoft TechNet。
+
+BitLocker 恢复信息包括恢复密码和一些唯一的标识符数据。还可以包含一个数据包，其中包含 BitLocker 所保护的驱动器的加密密钥。此密钥数据包由一个或多个恢复密码来保护，当磁盘损坏时，它可以帮助执行特定的恢复操作。
+
+如果选中“要求 BitLocker 备份到 AD DS”选项，则将无法打开 BitLocker，除非计算机已连接到域并且 BitLocker 恢复信息成功备份到 AD DS。默认情况下会选中此选项，以确保可以执行 BitLocker 恢复操作。如果不选中此选项，则系统将尝试 AD DS 备份，但网络或其他备份的失败并不会阻止 BitLocker 的安装。在安装 BitLocker 过程中，不会自动重试备份，并且恢复密码可能未存储在 AD DS 中。
+
+如果禁用或未配置此策略设置，则 BitLocker 恢复信息不会备份到 AD DS 中。
+
+注意: 受信任平台模块(TPM)初始化可能会在 BitLocker 安装期间发生。在“系统\受信任的平台模块服务”中启用策略设置“启用对 Active Directory 域服务的 TPM 备份”，以确保同时备份 TPM 信息。
+      
+      </string>
+      <string id="ActiveDirectoryBackup_Name">将 BitLocker 恢复信息存储在 Active Directory 域服务中(Windows Server 2008 和 Windows Vista)</string>
+      <string id="ActiveDirectoryBackupDropDown_1">恢复密码和密钥数据包</string>
+      <string id="ActiveDirectoryBackupDropDown_2">仅恢复密码</string>
+
+      <string id="ConfigureStartupUsage_Help">使用此策略设置，可以控制 BitLocker 驱动器加密安装向导是否能够安装每次计算机启动时所要求的附加身份验证方法。此策略设置将在打开 BitLocker 时应用。
+
+注意: 此策略仅适用于运行 Windows Server 2008 或 Windows Vista 的计算机。
+
+在带有兼容的受信任平台模块(TPM)的计算机上，启动时可以使用两种身份验证方法，以便为加密数据提供附加保护。当计算机启动时，它会要求用户插入包含启动密钥的 U 盘，另外还会要求用户输入一个 4 到 20 位数的启动个人标识号(PIN)。
+
+在没有兼容的 TPM 的计算机上，需要一个包含启动密钥的 U 盘。如果没有 TPM，则 BitLocker 加密数据只能受此 U 盘上的密钥资料保护。
+
+如果启用此策略设置，则该向导将显示允许用户为 BitLocker 配置高级启动选项的页面。可以为带有 TPM 和没有 TPM 的计算机进一步配置设置选项。
+
+如果禁用或未配置此策略设置，则 BitLocker 安装向导将显示用户可用来在带有 TPM 的计算机上启用 BitLocker 的基本步骤。在此基本向导中，无法配置任何其他启动密钥或启动 PIN。
+</string>
+
+      <string id="ConfigureStartupUsage_Name">启动时需要附加身份验证(Windows Server 2008 和 Windows Vista)</string>
+      <string id="ConfigureAdvancedStartup_Name">启动时需要附加身份验证</string>
+
+      <string id="ConfigureAdvancedStartup_Help">使用此策略设置，可以配置每次计算机启动时 BitLocker 是否要求附加身份验证以及使用 BitLocker 是否带受信任平台模块(TPM)。此策略设置将在打开 BitLocker 时应用。
+
+注意: 启动时只可要求其中一个附加身份验证选项，否则会发生策略错误。
+
+如果要在没有 TPM 的计算机上使用 BitLocker，则应选中“没有兼容的 TPM 时允许 BitLocker”复选框。在此模式下，需要密码或 USB 驱动器才能启动。使用启动密钥时，用于加密驱动器的密钥信息存储在 USB 驱动器中，以创建 USB 密钥。当插入 USB 密钥时，对该驱动器的访问将通过身份验证，驱动器处于可访问状态。如果 USB 密钥丢失或不可用，或者忘记了密码，则需要使用其中一个 BitLocker 恢复选项才能访问该驱动器。
+
+在含有兼容的 TPM 的计算机上，启动时可使用四种身份验证方法，以便为加密数据提供附加保护。计算机启动时，可只使用 TPM 进行身份验证，也可同时要求插入包含启动密钥和/或 6 到 20 位数个人标识号(PIN)的 U 盘。
+
+如果启用此策略设置，则用户可在 BitLocker 安装向导中配置高级启动选项。
+
+如果禁用或未配置此策略设置，则用户在含有 TPM 的计算机上只能配置基本选项。
+
+注意: 如果希望要求使用启动 PIN 和 U 盘，则必须使用命令行工具 manage-bde 而不是 BitLocker 驱动器加密安装向导来配置 BitLocker 设置。
+
+</string>
+      <string id="AllowNetworkUnlockAtStartup_Name">允许启动时网络解锁</string>
+      <string id="AllowNetworkUnlockAtStartup_Help">此策略设置控制已连接到受信任的有线局域网(LAN)并已加入域的受 BitLocker 保护的计算机是否能够在启用 TPM 的计算机上创建并使用网络密钥保护程序，以在该计算机启动时自动解锁操作系统。
+
+如果启用此策略，则配置了 BitLocker 网络解锁证书的客户端将能够创建并使用网络密钥保护程序。
+
+若要使用网络密钥保护程序解锁计算机，则必须用网络解锁证书预配计算机和 BitLocker 驱动器加密网络解锁服务器。网络解锁证书用于创建网络密钥保护程序，并保护与服务器交换以解锁计算机的信息。可以使用域控制器上的组策略设置(“计算机配置\Windows 设置\安全设置\公钥策略\BitLocker 驱动器加密网络解锁证书”)将此证书分发给组织中的计算机。此解锁方法使用计算机上的 TPM，因此，没有 TPM 的计算机将无法创建网络密钥保护程序，以使用网络解锁自动解锁。
+
+如果禁用或未配置此策略设置，则 BitLocker 客户端将无法创建和使用网络密钥保护程序。
+
+注意: 为了确保可靠性和安全性，计算机还应具有 TPM 启动 PIN，以便在启动时当计算机断开有线网络或服务器时使用。
+
+
+
+</string>
+
+      <string id="ConfigureTPMPINKeyUsageDropDown_Optional">有 TPM 时允许启动密钥和 PIN</string>
+      <string id="ConfigureTPMPINKeyUsageDropDown_Require">有 TPM 时需要启动密钥和 PIN</string>
+      <string id="ConfigureTPMPINKeyUsageDropDown_Disallow">有 TPM 时不允许启动密钥和 PIN</string>
+
+      <string id="ConfigureTPMUsageDropDown_Optional">允许 TPM</string>
+      <string id="ConfigureTPMUsageDropDown_Require">需要 TPM</string>
+      <string id="ConfigureTPMUsageDropDown_Disallow">不允许 TPM</string>
+
+      <string id="ConfigurePINUsageDropDown_Optional">有 TPM 时允许启动 PIN</string>
+      <string id="ConfigurePINUsageDropDown_Require">有 TPM 时需要启动 PIN</string>
+      <string id="ConfigurePINUsageDropDown_Disallow">有 TPM 时不允许启动 PIN</string>
+
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Optional">有 TPM 时允许启动密钥</string>
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Require">有 TPM 时需要启动密钥</string>
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Disallow">有 TPM 时不允许启动密钥</string>
+
+
+      <string id="ConfigureRecoveryUsage_Help">使用此策略设置，可以控制 BitLocker 驱动器加密安装向导是否可以显示和指定 BitLocker 恢复选项。此策略仅适用于运行 Windows Server 2008 或 Windows Vista 的计算机。此策略设置将在打开 BitLocker 时应用。
+
+在缺少所需启动密钥信息时，可使用两种恢复选项解除 BitLocker 加密数据的锁定。用户可键入 48 位数字恢复密码，或插入含有 256 位恢复密钥的 U 盘。
+
+如果启用此策略设置，则可以配置安装向导向用户显示用于恢复 BitLocker 加密数据的选项。保存到 U 盘的操作会将 48 位数的恢复密码存储为文本文件，将 256 位的恢复密钥存储为隐藏文件。保存到文件夹会将 48 位数的恢复密码存储为文本文件。打印操作会将 48 位数的恢复密码发送到默认打印机。例如，如果不允许 48 位数的恢复密码，将阻止用户打印恢复信息或将其保存到文件夹。
+
+如果禁用或未配置此策略设置，则 BitLocker 安装向导将为用户提供恢复选项的存储方法。
+
+注意: 如果在 BitLocker 安装过程中需要初始化受信任平台模块(TPM)，则 TPM 所有者信息将随 BitLocker 恢复信息一起保存或打印。
+
+注意: 在 FIPS 兼容模式下，48 位数的恢复密码将不可用。
+
+重要信息: 此策略设置提供一种恢复 BitLocker 加密数据的管理方法，防止因缺少密钥信息而发生数据丢失。如果不允许两种用户恢复选项，则必须启用“将 BitLocker 恢复信息存储在 Active Directory 域服务中(Windows Server 2008 和 Windows Vista)”策略设置以防止策略错误。
+
+      
+
+      </string>
+
+      <string id="ConfigureRecoveryUsage_Name">选择用户如何才能恢复受 BitLocker 保护的驱动器(Windows Server 2008 和 Windows Vista)</string>
+      <string id="ConfigureRecoveryPasswordUsageDropDown_Require">需要恢复密码(默认)</string>
+      <string id="ConfigureRecoveryPasswordUsageDropDown_Disallow">不允许恢复密码</string>
+
+      <string id="ConfigureRecoveryKeyUsageDropDown_Require">需要恢复密钥(默认)</string>
+      <string id="ConfigureRecoveryKeyUsageDropDown_Disallow">不允许恢复密钥</string>
+
+
+      <string id="OSRecoveryUsage_Name">选择如何才能恢复受 BitLocker 保护的操作系统驱动器</string>
+
+      <string id="OSRecoveryUsage_Help">使用此策略设置，可以控制在缺少所需启动密钥信息的情况下恢复受 BitLocker 保护的操作系统驱动器的方式。此策略设置将在打开 BitLocker 时应用。
+
+“允许基于证书的数据恢复代理”复选框用于指定数据恢复代理是否可用于受 BitLocker 保护的操作系统驱动器。在数据恢复代理可以使用之前，必须先在组策略管理控制台或本地组策略编辑器中的公钥策略项中添加该代理。有关添加数据恢复代理的详细信息，请参阅 Microsoft TechNet 上的 BitLocker 驱动器加密部署指南。
+
+在“配置 BitLocker 恢复信息的用户存储”中，选择是允许、需要还是不允许用户生成 48 位数的恢复密码或 256 位恢复密钥。
+
+选中“省略 BitLocker 安装向导中的恢复选项”可阻止用户在对驱动器启用 BitLocker 时指定恢复选项。这意味着在启用 BitLocker 时不能指定要使用的恢复选项，驱动器的 BitLocker 恢复选项由策略设置确定。
+
+在“将 BitLocker 恢复信息保存在 Active Directory 域服务中”中，选择要为操作系统驱动器在 AD DS 中存储哪些 BitLocker 恢复信息。如果选中“备份恢复密码和密钥数据包”，则 BitLocker 恢复密码和密钥数据包都存储到 AD DS 中。如果存储密钥数据包，则可以从已物理损坏的驱动器中恢复数据。如果选中“仅备份恢复密码”，则只将恢复密码存储到 AD DS 中。
+
+若要在计算机未连接到域且未将 BitLocker 恢复信息成功备份到 AD DS 时阻止用户启用 BitLocker，则选中“在为操作系统驱动器将恢复信息存储到 AD DS 之前不启用 BitLocker”复选框。
+
+注意: 如果选中“在为操作系统驱动器将恢复信息存储到 AD DS 之前不启用 BitLocker”复选框，则自动生成恢复密码。
+
+如果启用此策略设置，则可以控制用户可用于从受 BitLocker 保护的操作系统驱动器中恢复数据的方法。
+
+如果禁用或未配置此策略设置，则支持将默认恢复选项用于 BitLocker 恢复。默认情况下将允许 DRA，用户可以指定恢复选项(包括恢复密码和恢复密钥)，并且恢复信息不备份到 AD DS。
+
+
+
+</string>
+
+      <string id="OSRecoveryPasswordUsageDropDown_Require">需要 48 位数的恢复密码</string>
+      <string id="OSRecoveryPasswordUsageDropDown_Allow">允许 48 位数的恢复密码</string>
+      <string id="OSRecoveryPasswordUsageDropDown_Disallow">不允许 48 位数的恢复密码</string>
+
+      <string id="OSRecoveryKeyUsageDropDown_Require">需要 256 位恢复密钥</string>
+      <string id="OSRecoveryKeyUsageDropDown_Disallow">不允许 256 位恢复密钥</string>
+      <string id="OSRecoveryKeyUsageDropDown_Allow">允许 256 位恢复密钥</string>
+
+      <string id="FDVRecoveryUsage_Name">选择如何才能恢复受 BitLocker 保护的固定驱动器</string>
+      <string id="FDVRecoveryUsage_Help">使用此策略设置，可以控制在缺少所需凭据的情况下恢复受 BitLocker 保护的固定数据驱动器的方式。此策略设置将在打开 BitLocker 时应用。
+
+“允许数据恢复代理”复选框用于指定是否可将数据恢复代理用于受 BitLocker 保护的固定数据驱动器。在数据恢复代理可以使用之前，必须先在组策略管理控制台或本地组策略编辑器中的公钥策略项中添加该代理。有关添加数据恢复代理的详细信息，请参阅 Microsoft TechNet 上的 BitLocker 驱动器加密部署指南。
+
+在“配置 BitLocker 恢复信息的用户存储”中，选择是允许、需要还是不允许用户生成 48 位数的恢复密码或 256 位恢复密钥。
+
+选中“省略 BitLocker 安装向导中的恢复选项”可阻止用户在对驱动器启用 BitLocker 时指定恢复选项。这意味着在启用 BitLocker 时不能指定要使用的恢复选项，驱动器的 BitLocker 恢复选项由策略设置确定。
+
+在“将 BitLocker 恢复信息保存在 Active Directory 域服务中”中，选择要为固定数据驱动器在 AD DS 中存储哪些 BitLocker 恢复信息。如果选中“备份恢复密码和密钥数据包”，则 BitLocker 恢复密码和密钥数据包都存储到 AD DS 中。如果存储密钥数据包，则可以从已物理损坏的驱动器中恢复数据。如果选中“仅备份恢复密码”，则只将恢复密码存储到 AD DS 中。
+
+若要在计算机未连接到域且未将 BitLocker 恢复信息成功备份到 AD DS 时阻止用户启用 BitLocker，则选中“在为固定数据驱动器将恢复信息存储到 AD DS 之前不启用 BitLocker”复选框。
+
+注意: 如果选中“在为固定数据驱动器将恢复信息存储到 AD DS 之前不启用 BitLocker”复选框，则自动生成恢复密码。
+
+如果启用此策略设置，则可以控制用户可用于从受 BitLocker 保护的固定数据驱动器中恢复数据的方法。
+
+如果未配置或禁用此策略设置，则支持将默认恢复选项用于 BitLocker 恢复。默认情况下将允许 DRA，用户可以指定恢复选项(包括恢复密码和恢复密钥)，并且恢复信息不备份到 AD DS
+
+
+
+</string>
+
+      <string id="FDVRecoveryPasswordUsageDropDown_Require">需要 48 位数的恢复密码</string>
+      <string id="FDVRecoveryPasswordUsageDropDown_Allow">允许 48 位数的恢复密码</string>
+      <string id="FDVRecoveryPasswordUsageDropDown_Disallow">不允许 48 位数的恢复密码</string>
+
+      <string id="FDVRecoveryKeyUsageDropDown_Require">需要 256 位恢复密钥</string>
+      <string id="FDVRecoveryKeyUsageDropDown_Disallow">不允许 256 位恢复密钥</string>
+      <string id="FDVRecoveryKeyUsageDropDown_Allow">允许 256 位恢复密钥</string>
+
+      <string id="RDVRecoveryUsage_Name">选择如何才能恢复受 BitLocker 保护的可移动驱动器</string>
+
+      <string id="RDVRecoveryUsage_Help">使用此策略设置，可以控制在缺少所需凭据的情况下恢复受 BitLocker 保护的可移动数据驱动器的方式。此策略设置将在打开 BitLocker 时应用。
+
+“允许数据恢复代理”复选框用于指定是否可将数据恢复代理用于受 BitLocker 保护的可移动数据驱动器。在数据恢复代理可以使用之前，必须先在组策略管理控制台或本地组策略编辑器中的公钥策略项中添加该代理。有关添加数据恢复代理的详细信息，请参阅 Microsoft TechNet 上的 BitLocker 驱动器加密部署指南。
+
+在“配置 BitLocker 恢复信息的用户存储”中，选择是允许、需要还是不允许用户生成 48 位数的恢复密码或 256 位恢复密钥。
+
+选中“省略 BitLocker 安装向导中的恢复选项”可阻止用户在对驱动器启用 BitLocker 时指定恢复选项。这意味着在启用 BitLocker 时不能指定要使用的恢复选项，驱动器的 BitLocker 恢复选项由策略设置确定。
+
+在“将 BitLocker 恢复信息保存在 Active Directory 域服务中”中，选择要为可移动数据驱动器在 AD DS 中存储哪些 BitLocker 恢复信息。如果选中“备份恢复密码和密钥数据包”，则 BitLocker 恢复密码和密钥数据包都存储到 AD DS 中。如果选中“仅备份恢复密码”，则只将恢复密码存储到 AD DS 中。
+
+若要在计算机未连接到域且未将 BitLocker 恢复信息成功备份到 AD DS 时阻止用户启用 BitLocker，则选中“在为可移动数据驱动器将恢复信息存储到 AD DS 之前不启用 BitLocker”复选框。
+
+注意: 如果选中“在为固定数据驱动器将恢复信息存储到 AD DS 之前不启用 BitLocker”复选框，则自动生成恢复密码。
+
+如果启用此策略设置，则可以控制用户可用于从受 BitLocker 保护的可移动数据驱动器中恢复数据的方法。
+
+如果未配置或禁用此策略设置，则支持将默认恢复选项用于 BitLocker 恢复。默认情况下将允许 DRA，用户可以指定恢复选项(包括恢复密码和恢复密钥)，并且恢复信息不备份到 AD DS
+      
+      </string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Require">需要 48 位数的恢复密码</string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Allow">允许 48 位数的恢复密码</string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Disallow">不允许 48 位数的恢复密码</string>
+
+      <string id="RDVRecoveryKeyUsageDropDown_Require">需要 256 位恢复密钥</string>
+      <string id="RDVRecoveryKeyUsageDropDown_Disallow">不允许 256 位恢复密钥</string>
+      <string id="RDVRecoveryKeyUsageDropDown_Allow">允许 256 位恢复密钥</string>
+
+
+      <string id="ConfigureRecoveryFolder_Help">使用此策略设置，可以指定当 BitLocker 驱动器加密安装向导提示用户输入要保存恢复密码的文件夹位置时所显示的默认路径。此策略设置将在打开 BitLocker 时应用。
+
+如果启用此策略设置，则可以指定当用户选择将恢复密码保存在文件夹中时要用作默认文件夹位置的路径。可以指定完全限定的路径，也可以在该路径中包含目标计算机的环境变量。如果该路径无效，则 BitLocker 安装向导将显示计算机的顶级文件夹视图。
+
+如果禁用或未配置此策略设置，则当用户选择将恢复密码保存在文件夹中时，BitLocker 安装向导将显示计算机的顶级文件夹视图。
+
+注意: 此策略设置不会阻止用户将恢复密码保存到其他文件夹。
+
+
+
+</string>
+
+      <string id="ConfigureRecoveryFolder_Name">选择用于存放恢复密码的默认文件夹</string>
+
+      <string id="EncryptionMethod_Help">使用此策略设置，可以配置 BitLocker 驱动器加密所使用的算法和密码长度。此策略设置将在打开 BitLocker 时应用。如果驱动器已加密或正在加密，则更改加密方法将不起作用。有关可用加密方法的详细信息，请参阅 Microsoft TechNet 上的 BitLocker 驱动器加密部署指南。此策略仅适用于运行 Windows Server 2008、Windows Vista、Windows Server 2008 R2 或 Windows 7 的计算机。
+
+如果启用此策略设置，则可为 BitLocker 选择加密驱动器所用的加密算法和密钥密码长度。
+
+如果禁用或未配置此策略设置，则 BitLocker 将使用含有扩散器的 AES 128 位默认加密方法，或使用由安装脚本指定的加密方法。
+
+      
+
+      </string>
+      <string id="EncryptionMethodNoDiffuser_Help">使用此策略设置，可以配置 BitLocker 驱动器加密所使用的算法和密码长度。此策略设置将在打开 BitLocker 时应用。如果驱动器已加密或正在加密，则更改加密方法将不起作用。有关可用加密方法的详细信息，请参阅 Microsoft TechNet 上的 BitLocker 驱动器加密部署指南。此策略仅适用于运行 Windows 8 及更高版本的计算机。
+
+如果启用此策略设置，则可为 BitLocker 选择加密驱动器所用的加密算法和密钥密码长度。
+
+如果禁用或未配置此策略设置，则 BitLocker 会将具有相同位强度(128 位或 256 位)的 AES 用作“选择驱动器加密方法和密码长度(Windows Vista、Windows Server 2008、Windows 7)”策略设置(如果已设置)。如果设置以上任一策略，则 BitLocker 将使用 AES 128 位默认加密方法，或使用由安装脚本指定的加密方法。   
+
+      </string>
+      <string id="EncryptionMethodWithXts_Help">使用此策略设置，可以配置 BitLocker 驱动器加密所使用的算法和密码长度。此策略设置将在打开 BitLocker 时应用。如果驱动器已加密或正在加密，则更改加密方法将不起作用。
+
+如果启用此策略设置，你可以单独为固定数据驱动器、操作系统驱动器和可移动数据驱动器配置加密算法与密钥加密长度。对于固定驱动器和操作系统驱动器，我们建议使用 XTS-AES 算法。对于可移动驱动器，如果驱动器将在未运行 Windows 10 (版本 1511)的其他设备上使用，则应使用 AES-CBC 128 位或 AES-CBC 256 位。
+
+如果禁用或未配置此策略设置，则 BitLocker 会将具有相同位强度(128 位或 256 位)的 AES 用作“选择驱动器加密方法和密码长度(Windows Vista、Windows Server 2008、Windows 7)”和“选择驱动器加密方法和密码长度”策略设置(按该顺序，如果已设置)。如果未设置任何策略，则 BitLocker 将使用 XTS-AES 128 位默认加密方法，或使用由安装脚本指定的加密方法。
+
+      </string>
+      <string id="EncryptionMethod_Name">选择驱动器加密方法和密码长度(Windows Vista、Windows Server 2008、Windows 7、Windows Server 2008 R2)</string>
+      <string id="EncryptionMethodNoDiffuser_Name">选择驱动器加密方法和密码长度(Windows 8、Windows Server 2012、Windows 8.1、Windows Server 2012 R2、Windows 10 [版本 1507])</string>
+      <string id="EncryptionMethodWithXts_Name">选择驱动器加密方法和密码长度(Windows 10 [版本 1511] 和更高版本)</string>
+      <string id="EncryptionMethodDropDown_AES128Diffuser_Name">含有扩散器的 AES 128 位</string>
+      <string id="EncryptionMethodDropDown_AES256Diffuser_Name">含有扩散器的 AES 256 位</string>
+      <string id="EncryptionMethodDropDown_AES128_Name">AES 128 位(默认)</string>
+      <string id="EncryptionMethodDropDown_AES128_Name2">AES-CBC 128 位</string>
+      <string id="EncryptionMethodDropDown_AES128_Name3">AES-CBC 128 位(默认)</string>
+      <string id="EncryptionMethodDropDown_AES256_Name">AES 256 位</string>
+      <string id="EncryptionMethodDropDown_AES256_Name2">AES-CBC 256 位</string>
+      <string id="EncryptionMethodDropDown_XTS_AES128_Name">XTS-AES 128 位(默认)</string>
+      <string id="EncryptionMethodDropDown_XTS_AES128_Name2">XTS-AES 128 位</string>
+      <string id="EncryptionMethodDropDown_XTS_AES256_Name">XTS-AES 256 位</string>
+
+      <string id="FVECategory">BitLocker 驱动器加密</string>
+      <string id="PlatformValidation_Deprecated_Help">使用此策略设置，可以配置计算机的受信任平台模块(TPM)安全硬件如何保护 BitLocker 加密密钥。如果计算机没有兼容的 TPM 或者 BitLocker 已在 TPM 保护方式下打开，则此策略设置不适用。
+
+如果在打开 BitLocker 之前启用此策略设置，则可以配置在对 BitLocker 加密操作系统驱动器的访问解除锁定之前 TPM 将验证的启动组件。如果在 BitLocker 保护起作用时更改了其中任何组件，则 TPM 将不会发放用于解除驱动器锁定的加密密钥，而计算机将显示 BitLocker 恢复控制台，并要求提供恢复密码或恢复密钥来解除驱动器锁定。
+
+如果禁用或未配置此策略设置，则 TPM 将使用默认平台验证配置文件或由安装脚本指定的平台验证配置文件。平台验证配置文件由一组从 0 到 23 的平台配置注册表(PCR)索引组成。默认平台验证配置文件根据对可信度测量的核心根(CRTM)、BIOS 和平台扩展(PCR 0)、可选 ROM 代码(PCR 2)、主启动记录(MBR)代码(PCR 4)、NTFS 引导扇区(PCR 8)、NTFS 启动块(PCR 9)、启动管理器(PCR 10)以及 BitLocker 访问控制(PCR 11)的更改来保护加密密钥。使用可扩展固件接口的计算机的 PCR 设置描述不同于使用标准 BIOS 的计算机的 PCR 设置描述。
+
+警告: 更改默认平台验证配置文件会影响计算机的安全性和可管理性。BitLocker 对平台修改(恶意或授权)的灵敏度会增加或减小，具体取决于包含还是排除(分别)PCR。
+      
+      </string>
+
+      <string id="PlatformValidation_Deprecated_Name">配置 TPM 平台验证配置文件(Windows Vista、Windows Server 2008、Windows 7、Windows Server 2008 R2)</string>
+
+      <string id="PlatformValidation_BIOS_Help">使用此策略设置，可以配置计算机的受信任平台模块(TPM)安全硬件如何保护 BitLocker 加密密钥。如果计算机没有兼容的 TPM 或者 BitLocker 已在 TPM 保护方式下打开，则此策略设置不适用。
+
+重要信息: 此组策略仅适用于使用 BIOS 配置的计算机或具有启用了兼容性服务模块(CSM)的 UEFI 固件的计算机。 使用本地 UEFI 固件配置的计算机会将不同的值存储在平台配置注册表(PCR)中。 使用“为本地 UEFI 固件配置配置 TPM 平台验证配置文件”组策略设置可为使用本地 UEFI 固件的计算机配置 TPM PCR 配置文件。
+
+如果在打开 BitLocker 之前启用此策略设置，则可以配置在对 BitLocker 加密操作系统驱动器的访问解除锁定之前 TPM 将验证的启动组件。如果在 BitLocker 保护起作用时更改了其中任何组件，则 TPM 将不会发放用于解除驱动器锁定的加密密钥，而计算机将显示 BitLocker 恢复控制台，并要求提供恢复密码或恢复密钥来解除驱动器锁定。
+
+如果禁用或未配置此策略设置，则 BitLocker 将使用默认平台验证配置文件或由安装脚本指定的平台验证配置文件。平台验证配置文件由一组从 0 到 23 的平台配置注册表(PCR)索引组成。默认平台验证配置文件根据对可信度测量的核心根(CRTM)、BIOS 和平台扩展(PCR 0)、可选 ROM 代码(PCR 2)、主启动记录(MBR)代码(PCR 4)、NTFS 引导扇区(PCR 8)、NTFS 启动块(PCR 9)、启动管理器(PCR 10)以及 BitLocker 访问控制(PCR 11)的更改来保护加密密钥。
+
+警告: 更改默认平台验证配置文件会影响计算机的安全性和可管理性。BitLocker 对平台修改(恶意或授权)的灵敏度会增加或减小，具体取决于包含还是排除(分别)PCR。
+      
+      </string>
+
+      <string id="PlatformValidation_BIOS_Name">为基于 BIOS 的固件配置配置 TPM 平台验证配置文件</string>
+
+      <string id="PlatformValidation_UEFI_Help">使用此策略设置，可以配置计算机的受信任的平台模块(TPM)安全硬件如何保护 BitLocker 加密密钥。如果计算机没有兼容的 TPM 或者 BitLocker 已在 TPM 保护方式下打开，则此策略设置不适用。
+
+重要信息: 此组策略仅适用于采用本地 UEFI 固件配置的计算机。具备启用兼容性服务模块(CSM)的 BIOS 或 UEFI 固件的计算机会将不同的值存储在平台配置注册表(PCR)中。使用“为基于 BIOS 的固件配置配置 TPM 平台验证配置文件”组策略设置可为使用 BIOS 配置的计算机或具备启用 CSM 的 UEFI 固件的计算机配置 TPM PCR 配置文件。
+
+如果在打开 BitLocker 之前启用此策略设置，则可以配置 TPM 在对 BitLocker 加密操作系统驱动器的访问解除锁定之前进行验证的引导组件。如果在 BitLocker 保护起作用时更改了其中任何组件，则 TPM 将不会发放用于解除驱动器锁定的加密密钥，而计算机将显示 BitLocker 恢复控制台，并要求提供恢复密码或恢复密钥来解除驱动器锁定。
+
+如果禁用或未配置此策略设置，则 BitLocker 将使用可用硬件的默认平台验证配置文件或由安装脚本指定的平台验证配置文件。平台验证配置文件由一组从 0 到 23 的平台配置注册表(PCR)索引组成。
+
+在缺少安全引导状态(PCR 7)支持的电脑上，默认平台验证配置文件根据对核心系统固件可执行代码(PCR 0)、扩展或可插入可执行代码(PCR 2)、引导管理器(PCR 4)以及 BitLocker 访问控制(PCR 11)的更改来保护加密密钥。
+
+当安全引导状态(PCR7)支持可用时，默认平台验证配置文件使用安全引导状态(PCR 7)和 BitLocker 访问控制(PCR 11)来保护加密密钥。
+
+警告: 更改默认平台验证配置文件会影响计算机的安全性和可管理性。BitLocker 对平台修改(恶意或授权)的灵敏度会增加或减小，具体取决于(分别)包含还是排除 PCR。具体而言，在设置此策略时省略 PCR 7 将覆盖“允许对完整性验证使用安全引导”组策略，这将阻止 BitLocker 将安全引导用于平台或引导配置数据(BCD)完整性验证。设置此策略可能会导致在更新固件时恢复 BitLocker。如果将此策略设置为包括 PCR 0，将在应用固件更新之前挂起 BitLocker。
+
+建议不配置此策略，以允许 Windows 根据每台电脑上的可用硬件选择 PCR 配置，从而获得最佳的安全性和可用性。
+      </string>
+
+      <string id="PlatformValidation_UEFI_Name">为本地 UEFI 固件配置配置 TPM 平台验证配置文件</string>
+
+      <string id="MorBehavior_Help">此策略设置可控制计算机的重新启动性能，但可能会有暴露 BitLocker 机密的风险。此策略设置将在打开 BitLocker 时应用。BitLocker 机密包含用于加密数据的密钥材料。只有在启用了 BitLocker 保护的情况下，此策略设置才适用。
+
+如果启用此策略设置，则在重新启动计算机时不会覆盖内存。禁止覆盖内存可以提高重新启动性能，但将增加暴露 BitLocker 机密的风险。
+
+如果禁用或未配置此策略设置，则在重新启动计算机时会将 BitLocker 机密从内存中删除。
+
+      
+
+      </string>
+      <string id="MorBehavior_Name">禁止在重新启动时覆盖内存</string>
+
+      <string id="DisableExternalDMAUnderLock_Help">此策略设置允许你在用户登录 Windows 前阻止所有 Thunderbolt 热插拔 PCI 下游端口的直接内存存取(DMA)。用户登录后，Windows 会枚举连接到主机 Thunderbolt PCI 端口的 PCI 设备。用户每次锁定计算机，系统都将阻止无子设备的热插拔 Thunderbolt PCI 端口进行 DMA，直到用户再次登录。计算机解锁时已枚举的设备将继续工作，直到拔出设备或系统重新启动或休眠。只在启用 BitLocker 或设备加密时才执行此策略设置。
+
+注意: 如果系统固件在新设备登录到 Windows 之前为新连接的 Thunderbolt 设备启用 DMA, 则这些电脑可能与此策略不兼容。
+
+      </string>
+      <string id="DisableExternalDMAUnderLock_Name">此计算机锁定时禁用新的 DMA 设备</string>
+
+      <string id="FVEOSCategory">操作系统驱动器</string>
+      <string id="FVEFDVCategory">固定数据驱动器</string>
+      <string id="FVERDVCategory">可移动数据驱动器</string>
+
+      <string id="IdentificationField_Name">为组织提供唯一标识符</string>
+      <string id="IdentificationField_Help">使用此策略设置，可以对启用 BitLocker 的新驱动器关联唯一的组织标识符。这些标识符存储为标识字段和允许的标识字段。使用标识字段可以为受 BitLocker 保护的驱动器关联唯一的组织标识符。此标识符会自动添加到受 BitLocker 保护的新驱动器，并可以使用 manage-bde 命令行工具在受 BitLocker 保护的现有驱动器上进行更新。管理受 BitLocker 保护的驱动器上基于证书的数据恢复代理时，以及可能要更新 BitLocker To Go 读取器时，需要用到标识字段。仅当驱动器上的标识字段与标识字段中的配置值相匹配时，BitLocker 才会管理和更新数据恢复代理。同样，仅当驱动器上的标识字段与标识字段的配置值相匹配时，BitLocker 才会更新 BitLocker To Go 读取器。
+
+允许的标识字段结合“拒绝对不受 BitLocker 保护的可移动驱动器的写访问”策略设置使用，可以帮助控制组织中对可移动驱动器的使用。允许的标识字段是使用逗号分隔的、本组织或其他外部组织的标识字段列表。
+
+可以使用 manage-bde.exe 在现有驱动器上配置标识字段。
+
+如果启用此策略设置，则可以在受 BitLocker 保护的驱动器上配置标识字段和组织所用的任何允许标识字段。
+
+在将受 BitLocker 保护的驱动器安装到另一台启用了 BitLocker 的计算机时，将使用标识字段和允许的标识字段来确定驱动器是否来自外部组织。
+
+如果禁用或未配置此策略设置，则不需要标识字段。
+
+注意: 管理受 BitLocker 保护的驱动器上基于证书的数据恢复代理时需要用到标识字段。仅当驱动器上存在标识字段并且该标识字段与计算机上配置的值相同时，BitLocker 才会管理和更新基于证书的数据恢复代理。标识字段可以是由 260 个或更少字符组成的任何值。
+
+      
+
+      </string>
+
+
+      <string id="UserCertificateOID_Name">验证智能卡证书使用合规性</string>
+     <string id="UserCertificateOID_Help">使用此策略设置可以将智能卡证书中的对象标识符关联到受 BitLocker 保护的驱动器。此策略设置将在打开 BitLocker 时应用。
+
+对象标识符是在证书的增强型密钥使用(EKU)中指定的。 通过匹配证书中的对象标识符和此策略设置所定义的对象标识符，BitLocker 可以确定使用哪些证书来验证受 BitLocker 保护的驱动器的用户证书。
+
+默认对象标识符为 1.3.6.1.4.1.311.67.1.1
+
+注意: BitLocker 不要求证书具备 EKU 属性，但是如果已为证书配置了该属性，则必须将其设置为与为 BitLocker 配置的对象标识符(OID)匹配的 OID。
+
+如果启用此策略设置，则“对象标识符”框中指定的对象标识符必须与智能卡证书中的对象标识符匹配。
+
+如果禁用或未配置此策略设置，则使用默认对象标识符。
+
+     
+
+     </string>
+
+      <string id="UseEnhancedBcdProfile_Name">使用增强型引导配置数据验证配置文件</string>
+      <string id="UseEnhancedBcdProfile_Help">使用此策略设置可以在验证平台期间选择特定的引导配置数据(BCD)设置来进行验证。
+
+如果启用此策略设置，则将能够添加其他设置、删除默认设置或执行这两项操作。
+
+如果禁用此策略设置，则计算机将还原到类似于 Windows 7 所使用的默认 BCD 配置文件的 BCD 配置文件。
+
+如果未配置此策略设置，则计算机将验证默认 Windows BCD 设置。
+
+注意: 当 BitLocker 将安全引导用于平台和引导配置数据(BCD)完整性验证(如“允许对完整性验证使用安全引导”组策略所定义)时，将忽略“使用增强型引导配置数据验证配置文件”组策略。
+
+如果控制引导调试的设置(0x16000010)包含在提供的字段中，则始终验证此设置，且此设置无效。
+      
+      </string>
+
+      <string id="OSActiveDirectoryBackupDropDown_1">存储恢复密码和密钥数据包</string>
+      <string id="OSActiveDirectoryBackupDropDown_2">仅存储恢复密码</string>
+
+
+      <string id="MinimumPINLength_Name">为启动配置最小的 PIN 长度</string>
+      <string id="MinimumPINLength_Help">
+          使用此策略设置可以为受信任平台模块(TPM)的启动 PIN 配置最小长度。此策略设置将在打开 BitLocker 时应用。启动 PIN 的最小长度必须是 4 位数，最大长度可达 20 位数。
+
+          如果启用此策略设置，则可要求在设置启动 PIN 时使用最少的位数。
+
+          如果禁用或未配置此策略设置，则用户可以配置 6 到 20 位数之间任意长度的启动 PIN。
+
+          注意: 如果最小 PIN 长度设置为少于 6 位数，则在更改 PIN 时，Windows 会尝试将 TPM 2.0 锁定期限更新为大于默认值。如果成功，则 Windows 仅将 TPM 锁定期限重置回默认值(如果重置 TPM)。
+
+      </string>
+
+      <string id="OSAllowDRA_Name">允许基于证书的数据恢复代理</string>
+
+      <string id="FDVDenyWriteAccess_Name">拒绝对不受 BitLocker 保护的固定驱动器的写访问</string>
+      <string id="FDVDenyWriteAccess_Help">此策略设置决定了是否需要启用 BitLocker 保护才能使计算机上的固定数据驱动器可写。
+
+如果启用此策略设置，则所有不受 BitLocker 保护的固定数据驱动器都将安装成只读驱动器。受 BitLocker 保护的驱动器将安装成可读写驱动器。
+
+如果禁用或未配置此策略设置，则计算机上的所有固定数据驱动器都将安装成可读写驱动器。
+
+      </string>
+
+      <string id="FDVPassphrase_Name">配置对固定数据驱动器使用密码</string>
+      <string id="FDVPassphrase_Help">此策略设置指定对受 BitLocker 保护的固定数据驱动器解除锁定是否需要密码。如果选择允许使用密码，则可以要求使用密码、对密码强制执行复杂性要求以及为密码配置最小长度。要使复杂性要求设置发挥作用，还必须启用位于“计算机配置\Windows 设置\安全设置\帐户策略\密码策略”下的组策略设置“密码必须符合复杂性要求”。
+
+注意: 这些设置在打开 BitLocker 时强制执行，而在解除卷锁定时不强制执行。BitLocker 将允许使用驱动器上可用的任何保护器来解除驱动器锁定。
+
+如果启用此策略设置，则用户可以配置符合设定要求的密码。若要要求使用密码，请选中“需要对固定数据驱动器使用密码”。若要对密码强制执行复杂性要求，请选中“需要复杂性”。
+
+如果设置为“需要复杂性”，则在启用 BitLocker 时需要域控制器连接来验证密码复杂性。如果设置为“允许复杂性”，则将尝试连接域控制器来验证复杂性是否符合策略设置的规则。但如果找不到域控制器，则无论实际的密码复杂性如何，系统都会接受该密码，并将该密码用作保护器对驱动器进行加密。如果设置为“不允许复杂性”，则不会执行密码复杂性验证。
+
+密码必须至少包含 8 个字符。若要配置更大的密码最小长度，请在“最短密码长度”框中输入合适的字符数。
+
+如果禁用此策略设置，则不允许用户使用密码。
+
+如果未配置此策略设置，则密码将由默认设置提供支持。默认设置无密码复杂性要求，并且只要求使用 8 个字符。
+
+注意: 如果启用了 FIPS 兼容，则不能使用密码。位于“计算机配置\Windows 设置\安全设置\本地策略\安全选项”中的“系统加密: 使用 FIPS 兼容的算法来加密、哈希和签名”策略设置指定是否启用 FIPS 兼容。
+
+
+
+</string>
+
+      <string id="OSPassphrase_Name">配置对操作系统驱动器使用密码</string>
+      <string id="OSPassphrase_Help">此策略设置指定用于解锁受 BitLocker 保护的操作系统驱动器的密码限制。如果允许在操作系统驱动器上使用非 TPM 保护程序，则可以预配密码、对密码强制执行复杂性要求以及为密码配置最小长度。要使复杂性要求设置发挥作用，还必须启用位于“计算机配置\Windows 设置\安全设置\帐户策略\密码策略”下的组策略设置“密码必须符合复杂性要求”。
+
+注意: 这些设置在打开 BitLocker 时强制执行，而在解除卷锁定时不强制执行。BitLocker 将允许使用驱动器上可用的任何保护器来解除驱动器锁定。
+
+如果启用此策略设置，则用户可以配置符合设定要求的密码。若要对密码强制执行复杂性要求，请选中“需要复杂性”。
+
+如果设置为“需要复杂性”，则在启用 BitLocker 时需要域控制器连接来验证密码复杂性。如果设置为“允许复杂性”，则将尝试连接域控制器来验证复杂性是否符合策略设置的规则。但如果找不到域控制器，则无论实际的密码复杂性如何，系统都会接受该密码，并将该密码用作保护器对驱动器进行加密。如果设置为“不允许复杂性”，则不会执行密码复杂性验证。
+
+密码必须至少包含 8 个字符。若要配置更大的密码最小长度，请在“最短密码长度”框中输入合适的字符数。
+
+如果禁用或未配置此策略设置，则将 8 个字符的默认长度限制应用于操作系统驱动器密码，并将不进行复杂性检查。
+
+注意: 如果启用了 FIPS 兼容，则不能使用密码。位于“计算机配置\Windows 设置\安全设置\本地策略\安全选项”中的“系统加密: 使用 FIPS 兼容的算法来加密、哈希和签名”策略设置指定是否启用 FIPS 兼容。
+
+
+
+</string>
+
+
+      <string id="PassphraseComplexityDropDown_2">允许密码复杂性</string>
+      <string id="PassphraseComplexityDropDown_0">不允许密码复杂性</string>
+      <string id="PassphraseComplexityDropDown_1">需要密码复杂性</string>
+
+      <string id="FDVActiveDirectoryBackupDropDown_1">备份恢复密码和密钥数据包</string>
+      <string id="FDVActiveDirectoryBackupDropDown_2">仅备份恢复密码</string>
+
+
+      <string id="FDVHybrid_Name">允许从 Windows 早期版本访问受 BitLocker 保护的固定数据驱动器</string>
+      <string id="FDVHybrid_Help">此策略设置配置在运行 Windows Server 2008、Windows Vista、Windows XP Service Pack 3 (SP3)或 Windows XP Service Pack 2 (SP2)操作系统的计算机上是否可以对使用 FAT 文件系统格式化的固定数据驱动器解除锁定，以及是否可以查看这些驱动器。
+
+如果启用或未配置此策略设置，则可以在运行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的计算机上对使用 FAT 文件系统格式化的固定数据驱动器解除锁定，并能够查看这些驱动器的内容。这些操作系统对受 BitLocker 保护的驱动器具有只读访问权限。
+
+如果启用此策略设置，则应选中“禁止在 FAT 格式化固定驱动器上安装 BitLocker To Go 读取器”复选框，以防止用户从其固定驱动器中运行 BitLocker To Go 读取器。如果 BitLocker To Go 读取器(bitlockertogo.exe)存在于未指定标识字段的驱动器上，或该驱动器具备“为组织提供唯一标识符”策略设置中指定的相同标识字段，则系统将提示用户更新 BitLocker，并从该驱动器中删除 BitLocker To Go 读取器。在这种情况下，要在运行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的计算机上对固定驱动器解除锁定，则必须在该计算机上安装 BitLocker To Go 读取器。如果不选中此复选框，则将在固定驱动器上安装 BitLocker To Go 读取器，以使用户能够在运行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 并且没安装 BitLocker To Go 读取器的计算机上解除对该驱动器的锁定。
+
+如果禁用此策略设置，则不能在运行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的计算机上对使用 FAT 文件系统格式化并受 BitLocker 保护的固定数据驱动器解除锁定。这种情况下不会安装 Bitlockertogo.exe。
+
+注意: 此策略设置不适用于使用 NTFS 文件系统格式化的驱动器。
+
+      
+
+      </string>
+
+
+      <string id="FDVAllowDRA_Name">允许基于证书的数据恢复代理</string>
+
+      <string id="FDVConfigureSmartCard_Name">配置对固定数据驱动器使用智能卡</string>
+      <string id="FDVConfigureSmartCard_Help">使用此策略设置，可以指定能否使用智能卡来验证用户对计算机上受 BitLocker 保护的固定数据驱动器的访问。
+
+如果启用此策略设置，则可以使用智能卡验证用户对驱动器的访问。可以通过选中“需要对固定数据驱动器使用智能卡”复选框来要求使用智能卡进行身份验证。
+
+注意: 这些设置在打开 BitLocker 时执行，而在解除驱动器锁定时不执行。BitLocker 将允许使用驱动器上可用的任何保护器来解除驱动器锁定。
+
+如果禁用此策略设置，则禁止用户使用智能卡来验证他们对受 BitLocker 保护的固定数据驱动器的访问。
+
+如果未配置此策略设置，则可以使用智能卡来验证用户对受 BitLocker 保护的驱动器的访问。
+
+      
+
+      </string>
+
+      <string id="RDVPassphrase_Name">配置对可移动数据驱动器使用密码</string>
+      <string id="RDVPassphrase_Help">此策略设置指定对受 BitLocker 保护的可移动数据驱动器解除锁定是否需要密码。如果选择允许使用密码，则可以要求使用密码、强制执行复杂性要求以及配置最小长度。要使复杂性要求设置发挥作用，还必须启用位于“计算机配置\Windows 设置\安全设置\帐户策略\密码策略”下的组策略设置“密码必须符合复杂性要求”。
+
+注意: 这些设置在打开 BitLocker 时强制执行，而在解除卷锁定时不强制执行。BitLocker 将允许使用驱动器上可用的任何保护器来解除驱动器锁定。
+
+如果启用此策略设置，则用户可以配置符合设定要求的密码。若要要求使用密码，请选中“需要对可移动数据驱动器使用密码”。若要对密码强制执行复杂性要求，请选中“需要复杂性”。
+
+如果设置为“需要复杂性”，则在启用 BitLocker 时需要域控制器连接来验证密码复杂性。如果设置为“允许复杂性”，则将尝试连接域控制器来验证复杂性是否符合策略设置的规则。但如果找不到域控制器，则无论实际的密码复杂性如何，系统都会接受该密码，并将该密码用作保护器对驱动器进行加密。如果设置为“不允许复杂性”，则不会执行密码复杂性验证。
+
+密码必须至少包含 8 个字符。若要配置更大的密码最小长度，请在“最短密码长度”框中输入合适的字符数。
+
+如果禁用此策略设置，则不允许用户使用密码。
+
+如果未配置此策略设置，则密码将由默认设置提供支持。默认设置无密码复杂性要求，并且只要求使用 8 个字符。
+
+注意: 如果启用了 FIPS 兼容，则不能使用密码。位于“计算机配置\Windows 设置\安全设置\本地策略\安全选项”中的“系统加密: 使用 FIPS 兼容的算法来加密、哈希和签名”策略设置指定是否启用 FIPS 兼容。
+
+      
+
+      </string>
+
+      <string id="RDVDenyWriteAccess_Name">拒绝对不受 BitLocker 保护的可移动驱动器的写访问</string>
+      <string id="RDVDenyWriteAccess_Help">此策略设置配置否要在有 BitLocker 保护时才允许计算机将数据写入可移动数据驱动器。
+
+如果启用此策略设置，则所有不受 BitLocker 保护的可移动数据驱动器都安装成只读驱动器。受 BitLocker 保护的驱动器将安装成可读写驱动器。
+
+如果选中“拒绝对其他组织中配置的驱动器的写访问”选项，则只有标识字段与计算机标识字段匹配的驱动器才会被授予写访问权限。当访问可移动数据驱动器时，系统将会检查其是否具备有效标识字段和允许的标准字段。这些字段是由“为组织提供唯一标识符”策略设置定义的。
+
+如果禁用或未配置此策略设置，则计算机上的所有可移动数据驱动器都将安装成可读写驱动器。
+
+注意:“用户配置\管理模板\系统\可移动存储访问”下的策略设置可以覆盖此策略设置。如果启用“可移动磁盘: 拒绝写访问”策略设置，则将忽略此策略设置。
+
+      
+
+      </string>
+
+      <string id="RDVConfigureBDE_Name">控制对可移动驱动器使用 BitLocker</string>
+      <string id="RDVConfigureBDE_Help">此策略设置控制对可移动数据驱动器使用 BitLocker。此策略设置将在打开 BitLocker 时应用。
+
+启用此策略设置时，可选择用于控制用户如何配置 BitLocker 的属性设置。如果选中“允许用户对可移动数据驱动器应用 BitLocker 保护”，则用户可以在可移动数据驱动器上运行 BitLocker 安装向导。如果选中“允许用户对可移动数据驱动器暂停 BitLocker 并对其解密”，则用户可以在执行维护时从驱动器删除 BitLocker 驱动器加密，或暂停加密。有关暂停 BitLocker 保护的详细信息，请参阅 Microsoft TechNet 上的 BitLocker 驱动器加密部署指南。
+
+如果未配置此策略设置，则用户可对可移动磁盘驱动器使用 BitLocker。
+
+如果禁用此策略设置，则用户无法对可移动磁盘驱动器使用 BitLocker。
+
+      
+
+      </string>
+
+
+      <string id="RDVActiveDirectoryBackupDropDown_1">备份恢复密码和密钥数据包</string>
+      <string id="RDVActiveDirectoryBackupDropDown_2">仅备份恢复密码</string>
+
+      <string id="RDVHybrid_Name">允许从 Windows 早期版本访问受 BitLocker 保护的可移动数据驱动器</string>
+      <string id="RDVHybrid_Help">此策略设置配置在运行 Windows Server 2008、Windows Vista、Windows XP Service Pack 3 (SP3)或 Windows XP Service Pack 2 (SP2)操作系统的计算机上是否可以对使用 FAT 文件系统格式化的可移动数据驱动器解除锁定，以及是否可以查看这些驱动器。
+
+如果启用或未配置此策略设置，则可以在运行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的计算机上对使用 FAT 文件系统格式化的可移动数据驱动器解除锁定，并能够查看这些驱动器的内容。这些操作系统对受 BitLocker 保护的驱动器具有只读访问权限。
+
+如果启用此策略设置，则应选中“禁止在 FAT 格式化可移动驱动器上安装 BitLocker To Go 读取器”复选框，以防止用户从其可移动驱动器中运行 BitLocker To Go 读取器。如果 BitLocker To Go 读取器(bitlockertogo.exe)存在于未指定标识字段的驱动器上，或该驱动器具备“为组织提供唯一标识符”策略设置中指定的相同标识字段，则系统将提示用户更新 BitLocker，并从该驱动器中删除 BitLocker To Go 读取器。在这种情况下，要在运行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的计算机上对可移动驱动器解除锁定，则必须在该计算机上安装 BitLocker To Go 读取器。如果不选中此复选框，则将在可移动驱动器上安装 BitLocker To Go 读取器，以使用户能够在运行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 并且没安装 BitLocker To Go 读取器的计算机上解除对该驱动器的锁定。
+
+如果禁用此策略设置，则不能在运行 Windows Server 2008、Windows Vista、Windows XP SP3 或 Windows XP SP2 的计算机上对使用 FAT 文件系统格式化并受 BitLocker 保护的可移动数据驱动器解除锁定。这种情况下不会安装 Bitlockertogo.exe。
+
+注意: 此策略设置不适用于使用 NTFS 文件系统格式化的驱动器。
+
+      
+
+      </string>
+
+      <string id="RDVAllowDRA_Name">允许基于证书的数据恢复代理</string>
+
+      <string id="RDVConfigureSmartCard_Name">配置对可移动数据驱动器使用智能卡</string>
+      <string id="RDVConfigureSmartCard_Help">使用此策略设置，可以指定能否使用智能卡来验证用户对计算机上受 BitLocker 保护的可移动数据驱动器的访问。
+
+如果启用此策略设置，则可以使用智能卡验证用户对驱动器的访问。可以通过选中“需要对可移动数据驱动器使用智能卡”复选框来要求使用智能卡进行身份验证。
+
+注意: 这些设置在打开 BitLocker 时执行，而在解除驱动器锁定时不执行。BitLocker 将允许使用驱动器上可用的任何保护器来解除驱动器锁定。
+
+如果禁用此策略设置，则禁止用户使用智能卡来验证他们对受 BitLocker 保护的可移动数据驱动器的访问。
+
+如果未配置此策略设置，则可以使用智能卡来验证用户对受 BitLocker 保护的可移动数据驱动器的访问。
+
+      
+
+      </string>
+
+      <string id="EnhancedPIN_Name">允许增强型启动 PIN</string>
+      <string id="EnhancedPIN_Help">使用此策略设置可以配置是否对 BitLocker 使用增强型启动 PIN。
+
+增强型启动 PIN 允许使用包括大写字母、小写字母、符号、数字和空格在内的字符。此策略设置将在打开 BitLocker 时应用。
+
+如果启用此策略设置，则新设置的所有 BitLocker 启动 PIN 都将是增强型 PIN。
+
+注意: 并非所有计算机在预启动环境中都支持增强型 PIN。强烈建议用户在安装 BitLocker 时执行系统检查。
+
+如果禁用或未配置此策略设置，则不使用增强型 PIN。
+
+      
+
+      </string>
+
+      <string id="TPMAutoReseal_Name">在 BitLocker 恢复后重置平台验证数据</string>
+      <string id="TPMAutoReseal_Help">使用此策略设置，可控制当 Windows 在 BitLocker 恢复后启动时是否刷新平台验证数据。
+
+如果启用此策略设置，则当 Windows 在 BitLocker 恢复后启动时将刷新平台验证数据。
+
+如果禁用此策略设置，则当 Windows 在 BitLocker 恢复后启动时将不刷新平台验证数据。
+
+如果未配置此策略设置，则当 Windows 在 BitLocker 恢复后启动时将刷新平台验证数据。
+
+      
+
+      </string>
+
+      <string id="OSEncryptionType_Name">在操作系统驱动器上强制实施驱动器加密类型</string>
+
+      <string id="FDVEncryptionType_Name">在固定数据驱动器上强制实施驱动器加密类型</string>
+
+      <string id="RDVEncryptionType_Name">在可移动数据驱动器上强制实施驱动器加密类型</string>
+
+      <string id="EncryptionType_Help">使用此策略设置，可以配置 BitLocker 驱动器加密所使用的加密类型。此策略设置将在打开 BitLocker 时应用。如果驱动器已加密或正在加密，则更改加密类型无效。启动 BitLocker 时，选择“完全加密”可要求加密整个驱动器。启动 BitLocker 时，选择“仅加密已用空间”可要求仅加密用于存储数据的驱动器部分。
+
+如果启用此策略设置，则 BitLocker 将用于加密驱动器的加密类型由此策略定义，且加密类型选项将不在 BitLocker 安装向导中显示。
+
+如果禁用或未配置此策略设置，则在打开 BitLocker 之前，BitLocker 安装向导将要求用户选择加密类型。
+
+      
+
+      </string>
+
+      <string id="EncryptionTypeDropDown_UserChooses_Name">允许用户选择(默认)</string>
+      <string id="EncryptionTypeDropDown_FullEncryption_Name">完全加密</string>
+      <string id="EncryptionTypeDropDown_DataOnlyEncryption_Name">仅加密已用空间</string>
+
+      <string id="DisallowStandardUsersCanChangePIN_Name">禁止标准用户更改 PIN 或密码</string>
+      <string id="DisallowStandardUsersCanChangePIN_Help">使用此策略设置,可以配置是否允许标准用户更改 BitLocker 卷 PIN，前提是他们能够首先提供现有 PIN。
+
+此策略设置将在打开 BitLocker 时应用。
+
+如果启用此策略设置，则将不允许标准用户更改 BitLocker PIN 或密码。
+
+如果禁用或未配置此策略设置，则将允许标准用户更改 BitLocker PIN 和密码。
+
+      
+
+      </string>
+
+      <string id="OSEDrive_Name">配置对操作系统驱动器使用基于硬件的加密</string>
+
+      <string id="FDVEDrive_Name">配置对固定数据驱动器使用基于硬件的加密</string>
+
+      <string id="RDVEDrive_Name">配置对可移动数据驱动器使用基于硬件的加密</string>
+
+      <string id="OSEDrive_Help">使用此策略设置，可以管理 BitLocker 在操作系统驱动器上使用基于硬件的加密的方式，并指定它可以将哪些加密算法用于基于硬件的加密。使用基于硬件的加密可以提高涉及频繁读取数据或频繁将数据写入驱动器的驱动器操作的性能。
+
+如果启用此策略设置，则可以指定其他选项，控制是否在不支持基于硬件的加密的计算机上使用 BitLocker 基于软件的加密，而不是基于硬件的加密，以及是否希望限制将密码算法和密码套件用于基于硬件的加密。
+
+如果禁用此策略设置，则 BitLocker 无法将基于硬件的加密用于操作系统驱动器，并且在驱动器加密时将默认使用 BitLocker 基于软件的加密。
+
+如果未配置此策略设置，则 BitLocker 将使用基于软件的加密，无论基于硬件的加密是否可用。
+
+注意:“选择驱动器加密方法和密码长度”策略设置不适用于基于硬件的加密。基于硬件的加密所使用的加密算法在对驱动器进行分区时进行设置。默认情况下，BitLocker 使用在驱动器上配置的算法来加密驱动器。使用“限制可用于基于硬件的加密的加密算法和密码套件”选项，可以限制 BitLocker 可用于硬件加密的加密算法。如果为驱动器设置的算法不可用，则 BitLocker 将禁用基于硬件的加密。
+加密算法由对象标识符(OID)指定。例如:
+- AES 128 (CBC 模式) OID: 2.16.840.1.101.3.4.1.2
+- AES 256 (CBC 模式) OID: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="FDVEDrive_Help">使用此策略设置，可以管理 BitLocker 在固定数据驱动器上使用基于硬件的加密的方式，并指定它可以将哪些加密算法用于基于硬件的加密。使用基于硬件的加密可以提高涉及频繁读取数据或频繁将数据写入驱动器的驱动器操作的性能。
+
+如果启用此策略设置，则可以指定其他选项，控制是否在不支持基于硬件的加密的计算机上使用 BitLocker 基于软件的加密，而不是基于硬件的加密，以及是否希望限制将密码算法和密码套件用于基于硬件的加密。
+
+如果禁用此策略设置，则 BitLocker 无法将基于硬件的加密用于操作系统驱动器，并且在驱动器加密时将默认使用 BitLocker 基于软件的加密。
+
+如果未配置此策略设置，则 BitLocker 将使用基于软件的加密，无论基于硬件的加密是否可用。
+
+注意:“选择驱动器加密方法和密码长度”策略设置不适用于基于硬件的加密。基于硬件的加密所使用的加密算法在对驱动器进行分区时进行设置。默认情况下，BitLocker 使用在驱动器上配置的算法来加密驱动器。使用“限制可用于基于硬件的加密的加密算法和密码套件”选项，可以限制 BitLocker 可用于硬件加密的加密算法。如果为驱动器设置的算法不可用，则 BitLocker 将禁用基于硬件的加密。
+加密算法由对象标识符(OID)指定。例如:
+- AES 128 (CBC 模式) OID: 2.16.840.1.101.3.4.1.2
+- AES 256 (CBC 模式) OID: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="RDVEDrive_Help">使用此策略设置，可以管理 BitLocker 在可移动数据驱动器上使用基于硬件的加密的方式，并指定它可以将哪些加密算法用于基于硬件的加密。使用基于硬件的加密可以提高涉及频繁读取数据或频繁将数据写入驱动器的驱动器操作的性能。
+
+如果启用此策略设置，则可以指定其他选项，控制是否在不支持基于硬件的加密的计算机上使用 BitLocker 基于软件的加密，而不是基于硬件的加密，以及是否希望限制将密码算法和密码套件用于基于硬件的加密。
+
+如果禁用此策略设置，则 BitLocker 无法将基于硬件的加密用于操作系统驱动器，并且在驱动器加密时将默认使用 BitLocker 基于软件的加密。
+
+如果未配置此策略设置，则 BitLocker 将使用基于软件的加密，无论基于硬件的加密是否可用。
+
+注意:“选择驱动器加密方法和密码长度”策略设置不适用于基于硬件的加密。基于硬件的加密所使用的加密算法在对驱动器进行分区时进行设置。默认情况下，BitLocker 使用在驱动器上配置的算法来加密驱动器。使用“限制可用于基于硬件的加密的加密算法和密码套件”选项，可以限制 BitLocker 可用于硬件加密的加密算法。如果为驱动器设置的算法不可用，则 BitLocker 将禁用基于硬件的加密。
+加密算法由对象标识符(OID)指定。例如:
+- AES 128 (CBC 模式) OID: 2.16.840.1.101.3.4.1.2
+- AES 256 (CBC 模式) OID: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="EnablePrebootInputProtectorsOnSlates_Name">启用 BitLocker 身份验证需要在平板电脑上预启动键盘输入</string>
+      <string id="EnablePrebootInputProtectorsOnSlates_Help">使用此策略设置，用户可以启用需要来自预启动环境的用户输入的身份验证选项，即使平台不具有预启动输入功能也是如此。
+
+Windows 触摸键盘(如平板电脑使用的键盘)不可用于预启动环境，在该环境中，BitLocker 需要 PIN 或密码等其他信息。
+
+如果启用此策略设置，则设备必须具有预启动输入的替代方法(如连接的 USB 键盘)。
+
+如果未启用此策略，则必须在平板电脑上启用 Windows 恢复环境才能支持 BitLocker 恢复密码的输入。在未启用 Windows 恢复环境并且未启用此策略时，将无法在使用 Windows 触摸键盘的设备上启用 BitLocker。
+
+请注意，如果未启用此策略设置，则“启动时需要附加身份验证”策略中的选项可能无法用于此类设备。这些选项包括:
+- 配置 TPM 启动 PIN: 必选/允许
+- 配置 TPM 启动密钥和 PIN: 必选/允许
+- 配置对操作系统驱动器使用密码。
+      
+      </string>
+
+      <string id="EnablePreBootPinExceptionOnDECapableDevice_Name">允许与 InstantGo 或 HSTI 兼容的设备选择不使用预启动 PIN。</string>
+      <string id="EnablePreBootPinExceptionOnDECapableDevice_Help">此策略设置允许与 InstantGo 或 Microsoft 硬件安全测试接口 (HSTI)兼容的设备上的用户不必具有用于预启动身份验证的 PIN。此设置将覆盖兼容硬件上“启动时需要附加身份验证”策略的“有 TPM 时需要启动 PIN”和“有 TPM 时需要启动密钥和 PIN”选项。
+
+如果启用此策略设置，则 InstantGo 和 HSTI 兼容设备上的用户将可以选择无需预启动身份验证即可启用 BitLocker。
+
+如果未启用此策略，则“启动时需要附加身份验证”策略的选项适用。
+      </string>
+
+      <string id="AllowSecureBootForIntegrity_Name">允许对完整性验证使用安全引导</string>
+      <string id="AllowSecureBootForIntegrity_Help">使用此策略设置，可以配置是否允许将安全引导作为 BitLocker 操作系统驱动器的平台完整性提供程序。
+
+安全引导确保电脑的预启动环境仅加载由授权软件发行商数字签名的固件。相对于旧 BitLocker 完整性检查，安全引导还为管理预启动配置提供更大的灵活性。
+
+如果启用或未配置此策略设置，则 BitLocker 会将安全引导用于平台完整性(如果该平台具有基于安全引导的完整性验证功能)。
+
+如果禁用此策略设置，则即使在具有基于安全引导的完整性验证功能的系统上，BitLocker 也将使用旧平台完整性验证。
+
+当启用此策略且硬件能够将安全引导用于 BitLocker 方案时，将忽略“使用增强型引导配置数据验证配置文件”组策略设置，并且安全引导将根据安全引导策略设置(与 BitLocker 分开配置)验证 BCD 设置。
+
+注意: 如果启用组策略设置“为本地 UEFI 固件配置配置 TPM 平台验证配置文件”且忽略 PCR 7，则 Bitlocker 将无法将安全引导用于平台或引导配置数据(BCD)完整性验证。
+
+警告: 禁用此策略可能会导致在更新固件时恢复 BitLocker。如果禁用此策略，则在应用固件更新之前将挂起 BitLocker。
+    
+      </string>
+      <string id="SUPPORTED_Windows8NoARM">至少 Windows Server 2012 或 Windows 8</string>  
+      <string id="SUPPORTED_Windows_6_3ToVista">Windows Server 2012 R2、Windows 8.1、Windows Server 2012、Windows 8、Windows Server 2008、Windows 7 和 Windows Vista</string>
+      <string id="PrebootRecoveryInfo_Name">配置预启动恢复消息和 URL</string>
+      <string id="PrebootRecoveryInfoEmpty"></string>
+      <string id="PrebootRecoveryInfoUseDefault">使用默认恢复消息和 URL</string>
+      <string id="PrebootRecoveryInfoUseMessage">使用自定义恢复消息</string>
+      <string id="PrebootRecoveryInfoUseUrl">使用自定义恢复 URL</string>
+      <string id="PrebootRecoveryInfo_Help">使用此策略设置，可以在锁定 OS 驱动器时，配置整个恢复消息或替换现有的 URL，它们显示在预启动密钥恢复屏幕上。
+
+如果选择“使用默认恢复消息和 URL”选项，则默认的 BitLocker 恢复消息和 URL 将显示在预启动密钥恢复屏幕中。如果你以前已配置自定义恢复消息或 URL，并且希望转换为默认消息，则必须保持启用该策略，并选择“使用默认恢复消息和 URL”选项。
+
+如果你选择“使用自定义恢复消息”选项，则你在“自定义恢复消息选项”文本框中键入的消息将显示在预启动密钥恢复屏幕中。如果恢复 URL 可用，请将其包括在该消息中。
+
+如果你选择“使用自定义恢复 URL”选项，则你在“自定义恢复 URL 选项”文本框中键入的 URL 将替换默认恢复消息中的默认 URL，该 URL 将显示在预启动密钥恢复屏幕中。
+
+注意: 在预启动过程中，并非所有字符和语音都受支持。强烈建议你测试用于自定义消息或 URL 的字符是否正确显示在预启动恢复屏幕中。
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="ActiveDirectoryBackup_Name">
+        <checkBox refId="RequireActiveDirectoryBackup_Name" defaultChecked="true">要求 BitLocker 备份到 AD DS</checkBox>
+        <text>如果选中此选项，则当备份失败时将无法打开 BitLocker (建议的默认设置)。 </text>
+        <text>如果不选中此选项，则即使备份失败也可以打开 BitLocker。备份不会自动重试。</text>
+        <dropdownList refId="ActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">选择要存储的 BitLocker 恢复信息:</dropdownList>
+        <text/>
+        <text>恢复密码是一个 48 位数字，用于对受 BitLocker 保护的驱动器解除锁定。</text>
+        <text>密钥数据包内含由一个或多个恢复密码保护的驱动器 BitLocker 加密密钥</text>
+            <text>当磁盘受损或崩溃时，密钥数据包可帮助执行特定的恢复操作。 </text>
+      </presentation>
+
+      <presentation id="ConfigureStartupUsage_Name">
+        <checkBox refId="ConfigureNonTPMStartupKeyUsage_Name" defaultChecked="true">没有兼容的 TPM 时允许 BitLocker (在 U 盘上需要密码或启动密钥)</checkBox>
+        <text>有 TPM 时计算机的设置:</text>
+        <dropdownList refId="ConfigureTPMStartupKeyUsageDropDown_Name" noSort="true" defaultItem="0">配置 TPM 启动密钥:</dropdownList>
+        <dropdownList refId="ConfigurePINUsageDropDown_Name" noSort="true" defaultItem="0">配置 TPM 启动 PIN:</dropdownList>
+        <text>重要信息: 如果需要启动密钥，则不得允许启动 PIN。 </text>
+        <text>如果需要启动 PIN，则不得允许启动密钥。否则，将发生策略错误。</text>
+        <text>注意: 不要允许启动 PIN 和启动密钥选项都隐藏含有 TPM 的计算机上的高级页面。</text>
+      </presentation>
+
+      <presentation id="ConfigureAdvancedStartup_Name">
+        <checkBox refId="ConfigureNonTPMStartupKeyUsage_Name" defaultChecked="true">没有兼容的 TPM 时允许 BitLocker (在 U 盘上需要密码或启动密钥)</checkBox>
+        <text>有 TPM 时计算机的设置:</text>
+        <dropdownList refId="ConfigureTPMUsageDropDown_Name" noSort="true" defaultItem="0">配置 TPM 启动:</dropdownList>
+        <dropdownList refId="ConfigurePINUsageDropDown_Name" noSort="true" defaultItem="0">配置 TPM 启动 PIN:</dropdownList>
+        <dropdownList refId="ConfigureTPMStartupKeyUsageDropDown_Name" noSort="true" defaultItem="0">配置 TPM 启动密钥:</dropdownList>
+        <dropdownList refId="ConfigureTPMPINKeyUsageDropDown_Name" noSort="true" defaultItem="0">配置 TPM 启动密钥和 PIN:</dropdownList>
+        <text/>
+      </presentation>
+
+      <presentation id="ConfigureRecoveryUsage_Name">
+        <text>重要信息: 若要防止数据丢失，必须拥有一种可以恢复 BitLocker 加密密钥的方法。如果不允许以下两个恢复选项，则必须启用将 BitLocker 恢复信息备份到 AD DS。否则，将发生策略错误。</text>
+        <dropdownList refId="ConfigureRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0">配置 48 位数的恢复密码:</dropdownList>
+        <dropdownList refId="ConfigureRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0">配置 256 位恢复密钥:</dropdownList>
+        <text>注意: 如果不允许恢复密码但需要恢复密钥，则用户只有将恢复密钥保存到 USB 才能启用 BitLocker。</text>
+        <text/>
+      </presentation>
+
+      <presentation id="OSRecoveryUsage_Name">
+        <checkBox refId="OSAllowDRA_Name" defaultChecked="true">允许数据恢复代理</checkBox>
+        <text>配置 BitLocker 恢复信息的用户存储:</text>
+        <dropdownList refId="OSRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="OSRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="OSHideRecoveryPage_Name" defaultChecked="false">省略 BitLocker 安装向导中的恢复选项</checkBox>
+        <checkBox refId="OSActiveDirectoryBackup_Name" defaultChecked="true">为操作系统驱动器将 BitLocker 恢复信息保存到 AD DS 中</checkBox>
+        <dropdownList refId="OSActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">配置将 BitLocker 恢复信息存储到 AD DS:</dropdownList>
+        <checkBox refId="OSRequireActiveDirectoryBackup_Name">在为操作系统驱动器将恢复信息存储到 AD DS 之前禁止启用 BitLocker</checkBox>
+       </presentation>
+
+      <presentation id="FDVRecoveryUsage_Name">
+        <checkBox refId="FDVAllowDRA_Name" defaultChecked="true">允许数据恢复代理</checkBox>
+        <text>配置 BitLocker 恢复信息的用户存储:</text>
+        <dropdownList refId="FDVRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="FDVRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="FDVHideRecoveryPage_Name" defaultChecked="false">省略 BitLocker 安装向导中的恢复选项</checkBox>
+        <checkBox refId="FDVActiveDirectoryBackup_Name" defaultChecked="true">为固定数据驱动器将 BitLocker 恢复信息保存到 AD DS 中</checkBox>
+        <dropdownList refId="FDVActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">配置将 BitLocker 恢复信息存储到 AD DS:</dropdownList>
+        <checkBox refId="FDVRequireActiveDirectoryBackup_Name">在为固定数据驱动器将恢复信息存储到 AD DS 之前禁止启用 BitLocker</checkBox>
+      </presentation>
+
+      <presentation id="RDVRecoveryUsage_Name">
+        <checkBox refId="RDVAllowDRA_Name" defaultChecked="true">允许数据恢复代理</checkBox>
+        <text>配置 BitLocker 恢复信息的用户存储:</text>
+        <dropdownList refId="RDVRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="RDVRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="RDVHideRecoveryPage_Name" defaultChecked="false">省略 BitLocker 安装向导中的恢复选项</checkBox>
+        <checkBox refId="RDVActiveDirectoryBackup_Name" defaultChecked="true">为可移动数据驱动器将 BitLocker 恢复信息保存到 AD DS 中</checkBox>
+        <dropdownList refId="RDVActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">配置将 BitLocker 恢复信息存储到 AD DS:</dropdownList>
+        <checkBox refId="RDVRequireActiveDirectoryBackup_Name">在为可移动数据驱动器将恢复信息存储到 AD DS 之前禁止启用 BitLocker</checkBox>
+      </presentation>
+
+      <presentation id="ConfigureRecoveryFolder_Name">
+        <textBox refId="ConfigureRecoveryFolderPath_Input">
+          <label>配置默认文件夹路径: </label>
+          <defaultValue/>
+        </textBox>
+        <text>指定完全限定路径或在该路径中包含计算机的环境变量。 </text>
+        <text>例如，输入“\\server\backupfolder”或“%SecureDriveEnvironmentVariable%\backupfolder”</text>
+        <text>注意: 所有情况下，用户都可以选择要在其中保存恢复密码的其他文件夹。</text>
+        <text/>
+      </presentation>
+
+      <presentation id="EncryptionMethod_Name">
+        <dropdownList refId="EncryptionMethodDropDown_Name" noSort="true" defaultItem="2">选择加密方法:</dropdownList>
+      </presentation>
+
+      <presentation id="EncryptionMethodNoDiffuser_Name">
+        <dropdownList refId="EncryptionMethodNoDiffDropDown_Name" noSort="true" defaultItem="0">选择加密方法:</dropdownList>
+      </presentation>
+
+      <presentation id="EncryptionMethodWithXts_Name">
+        <dropdownList refId="EncryptionMethodWithXtsOsDropDown_Name" noSort="true" defaultItem="2">选择操作系统驱动器的加密方法:</dropdownList>
+        <dropdownList refId="EncryptionMethodWithXtsFdvDropDown_Name" noSort="true" defaultItem="2">选择固定数据驱动器的加密方法:</dropdownList>
+        <dropdownList refId="EncryptionMethodWithXtsRdvDropDown_Name" noSort="true" defaultItem="0">选择可移动数据驱动器的加密方法:</dropdownList>
+      </presentation>
+
+      <presentation id="OSEncryptionType">
+        <dropdownList refId="OSEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">选择加密类型:</dropdownList>
+      </presentation>
+
+      <presentation id="FDVEncryptionType">
+        <dropdownList refId="FDVEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">选择加密类型:</dropdownList>
+      </presentation>
+
+      <presentation id="RDVEncryptionType">
+        <dropdownList refId="RDVEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">选择加密类型:</dropdownList>
+      </presentation>
+
+      <presentation id="PlatformValidation_Deprecated_Name">
+        <text>平台验证配置文件由一组平台配置注册表(PCR)索引组成。每个 PCR 索引都与 Windows 启动时运行的组件关联。</text>
+        <text>使用以下复选框选择要包含在配置文件中的 PCR 索引。</text>
+        <text>更改此设置时，请务必小心。</text>
+        <text>建议 PCR 的默认值为 0、2、4、8、9、10 和 11。</text>
+        <text>若要使 BitLocker 保护生效，则必须包括 PCR 11。</text>
+
+        <text>有关更改默认 TPM 平台验证配置文件的好处与风险的详细信息，请参阅联机文档。</text>
+
+        <checkBox refId="PlatformValidation_Deprecated_Setting0" defaultChecked="true">PCR 0: 可信度管理的核心根(CRTM)、BIOS 和平台扩展</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting1">PCR 1: 平台和主板配置及数据</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting2" defaultChecked="true">PCR 2: 可选 ROM 代码</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting3">PCR 3: 可选 ROM 配置和数据</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting4" defaultChecked="true">PCR 4: 主启动记录(MBR)代码</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting5">PCR 5: 主启动记录(MBR)分区表</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting6">PCR 6: 状态转换和唤醒事件</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting7">PCR 7: 特定于制造商的计算机</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting8" defaultChecked="true">PCR 8: NTFS 引导扇区</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting9" defaultChecked="true">PCR 9: NTFS 启动块</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting10" defaultChecked="true">PCR 10: 启动管理器</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting11" defaultChecked="true">PCR 11: BitLocker 访问控制</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting12">PCR 12: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting13">PCR 13: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting14">PCR 14: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting15">PCR 15: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting16">PCR 16: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting17">PCR 17: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting18">PCR 18: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting19">PCR 19: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting20">PCR 20: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting21">PCR 21: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting22">PCR 22: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting23">PCR 23: 保留以供将来使用</checkBox>
+      </presentation>
+
+      <presentation id="PlatformValidation_BIOS_Name">
+        <text>平台验证配置文件由一组平台配置注册表(PCR)索引组成。每个 PCR 索引都与 Windows 启动时运行的组件关联。</text>
+        <text>使用以下复选框选择要包含在配置文件中的 PCR 索引。</text>
+        <text>更改此设置时，请务必小心。</text>
+        <text>建议 PCR 的默认值为 0、2、4、8、9、10 和 11。</text>
+        <text>若要使 BitLocker 保护生效，则必须包括 PCR 11。</text>
+
+        <text>有关更改默认 TPM 平台验证配置文件的好处与风险的详细信息，请参阅联机文档。</text>
+
+        <checkBox refId="PlatformValidation_BIOS_Setting0" defaultChecked="true">PCR 0: 可信度管理的核心根(CRTM)、BIOS 和平台扩展</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting1">PCR 1: 平台和主板配置及数据</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting2" defaultChecked="true">PCR 2: 可选 ROM 代码</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting3">PCR 3: 可选 ROM 配置和数据</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting4" defaultChecked="true">PCR 4: 主启动记录(MBR)代码</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting5">PCR 5: 主启动记录(MBR)分区表</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting6">PCR 6: 状态转换和唤醒事件</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting7">PCR 7: 特定于制造商的计算机</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting8" defaultChecked="true">PCR 8: NTFS 引导扇区</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting9" defaultChecked="true">PCR 9: NTFS 启动块</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting10" defaultChecked="true">PCR 10: 启动管理器</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting11" defaultChecked="true">PCR 11: BitLocker 访问控制</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting12">PCR 12: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting13">PCR 13: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting14">PCR 14: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting15">PCR 15: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting16">PCR 16: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting17">PCR 17: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting18">PCR 18: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting19">PCR 19: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting20">PCR 20: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting21">PCR 21: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting22">PCR 22: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting23">PCR 23: 保留以供将来使用</checkBox>
+      </presentation>
+
+      <presentation id="PlatformValidation_UEFI_Name">
+        <text>平台验证配置文件由一组平台配置注册表(PCR)索引组成。每个 PCR 索引都与 Windows 启动时运行的组件关联。</text>
+        <text>使用以下复选框选择要包含在配置文件中的 PCR 索引。</text>
+        <text>更改此设置时，请务必小心。</text>
+        <text>建议 PCR 的默认值为 0、2、4 和 11。</text>
+        <text>若要使 BitLocker 保护生效，则必须包括 PCR 11。</text>
+
+        <text>有关更改默认 TPM 平台验证配置文件的好处与风险的详细信息，请参阅联机文档。</text>
+
+        <checkBox refId="PlatformValidation_UEFI_Setting0" defaultChecked="true">PCR 0: 核心系统固件可执行代码</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting1">PCR 1: 核心系统固件数据</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting2" defaultChecked="true">PCR 2: 扩展或可插入可执行代码</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting3">PCR 3: 扩展或可插入固件数据</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting4" defaultChecked="true">PCR 4: 启动管理器</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting5">PCR 5: GPT/分区表</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting6">PCR 6: 从 S4 和 S5 电源状态事件恢复</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting7">PCR 7: 安全引导状态</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting8">PCR 8: 已初始化为 0，无扩展(保留以供将来使用)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting9">PCR 9: 已初始化为 0，无扩展(保留以供将来使用)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting10">PCR 10: 已初始化为 0，无扩展(保留以供将来使用)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting11" defaultChecked="true">PCR 11: BitLocker 访问控制</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting12">PCR 12: 数据事件和高度易变的事件</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting13">PCR 13: 引导模块详细信息</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting14">PCR 14: 引导引文</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting15">PCR 15: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting16">PCR 16: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting17">PCR 17: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting18">PCR 18: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting19">PCR 19: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting20">PCR 20: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting21">PCR 21: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting22">PCR 22: 保留以供将来使用</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting23">PCR 23: 保留以供将来使用</checkBox>
+      </presentation>
+
+      <presentation id="MorBehavior_Name">
+
+      </presentation>
+
+      <presentation id="IdentificationField">
+        <textBox refId="IdentificationField">
+          <label>BitLocker 标识字段:</label>
+        </textBox>
+        <textBox refId="SecIdentificationField">
+          <label>允许的 BitLocker 标识字段:</label>
+        </textBox>
+      </presentation>
+
+      <presentation id="UserCertificateOID">
+        <textBox refId="UserCertificateOID">
+          <label>对象标识符:</label>
+          <defaultValue>1.3.6.1.4.1.311.67.1.1</defaultValue>
+        </textBox>
+        </presentation>
+
+      <presentation id="UseEnhancedBcdProfile">
+        <text>验证以下附加 BCD 设置:</text>
+        <multiTextBox refId="EnhancedBcdProfile_AdditionalSecurityCriticalSettings"/>
+        <text>排除以下附加 BCD 设置:</text>
+        <multiTextBox refId="EnhancedBcdProfile_AdditionalExcludedSettings"/>
+      </presentation>
+
+     <presentation id="MinimumPINLength">
+        <decimalTextBox refId="MinPINLength" defaultValue="6">最小字符数:</decimalTextBox>
+      </presentation>
+
+     <presentation id="FDVPassphrase_Name">
+        <checkBox refId="FDVRequirePassphrase">需要对固定数据驱动器使用密码</checkBox>
+        <dropdownList refId="FDVPassphraseComplexity" noSort="true" defaultItem="0">为固定数据驱动器配置密码复杂性:</dropdownList>
+        <decimalTextBox refId="FDVMinPassphraseLength" defaultValue="8">固定数据驱动器的最小密码长度:</decimalTextBox>
+       <text>注意: 要使密码复杂性设置生效，必须启用“密码必须符合复杂性要求”策略设置。</text>
+      </presentation>
+
+     <presentation id="OSPassphrase_Name">
+       <dropdownList refId="OSPassphraseComplexity_Name" noSort="true" defaultItem="0">为操作系统驱动器配置密码复杂性:</dropdownList>
+       <decimalTextBox refId="OSPassphraseLength_Name" defaultValue="8">操作系统驱动器的最小密码长度:</decimalTextBox>
+       <text>注意: 要使密码复杂性设置生效，必须启用“密码必须符合复杂性要求”策略设置。</text>
+       <checkBox refId="OSPassphraseASCIIOnly_Name">可移动操作系统驱动器需要纯 ASCII 密码</checkBox>
+     </presentation>
+
+     <presentation id="FDVConfigureSmartCard">
+       <checkBox refId="FDVRequireSmartCard_Name">需要对固定数据驱动器使用智能卡</checkBox>
+     </presentation>
+
+     <presentation id="RDVPassphrase_Name">
+        <checkBox refId="RDVRequirePassphrase">需要对可移动数据驱动器使用密码</checkBox>
+       <dropdownList refId="RDVPassphraseComplexity" noSort="true" defaultItem="0">为可移动数据驱动器配置密码复杂性:</dropdownList>
+        <decimalTextBox refId="RDVMinPassphraseLength" defaultValue="8">可移动数据驱动器的最小密码长度:</decimalTextBox>
+<text>注意: 要使密码复杂性设置生效，必须启用“密码必须符合复杂性要求”策略设置。</text>
+      </presentation>
+
+      <presentation id="RDVConfigureBDE">
+        <checkBox refId="RDVAllowBDE_Name" noSort="true" defaultChecked="true">允许用户对可移动数据驱动器应用 BitLocker 保护</checkBox>
+        <checkBox refId="RDVDisableBDE_Name" noSort="true" defaultChecked="true">允许用户对可移动数据驱动器暂停使用 BitLocker 保护并对其进行解密</checkBox>
+      </presentation>
+
+      <presentation id="RDVDenyWriteAccess">
+        <checkBox refId="RDVCrossOrg" noSort="true" defaultChecked="false">不允许对其他组织中配置的设备进行写访问</checkBox>
+      </presentation>
+
+
+      <presentation id="RDVConfigureSmartCard">
+        <checkBox refId="RDVRequireSmartCard_Name" noSort="true" defaultItem="0">需要对可移动数据驱动器使用智能卡</checkBox>
+        </presentation>
+
+      <presentation id="EnhancedPIN">
+
+      </presentation>
+
+      <presentation id="TPMAutoReseal">
+
+      </presentation>
+
+      <presentation id="DisallowStandardUsersCanChangePIN">
+
+      </presentation>
+
+      <presentation id="FDVDiscoveryVolumeType">
+        <checkBox refId="FDVNoBitLockerToGoReader_Name" noSort="true" defaultChecked="false">禁止在 FAT 格式化固定驱动器上安装 BitLocker To Go 读取器</checkBox>
+      </presentation>
+
+      <presentation id="RDVDiscoveryVolumeType">
+        <checkBox refId="RDVNoBitLockerToGoReader_Name" noSort="true" defaultChecked="false">禁止在 FAT 格式化可移动驱动器上安装 BitLocker To Go 读取器</checkBox>
+      </presentation>
+
+      <presentation id="OSEDrive_Name">
+        <checkBox refId="OSUseSW" noSort="true" defaultChecked="true">硬件加密不可用时使用 BitLocker 基于软件的加密</checkBox>
+        <checkBox refId="OSRestrictAlgos" noSort="true" defaultChecked="false">限制可用于基于硬件的加密的加密算法和密码套件</checkBox>
+        <textBox refId="OSAllowedAlgos">
+          <label>将加密算法或密码套件限制为以下内容:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="FDVEDrive_Name">
+        <checkBox refId="FDVUseSW" noSort="true" defaultChecked="true">硬件加密不可用时使用 BitLocker 基于软件的加密</checkBox>
+        <checkBox refId="FDVRestrictAlgos" noSort="true" defaultChecked="false">限制可用于基于硬件的加密的加密算法和密码套件</checkBox>
+        <textBox refId="FDVAllowedAlgos">
+          <label>将加密算法或密码套件限制为以下内容:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="RDVEDrive_Name">
+        <checkBox refId="RDVUseSW" noSort="true" defaultChecked="true">硬件加密不可用时使用 BitLocker 基于软件的加密</checkBox>
+        <checkBox refId="RDVRestrictAlgos" noSort="true" defaultChecked="false">限制可用于基于硬件的加密的加密算法和密码套件</checkBox>
+        <textBox refId="RDVAllowedAlgos">
+          <label>将加密算法或密码套件限制为以下内容:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="PrebootRecoveryInfo">
+        <dropdownList refId="PrebootRecoveryInfoDropDown_Name" noSort="true" defaultItem="0">为预启动恢复消息选择一个选项:</dropdownList>
+        <textBox refId="RecoveryMessage_Input">
+          <label>自定义恢复消息选项:</label>
+          <defaultValue/>
+        </textBox>
+        <textBox refId="RecoveryUrl_Input">
+          <label>自定义恢复 URL 选项:</label>
+          <defaultValue/>
+        </textBox>
+      </presentation>
+
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

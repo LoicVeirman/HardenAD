@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Configurações de KDC</displayName>
+  <description>Configurações do Centro de Distribuição de Chaves Kerberos.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">Usar a ordem de pesquisa de floresta</string>
+      <string id="forestsearch_explain">Esta configuração de política define a lista de florestas confiáveis que o KDC (Centro de Distribuição de Chaves) pesquisará ao tentar resolver SPNs (nomes de entidade de serviço) de duas partes.
+
+Se você habilitar essa configuração de política, o KDC pesquisará as florestas dessa lista se não conseguir resolver um SPN de duas partes na floresta local. A pesquisa de floresta é executada com o uso de um catálogo global ou dicas de sufixo de nome. Se uma correspondência for encontrada, o KDC retornará um tíquete de referência ao cliente para o domínio apropriado.
+
+Se você desabilitar ou não definir essa configuração de política, o KDC não pesquisará as florestas listadas para resolver o SPN. Se o KDC não conseguir resolver o SPN por não ter encontrado o nome, a autenticação NTLM poderá ser usada.
+
+Para garantir um comportamento consistente, essa configuração de política deve ter suporte e ser definida de forma idêntica em todos os controladores do domínio.</string>
+      <string id="emitlili">Fornece informações sobre os logons anteriores aos computadores clientes</string>
+      <string id="emitlili_explain">Essa configuração de política define se o controlador de domínio fornecerá informações sobre logons anteriores aos computadores clientes.
+
+Se você habilitar essa configuração de política, o controlador de domínio fornecerá a mensagem informativa sobre logons anteriores.
+
+Para que o Logon do Windows aproveite esse recurso, a configuração de política "Exibir informações sobre logons anteriores durante o logon do usuário", localizada no nó Opções de Logon do Windows em Componentes do Windows, também precisa ser habilitada.
+
+Se você desabilitar ou não definir essa configuração de política, o controlador de domínio não fornecerá informações sobre logons anteriores, a menos que a configuração de política "Exibir informações sobre logons anteriores durante o logon do usuário" esteja habilitada.
+
+Observação: as informações sobre logons anteriores serão fornecidas somente se o nível funcional de domínio for Windows Server 2008. Em domínios com um nível funcional de domínio Windows Server 2003, Windows 2000 nativo ou Windows 2000 misto, os controladores de domínio não poderão fornecer informações sobre logons anteriores, e nada é afetado quando essa configuração de política é habilitada.
+
+</string>
+      <string id="CbacAndArmor">Suporte do KDC a declarações, autenticação composta e proteção Kerberos</string>
+      <string id="CbacAndArmor_explain">Essa configuração de política permite definir um controlador de domínio para dar suporte a declarações e autenticação composta para o Controle de Acesso Dinâmico (DAC) e a proteção Kerberos usando a autenticação Kerberos.
+
+Se você habilitar essa configuração de política, os computadores clientes que têm suporte a declarações e autenticação composta para DAC e proteção Kerberos usarão esse recurso para mensagens de autenticação do Kerberos. Essa política deve ser aplicada a todos os controladores de domínio para garantir a aplicação consistente dessa política no domínio. 
+
+Se você desabilitar ou não definir essa configuração de política, o controlador de domínio não terá suporte a declarações, autenticação composta ou proteção.
+
+Se você configurar a opção "Sem Suporte", o controlador de domínio não terá suporte a declarações, autenticação composta nem proteção, o que é o comportamento padrão para controladores de domínio que executam o Windows Server 2008 R2 ou sistemas operacionais anteriores.
+
+Observação: Para que as seguintes opções desta política do KDC entrem em vigor, a Política de Grupo do Kerberos "Suporte do cliente Kerberos a declarações, autenticação composta e proteção Kerberos" deve estar habilitada nos sistemas com suporte. Se a configuração de política do Kerberos não estiver habilitada, as mensagens da autenticação Kerberos não usarão esses recursos.  
+
+Se você configurar a opção "Com Suporte", o controlador de domínio dará suporte a declarações, autenticação composta e proteção Kerberos. O controlador de domínio avisa aos computadores clientes Kerberos que o domínio é compatível com declarações e autenticação composta para o Controle de Acesso Dinâmico e proteção Kerberos. 
+
+Requisitos de nível funcional de domínio
+Para as opções "Sempre fornecer declarações" e "Recusar solicitações de autenticação sem proteção", quando o nível funcional de domínio estiver definido para Windows Server 2008 R2 ou anterior, os controladores de domínio se comportarão como se a opção "Suportado" estiver selecionada. 
+
+Quando o nível funcional de domínio estiver definido para o Windows Server 2012, o controlador de domínio anunciará aos computadores clientes Kerberos que o domínio é compatível com declarações e autenticação composta para o Controle de Acesso Dinâmico e a proteção Kerberos, e:
+   - Se você definir a opção "Sempre fornecer declarações", ele sempre retornará declarações de contas e oferecerá suporte ao comportamento RFC para promover autenticação flexível de encapsulamento seguro (FAST).
+   - Se você definir a opção "Recusar solicitações de autenticação sem proteção", ele rejeitará mensagens do Kerberos sem proteção.
+
+Aviso: quando a opção "Recusar solicitações de autenticação sem proteção" for definida, os computadores clientes que não oferecem suporte à proteção Kerberos emitirão falhas de autenticação para o controlador de domínio.
+
+Para garantir a eficiência deste recurso, implante controladores de domínio suficientes com suporte a declarações e autenticação composta para o Controle de Acesso Dinâmico e proteção Kerberos para manipular as solicitações de autenticação. Se houver um número insuficiente de controladores de domínio com suporte a essa política, ocorrerão falhas de autenticação sempre que o Controle de Acesso Dinâmico ou a proteção Kerberos forem exigidos (isto é, se a opção "Suportado" estiver habilitada).
+
+Impacto sobre o desempenho do controlador de domínio quando essa configuração de política está habilitada:
+   - A descoberta de recursos de domínio Kerberos é exigida, gerando trocas de mensagens adicionais.
+   - As declarações e a autenticação composta para o Controle de Acesso Dinâmico aumentam o tamanho e a complexidade dos dados na mensagem, o que aumenta o tempo de processamento e o tamanho dos tíquetes de serviço do Kerberos.
+   - A proteção Kerberos criptografa completamente as mensagens Kerberos e sinaliza erros Kerberos, o que resulta em maior tempo de processamento, mas não altera o tamanho do tíquete de serviço.
+</string>
+      <string id="NoCbacAndArmor">Sem suporte</string>
+      <string id="MixModeCbacAndArmor">Suportado</string>
+      <string id="FullModeCbacAndArmor">Sempre fornecer declarações</string>
+      <string id="FullModeCbacAndRequireArmor">Recusar solicitações de autenticação sem proteção</string>
+      <string id="TicketSizeThreshold">Aviso para tíquetes grandes do Kerberos</string>
+      <string id="TicketSizeThreshold_explain">Esta política permite configurar qual o tamanho dos tíquetes Kerberos que irão disparar o evento de aviso emitido durante a autenticação Kerberos. Os avisos sobre tamanho de tíquetes são registrados no log do sistema.
+
+Se você habilitar essa configuração de política, será possível definir um limite para os tíquetes Kerberos, que disparará os eventos de aviso. Se for definido um limite muito alto, podem ocorrer falhas de autenticação, mesmo que os eventos de aviso não estejam sendo registrados.  Se for muito baixo, poderá haver o registro de avisos de tíquetes em excesso no log, tornando-o inútil para análise. Este valor deve ser definido como o mesmo valor que o da política Kerberos "Definir tamanho máximo do buffer de token de contexto SSPI do Kerberos" ou o menor MaxTokenSize usado em seu ambiente, se você não estiver configurando usando a Política de Grupo.
+      
+Se você desabilitar ou não definir essa configuração de política, o valor de limite assumirá o padrão de 12.000 bytes, que é o padrão de MaxTokenSize do Kerberos no Windows 7, Windows Server 2008 R2 e versões anteriores.
+
+</string>
+      <string id="RequestCompoundId">Solicitar autenticação composta</string>
+      <string id="RequestCompoundId_explain">Essa configuração de política permite configurar um controlador de domínio para solicitar autenticação composta.
+
+Observação: para que um controlador de domínio solicite a autenticação composta, a política "Suporte do KDC a declarações, autenticação composta e proteção Kerberos" deve estar configurada e habilitada. 
+
+Se você habilitar essa configuração de política, os controladores de domínio solicitarão autenticação composta. O tíquete de serviço retornado conterá autenticação composta somente quando a conta for configurada explicitamente. Essa política deve ser aplicada a todos os controladores de domínio para garantir a aplicação consistente dessa política no domínio. 
+
+Se você desabilitar ou não definir essa configuração de política, os controladores de domínio retornarão tíquetes de serviço que contêm autenticação composta sempre que o cliente enviar uma solicitação de autenticação composta, independentemente da configuração da conta.
+
+</string>
+      <string id="PKINITFreshness">Suporte KDC para Extensão de Atualização PKInit</string>
+      <string id="PKINITFreshness_explain">O suporte à Extensão de Atualização PKInit requer o DFL (nível funcional de domínio) do Windows Server 2016. Se o domínio do controlador de domínio não estiver no DFL do Windows Server 2016 ou superior, esta política não será aplicada.
+
+Essa configuração de política permite definir um DC (controlador de domínio) para dar suporte à Extensão de Atualização PKInit.
+
+Se você habilitar essa configuração de política, haverá suporte para as seguintes opções:
+
+Com suporte: suporte à Extensão de Atualização PKInit mediante solicitação. Clientes Kerberos bem-sucedidos na autenticação com a Extensão de Atualização PKInit obterão a nova SID de identidade de chave pública.
+
+Necessário: a Extensão de Atualização PKInit é necessária para a autenticação bem-sucedida. Clientes Kerberos que não dão suporte à Extensão de Atualização PKInit sempre apresentarão falhas ao usar credenciais de chaves públicas.
+
+Se você desabilitar ou não definir essa configuração de política, o DC nunca oferecerá a Extensão de Atualização PKInit e aceitará solicitações de autenticação válidas sem verificar se há atualização. Os usuários nunca receberão a nova SID de identidade de chave pública.
+</string>
+      <string id="NoPKINITFreshness">Desabilitado</string>
+      <string id="SupportPKINITFreshness">Com suporte</string>
+      <string id="RequirePKINITFreshness">Necessário</string>
+      <string id="PKINITHashAlgorithmConfiguration">Configurar algoritmos de hash para logon de certificado</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Essa definição de política controla os algoritmos de hash ou soma de verificação usados pelo cliente Kerberos ao executar a autentificação do certificado.
+
+Se você habilitar essa política, será capaz configurar um dos quatro estados para cada algoritmo:
+
+- “Padrão” define o algoritmo para o estado recomendado.
+
+- “Suportado” permite o uso do algoritmo. Habilitando algoritmos que foram desabilitados, por padrão podem reduzir sua segurança.
+
+- “Auditado” permite o uso do algoritmo e relata um evento (ID 309) toda vez que ele for usado. Esse estado tem como objetivo verificar se o algoritmo não está sendo usado e pode ser desabilitado com segurança.
+
+- “Não Suportado” desativa o uso do algoritmo. Esse estado é destinado a algoritmos considerados inseguros.
+
+Se você desabilitar ou não configurar essa política, cada algoritmo assumirá o estado “Padrão”.
+Mais informações sobre os algoritmos de hash e soma de verificação suportados pelo cliente Kerberos do Windows e seus estados padrão podem ser encontradas em https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Eventos gerados por essa configuração: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Padrão</string>
+      <string id="PKINITHashAlgorithm_Supported">Suportado</string>
+      <string id="PKINITHashAlgorithm_Audited">Auditado</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Sem Suporte</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Modo:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Florestas a Serem Pesquisadas</label>
+        </textBox>
+        <text>Sintaxe:</text>
+        <text>insira a lista de florestas a serem pesquisadas quando esta política estiver habilitada.</text>
+        <text>Use o formato de nome FQDN (nome de domínio totalmente qualificado).</text>
+        <text>Separe as diversas entradas de pesquisa com ponto-e-vírgula ";".</text>
+        <text>Detalhes:</text>
+        <text>A floresta atual não precisa estar listada porque a Ordem de Pesquisa da Floresta usa primeiro o catálogo global e depois pesquisa na ordem listada.</text>
+        <text>Não é necessário listar todos os domínios da floresta separadamente.</text>
+        <text>Se uma floresta confiável estiver listada, todos os domínios da floresta serão pesquisados.</text>
+        <text>Para obter o melhor desempenho, liste as florestas em ordem de probabilidade de êxito.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Declarações, autenticação composta para o Controle de Acesso Dinâmico e opções de proteção Kerberos:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Limite de tamanho do tíquete</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">Opções de Extensão de Atualização PKInit:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

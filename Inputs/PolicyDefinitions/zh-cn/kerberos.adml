@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Kerberos 设置</displayName>
+  <description>Kerberos 身份验证协议的配置设置。</description>
+  <resources>
+    <stringTable>
+      <string id="kerberos">Kerberos</string>
+      <string id="forestsearch">使用林搜索顺序</string>
+      <string id="forestsearch_explain">此策略设置定义 Kerberos 客户端在尝试解析由两部分组成的服务主体名称(SPN)时搜索的信任林列表。
+
+如果启用此策略设置，Kerberos 客户端在无法解析由两部分组成的 SPN 时将搜索此列表中的林。如果找到匹配项，则 Kerberos 客户端请求到该相应域的引荐票证。
+
+如果禁用或未配置此策略设置，则 Kerberos 客户端在解析 SPN 时不搜索列出的林。如果 Kerberos 客户端因未找到相应名称而无法解析 SPN，则可能使用 NTLM 身份验证。</string>
+      <string id="hosttorealm">定义主机名到 Kerberos 领域的映射</string>
+      <string id="hosttorealm_explain">使用此策略设置，可以指定将哪些 DNS 主机名和哪些 DNS 后缀映射到 Kerberos 领域。
+
+如果启用此策略设置，则可以查看并更改由组策略定义的映射到 Kerberos 领域的 DNS 主机名和 DNS 后缀的列表。若要查看映射列表，请启用策略设置，然后单击“显示”按钮。若要添加映射，请启用策略设置，记下语法，然后单击“显示”。在“显示内容”对话框的“值名称”列中键入领域名称。在“值”列中，使用正确的语法格式键入 DNS 主机名和 DNS 后缀的列表。若要从列表中删除映射，请单击要删除的映射条目，然后按 Delete 键。若要编辑映射，请从列表中删除当前条目，然后添加一个带有其他参数的新映射。
+
+如果禁用此策略设置，则由组策略定义的主机名到 Kerberos 领域的映射列表将被删除。
+
+如果未配置此策略设置，则系统使用在本地注册表中定义的主机名到 Kerberos 领域的映射(如果存在)。</string>
+      <string id="MitRealms">定义交互 Kerberos V5 领域设置</string>
+      <string id="MitRealms_explain">此策略设置配置 Kerberos 客户端，以便该客户端以此策略设置定义的方式使用交互 Kerberos V5 领域进行身份验证。
+
+如果启用此策略设置，则可以查看并更改交互 Kerberos V5 领域及其设置的列表。若要查看交互 Kerberos V5 领域的列表，请启用策略设置，然后单击“显示”按钮。若要添加交互 Kerberos V5 领域，请启用策略设置，记下语法，然后单击“显示”。在“显示内容”对话框的“值名称”列中键入交互 Kerberos V5 领域名称。在“值”列中，使用正确的语法格式键入主机 KDC 的领域标志和主机名。若要从列表中删除交互 Kerberos V5 领域的“值名称”或“值”条目，请单击相应条目，然后按 Delete 键。若要编辑映射，请从列表中删除当前条目，然后添加一个带有其他参数的新映射。
+
+如果禁用此策略设置，则删除由组策略定义的交互 Kerberos V5 领域设置。
+
+如果未配置此策略设置，则系统将使用在本地注册表中定义的交互 Kerberos V5 领域设置(如果存在)。</string>
+      <string id="ValidateKDC">要求严格的 KDC 验证</string>
+      <string id="ValidateKDC_explain">此策略设置控制 Kerberos 客户端验证智能卡登录和系统证书登录的 KDC 证书的行为。
+
+如果启用此策略设置，则 Kerberos 客户端要求 KDC 的 X.509 证书在扩展密钥用法(EKU)扩展中包含 KDC 密钥目的对象标识符，并且要求 KDC 的 X.509 证书包含与域的 DNS 名称匹配的 dNSName subjectAltName (SAN)扩展。如果计算机加入到域，则 Kerberos 客户端要求 KDC 的 X.509 证书在 NTAuth 存储中必须由证书颁发机构(CA)签署。如果计算机不加入到域，则 Kerberos 客户端允许在 KDC 的 X.509 证书的路径验证中使用智能卡上的根 CA 证书。
+
+如果禁用或未配置此策略设置，则 Kerberos 客户端仅要求 KDC 证书在可颁发给任何服务器的 EKU 扩展中包含服务器身份验证目的对象标识符。
+</string>
+      <string id="StrictTarget">要求远程过程调用使用严格的目标 SPN 匹配</string>
+      <string id="StrictTarget_explain">  使用此策略设置，可以配置此服务器，使 Kerberos 能解密包含此系统生成的 SPN 的票证。当某应用程序尝试使用值为 NULL 的服务主体名称(SPN)远程调用(RPC)此服务器时，运行 Windows 7 或更高版本的计算机将尝试通过生成一个 SPN 来使用 Kerberos。
+              
+如果启用此策略设置，则只允许作为 LocalSystem 或 NetworkService 运行的服务接受这些连接。不是以 LocalSystem 或 NetworkService 标识运行的服务将无法进行身份验证。
+
+如果禁用或未配置此策略设置，则允许任何服务使用此系统生成的 SPN 接受传入的连接。</string>
+      <string id="KdcProxyServer">指定 Kerberos 客户端的 KDC 代理服务器</string>
+      <string id="KdcProxyServer_explain">此策略设置根据域的 DNS 后缀名为这些域配置指向 KDC 代理服务器的 Kerberos 客户端映射。
+
+如果启用此策略设置，则当根据配置的映射找不到域控制器时，Kerberos 客户端将对域使用 KDC 代理服务器。若要将 KDC 代理服务器映射到某个域，请启用此策略设置，单击“显示”，然后使用选项窗格中所述的语法将 KDC 代理服务器名称映射到该域的 DNS 名称。在“显示内容”对话框的“值名称”列中键入 DNS 后缀名。在“值”列中，使用正确的语法格式键入代理服务器列表。若要查看映射列表，请启用策略设置，然后单击“显示”按钮。若要从列表中删除映射，请单击要删除的映射条目，然后按 Delete 键。若要编辑映射，请从列表中删除当前条目，然后添加一个带有其他参数的新映射。
+
+如果禁用或未配置此策略设置，则 Kerberos 客户端不会具有由组策略定义的 KDC 代理服务器设置。
+
+</string>
+      <string id="KdcProxyDisableServerRevocationCheck">禁用 KDC 代理服务器 SSL 证书的吊销检查</string>
+      <string id="KdcProxyDisableServerRevocationCheck_explain">使用此策略设置，可以禁用目标 KDC 代理服务器 SSL 证书的吊销检查。
+
+如果启用此策略设置，则 Kerberos 客户端将忽略 KDC 代理服务器 SSL 证书的吊销检查。应仅在疑难解答 KDC 代理连接中使用此策略设置。
+警告: 如果忽略吊销检查，则不能保证证书所表示的服务器有效。
+
+如果禁用或未配置此策略设置，则 Kerberos 客户端将强制进行 SSL 证书的吊销检查。如果吊销检查失败，则不会建立到 KDC 代理服务器的连接。
+
+</string>
+      <string id="ClientRequireFast">当 Kerberos 保护不可用时身份验证请求失败</string>
+      <string id="ClientRequireFast_explain">此策略设置控制当与域控制器通信时计算机是否要求保护 Kerberos 消息交换。
+
+警告: 当域未通过启用“支持动态访问控制和 Kerberos 保护”支持 Kerberos 保护时，则其所有用户的所有身份验证在启用了此策略设置的计算机上都将失败。
+
+如果启用此策略设置，域中的客户端计算机仅在与域控制器的身份验证服务(AS)和票证授予服务(TGS) 消息交换中强制使用 Kerberos 保护。
+
+注意: 为支持 Kerberos Armoring，还必须启用 Kerberos 组策略“Kerberos 客户端支持声明、复合身份验证和 Kerberos Armoring”。
+
+如果禁用或未配置此策略设置，则域中的客户端计算机会在可能的情况下强制使用 Kerberos Armoring(目标域支持此操作)。
+
+</string>
+      <string id="ServerAcceptsCompound">支持复合身份验证</string>
+      <string id="ServerAcceptsCompound_explain">此策略设置控制对设备的 Active Directory 帐户的配置，用于复合身份验证。
+
+对提供用于访问控制的复合身份验证的支持将要求资源帐户域中有足够多的域控制器以支持请求。域管理员必须在所有域控制器上配置“支持动态访问控制和 Kerberos Armoring”策略以支持此策略。
+
+如果启用此策略设置，则将通过以下选项为复合身份验证配置设备的 Active Directory 帐户:
+
+从不: 从不为此计算机帐户提供复合身份验证。
+
+自动: 如果为“动态访问控制”配置了一个或多个应用程序，则为此计算机帐户提供复合身份验证。
+
+始终: 始终为此计算机帐户提供复合身份验证。
+
+如果禁用此策略设置，则会使用“从不”选项。
+如果未配置此策略设置，则会使用“自动”选项。
+
+</string>
+      <string id="CompoundIdEnable_No">从不</string>
+      <string id="CompoundIdEnable_Auto">自动</string>
+      <string id="CompoundIdEnable_Yes">始终</string>
+
+      <string id="MaxTokenSize">设置最大 Kerberos SSPI 上下文令牌缓冲区大小</string>
+      <string id="MaxTokenSize_explain">使用此策略设置，可以设置返回给请求 SSPI 上下文令牌缓冲区最大大小的应用程序的值。
+
+上下文令牌缓冲区的大小用来确定应用程序所需的及分配的 SSPI 上下文令牌的最大大小。缓冲区可能会小于 SSPI 上下文令牌的实际大小，具体取决于身份验证请求处理和组成员身份。
+
+如果启用此策略设置，则 Kerberos 客户端或服务器将使用所配置值与本机允许的最大值之中的较小值。
+
+如果禁用或未配置此策略设置，则 Kerberos 客户端或服务器将使用本机配置的值或默认值。
+
+注意: 此策略设置配置 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa\Kerberos\Parameters 中的现有 MaxTokenSize 注册表值，在 Windows XP 和 Windows Server 2003 中添加该值，默认值为 12,000 字节。从 Windows 8 开始，默认值为 48,000 字节。由于 HTTP 的身份验证上下文令牌采用 base64 编码，因此不建议将此值设置为大于 48,000 字节。
+
+</string>
+      <string id="EnableCbacAndArmor">Kerberos 客户端支持声明、复合身份验证和 Kerberos Armoring</string>
+      <string id="EnableCbacAndArmor_explain">此策略设置可控制设备是否会对支持相应功能的域请求用于动态访问控制的声明和复合身份验证以及使用 Kerberos 身份验证的 Kerberos Armoring。
+如果启用此策略设置，客户端计算机将在支持用于动态访问的声明和复合身份验证以及 Kerberos Armoring 的域内请求声明、提供创建复合身份验证所需的信息、保护 Kerberos 消息。
+
+如果禁用或未配置此策略设置，客户端设备将不会请求声明、提供创建复合身份验证所需的信息、保护 Kerberos 消息。在设备上托管的服务将不能使用 Kerberos 协议转换检索客户端的声明。 
+
+</string>
+      <string id="AlwaysSendCompoundId">始终先发送复合身份验证</string>
+      <string id="AlwaysSendCompoundId_explain">此策略设置控制资源域请求复合标识时设备是否始终发送复合身份验证。
+
+注意：对于要请求复合身份验证的域控制器而言，必须在资源帐户域中配置并启用策略“KDC 支持声明、复合身份验证和 Kerberos 保护”和“请求复合身份验证”。
+
+如果启用此策略设置，并且资源域请求复合身份验证，那么支持复合身份验证的设备会始终发送复合身份验证请求。
+
+如果禁用或未配置此策略设置，并且资源域请求复合身份验证，那么当服务请求复合身份验证时，设备将首先发送非复合身份验证，然后再发送复合身份验证。
+
+</string>
+      <string id="DevicePKInitEnabled">支持使用证书的设备身份验证</string>
+      <string id="DevicePKInitEnabled_explain">若要支持使用证书进行设备身份验证，则需连接到设备帐户域中的 DC，以便对计算机帐户进行证书身份验证。
+
+使用此策略设置可以进行相关设置，允许 Kerberos 尝试使用设备的证书通过域进行身份验证。
+
+如果启用此策略设置，则将根据以下选项选择设备凭据:
+
+自动: 设备将尝试使用其证书进行身份验证。如果 DC 不支持使用证书进行计算机帐户身份验证，则将尝试使用密码进行身份验证。
+
+强制: 设备将始终使用其证书进行身份验证。如果找不到支持使用证书进行计算机帐户身份验证的 DC，则身份验证将失败。
+
+如果禁用此策略设置，则不使用证书。
+如果未配置此策略设置，则使用“自动”。
+</string>
+      <string id="DevicePKInitBehavior_Automatic">自动</string>
+      <string id="DevicePKInitBehavior_Force">强制</string>
+      <string id="CloudKerberosTicketRetrievalEnabled">允许在登录期间检索 Azure AD Kerberos Ticket 授予票证</string>
+      <string id="CloudKerberosTicketRetrievalEnabled_explain">此策略设置允许在登录期间检索Azure AD Kerberos 票证授予票证。
+
+如果禁用或未配置此策略设置，则在登录期间不会检索Azure AD Kerberos 票证授予票证。
+
+如果启用此策略设置，则会在登录期间检索Azure AD Kerberos 票证授予票证。</string>
+      <string id="PKInitHashAlgorithmConfiguration">为证书登录配置哈希算法</string>
+      <string id="PKInitHashAlgorithmConfiguration_explain">此策略设置控制 Kerberos 客户端执行证书身份验证时使用的哈希算法或校验和算法。
+
+如果启用此策略，你将能够为每种算法配置四种状态之一：
+
+-“默认”将算法设置为建议的状态。
+
+-“受支持”允许使用算法。启用默认情况下禁用的算法可能会降低安全性。
+
+-“已审核”允许使用算法在每次使用该算法时报告事件(ID 206)。此状态用于验证是否未使用算法，且可以安全禁用该算法。
+
+-“不受支持”不允许使用算法。此状态针对被视为不安全的算法。
+
+如果禁用或未配置此策略，则每种算法都将采用“默认”状态。
+有关 Windows Kerberos 客户端支持的哈希算法和校验和算法及其默认状态的详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2169037。
+
+此配置生成的事件: 205、206、207、208。
+</string>
+      <string id="PKInitHashAlgorithm_Default">默认</string>
+      <string id="PKInitHashAlgorithm_Supported">支持</string>
+      <string id="PKInitHashAlgorithm_Audited">已审核</string>
+      <string id="PKInitHashAlgorithm_NotSupported">不支持</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="hosttorealm">
+        <listBox refId="hosttorealm">定义主机名到领域的映射: </listBox>
+        <text></text>
+        <text>语法: </text>
+        <text>输入 Kerberos 领域名作为“值名称”。</text>
+        <text>输入要映射到 Kerberos 领域的</text>
+        <text>主机名和 DNS 后缀作为“值”。 若要添加多个</text>
+        <text>名称，请使用“;”分隔条目。</text>
+        <text></text>
+        <text>注意: 若要指定 DNS 后缀，请在条目前使用句点“.”。</text>
+        <text>对于主机名条目，请勿指定前导句点“.”。</text>
+        <text></text>
+        <text>示例: </text>
+        <text>值名称: MICROSOFT.COM</text>
+        <text>值: .microsoft.com; .ms.com; computer1.fabrikam.com;</text>
+        <text></text>
+        <text>在上面的示例中，DNS 后缀为</text>
+        <text>*.microsoft.com 或 *.ms.com 的所有主体都将被映射到</text>
+        <text>MICROSOFT.COM Kerberos 领域。 此外，主机名</text>
+        <text>computer1.fabrikam.com 也将被映射到  </text>
+        <text>MICROSOFT.COM Kerberos 领域。</text>
+      </presentation>
+      <presentation id="MitRealms">
+        <listBox refId="MitRealms">定义交互 Kerberos V5 领域设置: </listBox>
+        <text></text>
+        <text>语法: </text>
+        <text>输入交互 Kerberos V5 领域名作为“值名称”。</text>
+        <text>输入 KDC 的领域标志和主机名作为</text>
+        <text>“值”。 使用以下</text>
+        <text>标记 &lt;f&gt; &lt;/f&gt; 括住领域标志。 使用标记 &lt;k&gt; &lt;/k&gt; 括住 KDC 列表</text>
+        <text>若要添加多个 KDC 名称，请使用</text>
+        <text>分号“;”分隔条目。</text>
+        <text></text>
+        <text>示例: </text>
+        <text>值名称: TEST.COM</text>
+        <text>值: &lt;f&gt;0x00000004&lt;/f&gt;&lt;k&gt;kdc1.test.com; kdc2.test.com&lt;/k&gt;</text>
+        <text></text>
+        <text>其他示例: </text>
+        <text>值名称: REALM.FABRIKAM.COM</text>
+        <text>值: &lt;f&gt;0x0000000E&lt;/f&gt;</text>
+      </presentation>
+      <presentation id="ValidateKDC">
+        <dropdownList refId="ValidateKDCOp" noSort="true" defaultItem="0">模式: </dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>要搜索的林</label>
+        </textBox>
+        <text>语法:</text>
+        <text>输入启用此策略时要搜索的林的列表。</text>
+        <text>使用完全限定的域名(FQDN)命名格式。</text>
+        <text>使用分号“;”分隔多个搜索项。</text>
+        <text>详细信息:</text>
+        <text>不需要列出当前林，因为林搜索顺序先使用全局编录搜索，然后才按列出的顺序搜索。</text>
+        <text>不必分别列出林中的所有域。</text>
+        <text>如果列出了信任林，则将搜索该林中的所有域。</text>
+        <text>为获得最佳性能，应按成功可能性大小顺序列出林。 </text>
+      </presentation>
+      <presentation id="KdcProxyServer">
+        <listBox refId="KdcProxyServer">定义 KDC 代理服务器设置:</listBox>
+        <text></text>
+        <text>语法:</text>
+        <text></text>
+        <text>输入 DNS 后缀名作为“值名称”。</text>
+        <text>DNS 后缀可以使用以下三种格式(优先级依次降低):</text>
+        <text>完全匹配: host.contoso.com</text>
+        <text>后缀匹配: .contoso.com</text>
+        <text>默认匹配: *</text>
+        <text></text>
+        <text>输入代理服务器名称作为“值”。</text>
+        <text>代理服务器名称必须用标记 &lt;https /&gt; 括起来。</text>
+        <text>若要添加多个代理服务器名称，请使用空格或逗号“,”分隔条目</text>
+        <text></text>
+        <text>示例:</text>
+        <text>值名称: .contoso.com</text>
+        <text>值: &lt;https proxy1.contoso.com proxy2.contoso.com /&gt;</text>
+        <text></text>
+        <text>其他示例:</text>
+        <text>值名称: *</text>
+        <text>值: &lt;https proxy.contoso.com /&gt;</text>
+      </presentation>
+      <presentation id="ClientRequireFast">
+      </presentation>
+      <presentation id="ServerAcceptsCompound">
+       <dropdownList refId="CompoundIdEnabled" noSort="true" defaultItem="2">支持客户端设备信息的授权:</dropdownList>
+      </presentation>
+      <presentation id="MaxTokenSize">
+        <decimalTextBox refId="MaxTokenSize" defaultValue="48000" spinStep="1000">最大大小</decimalTextBox>
+      </presentation>
+      <presentation id="EnableCbacAndArmor">
+      </presentation>
+      <presentation id="DevicePKInitBehavior">
+        <dropdownList refId="DevicePKInitBehavior" noSort="true" defaultItem="0">使用证书的设备身份验证行为:</dropdownList>
+      </presentation>
+      <presentation id="PKInitHashAlgorithmConfiguration">
+        <dropdownList refId="PKInitHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKInitHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKInitHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKInitHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

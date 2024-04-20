@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>事件日志记录</displayName>
+    <description>此文件包含 Windows 事件日志记录的配置选项</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">事件日志记录</string>
+            <string id="EnableProtectedEventLogging">启用受保护的事件日志记录</string>
+            <string id="EnableProtectedEventLogging_Explain">
+使用此策略设置，可以配置受保护的事件日志记录。
+
+如果启用此策略设置，则支持它的组件将使用你提供的证书加密可能敏感的事件日志数据，然后将其写入到事件日志。数据将使用密码消息语法(CMS)标准和你提供的公钥进行加密。你可以使用 Unprotect-CmsMessage PowerShell cmdlet 解密这些已加密的消息，前提是你可以访问与加密使用的公钥对应的私钥。
+
+如果禁用或未配置此策略设置，则组件将不加密事件日志消息，直到将其写入到事件日志。
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+提供受保护的事件日志记录使用的加密证书。你可以提供以下证书之一:
+
+    - base-64 编码 X.509 证书的内容
+    - 可以在本地计算机证书存储(通常由 PKI 基础结构部署)找到的证书的指纹
+    - 证书的完整路径(可以是本地，也可以是远程共享)
+    - 包含证书的目录的路径(可以是本地，也可以是远程共享)
+    - 可以在本地计算机证书存储(通常由 PKI 基础结构部署)找到的证书的使用者名称
+
+生成的证书必须将“文档加密”用作提升的密钥用法(1.3.6.1.4.1.311.80.1)，并且启用数据加密或密钥加密密钥用法。
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

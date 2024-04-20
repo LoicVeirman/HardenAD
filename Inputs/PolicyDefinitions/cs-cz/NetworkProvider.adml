@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (c) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Poskytovatel sítě</displayName>
+  <description>Definice zásad pro službu Multiple UNC Provider</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_NetworkProvider">Poskytovatel sítě</string>
+      <string id="Pol_HardenedPaths">Cesty UNC s posíleným zabezpečením</string>
+      <string id="Pol_HardenedPaths_Explain">Toto nastavení zásad konfiguruje zabezpečený přístup k cestám UNC.
+
+Pokud tyto zásady povolíte, systém Windows povolí přístup k zadaným cestám UNC pouze po splnění dalších požadavků na zabezpečení.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_HardenedPaths">
+        <text>Zadejte síťové cesty s posíleným zabezpečením.
+Do pole s názvem zadejte plně kvalifikovanou cestu UNC pro každý síťový prostředek.
+Pokud chcete zabezpečit veškerý přístup ke sdílené složce s určitým názvem (bez ohledu na název serveru), zadejte jako název serveru hvězdičku (*). Příklad: "\\*\NETLOGON".
+Pokud chcete zabezpečit veškerý přístup ke všem sdíleným složkám hostovaným na serveru, můžete v cestě UNC vynechat část s názvem sdílené složky. Příklad: "\\SERVER".
+
+Do pole s hodnotou zadejte jednu nebo více následujících možností oddělených čárkami:
+    RequireMutualAuthentication=1: Vzájemné ověření mezi klientem a serverem požadované pro zajištění, že se klient připojuje ke správnému serveru.
+    RequireIntegrity=1: Komunikace mezi klientem a serverem musí zahrnovat mechanismus kontroly integrity zabraňující neoprávněné manipulaci s daty.
+    RequirePrivacy=1: Komunikace mezi klientem a serverem musí být šifrovaná k zabránění třetím stranám ve sledování důvěrných dat.</text>
+        <listBox refId="Pol_HardenedPaths">Cesty UNC s posíleným zabezpečením:</listBox>
+        <text> </text>
+        <text>Kontrolu integrity a vzájemné ověřování byste měli vyžadovat u všech cest UNC, které hostují spustitelné programy, soubory skriptu nebo soubory, které řídí zásady zabezpečení.
+
+Soubory, které nevyžadují kontrolu integrity a ochranu osobních údajů, je vhodné hostovat v sdílených složkách oddělených od těch, které toto zabezpečení ke své optimální funkci nevyhnutelně potřebují.
+
+Podrobné informace týkající se konfigurování počítačů se systémem Windows tak, aby vyžadovaly posílené zabezpečení při přístupu na určité cesty UNC, najdete na stránce http://support.microsoft.com/kb/3000483.</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

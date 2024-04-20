@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2015 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Microsoft Windows Device Guard</displayName>
+  <description>Windows Device Guard 安全</description>
+  <resources>
+    <stringTable>
+      <string id="DeviceGuard">Device Guard</string>
+      <string id="VirtualizationBasedSecurity">打开基于虚拟化的安全</string>
+      <string id="VirtualizationBasedSecurityHelp">指定是否启用基于虚拟化的安全性。
+
+基于虚拟化的安全性使用 Windows 虚拟机监控程序来为安全服务提供支持。基于虚拟化的安全性需要安全启动，并且可以选择使用 DMA 保护来启用。DMA 保护需要硬件支持，并且只能在正确配置的设备上启用。
+
+基于虚拟化的代码完整性保护
+
+此设置将启用基于虚拟化的内核模式代码完整性保护。启用此功能后，内核模式内存保护得到实施，代码完整性验证路径受基于虚拟化的安全功能保护。
+
+如果以前使用“无锁启用”选项启用了基于虚拟化的代码完整性保护，则“禁用”选项将远程关闭它。
+
+“使用 UEFI 锁启用”选项可确保无法远程禁用基于虚拟化的代码完整性保护。若要禁用该功能，必须将组策略设置为“禁用”，并从每台具有实际存在的用户的计算机上移除安全功能，以便清除 UEFI 中保留的配置。
+
+“无锁启用”选项允许使用组策略远程禁用基于虚拟化的代码完整性保护。
+
+“未配置”选项将不定义策略设置。组策略不会将策略设置写入注册表，因此对计算机或用户没有影响。如果注册表中当前有设置，则不会对其进行修改。
+
+“需要 UEFI 内存属性表”选项只会在 UEFI 固件支持内存属性表的设备上启用基于虚拟化的代码完整性保护。没有 UEFI 内存属性表的设备可能具有与基于虚拟化的代码完整性保护不兼容的固件，在某些情况下，这可能导致崩溃、数据丢失或与某些插件卡不兼容。如果未设置此选项，则应测试目标设备以确保兼容性。
+
+警告: 系统上的所有驱动程序都必须与此功能兼容，否则系统可能会崩溃。确保仅将此策略设置部署到已知兼容的计算机上。
+
+Credential Guard
+
+此设置允许用户启用具有基于虚拟化的安全性的 Credential Guard，以帮助保护凭据。
+
+对于 Windows 11 21H2 和更早版本，如果以前使用“无锁启用”选项启用了 Credential Guard，则“禁用”选项会远程关闭它。对于更高版本，如果以前使用“无锁启用”选项启用了 Credential Guard，或者“未配置”，则“禁用”选项会远程关闭 Credential Guard。
+
+“使用 UEFI 锁启用”选项可确保无法远程禁用 Credential Guard。若要禁用该功能，必须将组策略设置为“禁用”，并从每台具有实际存在的用户的计算机上移除安全功能，以便清除 UEFI 中保留的配置。
+
+“无锁启用”选项允许使用组策略远程禁用 Credential Guard。使用此设置的设备必须至少运行 Windows 10 (版本 1511)。
+
+对于 Windows 11 21H2 和更早版本，“未配置”选项将不定义策略设置。组策略不会将策略设置写入注册表，因此对计算机或用户没有影响。如果注册表中当前有设置，则不会对其进行修改。对于更高版本，如果注册表中当前没有设置，则“未配置”选项将在没有 UEFI 锁定的情况下启用 Credential Guard。
+
+安全启动
+
+此设置将安全启动的配置设置为保护引导链。
+
+“未配置”设置是默认设置，允许管理员用户配置该功能。
+
+“启用”选项可在支持的硬件上启用安全启动。
+
+无论硬件支持如何，“禁用”选项都会关闭安全启动。
+
+内核模式硬件强制实施堆栈保护
+
+此设置将为内核模式代码启用硬件强制实施堆栈保护。启用此安全功能后，内核模式数据堆栈将使用基于硬件的影子堆栈进行强化，这些堆栈存储预期的返回地址目标，以确保程序控制流不被篡改。
+
+此安全功能具有以下先决条件:
+1) CPU 硬件支持基于硬件的影子堆栈。
+2) 已启用基于虚拟化的代码完整性保护。
+
+如果任一先决条件不满足，则不会启用此功能，即使为此功能选择“启用”选项也是如此。请注意，为此功能选择“启用”选项不会自动启用基于虚拟化的代码完整性保护，这需要单独执行。
+
+启用此安全功能的设备必须至少运行 Windows 11 (版本 22H2)。
+
+“禁用”选项会关闭内核模式硬件强制实施堆栈保护。
+
+“在审核模式下启用”选项将在审核模式下启用内核模式硬件强制实施堆栈保护，其中影子堆栈违规不是致命的，并将记录到系统事件日志中。
+
+“在强制模式下启用”选项可在强制模式下启用内核模式硬件强制实施堆栈保护，其中影子堆栈违规是致命的。
+
+“未配置”选项将不定义策略设置。组策略不会将策略设置写入注册表，因此对计算机或用户没有影响。如果注册表中当前有设置，则不会对其进行修改。
+
+警告: 系统上的所有驱动程序都必须与此安全功能兼容，否则系统可能会在强制模式下崩溃。审核模式可用于发现不兼容的驱动程序。有关详细信息，请参阅 https://go.microsoft.com/fwlink/?LinkId=2162953。
+      </string>
+      <string id="SecureBoot">安全启动</string>
+      <string id="SecureBootAndDmaProtection">安全启动和 DMA 保护</string>
+      <string id="Disabled">已禁用</string>
+      <string id="Enabled">已启用</string>
+      <string id="EnabledWithoutLock">无锁启用</string>
+      <string id="EnabledWithUefiLock">使用 UEFI 锁启用</string>
+      <string id="EnabledAudit">在审核模式下启用</string>
+      <string id="EnabledEnforcement">在强制模式下启用</string>
+      <string id="NotConfigured">未配置</string>
+      <string id="ConfigCIPolicy">部署 Windows Defender 应用程序控制</string>
+      <string id="ConfigCIPolicyHelp">部署Windows Defender应用程序控件
+
+使用此策略设置，可以将代码完整性策略部署到计算机，以控制允许在该计算机上运行的内容。
+
+如果部署代码完整性策略，Windows 将根据此策略限制可在内核模式和 Windows 桌面上运行的内容。若要启用此策略，必须重新启动计算机。
+
+文件路径必须是 UNC 路径(，例如 \\ServerName\ShareName\SIPolicy.p7b)，或者是本地有效的路径(例如 C：\FolderName\SIPolicy.p7b)。 本地计算机帐户(LOCAL SYSTEM)必须具有访问策略文件的权限。
+
+如果使用已签名和受保护的策略，则禁用此策略设置不会从计算机中删除该功能。相反，你必须：
+
+1)先将策略更新为不受保护的策略，然后禁用设置，或
+   2)禁用该设置，然后使用实际存在的用户从每台计算机中删除策略。
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="VirtualizationBasedSecurity">
+        <dropdownList refId="RequirePlatformSecurityFeaturesDrop" defaultItem="1">选择平台安全级别:</dropdownList>
+        <dropdownList refId="HypervisorEnforcedCodeIntegrityDrop" defaultItem="3">基于虚拟化的代码完整性保护:</dropdownList>
+        <checkBox refId="CheckboxMAT">需要 UEFI 内存属性表</checkBox>
+        <dropdownList refId="CredentialIsolationDrop" defaultItem="3">Credential Guard 配置:</dropdownList>
+        <dropdownList refId="SystemGuardDrop" defaultItem="2">安全启动配置:</dropdownList>
+        <dropdownList refId="KernelShadowStacksDrop" defaultItem="3">内核模式硬件强制实施堆栈保护：</dropdownList>
+      </presentation>
+      <presentation id="ConfigCIPolicy">
+        <textBox refId="ConfigCIPolicyFilePathText">
+          <label>代码完整性策略文件路径:</label>
+        </textBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

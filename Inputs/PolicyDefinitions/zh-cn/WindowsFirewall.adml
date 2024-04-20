@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>请在此处输入显示名称</displayName>
+  <description>请在此处输入描述</description>
+  <resources>
+    <stringTable>
+      <string id="WF_AllowedPrograms_Help">允许查看和更改由组策略定义的程序例外列表。Windows Defender 防火墙使用两个程序例外列表: 一个由组策略设置定义，另一个由控制面板中的“Windows Defender 防火墙”组件定义。
+
+如果启用此策略设置，则可以查看和更改由组策略定义的程序例外列表。如果将一个程序添加到此列表中并将其状态设置为 Enabled，则该程序可以在其请求 Windows Defender 防火墙打开的任何端口上接收未经请求的传入信息，即使该端口已被其他策略设置(如“Windows Defender 防火墙: 定义入站端口例外”策略设置)阻止时也如此。若要查看程序列表，请启用策略设置，然后单击“显示”按钮。若要添加程序，请启用此策略设置，记下语法，然后单击“显示”按钮。在“显示内容”对话框中，键入一个使用该语法格式的定义字符串。若要删除程序，请单击其定义，然后按 Delete 键。若要编辑定义，请从列表中删除当前定义，然后添加一个包含不同参数的新定义。若要允许管理员将程序添加到本地程序例外列表(由控制面板中的“Windows Defender 防火墙”组件定义)，请同时启用“Windows Defender 防火墙: 允许本地程序例外”策略设置。
+
+如果禁用此策略设置，则将删除由组策略定义的程序例外列表。如果存在本地程序例外列表，则除非启用“Windows Defender 防火墙: 允许本地程序例外”策略设置，否则该列表将被忽略。
+
+如果未配置此策略设置，则 Windows Defender 防火墙只使用本地程序例外列表(由管理员使用控制面板中的“Windows Defender 防火墙”组件定义)。
+
+注意: 如果键入一个无效的定义字符串，Windows Defender 防火墙会直接将其添加到列表而不会检查是否有错误。这允许你添加尚未安装的程序，但是请注意，你可能会无意中为同一个程序创建 Scope 或 Status 值互相冲突的多个条目。将为多个条目组合使用 Scope 参数。
+
+注意: 如果将一个定义字符串的 Status 参数设置为 "disabled"，则 Windows Defender 防火墙将忽略该程序发出的端口请求，并忽略将该程序的 Status 设置为 "enabled" 的其他定义。因此，如果将 Status 设置为 "disabled"，则会阻止管理员允许程序请求 Windows Defender 防火墙打开其他端口。但是，即使 Status 为 "disabled"，程序仍然能够通过其他策略设置打开的端口接收未经请求的传入消息。
+
+注意: 仅当程序正在运行并“侦听”传入消息时，Windows Defender 防火墙才为程序打开端口。如果程序未在运行，或虽在运行但未在侦听传入消息，则 Windows Defender 防火墙不会打开其端口。</string>
+      <string id="WF_AllowedPrograms_Name">Windows Defender 防火墙: 定义入站程序例外</string>
+      <string id="WF_AllowedProgramsLocal_Help">允许管理员使用“控制面板”中的“Windows Defender 防火墙”组件定义本地程序例外列表。Windows Defender 防火墙使用两个程序例外列表；另一个由“Windows Defender 防火墙: 定义入站程序例外”策略设置定义。
+
+如果启用此策略设置，则“控制面板”中的“Windows Defender 防火墙”组件允许管理员定义本地程序例外列表。
+
+如果禁用此策略设置，则“控制面板”中的“Windows Defender 防火墙”组件不允许管理员定义本地程序例外列表。但是，仍然允许本地管理员在“高级安全 Windows Defender 防火墙”管理单元中创建防火墙规则。如果你希望阻止应用所有在本地创建的规则，请使用“组策略对象编辑器”管理单元并配置“计算机配置\Windows 设置\安全设置\高级安全 Windows Defender 防火墙”来指定不应该应用本地防火墙规则。</string>
+      <string id="WF_AllowedProgramsLocal_Name">Windows Defender 防火墙: 允许本地程序例外</string>
+      <string id="WF_AuthenticatedBypass_Help">允许来自指定系统的未经请求的传入消息，这些系统通过了使用 IPsec 传输的验证。
+
+如果启用此策略设置，则必须键入包含计算机或计算机组的列表的安全描述符。如果该列表中的计算机通过使用 IPsec 的验证，则 Windows Defender 防火墙不会阻止其未经请求的消息。此策略设置替代其他阻止那些消息的策略设置。
+
+如果禁用或没有配置此策略设置，Windows Defender 防火墙不会对那些通过使用 IPsec 的验证的计算机发送的消息进行例外处理。如果启用此策略设置并且将系统添加到该列表，则到禁用此策略时，Windows Defender 防火墙会删除该列表。
+
+注意: 应使用安全描述符定义语言(SDDL)字符串定义此列表中的项目。有关 SDDL 格式的详细信息，请参阅 Microsoft 网站上的 Windows Defender 防火墙部署信息(http://go.microsoft.com/fwlink/?LinkId=25131)。</string>
+      <string id="WF_AuthenticatedBypass_Name">Windows Defender 防火墙: 允许通过验证的 IPsec 旁路</string>
+      <string id="WF_Category">Windows Defender 防火墙</string>
+      <string id="WF_EnableFirewall_Help">启用 Windows Defender 防火墙。
+
+如果启用此策略设置，Windows Defender 防火墙将运行并忽略“计算机配置\管理模板\网络\网络连接\禁止使用 DNS 域网络上的 Internet 连接防火墙”策略设置。
+
+如果禁用此策略设置，Windows Defender 防火墙不会运行。这是确保 Windows Defender 防火墙不运行并且本地登录的管理员无法启动它的唯一方法。
+
+如果没有配置此策略设置，则管理员可以使用“控制面板”中的“Windows Defender 防火墙”组件启用或关闭 Windows Defender 防火墙，除非“禁止使用 DNS 域网络上的 Internet 连接防火墙”策略设置替代。</string>
+      <string id="WF_EnableFirewall_Name">Windows Defender 防火墙: 保护所有网络连接</string>
+      <string id="WF_EnableShield_Help">指定 Windows Defender 防火墙阻止所有未经请求的传入消息。此策略设置将替代允许此类消息的所有其他 Windows Defender 防火墙策略设置。
+
+如果启用此策略设置，则在控制面板的“Windows Defender 防火墙”组件中，“阻止所有传入连接”复选框处于选中状态，管理员无法将其清除。还应启用“Windows Defender 防火墙: 保护所有网络连接”策略设置; 否则，本地登录的管理员可以关闭防火墙，从而避开“Windows Defender 防火墙: 不允许例外”策略设置。
+
+如果禁用此策略设置，则 Windows Defender 防火墙将应用允许未经请求的传入消息的其他策略设置。在控制面板的“Windows Defender 防火墙”组件中，“阻止所有传入连接”复选框将被清除，管理员无法将其选中。
+
+如果没有配置此策略设置，Windows Defender 防火墙将应用允许未经请求的传入消息的其他策略设置。在控制面板的“Windows Defender 防火墙”组件中，“阻止所有传入连接”复选框默认被清除，但是管理员可以对其进行更改。</string>
+      <string id="WF_EnableShield_Name">Windows Defender 防火墙: 不允许例外</string>
+      <string id="WF_FileAndPrint_Help">允许入站文件和打印机共享。为实现此目的，Windows Defender 防火墙打开 UDP 端口 137 和 138，以及 TCP 端口 139 和 445。
+
+如果启用此策略设置，Windows Defender 防火墙将打开这些端口，这样计算机就可以接收打印作业和访问共享文件的请求。必须指定允许这些传入消息的 IP 地址或子网。在“控制面板”的“Windows Defender 防火墙”组件中，“文件和打印机共享”复选框处于选中状态，管理员无法将其清除。
+
+如果禁用此策略设置，Windows Defender 防火墙将阻塞这些端口, 这样计算机将无法共享文件和打印机。如果管理员试图通过将这些端口添加到本地端口例外列表来打开其中任何端口，Windows Defender 防火墙不会将其打开。在“控制面板”的“Windows Defender 防火墙”组件中，“文件和打印机共享”复选框被清除，管理员无法将其选中。
+
+如果没有配置此策略设置，Windows Defender 防火墙将不会打开这些端口。因此，除非管理员使用其他策略设置打开所需的端口，否则计算机将无法共享文件或打印机。在“控制面板”的“Windows Defender 防火墙”组件中，“文件和打印机共享”复选框被清除。管理员可以更改此复选框。
+
+注意: 如果任何策略设置打开 TCP 端口 445，Windows Defender 防火墙将允许入站 ICMP 回显请求(由 Ping 实用工具发出的消息)，即使“Windows Defender 防火墙: 允许 ICMP 例外”策略设置阻止这些请求。可打开 TCP 端口 445 的策略设置包括“Windows Defender 防火墙: 允许入站文件和打印机共享例外”、“Windows Defender 防火墙: 允许入站远程管理例外”和“Windows Defender 防火墙: 定义入站端口例外”。</string>
+      <string id="WF_FileAndPrint_Name">Windows Defender 防火墙: 允许入站文件和打印机共享例外</string>
+      <string id="WF_IcmpSettings_Help">定义 Windows Defender 防火墙允许的 Internet 控制消息协议(ICMP)消息类型集。实用工具可以使用 ICMP 消息来确定其他计算机的状态。例如，Ping 使用回显请求消息。如果不启用“允许入站回显请求”消息类型，则 Windows Defender 防火墙将阻止由其他计算机上运行的 Ping 发送的回显请求消息，但不会阻止由本计算机上运行的 Ping 发送的出站回显请求消息。
+
+如果启用此策略设置，则必须指定 Windows Defender 防火墙允许本计算机发送或接收哪些 ICMP 消息类型。
+
+如果禁用此策略设置，则 Windows Defender 防火墙将阻止所有列出的传入和传出 ICMP 消息类型。因此，使用被阻止的 ICMP 消息的实用工具将无法经由本计算机发送或接收这些消息。如果启用此策略设置并允许某些消息类型，然后禁用此策略设置，则 Windows Defender 防火墙将删除已启用的消息类型列表。
+
+如果未配置此策略设置，则 Windows Defender 防火墙将其视为已禁用。
+
+注意: 如果任何策略设置打开 TCP 端口 445，则即使“Windows Defender 防火墙: 允许 ICMP 例外”策略设置阻止入站回显请求，Windows Defender 防火墙也会允许这些请求。可以打开 TCP 端口 445 的策略设置包括“Windows Defender 防火墙: 允许文件和打印机共享例外”、“Windows Defender 防火墙: 允许远程管理例外”和“Windows Defender 防火墙: 定义入站端口例外”。
+
+注意: 其他 Windows Defender 防火墙策略设置只影响传入消息，但是“Windows Defender 防火墙: 允许 ICMP 例外”策略设置的几个选项将影响传出通信。</string>
+      <string id="WF_IcmpSettings_Name">Windows Defender 防火墙: 允许 ICMP 例外</string>
+      <string id="WF_Logging_Help">允许 Windows Defender 防火墙记录有关其接收的未经请求的传入消息的信息。
+
+如果启用此策略设置，Windows Defender 防火墙会将信息写入日志文件。必须提供日志文件的名称、位置和最大大小。位置可以包含环境变量。还必须指定是否记录有关防火墙阻止(丢弃)的传入消息的信息，以及有关成功的传入和传出连接的信息。Windows Defender 防火墙不提供用于记录成功传入消息的选项。
+
+如果正在配置日志文件名称，请确保 Windows Defender 防火墙服务帐户具有对包含日志文件的文件夹的写入权限。日志文件的默认路径是 %systemroot%\system32\LogFiles\Firewall\pfirewall.log。
+
+如果禁用此策略设置，则 Windows Defender 防火墙不会在日志文件中记录信息。如果启用此策略设置，并且 Windows Defender 防火墙已创建日志文件并添加信息，则在禁用此策略设置时，Windows Defender 防火墙不会改动日志文件。
+
+如果未配置此策略设置，Windows Defender 防火墙将其视为被禁用。
+
+</string>
+      <string id="WF_Logging_Name">Windows Defender 防火墙: 允许记录日志</string>
+      <string id="WF_Notifications_Help">在程序请求 Windows Defender 防火墙将程序添加到程序例外列表时，将阻止 Windows Defender 防火墙将通知显示给用户。
+
+如果启用此策略设置，则 Windows Defender 防火墙将阻止显示这些通知。
+
+如果禁用此策略设置，则 Windows Defender 防火墙将允许显示这些通知。在控制面板的“Windows Defender 防火墙”组件中，“Windows Defender 防火墙阻止新程序时通知我”复选框处于选中状态，管理员无法将其清除。
+
+如果未配置此策略设置，Windows Defender 防火墙的行为与禁用此策略设置时基本相同，区别在于虽然在控制面板的“Windows Defender 防火墙”组件中，“Windows Defender 防火墙阻止新程序时通知我”复选框默认处于选中状态，但管理员可以对其进行更改。</string>
+      <string id="WF_Notifications_Name">Windows Defender 防火墙: 阻止通知</string>
+      <string id="WF_OpenPorts_Help">允许查看和更改由组策略定义的入站端口例外列表。Windows Defender 防火墙使用两个端口例外列表: 一个由组策略设置定义，另一个由控制面板中的“Windows Defender 防火墙”组件定义。
+
+如果启用此策略设置，则可以查看和更改由组策略定义的入站端口例外列表。若要查看此端口例外列表，请启用此策略设置，然后单击“显示”按钮。若要添加端口，请启用此策略设置，记下语法，然后单击“显示”按钮。在“显示内容”对话框中，键入一个使用该语法格式的定义字符串。若要删除端口，请单击其定义，然后按 Delete 键。若要编辑定义，请从列表中删除当前定义，然后添加一个包含不同参数的新定义。若要允许管理员将端口添加到本地端口例外列表(由控制面板中的“Windows Defender 防火墙”组件定义)，请同时启用“Windows Defender 防火墙: 允许本地端口例外”策略设置。
+
+如果禁用此策略设置，则将删除由组策略定义的端口例外列表，但是其他策略设置可以继续打开或阻止端口。而且，如果存在本地端口例外列表，则除非启用“Windows Defender 防火墙: 允许本地端口例外”策略设置，否则该列表将被忽略。
+
+如果未配置此策略设置，则 Windows Defender 防火墙只使用本地端口例外列表(由管理员使用控制面板中的“Windows Defender 防火墙”组件定义)。其他策略设置可以继续打开或阻止端口。
+
+注意: 如果键入一个无效的定义字符串，Windows Defender 防火墙会直接将其添加到列表而不会检查是否有错误。因此，你可能会无意中为同一个端口创建 Scope 或 Status 值互相冲突的多个条目。将为多个条目组合使用 Scope 参数。如果条目具有不同的 Status 值，则 Status 设置为 "disabled" 的任何定义都将覆盖所有 Status 设置为 "enabled" 的定义，并且端口不接收消息。因此，如果某个端口的 Status 设置为 "disabled"，就可以阻止管理员使用控制面板中的“Windows Defender 防火墙”组件来启用该端口。
+
+注意: 将 Status 值设置为 "disabled" 的唯一效果是，Windows Defender 防火墙会忽略该端口的将 Status 设置为 "enabled" 的其他定义。如果另一个策略设置打开一个端口，或者如果程序例外列表中的一个程序请求 Windows Defender 防火墙打开一个端口，则 Windows Defender 防火墙将打开该端口。
+
+注意: 如果任何策略设置打开 TCP 端口 445，则即使“Windows Defender 防火墙: 允许 ICMP 例外”策略设置阻止入站 ICMP 回显请求消息(由 Ping 实用工具发送的消息)，Windows Defender 防火墙也会允许这些消息。可以打开 TCP 端口 445 的策略设置包括“Windows Defender 防火墙: 允许入站文件和打印机共享例外”、“Windows Defender 防火墙: 允许入站远程管理例外”和“Windows Defender 防火墙: 定义入站端口例外”。</string>
+      <string id="WF_OpenPorts_Name">Windows Defender 防火墙: 定义入站端口例外</string>
+      <string id="WF_OpenPortsLocal_Help">允许管理员使用“控制面板”中的“Windows Defender 防火墙”组件定义本地端口例外列表。Windows Defender 防火墙使用两个端口例外列表；另一个由“Windows Defender 防火墙: 定义入站端口例外”策略设置定义。
+
+如果启用此策略设置，则“控制面板”中的“Windows Defender 防火墙”组件允许管理员定义本地端口例外列表。
+
+如果禁用此策略设置，则“控制面板”中的“Windows Defender 防火墙”组件不允许管理员定义本地端口例外列表。但是，仍然允许本地管理员在“高级安全 Windows Defender 防火墙”管理单元中创建防火墙规则。如果你希望阻止应用所有在本地创建的规则，请使用“组策略对象编辑器”管理单元并配置“计算机配置\Windows 设置\安全设置\高级安全 Windows Defender 防火墙”来指定不应该应用本地防火墙规则。</string>
+      <string id="WF_OpenPortsLocal_Name">Windows Defender 防火墙: 允许本地端口例外</string>
+      <string id="WF_Profile_Domain">域配置文件</string>
+      <string id="WF_Profile_Standard">标准配置文件</string>
+      <string id="WF_RemoteAdmin_Help">允许此计算机的远程管理员使用管理工具，如 Microsoft 管理控制台(MMC) 和 Windows Management Instrumentation (WMI)。为此，Windows Defender 防火墙将打开 TCP 端口 135 和 445。服务通常将这些端口用于使用远程过程调用(RPC)和分布式组件对象模式(DCOM) 的通信。此外，在至少带有 SP2 的 Windows XP Professional 和至少带有 SP1 的 Windows Server 2003 上，此策略设置还允许 SVCHOST.EXE 和 LSASS.EXE 接收未经请求的传入消息并允许主持的服务打开其他动态分配的端口(通常在1024 至 1034 的范围内)。在 Windows Vista 上，此策略设置不控制与 SVCHOST.EXE 和 LSASS.EXE 的连接。
+
+如果启用此策略设置，Windows Defender 防火墙允许计算机接收与远程管理关联的未经请求的传入消息。必须指定允许这些传入消息的 IP 地址或子网。
+
+如果禁用或不配置此策略设置，Windows Defender 防火墙不会打开 TCP 端口 135 或 445。另外，在至少带有 SP2 的 Windows XP Professional 和至少带有 SP1 的 Windows Server 2003 上，Windows Defender 防火墙将阻止 SVCHOST.EXE 和 LSASS.EXE 接收未经请求的传入消息并阻止主持的服务打开其他动态分配的端口。由于禁用此策略设置不阻止 TCP 端口 445，所以它不会与“Windows Defender 防火墙: 允许文件和打印机共享例外”策略设置冲突。
+
+注意: 恶意用户经常试图使用 RPC 和 DCOM 攻击网络和计算机。建议与重要程序的制造商联系以确定这些程序是否由 SVCHOST.exe 或 LSASS.exe 主持，或者是否要求 RPC 和 DCOM 通信。如果不是，请不要启用此策略设置。
+
+注意: 如果任何策略设置打开 TCP 端口 445，Windows Defender 防火墙将允许入站 ICMP 回显请求消息(由 Ping 实用工具发出的消息)，即使“Windows Defender 防火墙: 允许 ICMP 例外”策略设置阻止这些请求。可打开 TCP 端口 445 的策略设置包括“Windows Defender 防火墙: 允许入站文件和打印机共享例外”、“Windows Defender 防火墙: 允许入站远程管理例外”和“Windows Defender 防火墙: 定义入站端口例外”。</string>
+      <string id="WF_RemoteAdmin_Name">Windows Defender 防火墙: 允许入站远程管理例外 </string>
+      <string id="WF_RemoteDesktop_Help">允许此计算机接收入站远程桌面请求。为此，Windows Defender 防火墙将打开 TCP 端口 3389。
+
+如果启用此策略设置，Windows Defender 防火墙将打开此端口，这样此计算机便可以接收远程桌面请求。必须指定允许这些传入消息的 IP 地址或子网。在“控制面板”的“Windows Defender 防火墙”组件中，“远程桌面”复选框处于选中状态，管理员无法将其清除。
+
+如果禁用此策略设置，Windows Defender 防火墙将阻止此端口，从而阻止此计算机接收远程桌面请求。如果管理员试图通过将此端口添加到本地端口例外列表来打开此端口，Windows Defender 防火墙将不会打开此端口。在“控制面板”的“Windows Defender 防火墙”组件中，“远程桌面”复选框被清除，管理员无法将其选中。
+
+如果没有配置此策略设置，Windows Defender 防火墙将不会打开此端口。因此，除非管理员使用其他策略设置打开此端口，否则计算机将无法接收远程桌面请求。在“控制面板”的“Windows Defender 防火墙”组件中，“远程桌面”复选框被清除。管理员可以更改此复选框。</string>
+      <string id="WF_RemoteDesktop_Name">Windows Defender 防火墙:允许入站远程桌面例外</string>
+      <string id="WF_UnicastResponseToMulticast_Help">阻止此计算机接收对其传出多播或广播消息的单播响应。
+
+如果启用此策略设置，并且此计算机向其他计算机发送多播或广播消息，Windows Defender 防火墙将阻止由其他计算机发送的单播响应。
+
+如果禁用或没有配置此策略设置，并且此计算机向其他计算机发送多播或广播消息，Windows Defender 防火墙将等待三秒以接收来自其他计算机的单播响应，然后阻止所有以后的响应。
+
+注意: 当单播消息是对此计算机发送的动态主机配置协议(DHCP)广播消息的响应时，此策略设置不起作用。Windows Defender 防火墙总是允许 DHCP 单播响应。但是，此策略设置可能会干扰检测名称冲突的 NetBIOS 消息。</string>
+      <string id="WF_UnicastResponseToMulticast_Name">Windows Defender 防火墙: 阻止对多播或广播请求的单播响应</string>
+      <string id="WF_UniversalPlugAndPlay_Help">允许此计算机接收由网络设备(如带内置防火墙的路由器)发送的未经请求的入站即插即用消息。为此，Windows Defender 防火墙将打开 TCP 端口 2869 和 UDP 端口 1900。
+
+如果启用此策略设置，Windows Defender 防火墙将打开这些端口，这样此计算机便可以接收即插即用消息。必须指定允许这些传入消息的 IP 地址或子网。在“控制面板”的“Windows Defender 防火墙”组件中，“UPnP 框架”复选框被选中，管理员无法将其清除。
+
+如果禁用此策略设置，Windows Defender 防火墙将阻塞这些端口, 从而阻止计算机接收即插即用消息。如果管理员试图通过将这些端口添加到本地端口例外列表来打开这些端口，Windows Defender 防火墙将不会打开这些端口。在“控制面板”的“Windows Defender 防火墙”组件中，“UPnP 框架”复选框被清除，管理员无法将其选中。
+
+如果没有配置此策略设置，Windows Defender 防火墙将不会打开这些端口。因此，除非管理员使用其他策略设置打开必需的端口或启用必需的程序，否则计算机将无法接收即插即用消息。在“控制面板”的“Windows Defender 防火墙”组件中，“UPnP 框架”复选框被清除。管理员可以更改此复选框。</string>
+      <string id="WF_UniversalPlugAndPlay_Name">Windows Defender 防火墙: 允许入站 UPnP 框架例外</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="WF_AllowedPrograms_Name_1">
+        <listBox refId="WF_AllowedPrograms_Show">定义程序例外: </listBox>
+        <text>指定要允许或阻止的程序。</text>
+        <text>语法: </text>
+        <text>  &lt;Path&gt;:&lt;Scope&gt;:&lt;Status&gt;:&lt;Name&gt;</text>
+        <text>    &lt;Path&gt; 是程序路径和文件名</text>
+        <text>    &lt;Scope&gt; 是“*”(用于所有网络)或</text>
+        <text>      包含下列项目的任意数量或组合</text>
+        <text>      并以逗号分隔的列表:</text>
+        <text>        IP 地址，如 10.0.0.1</text>
+        <text>        子网描述，如 10.2.3.0/24</text>
+        <text>        字符串“localsubnet”</text>
+        <text>    &lt;Status&gt; 是“enabled”或“disabled”</text>
+        <text>    &lt;Name&gt; 是文本字符串</text>
+        <text>示例: </text>
+        <text>下列定义字符串将 TEST.EXE 程序</text>
+        <text>添加到程序例外列表，</text>
+        <text>并允许该程序接收来自 10.0.0.1 的消息</text>
+        <text>或 10.3.4.x 子网上任何系统的消息: </text>
+        <text>  %programfiles%\test.exe:10.0.0.1,10.3.4.0/24:enabled:Test program</text>
+      </presentation>
+      <presentation id="WF_AllowedPrograms_Name_2">
+        <listBox refId="WF_AllowedPrograms_Show">定义程序例外: </listBox>
+        <text>指定要允许或阻止的程序。</text>
+        <text>语法: </text>
+        <text>  &lt;Path&gt;:&lt;Scope&gt;:&lt;Status&gt;:&lt;Name&gt;</text>
+        <text>    &lt;Path&gt; 是程序路径和文件名</text>
+        <text>    &lt;Scope&gt; 是“*”(用于所有网络)或</text>
+        <text>      包含下列项目的任意数量或组合</text>
+        <text>      并以逗号分隔的列表:</text>
+        <text>        IP 地址，如 10.0.0.1</text>
+        <text>        子网描述，如 10.2.3.0/24</text>
+        <text>        字符串“localsubnet”</text>
+        <text>    &lt;Status&gt; 是“enabled”或“disabled”</text>
+        <text>    &lt;Name&gt; 是文本字符串</text>
+        <text>示例: </text>
+        <text>下列定义字符串将 TEST.EXE 程序</text>
+        <text>添加到程序例外列表，</text>
+        <text>并允许该程序接收来自 10.0.0.1 的消息</text>
+        <text>或 10.3.4.x 子网上任何系统的消息: </text>
+        <text>  %programfiles%\test.exe:10.0.0.1,10.3.4.0/24:enabled:Test program</text>
+      </presentation>
+      <presentation id="WF_AuthenticatedBypass_Name">
+        <textBox refId="WF_AuthenticatedBypass_List_Name">
+          <label>定义要从防火墙策略免除的 IPSec 对等机:</label>
+        </textBox>
+        <text>使用 SDDL 字符串</text>
+        <text>指定要免除的 IPSec 对等机。</text>
+        <text>语法: </text>
+        <text>  O:&lt;OwnerSID&gt;G:&lt;GroupSID&gt;D:&lt;DACLflags&gt;</text>
+        <text>    &lt;OwnerSID&gt; 是所有者安全描述符</text>
+        <text>    &lt;GroupSID&gt; 是组安全描述符</text>
+        <text>    &lt;DACLflags&gt; 是 ACE 的列表</text>
+        <text>示例: </text>
+        <text>  O:DAG:DAD:(A;;RCGW;;;S-1-5-21-2157571284-1609012320)</text>
+      </presentation>
+      <presentation id="WF_FileAndPrint_Name_1">
+        <textBox refId="WF_Scope_Name">
+          <label>允许来自这些 IP 地址的未经请求的传入消息:</label>
+        </textBox>
+        <text>语法: </text>
+        <text>键入“*”允许来自任何网络的消息，或</text>
+        <text>键入包含下列项目的任意数量或组合</text>
+        <text>并以逗号分隔的列表:</text>
+        <text>   IP 地址，如 10.0.0.1</text>
+        <text>   子网描述，如 10.2.3.0/24</text>
+        <text>   字符串“localsubnet”</text>
+        <text>示例: 若要允许来自 10.0.0.1、</text>
+        <text>10.0.0.2 和来自本地子网或</text>
+        <text> 10.3.4.x 子网上任何系统的消息，</text>
+        <text>请在“允许来自下列 IP 地址的未经请求的传入消息”中 </text>
+        <text>键入以下内容: </text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_FileAndPrint_Name_2">
+        <textBox refId="WF_Scope_Name">
+          <label>允许来自这些 IP 地址的未经请求的传入消息:</label>
+        </textBox>
+        <text>语法: </text>
+        <text>键入“*”允许来自任何网络的消息，或</text>
+        <text>键入包含下列项目的任意数量或组合</text>
+        <text>并以逗号分隔的列表:</text>
+        <text>   IP 地址，如 10.0.0.1</text>
+        <text>   子网描述，如 10.2.3.0/24</text>
+        <text>   字符串“localsubnet”</text>
+        <text>示例: 若要允许来自 10.0.0.1、</text>
+        <text>10.0.0.2 和来自本地子网或</text>
+        <text> 10.3.4.x 子网上任何系统的消息，</text>
+        <text>请在“允许来自下列 IP 地址的未经请求的传入消息”中 </text>
+        <text>键入以下内容: </text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_IcmpSettings_Name_1">
+        <checkBox refId="WF_IcmpSettings_AllowOutboundDestinationUnreachable">允许不达传出目标</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundSourceQuench">允许传出源抑制</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowRedirect">允许重定向</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundEchoRequest">允许传入回显请求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundRouterRequest">允许传入路由器请求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundTimeExceeded">允许传出超时</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundParameterProblem">允许传出参数错误</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundTimestampRequest">允许传入时间戳请求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundMaskRequest">允许传入掩码请求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundPacketTooBig">允许出站数据包过大</checkBox>
+      </presentation>
+      <presentation id="WF_IcmpSettings_Name_2">
+        <checkBox refId="WF_IcmpSettings_AllowOutboundDestinationUnreachable">允许不达传出目标</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundSourceQuench">允许传出源抑制</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowRedirect">允许重定向</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundEchoRequest">允许传入回显请求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundRouterRequest">允许传入路由器请求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundTimeExceeded">允许传出超时</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundParameterProblem">允许传出参数错误</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundTimestampRequest">允许传入时间戳请求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowInboundMaskRequest">允许传入掩码请求</checkBox>
+        <checkBox refId="WF_IcmpSettings_AllowOutboundPacketTooBig">允许出站数据包过大</checkBox>
+      </presentation>
+      <presentation id="WF_Logging_Name_1">
+        <checkBox refId="WF_Logging_LogDroppedPackets">记录被丢弃的数据包</checkBox>
+        <checkBox refId="WF_Logging_LogSuccessfulConnections">记录成功的连接</checkBox>
+        <textBox refId="WF_Logging_LogFilePathAndName">
+          <label>日志文件路径和名称:</label>
+          <defaultValue>%systemroot%\system32\LogFiles\Firewall\pfirewall.log</defaultValue>
+        </textBox>
+        <decimalTextBox refId="WF_Logging_SizeLimit" defaultValue="4096" spinStep="128">大小限制(KB):</decimalTextBox>
+      </presentation>
+      <presentation id="WF_Logging_Name_2">
+        <checkBox refId="WF_Logging_LogDroppedPackets">记录被丢弃的数据包</checkBox>
+        <checkBox refId="WF_Logging_LogSuccessfulConnections">记录成功的连接</checkBox>
+        <textBox refId="WF_Logging_LogFilePathAndName">
+          <label>日志文件路径和名称:</label>
+          <defaultValue>%systemroot%\system32\LogFiles\Firewall\pfirewall.log</defaultValue>
+        </textBox>
+        <decimalTextBox refId="WF_Logging_SizeLimit" defaultValue="4096" spinStep="128">大小限制(KB):</decimalTextBox>
+      </presentation>
+      <presentation id="WF_OpenPorts_Name_1">
+        <listBox refId="WF_OpenPorts_Show">定义端口例外:</listBox>
+        <text>指定要打开或阻止的端口。</text>
+        <text>语法: </text>
+        <text>  &lt;Port&gt;:&lt;Transport&gt;:&lt;Scope&gt;:&lt;Status&gt;:&lt;Name&gt;</text>
+        <text>    &lt;Port&gt; 是十进制端口号</text>
+        <text>    &lt;Transport&gt; 是“TCP”或“UDP”</text>
+        <text>    &lt;Scope&gt; 是“*”(用于所有网络)或</text>
+        <text>      包含下列项目的任意数量或组合</text>
+        <text>      并以逗号分隔的列表:</text>
+        <text>        IP 地址，如 10.0.0.1</text>
+        <text>        子网描述，如 10.2.3.0/24</text>
+        <text>        字符串“localsubnet”</text>
+        <text>    &lt;Status&gt; 是“enabled”或“disabled”</text>
+        <text>    &lt;Name&gt; 是文本字符串</text>
+        <text>示例: </text>
+        <text>下列定义字符串将 TCP 端口 80</text>
+        <text>添加到端口例外列表并允许该端口</text>
+        <text>接收来自 10.0.0.1、10.0.0.2 的消息或</text>
+        <text> 10.3.4.x 子网上任何系统的消息: </text>
+        <text>  80:TCP:10.0.0.1,10.0.0.2,10.3.4.0/24:enabled:Web service</text>
+      </presentation>
+      <presentation id="WF_OpenPorts_Name_2">
+        <listBox refId="WF_OpenPorts_Show">定义端口例外:</listBox>
+        <text>指定要打开或阻止的端口。</text>
+        <text>语法: </text>
+        <text>  &lt;Port&gt;:&lt;Transport&gt;:&lt;Scope&gt;:&lt;Status&gt;:&lt;Name&gt;</text>
+        <text>    &lt;Port&gt; 是十进制端口号</text>
+        <text>    &lt;Transport&gt; 是“TCP”或“UDP”</text>
+        <text>    &lt;Scope&gt; 是“*”(用于所有网络)或</text>
+        <text>      包含下列项目的任意数量或组合</text>
+        <text>      并以逗号分隔的列表:</text>
+        <text>        IP 地址，如 10.0.0.1</text>
+        <text>        子网描述，如 10.2.3.0/24</text>
+        <text>        字符串“localsubnet”</text>
+        <text>    &lt;Status&gt; 是“enabled”或“disabled”</text>
+        <text>    &lt;Name&gt; 是文本字符串</text>
+        <text>示例: </text>
+        <text>下列定义字符串将 TCP 端口 80</text>
+        <text>添加到端口例外列表并允许该端口</text>
+        <text>接收来自 10.0.0.1、10.0.0.2 的消息或</text>
+        <text> 10.3.4.x 子网上任何系统的消息: </text>
+        <text>  80:TCP:10.0.0.1,10.0.0.2,10.3.4.0/24:enabled:Web service</text>
+      </presentation>
+      <presentation id="WF_RemoteAdmin_Name_1">
+        <textBox refId="WF_Scope_Name">
+          <label>允许来自这些 IP 地址的未经请求的传入消息:</label>
+        </textBox>
+        <text>语法: </text>
+        <text>键入“*”允许来自任何网络的消息，或</text>
+        <text>键入包含下列项目的任意数量或组合</text>
+        <text>并以逗号分隔的列表:</text>
+        <text>   IP 地址，如 10.0.0.1</text>
+        <text>   子网描述，如 10.2.3.0/24</text>
+        <text>   字符串“localsubnet”</text>
+        <text>示例: 若要允许来自 10.0.0.1、</text>
+        <text>10.0.0.2 和来自本地子网或</text>
+        <text> 10.3.4.x 子网上任何系统的消息，</text>
+        <text>请在“允许来自下列 IP 地址的未经请求的传入消息”中 </text>
+        <text>键入以下内容: </text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_RemoteAdmin_Name_2">
+        <textBox refId="WF_Scope_Name">
+          <label>允许来自这些 IP 地址的未经请求的传入消息:</label>
+        </textBox>
+        <text>语法: </text>
+        <text>键入“*”允许来自任何网络的消息，或</text>
+        <text>键入包含下列项目的任意数量或组合</text>
+        <text>并以逗号分隔的列表:</text>
+        <text>   IP 地址，如 10.0.0.1</text>
+        <text>   子网描述，如 10.2.3.0/24</text>
+        <text>   字符串“localsubnet”</text>
+        <text>示例: 若要允许来自 10.0.0.1、</text>
+        <text>10.0.0.2 和来自本地子网或</text>
+        <text> 10.3.4.x 子网上任何系统的消息，</text>
+        <text>请在“允许来自下列 IP 地址的未经请求的传入消息”中 </text>
+        <text>键入以下内容: </text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_RemoteDesktop_Name_1">
+        <textBox refId="WF_Scope_Name">
+          <label>允许来自这些 IP 地址的未经请求的传入消息:</label>
+        </textBox>
+        <text>语法: </text>
+        <text>键入“*”允许来自任何网络的消息，或</text>
+        <text>键入包含下列项目的任意数量或组合</text>
+        <text>并以逗号分隔的列表:</text>
+        <text>   IP 地址，如 10.0.0.1</text>
+        <text>   子网描述，如 10.2.3.0/24</text>
+        <text>   字符串“localsubnet”</text>
+        <text>示例: 若要允许来自 10.0.0.1、</text>
+        <text>10.0.0.2 和来自本地子网或</text>
+        <text> 10.3.4.x 子网上任何系统的消息，</text>
+        <text>请在“允许来自下列 IP 地址的未经请求的传入消息”中 </text>
+        <text>键入以下内容: </text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_RemoteDesktop_Name_2">
+        <textBox refId="WF_Scope_Name">
+          <label>允许来自这些 IP 地址的未经请求的传入消息:</label>
+        </textBox>
+        <text>语法: </text>
+        <text>键入“*”允许来自任何网络的消息，或</text>
+        <text>键入包含下列项目的任意数量或组合</text>
+        <text>并以逗号分隔的列表:</text>
+        <text>   IP 地址，如 10.0.0.1</text>
+        <text>   子网描述，如 10.2.3.0/24</text>
+        <text>   字符串“localsubnet”</text>
+        <text>示例: 若要允许来自 10.0.0.1、</text>
+        <text>10.0.0.2 和来自本地子网或</text>
+        <text> 10.3.4.x 子网上任何系统的消息，</text>
+        <text>请在“允许来自下列 IP 地址的未经请求的传入消息”中 </text>
+        <text>键入以下内容: </text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_UniversalPlugAndPlay_Name_1">
+        <textBox refId="WF_Scope_Name">
+          <label>允许来自这些 IP 地址的未经请求的传入消息:</label>
+        </textBox>
+        <text>语法: </text>
+        <text>键入“*”允许来自任何网络的消息，或</text>
+        <text>键入包含下列项目的任意数量或组合</text>
+        <text>并以逗号分隔的列表:</text>
+        <text>   IP 地址，如 10.0.0.1</text>
+        <text>   子网描述，如 10.2.3.0/24</text>
+        <text>   字符串“localsubnet”</text>
+        <text>示例: 若要允许来自 10.0.0.1、</text>
+        <text>10.0.0.2 和来自本地子网或</text>
+        <text> 10.3.4.x 子网上任何系统的消息，</text>
+        <text>请在“允许来自下列 IP 地址的未经请求的传入消息”中 </text>
+        <text>键入以下内容: </text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+      <presentation id="WF_UniversalPlugAndPlay_Name_2">
+        <textBox refId="WF_Scope_Name">
+          <label>允许来自这些 IP 地址的未经请求的传入消息:</label>
+        </textBox>
+        <text>语法: </text>
+        <text>键入“*”允许来自任何网络的消息，或</text>
+        <text>键入包含下列项目的任意数量或组合</text>
+        <text>并以逗号分隔的列表:</text>
+        <text>   IP 地址，如 10.0.0.1</text>
+        <text>   子网描述，如 10.2.3.0/24</text>
+        <text>   字符串“localsubnet”</text>
+        <text>示例: 若要允许来自 10.0.0.1、</text>
+        <text>10.0.0.2 和来自本地子网或</text>
+        <text> 10.3.4.x 子网上任何系统的消息，</text>
+        <text>请在“允许来自下列 IP 地址的未经请求的传入消息”中 </text>
+        <text>键入以下内容: </text>
+        <text>  10.0.0.1,10.0.0.2,localsubnet,10.3.4.0/24</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

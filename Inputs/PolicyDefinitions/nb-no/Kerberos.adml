@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Kerberos-innstillinger</displayName>
+  <description>Konfigurasjonsinnstillinger for Kerberos-godkjenningsprotokollen.</description>
+  <resources>
+    <stringTable>
+      <string id="kerberos">Kerberos</string>
+      <string id="forestsearch">Bruk søkerekkefølge i skoger</string>
+      <string id="forestsearch_explain">Denne policyinnstillingen definerer listen over klarerte skoger som Kerberos-klienten søker i under forsøk på å løse todelte SPNer (Service Principal Name – hovednavn for tjeneste).
+
+Hvis du aktiverer denne policyinnstillingen, søker Kerberos-klienten i skogene i denne listen hvis et todelt SPN ikke kan løses. Ved treff returnerer Kerberos-klienten en henvisningsbillett til det aktuelle domenet.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, søker ikke Kerberos-klienten i de oppførte skogene for å løse SPNet. Hvis Kerberos-klienten ikke kan løse SPNet fordi navnet ikke blir funnet, kan NTLM-godkjenning brukes.</string>
+      <string id="hosttorealm">Definer tilordninger fra vertsnavn til Kerberos-ressurs</string>
+      <string id="hosttorealm_explain">Med denne policyinnstillingen kan du angi hvilke DNS-vertsnavn og DNS-suffikser som er tilordnet til en Kerberos-ressurs.
+
+Hvis du aktiverer denne policyinnstillingen, kan du vise og endre listen over DNS-vertsnavn og DNS-suffikser som er tilordnet til en Kerberos-ressurs, som definert av gruppepolicyen. Hvis du vil vise listen over tilordninger, aktiverer du policyinnstillingen og klikker deretter Vis. Hvis du vil legge til en tilordning, aktiverer du policyinnstillingen, noterer deg syntaksen og klikker deretter Vis. Skriv inn et ressursnavn i Verdinavn-kolonnen i dialogboksen Vis innhold. Skriv inn listen over DNS-vertsnavn og DNS-suffikser i Verdi-kolonnen, med det aktuelle syntaksformatet. Hvis du vil fjerne en tilordning fra listen, klikker du tilordningsoppføringen som skal fjernes, og trykker deretter DELETE. Hvis du vil redigere en tilordning, fjerner du gjeldende oppføring fra listen og legger til en ny med andre parametere.
+
+Hvis du deaktiverer denne policyinnstillingen, slettes listen over tilordninger fra vertsnavn til Kerberos-ressurs som er definert i gruppepolicyen.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, bruker systemet tilordningene fra vertsnavn til Kerberos-ressurs som er definert i det lokale registret, hvis de finnes.</string>
+      <string id="MitRealms">Definer interoperable Kerberos V5-ressursinnstillinger</string>
+      <string id="MitRealms_explain">Denne policyinnstillingen konfigurerer Kerberos-klienten slik at den kan autentiseres med interoperable Kerberos V5-områder, som definert av denne policyinnstillingen.
+
+Hvis du aktiverer denne policyinnstillingen, kan du vise og endre listen over interoperable Kerberos V5-områder og deres innstillinger. For å se listen over interoperable Kerberos V5-områder, aktiverer du policyinnstillingen og klikker på Vis-knappen. For å legge til et interoperabelt Kerberos V5-område, aktiverer du policyinnstillingen, merker deg syntaksen og klikker på Vis. I dialogboksen Vis innhold i kolonnen Verdinavn angir du navnet på det interoperable Kerberos V5-området. I Verdi-kolonnen angir du områdeflaggene og vertsnavnene for verts-KDC-ene med det aktuelle syntaksformatet. For å fjerne et interoperabelt Kerberos V5-områdes verdinavn eller verdioppføring fra listen, klikker du på oppføringen og trykker på DELETE-tasten. For å redigere en tilordning, fjerner du den gjeldende oppføringen fra listen og legger til en ny med andre parametere.
+
+Hvis du deaktiverer denne policyinnstillingen, slettes innstillingene for det interoperable Kerberos V5-området som er definert av gruppepolicyen.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, bruker systemet innstillingene for det interoperable Kerberos V5-området som er definert i det lokale registeret, hvis de finnes.</string>
+      <string id="ValidateKDC">Krev streng KDC-godkjenning</string>
+      <string id="ValidateKDC_explain">Denne policyinnstillingen angir hvordan Kerberos-klienten validerer KDC-sertifikatet for pålogging med smartkort og systemsertifikat.
+
+Hvis du aktiverer denne policyinnstillingen, krever Kerberos-klienten at X.509-sertifikatet for KDC inneholder KDC-nøkkelens objektidentifikator i EKU-utvidelsene (Extended Key Usage), og at X.509-sertifikatet for KDC inneholder en dNSName subjectAltName (SAN)-utvidelse som samsvarer med domenets DNS-navn. Hvis datamaskinen inngår i et domene, krever Kerberos-klienten at X.509-sertifikatet for KDC er signert av en sertifiseringsinstans (CA) i NTAuth-lageret. Hvis datamaskinen ikke inngår i et domene, tillater Kerberos-klienten at CA-rotsertifikatet på smartkortet brukes til å validere banen til X.509-sertifikatet for KDC.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, krever Kerberos-klienten bare at KDC-sertifikatet inneholder objektidentifikatoren for servergodkjenning i EKU-utvidelsene, som kan utstedes til en hvilken som helst server.
+</string>
+      <string id="StrictTarget">Krev strengt treff for mål-SPN ved eksterne prosedyrekall</string>
+      <string id="StrictTarget_explain">  Med denne policyinnstillingen kan du konfigurere serveren slik at Kerberos kan dekryptere en billett som inneholder det systemgenererte SPNet. Når et program prøver å foreta et eksternt prosedyrekall (RPC) til denne serveren med en NULL-verdi for tjenestens hovednavn (SPN), vil datamaskiner som kjører Windows 7 eller senere, prøve å bruke Kerberos ved å generere et SPN.
+              
+Hvis du aktiverer denne policyinnstillingen, kan tilkoblingene bare godtas av tjenester som kjører som LocalSystem eller NetworkService. Tjenester som kjører som andre identiteter enn LocalSystem eller NetworkService, kan kanskje ikke godkjennes.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, kan alle tjenester godta innkommende tilkoblinger ved å bruke det systemgenererte SPNet.</string>
+      <string id="KdcProxyServer">Angi KDC-proxy-servere for Kerberos-klienter</string>
+      <string id="KdcProxyServer_explain">Denne policyinnstillingen konfigurerer tilordningen fra Kerberos-klienten til KDC-proxy-servere for domener basert på DNS-suffiksnavnene.
+
+Hvis du aktiverer denne policyinnstillingen, bruker Kerberos-klienten KDC-proxy-serveren for et domene når en domenekontroller ikke blir funnet basert på de konfigurerte tilordningene. Hvis du vil tilordne en KDC-proxy-server til et domene, aktiverer du policyinnstillingen, klikker Vis og tilordner deretter navnet/navnene på KDX-proxy-serveren(e) til DNS-navnet for domenet med syntaksen som er beskrevet i alternativruten. Skriv inn et DNS-suffiksnavn i Verdinavn-kolonnen i dialogboksen Vis innhold. Skriv inn listen over proxy-servere i Verdi-kolonnen, med det aktuelle syntaksformatet. Hvis du vil vise listen over tilordninger, aktiverer du policyinnstillingen og klikker deretter Vis. Hvis du vil fjerne en tilordning fra listen, klikker du tilordningsoppføringen som skal fjernes, og trykker deretter DELETE. Hvis du vil redigere en tilordning, fjerner du gjeldende oppføring fra listen og legger til en ny med andre parametere.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, vil ikke Kerberos-klienten ha KDC-proxy-serverinnstillinger som er definert av gruppepolicyen.
+
+</string>
+      <string id="KdcProxyDisableServerRevocationCheck">Deaktiver kontroll av tilbakekall for SSL-sertifikatet for KDC-proxy-servere</string>
+      <string id="KdcProxyDisableServerRevocationCheck_explain">Med denne policyinnstillingen kan du deaktivere kontroll av tilbakekall for SSL-sertifikatet for den aktuelle KDC-proxy-serveren.
+
+Hvis du aktiverer denne policyinnstillingen, ignorerer Kerberos-klienten kontroll av tilbakekall for SSL-sertifikatet for KDC-proxy-serveren. Policyinnstillingen bør bare brukes i forbindelse med feilsøking av KDC-proxy-tilkoblinger. 
+Advarsel!  Når kontroll av tilbakekall ignoreres, kan det ikke garanteres at serveren som representeres av sertifikatet, er gyldig. 
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, krever Kerberos-klienten kontroll av tilbakekall for SSL-sertifikatet. Tilkoblingen til KDC-proxy-serveren opprettes ikke hvis kontrollen av tilbakekall er mislykket.
+
+</string>
+      <string id="ClientRequireFast">Avvis godkjenningsforespørsler når Kerberos-forsterkning ikke er tilgjengelig</string>
+      <string id="ClientRequireFast_explain">Denne policyinnstillingen kontrollerer om en datamaskin krever at Kerberos-meldingsutvekslinger skal ha forsterkning under kommunikasjon med en domenekontroller.
+
+Advarsel!  Når et domene ikke støtter Kerberos-forsterkning gjennom aktivering av Støtt dynamisk tilgangskontroll og Kerberos-forsterkning, vil all godkjenning for alle domenebrukerne mislykkes fra datamaskiner der denne policyinnstillingen er aktivert.
+
+Hvis du aktiverer denne policyinnstillingen, krever klientdatamaskinene i domenet bruk av Kerberos-forsterkning bare for meldinger som utveksles mellom godkjenningstjenesten (AS) eller billettilgangstjenesten (TGS) og domenekontrollerne. 
+
+Obs!  Kerberos gruppepolicy: Kerberos klientstøtte for krav, sammensatt godkjenning og Kerberos-forsterkning må også være aktivert for å støtte Kerberos-forsterkning. 
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, krever klientdatamaskinene i domenet bruk av Kerberos-forsterkning når dette støttes av måldomenet.
+
+</string>
+      <string id="ServerAcceptsCompound">Støtt sammensatt godkjenning (Support compound authentication)</string>
+      <string id="ServerAcceptsCompound_explain">Denne policyinnstillingen styrer konfigurasjon av enhetens Active Directory-konto for sammensatt godkjenning.
+
+For at sammensatt godkjenning skal kunne tilbys ved bruk for tilgangskontroll, må det være tilstrekkelig mange domenekontrollere i ressurskontodomenene til at forespørslene kan støttes. Domeneadministratoren må konfigurere policyinnstillingen Støtt dynamisk tilgangskontroll og Kerberos-forsterkning for alle domenekontrollere som støtter denne policyen.
+
+Hvis du aktiverer denne policyinnstillingen, vil enhetens Active Directory-konto bli konfigurert for sammensatt godkjenning av følgende alternativer:
+
+Aldri: Det blir aldri gitt sammensatt godkjenning for denne datamaskinkontoen.
+
+Automatisk: Det blir gitt sammensatt godkjenning for denne datamaskinkontoen når ett eller flere programmer er konfigurert for dynamisk tilgangskontroll.
+
+Alltid: Det blir alltid gitt sammensatt godkjenning for denne datamaskinkontoen.
+
+Hvis du deaktiverer denne policyinnstillingen, brukes Aldri.
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes Automatisk.
+
+</string>
+      <string id="CompoundIdEnable_No">Aldri</string>
+      <string id="CompoundIdEnable_Auto">Automatisk</string>
+      <string id="CompoundIdEnable_Yes">Alltid</string>
+
+      <string id="MaxTokenSize">Angi maksimal bufferstørrelse for Kerberos SSPI-konteksttoken</string>
+      <string id="MaxTokenSize_explain">Med denne policyinnstillingen kan du angi verdien som skal returneres til programmer som ber om maksimal bufferstørrelse for SSPI-konteksttoken.
+
+Bufferstørrelsen for konteksttoken bestemmer maksimumsstørrelsen for SSPI-konteksttokener som et program forventer og tildeler. Bufferen kan være mindre enn den faktiske størrelsen på SSPI-konteksttokenet, avhengig av gruppemedlemskap og hvordan godkjenningsforespørsler behandles.
+
+Hvis du aktiverer denne policyinnstillingen, bruker Kerberos-klienten eller -serveren den konfigurerte verdien, eller den lokalt tillatte maksimumsverdien, avhengig av hva som er minst.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, bruker Kerberos-klienten eller -serveren den lokalt konfigurerte verdien eller standardverdien.
+
+Merk: Denne policyinnstillingen konfigurerer eksisterende MaxTokenSize-registerverdien i HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa\Kerberos\Parameters, som ble lagt til i Windows XP og Windows Server 2003, med en standardverdi på 12 000 byte. Fra Windows 8 er standarden 48 000 byte. Ettersom HTTP bruker base64-koding i konteksttokener for godkjenning, bør du ikke sette denne verdien til mer enn 48 000 byte.
+
+</string>
+      <string id="EnableCbacAndArmor">Kerberos klientstøtte for krav, sammensatt godkjenning og Kerberos-forsterkning</string>
+      <string id="EnableCbacAndArmor_explain">Denne policyinnstillingen styrer om en enhet vil be om krav og sammensatt godkjenning for dynamisk tilgangskontroll og Kerberos-forsterkning ved hjelp av Kerberos-godkjenning i domener som støtter disse funksjonene. 
+Hvis du aktiverer denne policyinnstillingen, vil klientdatamaskiner be om krav, gi informasjon som kreves for å opprette sammensatt godkjenning, og forsterke Kerberos-meldinger i domener som støtter krav og sammensatt godkjenning for dynamisk tilgangskontroll og Kerberos-forsterkning.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, vil ikke klientenhetene be om krav, gi informasjon som kreves for å opprette sammensatt godkjenning, og forsterke Kerberos-meldinger. Tjenester som enheten er vert for, kan ikke hente krav for klienter som bruker Kerberos-protokollovergang.  
+
+</string>
+      <string id="AlwaysSendCompoundId">Send alltid sammensatt godkjenning først</string>
+      <string id="AlwaysSendCompoundId_explain">Denne policyinnstillingen avgjør om en enhet alltid sender en forespørsel om sammensatt godkjenning når ressursdomenet ber om sammensatt identitet.
+
+Obs!  For at en domenekontroller skal kunne be om sammensatt godkjenning, på policyene "KDC-støtte for krav, sammensatt godkjenning og Kerberos-forsterkning" og "Be om sammensatt godkjenning" konfigureres og aktiveres i ressurskontodomenet. 
+
+Hvis du aktiverer denne policyinnstillingen og ressursdomenet ber om sammensatt godkjenning, sender enheter som støtter sammensatt godkjenning, alltid en forespørsel om sammensatt godkjenning. 
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen og ressursdomenet ber om sammensatt godkjenning, sender enheter først en forespørsel om ikke-sammensatt godkjenning og deretter en forespørsel om sammensatt godkjenning når tjenesten ber om sammensatt godkjenning.
+
+</string>
+      <string id="DevicePKInitEnabled">Støtte for enhetsgodkjenning ved hjelp av sertifikat</string>
+      <string id="DevicePKInitEnabled_explain">Støtte for enhetsgodkjenning ved hjelp av sertifikat krever tilkobling til en domenekontroller i enhetskontodomenet som støtter sertifikatgodkjenning for datamaskinkontoer. 
+
+Ved hjelp av denne policyinnstillingen kan du angi støtte for Kerberos for å prøve godkjenning ved hjelp av sertifikatet for enheten til domenet.
+
+Hvis du aktiverer denne policyinnstillingen, blir enhetslegitimasjonen valgt basert på følgende alternativer:
+
+Automatisk enhet forsøker godkjenning ved hjelp av enhetssertifikat. Hvis domenekontrolleren ikke støtter godkjenning av datamaskinkontoer ved hjelp av sertifikater, blir godkjenning forsøkt med passord.
+
+Tvang: Enheten godkjenner alltid ved hjelp av enhetssertifikatet. Hvis en domenekontroller som støtter godkjenning av datamaskinkontoer ved hjelp av sertifikater, ikke er tilgjengelig, mislykkes godkjenningen.
+
+Hvis du deaktiverer denne policyinnstillingen, blir aldri sertifikater brukt.
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes Automatisk.
+</string>
+      <string id="DevicePKInitBehavior_Automatic">Automatisk</string>
+      <string id="DevicePKInitBehavior_Force">Tving</string>
+      <string id="CloudKerberosTicketRetrievalEnabled">Tillat henting av Azure AD Kerberos-billetttildelingsbillett under pålogging</string>
+      <string id="CloudKerberosTicketRetrievalEnabled_explain">Denne policyinnstillingen tillater henting av Azure AD Kerberos-billetttildelingsbillett under pålogging.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, hentes ikke Azure AD Kerberos Ticket Granting Ticket under pålogging.
+
+Hvis du aktiverer denne policyinnstillingen, hentes tildelingsbilletten for Azure AD Kerberos-billett under pålogging.</string>
+      <string id="PKInitHashAlgorithmConfiguration">Konfigurer hash-algoritmer for sertifikatpålogging</string>
+      <string id="PKInitHashAlgorithmConfiguration_explain">Denne policyinnstillingen kontrollerer hash- eller kontrollsumalgoritmer som brukes av Kerberos-klienten når sertifikatgodkjenning utføres.
+
+Hvis du aktiverer denne policyen, kan du konfigurere én av fire tilstander for hver algoritme:
+
+ – «Standard» angir algoritmen til den anbefalte tilstanden.
+
+ – «Støttes» aktiverer bruk av algoritmen. Aktivering av algoritmer, som er deaktivert som standard, kan redusere sikkerheten.
+
+ – «Overvåket» aktiverer bruk av algoritmen og rapporterer en hendelse (ID 206) hver gang den brukes. Denne tilstanden er ment å kontrollere at algoritmen ikke brukes og trygt kan deaktiveres.
+
+ – «Støttes ikke» deaktiverer bruk av algoritmen. Denne tilstanden er ment for algoritmer som anses å være usikre.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyen, vil hver algoritme anta Standard-tilstanden.
+Du kan finne mer informasjon om hash- og kontrollsumalgoritmene som støttes av Windows Kerberos-klienten, og standardtilstandene på https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Hendelser som genereres av denne konfigurasjonen: 205, 206, 207 og 208.
+</string>
+      <string id="PKInitHashAlgorithm_Default">Standard</string>
+      <string id="PKInitHashAlgorithm_Supported">Støttes</string>
+      <string id="PKInitHashAlgorithm_Audited">Revidert</string>
+      <string id="PKInitHashAlgorithm_NotSupported">Støttes ikke</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="hosttorealm">
+        <listBox refId="hosttorealm">Definer tilordninger fra vertsnavn til ressurs:</listBox>
+        <text></text>
+        <text>Syntaks:</text>
+        <text>Skriv inn Kerberos-ressursnavnet som verdinavn.</text>
+        <text>Skriv inn vertsnavnene og DNS-suffiksene du vil</text>
+        <text>tilordne til Kerberos-ressursen, som verdi.  Hvis du vil legge til flere</text>
+        <text>navn, skiller du oppføringene med et semikolon (;).</text>
+        <text></text>
+        <text>Obs!  Hvis du skal angi et DNS-suffiks, setter du et punktum (.) foran oppføringen.</text>
+        <text>Ikke bruk punktum (.) foran en vertsnavnoppføring.</text>
+        <text></text>
+        <text>Eksempel:</text>
+        <text>Verdinavn: MICROSOFT.COM</text>
+        <text>Verdi: .microsoft.com; .ms.com; computer1.fabrikam.com;</text>
+        <text></text>
+        <text>i eksemplet ovenfor. Alle kontohavere som har DNS-suffikset</text>
+        <text>*.microsoft.com eller *.ms.com, tilordnes til</text>
+        <text>Kerberos-ressursen MICROSOFT.COM.  I tillegg blir vertsnavnet</text>
+        <text>computer1.fabrikam.com tilordnet til  </text>
+        <text>Kerberos-ressursen MICROSOFT.COM.</text>
+      </presentation>
+      <presentation id="MitRealms">
+        <listBox refId="MitRealms">Definer interoperable Kerberos V5-ressursinnstillinger:</listBox>
+        <text></text>
+        <text>Syntaks:</text>
+        <text>Skriv inn det interoperable Kerberos-ressursnavnet som verdinavn.</text>
+        <text>Skriv inn ressursflaggene og vertsnavnene til KDCene som</text>
+        <text>verdi.  Omslutt ressursflaggene med følgende</text>
+        <text>koder: &lt;f&gt; &lt;/f&gt;.  Omslutt listen over KDCer med følgende koder: &lt;k&gt; &lt;/k&gt;</text>
+        <text>Hvis du vil legge til flere KDC-navn, skiller du oppføringene med</text>
+        <text>et semikolon (;).</text>
+        <text></text>
+        <text>Eksempel:</text>
+        <text>Verdinavn: TEST.COM</text>
+        <text>Verdi: &lt;f&gt;0x00000004&lt;/f&gt;&lt;k&gt;kdc1.test.com; kdc2.test.com&lt;/k&gt;</text>
+        <text></text>
+        <text>Et annet eksempel:</text>
+        <text>Verdinavn: REALM.FABRIKAM.COM</text>
+        <text>Verdi: &lt;f&gt;0x0000000E&lt;/f&gt;</text>
+      </presentation>
+      <presentation id="ValidateKDC">
+        <dropdownList refId="ValidateKDCOp" noSort="true" defaultItem="0">Modus:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Skoger det skal søkes i</label>
+        </textBox>
+        <text>Syntaks:</text>
+        <text>Angi listen over skoger det skal søkes i når denne policyinnstillingen er aktivert.</text>
+        <text>Bruk FQDN-navneformatet (Fully Qualified Domain Name – fullstendig domenenavn).</text>
+        <text>Bruk semikolon (;) som skilletegn mellom søkeoppføringer.</text>
+        <text>Detaljer:</text>
+        <text>Det er ikke nødvendig å føre opp gjeldende skog fordi policyinnstillingen Bruk søkerekkefølge i skoger først bruker den globale katalogen og deretter søker i den oppførte rekkefølgen.</text>
+        <text>Du trenger ikke å føre opp alle domenene i skogen hver for seg.</text>
+        <text>Hvis en klarert skog er oppført, søkes det i alle domenene i denne skogen.</text>
+        <text>Du får best ytelse ved å føre opp skogene etter sannsynligheten for vellykket søk.  </text>
+      </presentation>
+      <presentation id="KdcProxyServer">
+        <listBox refId="KdcProxyServer">Definer innstillinger for KDC-proxy-servere:</listBox>
+        <text></text>
+        <text>Syntaks:</text>
+        <text></text>
+        <text>Skriv inn DNS-suffiksnavnet som verdinavn.</text>
+        <text>DNS-suffiksnavnet støtter tre formater i synkende prioritetsrekkefølge:</text>
+        <text>Fullt samsvar: host.contoso.com</text>
+        <text>Suffikssamsvar: .contoso.com</text>
+        <text>Standardsamsvar: *</text>
+        <text></text>
+        <text>Skriv inn proxy-servernavnene som verdi.</text>
+        <text>Proxy-servernavnene må være omsluttet med koder: &lt;https /&gt;</text>
+        <text>Hvis du vil legge til flere proxy-servernavn, skiller du oppføringene med et mellomrom eller komma (,).</text>
+        <text></text>
+        <text>Eksempel:</text>
+        <text>Verdinavn: .contoso.com</text>
+        <text>Verdi: &lt;https proxy1.contoso.com proxy2.contoso.com /&gt;</text>
+        <text></text>
+        <text>Et annet eksempel:</text>
+        <text>Verdinavn: *</text>
+        <text>Verdi: &lt;https proxy.contoso.com /&gt;</text>
+      </presentation>
+      <presentation id="ClientRequireFast">
+      </presentation>
+      <presentation id="ServerAcceptsCompound">
+       <dropdownList refId="CompoundIdEnabled" noSort="true" defaultItem="2">Støtt godkjenning med klientenhetsinformasjon:</dropdownList>
+      </presentation>
+      <presentation id="MaxTokenSize">
+        <decimalTextBox refId="MaxTokenSize" defaultValue="48000" spinStep="1000">Maksimumsstørrelse</decimalTextBox>
+      </presentation>
+      <presentation id="EnableCbacAndArmor">
+      </presentation>
+      <presentation id="DevicePKInitBehavior">
+        <dropdownList refId="DevicePKInitBehavior" noSort="true" defaultItem="0">Virkemåte for enhetsgodkjenning ved hjelp av sertifikat:</dropdownList>
+      </presentation>
+      <presentation id="PKInitHashAlgorithmConfiguration">
+        <dropdownList refId="PKInitHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKInitHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKInitHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKInitHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

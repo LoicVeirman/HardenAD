@@ -1,0 +1,132 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>Modelo de Política de Grupo de Configurações da Experiência do Cliente DirectAccess</displayName>
+  <description>Esse arquivo admx descreve o modelo de política para componentes NCA do Cliente DirectAccess</description>
+  <resources>
+    <stringTable>
+      <string id="NCA">Configurações da Experiência do Cliente DirectAccess</string>
+      <string id="NCA_Help">Este é o modelo de política de grupo para Configurações da Experiência do Cliente DirectAccess. Leia o guia de implantação do DirectAccess para obter mais informações.</string>
+      <string id="SupportEmail">Endereço de email de suporte</string>
+      <string id="SupportEmail_Help">Especifica o endereço de email a ser usado para enviar arquivos de log que são gerados pelo NCA ao administrador de rede. 
+
+Quando o usuário envia os arquivos de log ao Administrador, o NCA usa o cliente de email padrão para abrir uma nova mensagem com o endereço de email de suporte no campo Para: da mensagem, em seguida anexa os arquivos de log gerados como um arquivo .html. O usuário pode revisar a mensagem e adicionar outras informações antes de enviá-la.
+
+</string>
+      <string id="FriendlyName">Nome amigável</string>
+      <string id="FriendlyName_Help">Especifica a cadeia de caracteres que aparece para a conectividade do DirectAccess quando o usuário clica no ícone da área de notificação da Rede. Por exemplo, você pode especificar “Acesso à Intranet da Contoso” para os clientes DirectAccess da Contoso Corporation.
+
+Se essa configuração não for definida, a cadeia de caracteres exibida para a conectividade do DirectAccess será “Conexão Corporativa”.
+
+</string>
+      <string id="ShowUI">Interface do Usuário</string>
+      <string id="ShowUI_Help">Especifica se uma entrada para a conectividade do DirectAccess aparece quando o usuário clica no ícone da área de notificação da Rede.
+
+Defina como Desabilitado para evitar confusão do usuário quando você estiver apenas usando o DirectAccess para gerenciar remotamente os computadores cliente do DirectAccess a partir da sua intranet e sem permitir acesso direto à intranet. 
+
+Se essa configuração não for definida, a entrada para a conectividade do DirectAccess será exibida.
+
+</string>
+      <string id="PassiveMode">Modo Passivo do DirectAccess</string>
+      <string id="PassiveMode_Help">Especifica se o serviço do NCA é executado ou não em Modo Passivo.
+
+Defina como Desabilitado para manter o NCA em sondagem ativa o tempo todo. Se essa configuração não for definida, a sondagem do NCA ficará no modo ativo por padrão.
+
+</string>
+      <string id="LocalNamesOn">Permitir Preferência por Nomes Locais</string>
+      <string id="LocalNamesOn_Help">Especifica se o usuário tem as opções Conectar e Desconectar para a entrada do DirectAccess ao clicar no ícone da área de notificação da Rede.
+
+Se o usuário clicar na opção Desconectar, o NCA removerá as regras do DirectAccess da NRPT (Tabela de Políticas de Resolução de Nome) e o computador cliente do DirectAccess usará qualquer resolução de nome normal que estiver disponível para o computador cliente em sua configuração de rede atual, incluindo o envio de todas as consultas DNS para os servidores DNS da intranet local ou de Internet. Observe que o NCA não remove os túneis IPsec existentes e os usuários ainda podem acessar os recursos da intranet em todo o servidor DirectAccess especificando endereços IPv6 em vez de nomes.
+
+A capacidade de desconectar permite aos usuários especificar nomes de rótulo único não qualificados (como “PRINTSVR”) para recursos locais quando conectados a uma intranet diferente, e para acesso temporário aos recursos da intranet, quando a detecção do local de rede não determinou corretamente que o computador cliente do DirectAccess está conectado a sua própria intranet.
+
+Para restaurar as regras do DirectAccess para a NRPT e retomar a funcionalidade normal do DirectAccess, o usuário clica em Conectar.
+
+Observação 
+Se o computador cliente do DirectAccess estiver na intranet e determinou corretamente seu local na rede, a opção Desconectar não terá efeito, pois as regras para o DirectAccess já foram removidas da NRPT.
+
+Se essa configuração não for definida, os usuários não terão as opções Conectar ou Desconectar.
+
+</string>
+      <string id="DTEs">Pontos de extremidade de túnel IPsec</string>
+      <string id="DTEs_Help">Especifica os endereços IPv6 dos pontos de extremidade dos túneis IPsec (protocolo IPsec) que habilitam o DirectAccess. O NCA tenta acessar os recursos que estão especificados na configuração de Recursos Corporativos usando esses pontos de extremidade de túnel configurados. 
+
+Por padrão, o NCA usa o mesmo servidor DirectAccess utilizado pela conexão do computador cliente do DirectAccess. Nas configurações padrão do DirectAccess, geralmente existem dois pontos de extremidade de túnel IPsec: um para o túnel de infraestrutura e um para o túnel de intranet. Você deve configurar um ponto de extremidade para cada túnel. 
+	  
+Cada entrada consiste no texto PING: seguido do endereço IPv6 de um ponto de extremidade de túnel IPsec. Exemplo: PING:2002:836b:1::836b:1.
+
+Você deve definir essa configuração para ter a funcionalidade completa do NCA.
+
+</string>
+      <string id="CorporateResources">Recursos Corporativos</string>
+      <string id="CorporateResources_Help">Especifica os recursos em sua intranet que são normalmente acessíveis aos clientes DirectAccess. Cada entrada é uma cadeia de caracteres que identifica o tipo de recurso e o seu local. 
+
+Cada cadeia de caracteres pode ser de um dos seguintes tipos:
+	  
+-  Um nome DNS ou endereço IPv6 que o NCA executa ping. A sintaxe é “PING:” seguido de um FQDN (nome de domínio totalmente qualificado) que é resolvido para um endereço IPv6. Exemplos: PING:meuservidor.corp.contoso.com ou PING:2002:836b:1::1. 
+ 
+Observação
+
+É recomendável usar FQDNs em vez de endereços IPv6 sempre que possível.
+
+Importante
+
+Pelo menos uma das entradas deve ser um recurso PING:.
+
+-	Uma URL consultada pelo NCA com uma solicitação HTTP. O conteúdo da página da web não importa. A sintaxe é “HTTP:” seguido de uma URL. A parte do host da URL deve ser resolvida para um endereço IPv6 de um servidor Web ou incluir um endereço IPv6. Exemplos: HTTP:http://meuservidor.corp.contoso.com/ ou HTTP:http://2002:836b:1::1/.
+
+-	Um caminho UNC para um arquivo que o NCA verifica a existência. O conteúdo do arquivo não importa. A sintaxe é “FILE:” seguido de um caminho UNC. A parte do ComputerName do caminho UNC deve ser resolvida para um endereço IPv6 ou incluir um endereço IPv6. Exemplos: FILE:\\meuservidor\meucompartilhamento\teste.txt ou FILE:\\2002:836b:1::1\meucompartilhamento\teste.txt.
+
+Você deve definir essa configuração para ter a funcionalidade completa do NCA.
+
+</string>
+
+      <string id="CustomCommands">Comandos personalizados</string>
+      <string id="CustomCommands_Help">Especifica os comandos configurados pelo administrador para log personalizado. Estes comandos serão executados além dos comandos de log padrão.</string>
+
+    </stringTable>
+    
+    <presentationTable>
+      <presentation id="POL_08EF8AE6_3960_4852_93B5_3E068D6C2E6B">
+        <textBox refId="TXT_60660913_5491_4D50_AF96_770639FF243D">
+          <label>Portal de Solução de Problemas</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="SupportEmail">
+        <textBox refId="SupportEmail_Control">
+          <label>Email de Suporte</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="FriendlyName">
+        <textBox refId="FriendlyName_Control">
+          <label>Nome Amigável</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="LocalNamesOn"/>
+      <presentation id="ShowUI"/>
+      <presentation id="CorporateResources">
+        <listBox refId="CorporateResources_Control">Recursos Corporativos</listBox>
+      </presentation>
+      <presentation id="PortalName">
+        <textBox refId="PortalName_Control">
+          <label>Nome do Portal</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="DTEs">
+        <listBox refId="DTEs_Control">DTEs</listBox>
+      </presentation>
+      <presentation id="PassiveMode"/>
+      <presentation id="CoporatePortalSite">
+        <textBox refId="CoporatePortalSite_Control">
+          <label>Site Corporativo do Portal - URL</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="CustomCommands">
+        <listBox refId="CustomCommands_Control">CustomCommands</listBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

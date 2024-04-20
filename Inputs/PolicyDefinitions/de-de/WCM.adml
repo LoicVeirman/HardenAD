@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Gruppenrichtlinieneinstellungen für den Windows-Verbindungs-Manager</displayName>
+  <description>Gruppenrichtlinieneinstellungen für den Windows-Verbindungs-Manager</description>
+  <resources>
+    <stringTable>
+      <string id="WCM_Category">Windows-Verbindungs-Manager</string>
+      <string id="WCM_BlockNonDomain">Verbindung mit Nicht-Domänennetzwerken bei vorhandener Verbindung mit domänenauthentifiziertem Netzwerk nicht zulassen</string>
+      <string id="WCM_BlockNonDomain_Help">Durch diese Richtlinieneinstellung wird verhindert, dass Computer eine gleichzeitige Verbindung mit einem domänenbasierten Netzwerk und einem nicht domänenbasierten Netzwerk herstellen.
+
+Wenn diese Richtlinieneinstellung aktiviert wird, reagiert der Computer basierend auf den folgenden Umständen auf automatische und manuelle Netzwerkverbindungsversuche:
+
+Automatische Verbindungsversuche
+- Wenn der Computer bereits mit einem domänenbasierten Netzwerk verbunden ist, werden alle automatischen Verbindungsversuche mit nicht domänenbasierten Netzwerken blockiert.
+- Wenn der Computer bereits mit einem nicht domänenbasierten Netzwerk verbunden ist, werden automatische Verbindungsversuche mit domänenbasierten Netzwerken blockiert.
+
+Manuelle Verbindungsversuche
+- Wenn der Computer bereits über ein anderes Medium als Ethernet mit einem nicht domänenbasierten Netzwerk oder einem domänenbasierten Netzwerk verbunden ist und ein Benutzer unter Verstoß gegen diese Richtlinieneinstellung versucht, eine manuelle Verbindung mit einem zusätzlichen Netzwerk herzustellen, wird die vorhandene Netzwerkverbindung getrennt und die manuelle Verbindung zugelassen.
+- Wenn der Computer bereits über Ethernet mit einem nicht domänenbasierten Netzwerk oder einem domänenbasierten Netzwerk verbunden ist und ein Benutzer unter Verstoß gegen diese Richtlinieneinstellung versucht, eine manuelle Verbindung mit einem zusätzlichen Netzwerk herzustellen, wird die vorhandene Ethernet-Verbindung beibehalten und der manuelle Verbindungsversuch blockiert.
+
+Wenn diese Richtlinienstellung nicht konfiguriert oder deaktiviert wird, ist für Computer das Herstellen einer gleichzeitigen Verbindung mit Domänen- und Nicht-Domänennetzwerken zulässig.
+      </string>
+      <string id="WCM_DisableRoaming">Verbindung mit mobilen Roaming-Breitbandnetzwerken nicht zulassen</string>
+      <string id="WCM_DisableRoaming_Help">Durch diese Richtlinieneinstellung wird verhindert, dass Clients eine Verbindung mit mobilen Breitbandnetzwerken herstellen, wenn sie im Netzwerk eines Roaminganbieters registriert sind. 
+
+Wenn diese Richtlinieneinstellung aktiviert wird, werden alle automatischen und manuellen Verbindungsversuche mit Netzwerken von Roaminganbietern blockiert, bis sich der Client im Netzwerk des Heimanbieters registriert.
+      
+Wenn diese Richtlinieneinstellung nicht konfiguriert oder deaktiviert wird, ist für Clients das Herstellen von Verbindungen mit mobilen Breitbandnetzwerken von Roaminganbietern zulässig.
+      </string>
+      <string id="WCM_MinimizeConnections">Anzahl gleichzeitiger Verbindungen mit dem Internet oder einer Windows-Domäne minimieren</string>
+      <string id="WCM_MinimizeConnections_AllowAllConnections">0 = Gleichzeitige Verbindungen zulassen</string>
+      <string id="WCM_MinimizeConnections_MinimizeSimultaneousConnections">1 = Gleichzeitige Verbindungen minimieren</string>
+      <string id="WCM_MinimizeConnections_AlwaysConnectedToCellular">2 = mit dem Mobilfunknetz verbunden bleiben</string>
+      <string id="WCM_MinimizeConnections_PreventWifiOnEthernet">3 = Wi-Fi bei Ethernet verhindern</string>
+      <string id="WCM_MinimizeConnections_Help">
+        Diese Richtlinieneinstellung legt fest, ob ein Computer mehrere Verbindungen zum Internet oder zu einer Windows-Domäne haben kann. Wenn mehrere Verbindungen zugelassen sind, legt sie fest, wie der Netzwerkverkehr geroutet wird.
+
+        Wenn diese Richtlinieneinstellung auf 0 festgelegt ist, kann ein Computer mehrere gleichzeitige Verbindungen zum Internet, zu einer Windows-Domäne oder zu beiden haben. Der Internetverkehr kann über jede beliebige Verbindung geroutet werden – einschließlich einer Mobilfunkverbindung und eines beliebigen getakteten Netzwerks. Diese Einstellung entspricht der früheren Einstellung "Deaktiviert" dieser Richtlinie. Diese Option war erstmals unter Windows 8 verfügbar.
+
+        Wenn diese Richtlinieneinstellung auf 1 festgelegt ist, wird jede neue automatische Internetverbindung blockiert, wenn der Computer mindestens eine aktive Internetverbindung zu einem bevorzugten Netzwerktyp hat. Die Reihenfolge sieht folgendermaßen aus (von bevorzugt zu am wenigsten bevorzugt): Ethernet, WLAN, Mobilfunk. Sofern verbunden wird Ethernet immer bevorzugt. Die Benutzer können sich weiterhin manuell mit jedem Netzwerk verbinden. Diese Einstellung entspricht der früheren Einstellung "Aktiviert" dieser Richtlinie. Diese Option war erstmals unter Windows 8 verfügbar.
+
+        Wenn diese Richtlinieneinstellung auf 2 festgelegt ist, ist das Verhalten ähnlich wie bei 1. Wenn eine Mobilfunkdatenverbindung verfügbar ist, bleibt diese jedoch für Dienste, die eine Mobilfunkverbindung erfordern, immer verbunden. Wenn der Benutzer über eine WLAN- oder Ethernet-Verbindung verfügt, wird kein Internetverkehr über die Mobilfunkverbindung geroutet. Diese Option war erstmals in Windows 10 (Version 1703) verfügbar.
+
+        Wenn diese Richtlinieneinstellung auf 3 festgelegt ist, ähnelt das Verhalten dem des Wertes 2. Wenn eine Ethernet-Verbindung besteht, erlaubt Windows den Benutzern jedoch nicht, sich manuell mit einem WLAN zu verbinden. Ein WLAN kann nur dann verbunden werden (automatisch oder manuell), wenn keine Ethernet-Verbindung besteht.
+
+        Diese Richtlinieneinstellung bezieht sich auf die Richtlinieneinstellung "Zulassen, dass Windows einen Computer ordnungsgemäß vom Netzwerk trennt".
+      </string>
+      <string id="WCM_DisablePowerManagement">Energieverwaltung im verbundenen Standbymodus deaktivieren</string>
+      <string id="WCM_DisablePowerManagement_Help">Mithilfe dieser Richtlinieneinstellung wird angegeben, dass die Energieverwaltung deaktiviert wird, wenn der Computer in den verbundenen Standbymodus wechselt. 
+
+Sofern diese Richtlinieneinstellung aktiviert wird, erfolgt keine Verwaltung der Funkadapter durch den Windows-Verbindungs-Manager zur Reduzierung des Energieverbrauchs, wenn der Computer in den verbundenen Standbymodus wechselt.
+
+Wenn diese Richtlinieneinstellung nicht konfiguriert oder deaktiviert wird, erfolgt eine Aktivierung der Energieverwaltung, sobald der Computer in den verbundenen Standbymodus wechselt.
+      </string>
+      <string id="WCM_EnableSoftDisconnect">Zulassen, dass Windows einen Computer ordnungsgemäß vom Netzwerk trennt</string>
+      <string id="WCM_EnableSoftDisconnect_Help">Mit dieser Richtlinieneinstellung wird festgelegt, ob Windows die Verbindung eines Computers mit einem Netzwerk automatisch trennt. 
+
+ Wenn diese Richtlinieneinstellung aktiviert oder nicht konfiguriert ist, trennt Windows die Verbindung eines Computers zu einem Netzwerk, wenn es feststellt, dass der Computer nicht mehr mit einem Netzwerk verbunden werden sollte. 
+
+Wenn diese Richtlinieneinstellung deaktiviert ist, trennt Windows die Verbindung eines Computers zu einem Netzwerk sofort, wenn es feststellt, dass der Computer nicht mehr mit einem Netzwerk verbunden sein sollte. 
+
+Wenn Soft-Trennen aktiviert ist: 
+ – Wenn Windows entscheidet, dass der Computer nicht mehr mit einem Netzwerk verbunden werden soll, wird gewartet, bis sich der Datenverkehr in diesem Netzwerk beruhigt hat. Die bestehende TCP-Sitzung wird ohne Unterbrechung fortgesetzt. 
+ – Windows prüft dann in regelmäßigen Abständen die Verkehrsdichte im Netzwerk. Liegt das Verkehrsaufkommen über einem bestimmten Schwellenwert, werden keine weiteren Maßnahmen ergriffen. Der Computer bleibt mit dem Netzwerk verbunden und kann es weiterhin nutzen. Wenn die Netzwerkverbindung beispielsweise gerade zum Herunterladen von Dateien aus dem Internet verwendet wird, werden die Dateien weiterhin über diese Netzwerkverbindung heruntergeladen. 
+ – Wenn der Netzwerkverkehr unter diesen Schwellenwert fällt, wird die Verbindung des Computers zum Netzwerk getrennt. Anwendungen, die eine Netzwerkverbindung aufrechterhalten, auch wenn sie diese nicht aktiv nutzen (z. B. E-Mail-Anwendungen), können ihre Verbindung verlieren. In diesem Fall sollten diese Anwendungen ihre Verbindung über ein anderes Netzwerk wiederherstellen. 
+
+ Diese Richtlinieneinstellung hängt von anderen Gruppenrichtlinieneinstellungen ab. Wenn beispielsweise „Anzahl der gleichzeitigen Verbindungen mit dem Internet oder einer Windows-Domäne minimieren“ deaktiviert ist, trennt Windows die Verbindung zu keinem Netzwerk.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="WCM_MinimizeConnections">
+        <dropdownList refId="WCM_MinimizeConnections_Options" noSort="true" defaultItem="2">Richtlinienoptionen minimieren</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

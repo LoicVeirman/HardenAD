@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>SAM-indstillinger</displayName>
+  <description>Konfigurationsindstillinger for sikkerhedskontohåndtering</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">Sikkerhedskontohåndtering</string>
+      <string id="SamNGCKeyROCAValidation">Konfigurer validering af ROCA-sårbare WHfB-nøgler under godkendelse</string>
+      <string id="SamNGCKeyROCAValidationNone">Ignorer ROCA-sårbare WHfB-nøgler</string>
+      <string id="SamNGCKeyROCAValidationAudit">Overvåg ROCA-sårbare WHfB-nøgler ved brug</string>
+      <string id="SamNGCKeyROCAValidationBlock">Bloker ROCA-sårbare WHfB-nøgler ved brug</string>
+      <string id="SamNGCKeyROCAValidation_explain">Denne politikindstilling giver dig mulighed at konfigurere, hvordan domænecontrollere håndterer Windows Hello til virksomheder-nøgler (WHfB), der er sårbare over for sikkerhedsrisikoen "Return of Coppersmith's attack" (ROCA) .
+
+Få mere at vide under:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+Hvis du aktiverer denne politikindstilling, understøttes følgende indstillinger:
+
+Ignorer: under godkendelse vil domænecontrolleren ikke teste WHfB-nøgler for ROCA-sårbarheden.
+
+Overvåg: Under godkendelse vil domænecontrolleren sende overvågningshændelser for WHfB-nøgler, der er udsat for ROCA-sårbarheden (godkendelser lykkes stadig).
+
+Bloker: Under godkendelse vil domænecontrolleren blokere for brugen af WHfB-nøgler, der er udsat for ROCA-sårbarheden (godkendelser mislykkes).
+
+Denne indstilling træder kun i kraft på domænecontrollere.
+
+Hvis den ikke konfigureres, vil domænecontrollere som standard bruge deres lokale konfiguration. Den lokale standardkonfiguration er Overvåg.
+
+Computeren skal genstartes, for at ændringer af denne indstilling kan træde i kraft.
+
+Bemærk! Hvis du vil undgå uventede afbrydelser, skal denne indstilling ikke angives til Bloker, før de passende migreringer er foretaget, f.eks. fejlrettelse af sårbare TPM'er.
+
+Du kan finde flere oplysninger på https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Indstillinger for håndtering af ROCA-sårbare WHfB-nøgler:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

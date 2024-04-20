@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>在此輸入顯示名稱</displayName>
+  <description>在此輸入描述</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">緩和選項</string>
+      <string id="Font_List">封鎖未受信任的字型</string>
+      <string id="Font_List_Help">這項安全性功能提供防止程式載入未受信任的字型之全域設定。未受信任的字型是安裝在 %windir%\Fonts 目錄以外的任何字型。此功能有 3 種模式可以設定: [開啟]、[關閉] 和 [稽核]。預設值為 [關閉]，不會封鎖字型。如果您還沒準備好在組織中部署這項功能，您可以使用 [稽核] 模式查看封鎖未受信任的字型是否會產生任何可用性或相容性問題。</string>
+      <string id="FontMitigation_On">封鎖未受信任的字型並記錄事件</string>
+      <string id="FontMitigation_Off">不封鎖未受信任的字型</string>
+      <string id="FontMitigation_Audit">記錄事件，而不封鎖未受信任的字型</string>
+
+	  <string id="ProcessMitigationOptions_List">處理程序安全防護選項</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        此安全性功能提供覆寫個別處理程序 MitigationOptions 設定的方式。這可以用來加強一些應用程式特定安全性原則。應用程式名稱是以 [值] 名稱的方式指定，包含副檔名。[值] 是以位元欄位的方式指定，包含特定位置中的一系列旗標。位元可設定為 0 (強制關閉設定)、1 (強制開啟設定) 或 ? (設定在 GPO 評估前保留其現有值)。可辨識的位元位置包括:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        針對子處理程序啟用資料執行防止 (DEP)
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        針對子處理程序啟用 DEP-ATL Thunk 模擬。DEP-ATL Thunk 模擬會造成系統攔截來自 Active Template Library (ATL) Thunk 層的 NX 錯誤。
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        針對子處理程序啟用結構化例外狀況處理常式覆寫保護 (SEHOP)。SEHOP 會封鎖使用結構化例外狀況處理常式 (SEH) 覆寫技術的惡意探索。
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        強制的位址空間配置隨機載入 (ASLR) 原則會透過似乎於載入時發生映像基底衝突的方式，強制重訂不相容於動態基底之映像的基底。若需要重新配置，將不會載入不具備基底重新配置區段的映像。
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        由下而上的隨機載入原則 (包含堆疊隨機載入選項) 會造成使用隨機位置做為最低使用者位址。
+
+        例如，若要啟用 PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE 與 PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON，請停用 PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF，並將所有其他選項保留為其預設值，指定下列值：
+        ???????????????0???????1???????1
+
+        將此處未指定的旗標設定為 ? 以外的任何值會導致未定義的行為。
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">啟用原則重新整理期間的 AD/DFS 網域控制站同步</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">啟用這個設定會讓群組原則用戶端連線到 DFS 共用的網域控制站，這個網域控制站與 Active Directory 使用的網域控制站相同。
+
+
+
+</string>
+      <string id="DisableAOACProcessing">關閉群組原則用戶端服務 AOAC 最佳化</string>
+      <string id="DisableAOACProcessing_Help">這個原則設定可以防止閒置時停止群組原則用戶端服務。
+
+
+
+</string>
+      <string id="EnableCDP">在此裝置上繼續體驗</string>
+      <string id="EnableCDP_Help">
+此原則設定決定是否允許 Windows 裝置參與跨裝置體驗 (繼續體驗)。
+
+若啟用此原則設定，此 Windows 裝置將可由屬於相同使用者的其他 Windows 裝置探索，而且可以參與跨裝置體驗。
+
+若停用此原則設定，此 Windows 裝置將無法由其他裝置探索，而且無法參與跨裝置體驗。
+
+若未設定此原則設定，預設行為取決於 Windows 版本。對此原則所做的變更將在重新開機之後生效。
+      </string>
+      <string id="EnableMMX">此裝置上連結手機與電腦</string>
+      <string id="EnableMMX_Help">
+這個原則讓 IT 系統管理員可以關閉連結手機與電腦功能，以繼續閱讀、寄送電子郵件及其他需要手機與電腦連結的工作。
+
+若啟用此原則設定，Windows 裝置將能夠在「連結手機與電腦」功能中註冊，並參與「在電腦端繼續」體驗。
+
+若停用此原則設定，則 Windows 裝置不得連結到手機，而會將其自身從任何已連結手機的裝置清單中移除，並且無法參與「在電腦端繼續」體驗。
+
+若未設定此原則設定，預設行為取決於 Windows 版本。對此原則所做的變更將在重新開機之後生效。
+      </string>
+      <string id="EnableAppUriHandlers">設定透過 App URI 處理常式進行 Web 對 App 連結</string>
+      <string id="EnableAppUriHandlers_Help">
+此原則設定決定 Windows 是否支援透過 App URI 處理常式進行 Web 對 App 連結。
+
+啟用此原則設定將會啟用 Web 對 App 連結，使應用程式可透過 http(s) URI 啟動。
+
+停用此原則將會停用 Web 對 App 連結，以致將由預設瀏覽器開啟 http(s) URI 而不會啟動相關聯的應用程式。
+
+若未設定此原則設定，預設行為取決於 Windows 版本。對此原則所做的變更將在重新開機之後生效。
+      </string>
+      <string id="Fonts">字型</string>
+      <string id="EnableFontProviders">啟用字型提供者</string>
+      <string id="EnableFontProviders_Help">
+        此原則設定決定 Windows 是否能從線上字型提供者下載字型與字型類別目錄資料。
+
+        若啟用此原則設定，Windows 會定期查詢線上字型提供者以判斷是否有新的字型類別目錄可用。Windows 可能也會視需要下載字型資料以設定文字格式或轉譯文字。
+
+        若停用此原則設定，Windows 不會連線到線上字型提供者，而只會列舉本機安裝的字型。
+
+        若未設定此原則設定，預設行為取決於 Windows 版本。對此原則所做的變更將在重新開機之後生效。
+      </string>
+      <string id="EnableLogonOptimization">設定群組原則快取</string>
+      <string id="EnableLogonOptimization_Help">
+        這個原則設定可讓您設定群組原則快取行為。
+
+        如果您啟用或未設定這個原則設定，則每個背景處理工作階段之後，群組原則將會快取原則資訊。這個快取會儲存適用的 GPO 及其中包含的設定。當群組原則在同步前景模式下執行時，它會參照這個快取以便執行地更快。讀取快取時，群組原則會嘗試連線登入網域控制站來決定連結速度。當群組原則在背景模式或非同步前景模式下執行時，它會持續下載最新版的原則資訊，並使用頻寬預估來決定低速連結閾值。(請參閱「設定群組原則低速連結偵測」原則設定，設定非同步前景行為)。
+
+        這個原則設定中定義的低速連結值可決定群組原則將等候網域控制站回應多長時間，才將連結速度報告為低速。預設值為 500 毫秒。
+
+        這個原則設定中定義的逾時值可決定群組原則將等候網域控制站回應多長時間，才決定沒有網路連線能力。這會停止目前的群組原則處理。下次建立與網域控制站的連線時，群組原則將會在背景執行。將這個值設得太高，會讓使用者在開機或登入時等候太久時間。預設值為 5000 毫秒。
+
+        如果您停用這個原則設定，群組原則用戶端將不會快取適用的 GPO 或 GPO 內包含的設定。當群組原則同步執行時，它會從網路下載最新版的原則，並使用頻寬預估來決定低速連結閾值。(請參閱「設定群組原則低速連結偵測」原則設定，設定非同步前景行為)。
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">啟用伺服器的群組原則快取</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        這個原則設定可讓您設定 Windows Server 電腦上的群組原則快取行為。
+        如果您啟用這個原則設定，則每個背景處理工作階段之後，群組原則將會快取原則資訊。這個快取會儲存適用的 GPO 及其中包含的設定。當群組原則在同步前景模式下執行時，它會參照這個快取以便執行地更快。讀取快取時，群組原則會嘗試連線登入網域控制站來決定連結速度。當群組原則在背景模式或非同步前景模式下執行時，它會持續下載最新版的原則資訊，並使用頻寬預估來決定低速連結閾值。(請參閱 [設定群組原則低速連結偵測] 原則設定，設定非同步前景行為)。
+        這個原則設定中定義的低速連結值可決定群組原則將等候網域控制站回應多長時間，才將連結速度報告為低速。預設值為 500 毫秒。
+        這個原則設定中定義的逾時值可決定群組原則將等候網域控制站回應多長時間，才決定沒有網路連線能力。這會停止目前的群組原則處理。下次建立與網域控制站的連線時，群組原則將會在背景執行。將這個值設得太高，會讓使用者在開機或登入時等候太久時間。預設值為 5000 毫秒。
+        如果您停用或未設定這個原則設定，群組原則用戶端將不會快取適用的 GPO 或 GPO 內包含的設定。當群組原則同步執行時，它會從網路下載最新版的原則，並使用頻寬預估來決定低速連結閾值。(請參閱 [設定群組原則低速連結偵測] 原則設定，設定非同步前景行為)。
+      
+      </string>
+
+      <string id="LogonScriptDelay">設定登入指令碼延遲</string>
+      <string id="LogonScriptDelay_Help">
+        輸入 "0" 來停用登入指令碼延遲。
+
+        這個原則設定可讓您設定登入後群組原則用戶端要等候多長時間才執行指令碼。
+
+        根據預設，群組原則用戶端會等候五分鐘才執行登入指令碼。這種方式有助於防止磁碟爭用以建立有回應的桌面環境。
+
+        如果您啟用這個原則設定，群組原則將等候一段指定的時間，然後才執行登入指令碼。
+
+        如果您停用這個原則設定，群組原則將在登入後立即執行指令碼。
+
+        如果您未設定這個原則設定，群組原則將等候五分鐘，然後才執行登入指令碼。
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">將直接存取連線設定成快速網路連線</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">這個原則設定可讓系統管理員定義直接存取連線，將其視為快速網路連線，以便套用和更新群組原則。
+
+群組原則偵測直接存取連線的頻寬速度時，這個偵測有時候無法提供有關頻寬速度的任何資訊。如果群組原則偵測到頻寬速度，群組原則將會遵循一般規則，評估直接存取連線是否為快速或低速的網路連線。如果沒有偵測到頻寬速度，群組原則將預設它是低速網路連線。這個原則設定可讓系統管理員選擇是否覆寫低速網路連線的預設值，而不是在無法判定網路頻寬速度的情況下預設使用快速網路連線。
+
+注意: 當群組原則偵測到低速網路連線時，群組原則將只會處理設定在低速連結 (低速網路連線) 上處理的用戶端延伸。
+
+如果您啟用這個原則，當群組原則無法判定直接存取上的頻寬速度時，群組原則會將網路連線評估為快速連結，並處理所有用戶端延伸。
+
+如果您停用或未設定這個設定，群組原則會將網路連線評估為低速連結，而只處理設定在低速連結上處理的用戶端延伸。
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">變更群組原則處理，在偵測到低速網路連線時非同步執行。</string>
+      <string id="SlowlinkDefaultToAsync_Help">在偵測到低速網路連線時，這個原則會指示群組原則處理，跳過需要同步處理的任何用戶端延伸處理 (也就是說，電腦啟動和使用者登入期間，電腦是否等候網路完全初始化)。
+
+如果您啟用這個原則設定，則偵測到低速網路連線時，群組原則處理永遠會以非同步方式執行。
+用戶端電腦在啟動和登入時不會等候網路完全初始化。現有使用者會使用快取的認證來登入，
+這樣可以縮短登入時間。在網路可用之後，群組原則會於背景套用。
+請注意，因為這是背景更新，所以不會套用像是軟體安裝、資料夾重新導向
+及磁碟機對應喜好設定延伸等需要同步處理的延伸。
+
+注意: 即使啟用這個原則設定，仍有兩個情況會導致群組原則進行同步處理:
+1 - 用戶端電腦加入網域之後首次啟動電腦。
+2 - 如果已啟用「永遠在電腦啟動及登入時等待網路啟動」原則設定。
+
+如果您停用或未設定這個原則設定，偵測到低速網路連線對群組原則是否同步或非同步處理並沒有影響。
+
+      </string>
+      <string id="DisableLGPOProcessing">關閉本機群組原則物件處理</string>
+      <string id="DisableLGPOProcessing_Help">這個原則設定可以防止套用本機群組原則物件 (本機 GPO)。
+
+根據預設，會先套用本機 GPO 中的原則設定，之後才套用網域 GPO 的原則設定。這些原則設定可同時套用至使用者與本機電腦。您可以停用所有本機 GPO 的處理及套用，以確保只套用網域 GPO。
+
+如果您啟用這個原則設定，系統不會處理及套用任何本機 GPO。
+
+如果您停用或未設定這個原則設定，則會繼續套用本機 GPO。
+
+注意: 若是使用已加入網域的電腦，強烈建議您只在網域 GPO 設定這個原則設定。若電腦已加入工作群組，則會忽略這個原則設定。
+
+</string>
+      <string id="SyncWaitTime">指定啟動原則處理等待時間</string>
+      <string id="SyncWaitTime_Help">這個原則設定會指定在啟動原則處理期間，群組原則應該等待網路可用性通知的時間。如果啟動原則處理採用同步方式，系統會封鎖電腦，直到可以使用網路或達到預設的等待時間為止。如果啟動原則處理採非同步方式，則不會封鎖電腦，而是在背景進行原則處理。無論是哪種情形，設定這個原則設定都會覆寫任何系統計算的等待時間。
+
+如果您啟用這個原則設定，群組原則會使用這個由系統管理員設定的最長等待時間，並覆寫任何預設或系統計算的等待時間。
+
+如果您停用或未設定這個原則設定，群組原則會在執行 Windows Vista 作業系統的電腦上使用預設的等候時間 (30 秒)。
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">允許交互樹系使用者原則和漫遊使用者設定檔</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">這個原則設定允許交互樹系互動式登入的使用者型原則處理、漫遊使用者設定檔以及使用者物件登入指令檔。
+
+跨樹系信任或雙向樹系信任存在時，這個原則設定會影響以互動方式登入其他樹系之電腦的所有使用者帳戶。
+
+如果您未設定這個原則設定:
+-  不會從使用者樹系套用任何使用者原則設定。
+-  使用者不會接收到自己的漫遊設定檔，而是接收到來自本機樹系電腦上的本機設定檔。會對使用者顯示警告訊息，並會發佈事件日誌訊息 (1529)。
+-  將會使用符合電腦範圍的群組原則物件 (GPO)，套用回送群組原則處理。
+- 將會發佈事件日誌訊息 (1109)，指出已在取代模式中呼叫回送。
+
+如果您啟用這個原則設定，會產生與 Windows 2000 上完全相同的行為: 套用使用者原則，並允許來自受信任樹系的漫遊使用者設定檔。
+
+如果您停用這個原則設定，則會產生與 [尚未設定] 相同的行為。</string>
+      <string id="CSE_AppMgmt">設定軟體安裝原則處理</string>
+      <string id="CSE_AppMgmt_Help">這個原則設定決定更新軟體安裝原則的時間。
+
+這個原則設定會影響所有使用群組原則之軟體安裝元件的原則設定，例如在 [軟體設定\軟體安裝] 中的原則設定。您可以設定軟體安裝原則只給存放在 Active Directory 的群組原則物件使用，而不給本機電腦中的群組原則物件使用。
+
+這個原則設定會覆蓋當初安裝程式時，該程式所執行的軟體安裝原則組的自訂設定。
+
+如果您啟用這個原則設定，您可以使用所提供的核取方塊來變更選項。如果您停用或未設定這個原則設定，則不會影響系統。
+
+不論是否透過低速網路連線 (例如電話線)，[允許在低速網路連線之間處理] 選項會更新原則。透過低速網路連線更新可能會導致明顯延遲。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則設定執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則設定，例如重新套用您想要的原則，以免使用者變更了此設定。</string>
+      <string id="CSE_DiskQuota">設定磁碟配額原則處理</string>
+      <string id="CSE_DiskQuota_Help">這個原則設定決定更新磁碟配額原則的時間。
+
+這個原則設定會影響所有使用群組原則之磁碟配額元件的原則，例如在 [電腦設定\系統管理範本\系統\磁碟配額] 中的原則。
+
+這個原則設定會覆蓋當初安裝程式時，該程式所執行的磁碟配額原則組的自訂設定。
+
+如果您啟用這個原則設定，您可以使用所提供的核取方塊來變更選項。如果您停用或未設定這個原則設定，則不會影響系統。
+
+不論是否透過低速網路連線 (例如電話線)，[允許在低速網路連線之間處理] 選項會更新原則。透過低速網路連線更新可能會導致明顯延遲。
+
+[在定期的背景處理期間不要套用] 選項會禁止系統在電腦使用中，對受到影響的原則進行背景更新。停用背景更新後，要等到下一個使用者登入或重新啟動系統時，原則變更才會生效。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則，例如重新套用您想要的設定，以免使用者變更了此設定。</string>
+      <string id="CSE_EFSRecovery">設定 EFS 修復原則處理</string>
+      <string id="CSE_EFSRecovery_Help">這個原則設定決定更新加密原則的時間。
+
+這個原則設定會影響所有使用群組原則之加密元件的原則，例如在 [Windows 設定\安全性設定] 中加密的相關原則。
+
+它會覆蓋當初安裝程式時，該程式所執行的加密原則組的自訂設定。
+
+如果您啟用這個原則設定，您可以使用所提供的核取方塊來變更選項。如果您停用或未設定這個原則設定，則不會影響系統。
+
+不論是否透過低速網路連線 (例如電話線)，[允許在低速網路連線之間處理] 選項會更新原則。透過低速網路連線更新可能會導致明顯延遲。
+
+[在定期的背景處理期間不要套用] 選項會禁止系統在電腦使用中，對受到影響的原則進行背景更新。停用背景更新後，要等到下一個使用者登入或重新啟動系統時，原則變更才會生效。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則，例如重新套用您想要的設定，以免使用者變更了此設定。</string>
+      <string id="CSE_FolderRedirection">設定資料夾重新導向原則處理</string>
+      <string id="CSE_FolderRedirection_Help">這個原則設定決定更新資料夾重新導向原則的時間。
+
+這個原則設定會影響所有使用群組原則之資料夾重新導向元件的原則，例如在 [Windows 設定\資料夾重新導向] 中的原則。您可以把資料夾重新導向原則只設定給存放在 Active Directory 的群組原則物件使用，而不設定給本機電腦中的群組原則物件。
+
+這個原則設定會覆蓋當初安裝程式時，該程式所執行的軟體安裝原則設定組的自訂設定。
+
+如果您啟用這個原則設定，您可以使用所提供的核取方塊來變更選項。如果您停用或未設定這個原則設定，則不會影響系統。
+
+不論是否透過低速網路連線 (例如電話線)，[允許在低速網路連線之間處理] 選項會更新原則。透過低速網路連線更新可能會導致明顯延遲。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則，例如重新套用您想要的設定，以免使用者變更了此設定。</string>
+      <string id="CSE_IEM">設定 Internet Explorer 維護原則處理</string>
+      <string id="CSE_IEM_Help">這個原則設定決定更新 Internet Explorer 維護原則的時間。
+
+這個原則設定會影響所有使用群組原則之 Internet Explorer 維護元件的原則，例如在 [Windows 設定\Internet Explorer 維護] 中的原則。
+
+這個原則設定會覆蓋當初安裝程式時，該程式所執行的 Internet Explorer 維護原則組的自訂設定。
+
+如果您啟用這個原則設定，您可以使用所提供的核取方塊來變更選項。如果您停用或未設定這個原則設定，則不會影響系統。
+
+不論是否透過低速網路連線 (例如電話線)，[允許在低速網路連線之間處理] 選項會更新原則。透過低速網路連線更新可能會導致明顯延遲。
+
+[在定期的背景處理期間不要套用] 選項會禁止系統在電腦使用中，對受到影響的原則進行背景更新。停用背景更新後，要等到下一個使用者登入或重新啟動系統時，原則變更才會生效。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則，例如重新套用您想要的原則設定，以免使用者變更了此設定。</string>
+      <string id="CSE_IPSecurity">設定 IP 安全性原則處理</string>
+      <string id="CSE_IPSecurity_Help">這個原則設定決定更新 IP 安全性原則的時間。
+
+這個原則設定會影響所有使用群組原則之 IP 安全性元件的原則，例如在 [電腦設定\Windows 設定\安全性設定\在本機電腦上的 IP 安全性原則] 中的原則。
+
+這個原則設定會覆蓋當初安裝程式時，該程式所執行的 IP 安全性原則組的自訂設定。
+
+如果您啟用這個原則設定，您可以使用所提供的核取方塊來變更選項。如果您停用或未設定這個原則設定，則不會影響系統。
+
+不論是否透過低速網路連線 (例如電話線)，[允許在低速網路連線之間處理] 選項會更新原則。透過低速網路連線更新可能會導致明顯延遲。
+
+[在定期的背景處理期間不要套用] 選項會禁止系統在電腦使用中，對受到影響的原則進行背景更新。停用背景更新後，要等到下一個使用者登入或重新啟動系統時，原則變更才會生效。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則，例如重新套用您想要的原則設定，以免使用者變更了此設定。</string>
+      <string id="CSE_Registry">設定登錄原則處理</string>
+      <string id="CSE_Registry_Help">這個原則設定決定更新登錄原則的時間。
+
+這個原則設定會影響 [系統管理範本] 資料夾中的所有原則，以及在登錄中儲存值的任何其他原則。它會覆蓋當初安裝程式時，該程式所執行的登錄原則組的自訂設定。
+
+如果您啟用這個原則設定，您可以使用所提供的核取方塊來變更選項。如果您停用或未設定這個原則設定，則不會影響系統。
+
+[在定期的背景處理期間不要套用] 選項會禁止系統在電腦使用中，對受到影響的原則進行背景更新。停用背景更新後，要等到下一個使用者登入或重新啟動系統時，原則變更才會生效。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則，例如重新套用您想要的原則設定，以免使用者變更了此設定。</string>
+      <string id="CSE_Scripts">設定指令碼原則處理</string>
+      <string id="CSE_Scripts_Help">這個原則設定決定更新指派共用指令碼原則的時間。
+
+這個原則設定會影響所有使用群組原則之指令碼元件的原則，例如在 [Windows 設定\指令碼] 中的原則。它會覆蓋當初安裝程式時，該程式所執行的指令碼原則組的自訂設定。
+
+如果您啟用這個原則設定，您可以使用所提供的核取方塊來變更選項。如果停用或未設定這個設定，則不會影響系統。
+
+不論是否透過低速網路連線 (例如電話線)，[允許在低速網路連線之間處理] 選項會更新原則。透過低速網路連線更新可能會導致明顯延遲。
+
+[在定期的背景處理期間不要套用] 選項會禁止系統在電腦使用中，對受到影響的原則進行背景更新。停用背景更新後，要等到下一個使用者登入或重新啟動系統時，原則變更才會生效。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則，例如重新套用您想要的原則設定，以免使用者變更了此設定。</string>
+      <string id="CSE_Security">設定安全性原則處理</string>
+      <string id="CSE_Security_Help">這個原則設定決定更新安全性原則的時間。
+
+這個原則設定會影響所有使用群組原則之安全性元件的原則，例如在 [Windows 設定\安全性設定] 中的原則。
+
+這個原則設定會覆蓋當初安裝程式時，該程式所執行的安全性原則組的自訂設定。
+
+如果您啟用這個原則設定，您可以使用所提供的核取方塊來變更選項。如果您停用或未設定這個原則設定，則不會影響系統。
+
+[在定期的背景處理期間不要套用] 選項會禁止系統在電腦使用中，對受到影響的原則進行背景更新。停用背景更新後，要等到下一個使用者登入或重新啟動系統時，原則變更才會生效。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則，例如重新套用您想要的原則設定，以免使用者變更了此設定。</string>
+      <string id="CSE_Wireless">設定無線原則處理</string>
+      <string id="CSE_Wireless_Help">這個原則設定決定更新指派無線網路設定原則的時間。
+
+這個原則設定會影響所有使用群組原則之無線網路元件的原則，例如在 [Windows 設定\無線網路原則] 中的原則。
+
+它會覆蓋當初安裝程式時，該程式所執行的無線網路自訂設定。
+
+如果您啟用這項原則，可以使用所提供的核取方塊來變更選項。
+
+如果您停用或未設定這個設定，它在系統上就不會產生作用。
+
+不論是否透過低速網路連線 (例如電話線)，[允許在低速網路連線之間處理] 選項會更新原則。透過低速網路連線更新可能會導致明顯延遲。
+
+[在定期的背景處理期間不要套用] 選項會禁止系統在電腦使用中，對受到影響的原則進行背景更新。停用背景更新後，要等到下一個使用者登入或重新啟動系統時，原則變更才會生效。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則，例如重新套用您想要的設定，以免使用者變更了此設定。</string>
+      <string id="CSE_Wired">設定有線原則處理</string>
+      <string id="CSE_Wired_Help">這個原則設定決定更新指派有線網路設定原則的時間。
+
+這個原則設定將會影響所有使用群組原則之有線網路元件的原則，例如在 [Windows 設定\有線網路原則] 中的原則。
+
+它會覆蓋當初安裝程式時，該程式所執行的有線網路自訂設定。
+
+如果您啟用這項原則，可以使用所提供的核取方塊來變更選項。
+
+如果您停用或未設定這個設定，它在系統上就不會產生作用。
+
+不論是否透過低速網路連線 (例如電話線)，[允許在低速網路連線之間處理] 選項會更新原則。透過低速網路連線更新可能會導致明顯延遲。
+
+[在定期的背景處理期間不要套用] 選項會禁止系統在電腦使用中，對受到影響的原則進行背景更新。停用背景更新後，要等到下一個使用者登入或重新啟動系統時，原則變更才會生效。
+
+不論原則是否已變更，[即使群組原則物件尚未變更也進行處理] 選項會更新並重新套用原則。許多原則執行方式會指定只有在變更後，才進行更新。不過，您可能會想要更新未變更的原則，例如重新套用您想要的設定，以免使用者變更了此設定。</string>
+
+      <string id="DenyRsopToInteractiveUser">決定互動式使用者是否可以產生原則結果組資料</string>
+      <string id="DenyRsopToInteractiveUser_Help">這個原則設定控制使用者檢視其原則結果組 (RSoP) 資料的能力。
+
+根據預設，以互動方式登入的使用者可以檢視自己的原則結果組 (RSoP) 資料。
+
+如果您啟用這個原則設定，互動式使用者無法產生 RSoP 資料。
+
+如果您停用或未設定這個原則設定，互動式使用者可以產生 RSoP。
+
+注意: 這個原則設定對系統管理員沒有影響。如果您啟用或停用這個原則設定，系統管理員預設可以檢視 RSoP 資料。
+
+注意: 若要檢視用戶端電腦上的 RSoP 資料，請使用 Microsoft Management Console 的 [RSoP] 嵌入式管理單元。在命令列輸入 RSOP.msc，即可啟動 RSoP 嵌入式管理單元
+
+注意: 這個原則設定同時存在於 [使用者設定] 與 [電腦設定] 設定中。
+
+另請參閱 [電腦設定\系統管理範本\系統\群組原則] 中的 [關閉原則結果組記錄]。</string>
+      <string id="DisableAutoADMUpdate">關閉 ADM 檔案的自動更新</string>
+      <string id="DisableAutoADMUpdate_Help">防止系統在群組原則物件編輯器開啟時，自動更新系統管理範本的來源檔案。 如果系統管理員擔心 DC 之系統磁碟區的使用空間容量，可以使用此功能。
+
+根據預設，群組原則物件編輯器啟動時，會在本機的 %SYSTEMROOT%\inf 目錄的來源檔案及 GPO 中儲存的來源檔案中，進行時間戳記的比較。 如果本機檔案較新，則會將檔案複製到 GPO 中。
+
+若將此設定的狀態變更為 [已啟用]，將會阻止複製任何來源檔案到 GPO。
+
+若將此設定的狀態變更為 [已停用]，將會強制執行預設操作。 若檔案的時間戳記較晚，永遠將檔案會複製到 GPO。
+
+注意: 如果 [電腦設定] 原則設定已啟用 [永遠使用本機 ADM 檔案於群組原則物件編輯器] 選項，將會忽略此設定的狀態，並將其永遠視為 [已啟用]。</string>
+      <string id="DisableBackgroundPolicy">關閉群組原則背景更新</string>
+      <string id="DisableBackgroundPolicy_Help">當電腦在使用中時，這個原則設定禁止群組原則進行更新。這個原則設定會套用到電腦、使用者和網域控制站的群組原則。
+
+如果您啟用這個原則設定，系統會等到目前的使用者登出系統後，才更新電腦及使用者設定。
+
+如果您停用或未設定這個原則設定，使用者在工作時即可套用更新。更新頻率是由 [設定電腦的群組原則更新間隔] 及 [設定使用者的群組原則更新間隔] 原則設定來決定。
+
+注意: 若變更這個原則設定，您必須重新啟動電腦，設定才能生效。</string>
+      <string id="DisableUsersFromMachGP">不讓使用者啟動電腦原則更新</string>
+      <string id="DisableUsersFromMachGP_Help">這個原則設定可以讓您控制使用者呼叫電腦原則更新的能力。
+
+如果您啟用這個原則設定，使用者就無法呼叫電腦原則更新。在電腦啟動或進行正式原則更新時，仍將套用電腦原則。
+
+如果您停用或未設定這個原則設定，則會套用預設行為。根據預設，電腦啟動時會套用電腦原則。指定的更新間隔屆滿或使用者手動呼叫時也會套用。
+
+注意: 這個原則設定只適用於非系統管理員。無論這個原則設定的設定為何，系統管理員仍可隨時呼叫電腦原則更新。
+
+另請參閱 [設定電腦的群組原則更新間隔] 原則設定來變更原則更新間隔。
+
+注意: 若變更這個原則設定，您必須重新啟動電腦，設定才能生效。</string>
+      <string id="EnforcePoliciesOnly">只強制顯示原則</string>
+      <string id="EnforcePoliciesOnly_Help">這個原則設定防止系統管理員檢視或使用群組原則喜好設定。
+
+群組原則系統管理檔案 (.adm) 可同時包含 "true" (真) 設定及喜好設定。群組原則完全支援的 "true" (真) 設定必須使用 Software\Policies 或 Software\Microsoft\Windows\CurrentVersion\Policies 登錄子機碼中的登錄項目。至於群組原則未完全支援的喜好設定，則使用其他子機碼中的登錄項目。
+
+如果您啟用這個原則設定，將會開啟「只顯示原則」命令，且系統管理員無法關閉該命令。因此，群組原則物件編輯器只會顯示 "true" (真) 設定，而不會顯示喜好設定。
+
+如果您停用或未設定這個原則設定，預設狀況下會開啟「只顯示原則」命令，但是系統管理員可以關閉「只顯示原則」命令來檢視喜好設定。
+
+注意: 若要尋找「只顯示原則」命令，請在群組原則物件編輯器中，按一下 [系統管理範本] 資料夾 (任一個)，再以滑鼠右鍵按一下同一個資料夾，接著指向 [檢視]。
+
+在群組原則物件編輯器中，喜好設定的圖示為紅色，以便與藍色圖示的 "true" (真) 設定區別。</string>
+      <string id="GPDCOptionAny">使用任何可用的網域控制站</string>
+      <string id="GPDCOptionInherit">從 Active Directory 嵌入式管理單元繼承</string>
+      <string id="GPDCOptionPDC">使用網域主控站</string>
+      <string id="GPDCOptions">設定選取群組原則網域控制站</string>
+      <string id="GPDCOptions_Help">這個原則設定決定群組原則物件編輯器嵌入式管理單元使用的網域控制站。
+
+如果您啟用這個設定，可以根據下列這些選項使用的網域控制站:
+
+[使用網域主控站] 表示群組原則物件編輯器嵌入式管理單元會讀取變更，並將其寫入到指定為網域之 PDC 操作主機的網域控制站。
+
+[從 Active Directory 嵌入式管理單元繼承] 表示群組原則物件編輯器嵌入式管理單元會讀取變更，並將其寫入到 [Active Directory 使用者和電腦] 或 [Active Directory 站台及服務] 嵌入式管理單元使用的網域控制站。
+
+[使用任何可用的網域控制站] 表示群組原則物件編輯器嵌入式管理單元會讀取變更，並將其寫入到任何可用的網域控制站。
+
+如果您停用或未設定這個設定，群組原則物件編輯器嵌入式管理單元會使用指定為網域之 PDC 操作主機的網域控制站。
+
+注意: 如果要變更網域的 PDC 操作主機，請在 [Active Directory 使用者和電腦] 中，以滑鼠右鍵按一下網域，然後按一下 [操作主機]。</string>
+      <string id="GPTransferRate">設定群組原則低速連結偵測</string>
+      <string id="GPTransferRate_Help">這個原則設定定義用來套用及更新群組原則的低速連線。
+
+如果從提供原則更新之網域控制站傳送資料到此群組電腦的速率，低於設定中指定的速率，系統就認定連線是低速。
+
+系統對低速原則連線的回應視原則而有不同。執行原則的程式可以指定對低速連結的回應。另外，此資料夾中的原則處理設定可讓您覆寫程式對低速連結的指定回應。
+
+如果您啟用這個設定，可以在 [連線速度] 方塊中，輸入介於 0 與 4,294,967,200 之間的十進位數字，以每秒的 KB 表示傳送速率。凡是低於此速度的連線都會認定是低速。如果輸入 0，則所有連線均會認定是高速。
+
+如果您停用或未設定這個設定，系統會使用每秒 500 KB 的預設值。
+
+這個設定會出現在 [電腦設定] 及 [使用者設定] 資料夾中。電腦設定中的設定會定義 [電腦設定] 資料夾中原則的低速連結。電腦設定中的設定會定義 [使用者設定] 資料夾中原則的低速連結。
+
+另請參閱 [不要偵測低速網路連線] 和 [電腦設定\系統管理範本\系統\使用者設定檔] 中的相關原則。注意: 如果設定檔伺服器具有 IP 連線，將會使用連線速度設定。如果設定檔伺服器沒有 IP 連線，則會使用 SMB 計時。</string>
+      <string id="GroupPolicyRefreshRate">設定電腦的群組原則更新間隔</string>
+      <string id="GroupPolicyRefreshRate_Help">這個原則設定指定電腦在使用中時，電腦的群組原則在背景更新的頻率。此設定只指定 [電腦設定] 資料夾中群組原則的背景更新速率。
+
+除了背景更新外，當系統啟動時永遠會更新電腦的群組原則。
+
+根據預設，每 90 分鐘會在背景更新電腦的群組原則，隨機位移為 0 到 30 分鐘。
+
+如果您啟用這個設定，可以指定從 0 到 64,800 分鐘 (45 天) 的更新速率。若您選取 0 分鐘，電腦會試著每 7 秒更新一次群組原則。不過，由於更新可能干擾使用者的工作並增加網路流量，因此對大部分安裝的更新間隔不宜過短。
+
+若停用此設定，將會每 90 分鐘 (預設值) 更新一次群組原則。如果要指定電腦在使用中時永不更新群組原則，請選取 [關閉群組原則背景更新] 原則。
+
+電腦原則的設定群組原則更新間隔也可讓您指定實際更新間隔變化的幅度。如果要避免具有相同更新間隔的用戶端同時要求更新，系統會以隨機分鐘數錯開每個用戶端設定的更新間隔。您在隨機時間方塊中輸入的數字會設定變化幅度的上限。例如，若輸入 30 分鐘，系統會選取的變化幅度為 0 到 30 分鐘。輸入較大的數字可擴大變化幅度，使用戶端的要求較不可能重疊。不過，這樣可能會大幅延遲更新。
+
+此設定會建立電腦的群組原則更新速率。如果要設定使用者原則的更新速率，請使用 [設定使用者的群組原則更新間隔] (位於 [使用者設定\系統管理範本\系統\群組原則] 中)。
+
+只有在未啟用 [關閉群組原則背景更新] 設定時才會使用此設定。
+
+注意: 建議您通知使用者他們的原則會定期更新，如此他們才能辨識原則更新的信號。更新群組原則時，會重新整理 Windows 桌面，它會短暫閃爍並關閉開啟的功能表。另外，群組原則加入的限制 (如限制使用者可以執行的程式) 可能會干擾到正在進行的工作。</string>
+      <string id="GroupPolicyRefreshRateDC">設定網域控制站群組原則更新的間隔</string>
+      <string id="GroupPolicyRefreshRateDC_Help">這個原則設定指定網域控制站正在執行時，其中群組原則在背景更新的頻率。系統啟動時除了會執行更新外，也會進行此設定指定的更新。
+
+根據預設，網域控制站上的群組原則每 5 分鐘會更新一次。
+
+如果您啟用這個設定，可以指定從 0 到 64,800 分鐘 (45 天) 的更新速率。若您選取 0 分鐘，網域控制站會試著每 7 秒更新一次群組原則。不過，由於更新可能干擾使用者的工作並增加網路流量，因此對大部分安裝的更新間隔不宜過短。
+
+如果您停用或未設定這個設定，網域控制站將會每 5 分鐘 (預設值) 更新一次群組原則。如果要指定電腦在使用中時永不更新使用者的群組原則，請選取 [關閉群組原則背景更新] 設定。
+
+此設定還可讓您指定實際更新間隔變化的幅度。如果要避免具有相同更新間隔的網域控制站同時要求更新，系統會以隨機分鐘數錯開每個控制站設定的更新間隔。您在隨機時間方塊中輸入的數字會設定變化幅度的上限。例如，若輸入 30 分鐘，系統會選取的變化幅度為 0 到 30 分鐘。輸入較大的數字可擴大變化幅度，使更新的要求較不可能重疊。不過，這樣可能會大幅延遲更新。
+
+注意: 只有當您要建立網域、網站、組織單位 (OU) 或自訂群組的原則時，才會使用此設定。若您只是要建立本機電腦的原則，系統會忽略此設定。</string>
+      <string id="GroupPolicyRefreshRateUser">設定使用者的群組原則更新間隔</string>
+      <string id="GroupPolicyRefreshRateUser_Help">這個原則設定指定電腦在使用中時，使用者的群組原則在背景更新的頻率。此設定只指定 [使用者設定] 資料夾中群組原則的背景更新速率。
+
+除了背景更新外，在使用者登入時永遠會更新使用者的群組原則。
+
+根據預設，每 90 分鐘會在背景更新使用者的群組原則，隨機位移為 0 到 30 分鐘。
+
+如果您啟用這個設定，可以指定從 0 到 64,800 分鐘 (45 天) 的更新速率。若您選取 0 分鐘，電腦會試著每 7 秒更新一次使用者群組原則。不過，由於更新可能干擾使用者的工作並增加網路流量，因此對大部分安裝的更新間隔不宜過短。
+
+若停用此設定，將會每 90 分鐘 (預設值) 更新一次使用者群組原則。如果要指定電腦在使用中時永不更新使用者的群組原則，請選取 [關閉群組原則背景更新] 設定。
+
+此設定還可讓您指定實際更新間隔變化的幅度。如果要避免具有相同更新間隔的用戶端同時要求更新，系統會以隨機分鐘數錯開每個用戶端設定的更新間隔。您在隨機時間方塊中輸入的數字會設定變化幅度的上限。例如，若輸入 30 分鐘，系統會選取的變化幅度為 0 到 30 分鐘。輸入較大的數字可擴大變化幅度，使用戶端的要求較不可能重疊。不過，這樣可能會大幅延遲更新。
+
+重要事項: 如果已啟用 [關閉群組原則背景更新] 設定，將會略過此設定。
+
+注意: 此設定會建立使用者群組原則的更新速率。如果要設定電腦群組原則的更新速率，請使用 [電腦的群組原則更新間隔] (位於 [電腦設定\系統管理範本\系統\群組原則] 中)。
+
+提示: 建議您通知使用者他們的原則會定期更新，如此他們才能辨識原則更新的信號。更新群組原則時，會重新整理 Windows 桌面，它會短暫閃爍並關閉開啟的功能表。另外，群組原則加入的限制 (如限制使用者可以執行的程式) 可能會干擾到正在進行的工作。</string>
+      <string id="NewGPODisplayName">設定新群組原則物件的預設名稱</string>
+      <string id="NewGPODisplayName_Help">這個原則設定可以讓您設定新群組原則物件的預設顯示名稱。
+
+此設定可讓您指定新群組原則物件的預設名稱，這些物件是從原則相容的群組原則管理工具 (包括 Active Directory 工具和 GPO 瀏覽器中的 [群組原則] 索引標籤) 建立的。
+
+顯示名稱可以包含環境變數，最長可以有 255 個字元。
+
+如果此設定為 [已停用] 或 [尚未設定]，則會使用新群組原則物件的預設顯示名稱。</string>
+      <string id="NewGPOLinksDisabled">將新群組原則物件連結的預設建立為已停用</string>
+      <string id="NewGPOLinksDisabled_Help">這個原則設定可以讓您將新群組原則物件連結建立為已停用狀態。
+
+如果您啟用這個設定，可以將所有新群組原則物件連結的預設建立為已停用狀態。使用原則相容的群組原則管理工具 (如 [Active Directory 使用者和電腦] 和 [Active Directory 站台及服務]) 來設定和測試新的物件連結後，即可啟用物件連結在系統上使用。
+
+如果您停用或未設定這個設定，新建立的群組原則物件連結會是已啟用狀態。如果希望物件連結經設定並測試後才生效，您必須先停用此物件連結。</string>
+      <string id="OnlyUseLocalAdminFiles">永遠使用本機 ADM 檔案於群組原則物件編輯器</string>
+      <string id="OnlyUseLocalAdminFiles_Help">這個原則設定可以讓您永遠使用本機 ADM 檔案於群組原則嵌入式管理單元。
+
+根據預設，當您使用群組原則物件編輯器嵌入式管理單元來編輯群組原則物件 (GPO) 時，會將該 GPO 中的 ADM 檔案載入至群組原則物件編輯器嵌入式管理單元中。這樣會讓您在編輯此 GPO 時，就使用當初建立 GPO 所用的 ADM 檔案版本。
+
+這種做法會造成下列行為:
+
+-  若最初是使用英文系統建立 GPO，則 GPO 會包含英文版的 ADM 檔案。
+
+-  若稍後從不同的語言系統編輯 GPO，則會得到與 GPO 中相同的英文版 ADM 檔案。
+
+您可以透過此設定變更這個行為。
+
+如果您啟用這個設定，編輯 GPO 時，群組原則物件編輯器嵌入式管理單元永遠會使用 %windir%\inf 目錄中的本機 ADM 檔案。
+
+這種做法會造成下列行為:
+
+-  若最初是使用英文系統建立 GPO，接著使用日文系統編輯 GPO，則群組原則物件編輯器嵌入式管理單元會使用本機的日文版 ADM 檔案，而您在 [系統管理範本] 下看到的文字會是日文。
+
+若您停用或未設定此設定，群組原則物件編輯器嵌入式管理單元永遠從真正的 GPO 載入所有的 ADM 檔案。
+
+注意: 如果所需的 ADM 檔案無法全部從本機的 %windir%\inf 目錄取得，您可能會無法看到自己正在編輯的 GPO 中已做的所有設定。</string>
+      <string id="PolicyPolicies">群組原則</string>
+      <string id="RSoPLogging">關閉原則結果組記錄</string>
+      <string id="RSoPLogging_Help">此設定可讓您啟用或停用用戶端電腦上的原則結果組 (RSoP) 記錄。
+
+RSoP 記錄已套用到用戶端電腦的原則群組設定資訊。這些資訊中的詳細資料包含已經套用的群組原則物件 (GPO)、物件的來源以及其中包含的用戶端延伸設定。
+
+如果您啟用這個設定，將關閉 RSoP 記錄。
+
+如果您停用或未設定這個設定，則會開啟 RSoP 記錄。根據預設，RSoP 記錄永遠是開啟狀態。
+
+注意: 若要檢視用戶端電腦上記錄的 RSoP 資訊，請使用 Microsoft Management Console (MMC) 中的 RSoP 嵌入式管理單元。</string>
+      <string id="UserPolicyMode">設定使用者群組原則回送處理模式</string>
+      <string id="UserPolicyMode_Help">這個原則設定指示系統將電腦的群組原則物件組套用到任何登入受這個設定影響的電腦使用者。這是專門針對有特殊用途的電腦，例如公共場合、實驗室和教室的電腦，在這些地方，您必須根據正在使用的電腦來修改使用者設定。
+
+根據預設，使用者的群組原則物件會決定要套用哪些使用者設定。如果您啟用這個設定，那麼使用者登入這部電腦時，則是電腦的群組原則物件決定要套用哪一組群組原則物件。
+
+如果您啟用這個設定，可以從 [模式] 方塊選取下列其中一種模式:
+
+[取代] 表示電腦群組原則物件中定義的使用者設定會取代一般套用到使用者的使用者設定。
+
+[合併] 表示會結合使用電腦群組原則物件中定義的使用者設定與一般套用到使用者的使用者設定。如果這些設定產生衝突，則電腦群組原則物件中的使用者設定優先於一般的使用者設定。
+
+如果您停用或未設定這個設定，則使用者的群組原則物件會決定要套用哪些使用者設定。
+
+注意: 只在電腦帳戶及使用者帳戶都位於至少 Windows 2000 網域時，此設定才有效。</string>
+      <string id="UserPolicyMode_Merge">合併</string>
+      <string id="UserPolicyMode_Replace">取代</string>
+      <string id="CorpConnSyncWaitTime">指定原則處理等待工作地點連線的時間</string>
+      <string id="CorpConnSyncWaitTime_Help">這個原則設定會指定在啟動原則處理期間，群組原則應該等待工作地點連線通知的時間。如果啟動原則處理採用同步方式，系統會封鎖電腦，直到可以使用工作地點連線或達到預設的等待時間為止。如果啟動原則處理採非同步方式，則不會封鎖電腦，而是在背景進行原則處理。無論是哪種情形，設定這個原則設定都會覆寫任何系統計算的等待時間。
+
+如果您啟用這個原則設定，群組原則會使用這個由系統管理員設定的工作地點連線最長等待時間，並覆寫任何預設或系統計算的等待時間。
+
+如果您停用或未設定這個原則設定，群組原則會在執行 Windows 7 以上版本的 Windows 作業系統電腦上，設定工作地點連線使用預設的等候時間 (60 秒)。</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">緩和選項</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">處理程序安全防護選項</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">必須允許「Windows 字型快取服務」從線上提供者下載字型與字型類別目錄資料。</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">低速連結值:[數字欄位] 毫秒</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">逾時值: [數字欄位] 毫秒</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">分鐘:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">等待時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">允許在低速網路連線之間處理</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">允許在低速網路連線之間處理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">在定期的背景處理期間不要套用</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">允許在低速網路連線之間處理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">在定期的背景處理期間不要套用</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">允許在低速網路連線之間處理</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">允許在低速網路連線之間處理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">在定期的背景處理期間不要套用</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">允許在低速網路連線之間處理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">在定期的背景處理期間不要套用</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">在定期的背景處理期間不要套用</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">允許在低速網路連線之間處理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">在定期的背景處理期間不要套用</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">在定期的背景處理期間不要套用</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">允許在低速網路連線之間處理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">在定期的背景處理期間不要套用</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">允許在低速網路連線之間處理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">在定期的背景處理期間不要套用</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">即使群組原則物件尚未變更也進行處理</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">當群組原則物件編輯器要選取使用的網域控制站時，應該要:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">連線速度 (Kbps):</decimalTextBox>
+        <text> </text>
+        <text>輸入 0 來停用低速連結偵測。</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">連線速度 (Kbps):</decimalTextBox>
+        <text> </text>
+        <text>輸入 0 來停用低速連結偵測。</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">永遠將 WWAN 連線視為低速連結</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>這個設定可讓您自訂將群組原則套用</text>
+        <text>至電腦的頻率。範圍從 0 到 44640 分鐘 (31 天)。</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">分鐘:</decimalTextBox>
+        <text> </text>
+        <text>這個隨機時間會新增至更新間隔，以避免</text>
+        <text>全部的用戶端在同一時間要求群組原則。</text>
+        <text>範圍從 0 到 1440 分鐘 (24 小時)</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">分鐘:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>這個設定可讓您自訂將群組原則套用</text>
+        <text>至網域控制站的頻率。範圍從 0 到 44640 分鐘 (31 天)。</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">分鐘:</decimalTextBox>
+        <text> </text>
+        <text>這個隨機時間會新增至更新間隔，以避免</text>
+        <text>全部的用戶端在同一時間要求群組原則。</text>
+        <text>範圍從 0 到 1440 分鐘 (24 小時)</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">分鐘:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>這個設定可讓您自訂將群組原則套用</text>
+        <text>至使用者的頻率。範圍從 0 到 44640 分鐘 (31 天)。</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">分鐘:</decimalTextBox>
+        <text> </text>
+        <text>這個隨機時間會新增至更新間隔，以避免</text>
+        <text>全部的用戶端在同一時間要求群組原則。</text>
+        <text>範圍從 0 到 1440 分鐘 (24 小時)</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">分鐘:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>GPO 名稱:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">模式:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">等待時間 (秒):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>
