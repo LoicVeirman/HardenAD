@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<customRuleSet>
+    <!--
+        CustomRuleSet must reflect your domain value - there is no try and guess by the script. Some dynamic value is used to maintain a dynamic approach:
+        > %ComputerName%    The script will seek for it and replace it with the computerName.
+    -->
+    <default>
+        <!--
+            The Default section will provide default value used by the script when no match are identify in <Sources> and <Targets> sections.
+        -->
+        <target>
+            <!-- 
+                Set here default value to create (or move) a local admin group.
+                Parameters are those used by New-ADgroup and Move-ADObject.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=Groups T0,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </target>
+        <operatingSystems>
+            <!-- 
+                Set the major and minor version for a Windows System behind which is considered as legacy.
+                Formula: (OSmajorVersion -ge Major.version -and OSminorVersion -ge Minor.version)
+            -->
+            <supported>
+                <server MajorVersion="6"  MinorVersion="3"/>
+                <client MajorVersion="10" MinorVersion="0"/>
+            </supported>
+        </operatingSystems>
+    </default>
+
+    <sources>
+        <!-- 
+            Sources allow the script to identify which object is belonging to which Tier/Source. you can add as many as you need.
+            
+            All source will be crawled and compared to the distinguishedName of the computer object ; first match wins. To ease in setting up the dnPattern, you can try in pShell with the following command (should return True):
+            PS:> (Get-ADComputer MyComputer).DistinguishedName -match $dnPattern
+
+            Filling up osPattern will instruct the script to confirm a target only if the osPattern is matched; if not used, just fill it up with ".*". You can test the osPattern match this way:
+            PS:> (Get-ADComputer MyComputer -Properties OperatingSystem).OperatingSystem -match $osPattern
+
+            When you fillup the 'target' attribute, you need to refer to a sub-section of <targets>. This way you can fine tune your script and manage exception. 
+            If the sub-section is missing, <default><target> will be used.
+
+            LegacyTarget teach the script to use an alternate target when a legacy system is detected. the value must match a sub-section of <targets>; if not, the parameter target will be used anyway.
+
+            The default section (dnPattern=".*"), if kept, must remains at the whole end of this section - else all analyse will fall into it. Note: we to keep it, as it will redirect to default values.
+        -->
+
+        <!-- 
+            Example 1: Tier 0 computer is detected based on the OU location
+        -->
+        <source dnPattern="OU=Servers,OU=Harden_T0"      osPattern=".*" target="tier0server" LegacyTarget=""/>
+        <source dnPattern="OU=Workstations,OU=Harden_T0" osPattern=".*" target="tier0client" LegacyTarget=""/>
+
+        <!-- 
+            Example 2: Tier 1 and 2 computer is detected based on OU location and the osPattern (if not contains 'serve' then you're tier 2).
+        -->        
+        <source dnPattern="OU=Harden_T12" osPattern="serve" target="Tier1"       LegacyTarget="tier1Leg"/>
+        <source dnPattern="OU=Harden_T12" osPattern="Windo" target="Tier2"       LegacyTarget="tier2Leg"/>
+        <source dnPattern="OU=Harden_T12" osPattern=".*"    target="Tier0server" LegacyTarget=""/>
+
+        <!-- 
+            Example 3: PAW are defined by three different OU locations but will target only two <target> and does not have legacy location.
+        -->        
+        <source dnPattern="OU=PAWACCESS,OU=_Administration" osPattern=".*" target="pawTier0" LegacyTarget=""/>
+        <source dnPattern="OU=PAWT0,OU=_Administration"     osPattern=".*" target="pawTier0" LegacyTarget=""/>
+        <source dnPattern="OU=PAWT12L,OU=_Administration"   osPattern=".*" target="pawProd"  LegacyTarget=""/>
+
+        <!-- 
+            Example 4: based on the OU localization for provisioning, will match three cases (is server, is client and is unknown). Remember: first match wins...
+        -->        
+        <source dnPattern="OU=Provisioning" osPattern="Serve" target="provisioningTier1" LegacyTarget=""/>
+        <source dnPattern="OU=Provisioning" osPattern="Windo" target="provisioningTier2" LegacyTarget=""/>
+        <source dnPattern="OU=Provisioning" osPattern=".*"    target="provisioningTier0" LegacyTarget=""/>
+        <!-- 
+            Example 5: match everything and use value from <default><target>.
+        -->        
+        <source dnPattern=".*" osPattern=".*" target="" LegacyTarget=""/>
+    </sources>
+
+    <targets>
+        <pawTier0>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 0 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT0,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </pawTier0>
+
+        <pawProd>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 1 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT1,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </pawProd>
+        
+        <tier0server>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 0 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT0,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </tier0server>
+        
+        <tier0client>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 0 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT0,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </tier0client>
+        
+        <tier1>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 1 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT1,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </tier1>
+        
+        <tier2>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 2 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT2,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </tier2>
+        
+        <tier1Leg>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 1 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT1L,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </tier1Leg>
+        
+        <tier2Leg>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 2 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT2L,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </tier2Leg>
+
+        <provisioningTier0>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 0 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT0,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </provisioningTier0>
+
+        <provisioningTier1>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 1 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT1,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </provisioningTier1>
+
+        <provisioningTier2>
+            <!-- 
+                Set here default value to create (or move) a local admin group managed by the Tier 2 Managers.
+            -->
+            <name>L-S_LocalAdmins_%ComputerName%</name>
+            <description>Members of this group will be members of the builtin\administrator group of %ComputerName%</description>
+            <path>OU=LocalAdmins,OU=GroupsT2,OU=_Administration,DC=HARDEN,DC=AD</path>
+            <category>Security</category>
+            <scope>DomainLocal</scope>
+        </provisioningTier2>
+    </targets>
+
+</customRuleSet>
