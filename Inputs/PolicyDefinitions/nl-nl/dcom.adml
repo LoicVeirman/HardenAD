@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>voer hier de weergegeven naam in</displayName>
+  <description>typ hier een beschrijving</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">Gedistribueerde COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Lokale uitzonderingen voor controle op beveiligingsactivering toestaan</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Hiermee kunt u opgeven dat lokale computerbeheerders de lijst Uitzonderingen voor beveiligingscontrole voor activering definiëren kunnen uitbreiden.
+
+Als deze instelling is ingeschakeld en DCOM in het beleid Uitzonderingen voor beveiligingscontrole voor activering definiëren (indien ingeschakeld) geen expliciete vermelding voor een DCOM-servertoepassings-id kan vinden, zoekt DCOM in de lokaal geconfigureerde lijst.
+
+Als u deze beleidsinstelling uitschakelt, zoekt DCOM niet in de lokale lijst met uitzonderingen.
+
+Als u deze beleidsinstelling niet configureert, zoekt DCOM alleen in de lokale lijst met uitzonderingen als de instelling Uitzonderingen voor beveiligingscontrole voor activering definiëren niet is geconfigureerd.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Uitzonderingen voor beveiligingscontrole voor activering definiëren</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Hiermee kunt u een lijst weergeven en wijzigen met DCOM-servertoepassings-id's die zijn uitgezonderd van de beveiligingscontrole voor activering van DCOM. DCOM gebruikt twee lijsten: één die is geconfigureerd via groepsbeleid met deze instelling en één die is geconfigureerd via de bewerkingen van lokale computerbeheerders. Als u deze beleidsinstelling configureert, wordt de tweede lijst door DCOM genegeerd, tenzij het beleid Lokale uitzonderingen voor controle op beveiligingsactivering toestaan is ingeschakeld.
+
+DCOM-servertoepassings-id's die aan dit beleid worden toegevoegd, moeten worden opgegeven in de notatie met accolades. Bijvoorbeeld: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}. Als u een toepassings-id invoert die niet bestaat of die niet de juiste notatie heeft, wordt deze door DCOM aan de lijst toegevoegd zonder deze op fouten te controleren.
+
+Als u deze beleidsinstelling inschakelt, kunt u de lijst met uitzonderingen voor de beveiligingscontrole voor activering van DCOM weergeven en wijzigen. Als een toepassings-id aan deze lijst wordt toegevoegd en de waarde wordt ingesteld op 1, wordt de beveiligingscontrole voor activering voor de betreffende DCOM-server niet uitgevoerd. Als een toepassings-id aan deze lijst wordt toegevoegd en de waarde wordt ingesteld op 0, wordt de beveiligingscontrole voor activering voor de betreffende DCOM-server altijd uitgevoerd, ongeacht de lokale instellingen.
+
+Als u deze beleidsinstelling uitschakelt, wordt de lijst met uitzonderingen die door groepsbeleid is gedefinieerd, verwijderd en wordt de lijst gebruikt die door lokale computerbeheerders is gedefinieerd.
+
+Als u deze beleidsinstelling niet configureert, wordt de lijst met uitzonderingen gebruikt die door lokale computerbeheerders is gedefinieerd.
+
+Opmerkingen:
+
+De beveiligingscontrole voor activering van DCOM wordt uitgevoerd nadat het DCOM-serverproces is gestart, maar voordat een aanvraag voor objectactivering naar het serverproces is verzonden. Deze toegangscontrole wordt uitgevoerd met de security descriptor voor aangepast uitvoeren van de DCOM-server als deze bestaat, of anders met de geconfigureerde standaardwaarden.
+
+Als de security descriptor voor aangepast uitvoeren van de DCOM-server expliciete vermeldingen voor Toegang weigeren bevat, betekent dit mogelijk dat objectactiveringen die eerder voor opgegeven gebruikers konden worden voltooid, nu mislukken terwijl het DCOM-serverproces wordt uitgevoerd. De juiste oplossing in deze situatie is het opnieuw configureren van de bevoegdheden voor aangepast uitvoeren van de DCOM-server voor de juiste beveiligingsinstellingen, maar deze beleidsinstelling kan op de korte termijn worden gebruikt als hulpmiddel voor toepassingscompatibiliteit.
+
+DCOM-servers die aan deze lijst met uitzonderingen worden toegevoegd, worden alleen uitgesloten als de bevoegdheden voor aangepast uitvoeren geen specifieke vermeldingen voor het toekennen of weigeren van de machtiging LocalLaunch, RemoteLaunch, LocalActivate of RemoteActivate voor een groep of gebruiker bevatten. Uitzonderingen voor DCOM-servertoepassings-id's die aan deze lijst worden toegevoegd, zijn indien aanwezig van toepassing op zowel de 32-bits als de 64-bits versies van de server.</string>
+      <string id="DCOMAppCompatPolicies">Instellingen toepassingscompatibiliteit</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Geef de toepassings-id's van de DCOM-server op samen met een actiewaarde hieronder.</text>
+        <text>De toepassings-id moet worden opgegeven met accolades.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">DCOM-servers toevoegen aan/verwijderen uit de lijst met uitzonderingen: </listBox>
+        <text> </text>
+        <text>Waarden:</text>
+        <text>0 = de opgegeven toepassings-id wordt niet van de beveiligingscontrole voor activering uitgezonderd</text>
+        <text>1 = de opgegeven toepassings-id wordt van de beveiligingscontrole voor activering uitgezonderd</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

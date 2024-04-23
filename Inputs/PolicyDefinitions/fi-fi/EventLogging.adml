@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Tapahtumalokiin kirjaaminen</displayName>
+    <description>Tämä tiedosto sisältää Windowsin tapahtumalokiin kirjaamisen määritykset</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Tapahtumalokiin kirjaaminen</string>
+            <string id="EnableProtectedEventLogging">Ota suojattu tapahtumalokiin kirjaaminen käyttöön</string>
+            <string id="EnableProtectedEventLogging_Explain">
+Tämän käytännön avulla voit määrittää suojattuun tapahtumalokiin kirjaamisen.
+
+Jos otat tämän käytäntöasetuksen käyttöön, sitä tukevat osat käyttävät antamaasi varmennetta mahdollisesti arkaluonteisten tapahtumalokitietojen salaamiseen ennen niiden kirjoittamista tapahtumalokiin. Tiedot salataan käyttämällä CMS (Cryptographic Message Syntax) -standardia antamaasi julkista avainta. Voit PowerShellin cmdlet-komennon Unprotect-CmsMessage avulla purkaa näiden salattujen sanomien salauksen, kunhan pystyt käyttämään sitä julkista avainta vastaavaa yksityistä avainta, jolla ne salattiin.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, osat eivät salaa tapahtumalokisanomia ennen niiden kirjoittamista tapahtumalokiin.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+Anna salausvarmenne, jota suojattu tapahtumalokiin kirjaaminen käyttää. Voit antaa jonkin seuraavista:
+
+    – base-64-koodatun X.509-varmenteen sisältö
+    – Paikallinen kone -varmennesäilöstä löytyvän varmenteen allekirjoitus (tavallisesti PKI-infrastruktuurin käyttöönottama)
+    – varmenteen täydellinen polku (voi olla paikallinen tai jaettu etäresurssi)
+    – varmenteen tai varmenteet sisältävän hakemiston polku (voi olla paikallinen tai jaettu etäresurssi)
+    – Paikallinen kone -varmennesäilöstä löytyvän varmenteen hakijan nimi (tavallisesti PKI-infrastruktuurin käyttöönottama).
+
+Tulokseksi saatavalla varmenteella on oltava asiakirjan salaus laajennettuna avaimen käyttönä (1.3.6.1.4.1.311.80.1) sekä joko Tiedon salakoodaus- tai Avaimen salakoodaus -avainkäytöt käytössä.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

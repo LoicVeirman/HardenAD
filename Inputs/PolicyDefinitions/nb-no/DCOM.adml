@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>skriv inn visningsnavn her</displayName>
+  <description>skriv inn beskrivelse her</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">Distribuert COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Tillat lokale unntak for sikkerhetskontroll for aktivering</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Lar deg angi at lokale datamaskinadministratorer kan legge til i listen Definer unntak for sikkerhetskontroll for aktivering.
+
+Hvis denne policyinnstillingen aktiveres og DCOM ikke finner en oppføring for en DCOM-serverprogram-ID i policyen Definer unntak for sikkerhetskontroll for aktivering (hvis aktivert), vil DCOM søke etter en oppføring i den lokalt konfigurerte listen.
+
+Hvis policyinnstillingen deaktiveres, vil DCOM ikke søke i den lokalt konfigurerte unntakslisten for sikkerhetskontroll for aktivering.
+
+Hvis policyinnstillingen ikke konfigureres, vil DCOM bare søke i den lokale unntakslisten for sikkerhetskontroll for aktivering hvis policyen Definer unntak for sikkerhetskontroll for aktivering er konfigurert.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Definer unntak for sikkerhetskontroll for aktivering</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Lar deg vise og endre en liste over DCOM-serverprogram-IDer som er unntatt fra sikkerhetskontrollen for DCOM-aktivering.  DCOM bruker to slike lister, én konfigurert via Gruppepolicy med denne policyinnstillingen, og den andre via handlingene til lokale datamaskinadministratorer. DCOM ignorerer den andre listen når denne policyinnstillingen konfigureres, med mindre policyen Tillat lokale unntak for sikkerhetskontroll for aktivering er aktivert.
+
+DCOM-serverprogram-IDer som legges til i denne policyen, må omgis av klammeparenteser. Eksempel: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}. Hvis du angir en program-ID som ikke eksisterer eller er feilformatert, vil DCOM legge dette til i listen uten å kontrollere om det finnes feil.
+
+Hvis denne policyinnstillingen aktiveres, kan du vise og endre listen over sikkerhetskontrollunntak for DCOM-aktivering som er definert i innstillinger i Gruppepolicy. Hvis du legger til en program-ID i listen og angir verdien 1, vil DCOM ikke fremtvinge sikkerhetskontrollen for aktivering for denne DCOM-serveren. Hvis du legger til en program-ID i listen og angir verdien 0, vil DCOM alltid fremtvinge sikkerhetskontrollen for aktivering for denne DCOM-serveren, uavhengig av lokale innstillinger.
+
+Hvis policyinnstillingen deaktiveres, blir program-ID-unntakslisten definert i Gruppepolicy slettet, og listen definert av lokale datamaskinadministratorer blir brukt.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes program-ID-unntakslisten definert av lokale datamaskinadministratorer.
+
+Notater:
+
+Sikkerhetskontrollen for DCOM-aktivering utføres etter at en DCOM-serverprosess har startet, men før en objektaktiveringsforespørsel sendes til serverprosessen. Denne kontrollen utføres mot DCOM-serverens egen oppstartstillatelsesbeskrivelse hvis denne finnes, og ellers mot de konfigurerte standardinnstillingene.
+
+Hvis DCOM-serverens egen oppstartstillatelsesbeskrivelse inneholder spesifikke blokkeringsoppføringer (DENY), kan dette bety at objektaktiveringer som tidligere ville vært vellykkede for slike spesifikke brukere når DCOM-serveren er oppe og kjører, nå vil mislykkes. Riktig handling i denne situasjonen er å konfigurere DCOM-serverens egne oppstartstillatelsesinnstillinger på nytt med riktige sikkerhetsinnstillinger, men denne policyinnstillingen kan brukes midlertidig for hjelp med programkompatibilitetsdistribusjon.
+
+DCOM-servere som er lagt til i denne unntakslisten, unntas bare hvis oppstartstillatelsene ikke inneholder spesifikke tillatelses- eller blokkeringsoppføringer (LocalLaunch, RemoteLaunch, LocalActivate eller RemoteActivate) for brukere eller grupper. Legg også merke til at unntak for DCOM-serverprogram-IDer som er lagt til i denne listen, gjelder for både 32- og 64-biters versjoner av serveren som representeres.</string>
+      <string id="DCOMAppCompatPolicies">Innstillinger for programkompatibilitet</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Angi DCOM-serverprogram-IDer sammen med en av handlingsverdiene oppført nedenfor.</text>
+        <text>Program-IDen må inneholde høyre og venstre klammeparentes.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Legg til eller fjern DCOM-servere i/fra unntakslisten: </listBox>
+        <text> </text>
+        <text>Verdier:</text>
+        <text>0 =  Den angitte program-IDen er ikke unntatt fra sikkerhetskontrollen for aktivering</text>
+        <text>1 = Den angitte program-IDen er unntatt fra sikkerhetskontrollen for aktivering</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

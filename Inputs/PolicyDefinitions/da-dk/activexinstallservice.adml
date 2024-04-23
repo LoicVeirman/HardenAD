@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ActiveX-installationstjeneste</displayName>
+  <description>Installerer ActiveX-objekter fra godkendte installationswebsteder</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">ActiveX-installationstjeneste</string>
+      <string id="AxISURLZonePolicies">Etabler ActiveX-installationspolitik for websteder i de zoner, der er tillid til</string>        
+      <string id="AxISURLZonePolicies_explain">Denne politikindstilling styrer installationen af ActiveX-objekter for websteder i Zone, der er tillid til. 
+
+Hvis du aktiverer denne politikindstilling, installeres ActiveX-objekter ifølge de indstillinger, der angives af denne politikindstilling. 
+      
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, vil ActiveX-objekterne spørge brugeren før installation. 
+
+Hvis det websted, der er tillid til, bruger HTTPS-protokollen, kan denne politikindstilling også styre, hvordan tjenesten ActiveX-installationsprogram reagerer på certifikatfejl. Som standard skal alle HTTPS-forbindelser levere et servercertifikat, som opfylder alle valideringskriterier. Hvis du ved, at et websted, der er tillid til, har en certifikatfejl, men du vælger at bruge webstedet alligevel, kan du vælge de certifikatfejl, du vil ignorere. 
+    
+Bemærk! Denne politikindstilling gælder for alle websteder i de zoner, der er tillid til.
+
+</string>
+      <string id="TrustedZoneDisabled">Installer ikke</string>
+      <string id="TrustedZonePrompt">Spørg brugeren</string>
+      <string id="TrustedZoneSilentInstall">Installer automatisk</string>
+      <string id="ApprovedActiveXInstallSites">Godkendte installationswebsteder til ActiveX-objekter</string>
+      <string id="ApprovedActiveXInstallSites_explain">Denne politikindstilling afgør, hvilke ActiveX-installationswebsteder som standardbrugerne i organisationen kan bruge til at installere ActiveX-objekter på deres computere. Når indstillingen er aktiveret, kan administratoren oprette en liste over godkendte Activex-installationswebsteder angivet efter værts-URL-adresse. 
+
+Hvis du aktiverer indstillingen, kan administratoren oprette en liste over godkendte ActiveX-installationswebsteder angivet efter værts-URL-adresse. 
+      
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, vil ActiveX-objekterne bede brugeren om at angive administrative legitimationsoplysninger før installation. 
+
+Bemærk! Du må ikke bruge jokertegn i værts-URL-adresser.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Installationspolitik for ActiveX-objekt, som er signeret af en udgiver, der er tillid til</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Installationspolitik for signeret ActiveX-objekt</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Installationspolitik for usigneret ActiveX-objekt</dropdownList>
+        <text>Tillad forbindelse til websteder, der er tillid til, med følgende servercertifikatfejl.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Ukendt nøglecenter</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Ugyldigt certifikatnavn</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Udløbet certifikatvalideringsdato</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Forkert brug af certifikat</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">Værts-URL'er</listBox>
+        <text>Indeholder politik for værts-URL.</text>
+        <text>For eksempel  </text>
+        <text>VærtsNavn: http://activex.microsoft.com</text>
+        <text>Værdi: 2,1,0,0</text>
+        <text>Værdien for hver enkelt host-URL er fire indstillinger i CSV-format.</text>
+        <text>Som repræsenterer "TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy</text>
+        <text>De tre værdier længst til venstre i politikken styrer installationen af ActiveX-objekter baseret på deres signatur.</text>
+        <text>De kan være en af følgende</text>
+        <text>0: ActiveX-objekt kan ikke installeres</text>
+        <text>1: Bed brugeren installere ActiveX-objekt</text>
+        <text>2: ActiveX-objektet installeres automatisk</text>
+        <text>Objekter, som er signeret af certifikater i lageret for udgiveren, der er tillid til, installeres automatisk  </text>
+        <text>Automatisk installation af objekter, som ikke er signeret, understøttes ikke</text>
+        <text></text>
+        <text>Værdien længst til højre i politikken er et bitmaskeret flag</text>
+        <text>Flagene bruges til at ignorere HTTPS-certificeringsfejl.</text>
+        <text>Standardværdien er 0.</text>
+        <text>Hvilket betyder, at HTTPS-forbindelser skal klare alle sikkerhedskontroller</text>
+        <text></text>
+        <text>Brug kombinationen af følgende værdier</text>
+        <text>Hvis du vil ignorere ugyldige certifikatfejl</text>
+        <text>0x00000100  Ignorer ukendt CA</text>
+        <text>0x00001000  Ignorer ugyldig CN</text>
+        <text>0x00002000  Ignorer ugyldig certifikatdato</text>
+        <text>0x00000200  Ignorer forkert brug af certifikat</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

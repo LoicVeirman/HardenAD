@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>immettere qui il nome visualizzato</displayName>
+  <description>immettere qui la descrizione</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">DCOM (Distributed Component Object Model)</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Consenti esenzioni dal controllo di sicurezza attivazione locale</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Consente di specificare che gli amministratori del computer locale possono fornire l'elenco di "Definisci esenzioni dal controllo di sicurezza attivazione".
+
+Se si abilita questa impostazione e DCOM non trova una voce esplicita per un ID applicazione (appid) relativo a un server DCOM nel criterio "Definisci esenzioni dal controllo di sicurezza attivazione" (se abilitato), DCOM cercherà una voce nell'elenco configurato localmente.
+
+Se si disabilita questa impostazione, DCOM non cercherà nell'elenco di esenzione del controllo di sicurezza attivazione configurato localmente.
+
+Se non si configura questa impostazione, DCOM cercherà solo nell'elenco di esenzione configurato localmente, se il criterio "Definisci esenzioni dal controllo di sicurezza attivazione" non è configurato.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Definisci esenzioni dal controllo di sicurezza attivazione</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Consente di visualizzare e modificare un elenco di id applicazione (appid) di server DCOM esentati dal controllo di sicurezza attivazione DCOM. DCOM utilizza due elenchi di questo genere, uno definito da Criteri di gruppo mediante l'impostazione di questo criterio, l'altro dalle azioni degli amministratori del computer locale. Quando questa impostazione è configurata, DCOM ignorerà il secondo elenco, a meno che non sia abilitata l'impostazione "Consenti esenzioni dal controllo di sicurezza attivazione locale".
+
+Gli appid dei server DCOM aggiunti a questo criterio devono essere elencati tra parentesi graffe. Ad esempio: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}. Se viene immesso un appid inesistente o di formato non corretto, DCOM lo aggiunge all'elenco senza verificare la presenza di eventuali errori.
+
+Se si abilita questa impostazione, sarà possibile visualizzare e modificare l'elenco di esenzioni dal controllo di sicurezza attivazione DCOM definito dalle impostazioni di Criteri di gruppo. Se si aggiunge un appid all'elenco e se ne imposta il valore su 1, DCOM non impone il controllo di sicurezza attivazione per il server specificato. Se si aggiunge un appid all'elenco e se ne imposta il valore su 0, DCOM impone sempre il controllo di sicurezza attivazione per il server specificato, indipendentemente dalle impostazioni locali.
+
+Se si disabilita questa impostazione, l'elenco delle esenzioni appid definito da Criteri di gruppo verrà eliminato e verrà utilizzato quello definito dagli amministratori del computer locale.
+
+Se non si configura questa impostazione, verrà utilizzato l'elenco delle esenzioni appid definito dagli amministratori del computer locale.
+
+Note:
+
+il controllo di sicurezza attivazione viene effettuato dopo l'avvio di un processo di un server DCOM, ma prima che venga inviata a tale processo una richiesta di attivazione oggetto. Questo controllo degli accessi viene effettuato utilizzando come riferimento il descrittore di sicurezza delle autorizzazioni di esecuzione personalizzate del server DCOM, nei casi in cui esista. In caso contrario, viene effettuato utilizzando le impostazioni predefinite configurate.
+
+Se l'autorizzazione di esecuzione personalizzata del server DCOM contiene voci esplicite di tipo DENY, è possibile che, dopo l'avvio e l'esecuzione del processo del server DCOM, le attivazioni oggetto che in precedenza sarebbero riuscite per gli utenti specificati non riescano più. In questa situazione l'azione più indicata è configurare nuovamente le autorizzazioni di esecuzione personalizzate del server DCOM per ottenere le impostazioni di sicurezza corrette. Come soluzione temporanea è tuttavia possibile utilizzare questa impostazione come supporto alla compatibilità applicazioni.
+
+I server DCOM aggiunti all'elenco di esenzioni sono esentati solo se le relative autorizzazioni di esecuzione personalizzate non contengono voci specifiche LocalLaunch, RemoteLaunch, LocalActivate o RemoteActivate di tipo grant o deny per nessun utente o gruppo. Le esenzioni per gli appid dei server DCOM aggiunte a questo elenco valgono sia per la versione a 32 bit che per quella a 64 bit del server, se esistente.</string>
+      <string id="DCOMAppCompatPolicies">Impostazioni compatibilità applicazioni</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Inserire gli appid dei server DCOM da combinare con uno dei valori delle azioni riportati di seguito.</text>
+        <text>L'appid deve includere le parentesi graffe di apertura e chiusura.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Aggiungi\Rimuovi server DCOM nell'elenco esenzioni: </listBox>
+        <text> </text>
+        <text>Valori:</text>
+        <text>0 = l'appid specificato non è esente dal controllo di sicurezza attivazione</text>
+        <text>1 = l'appid specificato è esente dal controllo di sicurezza attivazione</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

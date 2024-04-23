@@ -1,0 +1,157 @@
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Netværksisolation  </displayName>
+  <description>Konfigurerer indstillinger for netværksisolation for apps  </description>
+  <resources>
+    <stringTable>
+      	<string id="WF_Isolation">Netværksisolation</string>
+		
+
+<!--Define server addresses that proxy to the Internet -->	
+	<string id="WF_NetIsolation_Domain_Proxies">Internetproxyservere til apps</string>  
+	<string id="WF_NetIsolation_Domain_Proxies_Help">  Denne indstilling gælder ikke for skrivebords-apps.
+	
+En semikolonsepareret liste over IP-adresser til internetproxyserveren. Disse adresser er kategoriseret som Internet af Windows Network Isolation og er tilgængelige for apps, der har internetklient- eller internetklient/serverfunktioner.
+
+Hvis du aktiverer denne politikindstilling, kan programmer på proxybaserede netværk opnå adgang til internettet uden at skulle være afhængig af Privat netværk-funktioner. I de fleste situationer vil Windows Network Isolation dog kunne registrere disse proxyer korrekt. Som standard flettes alle proxyer, der er konfigureret med denne indstilling, med proxyer, der registreres automatisk. Hvis du vil gøre denne politikkonfiguration til den eneste liste over tilladte proxyer, skal du aktivere indstillingen Proxydefinitioner er autoritative.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, anvender programmerne de internetproxyer, der automatisk blev registreret af Windows Network Isolation.
+
+Eksempel: [3efe:3022::1000];18.0.0.1;18.0.0.2 
+
+Du kan finde flere oplysninger under: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string> 
+
+
+<!--Define server addresses that proxy to a private network (intranet) -->	
+	<string id="WF_NetIsolation_Intranet_Proxies">Intranetproxyservere til apps</string>
+	<string id="WF_NetIsolation_Intranet_Proxies_Help">  Denne indstilling gælder ikke for skrivebords-apps.
+	
+En semikolonsepareret liste over IP-adresser til intranetproxyserveren. Disse adresser er kategoriseret som private af Windows Network Isolation og er tilgængelige for apps, der har netværksegenskaben Hjem/arbejde.
+
+Hvis du aktiverer denne politikindstilling, kan en administrator konfigurere en række proxyer, der giver adgang til intranetressourcer.
+
+Hvis du deaktiverer eller ikke konfigurerer denne politikindstilling, forsøger Windows Network Isolation at registrere proxyer og konfigurere dem som internetnoder.
+  
+Denne indstilling bør IKKE bruges til at konfigurere internetproxyer.
+
+Eksempel: [3efe:3022::1000]; 18.0.0.1; 18.0.0.2
+
+Du kan finde flere oplysninger under: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define subnet addresses-->	
+	<string id="WF_NetIsolation_PrivateSubnet">Private netværksområder for apps</string>
+	<string id="WF_NetIsolation_PrivateSubnet_Help"> Denne indstilling gælder ikke for skrivebords-apps.
+				
+En kommasepareret liste over IP-adresseintervaller, der findes på dit firmanetværk.
+
+Hvis du aktiverer denne politikindstilling, vil apps med netværksegenskaben Hjem/arbejde have korrekt adgang til dit firmanetværk. Disse adresser er kun tilgængelige for apps, hvis app'en har erklæret netværksegenskaben Hjem/arbejde.
+
+Windows Network Isolation forsøger automatisk at registrere værter for private netværk. De adresser, der er konfigureret med denne politikindstilling, er som standard flettet med de værter, der er erklæret som private gennem automatisk registrering.
+
+Du kan sikre, at disse adresser er de eneste adresser, der nogen sinde klassificeres som private, ved at aktivere politikindstillingen Undernetdefinitioner er autoritative.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, forsøger Windows Network Isolation automatisk at registrere dine værter for private netværk.
+
+Eksempel: 3efe:1092::/96,18.1.1.1/10 
+
+Du kan finde flere oplysninger under: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Proxy definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Proxy">Proxydefinitioner er autoritative</string>
+	<string id="WF_NetIsolation_Authoritative_Proxy_Help"> Denne indstilling gælder ikke for skrivebords-apps.
+				
+Deaktiverer den automatiske registrering af proxyer i domænets virksomhedsmiljø i Windows Network Isolation.
+
+Hvis du aktiverer denne politikindstilling, deaktiverer det den automatiske proxyregistrering i domænets virksomhedsmiljø i Windows Network Isolation. Kun proxyer, der er konfigureret med gruppepolitik, er autoritative. Dette gælder for både internet- og intranetproxyer.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, forsøger Windows Network Isolation automatisk at registrere dine proxyserveradresser.  
+
+Du kan finde flere oplysninger under: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Subnet definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Subnet">Undernetdefinitioner er autoritative</string>
+	<string id="WF_NetIsolation_Authoritative_Subnet_Help"> Denne indstilling gælder ikke for skrivebords-apps.
+				
+Deaktiverer den automatiske registrering af værter for private netværk i domænets virksomhedsmiljø i Windows Network Isolation.
+
+Hvis du aktiverer denne politikindstilling, deaktiverer det den automatiske registrering af værter for private netværk i domænets virksomhedsmiljø i Windows Network Isolation. Kun netværksværter inden for de adresseintervaller, der er konfigureret via Gruppepolitik, vil være klassificeret som private.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, forsøger Windows Network Isolation automatisk at registrere dine værter for private netværk i domænets virksomhedsmiljø. 
+				
+Du kan finde flere oplysninger under: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+
+<!--Define cloud resources-->
+  <string id="WF_NetIsolation_EnterpriseCloudResources">Virksomhedsressourcedomæner, der er hostet i skyen</string>
+  <string id="WF_NetIsolation_EnterpriseCloudResources_Help"> Denne indstilling gælder ikke for skrivebordsapps.
+
+En pipeadskilt liste over skyressourcer i domænet. Hver skyressource kan også være parret med en intern proxyserver ved hjælp af et efterstillet komma, efterfulgt af proxyadressen.
+
+Indeholder en liste over virksomhedsressourcedomæner, der er hostet i skyen. Forbindelser til disse ressourcer betragtes som forbindelser til virksomhedsnetværk.
+
+Hvis en proxy hører sammen med en skyressource, vil trafik til skyressourcen blive dirigeret gennem virksomhedsnetværket via den angivne proxyserver (på port 80). En proxyserver, der bruges til dette formål, skal også konfigureres ved hjælp af intranetproxyservere til apppolitik.
+
+Eksempel: [skyressource]|[skyressource]|[skyressource],[proxy]|[skyressource]|[skyressource],[proxy]|
+
+Der er flere oplysninger under: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define neutral resources-->
+    <string id="WF_NetIsolation_NeutralResources">Domæner, der er kategoriseret som både arbejdsdomæner og personlige domæner</string>
+    <string id="WF_NetIsolation_NeutralResources_Help"> Denne indstilling gælder ikke for skrivebordsapps.
+
+En kommasepareret liste over domænenavne, der kan bruges som både arbejdsressource og personlig ressource.
+
+Der er flere oplysninger under: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+    </stringTable>
+ 
+ <!--Start of Presentation Table-->	
+ 
+ <presentationTable>
+
+	<presentation id="WF_NetIsolation_Domain_Proxies">
+        <textBox refId="WF_NetIsolation_Domain_ProxiesBox">
+          <label>Domæneproxyer  </label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_Intranet_Proxies">
+        <textBox refId="WF_NetIsolation_Intranet_ProxiesBox">
+          <label>Skriv en proxyservers IP-adresse til intranettet</label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_PrivateSubnet">
+        <textBox refId="WF_NetIsolation_PrivateSubnetBox">
+          <label>Private undernet  </label>
+        </textBox>
+      </presentation>
+
+  <presentation id="WF_NetIsolation_Authoritative_Proxies">
+      </presentation>
+	
+	<presentation id="WF_NetIsolation_Authoritative_Subnets">
+      </presentation>
+
+   <presentation id="WF_NetIsolation_EnterpriseCloudResources">
+     <textBox refId="WF_NetIsolation_EnterpriseCloudResourcesBox">
+       <label>Virksomhedsressourcer i clouden </label>
+     </textBox>
+   </presentation>
+
+   <presentation id="WF_NetIsolation_NeutralResources">
+     <textBox refId="WF_NetIsolation_NeutralResourcesBox">
+       <label>Neutrale ressourcer </label>
+     </textBox>
+   </presentation>
+
+ </presentationTable>
+
+  </resources>
+</policyDefinitionResources>

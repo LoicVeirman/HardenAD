@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>SAM-Einstellungen</displayName>
+  <description>Konfigurationseinstellungen für die Sicherheitskontenverwaltung</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">Sicherheitskontenverwaltung</string>
+      <string id="SamNGCKeyROCAValidation">Konfigurieren der Überprüfung von ROCA-anfälligen WHfB-Schlüsseln während der Authentifizierung</string>
+      <string id="SamNGCKeyROCAValidationNone">ROCA-anfällige WHfB-Schlüssel ignorieren</string>
+      <string id="SamNGCKeyROCAValidationAudit">Überwachung von ROCA-anfälligen WHfB-Schlüsseln bei Verwendung</string>
+      <string id="SamNGCKeyROCAValidationBlock">Blockieren von ROCA-anfälligen WHfB-Schlüsseln bei Verwendung</string>
+      <string id="SamNGCKeyROCAValidation_explain">Diese Richtlinieneinstellung ermöglicht es Ihnen, zu konfigurieren, wie Domänencontroller Windows Hello for Business-Schlüssel (WHfB) behandeln, die für die Sicherheitsanfälligkeit von "Return of Coppersmith‘s Attack" (ROCA) anfällig sind.
+
+Weitere Informationen zur Sicherheitsanfälligkeit für ROCA finden Sie unter:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, werden die folgenden Optionen unterstützt:
+
+Ignorieren : während der Authentifizierung prüft der Domänencontroller keine WHfB-Schlüssel für die Sicherheitsanfälligkeit von ROCA.
+
+Überwachung: während der Authentifizierung gibt der Domänencontroller Überwachungsereignisse für WHfB-Schlüssel aus, die der Sicherheitsanfälligkeit von ROCA unterworfen sind (Authentifizierungen werden weiterhin erfolgreich ausgeführt).
+
+Blockieren: während der Authentifizierung blockiert der Domänencontroller die Verwendung von WHfB-Schlüsseln, die der Sicherheitsanfälligkeit von ROCA unterliegen (Authentifizierungen können nicht ausgeführt werden).
+
+Diese Einstellung ist nur auf Domänencontrollern wirksam.
+
+Wenn nicht konfiguriert, wird standardmäßig die lokale Konfiguration der Domänencontroller verwendet. Die lokale Standardkonfiguration ist Überwachung.
+
+Ein Neustart ist nicht erforderlich, damit Änderungen an dieser Einstellung wirksam werden.
+
+Hinweis: um unerwartete Unterbrechungen zu vermeiden, sollte diese Einstellung nicht so lange blockiert werden, bis geeignete Eindämmungsmaßnahmen vorgenommen wurden, wie beispielsweise das Patchen von verwundbaren TPMs.
+
+Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Optionen für die Behandlung von ROCA-anfälligen WHfB-Schlüsseln:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

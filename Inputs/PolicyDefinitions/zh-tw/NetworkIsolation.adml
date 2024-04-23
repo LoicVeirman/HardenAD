@@ -1,0 +1,157 @@
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>網路隔離  </displayName>
+  <description>設定應用程式的網路隔離選項  </description>
+  <resources>
+    <stringTable>
+      	<string id="WF_Isolation">網路隔離</string>
+		
+
+<!--Define server addresses that proxy to the Internet -->	
+	<string id="WF_NetIsolation_Domain_Proxies">應用程式的網際網路 Proxy 伺服器</string>  
+	<string id="WF_NetIsolation_Domain_Proxies_Help">  這個設定不適用於傳統型應用程式。
+	
+以分號區隔的網際網路 Proxy 伺服器 IP 位址清單。Windows 網路隔離將這些位址分類為網際網路，具備網際網路用戶端或網際網路用戶端/伺服器功能的應用程式都可以存取這些位址。
+
+如果您啟用這個原則設定，Proxy 網路上的應用程式不需要依賴私人網路功能即可存取網際網路。不過，大部分情況下 Windows 網路隔離都可以正確地探索 Proxy。根據預設，這個設定所設定的任何 Proxy 都會與自動探索到的 Proxy 合併。若要讓這個原則設定成為唯一允許的 Proxy 清單，請啟用 [Proxy 定義具有權限] 設定。
+
+如果您停用或未設定這個原則設定，應用程式將會使用 Windows 網路隔離自動探索到的網際網路 Proxy。
+
+範例: [3efe:3022::1000];18.0.0.1;18.0.0.2 
+
+如需詳細資訊，請參閱: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string> 
+
+
+<!--Define server addresses that proxy to a private network (intranet) -->	
+	<string id="WF_NetIsolation_Intranet_Proxies">應用程式的內部網路 Proxy 伺服器</string>
+	<string id="WF_NetIsolation_Intranet_Proxies_Help">  這個設定不適用於傳統型應用程式。
+	
+以分號區隔的內部網路 Proxy 伺服器 IP 位址清單。Windows 網路隔離將這些位址分類為私人，具備家用/工作網路功能的應用程式都可以存取這些位址。
+
+如果您啟用這個原則設定，系統管理員將可設定一組可以存取內部網路資源的 Proxy。
+
+如果您停用或未設定這個原則設定，Windows 網路隔離會嘗試探索 Proxy，並將它們設定為網際網路節點。
+  
+這個設定不應該用來設定網際網路 Proxy。
+
+範例: [3efe:3022::1000]; 18.0.0.1; 18.0.0.2
+
+如需詳細資訊，請參閱: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define subnet addresses-->	
+	<string id="WF_NetIsolation_PrivateSubnet">應用程式的私人網路範圍</string>
+	<string id="WF_NetIsolation_PrivateSubnet_Help"> 這個設定不適用於傳統型應用程式。
+				
+以逗號區隔的公司網路 IP 位址範圍清單。
+
+如果您啟用這個原則設定，可確保具備家用/工作網路功能的應用程式可以擁有公司網路的適當存取權。只有在應用程式宣告家用/工作網路功能後，應用程式才能存取這些位址。
+
+Windows 網路隔離會嘗試自動探索私人網路主機。根據預設，這個原則設定所設定的位址會與透過自動探索宣告為私人的主機合併。
+
+若要確保這些位址是唯一分類為私人的位址，請啟用 [子網路定義具有權限] 原則設定。
+
+如果您停用或未設定這個原則設定，Windows 網路隔離會嘗試自動探索您的私人網路主機。
+
+範例: 3efe:1092::/96,18.1.1.1/10 
+
+如需詳細資訊，請參閱: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Proxy definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Proxy">Proxy 定義具有權限</string>
+	<string id="WF_NetIsolation_Authoritative_Proxy_Help"> 這個設定不適用於傳統型應用程式。
+				
+關閉網域公司環境中 Windows 網路隔離的自動 Proxy 探索。
+
+如果您啟用這個原則設定，會關閉網域公司環境中 Windows 網路隔離的自動 Proxy 探索。只有以群組原則設定的 Proxy 才具有權限。這適用於網際網路和內部網路 Proxy。
+
+如果您停用或未設定這個原則設定，Windows 網路隔離會嘗試自動探索您的 Proxy 伺服器位址。 
+
+如需詳細資訊，請參閱: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Subnet definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Subnet">子網路定義具有權限</string>
+	<string id="WF_NetIsolation_Authoritative_Subnet_Help"> 這個設定不適用於傳統型應用程式。
+				
+關閉網域公司環境中私人網路主機的 Windows 網路隔離自動探索。
+
+如果您啟用這個原則設定，會關閉網域公司環境中私人網路主機的 Windows 網路隔離自動探索。只有透過群組原則設定之位址範圍內的網路主機可分類為私人。
+
+如果您停用或未設定這個原則設定，Windows 網路隔離會嘗試自動探索網域公司環境中的私人網路主機。
+				
+如需詳細資訊，請參閱: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+
+<!--Define cloud resources-->
+  <string id="WF_NetIsolation_EnterpriseCloudResources">裝載在雲端中的企業資源網域</string>
+  <string id="WF_NetIsolation_EnterpriseCloudResources_Help"> 此設定不適用於傳統型應用程式。
+
+以直立線符號分隔的網域雲端資源清單。您也可以選擇將每個雲端資源與內部 Proxy 伺服器配對，方式是在雲端資源後方加上逗號並接著輸入 Proxy 位址。
+
+包含裝載在雲端中的企業資源網域清單。這些資源的連線會被視為企業網路連線。
+
+若 Proxy 已與雲端資源配對，要傳送到該雲端資源的流量將會透過指定的 Proxy 伺服器 (在連接埠 80 上) 在企業網路中路由傳送。用於此用途的 Proxy 伺服器也必須使用應用程式原則的內部網路 Proxy 伺服器來設定。
+
+範例: [cloudresource]|[cloudresource]|[cloudresource],[proxy]|[cloudresource]|[cloudresource],[proxy]|
+
+如需詳細資訊，請參閱: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define neutral resources-->
+    <string id="WF_NetIsolation_NeutralResources">同時分類為公司與個人的網域</string>
+    <string id="WF_NetIsolation_NeutralResources_Help"> 此設定不適用於傳統型應用程式。
+
+可同時做為公司或個人資源使用的網域名稱清單 (各網域名稱之間以逗號分隔)。
+
+如需詳細資訊，請參閱: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+    </stringTable>
+ 
+ <!--Start of Presentation Table-->	
+ 
+ <presentationTable>
+
+	<presentation id="WF_NetIsolation_Domain_Proxies">
+        <textBox refId="WF_NetIsolation_Domain_ProxiesBox">
+          <label>網域 Proxy  </label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_Intranet_Proxies">
+        <textBox refId="WF_NetIsolation_Intranet_ProxiesBox">
+          <label>輸入內部網路的 Proxy 伺服器 IP 位址</label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_PrivateSubnet">
+        <textBox refId="WF_NetIsolation_PrivateSubnetBox">
+          <label>私人子網路  </label>
+        </textBox>
+      </presentation>
+
+  <presentation id="WF_NetIsolation_Authoritative_Proxies">
+      </presentation>
+	
+	<presentation id="WF_NetIsolation_Authoritative_Subnets">
+      </presentation>
+
+   <presentation id="WF_NetIsolation_EnterpriseCloudResources">
+     <textBox refId="WF_NetIsolation_EnterpriseCloudResourcesBox">
+       <label>企業雲端資源 </label>
+     </textBox>
+   </presentation>
+
+   <presentation id="WF_NetIsolation_NeutralResources">
+     <textBox refId="WF_NetIsolation_NeutralResourcesBox">
+       <label>中性資源 </label>
+     </textBox>
+   </presentation>
+
+ </presentationTable>
+
+  </resources>
+</policyDefinitionResources>

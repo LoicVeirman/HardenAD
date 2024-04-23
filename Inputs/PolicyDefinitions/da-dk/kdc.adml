@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Indstillinger for nøgledistributionscenter</displayName>
+  <description>Konfigurationsindstillinger til Kerberos-nøgledistributionscenter.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">Nøgledistributionscenter</string>
+      <string id="forestsearch">Brug søgerækkefølge i skov</string>
+      <string id="forestsearch_explain">Denne politikindstilling definerer listen over skove, der er tillid til, og som nøgledistributionscenteret søger i under forsøg på at fortolke todelte hovednavne (Service Principal Names – SPN'er).
+
+Hvis du aktiverer denne politikindstilling, søger nøgledistributionscenteret i skovene på denne liste, hvis et todelt SPN-navn i den lokale skov ikke kan fortolkes. Skovsøgningen foretages ved hjælp af et globalt katalog eller navnesuffikstip. Hvis der findes et match, returnerer nøgledistributionscenteret en henvisningsbillet til klienten for det relevante domæne.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, søger nøgledistributionscenteret ikke i de angivne skove for at fortolke SPN'et. Hvis nøgledistributionscenteret ikke kan fortolke SPN-navnet, fordi navnet ikke findes, kan du evt. anvende NTLM-godkendelse.
+
+For at sikre gennemført funktionalitet skal denne politikindstilling være understøttet og indstillet ens på alle domænecontrollere i domænet.</string>
+      <string id="emitlili">Angiv oplysninger om tidligere logon på klientcomputere</string>
+      <string id="emitlili_explain">Denne politikindstilling styrer, om domænecontrolleren leverer oplysninger om tidligere logon til klientcomputere.
+
+Hvis du aktiverer denne politikindstilling, leverer domænecontrolleren oplysninger om tidligere logon.
+
+Hvis Windows-logon skal udnytte denne funktion, skal politikindstillingen "Vis oplysninger om tidligere logon under brugerlogon" i noden Windows Logonindstillinger under Windows-komponenter også være aktiveret.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, leverer domænecontrolleren ikke oplysninger om tidligere logon, medmindre politikindstillingen "Vis oplysninger om tidligere logon under brugerlogon" er aktiveret.
+
+Bemærk! Oplysninger om tidligere logon leveres kun, hvis domænets funktionsniveau er Windows Server 2008. I domæner med funktionsniveauet Windows Server 2003, oprindelig Windows 2000 eller blandet Windows 2000 kan domænecontrollere ikke levere oplysninger om tidligere logon, så aktivering af denne politikindstilling har ingen virkning.
+
+</string>
+      <string id="CbacAndArmor">KDC-understøttelse af erklæringer, sammensat godkendelse og Kerberos-armering</string>
+      <string id="CbacAndArmor_explain">Du kan bruge denne politikindstilling til at konfigurere en domænecontroller til at understøtte erklæringer og sammensat godkendelse til dynamisk adgangskontrol og Kerberos-armering ved hjælp af Kerberos-godkendelse.
+
+Hvis du aktiverer denne politikindstilling, bruger klientcomputere, der understøtter erklæringer og sammensat godkendelse til dynamisk adgangskontrol og er kompatible med Kerberos-armering, denne funktion til meddelelser om Kerberos-godkendelse. Denne politik bør anvendes på alle domænecontrollere for at sikre ensartet anvendelse af politikken i domænet. 
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, understøtter domænecontrolleren ikke erklæringer, sammensat godkendelse eller armering.
+
+Hvis du konfigurerer indstillingen "Ikke understøttet", understøtter domænecontrolleren ikke erklæringer, sammensat godkendelse eller armering. Dette er standardfunktionsmåden for domænecontrollere, der kører Windows Server 2008 R2 eller tidligere operativsystemer.
+
+Bemærk! For at følgende indstillinger i denne KDC-politik skal være effektive, skal Kerberos-gruppepolitikken "Kerberos-klientunderstøttelse for erklæringer, sammensat godkendelse og Kerberos-armering" være aktiveret i understøttede systemer. Hvis Kerberos-politikindstillingen ikke er aktiveret, vil disse funktioner ikke blive benyttet i meddelelser om Kerberos-godkendelse.  
+
+Hvis du konfigurerer "Understøttet", understøtter domænecontrollere erklæringer, sammensat godkendelse og Kerberos-armering. Domænecontrolleren fortæller Kerberos-klientcomputere, at domænet kan anvende erklæringer og sammensat godkendelse til dynamisk adgangskontrol og Kerberos-armering. 
+
+Krav til domænets funktionsniveau
+Hvis domænets funktionsniveau er indstillet til Windows Server 2008 R2 eller tidligere, vil domænecontrollere fungere, som om indstillingen "Understøttet" er valgt for indstillingerne "Levér altid erklæringer" og "Tillad ikke godkendelsesanmodninger uden armering". 
+
+Når domænets funktionsniveau er indstillet til Windows Server 2012, fortæller domænecontrolleren Kerberos-klientcomputerne, at domænet kan anvende erklæringer og sammensat godkendelse til dynamisk adgangskontrol og Kerberos-armering, og:
+   - Hvis du angiver indstillingen "Levér altid erklæringer", returnerer domænecontrolleren altid erklæringer for konti, og den understøtter RFC-funktionalitet for meddelelse af FAST (Flexible Authentication Secure Tunneling).
+   - Hvis du angiver indstillingen "Tillad ikke godkendelsesanmodninger uden armering", afviser domænecontrolleren Kerberos-meddelelser uden armering.
+
+Advarsel! Når "Tillad ikke godkendelsesanmodninger uden armering" er angivet, kan de klientcomputere, som ikke understøtter Kerberos-armering, ikke blive godkendt af domænecontrolleren.
+
+Hvis du vil sikre, at denne funktion er effektiv, skal du installere nok domænecontrollere, der understøtter erklæringer og sammensat godkendelse til dynamisk adgangskontrol, og som er kompatible med Kerberos-armering, til, at de kan håndtere anmodningerne om godkendelse. Et utilstrækkeligt antal domænecontrollere, der understøtter denne politik, medfører godkendelsesfejl, når der kræves dynamisk adgangskontrol eller Kerberos-armering (dvs. indstillingen "Understøttet" er aktiveret).
+
+Virkning på ydeevne af domænecontroller, når denne politikindstilling er aktiveret:
+   - Sikker registrering af Kerberos-domænefunktionalitet er påkrævet og medfører flere udvekslinger af meddelelser.
+   - Erklæringer og sammensat godkendelse til dynamisk adgangskontrol øger størrelsen og kompleksiteten af data i meddelelsen, hvilket medfører længere behandlingstid og større Kerberos-tjenestebillet.
+   - Kerberos-armering krypterer Kerberos-meddelelser fuldt ud og signerer Kerberos-fejl, hvilket øger behandlingstiden, men ikke ændrer størrelsen på tjenestebilletten.
+</string>
+      <string id="NoCbacAndArmor">Ikke understøttet</string>
+      <string id="MixModeCbacAndArmor">Understøttet</string>
+      <string id="FullModeCbacAndArmor">Levér altid erklæringer</string>
+      <string id="FullModeCbacAndRequireArmor">Tillad ikke godkendelsesanmodninger uden armering</string>
+      <string id="TicketSizeThreshold">Advarsel om store Kerberos-billetter</string>
+      <string id="TicketSizeThreshold_explain">Du kan bruge denne politikindstilling til at konfigurere, hvilken størrelse Kerberos-billetter der udløser den advarselshændelse, som udstedes under Kerberos-godkendelse. Advarsler om billetstørrelse logføres i systemloggen.
+
+Hvis du aktiverer denne politikindstilling, kan du angive den tærskelgrænse for Kerberos-billetter, der udløser advarselshændelserne. Hvis den indstilles for højt, kan der opstå godkendelsesfejl, selvom advarselshændelserne ikke logføres.  Hvis den indstilles for lavt, kommer der så mange billetadvarsler i loggen, at den ikke er egnet til analyse. Denne værdi skal angives til samme værdi som Kerberos-politikken "Angiv den maksimale bufferstørrelse for Kerberos-SSPI-konteksttoken" eller den mindste MaxTokenSize, der bruges i dit miljø, hvis du ikke konfigurerer vha. gruppepolitik.
+      
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, har tærsklen standardværdien 12.000 byte, som er den MaxTokenSize, der bruges som standard for Kerberos i Windows 7, Windows Server 2008 R2 og tidligere versioner.
+
+</string>
+      <string id="RequestCompoundId">Anmod om sammensat godkendelse</string>
+      <string id="RequestCompoundId_explain">Du kan bruge denne politikindstilling til at konfigurere en domænecontroller til at anmode om sammensat godkendelse.
+
+Bemærk! For at en domænecontroller kan anmode om sammensat godkendelse skal politikindstillingen "KDC-understøttelse af erklæringer, sammensat godkendelse og Kerberos-armering" være konfigureret og aktiveret. 
+
+Hvis du aktiverer denne politikindstilling, anmoder domænecontrollere om sammensat godkendelse. Den returnerede tjenestebillet indeholder kun sammensat godkendelse, når kontoen er konfigureret eksplicit. Denne politikindstilling bør anvendes på alle domænecontrollere for at sikre ensartet anvendelse af politikindstillingen i domænet. 
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, returnerer domænecontrollere tjenestebilletter, som indeholder sammensat godkendelse, når som helst klienten sender en anmodning om sammensat godkendelse, uanset hvordan kontoen er konfigureret.
+
+</string>
+      <string id="PKINITFreshness">KDC-understøttelse af udvidelsen PKINIT-opdatering</string>
+      <string id="PKINITFreshness_explain">Understøttelse af udvidelsen PKINIT-opdatering kræver Windows Server 2016-domænefunktionsniveau (DFL). Hvis domænecontrollerens domæne ikke er på Windows Server 2016 DFL eller højere, anvendes denne politik ikke.
+
+Denne politikindstilling giver dig mulighed for at konfigurere en domænecontroller (DC), der understøtter udvidelsen PKINIT-opdatering.
+
+Hvis du aktiverer denne politikindstilling, understøttes følgende indstillinger:
+
+Understøttet: Udvidelsen PKINIT-opdatering understøttes efter anmodning. Kerberos-klienter, der er godkendt af udvidelsen PKINIT-opdatering, får identitet med ny offentlig SID-nøgle.
+
+Krævet: Udvidelsen PKINIT-opdatering er påkrævet for vellykket godkendelse. Der opstår altid fejl i Kerberos-klienter, som ikke understøtter udvidelsen PKINIT-opdatering, når du bruger legitimationsoplysninger med offentlige nøgler.
+
+Hvis du deaktiverer eller ikke konfigurerer denne politikindstilling, vil domænecontrolleren aldrig tilbyde udvidelsen PKINIT-opdatering og accepterer gyldige godkendelsesanmodninger uden at kontrollere for opdatering. Brugerne får aldrig identiteten med ny offentlig SID-nøgle.
+</string>
+      <string id="NoPKINITFreshness">Deaktiveret</string>
+      <string id="SupportPKINITFreshness">Understøttet</string>
+      <string id="RequirePKINITFreshness">Obligatorisk</string>
+      <string id="PKINITHashAlgorithmConfiguration">Konfigurer hashalgoritmer til certifikat login</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Denne politikindstilling styrer hash- eller kontrolsumalgoritmer, der bruges af Kerberos-klienten, når der udføres certifikatgodkendelse.
+
+Hvis du aktiverer denne politik, kan du konfigurere en af fire tilstande for hver algoritme:
+
+- “ Standard ” angiver algoritmen til den anbefalede tilstand.
+
+- " Understøttet" aktiverer brugen af algoritmen. Aktivering af algoritmer, der er deaktiveret som standard, kan reducere din sikkerhed.
+
+- " Overvåget" aktiverer brugen af algoritmen og rapporterer en hændelse (id 309), hver gang den bruges. Denne tilstand er beregnet til at bekræfte, at algoritmen ikke bruges og kan deaktiveres sikkert.
+
+- " Understøttes ikke" deaktiverer brugen af algoritmen. Denne tilstand er beregnet til algoritmer, der anses for at være usikre.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politik, antager hver algoritme "Standard"-tilstanden.
+Du kan finde flere oplysninger om de hash- og kontrolsumalgoritmer, der understøttes af Windows Kerberos-klienten og deres standardtilstande, på https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Hændelser, der genereres af denne konfiguration: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Standard</string>
+      <string id="PKINITHashAlgorithm_Supported">Understøttet</string>
+      <string id="PKINITHashAlgorithm_Audited">Overvågede</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Ikke understøttet</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Tilstand:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Skove, der skal søges i</label>
+        </textBox>
+        <text>Syntaks:</text>
+        <text>Angiv listen over skove, der skal søges i, når denne politik er aktiveret.</text>
+        <text>Brug navngivningsformatet Fuldt domænenavn.</text>
+        <text>Adskil flere søgestrenge med et semikolon ";".</text>
+        <text>Detaljer:</text>
+        <text>Det er ikke nødvendigt at angive den aktuelle skov på listen, fordi søgerækkefølgen for skoven bruger det globale katalog først, før der søges i den angivne rækkefølge.</text>
+        <text>Du behøver ikke at angive alle skovens domæner separat.</text>
+        <text>Hvis der er angivet en skov, der er tillid til, søges der i alle domæner i denne skov.</text>
+        <text>Du opnår det bedste resultat ved at angive skovene i den rækkefølge, hvori de med størst sandsynlighed efterfølger hinanden.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Indstillinger for erklæringer, sammensat godkendelse til dynamisk adgangskontrol og Kerberos-armering:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Tærskel for billetstørrelse</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">Indstillinger for udvidelsen PKINIT-opdatering:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

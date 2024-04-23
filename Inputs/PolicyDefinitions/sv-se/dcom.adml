@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ange visningsnamn här</displayName>
+  <description>ange beskrivning här</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">DCOM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Tillåt lokala undantag från säkerhetskontroll vid aktivering</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Används för att ge lokala administratörer behörighet att lägga till poster i listan Definiera undantag från säkerhetskontroll vid aktivering.
+
+Om du aktiverar den här principinställningen, och DCOM inte hittar någon uttrycklig post för ett DCOM-serverprogram-ID (appid) i principen Definiera undantag från säkerhetskontroll vid aktivering (om den är aktiverad), söker DCOM efter en post i motsvarande lokala lista.
+
+Om du däremot inaktiverar den, söker inte DCOM i den lokala listan över DCOM-program som ska undantas från säkerhetskontroll vid aktivering.
+
+Om inställningen inte konfigureras kommer DCOM bara att söka i den lokala listan över undantag om principen Definiera undantag från säkerhetskontroll vid aktivering inte är konfigurerad.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Definiera undantag från säkerhetskontroll vid aktivering</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Används för att se och ändra en lista över DCOM-serverprogram-ID (appid) som undantas från säkerhetskontroll vid aktivering. DCOM använder två listor, den ena konfigureras via den här grupprincipinställningen och den andra genom åtgärder som lokala administratörer vidtar. Den andra listan ignoreras om den här principinställningen har konfigurerats, om inte principen Tillåt lokala undantag från säkerhetskontroll vid aktivering har aktiverats.
+
+Program-ID för DCOM-servrar som läggs till i den här principen måste anges i standardformat. Exempel: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}. Om du anger ett ID som inte finns eller som är felaktigt formaterat läggs den felaktiga posten till i listan utan att felet kontrolleras.
+
+Om du aktiverar den här principinställningen kan du se och ändra listan över grupprincipdefinierade DCOM-servrar som ska undantas från säkerhetskontroll när de aktiveras. Om du lägger till ett program-ID i listan och ger posten värdet 1, kommer ingen säkerhetskontroll att göras när komponenten aktiveras. Om du lägger till ett program-ID i listan och ger posten värdet 0, kommer säkerhetskontroll alltid att göras när DCOM-servern aktiveras oavsett de lokala inställningarna.
+
+Om du inaktiverar den här principinställningen raderas listan över undantagna program, som definierats med hjälp av grupprincipen, och endast undantag som anges av lokala administratörer används.
+
+Om du inte konfigurerar den här principinställningen används den undantagslista som anges av lokala administratörer.
+
+Anmärkningar:
+
+Säkerhetskontrollen vid aktivering sker efter att DCOM-serverprocessen har startats, men innan en objektaktiveringsbegäran skickas till serverns process. Åtkomstkontrollen sker mot DCOM-serverns anpassade startsäkerhetsbeskrivare, om en sådan finns, och i annat fall mot de konfigurerade standardvärdena.
+
+Om DCOM-serverns anpassade startbehörigheter innehåller poster som uttryckligen nekar åtkomst kan objektaktiveringen nu misslyckas även om aktiveringen tidigare lyckades för de användare som påverkas av dessa poster. I sådana fall bör du konfigurera om DCOM-serverns startbehörighet så att rätt säkerhetsinställningar används. Den här principinställningen kan dock användas kortsiktigt för att underlätta programkompatibiliteten.
+
+DCOM-servrar som läggs till i listan över undantag, undantas endast om deras anpassade startbehörigheter inte innehåller några poster som uttryckligen tillåter eller förhindrar "LocalLaunch", "RemoteLaunch", "LocalActivate" eller "RemoteActivate" för någon användare eller grupp. Notera även att undantag för DCOM-serverprogram-ID som läggs till i listan gäller för både 32-bitars och 64-bitars versioner av servern om båda finns.</string>
+      <string id="DCOMAppCompatPolicies">Inställningar för programkompatibilitet</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Ange DCOM-serverprogram-ID tillsammans med ett av åtgärdsvärdena nedan.</text>
+        <text>Program-ID måste anges inom klammerparenteser.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Lägg till eller ta bort DCOM-servrar från listan över undantag: </listBox>
+        <text> </text>
+        <text>Värden:</text>
+        <text>0 = Det program-ID som anges undantas inte från säkerhetskontroll vid aktivering</text>
+        <text>1 = Det program-ID som anges undantas från säkerhetskontroll vid aktivering</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

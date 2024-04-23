@@ -1,0 +1,157 @@
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Isolamento rete  </displayName>
+  <description>Configura le opzioni di Isolamento rete per le app  </description>
+  <resources>
+    <stringTable>
+      	<string id="WF_Isolation">Isolamento rete</string>
+		
+
+<!--Define server addresses that proxy to the Internet -->	
+	<string id="WF_NetIsolation_Domain_Proxies">Server proxy Internet per app</string>  
+	<string id="WF_NetIsolation_Domain_Proxies_Help">  Questa impostazione non si applica alle app desktop.
+	
+Un elenco separato da punto e virgola di indirizzi IP di server proxy Internet. Isolamento rete Windows categorizza questi indirizzi come Internet e li rende accessibili alle app che dispongono di capacità client o client/server Internet.
+
+Se si abilita questa impostazione dei criteri, le applicazioni sulle reti di proxy potranno accedere a Internet senza basarsi sulla funzionalità Rete privata. Nella maggior parte delle situazioni, tuttavia, Isolamento rete Windows sarà in grado di rilevare correttamente i proxy. Per impostazione predefinita, tutti i proxy configurati con questa impostazione vengono uniti ai proxy rilevati automaticamente. Per rendere questa configurazione del criterio l'unico elenco di proxy consentiti, abilitare l'impostazione "Le definizioni proxy sono autorevoli".
+
+Se si disabilita o non si configura questa impostazione dei criteri, le applicazioni utilizzeranno i proxy Internet rilevati automaticamente da Isolamento rete Windows.
+
+Esempio: [3efe:3022::1000];18.0.0.1;18.0.0.2 
+
+Per ulteriori informazioni, vedere: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string> 
+
+
+<!--Define server addresses that proxy to a private network (intranet) -->	
+	<string id="WF_NetIsolation_Intranet_Proxies">Server proxy Intranet per app</string>
+	<string id="WF_NetIsolation_Intranet_Proxies_Help">  Questa impostazione non si applica alle app desktop.
+	
+Un elenco separato da punto e virgola di indirizzi IP di server proxy Intranet. Isolamento rete Windows categorizza questi indirizzi come privati e li rende accessibili alle app che supportano la funzionalità Rete casa/lavoro.
+
+Se si abilita questa impostazione dei criteri, a un amministratore sarà consentito configurare un insieme di proxy per fornire accesso alle risorse Intranet.
+
+Se si disabilita o non si configura questa impostazione dei criteri, Isolamento rete Windows tenterà di rilevare i proxy e li configurerà come nodi Internet.
+  
+Questa impostazione NON dovrebbe essere utilizzata per configurare i proxy Internet.
+
+Esempio: [3efe:3022::1000];18.0.0.1;18.0.0.2
+
+Per ulteriori informazioni, vedere: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define subnet addresses-->	
+	<string id="WF_NetIsolation_PrivateSubnet">Intervalli della rete privata per app</string>
+	<string id="WF_NetIsolation_PrivateSubnet_Help"> Questa impostazione non si applica alle app desktop.
+				
+Un elenco separato da virgole di intervalli di indirizzi IP presenti sulla rete aziendale.
+
+Se si abilita questa impostazione dei criteri, verrà garantito l'accesso appropriato alla rete aziendale alle app che supportano la funzionalità Rete casa/lavoro. Questi indirizzi sono accessibili solo alle app e solo se le app includono la funzionalità Rete casa/lavoro dichiarata.
+
+Isolamento rete Windows tenta di rilevare automaticamente gli host di rete privati. Per impostazione predefinita, gli indirizzi configurati con questa impostazione dei criteri vengono uniti agli host dichiarati privati mediante il rilevamento automatico.
+
+Per garantire che questi siano gli unici indirizzi classificati come privati, abilitare l'impostazione dei criteri "Le definizioni subnet sono autorevoli".
+
+Se si disabilita o non si configura questa impostazione dei criteri, Isolamento rete Windows tenterà di rilevare automaticamente gli host di rete privati.
+
+Esempio: 3efe:1092::/96,18.1.1.1/10 
+
+Per ulteriori informazioni, vedere: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Proxy definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Proxy">Le definizioni proxy sono autorevoli</string>
+	<string id="WF_NetIsolation_Authoritative_Proxy_Help"> Questa impostazione non si applica alle app desktop.
+				
+Disattiva il rilevamento automatico di proxy di Isolamento rete Windows nell'ambiente del dominio aziendale.
+
+Se si abilita questa impostazione dei criteri, verrà disattivato il rilevamento automatico di proxy nell'ambiente del dominio aziendale. Solo i proxy configurati con Criteri di gruppo sono autorevoli. Ciò si applica sia ai proxy Internet che a quelli Intranet.
+
+Se si disabilita o non si configura questa impostazione dei criteri, Isolamento rete Windows tenterà di rilevare automaticamente gli indirizzi dei server proxy.  
+
+Per ulteriori informazioni, vedere: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Subnet definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Subnet">Le definizioni subnet sono autorevoli</string>
+	<string id="WF_NetIsolation_Authoritative_Subnet_Help"> Questa impostazione non si applica alle app desktop.
+				
+Disattiva il rilevamento automatico di host di reti privati di Isolamento rete Windows nell'ambiente del dominio aziendale.
+
+Se si abilita questa impostazione dei criteri, verrà disattivato il rilevamento automatico di host di rete privati nell'ambiente del dominio aziendale. Verranno classificati come privati solo gli host di rete presenti negli intervalli di indirizzi configurati mediante Criteri di gruppo.
+
+Se si disabilita o non si configura questa impostazione dei criteri, Isolamento rete Windows tenterà di rilevare automaticamente gli host di rete privati nell'ambiente del dominio aziendale. 
+				
+Per ulteriori informazioni, vedere: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+
+<!--Define cloud resources-->
+  <string id="WF_NetIsolation_EnterpriseCloudResources">Domini di risorse aziendali ospitati nel cloud</string>
+  <string id="WF_NetIsolation_EnterpriseCloudResources_Help"> Questa impostazione non si applica alle app desktop.
+
+Elenco di risorse cloud di dominio delimitate da barre verticali. Ogni risorsa cloud può essere anche facoltativamente associata a un server proxy interno usando una virgola finale seguita dall'indirizzo del proxy.
+
+Contiene un elenco dei domini di risorse aziendali ospitate nel cloud. Le connessioni a queste risorse sono considerate connessioni alle reti aziendali.
+
+Se un proxy viene associato a una risorsa cloud, il traffico verso la risorsa cloud verrà instradato attraverso la rete aziendale tramite il server proxy specificato (sulla porta 80). Un server proxy usato a questo scopo deve essere anche configurato con i server proxy Intranet per i criteri relativi alle app.
+
+Esempio: [risorsacloud]|[risorsacloud]|[risorsacloud],[proxy]|[risorsacloud]|[risorsacloud],[proxy]|
+
+Per altre informazioni, vedi: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define neutral resources-->
+    <string id="WF_NetIsolation_NeutralResources">Domini categorizzati sia come aziendali che come personali</string>
+    <string id="WF_NetIsolation_NeutralResources_Help"> Questa impostazione non si applica alle app desktop.
+
+Elenco delimitato da virgole di nomi di dominio che possono essere usati sia come risorsa aziendale che come risorsa personale.
+
+Per altre informazioni, vedi: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+    </stringTable>
+ 
+ <!--Start of Presentation Table-->	
+ 
+ <presentationTable>
+
+	<presentation id="WF_NetIsolation_Domain_Proxies">
+        <textBox refId="WF_NetIsolation_Domain_ProxiesBox">
+          <label>Proxy di dominio  </label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_Intranet_Proxies">
+        <textBox refId="WF_NetIsolation_Intranet_ProxiesBox">
+          <label>Digitare l'indirizzo IP di un server proxy per la rete Intranet</label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_PrivateSubnet">
+        <textBox refId="WF_NetIsolation_PrivateSubnetBox">
+          <label>Subnet private  </label>
+        </textBox>
+      </presentation>
+
+  <presentation id="WF_NetIsolation_Authoritative_Proxies">
+      </presentation>
+	
+	<presentation id="WF_NetIsolation_Authoritative_Subnets">
+      </presentation>
+
+   <presentation id="WF_NetIsolation_EnterpriseCloudResources">
+     <textBox refId="WF_NetIsolation_EnterpriseCloudResourcesBox">
+       <label>Risorse cloud aziendali </label>
+     </textBox>
+   </presentation>
+
+   <presentation id="WF_NetIsolation_NeutralResources">
+     <textBox refId="WF_NetIsolation_NeutralResourcesBox">
+       <label>Risorse neutre </label>
+     </textBox>
+   </presentation>
+
+ </presentationTable>
+
+  </resources>
+</policyDefinitionResources>

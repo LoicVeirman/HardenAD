@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Instalační služba ovládacích prvků ActiveX</displayName>
+  <description>Instaluje ovládací prvky ActiveX ze schválených instalačních webů</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">Instalační služba ovládacích prvků ActiveX</string>
+      <string id="AxISURLZonePolicies">Vytvořit zásady instalace ovládacích prvků ActiveX pro weby v zóně důvěryhodných serverů</string>        
+      <string id="AxISURLZonePolicies_explain">Toto nastavení zásad řídí instalaci ovládacích prvků ActiveX pro weby v zóně důvěryhodných serverů. 
+
+Pokud toto nastavení zásad povolíte, budou se ovládací prvky ActiveX instalovat podle nastavení definovaných tímto nastavením zásad. 
+      
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, zobrazí se před instalací ovládacího prvku ActiveX dotaz. 
+
+Pokud důvěryhodný web používá protokol HTTPS, může toto nastavení zásad také určovat způsob, jakým Instalační služba ovládacích prvků ActiveX reaguje na chyby certifikátů. Ve výchozím nastavení musí všechna připojení HTTPS poskytovat certifikát serveru, který předá všechna kritéria ověřování. Pokud jste si vědomi chyby certifikátu důvěryhodného webu, ale chcete ho přesto považovat za důvěryhodný, můžete vybrat chyby certifikátu, které chcete ignorovat. 
+    
+Poznámka: Toto nastavení zásad platí pro všechny weby v zónách důvěryhodných serverů.
+
+</string>
+      <string id="TrustedZoneDisabled">Neinstalovat</string>
+      <string id="TrustedZonePrompt">Zobrazit uživateli dotaz</string>
+      <string id="TrustedZoneSilentInstall">Nainstalovat bezobslužně</string>
+      <string id="ApprovedActiveXInstallSites">Schválené weby pro instalaci ovládacích prvků ActiveX</string>
+      <string id="ApprovedActiveXInstallSites_explain">Toto nastavení zásad určuje, které instalační weby ovládacích prvků ActiveX mohou standardní uživatelé ve vaší organizaci využít k instalaci ovládacích prvků ActiveX do svých počítačů. Pokud je toto nastavení povoleno, může správce vytvořit seznam schválených instalačních webů ovládacích prvků ActiveX zadaných pomocí adresy URL hostitele. 
+
+Pokud toto nastavení povolíte, může správce vytvořit seznam schválených instalačních webů ovládacích prvků ActiveX zadaných pomocí adresy URL hostitele. 
+      
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, zobrazí se před instalací ovládacího prvku ActiveX výzva k zadání pověření správce. 
+
+Poznámka: Při zadávání adres URL hostitelů nelze používat zástupné znaky.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Zásady instalace pro ovládací prvek ActiveX podepsaný důvěryhodným vydavatelem</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Zásady instalace pro podepsaný ovládací prvek ActiveX</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Zásady instalace pro nepodepsaný ovládací prvek ActiveX</dropdownList>
+        <text>Povolit připojení k důvěryhodným webům s následujícími chybami certifikátu serveru</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Neznámá certifikační autorita (CA)</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Neplatný název certifikátu (CN)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Datum ověření certifikátu s vypršenou platností</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Použití nesprávného certifikátu</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">Adresy URL hostitele</listBox>
+        <text>Obsahuje zásadu pro adresu URL hostitele.</text>
+        <text>Například  </text>
+        <text>Název hostitele: http://activex.microsoft.com</text>
+        <text>Hodnota: 2,1,0,0</text>
+        <text>Hodnotu pro adresu URL každého hostitele představují čtyři údaje ve formátu CSV.</text>
+        <text>Představují je hodnoty TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy</text>
+        <text>Tři hodnoty v této zásadě úplně vlevo řídí instalaci ovládacích prvků ActiveX na základě jejich podpisu.</text>
+        <text>Mohou být tyto</text>
+        <text>0: ovládací prvek ActiveX nebude nainstalován</text>
+        <text>1: Vyzvání uživatele k instalaci ovládacího prvku ActiveX</text>
+        <text>2: Ovládací prvek ActiveX bude nainstalován bez upozornění</text>
+        <text>Ovládací prvky podepsané certifikáty v úložišti důvěryhodných vydavatelů budou nainstalovány bezobslužně. </text>
+        <text>Instalace bez upozornění nepodepsaných ovládacích prvků není podporována</text>
+        <text></text>
+        <text>Hodnota uvedená v zásadě úplně vpravo je bitově maskovaný příznak </text>
+        <text>Tyto příznaky se používají kvůli ignorování chyb certifikátů https.</text>
+        <text>Výchozí hodnota je 0.</text>
+        <text>Což znamená, že připojení https musí projít veškerými bezpečnostními kontrolami</text>
+        <text></text>
+        <text>Použijte kombinaci následujících hodnot</text>
+        <text>pro ignorování chyb neplatného certifikátu</text>
+        <text>0x00000100  Ignorovat neznámý CA</text>
+        <text>0x00001000  Ignorovat neplatný CN</text>
+        <text>0x00002000  Ignorovat neplatné datum certifikátu</text>
+        <text>0x00000200  Ignorovat chybné používání certifikátu</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0">
+  <displayName>전송 최적화 GP</displayName>
+  <description>이 파일은 전송 최적화 GP 설정을 설명합니다.</description>
+  <resources>
+    <stringTable>
+      <string id="DeliveryOptimizationCat">전송 최적화</string>
+      <string id="DownloadMode">다운로드 모드</string>
+      <string id="DownloadMode_Help">Windows 업데이트, 앱 및 앱 업데이트의 다운로드에서 배달 최적화가 사용할 수 있는 다운로드 방법을 지정합니다.
+
+지원되는 값은 다음과 같습니다.
+
+0=HTTP만, 피어링 없음.
+
+1=동일한 NAT 뒤의 피어링과 혼합된 HTTP.
+
+2=개인 그룹에서의 피어링과 혼합된 HTTP. 피어링은 동일한 Active Directory 사이트(있는 경우) 또는 기본적으로 동일한 도메인의 디바이스에서 발생합니다. 이 옵션을 선택하면 피어링이 NAT를 벗어납니다. 사용자 지정 그룹을 만들려면 모드 2와 함께 그룹 ID를 사용하세요.
+
+3=인터넷 피어링과 혼합된 HTTP.
+
+99=피어링이 없는 단순 다운로드 모드. 배달 최적화가 HTTP만 사용하여 다운로드하고 배달 최적화 클라우드 서비스에 연결하려고 시도하지 않습니다.
+
+100=우회 모드. Windows 10: 배달 최적화를 사용하지 말고 대신 BITS를 사용하세요. Windows 11: 사용되지 않음, 대신 단순 모드를 사용하세요.</string>
+      <string id="DownloadMode_CdnOnly">HTTP만(0)</string>
+      <string id="DownloadMode_Lan">LAN(1)</string>
+      <string id="DownloadMode_Group">그룹(2)</string>
+      <string id="DownloadMode_Internet">인터넷(3)</string>
+      <string id="DownloadMode_Simple">단순(99)</string>
+      <string id="DownloadMode_Bypass">바이패스(100)</string>
+      <string id="GroupId">그룹 ID</string>
+      <string id="GroupId_Help">그룹 ID는 GUID로 설정되어야 합니다. 이 정책은 장치가 속한 임의 그룹 ID를 지정합니다.
+
+서로 다른 도메인에 있거나 동일한 LAN에 있지 않은 분기를 위해 로컬 네트워크 피어링을 위한 단일 그룹을 만들어야 하는 경우 이 정책을 사용하세요.
+
+참고: 이는 최선의 최적화이지 완전한 것이 아니므로 ID 인증에 사용해서는 안 됩니다.</string>
+      <string id="MaxCacheSize">최대 캐시 크기(백분율)</string>
+      <string id="MaxCacheSize_Help">전송 최적화에서 사용 가능한 디스크 크기의 백분율(1-100)로 사용하는 최대 캐시 크기를 지정합니다.</string>
+      <string id="AbsoluteMaxCacheSize">절대 최대 캐시 크기(GB)</string>
+      <string id="AbsoluteMaxCacheSize_Help">전송 최적화 캐시의 최대 크기(GB)를 지정합니다.
+
+이 정책은 DOMaxCacheSize 정책을 재정의합니다.
+
+값 0(영)은 “제한 없는” 캐시를 의미합니다. 전송 최적화는 디바이스의 디스크 공간이 부족할 때 캐시를 지웁니다.</string>
+      <string id="MaxCacheAge">최대 캐시 보관 기간(초)</string>
+      <string id="MaxCacheAge_Help">각 파일이 다운로드된 후 전송 최적화 캐시에 저장되는 최대 시간(초)을 지정합니다.
+
+값 0(영)은 "제한 없음"을 의미합니다. 전송 최적화는 캐시 크기가 초과되지 않는 한 파일을 캐시에 오래 저장하고 다른 디바이스에 업로드할 수 있도록 합니다.</string>
+      <string id="MonthlyUploadDataCap">월간 업로드 데이터 상한(GB)</string>
+      <string id="MonthlyUploadDataCap_Help">매월 인터넷 피어에 업로드할 수 있도록 전송 최적화에 허용되는 최대 총 바이트(GB)를 지정합니다.
+
+값 0(영)은 "제한 없음"을 의미합니다. 0이 설정된 경우 월간 업로드 제한이 적용되지 않습니다.</string>
+      <string id="MinBackgroundQos">최소 백그라운드 QoS(KB/s)</string>
+      <string id="MinBackgroundQos_Help">백그라운드 다운로드에 대한 최소 다운로드 QoS(서비스 또는 속도 품질)를 지정합니다(KB/초).
+
+이 정책은 피어 및 HTTP 원본의 혼합에 영향을 줍니다. 전송 최적화는 지정된 최소 QoS 값을 달성하도록 HTTP 원본에서의 다운로드를 보완합니다.</string>
+      <string id="ModifyCacheDrive">캐시 드라이브 수정</string>
+      <string id="ModifyCacheDrive_Help">전송 최적화가 캐시에 사용할 드라이브를 지정합니다.
+
+기본적으로 %SystemDrive%가 캐시를 저장하는 데 사용됩니다. 환경 변수, 드라이브 문자 또는 전체 경로를 사용하여 드라이브 위치를 지정할 수 있습니다.</string>
+      <string id="MaxBackgroundDownloadBandwidth">최대 백그라운드 다운로드 대역폭(KB/s)</string>
+      <string id="MaxBackgroundDownloadBandwidth_Help">장치가 전송 최적화를 사용하는 모든 동시 다운로드 작업에서 사용할 수 있는 최대 백그라운드 다운로드 대역폭을 KB/초 단위로 지정합니다.
+
+기본값 0(영)은 전송 최적화가 다운로드에 사용 가능한 대역폭을 사용하기 위해 동적으로 조정됨을 의미합니다.
+      </string>
+      <string id="MaxForegroundDownloadBandwidth">최대 포그라운드 다운로드 대역폭(KB/s)</string>
+      <string id="MaxForegroundDownloadBandwidth_Help">장치가 전송 최적화를 사용하는 모든 동시 다운로드 작업에서 사용할 수 있는 최대 포그라운드 다운로드 대역폭을 KB/초 단위로 지정합니다.
+
+기본값 0(영)은 전송 최적화가 다운로드에 사용 가능한 대역폭을 사용하기 위해 동적으로 조정됨을 의미합니다.
+      </string>
+      <string id="PercentageMaxBackgroundBandwidth">최대 백그라운드 다운로드 대역폭(백분율)</string>
+      <string id="PercentageMaxBackgroundBandwidth_Help">전송 최적화가 모든 동시 다운로드 작업에서 사용하는 최대 백그라운드 다운로드 대역폭을 사용 가능한 다운로드 대역폭의 백분율로 지정합니다.
+
+기본값 0(영)은 전송 최적화가 다운로드에 사용 가능한 대역폭을 사용하기 위해 동적으로 조정됨을 의미합니다.</string>
+      <string id="PercentageMaxForegroundBandwidth">최대 포그라운드 다운로드 대역폭(백분율)</string>
+      <string id="PercentageMaxForegroundBandwidth_Help">전송 최적화가 모든 동시 다운로드 작업에서 사용하는 최대 포그라운드 다운로드 대역폭을 사용 가능한 다운로드 대역폭의 백분율로 지정합니다.
+
+기본값 0(영)은 전송 최적화가 다운로드에 사용 가능한 대역폭을 사용하기 위해 동적으로 조정됨을 의미합니다.</string>
+      <string id="MinFileSizeToCache">최소 피어 캐싱 콘텐츠 파일 크기(MB)</string>
+      <string id="MinFileSizeToCache_Help">피어 캐싱을 사용할 수 있는 최소 콘텐츠 파일 크기(MB)를 지정합니다.
+
+권장 값은 1MB~100,000MB입니다.</string>
+      <string id="AllowVPNPeerCaching">디바이스가 VPN을 통해 연결하는 동안 피어 캐싱 사용</string>
+      <string id="AllowVPNPeerCaching_Help">VPN을 통해 도메인 네트워크에 연결되어 있는 동안 장치가 피어 캐싱에 참여할 수 있도록 허용하려면 "true"로 지정합니다.
+
+이렇게 하면 장치가 VPN 또는 회사 도메인 네트워크에 있는 다른 도메인 네트워크 장치에서 다운로드하거나 업로드할 수 있습니다.</string>
+      <string id="MinRAMAllowedToPeer">피어 캐싱을 사용하는 데 필요한 최소 RAM 용량(포함)(GB)</string>
+      <string id="MinRAMAllowedToPeer_Help">피어 캐싱을 사용하는 데 필요한 최소 RAM 크기(GB)를 지정합니다.
+
+예를 들어 설정된 최소값이 1GB이면 사용 가능한 RAM이 1GB 이상인 장치에서 피어 캐싱을 사용할 수 있습니다.
+
+권장 값은 1GB~4GB입니다.</string>
+      <string id="MinDiskSizeAllowedToPeer">피어 캐싱을 사용하도록 허용되는 최소 디스크 크기(GB)</string>
+      <string id="MinDiskSizeAllowedToPeer_Help">디바이스가 피어 캐싱을 사용하는 데 필요한 최소 디스크 크기(GB 용량)를 지정합니다. 클라우드 서비스에서 설정한 기본값이 사용됩니다.
+
+권장 값은 64GB~256GB입니다.
+
+참고: DOModifyCacheDrive 정책을 설정하면 이 정책에 지정된 새 작업 디렉터리의 디스크 크기 확인이 수행됩니다.</string>
+      <string id="MinBatteryPercentageAllowedToUpload">배터리 전원을 사용하는 동안 설정한 배터리 잔량(백분율) 이하에서 업로드 허용</string>
+      <string id="MinBatteryPercentageAllowedToUpload_Help">장치가 DC 전원(배터리)을 사용하는 동안 LAN과 그룹 피어로 데이터를 업로드하도록 허용하려면 1~100(%) 사이의 값을 지정하세요.
+
+배터리 전원을 사용하는 동안 업로드를 허용하는 경우 권장되는 설정 값은 40(40%)입니다. 장치는 이 정책과 상관없이 배터리 전원을 사용하는 동안 피어로부터 다운로드할 수 있습니다.
+
+값이 0이면 "제한 없음"으로, 클라우드 서비스에서 설정한 기본값이 사용됩니다.</string>
+      <string id="CacheHost">캐시 서버 호스트 이름</string>
+      <string id="CacheHost_Help">이 정책을 사용하면 클라이언트에서 사용할 하나 이상의 Microsoft 연결된 캐시 서버를 설정할 수 있습니다.
+
+하나 이상의 값을 FQDN(정규화된 도메인 이름) 또는 IP 주소로 추가할 수 있습니다. 여러 값을 추가하려면 각 FQDN 또는 IP 주소를 쉼표로 구분하십시오.
+      </string>
+      <string id="CacheHostSource">캐시 서버 호스트 이름 원본</string>
+      <string id="CacheHostSource_Help">이 정책을 사용하면 클라이언트가 Microsoft 연결된 캐시 서버를 동적으로 검색할 수 있는 방법을 지정할 수 있습니다.
+
+사용 가능한 옵션은 다음과 같습니다.
+
+0 = DNS-SD를 사용하지 않습니다.
+
+1 = DHCP 옵션 235.
+
+2 = DHCP 옵션 235 강제 적용
+
+이 정책이 구성되지 않은 경우 클라이언트는 DNS-SD를 사용하여 캐시 서버를 자동으로 찾으려고 시도합니다. 0으로 설정하면 클라이언트는 DNS-SD를 사용하여 캐시 서버를 자동으로 찾지 않습니다. 1 또는 2로 설정하면 클라이언트는 DHCP 옵션 ID 235를 쿼리하고 반환된 값을 캐시 서버 호스트 이름으로 사용합니다. 옵션 2는 구성된 경우 캐시 서버 호스트 이름 정책을 무시합니다.</string>
+      <string id="CacheHostSource_DHCP">DHCP 옵션 235</string>
+      <string id="CacheHostSource_DHCP_Force">DHCP 옵션 235 강제 적용</string>
+      <string id="GroupIdSource">그룹 ID의 원본을 선택합니다.</string>
+      <string id="GroupIdSource_Help">특정 원본에 대한 피어 선택을 제한하려면 이 정책을 설정합니다.
+
+사용 가능한 옵션:
+
+1 = AD 사이트.
+
+2 = 인증된 도메인 SID.
+
+3 = DHCP 옵션 ID.
+
+4 = DNS 접미사.
+
+5 = AAD 테넌트 ID.
+
+설정하면 선택한 소스에서 그룹 ID가 자동으로 할당됩니다. GroupID 정책도 설정된 경우 이 정책은 무시됩니다.
+
+이 정책에 설정된 옵션 그룹 (2) 다운로드 모드에만 적용됩니다. 그룹 (2)가 다운로드 모드로 설정되지 않은 경우 이 정책이 무시됩니다.
+
+3인 DHCP 옵션 ID의 경우 클라이언트는 DHCP 옵션 ID 234를 쿼리하고 반환된 GUID 값을 그룹 ID로 사용합니다.</string>
+      <string id="GroupIdSource_Unset">설정 해제 (0)</string>
+      <string id="GroupIdSource_AD">AD 사이트 (1)</string>
+      <string id="GroupIdSource_SID">인증된 도메인 SID (2)</string>
+      <string id="GroupIdSource_DHCP">DHCP 옵션 ID (3)</string>
+      <string id="GroupIdSource_DNS">DNS 접미사 (4)</string>
+      <string id="GroupIdSource_AAD">AAD 테넌트 ID (5)</string>
+      <string id="DelayBackgroundDownloadFromHttp">HTTP에서 백그라운드 다운로드 지연(초)</string>
+      <string id="DelayBackgroundDownloadFromHttp_Help">이 정책을 사용하면 P2P를 사용할 수 있는 백그라운드 다운로드에서 HTTP 소스 사용을 지연시킬 수 있습니다.
+
+최대 지연 시간에 도달하면 전체 페이로드를 다운로드하거나 피어에서 다운로드할 수 없는 바이트를 보완하는 HTTP를 사용하여 다운로드가 재개됩니다.
+
+피어 소스를 대기하는 다운로드는 최종 사용자에게는 중단된 것으로 나타납니다.
+
+권장 값은 1시간(3600)입니다.</string>
+      <string id="DelayForegroundDownloadFromHttp">HTTP에서 포그라운드 다운로드 지연(초)</string>
+      <string id="DelayForegroundDownloadFromHttp_Help">이 정책을 사용하면 P2P를 사용할 수 있는 포그라운드(대화형) 다운로드에서 HTTP 소스 사용을 지연시킬 수 있습니다.
+
+최대 지연 시간에 도달하면 전체 페이로드를 다운로드하거나 피어에서 다운로드할 수 없는 바이트를 보완하는 HTTP를 사용하여 다운로드가 재개됩니다.
+
+피어 소스를 대기하는 다운로드는 최종 사용자에게는 중단된 것으로 나타납니다.
+
+권장 값은 1분(60)입니다.</string>
+      <string id="DelayCacheServerFallbackBackground">백그라운드 다운로드 캐시 서버 대체 지연(초)</string>
+      <string id="DelayCacheServerFallbackBackground_Help">이 정책을 설정하면 백그라운드 콘텐츠 다운로드를 위해 캐시 서버에서 HTTP 원본으로의 대체를 X초 지연합니다.
+
+참고: http 백그라운드 다운로드를 지연하도록 정책을 설정하면 먼저 피어로부터의 다운로드가 허용될 수 있도록 이 정책이 먼저 적용됩니다.</string>
+      <string id="DelayCacheServerFallbackForeground">포그라운드 다운로드 캐시 서버 대체 지연(초)</string>
+      <string id="DelayCacheServerFallbackForeground_Help">이 정책을 설정하면 포그라운드 콘텐츠 다운로드를 위해 캐시 서버에서 HTTP 원본으로의 대체를 X초 지연합니다.
+
+참고: http 포그라운드 다운로드를 지연하도록 정책을 설정하면 먼저 피어로부터의 다운로드가 허용될 수 있도록 이 정책이 먼저 적용됩니다.</string>
+      <string id="RestrictPeerSelectionBy">피어 선택을 제한할 방법 선택</string>
+      <string id="RestrictPeerSelectionBy_Help">선택한 옵션을 통해 피어 선택을 제한 하도록이 정책을 설정 합니다.
+
+사용 가능한 옵션은 다음과 같습니다.
+0 = NAT.
+1 = 서브넷 마스크입니다.
+2 = 로컬 검색 (DNS-SD).
+
+기본값이 0 (제한 없음)에서 1 (서브넷으로 제한) (으)로 변경 되었습니다.
+
+이러한 옵션은 다운로드 모드 LAN (1) 및 그룹 (2)에 모두 적용 됩니다.</string>
+      <string id="RestrictPeerSelectionBy_None">NAT</string>
+      <string id="RestrictPeerSelectionBy_Subnet">서브넷</string>
+      <string id="RestrictPeerSelectionBy_LinkLocal">로컬 검색</string>
+      <string id="SetHoursToLimitBackgroundDownloadBandwidth">백그라운드 다운로드 대역폭을 제한할 업무 시간 설정</string>
+      <string id="SetHoursToLimitBackgroundDownloadBandwidth_Help">모든 동시 다운로드 작업에서 전송 최적화가 업무 시간 동안 및 업무 시간 외에 사용하는 최대 백그라운드 다운로드 대역폭을 사용 가능한 다운로드 대역폭의 백분율로 지정합니다.</string>
+      <string id="SetHoursToLimitForegroundDownloadBandwidth">포그라운드 다운로드 대역폭을 제한할 업무 시간 설정</string>
+      <string id="SetHoursToLimitForegroundDownloadBandwidth_Help">모든 동시 다운로드 작업에서 전송 최적화가 업무 시간 동안 및 업무 시간 외에 사용하는 최대 포그라운드 다운로드 대역폭을 사용 가능한 다운로드 대역폭의 백분율로 지정합니다.</string>
+      <string id="Time1AM">오전 1시</string>
+      <string id="Time1PM">오후 1시</string>
+      <string id="Time2AM">오전 2시</string>
+      <string id="Time2PM">오후 2시</string>
+      <string id="Time3AM">오전 3시</string>
+      <string id="Time3PM">오후 3시</string>
+      <string id="Time4AM">오전 4시</string>
+      <string id="Time4PM">오후 4시</string>
+      <string id="Time5AM">오전 5시</string>
+      <string id="Time5PM">오후 5시</string>
+      <string id="Time6AM">오전 6시</string>
+      <string id="Time6PM">오후 6시</string>
+      <string id="Time7AM">오전 7시</string>
+      <string id="Time7PM">오후 7시</string>
+      <string id="Time8AM">오전 8시</string>
+      <string id="Time8PM">오후 8시</string>
+      <string id="Time9AM">오전 9시</string>
+      <string id="Time9PM">오후 9시</string>
+      <string id="Time10AM">오전 10시</string>
+      <string id="Time10PM">오후 10시</string>
+      <string id="Time11AM">오전 11시</string>
+      <string id="Time11PM">오후 11시</string>
+      <string id="Time12AM">오전 12시</string>
+      <string id="Time12PM">오후 12시</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DownloadMode">
+        <dropdownList defaultItem="1" noSort="true" refId="DownloadMode">다운로드 모드:</dropdownList>
+      </presentation>
+      <presentation id="GroupId">
+        <textBox refId="GroupId">
+          <label>그룹 ID:</label>
+        </textBox>
+      </presentation>
+      <presentation id="MaxCacheSize">
+        <decimalTextBox defaultValue="20" refId="MaxCacheSize">최대 캐시 크기(백분율):</decimalTextBox>
+        <text>기본값은 20%입니다.</text>
+      </presentation>
+      <presentation id="AbsoluteMaxCacheSize">
+        <decimalTextBox defaultValue="10" refId="AbsoluteMaxCacheSize">절대 최대 캐시 크기(GB):</decimalTextBox>
+        <text>기본값은 10GB입니다.</text>
+      </presentation>
+      <presentation id="MaxCacheAge">
+        <decimalTextBox defaultValue="604800" refId="MaxCacheAge">최대 캐시 보관 기간(초):</decimalTextBox>
+        <text>기본값은 7일입니다.</text>
+      </presentation>
+      <presentation id="MonthlyUploadDataCap">
+        <decimalTextBox defaultValue="5120" refId="MonthlyUploadDataCap">월간 업로드 데이터 상한(GB):</decimalTextBox>
+        <text>기본값은 5TB입니다.</text>
+      </presentation>
+      <presentation id="MinBackgroundQos">
+        <decimalTextBox defaultValue="20480" refId="MinBackgroundQos">최소 백그라운드 QoS(KB/s):</decimalTextBox>
+        <text>기본값은 20MB/s입니다.</text>
+      </presentation>
+      <presentation id="ModifyCacheDrive">
+        <textBox refId="ModifyCacheDrive">
+          <label>캐시 드라이브 수정:</label>
+        </textBox>
+      </presentation>
+      <presentation id="MaxBackgroundDownloadBandwidth">
+        <decimalTextBox defaultValue="0" refId="MaxBackgroundDownloadBandwidth">최대 백그라운드 다운로드 대역폭(KB/s):</decimalTextBox>
+        <text>기본값은 0(제한 없음)입니다.</text>
+      </presentation>
+      <presentation id="MaxForegroundDownloadBandwidth">
+        <decimalTextBox defaultValue="0" refId="MaxForegroundDownloadBandwidth">최대 포그라운드 다운로드 대역폭(KB/s):</decimalTextBox>
+        <text>기본값은 0(제한 없음)입니다.</text>
+      </presentation>
+      <presentation id="PercentageMaxBackgroundBandwidth">
+        <decimalTextBox defaultValue="0" refId="PercentageMaxBackgroundBandwidth">최대 백그라운드 다운로드 대역폭(백분율):</decimalTextBox>
+        <text>기본값은 0(제한 없음)입니다.</text>
+      </presentation>
+      <presentation id="PercentageMaxForegroundBandwidth">
+        <decimalTextBox defaultValue="0" refId="PercentageMaxForegroundBandwidth">최대 포그라운드 다운로드 대역폭(백분율):</decimalTextBox>
+        <text>기본값은 0(제한 없음)입니다.</text>
+      </presentation>
+      <presentation id="MinFileSizeToCache">
+        <decimalTextBox defaultValue="100" refId="MinFileSizeToCache">최소 피어 캐싱 콘텐츠 파일 크기(MB):</decimalTextBox>
+        <text>기본값은 100MB입니다.</text>
+      </presentation>
+      <presentation id="AllowVPNPeerCaching">
+        <checkBox defaultChecked="false" refId="AllowVPNPeerCaching">디바이스가 VPN을 통해 연결하는 동안 피어 캐싱 사용</checkBox>
+      </presentation>
+      <presentation id="MinRAMAllowedToPeer">
+        <decimalTextBox defaultValue="4" refId="MinRAMAllowedToPeer">피어 캐싱을 사용하는 데 필요한 최소 RAM 용량(포함)(GB):</decimalTextBox>
+        <text>기본값은 4GB입니다.</text>
+      </presentation>
+      <presentation id="MinDiskSizeAllowedToPeer">
+        <decimalTextBox defaultValue="32" refId="MinDiskSizeAllowedToPeer">피어 캐싱을 사용하도록 허용되는 최소 디스크 크기(GB):</decimalTextBox>
+        <text>기본값은 32GB입니다.</text>
+      </presentation>
+      <presentation id="MinBatteryPercentageAllowedToUpload">
+        <decimalTextBox defaultValue="0" refId="MinBatteryPercentageAllowedToUpload">최소 배터리 잔량(백분율):</decimalTextBox>
+        <text>기본값은 0(제한 없음)입니다.</text>
+      </presentation>
+      <presentation id="CacheHost">
+        <textBox refId="CacheHost">
+          <label>캐시 서버:</label>
+        </textBox>
+      </presentation>
+      <presentation id="CacheHostSource">
+        <dropdownList defaultItem="0" noSort="true" refId="CacheHostSource">캐시 서버 호스트 이름 원본:</dropdownList>
+      </presentation>
+      <presentation id="GroupIdSource">
+        <dropdownList defaultItem="0" noSort="true" refId="GroupIdSource">그룹 ID의 원본:</dropdownList>
+      </presentation>
+      <presentation id="DelayBackgroundDownloadFromHttp">
+        <decimalTextBox defaultValue="0" refId="DelayBackgroundDownloadFromHttp">HTTP에서 백그라운드 다운로드 지연(초):</decimalTextBox>
+        <text>기본값은 0(지연 없음)입니다.</text>
+      </presentation>
+      <presentation id="DelayForegroundDownloadFromHttp">
+        <decimalTextBox defaultValue="0" refId="DelayForegroundDownloadFromHttp">HTTP에서 포그라운드 다운로드 지연(초):</decimalTextBox>
+        <text>기본값은 0(지연 없음)입니다.</text>
+      </presentation>
+      <presentation id="DelayCacheServerFallbackBackground">
+        <decimalTextBox defaultValue="0" refId="DelayCacheServerFallbackBackground">백그라운드 다운로드 캐시 서버 대체 지연(초):</decimalTextBox>
+        <text>기본값은 0(지연 없음)입니다.</text>
+      </presentation>
+      <presentation id="DelayCacheServerFallbackForeground">
+        <decimalTextBox defaultValue="0" refId="DelayCacheServerFallbackForeground">포그라운드 다운로드 캐시 서버 대체 지연(초):</decimalTextBox>
+        <text>기본값은 0(지연 없음)입니다.</text>
+      </presentation>
+      <presentation id="RestrictPeerSelectionBy">
+        <dropdownList defaultItem="1" noSort="true" refId="RestrictPeerSelectionBy">피어 선택 제한 기준:</dropdownList>
+      </presentation>
+      <presentation id="SetHoursToLimitBackgroundDownloadBandwidth">
+        <text/>
+        <text>백그라운드 다운로드 대역폭을 제한할 업무 시간 설정:</text>
+        <dropdownList defaultItem="8" noSort="true" refId="SetHoursToLimitBackgroundDownloadBandwidthFrom">시작:</dropdownList>
+        <dropdownList defaultItem="17" noSort="true" refId="SetHoursToLimitBackgroundDownloadBandwidthTo">끝:</dropdownList>
+        <text/>
+        <text>업무 시간 동안 최대 배경 다운로드 대역폭(백분율):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitBackgroundDownloadBandwidthIn"/>
+        <text>기본값은 0(제한 없음)입니다.</text>
+        <text/>
+        <text>업무 시간 외 최대 배경 다운로드 대역폭(백분율):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitBackgroundDownloadBandwidthOut"/>
+        <text>기본값은 0(제한 없음)입니다.</text>
+      </presentation>
+      <presentation id="SetHoursToLimitForegroundDownloadBandwidth">
+        <text/>
+        <text>포그라운드 다운로드 대역폭을 제한할 업무 시간 설정:</text>
+        <dropdownList defaultItem="8" noSort="true" refId="SetHoursToLimitForegroundDownloadBandwidthFrom">시작:</dropdownList>
+        <dropdownList defaultItem="17" noSort="true" refId="SetHoursToLimitForegroundDownloadBandwidthTo">끝:</dropdownList>
+        <text/>
+        <text>업무 시간 동안 최대 포그라운드 다운로드 대역폭(백분율):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitForegroundDownloadBandwidthIn"/>
+        <text>기본값은 0(제한 없음)입니다.</text>
+        <text/>
+        <text>업무 시간 외 최대 포그라운드 다운로드 대역폭(백분율):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitForegroundDownloadBandwidthOut"/>
+        <text>기본값은 0(제한 없음)입니다.</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>在此輸入顯示名稱</displayName>
+  <description>在此輸入描述</description>
+  <resources>
+    <stringTable>
+      <string id="W32TIME_CONFIG_EXPLAIN">此原則設定可讓您為網域控制站 (包括 RODC) 的 Windows 時間服務 (W32time) 指定時鐘原則和一般值。
+
+如果啟用此原則設定，目標電腦上的 W32time 服務會使用此處提供的設定。否則，目標電腦上的服務會使用本機設定的設定值。
+
+如需個別參數、參數值組合以及旗標定義的詳細資訊，請參閱 https://go.microsoft.com/fwlink/?linkid=847809。
+
+        FrequencyCorrectRate
+此參數控制 W32time 會以多快的速率校正本機時鐘的頻率。值越小，校正幅度越大；值越大，校正幅度越小。預設值: 4 (純量值)。
+
+        HoldPeriod
+此參數指示用戶端電腦必須連續接收到多少個一致的時間取樣後，才能將後續的時間取樣評估為潛在高峰。預設值: 5
+
+        LargePhaseOffset
+如果時間取樣與用戶端電腦的本機時鐘相差超過 LargePhaseOffset，本機時鐘會被視為已經大幅偏移，或者換句話說達到高峰。預設值: 50,000,000 個 100 奈秒單位 (ns)，也就是 5 秒。
+
+        MaxAllowedPhaseOffset
+如果收到之回應的時間差異大於這個參數值，W32time 會立即將用戶端電腦的本機時鐘設為從網路時間通訊協定 (NTP) 伺服器接收到的精確時間。如果時間差異小於這個值，則會逐步校正用戶端電腦本機時鐘。預設值: 300 秒。
+
+        MaxNegPhaseCorrection
+如果收到的時間取樣指示已經過去的時間 (與用戶端電腦本機時鐘相較)，而且時間差大於 MaxNegPhaseCorrection 值，就會捨棄該時間取樣。預設值: 172,800 秒。
+
+        MaxPosPhaseCorrection
+如果收到的時間取樣指示未來的時間 (與用戶端電腦本機時鐘相較)，而且時間差大於 MaxPosPhaseCorrection 值，就會捨棄該時間取樣。預設值:172,800 秒。
+
+        PhaseCorrectRate
+此參數控制 W32time 會以多快的速度校正用戶端電腦本機時鐘差異，以符合從 NTP 伺服器收到的精確時間取樣。值越小，時鐘校正速度越快；值越大，時鐘校正速度越緩慢。預設值: 7 (純量值)。
+
+        PollAdjustFactor
+此參數控制 W32time 會以多快的速度變更輪詢間隔。當回應被視為精確時，輪詢間隔會自動加長。當回應被視為不精確時，輪詢間隔會自動縮短。預設值: 5 (純量值)。
+
+        SpikeWatchPeriod
+此參數指定當取樣的時間差大於 LargePhaseOffset 時要接收多長時間，才接受這些取樣為精確。將 SpikeWatchPeriod 與 HoldPeriod 搭配一起使用，有助於消除從對等傳回來的偶發性、不精確的時間取樣。預設值: 900 秒。
+
+        UpdateInterval
+此參數指定 W32time 在逐步校正時鐘時，於每次校正之間等候的時間長度。服務在進行逐步校正時，會對時鐘做些微的調整，然後等待這個時間長度後，再檢查是否需要另一次調整，直到校正完成為止。預設值: 100 個 1/100 秒單位，或者 1 秒。
+
+        一般參數:
+
+        AnnounceFlags
+此參數是位元遮罩值，用於控制如何透過 NetLogon 通告時間服務可用性。預設值: 十六進位 0x0a
+
+        EventLogFlags
+此參數控制可記錄到事件檢視器系統記錄檔的特殊事件。預設值: 0x02 十六進位位元遮罩。
+
+        LocalClockDispersion
+此參數表示 NTP 伺服器對要求時間取樣的用戶端所報告的最大錯誤秒數 (僅適用於 NTP 伺服器正在使用本機 CMOS 時鐘的時間時)。預設值: 10 秒。
+
+        MaxPollInterval
+此參數控制最大輪詢間隔，這會定義每次輪詢對等之間的最大時間長度。預設值: 10 以 2 為基底的對數，或者 1024 秒 (不可設定大於 15)。
+
+        MinPollInterval
+此參數控制最小輪詢間隔，這會定義每次輪詢對等之間的最小時間長度。預設值: 6 以 2 為基底的對數，或者 64 秒。
+
+        ClockHoldoverPeriod
+此參數表示系統時鐘名義上可以保留其精確度而不需要與時間來源同步的最大秒數。如果經過這段期間，而 W32time 未從其任何輸入提供者取得新取樣，W32time 會起始重新探索時間來源。預設值: 7800 秒。
+
+        RequireSecureTimeSyncRequests
+此參數控制 DC 是否回應使用舊驗證通訊協定的時間同步要求。如果啟用這個參數 (設定為 1) 不會回應使用這種通訊協定的要求。預設值: 0 布林值。
+
+        UtilizeSslTimeData
+此參數控制 W32time 是否將使用從電腦上的 SSL 流量計算的時間資料，做為校正本機時鐘的額外輸入。預設值: 1 (已啟用) 布林值
+
+      ClockAdjustmentAuditLimit 
+ 此參數指定可記錄到目標機器上的 W32time 服務事件記錄檔的最小本機時鐘調整次數。預設: 800 Parts per million (PPM)。 
+
+       RODC 參數: 
+
+  ChainEntryTimeout 
+此參數指定將項目視為過期之前，該項目可留在鏈結表中的最大時間長度。處理下一個要求或回應時，可移除過期的項目。預設值: 16 秒。
+
+              ChainMaxEntries 
+此參數控制鏈結表中允許的項目數目上限。如果鏈結表已滿，而且沒有過期的項目可移除，就會捨棄所有連入要求。預設值: 128 個項目。
+
+               ChainMaxHostEntries
+此參數控制鏈結表中允許用於特定主機的項目數目上限。預設值: 4 個項目。
+
+      ChainDisable
+此參數控制是否停用鏈結機制。如果停用鏈結 (設為 0)，RODC 可以與任何網域控制站同步，但主機若未將密碼快取在 RODC 上，就無法與 RODC 同步。預設值: 0 布林值。
+
+        ChainLoggingRate
+ 此參數控制將指示鏈結嘗試成功和不成功次數的事件記錄到事件檢視器中系統記錄檔的頻率。預設值: 30 分鐘。
+      </string>
+
+<string id="W32TIME_CONFIGURE_NTPCLIENT_EXPLAIN">這個原則設定指定用於控制 Windows NTP 用戶端的參數組。
+
+如果您啟用此原則設定，可以指定 Windows NTP 用戶端的下列參數。
+
+如果您停用或未設定此原則設定，Windows NTP 用戶端會使用下列每個參數的預設值。
+
+NtpServer
+NTP 時間來源的網域名稱系統 (DNS) 名稱或 IP 位址。這個值的格式為 ""dnsName,flags""，其中 flags 是該主機之旗標的十六進位位元遮罩。如需詳細資訊，請參閱「Windows 時間服務群組原則設定」中「與 Windows 時間相關的 NTP 用戶端群組原則設定」區段。預設值是 ""time.windows.com,0x09""。
+
+Type
+這個值用於控制 W32time 使用的驗證方式。預設值是 NT5DS。
+
+CrossSiteSyncFlags
+這個值以位元遮罩形式表示，用於控制 W32time 如何選擇其站台以外的時間來源。可能的值為 0、1 及 2。這個值若設為 0 (無)，表示時間用戶端不應嘗試與站台外進行時間同步。這個值若設為 1 (PdcOnly)，表示當用戶端必須與其站台以外的夥伴進行時間同步時，只有在其他網域做為網域主控站 (PDC) 模擬器操作主機的電腦可做為同步夥伴使用。這個值若設為 2 (全部)，則表示可以使用任何同步夥伴。如果未設定 NT5DS 值，就會忽略這個值。預設值是十進位 2 (十六進位 0x02)。
+
+ResolvePeerBackoffMinutes
+這個值 (以分鐘表示) 用於控制 W32time 在前次嘗試失敗後，於嘗試解析 DNS 名稱前等候的時間長度。預設值是 15 分鐘。
+
+ResolvePeerBackoffMaxTimes
+這個值用於控制 W32time 在重新啟動探索處理程序之前，嘗試解析 DNS 名稱的次數。DNS 名稱解析每失敗一次，下次嘗試之前等候的時間長度都將是前次時間長度的兩倍。預設值是 7 次嘗試。
+
+SpecialPollInterval
+這個 NTP 用戶端值 (以秒表示) 用於控制當時間來源設定為使用特殊輪詢間隔時，手動設定的時間來源的輪詢頻率。如果 NTPServer 設定已啟用 SpecialInterval 旗標，用戶端會使用設定為 SpecialPollInterval 的值 (而不是 MinPollInterval 與 MaxPollInterval 值之間的變數間隔) 來判定輪詢時間來源的頻率。SpecialPollInterval 必須落在 [MinPollInterval, MaxPollInterval] 範圍內，否則會挑選範圍的最近值。預設值: 1024 秒。
+
+EventLogFlags
+這個值是位元遮罩，用於控制可記錄到事件檢視器中系統記錄檔的事件。這個值若設為 0x1，表示每次偵測到時間跳躍時，W32time 都會建立事件。這個值若設為 0x2，表示每次發生時間來源變更時，W32time 都會建立事件。因為它是位元遮罩值，所以設定 0x3 (0x1 加上 0x2) 表示時間跳躍和時間來源變更都會留下記錄。
+      </string>
+      <string id="W32TIME_ENABLE_NTPCLIENT_EXPLAIN">這個原則設定會指定是否啟用 Windows NTP 用戶端。
+
+啟用 Windows NTP 用戶端可讓您的電腦時鐘與其他 NTP 伺服器同步。如果您決定使用協力廠商時間提供者，可能必須停用這個服務。
+
+如果您啟用這個原則設定，您可以將本機電腦時鐘設定成與 NTP 伺服器的時間同步。
+
+如果您停用或未設定這個原則設定，則本機電腦時鐘不會與 NTP 伺服器的時間同步。
+      
+      </string>
+      <string id="W32TIME_ENABLE_NTPSERVER_EXPLAIN">這個原則設定可讓您指定是否啟用 Windows NTP 伺服器。
+
+如果您為 Windows NTP 伺服器啟用這個原則設定，您的電腦可以從其他電腦提供 NTP 要求的服務。
+
+
+如果您停用或未設定這個原則設定，您的電腦就無法從其他電腦提供 NTP 要求的服務。
+
+
+
+</string>
+      <string id="W32TIME_POLICY_CONFIG">全域設定值</string>
+      <string id="W32TIME_POLICY_CONFIGURE_NTPCLIENT">設定 Windows NTP 用戶端</string>
+      <string id="W32TIME_POLICY_ENABLE_NTPCLIENT">啟用 Windows NTP 用戶端</string>
+      <string id="W32TIME_POLICY_ENABLE_NTPSERVER">啟用 Windows NTP 伺服器</string>
+      <string id="W32TIME_ROOT">Windows 時間服務</string>
+      <string id="W32TIME_TIMEPROVIDERS">時間提供者</string>
+      <string id="W32TIME_Type_AllSync">AllSync</string>
+      <string id="W32TIME_Type_NoSync">NoSync</string>
+      <string id="W32TIME_Type_NT5DS">NT5DS</string>
+      <string id="W32TIME_Type_Ntp">NTP</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="W32TIME_POLICY_CONFIG">
+        <text>時鐘原則參數</text>
+        <decimalTextBox refId="W32TIME_FrequencyCorrectRate" defaultValue="4">FrequencyCorrectRate</decimalTextBox>
+        <decimalTextBox refId="W32TIME_HoldPeriod" defaultValue="5">HoldPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_LargePhaseOffset" defaultValue="50000000">LargePhaseOffset</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxAllowedPhaseOffset" defaultValue="300">MaxAllowedPhaseOffset</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxNegPhaseCorrection" defaultValue="172800">MaxNegPhaseCorrection</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxPosPhaseCorrection" defaultValue="172800">MaxPosPhaseCorrection</decimalTextBox>
+        <decimalTextBox refId="W32TIME_PhaseCorrectRate" defaultValue="1">PhaseCorrectRate</decimalTextBox>
+        <decimalTextBox refId="W32TIME_PollAdjustFactor" defaultValue="5">PollAdjustFactor</decimalTextBox>
+        <decimalTextBox refId="W32TIME_SpikeWatchPeriod" defaultValue="900">SpikeWatchPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_UpdateInterval" defaultValue="100">UpdateInterval</decimalTextBox>
+        <text>一般參數</text>
+        <decimalTextBox refId="W32TIME_AnnounceFlags" defaultValue="10">AnnounceFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_EventLogFlags" defaultValue="2">EventLogFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_LocalClockDispersion" defaultValue="10">LocalClockDispersion</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxPollInterval" defaultValue="10">MaxPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MinPollInterval" defaultValue="6">MinPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ClockHoldoverPeriod" defaultValue="7800">ClockHoldoverPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_RequireSecureTimeSyncRequests" defaultValue="0">RequireSecureTimeSyncRequests</decimalTextBox>
+        <decimalTextBox refId="W32TIME_UtilizeSslTimeData" defaultValue="1">UtilizeSslTimeData</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ClockAdjustmentAuditLimit" defaultValue="800">ClockAdjustmentAuditLimit</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainEntryTimeout" defaultValue="16">ChainEntryTimeout</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainMaxEntries" defaultValue="128">ChainMaxEntries</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainMaxHostEntries" defaultValue="4">ChainMaxHostEntries</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainDisable" defaultValue="0">ChainDisable</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainLoggingRate" defaultValue="30">ChainLoggingRate</decimalTextBox>
+      </presentation>
+      <presentation id="W32TIME_POLICY_CONFIGURE_NTPCLIENT">
+        <textBox refId="W32TIME_NtpServer">
+          <label>NtpServer</label>
+          <defaultValue>time.windows.com,0x9</defaultValue>
+        </textBox>
+        <dropdownList refId="W32TIME_Type" noSort="true" defaultItem="2">Type</dropdownList>
+        <decimalTextBox refId="W32TIME_CrossSiteSyncFlags" defaultValue="2">CrossSiteSyncFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ResolvePeerBackoffMinutes" defaultValue="15">ResolvePeerBackoffMinutes</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ResolvePeerBackoffMaxTimes" defaultValue="7">ResolvePeerBackoffMaxTimes</decimalTextBox>
+        <decimalTextBox refId="W32TIME_SpecialPollInterval" defaultValue="1024">SpecialPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_NtpClientEventLogFlags" defaultValue="0">EventLogFlags</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

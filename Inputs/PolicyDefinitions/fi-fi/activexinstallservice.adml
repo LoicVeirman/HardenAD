@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ActiveX-asennuspalvelu</displayName>
+  <description>Asentaa ActiveX-komponentit hyväksytyistä asennussivustoista</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">ActiveX-asennuspalvelu</string>
+      <string id="AxISURLZonePolicies">Establish ActiveX installation policy for sites in Trusted zones (Muodosta ActiveX-asennuskäytäntö luotettavien vyöhykkeiden sivustoihin)</string>        
+      <string id="AxISURLZonePolicies_explain">Tämä käytäntöasetus ohjaa ActiveX-komponenttien asennusta luotetulla vyöhykkeellä olevissa sivustoissa. 
+
+Jos otat tämän käytäntöasetuksen käyttöön, ActiveX-komponentit asennetaan tässä käytäntöasetuksessa määritettyjen asetusten mukaisesti. 
+      
+Jos poistat käytöstä tai et määritä tätä käytäntöasetusta, ActiveX-komponentit kysyvät käyttäjältä asiasta ennen asennusta. 
+
+Jos luotettava sivusto käyttää HTTPS-protokollaa, tämä käytäntöasetus voi myös määrittää, miten ActiveX-asennuspalvelu reagoi varmennevirheisiin. Oletusarvon mukaan kaikkien HTTPS-yhteyksien on annettava palvelinvarmenne, joka läpäisee kaikki tarkistusperusteet. Jos tiedät, että luotettavassa sivustossa on varmennevirhe, mutta haluat kuitenkin luottaa siihen, voit valita ohitettavat varmennevirheet. 
+    
+Huomautus: tämä käytäntöasetus koskee kaikkia luotettujen vyöhykkeiden sivustoja.
+
+</string>
+      <string id="TrustedZoneDisabled">Älä asenna</string>
+      <string id="TrustedZonePrompt">Kysy käyttäjältä</string>
+      <string id="TrustedZoneSilentInstall">Asenna hiljaisesti</string>
+      <string id="ApprovedActiveXInstallSites">ActiveX-komponenttien hyväksytyt asennussivustot</string>
+      <string id="ApprovedActiveXInstallSites_explain">Tämä käytäntöasetus määrittää, mitä ActiveX-asennussivustoja organisaation tavalliset käyttäjät voivat käyttää ActiveX-komponenttien tietokoneisiin asentamiseen. Kun tämä asetus on käytössä, järjestelmänvalvoja voi luoda luettelon hyväksytyistä ActiveX-asennussivustoista tietokoneen URL-osoitteen mukaan. 
+
+Jos otat tämän asetuksen käyttöön, järjestelmänvalvoja voi luoda luettelon hyväksytyistä ActiveX-asennussivustoista tietokoneen URL-osoitteen mukaan. 
+      
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, ActiveX-komponentit pyytävät käyttäjältä järjestelmänvalvojan käyttöoikeuksia ennen asennusta. 
+
+Huomautus: yleismerkkejä ei voi käyttää tietokoneiden URL-osoitteita määritettäessä.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Luotettavan julkaisijan allekirjoittaman ActiveX-komponentin asennuskäytäntö</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Allekirjoitetun ActiveX-komponentin asennuskäytäntö</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Allekirjoittamattoman ActiveX-komponentin asennuskäytäntö</dropdownList>
+        <text>Salli yhteys luotettaviin sivustoihin seuraavien palvelimen varmennevirheiden yhteydessä.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Tuntematon varmenteiden myöntäjä (CA)</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Virheellinen varmenteen nimi (CN)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Vanhentunut varmenteen vahvistuspäivämäärä</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Väärä varmenteen käyttö</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">Isäntä-URL-osoitteet</listBox>
+        <text>Sisältää isäntä-URL-osoitteen käytännön.</text>
+        <text>Esimerkki  </text>
+        <text>Isäntänimi: http://activex.microsoft.com</text>
+        <text>Arvo: 2,1,0,0</text>
+        <text>Jokaisen isäntä-URL-osoitteen arvo sisältää neljä CSV-muotoista asetusta.</text>
+        <text>Arvo voi olla seuraava: "TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy</text>
+        <text>Käytännön kolme ensimmäistä arvoa ohjaavat ActiveX-komponenttien asennusta allekirjoitustensa perusteella.</text>
+        <text>Arvo voi olla jokin seuraavista:</text>
+        <text>0: ActiveX-komponenttia ei asenneta</text>
+        <text>1: Käyttäjää kehotetaan asentamaan ActiveX-komponentti</text>
+        <text>2: ActiveX-komponentti asennetaan automaattisesti</text>
+        <text>Luotettavan julkaisijan säilössä olevilla varmenteilla allekirjoitetut komponentit asennetaan hiljaisesti  </text>
+        <text>Allekirjoittamattomien komponenttien automaattinen asennus ei ole tuettu</text>
+        <text></text>
+        <text>Käytännön viimeinen arvo on bittipeitetty lippu</text>
+        <text>Lippujen avulla ohitetaan https-varmennevirheet.</text>
+        <text>Oletusarvo on 0.</text>
+        <text>Tämä tarkoittaa sitä, että https-yhteyksien on läpäistävä kaikki suojaustarkistukset</text>
+        <text></text>
+        <text>Käyttämällä seuraavia arvoja yhdessä</text>
+        <text>voit ohittaa varmennevirheet, jotka eivät kelpaa</text>
+        <text>0x00000100  Ohita tuntematon varmenteen myöntäjä</text>
+        <text>0x00001000  Ohita virheellinen CN-nimi</text>
+        <text>0x00002000  Ohita virheellinen varmenteen päivämäärä</text>
+        <text>0x00000200  Ohita virheellinen varmenteen käyttö</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

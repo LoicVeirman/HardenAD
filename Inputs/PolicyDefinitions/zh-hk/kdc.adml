@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>KDC 設定</displayName>
+  <description>Kerberos 金鑰發佈中心的組態設定。</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">使用樹系搜尋順序</string>
+      <string id="forestsearch_explain">這個原則設定會定義金鑰發佈中心 (KDC) 嘗試解析兩部分服務主要名稱 (SPN) 時所搜尋的信任的樹系清單。
+
+如果您啟用這個原則設定，若 KDC 無法在本機樹系中解析兩部分 SPN，便會在此清單中搜尋樹系。樹系搜尋是使用通用類別目錄或名稱尾碼提示執行。如果找到符合項目，KDC 便會將轉介票證傳回適當網域的用戶端。
+
+如果您停用或未設定這個原則設定，KDC 將不會搜尋列出的樹系來解析 SPN。如果 KDC 因為找不到名稱而無法解析 SPN，就可能會使用 NTLM 驗證。
+
+為確保一致的行為，網域中的所有網域控制站都必須支援這個原則設定，並以相同的方式設定。</string>
+      <string id="emitlili">提供用戶端電腦有關先前登入的資訊</string>
+      <string id="emitlili_explain">這個原則設定控制網域控制站是否提供用戶端電腦有關先前登入的資訊。
+
+如果您啟用這個原則設定，網域控制站將提供有關先前登入的資訊訊息。
+
+若要讓 Windows 登入運用這項功能，必須同時啟用 Windows 元件下 [Windows 登入選項] 節點中的 [於使用者登入期間顯示有關上次登入的資訊] 原則設定。
+
+若您停用或未設定這個原則設定，除非已啟用 [於使用者登入期間顯示有關上次登入的資訊] 原則設定，否則網域控制站將不提供有關先前登入的資訊。
+
+注意: 只有當網域功能等級為 Windows Server 2008 時，才會提供有關先前登入的資訊。若網域功能等級為 Windows Server 2003、Windows 2000 原生或 Windows 2000 混合模式，網域控制站將無法提供有關先前登入的資訊，啟用這個原則設定將不會有任何效果。
+
+</string>
+      <string id="CbacAndArmor">KDC 支援宣告、複合驗證以及 Kerberos 保護</string>
+      <string id="CbacAndArmor_explain">這個原則設定可以讓您設定網域控制站，以使用 Kerberos 驗證來支援宣告、動態存取控制的複合驗證以及 Kerberos 保護。
+
+如果您啟用這個原則設定，可感知支援宣告、動態存取控制的複合驗證以及 Kerberos 保護的用戶端電腦，將會針對 Kerberos 驗證訊息使用此功能。這個原則應套用至所有網域控制站，以確保網域中都一致套用了此原則。
+
+如果您停用或未設定這個原則設定，網域控制站不會支援宣告、複合驗證或保護。
+
+如果您設定 [不支援] 選項，網域控制站不會支援宣告、複合驗證或保護，這是執行 Windows Server 2008 R2 或之前作業系統的網域控制站預設行為。
+
+注意: 為了讓這個 KDC 原則的下列選項能夠生效，支援的系統上必須啟用 [Kerberos 用戶端支援宣告、複合驗證以及 Kerberos 保護] Kerberos 群組原則。如果未啟用 Kerberos 原則設定，Kerberos 驗證訊息將不會使用這些功能。 
+
+如果您設定 [支援]，則網域控制站會支援宣告、複合驗證以及 Kerberos 保護。網域控制站會向 Kerberos 用戶端電腦公告，網域具備宣告、動態存取控制的複合驗證以及 Kerberos 保護功能。
+
+網域功能層級需求
+對於 [永遠提供宣告] 和 [未受保護的驗證要求失敗] 選項，當網域功能層級設為 Windows Server 2008 R2 或之前的版本，則網域控制站的行為會如同選取 [支援] 選項一樣。
+
+網域功能層級設為 Windows Server 2012 時，則網域控制站會向 Kerberos 用戶端電腦公告，網域具備宣告、動態存取控制的複合驗證以及 Kerberos 保護功能，以及:
+   - 如果您設定 [永遠提供宣告] 選項，則一律傳回帳戶的宣告，並支援 RFC 行為，以公告彈性驗證安全通道 (FAST)。
+   - 如果您設定 [未受保護的驗證要求失敗] 選項，則會拒絕未受保護的 Kerberos 訊息。
+
+警告: 設定 [未受保護的驗證要求失敗] 選項時，不支援 Kerberos 保護的用戶端電腦對網域控制站的驗證將會失敗。
+
+若要確保這個功能有效，請部署數量足夠且可感知支援宣告、動態存取控制的複合驗證以及 Kerberos 保護的網域控制站，來處理驗證要求。如果支援這個原則的網域控制站數量不足，每當需要動態存取控制或 Kerberos 保護 (也就是啟用 [支援] 選項) 時，都會導致驗證失敗。
+
+這個原則設定啟用之後，會影響網域控制站的效能:
+   - 必要的安全 Kerberos 網域功能探索會導致額外的訊息交換。
+   - 宣告和動態存取控制的複合驗證會增加訊息中資料的大小和複雜度，而需要更長的處理時間，並產生更大的 Kerberos 服務票證大小。
+   - Kerberos 保護會將 Kerberos 訊息完全加密，並簽署 Kerberos 錯誤，這樣會導致處理時間增加，但是不會變更服務票證大小。
+
+</string>
+      <string id="NoCbacAndArmor">不支援</string>
+      <string id="MixModeCbacAndArmor">支援</string>
+      <string id="FullModeCbacAndArmor">永遠提供宣告</string>
+      <string id="FullModeCbacAndRequireArmor">未受保護的驗證要求失敗</string>
+      <string id="TicketSizeThreshold">大型 Kerberos 票證的警告</string>
+      <string id="TicketSizeThreshold_explain">這個原則設定可以讓您設定哪些 Kerberos 票證大小會在 Kerberos 驗證期間觸發警告事件。票證大小警告會記錄在系統記錄檔。
+
+如果您啟用這個原則設定，您可以設定會觸發警告事件的 Kerberos 票證閾值限制。如果設定太高，則可能會發生驗證失敗，即使沒有記錄警告事件。 如果設定太低，則可能會在記錄檔中看到太多對分析沒有幫助的票證警告。這個值應該設定為與 Kerberos 原則 [設定 Kerberos SSPI 內容權杖緩衝區大小上限] 相同的值或環境中使用的最小 MaxTokenSize (如果您沒有使用群組原則進行設定)。
+      
+如果您停用或未設定這個原則設定，閾值會預設為 12,000 位元組，這是 Windows 7、Windows Server 2008 R2 和之前版本的預設 Kerberos MaxTokenSize 值。
+
+</string>
+      <string id="RequestCompoundId">要求複合驗證</string>
+      <string id="RequestCompoundId_explain">這個原則設定可讓您設定網域控制站要求複合驗證。
+
+注意: 為了網域控制站能夠要求複合驗證，必須設定並啟用「KDC 支援宣告、複合驗證以及 Kerberos 保護」原則。
+
+如果您啟用這個原則設定，網域控制站將要求複合驗證。只在明確設定帳戶時，傳回的服務票證才會包含複合驗證。這個原則應套用至所有網域控制站，以確保網域中都一致套用了此原則。
+
+如果您停用或未設定這個原則設定，只要用戶端傳送複合驗證要求 (無論帳戶設定為何)，網域控制站將會傳回包含複製驗證的服務票證。
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">模式:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>要搜尋的樹系</label>
+        </textBox>
+        <text>語法:</text>
+        <text>輸入啟用這個原則時要搜尋的樹系清單。</text>
+        <text>使用完整網域名稱 (FQDN) 命名格式。</text>
+        <text>以分號 ";" 分隔多個搜尋項目。</text>
+        <text>詳細資料:</text>
+        <text>不必列示目前樹系，因為樹系搜尋順序會先使用通用類別目錄，然後再依所列順序搜尋。</text>
+        <text>您不需要分別列出樹系中的所有網域。</text>
+        <text>如果列出了信任的樹系，便會搜尋樹系中的所有網域。</text>
+        <text>為獲得最佳效能，請依可能成功的順序列示樹系。</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">宣告、動態存取控制的複合驗證以及 Kerberos 保護選項:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">票證大小閾值</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

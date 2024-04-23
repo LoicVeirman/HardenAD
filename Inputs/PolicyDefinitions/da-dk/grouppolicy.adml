@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>indtast det viste navn her</displayName>
+  <description>indtast beskrivelsen her</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Indstillinger for afhjælpning</string>
+      <string id="Font_List">Spærring af skrifttyper, der ikke er tillid til</string>
+      <string id="Font_List_Help">Denne sikkerhedsfunktion giver en global indstilling, der forhindrer programmer i at indlæse skrifttyper, der ikke er tillid til. Skrifttyper, der ikke er tillid til, er dem, der er installeret uden for mappen %windir%\Fonts. Denne funktion kan konfigureres til at være i tre tilstande: til, fra og overvågning. Den er som standard slået fra, og der bliver ikke blokeret nogen skrifttyper. Hvis du ikke er helt klar til at installere denne funktion i din organisation, kan du bruge overvågningstilstanden til at se, om blokeringen af skrifttyper, der ikke er tillid til, har givet problemer i forhold til anvendelighed eller kompatibilitet.</string>
+      <string id="FontMitigation_On">Bloker skrifttyper, der ikke er tillid til, og logfør hændelser</string>
+      <string id="FontMitigation_Off">Bloker ikke skrifttyper, der ikke er tillid til</string>
+      <string id="FontMitigation_Audit">Logfør hændelser uden at blokere skrifttyper, der ikke er tillid til</string>
+
+	  <string id="ProcessMitigationOptions_List">Behandle indstillinger for afhjælpning</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Denne sikkerhedsfunktion giver mulighed for at tilsidesætte de enkelte MitigationOptions-procesindstillinger. Den kan bruges til at gennemtvinge en række sikkerhedspolitikker, der er specifikke for programmer. Programnavnet angives som værdinavnet, herunder filtype. Værdien angives som et bitfelt med en række flag i bestemte positioner. Bit kan indstilles til 0 (indstillingen er tvunget slået fra), 1 (indstilling er tvunget slået til), eller ? (indstillingen beholder dens eksisterende værdi før GPO-evaluering). De anerkendte bit-placeringer er:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        Aktiverer DEP (Data Execution Prevention) for den underordnede proces
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        Aktiverer thunk-emulering af DEP-ATL (Data Execution Prevention) for den underordnede proces. Thunk-emulering af DEP-ATL bevirker, at systemet opfanger NX-fejl, der stammer fra thunk-laget i ATL-biblioteket (Active Template Library).
+
+PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        Aktiverer SHEOP (Structured Exception Handler Overwrite Protection) for den underordnede proces. SEHOP blokerer udnyttelser, der bruger SEH-overskrivningsteknikken (Structured Exception Handler).
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        Den gennemtvungne ASLR-politik (Address Space Layout Randomization) rebaserer billeder, der ikke er dynamisk basiskompatible, ved at fungere som om en billedbasiskollision, som skete på indlæsningstidspunktet. Hvis der kræves flytninger, vil billeder, der ikke har et grundlæggende flytningsafsnit, ikke blive indlæst.
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        Bottom-up-tilfældighedspolitikken, som omfatter indstillinger for stablingstilfældighed, medfører, at en tilfældig placering bruges som den laveste brugeradresse.
+
+        Hvis du f.eks. vil aktivere PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE og PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON, skal du deaktivere PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF og bruge standardværdier for alle andre indstillinger og angive en en værdi for:
+        ??????????????? 0??????? 1??????? 1
+
+        Hvis du indstiller flag, der ikke angivet her til nogen anden værdi end ?, resulterer det i en ikke-defineret funktionsmåde.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">Aktivér synkronisering af AD/DFS-domænecontroller under opdatering af politik</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">Hvis du aktiverer denne indstilling, opretter klienten til gruppepolitik forbindelse til samme domænecontroller for DFS-shares, som der bruges til Active Directory.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">Deaktiver AOAC-optimering af gruppepolitikklienttjeneste</string>
+      <string id="DisableAOACProcessing_Help">Denne politikindstilling forhindrer, at gruppepolitikklienttjenesten stopper, når den ikke er i brug.
+
+
+
+</string>
+      <string id="EnableCDP">Fortsæt oplevelser på denne enhed</string>
+      <string id="EnableCDP_Help">
+Denne politikindstilling bestemmer, om Windows-enheden har tilladelse til at deltage i oplevelser på flere enheder (fortsætte oplevelser).
+
+Hvis du aktiverer denne politikindstilling, er Windows-enheden synlig for andre Windows-enheder, der tilhører den samme bruger, og den kan deltage i oplevelser på flere enheder.
+
+Hvis du deaktiverer denne politikindstilling, er Windows-enheden ikke synlig for andre enheder og ikke deltage i oplevelser på flere enheder.
+
+Hvis du ikke konfigurerer denne politikindstilling, afhænger standardfunktionsmåden af udgaven af Windows. Ændringer i denne politik træder i kraft ved genstart.
+      </string>
+      <string id="EnableMMX">Telefon-pc-sammenkædning på denne enhed</string>
+      <string id="EnableMMX_Help">
+Denne politik gør det muligt for it-administratorer at slå muligheden for at sammenkæde en telefon med en pc fra for at fortsætte med at læse, sende mails og andre opgaver, der kræver sammenkædning mellem telefon og pc.
+
+Hvis du aktiverer denne politikindstilling, kan Windows-enheden tilmelde sig telefon-pc-sammenkædningsfunktionen og deltage i Fortsæt på pc-oplevelser.
+
+Hvis du deaktiverer denne politikindstilling, har Windows-enheden ikke tilladelse til at blive sammenkædet med telefoner. Den vil fjerne sig selv fra enhedslisten på alle sammenkædede telefoner og kan ikke deltage i Fortsæt på pc-oplevelser.
+
+Hvis du ikke konfigurerer denne politikindstilling, afhænger standardfunktionsmåden af Windows-udgaven. Ændringer i denne politik træder i kraft ved genstart.
+      </string>
+      <string id="EnableAppUriHandlers">Konfigurer web-til-app-sammenkædning med app-URI-handlere</string>
+      <string id="EnableAppUriHandlers_Help">
+Denne politikindstilling bestemmer, om Windows understøtter web-til-app-sammenkædning med app-URI-handlere.
+
+Hvis du aktiverer politikindstillingen, aktiveres web-til-app-sammenkædning, så apps kan startes med en http(s)-URI.
+
+Hvis du deaktiverer politikken, deaktiveres web-til-app-sammenkædning, og http(s)-URI'er åbnes i standardbrowseren i stedet for at starte den tilknyttede app.
+
+Hvis du undlader at konfigurere indstillingen, afhænger standardfunktionsmåden af udgaven af Windows. Ændringer i denne politik træder i kraft ved genstart.
+      </string>
+      <string id="Fonts">Skrifttyper</string>
+      <string id="EnableFontProviders">Aktivér skrifttypeudbydere</string>
+      <string id="EnableFontProviders_Help">
+        Denne politikindstilling bestemmer, om Windows har tilladelse til at hente skrifttyper og skrifttypekatalogdata fra en online skrifttypeudbyder.
+
+        Hvis du aktiverer denne politikindstilling, anmoder Windows jævnligt en online skrifttypeudbyder om at finde ud af, om et nyt skrifttypekatalog er tilgængeligt. Windows kan også hente skrifttypedata, hvis det er nødvendigt at formatere eller gengive tekst.
+
+        Hvis du deaktiverer denne politikindstilling, opretter Windows ikke forbindelse til en online skrifttypeudbyder og optæller kun lokalt installerede skrifttyper.
+
+        Hvis du ikke konfigurerer denne politikindstilling, afhænger standardfunktionsmåden af Windows-udgaven. Ændringer i denne politik træder i kraft ved genstart.
+      </string>
+      <string id="EnableLogonOptimization">Konfigurer cachelagring af gruppepolitik</string>
+      <string id="EnableLogonOptimization_Help">
+        Denne politikindstilling giver dig mulighed for at konfigurere funktionaliteten for cachelagring af gruppepolitik.
+
+        Hvis du aktiverer eller ikke konfigurerer denne politikindstilling, cacher Gruppepolitik politikoplysninger efter hver session med baggrundsbehandling. Denne cache gemmer gældende gruppepolitikobjekter og de indstillinger, der er indeholdt i dem. Når Gruppepolitik kører i synkron forgrundstilstand, henviser den til denne cache, som gør, at den kan køre hurtigere. Når cachen læses, forsøger Gruppepolitik at kontakte en domænecontroller til logon for at bestemme forbindelseshastigheden. Når Gruppepolitik kører i baggrundstilstand eller asynkron forgrundstilstand, fortsætter den med at downloade den nyeste version af politikoplysningerne, og den bruger en beregning for båndbredde til at bestemme langsomme forbindelsestærskler. (Se politikindstillingen "Konfigurer registrering af langsom forbindelse for Gruppepolitik" for at konfigurere den asynkrone forgrundsfunktionsmåde.)
+
+        Den langsomme sammenkædningsværdi, der er defineret i denne politikindstilling, bestemmer, hvor lang tid Gruppepolitik vil vente på et svar fra domænecontrolleren, før sammenkædningshastigheden rapporteres som langsom. Standarden er 500 millisekunder.
+
+        Den timeoutværdi, der er defineret i denne politikindstilling, bestemmer, hvor lang tid Gruppepolitik vil vente på et svar fra domænecontrolleren, før der fastslås, at der ikke er nogen netværksforbindelse. Det stopper den aktuelle behandling af Gruppepolitik. Gruppepolitik kører i baggrunden, næste gang der oprettes forbindelse til en domænecontroller. Hvis du indstiller denne værdi for højt, kan det medføre længere ventetid for brugeren ved start eller logon. Standarden er 5000 millisekunder.
+
+        Hvis du deaktiverer denne politikindstilling, cacher Gruppepolitik-klienten ikke gældende gruppepolitikker eller indstillinger, der er indeholdt i gruppepolitikkerne. Når Gruppepolitik kører synkront, downloader den den seneste version af politikken fra netværket og bruger beregninger af båndbredde til at bestemme langsomme sammenkædningstærskler. (Se politikindstillingen "Konfigurer registrering af langsom forbindelse for Gruppepolitik" for at konfigurere den asynkrone forgrundsfunktionsmåde.)
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">Aktivér cachelagring af gruppepolitik for servere</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        Med denne politikindstilling kan du konfigurere funktionsmåden for cachelagring af gruppepolitik på Windows-maskiner.
+        Hvis du aktiverer denne politikindstilling, cachelagrer gruppepolitik politikoplysninger efter hver baggrundsbehandlingssession. Denne cache gemmer relevante gruppepolitikobjekter og de indstillinger, der er indeholdt i dem. Når gruppepolitikken kører i synkron forgrundstilstand, refererer den til denne cache og kan dermed køre hurtigere. Når cachen er læst, forsøger gruppepolitikken at kontakte en logondomænecontroller for at bestemme forbindelseshastigheden. Når gruppepolitikken kører i baggrundsstilstand eller asynkron forgrundstilstand, fortsætter den med at hente den seneste version af politikoplysningerne, og den bruger en anslået båndbredde til at fastsætte tærskler for langsomme forbindelser. (Se politikindstillingen "Konfigurer genkendelse af langsom forbindelse for Gruppepolitik" for at konfigurere funktionsmåden for asynkrone forgrunde).
+        Værdien for den langsomme forbindelse, der defineres i denne politikindstilling, bestemmer, hvor længe gruppepolitikken venter på et svar fra domænecontrolleren, før den rapporterer forbindelseshastigheden som langsom. Standardværdien er 500 millisekunder.
+        Den timoutværdi, der defineres i denne politikindstilling, bestemmer, hvor længe gruppepolitikken venter på et svar fra domænecontrolleren, før den fastslår, at der ikke er nogen netværksforbindelse. Dette stopper den igangværende gruppepolitikbehandling. Gruppepolitikken kører i baggrunden, næste gang der oprettes forbindelse til en domænecontroller. Hvis denne værdi indstilles for højt, kan det resultere i længere ventetider for brugeren ved start eller logon. Standardværdien er 5000 millisekunder.
+        Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, cachelagrer gruppepolitikklienten ikke relevante gruppepolitikobjekter eller indstillinger, som er indeholdt i gruppepolitikobjekterne. Når gruppepolitikken kører synkront, henter den den seneste version af politikken fra netværket og bruger anslåede båndbredder til at fastsætte tærskler for langsomme forbindelser. (Se politikindstillingen "Konfigurer genkendelse af langsom forbindelse for Gruppepolitik" for at konfigurere funktionsmåden for asynkrone forgrunde).
+      
+      </string>
+
+      <string id="LogonScriptDelay">Konfigurer forsinkelse af logonscript</string>
+      <string id="LogonScriptDelay_Help">
+        Indtast "0" for at deaktivere forsinkelse af logon-script.
+
+        Med denne politikindstilling kan du konfigurere, hvor længe Gruppepolitik-klienten venter efter logon, før der køres scripts.
+
+        Som standard venter Gruppepolitik-klienten fem minutter, før der køres logonscripts. Det hjælper med at oprette et responsivt skrivebordsmiljø ved at forhindre diskkonflikt.
+
+        Hvis du aktiverer denne politikindstilling, vil Gruppepolitik vente i det angivne tidsrum, før der køres logonscripts.
+
+        Hvis du deaktiverer denne politikindstilling, vil Gruppepolitik køre scripts umiddelbart efter logon.
+
+        Hvis du ikke konfigurerer denne politikindstilling, vil Gruppepolitik vente fem minutter, før der køres logonscripts.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">Konfigurer Direct Access-forbindelser som en hurtig netværksforbindelse</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">Denne politikindstilling gør det muligt for en administrator at definere, at den direkte adgangsforbindelse bliver betragtet som en hurtig netværksforbindelse med henblik på at anvende og opdatere gruppepolitik.
+
+Når Gruppepolitik registrerer båndbreddens hastighed for en direkte adgangsforbindelse, kan registreringen nogle gange undlade at angive oplysninger om båndbreddens hastighed. Hvis Gruppepolitik registrerer en båndbreddes hastighed, følger Gruppepolitikken de normale regler for evaluering, hvis den direkte adgang er en hurtig eller langsom netværksforbindelse. Hvis der ikke registreres en hastighed for båndbredden, vil Gruppepolitik som standard være en langsom netværksforbindelse. Denne politikindstilling giver administratoren mulighed for at tilsidesætte standardindstillingen til langsom netværksforbindelse og i stedet for at bruge en hurtig netværksforbindelse i tilfælde af, at der ikke bestemmes nogen hastighed på netværksbåndbredden.
+
+Bemærk: Når Gruppepolitik registrerer en langsom netværksforbindelse, vil Gruppepolitik kun behandle de klientsideudvidelser, der er konfigureret til behandling på tværs af en langsom forbindelse (langsom netværksforbindelse).
+
+Hvis du aktiverer denne politik, og hvis gruppepolitik ikke kan bestemme båndbreddens hastighed på tværs af direkte adgang, evaluerer Gruppepolitik netværksforbindelsen som en hurtig forbindelse og behandler alle udvidelser af klientsiden.
+
+Hvis du deaktiverer indstillingen eller ikke konfigurerer den, vil Gruppepolitik vurdere netværksforbindelsen som en langsom forbindelse og kun behandle de Klientsideudvidelser, der er konfigureret til at behandle via en langsom forbindelse.
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">Skift gruppepolitikbehandling til at køre asynkront, når der registreres en langsom netværksforbindelse.</string>
+      <string id="SlowlinkDefaultToAsync_Help">Denne politik bestemmer behandling af gruppepolitik for at ignorere behandlingen af alle klientsideudvidelser, der kræver synkron behandling (dvs. om computere venter på, at netværket initialiseres fuldstændigt under computerstart og brugerlogon), når der registreres en langsom netværksforbindelse.
+
+Hvis du aktiverer denne politikindstilling, og der registreres en langsom netværksforbindelse, vil behandling af gruppepolitik altid køre på en asynkron måde.
+Klientcomputerne venter ikke på, at netværket initialiseres fuldt ud ved start og logon. Eksisterende brugere vil være logget på med cachelagrede legitimationsoplysninger,
+hvilket vil resultere i kortere logon-tider. Gruppepolitikken anvendes i baggrunden, når netværket bliver tilgængeligt.
+Bemærk, at da dette er en opdatering i baggrunden, der kræver synkron behandling, vil præferenceudvidelser, som f.eks. Programinstallation, Mappeomdirigering
+og Drevtilknytninger, ikke blive anvendt.
+
+Bemærk: Der er to betingelser, som medfører, at Gruppepolitik behandles synkront, selvom denne politikindstilling er aktiveret:
+1 - Ved den første computerstart, efter at klientcomputeren har tilsluttet sig domænet.
+2 - Hvis politikindstillingen "Vent altid på netværket ved computerstart og logon" er aktiveret.
+
+Hvis du deaktiverer eller ikke konfigurerer denne politikindstilling, vil registrering af en langsom netværksforbindelse ikke påvirke, om behandling af gruppepolitik vil være synkron eller asynkron.
+
+      </string>
+      <string id="DisableLGPOProcessing">Deaktiver behandling af lokale gruppepolitikobjekter</string>
+      <string id="DisableLGPOProcessing_Help">Denne politikindstilling forhindrer, at lokale gruppepolitikobjekter (Lokale GPO'er) anvendes.
+
+Som standard anvendes indstillingerne i lokale GPO'er før eventuelle domænebaserede GPO-politikindstillinger. Disse politikindstillinger kan anvendes af både brugere og den lokale computer. Du kan deaktivere behandling og anvendelse af alle lokale GPO'er for at sikre, at det kun er domænebaserede GPO'er, som anvendes.
+
+Hvis du aktiverer denne politikindstilling, behandler og anvender systemet ikke lokale GPO'er.
+
+Hvis du deaktiverer eller ikke konfigurerer denne politikindstilling, fortsættes anvendelsen af lokale GPO'er.
+
+Bemærk! Når det drejer sig om computere, som er føjet til et domæne, anbefales det kraftigt, at du kun konfigurerer denne politikindstilling i domænebaserede GPO'er. Denne politikindstilling bliver ignoreret på computere, som føjes til en arbejdsgruppe.
+
+</string>
+      <string id="SyncWaitTime">Angiv ventetid før behandling af startpolitik</string>
+      <string id="SyncWaitTime_Help">Denne politik angiver, hvor længe gruppepolitikken skal vente på beskeder om netværkstilgængelighed under behandling af startpolitik. Hvis behandling af startpolitikken er synkron, blokeres computeren, indtil netværket er tilgængelig, eller standardventetiden er nået. Hvis behandling af startpolitikken er asynkron, blokeres computeren ikke, og behandling af politik foregår i baggrunden. I begge tilfælde tilsidesætter konfiguration af denne politikindstilling ventetider, der er beregnet af systemet.
+
+Hvis du aktiverer denne politikindstilling, bruger gruppepolitik denne administrativt konfigurerede maks. ventetid og tilsidesætte alle standardventetider og ventetider, der er beregnet af et system.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, anvender Gruppepolitik standardventetiden på 30 sek. på computere, som kører med operativsystemet Windows Vista. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Tillad brugerpolitik på tværs af skove og roamingbrugerprofiler</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">Denne politikindstilling tillader brugerbaseret politikbehandling, roamingbrugerprofiler og logonscripts i brugerobjekter til interaktiv logon på tværs af skove.
+
+Denne politikindstilling berører alle brugerkonti, der interaktivt logger på en computer i en anden skov, når der findes en krydsskov eller et tovejs skovtillidsforhold.
+
+Hvis du ikke konfigurerer denne politikindstilling:
+-  Ingen brugerbaserede politikindstillinger anvendes fra brugerens skov.
+-  Brugere modtager ikke deres roamingprofiler. De modtager en lokal profil på computeren fra den lokale skov. Der vises en advarselsmeddelelse for brugeren, og der sendes en hændelseslogmeddelelse (1529).
+- Der anvendes tilbagekoblende gruppepolitikbehandling vha. de gruppepolitikobjekter, der dækker computeren.
+- Der sendes en hændelseslogmeddelelse (1109), som angiver, at tilbagekobling blev startet i erstatningstilstand.
+
+Hvis du aktiverer denne politikindstilling, er funktionen nøjagtig den samme som i Windows 2000: der tillades en roamingbrugerprofil fra skoven, du har tillid til.
+
+Hvis du deaktiverer denne politikindstilling, er funktionsmåden den samme som Ikke konfigureret.</string>
+      <string id="CSE_AppMgmt">Konfigurer behandling af politik for programinstallation</string>
+      <string id="CSE_AppMgmt_Help">Denne politikindstilling bestemmer, hvornår politikker for softwareinstallation opdateres.
+
+Denne politikindstilling påvirker alle politikindstillinger, der bruger komponenten til programinstallation i Gruppepolitik, f.eks. politikindstillinger i Programindstillinger\Programinstallation. Du kan kun angive en programinstallationspolitik for gruppepolitikobjekter, der gemmes i Active Directory, ikke for gruppepolitikobjekter på en lokal computer.
+
+Denne politikindstilling tilsidesætter tilpassede indstillinger, som blev angivet under installationen af det program, der implementerede programinstallationspolitikken.
+
+Hvis du aktiverer denne politikindstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne. Hvis du deaktiverer denne politikindstilling eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Tillad behandling via en langsom netværksforbindelse" opdaterer politikkerne, selv når opdateringen sendes via en langsom netværksforbindelse, f.eks. en telefonlinje. Opdateringer via langsomme forbindelser kan medføre betydelige forsinkelser.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange implementeringer af politikindstillinger angiver, at politikindstillingerne kun opdateres, når de ændres. Du kan dog opdatere uændrede politikindstillinger, f.eks. ved at vælge bestemte politikindstilling igen, hvis en bruger har ændret den.</string>
+      <string id="CSE_DiskQuota">Konfigurer behandling af politik for diskkvota</string>
+      <string id="CSE_DiskQuota_Help">Denne politikindstilling bestemmer, hvornår politikker for diskkvota opdateres.
+
+Denne politikindstilling påvirker alle politikker, der bruger komponenten diskkvota i Gruppepolitik, f.eks. i Computerkonfiguration\Administrative skabeloner\System\Diskkvotaer.
+
+Denne politikindstilling tilsidesætter tilpassede indstillinger, som blev angivet under installationen af det program, der implementerede diskkvotapolitikken.
+
+Hvis du aktiverer denne politikindstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne. Hvis du deaktiverer denne politikindstilling eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Tillad behandling via en langsom netværksforbindelse" opdaterer politikkerne, selv når opdateringen sendes via en langsom netværksforbindelse, f.eks. en telefonlinje. Opdateringer via langsomme forbindelser kan medføre betydelige forsinkelser.
+
+Indstillingen "Anvend ikke under periodisk baggrundsbehandling" forhindrer systemet i at opdatere berørte politikker i baggrunden, mens computeren er i brug. Når baggrundsopdateringer er deaktiverede, træder politikændringer ikke i kraft, før den næste bruger logger på, eller systemet genstarter.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange politikimplementeringer angiver, at politikkerne kun opdateres, når de ændres. Du kan dog opdatere politikker, f.eks. ved at vælge en bestemt indstilling igen, hvis en bruger har ændret den.</string>
+      <string id="CSE_EFSRecovery">Konfigurer behandling af politik for EFS-genoprettelse</string>
+      <string id="CSE_EFSRecovery_Help">Denne politikindstilling bestemmer, hvornår politikker for kryptering opdateres.
+
+Denne politikindstilling påvirker alle politikker, der bruger krypteringskomponenten i Gruppepolitik, f.eks. politikker, som er relateret til kryptering i Windows-indstillinger\Sikkerhedsindstillinger.
+
+Den tilsidesætter de tilpassede indstillinger, som blev angivet under installationen af det program, der implementerede krypteringspolitikken.
+
+Hvis du aktiverer denne politikindstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne. Hvis du deaktiverer denne politikindstilling eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Tillad behandling via en langsom netværksforbindelse" opdaterer politikkerne, selv når opdateringen sendes via en langsom netværksforbindelse, f.eks. en telefonlinje. Opdateringer via langsomme forbindelser kan medføre betydelige forsinkelser.
+
+Indstillingen "Anvend ikke under periodisk baggrundsbehandling" forhindrer systemet i at opdatere berørte politikker i baggrunden, mens computeren er i brug. Når baggrundsopdateringer er deaktiverede, træder politikændringer ikke i kraft, før den næste bruger logger på, eller systemet genstarter.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange politikimplementeringer angiver, at politikkerne kun opdateres, når de ændres. Du kan dog opdatere politikker, f.eks. ved at vælge en bestemt indstilling igen, hvis en bruger har ændret den.</string>
+      <string id="CSE_FolderRedirection">Konfigurer behandling af politik for mappeomdirigering</string>
+      <string id="CSE_FolderRedirection_Help">Denne politikindstilling bestemmer, hvornår politikker for mappeomdirigering opdateres.
+
+Denne politikindstilling påvirker alle politikker, der bruger komponenten til mappeomdirigering i Gruppepolitik, f.eks. politikker i Windows-indstillinger\Mappeomdirigering. Du kan kun angive en politik for mappeomdirigering for gruppepolitikobjekter, der lagres i Active Directory, ikke for gruppepolitikobjekter på den lokale computer.
+
+Denne politikindstilling tilsidesætter de tilpassede indstillinger, som blev angivet under installationen af det program, der implementerede politikindstillingen for mappeomdirigering.
+
+Hvis du aktiverer denne politikindstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne. Hvis du deaktiverer denne politikindstilling eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Tillad behandling via en langsom netværksforbindelse" opdaterer politikkerne, selv når opdateringen sendes via en langsom netværksforbindelse, f.eks. en telefonlinje. Opdateringer via langsomme forbindelser kan medføre betydelige forsinkelser.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange politikimplementeringer angiver, at politikkerne kun opdateres, når de ændres. Du kan dog opdatere politikker, f.eks. ved at vælge en bestemt indstilling igen, hvis en bruger har ændret den.</string>
+      <string id="CSE_IEM">Konfigurer behandling af Internet Explorer-vedligeholdelsespolitik</string>
+      <string id="CSE_IEM_Help">Denne politikindstilling bestemmer, hvornår Internet Explorer-vedligeholdelsespolitikker opdateres.
+
+Denne politikindstilling påvirker alle politikker, der bruger komponenten Internet Explorer-vedligeholdelse i Gruppepolitik, f.eks. politikker i Windows-indstillinger\Internet Explorer-vedligeholdelse.
+
+Denne politikindstilling tilsidesætter de tilpassede indstillinger, som blev angivet under installationen af det program, der implementerede politikken for Internet Explorer-vedligeholdelse.
+
+Hvis du aktiverer denne politikindstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne. Hvis du deaktiverer denne politikindstilling eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Tillad behandling via en langsom netværksforbindelse" opdaterer politikkerne, selv når opdateringen sendes via en langsom netværksforbindelse, f.eks. en telefonlinje. Opdateringer via langsomme forbindelser kan medføre betydelige forsinkelser.
+
+Indstillingen "Anvend ikke under periodisk baggrundsbehandling" forhindrer systemet i at opdatere berørte politikker i baggrunden, mens computeren er i brug. Når baggrundsopdateringer er deaktiverede, træder politikændringer ikke i kraft, før den næste bruger logger på, eller systemet genstarter.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange politikimplementeringer angiver, at politikkerne kun opdateres, når de ændres. Du kan dog opdatere uændrede politikker, f.eks. ved at vælge en ønsket politikindstilling igen, hvis en bruger har ændret den.</string>
+      <string id="CSE_IPSecurity">Konfigurer behandling af politik for IP-sikkerhed</string>
+      <string id="CSE_IPSecurity_Help">Denne politikindstilling bestemmer, hvornår politikker for IP-sikkerhed opdateres.
+
+Denne politikindstilling påvirker alle politikker, der bruger komponenten IP-sikkerhed i Gruppepolitik, f.eks. politikker i Computerkonfiguration\Windows-indstillinger\Sikkerhedsindstillinger\IP-sikkerhedspolitikker på lokal computer.
+
+Denne politikindstilling tilsidesætter tilpassede indstillinger, som blev angivet under installationen af det program, der implementerede politikken for IP-sikkerhed.
+
+Hvis du aktiverer denne politikindstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne. Hvis du deaktiverer denne politikindstilling eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Tillad behandling via en langsom netværksforbindelse" opdaterer politikkerne, selv når opdateringen sendes via en langsom netværksforbindelse, f.eks. en telefonlinje. Opdateringer via langsomme forbindelser kan medføre betydelige forsinkelser.
+
+Indstillingen "Anvend ikke under periodisk baggrundsbehandling" forhindrer systemet i at opdatere berørte politikker i baggrunden, mens computeren er i brug. Når baggrundsopdateringer er deaktiverede, træder politikændringer ikke i kraft, før den næste bruger logger på, eller systemet genstarter.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange politikimplementeringer angiver, at politikkerne kun opdateres, når de ændres. Du kan dog opdatere uændrede politikker, f.eks. ved at vælge en ønsket politikindstilling igen, hvis en bruger har ændret den.</string>
+      <string id="CSE_Registry">Konfigurer behandling af politik for registreringsdatabase</string>
+      <string id="CSE_Registry_Help">Denne politikindstilling bestemmer, hvornår politikker for registreringsdatabasen opdateres.
+
+Denne politikindstilling påvirker alle politikker i mappen Administrative skabeloner og alle andre politikker, der gemmer værdier i registreringsdatabasen. Den tilsidesætter de tilpassede indstillinger, som blev angivet under installationen af det program, der implementerede en politik for registreringsdatabasen.
+
+Hvis du aktiverer denne politikindstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne. Hvis du deaktiverer denne politikindstilling eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Anvend ikke under periodisk baggrundsbehandling" forhindrer systemet i at opdatere berørte politikker i baggrunden, mens computeren er i brug. Når baggrundsopdateringer er deaktiverede, træder politikændringer ikke i kraft, før den næste bruger logger på, eller systemet genstarter.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange politikimplementeringer angiver, at politikkerne kun opdateres, når de ændres. Du kan dog opdatere uændrede politikker, f.eks. ved at vælge en ønsket politikindstilling igen, hvis en bruger har ændret den.</string>
+      <string id="CSE_Scripts">Konfigurer behandling af politik for scripts</string>
+      <string id="CSE_Scripts_Help">Denne politikindstilling bestemmer, hvornår de politikker, der tildeler delte scripts, opdateres.
+
+Denne politikindstilling påvirker alle politikker, der bruger scriptkomponenten i Gruppepolitik, f.eks. politikker i Windows-indstillinger\Scripts. Den tilsidesætter de tilpassede indstillinger, som blev angivet under installationen af det program, der implementerede scriptpolitikken.
+
+Hvis du aktiverer denne politikindstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne. Hvis du deaktiverer denne indstilling eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Tillad behandling via en langsom netværksforbindelse" opdaterer politikkerne, selv når opdateringen sendes via en langsom netværksforbindelse, f.eks. en telefonlinje. Opdateringer via langsomme forbindelser kan medføre betydelige forsinkelser.
+
+Indstillingen "Anvend ikke under periodisk baggrundsbehandling" forhindrer systemet i at opdatere berørte politikker i baggrunden, mens computeren er i brug. Når baggrundsopdateringer er deaktiverede, træder politikændringer ikke i kraft, før den næste bruger logger på, eller systemet genstarter.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange politikimplementeringer angiver, at politikkerne kun opdateres, når de ændres. Du kan dog opdatere uændrede politikker, f.eks. ved at vælge en ønsket politikindstilling igen, hvis en bruger har ændret den.</string>
+      <string id="CSE_Security">Konfigurer behandling af sikkerhedspolitik</string>
+      <string id="CSE_Security_Help">Denne politikindstilling bestemmer, hvornår sikkerhedspolitikker opdateres.
+
+Denne politikindstilling påvirker alle politikker, der bruger sikkerhedskomponenten i Gruppepolitik, f.eks. politikker i Windows-indstillinger\Indstillinger for sikkerhed.
+
+Denne politikindstilling tilsidesætter tilpassede indstillinger, som blev angivet under installationen af det program, der implementerede sikkerhedspolitikken.
+
+Hvis du aktiverer denne politikindstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne. Hvis du deaktiverer denne politikindstilling eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Anvend ikke under periodisk baggrundsbehandling" forhindrer systemet i at opdatere berørte politikker i baggrunden, mens computeren er i brug. Når baggrundsopdateringer er deaktiverede, træder politikændringer ikke i kraft, før den næste bruger logger på, eller systemet genstarter.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange politikimplementeringer angiver, at politikkerne kun opdateres, når de ændres. Du kan dog opdatere uændrede politikker, f.eks. ved at vælge en ønsket politikindstilling igen, hvis en bruger har ændret den.</string>
+      <string id="CSE_Wireless">Konfigurer behandling af politik for trådløse netværk</string>
+      <string id="CSE_Wireless_Help">Denne politikindstilling bestemmer, hvornår politikker, der fastsætter indstillinger for trådløse netværk, opdateres.
+
+Denne politikindstilling gælder for alle politikker, der bruger komponenten til trådløse netværk i Gruppepolitik, f.eks. i Windows-indstillinger\Politikker for trådløse netværk.
+
+Politikken tilsidesætter tilpassede indstillinger, som det program, der implementerer det trådløse netværk, angav ved installationen.
+
+Hvis du aktiverer denne indstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne.
+
+Hvis du deaktiverer indstillingen eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Tillad behandling via en langsom netværksforbindelse" opdaterer politikkerne, selv når opdateringen sendes via en langsom netværksforbindelse, f.eks. en telefonlinje. Opdateringer via langsomme forbindelser kan medføre betydelige forsinkelser.
+
+Indstillingen "Anvend ikke under periodisk baggrundsbehandling" forhindrer systemet i at opdatere berørte politikker i baggrunden, mens computeren er i brug. Når baggrundsopdateringer er deaktiverede, træder politikændringer ikke i kraft, før den næste bruger logger på, eller systemet genstarter.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange politikimplementeringer angiver, at politikkerne kun opdateres, når de ændres. Du kan dog opdatere politikker, f.eks. ved at vælge en bestemt indstilling igen, hvis en bruger har ændret den.</string>
+      <string id="CSE_Wired">Konfigurer behandling af politik for traditionelle netværk</string>
+      <string id="CSE_Wired_Help">Denne politikindstilling bestemmer, hvornår politikker, der fastsætter indstillinger for traditionelle netværk, opdateres.
+
+Denne politikindstilling gælder for alle politikker, der bruger komponenten til traditionelle netværk i Gruppepolitik, f.eks. i Windows-indstillinger\Politikker for traditionelle netværk.
+
+Politikken tilsidesætter tilpassede indstillinger, som det program, der implementerer det traditionelle netværk, angav ved installationen.
+
+Hvis du aktiverer denne indstilling, kan du bruge afkrydsningsfelterne til at ændre indstillingerne.
+
+Hvis du deaktiverer indstillingen eller ikke konfigurerer den, har den ingen indflydelse på systemet.
+
+Indstillingen "Tillad behandling via en langsom netværksforbindelse" opdaterer politikkerne, selv når opdateringen sendes via en langsom netværksforbindelse, f.eks. en telefonlinje. Opdateringer via langsomme forbindelser kan medføre betydelige forsinkelser.
+
+Indstillingen "Anvend ikke under periodisk baggrundsbehandling" forhindrer systemet i at opdatere berørte politikker i baggrunden, mens computeren er i brug. Når baggrundsopdateringer er deaktiverede, træder politikændringer ikke i kraft, før den næste bruger logger på, eller systemet genstarter.
+
+Indstillingen "Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret", opdaterer og anvender politikkerne igen, selvom politikkerne ikke er blevet ændret. Mange politikimplementeringer angiver, at politikkerne kun opdateres, når de ændres. Du kan dog opdatere politikker, f.eks. ved at vælge en bestemt indstilling igen, hvis en bruger har ændret den.</string>
+
+      <string id="DenyRsopToInteractiveUser">Bestem, om interaktive brugere kan oprette data for gældende politikindstilling</string>
+      <string id="DenyRsopToInteractiveUser_Help">Denne politikindstilling styrer brugeres mulighed for at få vist deres data for gældende politikindstilling.
+
+Som standard kan brugere, der er logget på interaktivt, få vist deres egne data for gældende politikindstilling.
+
+Hvis du aktiverer denne politikindstilling, kan interaktive brugere ikke generere data for gældende politikindstilling
+
+Hvis du deaktiverer eller ikke konfigurerer denne politikindstilling, kan interaktive brugere generere gældende politikindstilling.
+
+Bemærk! Denne politikindstilling påvirker ikke administratorer. Hvis du aktiverer eller deaktiverer denne politikindstilling, kan administratorer som standard få vist data for gældende politikindstilling.
+
+Bemærk! Hvis du vil se data for gældende politikindstilling på en klientcomputer, skal du bruge RSoP-snap-in i Microsoft Management Console. Du kan starte RSoP-snap-in fra kommandolinjen ved at skrive RSOP.msc.
+
+Bemærk! Denne indstilling findes både som en indstilling for brugerkonfiguration og computerkonfiguration.
+
+Se også politikindstillingen "Slå logføring af gældende politikindstilling fra" i Computerkonfiguration\Administrative skabeloner\System\Gruppepolitik.</string>
+      <string id="DisableAutoADMUpdate">Slå automatisk opdatering af ADM-filer fra</string>
+      <string id="DisableAutoADMUpdate_Help">Forhindrer systemet i automatisk at opdatere kildefilerne til Administrative skabeloner, når du åbner redigeringsprogrammet til gruppepolitik.  Administratorer kan være interesserede i at bruge dette, hvis de er bekymrede for den mængde plads, der bruges på systemdiskenheden for en domænecontroller.
+
+Når du starter redigeringsprogrammet til gruppepolitik, udføres der som standard en sammenligning af tidsstempler på kildefilerne i den lokale mappe %SYSTEMROOT%\inf og de kildefiler, der er gemt i gruppepolitikobjektet.  Hvis de lokale filer er nyere, kopieres de til gruppepolitikobjektet.
+
+Hvis indstillingens status ændres til Aktiveret, bliver der ikke kopieret nogen kildefiler til gruppepolitikobjektet.
+
+Hvis indstillingens status ændres til Deaktiveret, anvendes standardfunktionaliteten.  Filerne bliver altid kopieret til gruppepolitikobjektet, hvis de har et senere tidsstempel.
+
+Bemærk! Hvis politikindstillingen "Brug altid lokale ADM-filer til redigeringsprogrammet til gruppepolitik" i Computerkonfiguration er aktiveret, ignoreres denne indstilling, og den opfattes altid som Aktiveret.</string>
+      <string id="DisableBackgroundPolicy">Slå baggrundsopdatering af gruppepolitik fra</string>
+      <string id="DisableBackgroundPolicy_Help">Denne politikindstilling forhindrer, at gruppepolitikken bliver opdateret, når computeren bruges. Denne politikindstilling kan anvendes på gruppepolitikken for computere, brugere og domænecontrollere.
+
+Hvis du aktiverer denne politikindstilling, vil systemet vente med at opdatere computeren og brugerpolitikkerne indtil den aktuelle bruger logger af systemet.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, kan opdateringer anvendes, mens brugere arbejder. Opdateringsfrekvensen bestemmes af politikindstillingerne "Angiv opdateringsinterval for gruppepolitik for computere" og "Angiv opdateringsinterval for gruppepolitik for brugere".
+
+Bemærk! Hvis du ændrer denne politikindstilling, skal computeren genstartes, før ændringerne træder i kraft.</string>
+      <string id="DisableUsersFromMachGP">Fjern brugeres mulighed for at starte opdatering af computerpolitik</string>
+      <string id="DisableUsersFromMachGP_Help">Opdateringsinterval for gruppepolitik for brugere giver dig mulighed for at styre en brugers mulighed for at starte en computerpolitikopdatering.
+
+Hvis du aktiverer denne politikindstilling, kan brugerne ikke starte en computerpolitikopdatering. Computerpolitikken anvendes stadig ved start, eller når en officiel politikopdatering forekommer.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, anvendes standardindstillingen. Computerpolitikken anvendes som standard, når computeren startes. Den anvendes også efter et angivet opdateringsinterval, eller den kan startes manuelt af brugeren.
+
+Bemærk! Denne politikindstilling gælder kun for ikke-administratorer. Administratorerne kan stadig starte en opdatering af computerpolitikken på et vilkårligt tidspunkt uafhængigt af, hvordan politikindstillingen er konfigureret.
+
+Se også politikindstillingen til "Angiv opdateringsinterval for gruppepolitik for computere" for at ændre politikopdateringsintervallet.
+
+Bemærk! Hvis du ændrer denne politikindstilling, skal computeren genstartes, før ændringerne træder i kraft.</string>
+      <string id="EnforcePoliciesOnly">Aktiver Vis kun politikker</string>
+      <string id="EnforcePoliciesOnly_Help">Denne politikindstilling medfører, at administratorer ikke kan få vist eller bruge gruppepolitikindstillinger.
+
+En .adm-fil (fil til administration af Gruppepolitik) kan både indeholde ægte indstillinger og andre indstillinger. Ægte indstillinger, der fuldt understøttes af Gruppepolitik, skal bruge poster i undernøglerne Software\Policies eller Software\Microsoft\Windows\CurrentVersion\Policies i registreringsdatabasen. Andre indstillinger, der ikke fuldt understøttes, bruger poster i andre undernøgler.
+
+Hvis du aktiverer politikindstillingen, vil kommandoen "Vis kun politikker" være aktiveret, og administratorer kan ikke deaktivere den. Det bevirker, at kun ægte indstillinger vises i redigeringsprogrammet til gruppepolitik, mens andre indstillinger ikke vises.
+
+Hvis du deaktiverer politikindstillingen eller undlader at konfigurere den, aktiveres kommandoen "Vis kun politikker" som standard, men administratorer kan få vist andre indstillinger ved at deaktivere kommandoen "Vis kun politikker".
+
+Bemærk! Hvis du vil finde kommandoen "Vis kun politikker", skal du klikke på mappen Administrative skabeloner (en af dem) i redigeringsprogrammet til gruppepolitik, højreklikke på den samme mappe og derefter pege på "Vis".
+
+ I redigeringsprogrammet til gruppepolitik har andre indstillinger et rødt ikon for at adskille dem fra ægte indstillinger, som har et blåt ikon.</string>
+      <string id="GPDCOptionAny">Brug en hvilken som helst domænecontroller</string>
+      <string id="GPDCOptionInherit">Arv fra Active Directory-snap-in-programmer</string>
+      <string id="GPDCOptionPDC">Brug den primære domænecontroller</string>
+      <string id="GPDCOptions">Konfigurer valg af domænecontroller til Gruppepolitik</string>
+      <string id="GPDCOptions_Help">Denne politikindstilling bestemmer, hvilken domænecontroller snap-in til redigeringsprogrammet til gruppepolitik benytter.
+
+Hvis du aktiverer denne politikindstilling, kan du styre, hvilken domænecontroller der bruges, i henhold til disse indstillinger:
+
+"Brug den primære domænecontroller" angiver, at snap-in'et til redigeringsprogrammet til gruppepolitik læser og skriver ændringer til den domænecontroller, der er reserveret som PDC Operations Master for domænet.
+
+"Arv fra Active Directory-snap-in-programmer" angiver, at snap-in til redigeringsprogrammet til gruppepolitik læser og skriver ændringer til den domænecontroller, som snap-in-programmerne Active Directory-brugere og -computere eller Active Directory-områder og -tjenester bruger.
+
+"Brug en hvilken som helst tilgængelig domænecontroller" angiver, at snap-in til redigeringsprogrammet til gruppepolitik kan læse og skrive ændringer til alle tilgængelige domænecontrollere.
+
+Hvis du deaktiverer indstillingen eller undlader at konfigurere den, bruger snap-in til redigeringsprogrammet til gruppepolitik den domænecontroller, der er reserveret som PDC Operations Master for domænet.
+
+Bemærk! Hvis du vil skifte PDC Operations Master for et domæne, skal du højreklikke på domænet i Active Directory-brugere og -computere og derefter klikke på "Operations Masters".</string>
+      <string id="GPTransferRate">Konfigurer genkendelse af langsom forbindelse for Gruppepolitik</string>
+      <string id="GPTransferRate_Help">Denne politikindstilling definerer en langsom forbindelse til brug i forbindelse med anvendelse og opdatering af gruppepolitik.
+
+Hvis dataoverførselshastigheden fra den domænecontroller, der foretager politikopdateringer på computere i denne gruppe, er lavere end den hastighed, der er defineret af denne indstilling, betragtes forbindelsen som langsom.
+
+Hvordan systemet reagerer på langsomme forbindelser varierer fra politik til politik. Det program, der implementerer politikken, kan definere, hvordan systemet skal reagere på langsomme forbindelser. Desuden giver den politik, der behandler indstillinger i denne mappe, dig mulighed for at tilsidesætte de handlinger, der er defineret for langsomme forbindelser.
+
+Hvis du aktiverer denne indstilling, kan du skrive et decimaltal mellem 0 og 4.294.967.200 i boksen "Forbindelseshastighed", der angiver en overførselshastighed i kilobit pr. sekund. Enhver forbindelse, der er langsommere end denne hastighed, betragtes som langsom. Hvis du skriver 0, betragtes alle forbindelser som hurtige.
+
+Hvis du deaktiverer indstillingen eller ikke konfigurerer den, bruges standardværdien på 500 kilobit pr. sekund.
+
+Indstillingen vises i mapperne Computerkonfiguration og Brugerkonfiguration. Indstillingen i Computerkonfiguration definerer en langsom forbindelse for politikker i mappen Computerkonfiguration. Indstillingen i Brugerkonfiguration definerer en langsom forbindelse for politikker i mappen Brugerkonfiguration.
+
+Se også politikken "Find ikke langsomme netværksforbindelser" og relaterede politikker i Computerkonfiguration\Administrative skabeloner\System\Brugerprofil. Bemærk! Hvis profilserveren har IP-forbindelse, bruges indstillingen for forbindelseshastighed. Hvis profilserveren ikke har IP-forbindelse, bruges SMB- timing.</string>
+      <string id="GroupPolicyRefreshRate">Angiv opdateringsinterval for gruppepolitik for computere</string>
+      <string id="GroupPolicyRefreshRate_Help">Denne politikindstilling angiver, hvor ofte gruppepolitikken for computere opdateres, mens computeren er i brug (i baggrunden). Denne politikindstilling angiver kun en baggrundsopdateringshastighed for gruppepolitikker i mappen Computerkonfiguration.
+
+Udover baggrundsopdateringer opdateres gruppepolitikken for computeren altid, når systemet starter.
+
+Gruppepolitikken for computeren opdateres som standard i baggrunden hvert 90. minut, med en vilkårlig variation på 0 til 30 minutter.
+
+Hvis du aktiverer denne politikindstilling, kan du angive et opdateringsinterval fra 0 til 64.800 minutter (45 dage). Hvis du vælger 0 minutter, vil computeren forsøge at opdatere gruppepolitikken hvert 7. sekund. Da opdateringer kan forstyrre brugerens arbejde og forøge netværkstrafikken, er korte opdateringsintervaller ikke velegnede til de fleste typer installationer.
+
+Hvis du deaktiverer denne indstilling, opdateres gruppepolitikken hvert 90. minut (standard). Du kan angive, at gruppepolitikken aldrig skal opdateres, mens computeren er i brug, ved at vælge politikindstillingen "Slå baggrundsopdatering af gruppepolitik fra".
+
+Politikindstillingen "Angiv opdateringsinterval for gruppepolitik for computere" giver dig desuden mulighed for at angive, hvor meget det faktiske opdateringsinterval skal variere. For at forhindre klienter med det samme opdateringsinterval i at anmode om opdateringer samtidigt, varierer systemet opdateringsintervallet for hver klient med et vilkårligt antal minutter. Tallet, du skriver i feltet for antal minutter, angiver en maksimal grænse for variationen. Hvis du f.eks. skriver 30 minutter, vil systemet vælge en variation på 0 til 30 minutter. Hvis du skriver et højt tal, oprettes der et bredt interval, og det er mindre sandsynligt, at klientanmodninger overlapper hinanden. Opdateringer kan dog blive væsentligt forsinket.
+
+Denne indstilling angiver opdateringsintervallet for gruppepolitikken for computere. Hvis du vil angive en opdateringshyppighed for brugerpolitikker, skal du bruge indstillingen "Angiv opdateringsinterval for gruppepolitik for brugere" (findes i Brugerkonfiguration\Administrative skabeloner\System\Gruppepolitik).
+
+Denne indstilling bruges kun, når indstillingen "Slå baggrundsopdatering af gruppepolitik fra" ikke er aktiveret.
+
+Bemærk! Du bør overveje at oplyse brugerne om, at deres politik opdateres regelmæssigt, så de genkender tegnene på en politikopdatering. Når Gruppepolitik opdateres, opdateres Windows-skrivebordet. Herved blinker det et øjeblik, og åbne menuer lukkes. Begrænsninger, som er et resultat af gruppepolitikker, f.eks. de politikker, der begrænser, hvilke programmer brugerne kan køre, kan desuden muligvis forstyrre igangværende opgaver.</string>
+      <string id="GroupPolicyRefreshRateDC">Angiv opdateringsinterval for gruppepolitik for domænecontrollere</string>
+      <string id="GroupPolicyRefreshRateDC_Help">Denne politikindstilling angiver, hvor ofte gruppepolitikken opdateres på domænecontrollere, mens de kører (i baggrunden). De opdateringer, som defineres af denne indstilling, foretages i tillæg til opdateringer, der udføres, når systemet starter.
+
+Gruppepolitik på domænecontrollere opdateres som standard hvert 5. minut.
+
+Hvis du aktiverer denne politikindstilling, kan du angive et opdateringsinterval fra 0 til 64.800 minutter (45 dage). Hvis du vælger 0 minutter, vil domænecontrolleren forsøge at opdatere gruppepolitikken hvert 7. sekund. Da opdateringer kan forstyrre brugerens arbejde og forøge netværkstrafikken, er korte opdateringsintervaller ikke velegnede til de fleste typer installationer.
+
+Hvis du deaktiverer eller undlader at konfigurere denne indstilling, opdaterer domænecontrolleren Gruppepolitik hvert 5. minut (standard). Du kan angive, at gruppepolitikker for brugere aldrig skal opdateres, mens computeren er i brug, ved at vælge politikindstillingen "Slå baggrundsopdatering af gruppepolitik fra".
+
+Denne politikindstilling giver dig desuden mulighed for at angive, hvor meget det faktiske opdateringsinterval skal variere. For at forhindre domænecontrollere med det samme opdateringsinterval i at anmode om opdateringer samtidigt, varierer systemet opdateringsintervallet for hver domænecontroller med et vilkårligt antal minutter. Tallet, du skriver i feltet for antal minutter, angiver en maksimal grænse for variationen. Hvis du f.eks. skriver 30 minutter, vil systemet vælge en variation på 0 til 30 minutter. Hvis du skriver et højt tal, oprettes der et bredt interval, og det er mindre sandsynligt, at opdateringsanmodninger overlapper hinanden. Opdateringer kan dog blive væsentligt forsinket.
+
+Bemærk! Denne indstilling bruges kun, når du opretter en politik for et domæne, et område, en organisationsenhed eller en brugerdefineret gruppe. Hvis du kun opretter en politik for en lokal computer, vil systemet ignorere denne indstilling.</string>
+      <string id="GroupPolicyRefreshRateUser">Angiv opdateringsinterval for gruppepolitik for brugere</string>
+      <string id="GroupPolicyRefreshRateUser_Help">Denne politikindstilling angiver, hvor ofte gruppepolitikken for brugere opdateres, mens computeren er i brug (i baggrunden). Denne politikindstilling angiver kun en baggrundsopdateringshastighed for gruppepolitikker i mappen Brugerkonfiguration.
+
+Udover baggrundsopdateringer opdateres gruppepolitikken for brugere altid, når brugere logger på.
+
+Gruppepolitikken for brugere opdateres som standard i baggrunden hvert 90. minut, med en vilkårlig variation på 0 til 30 minutter.
+
+Hvis du aktiverer denne politikindstilling, kan du angive et opdateringsinterval fra 0 til 64.800 minutter (45 dage). Hvis du vælger 0 minutter, vil computeren forsøge at opdatere gruppepolitikken for brugere hvert 7. sekund. Da opdateringer kan forstyrre brugerens arbejde og forøge netværkstrafikken, er korte opdateringsintervaller ikke velegnede til de fleste typer installationer.
+
+Hvis du deaktiverer denne indstilling, opdateres gruppepolitikken for brugere hvert 90. minut (standard). Du kan angive, at gruppepolitikken for brugere aldrig skal opdateres, mens computeren er i brug, ved at vælge politikindstillingen "Slå baggrundsopdatering af gruppepolitik fra".
+
+Denne politikindstilling giver dig desuden mulighed for at angive, hvor meget det faktiske opdateringsinterval skal variere. For at forhindre klienter med det samme opdateringsinterval i at anmode om opdateringer samtidigt, varierer systemet opdateringsintervallet for hver klient med et vilkårligt antal minutter. Tallet, du skriver i feltet for antal minutter, angiver en maksimal grænse for variationen. Hvis du f.eks. skriver 30 minutter, vil systemet vælge en variation på 0 til 30 minutter. Hvis du skriver et højt tal, oprettes der et bredt interval, og det er mindre sandsynligt, at klientanmodninger overlapper hinanden. Opdateringer kan dog blive væsentligt forsinket.
+
+Vigtigt! Hvis indstillingen "Slå baggrundsopdatering af gruppepolitik fra" er aktiveret, ignoreres denne indstilling.
+
+Bemærk! Denne indstilling angiver opdateringsintervallet for gruppepolitikker for brugere. Hvis du vil angive en opdateringshyppighed for gruppepolitikker for computere, skal du bruge indstillingen "Opdateringsinterval for gruppepolitik for computere" (findes i Computerkonfiguration\Administrative skabeloner\System\Gruppepolitik).
+
+Tip! Du bør overveje at oplyse brugerne om, at deres politik opdateres regelmæssigt, så de genkender tegnene på en politikopdatering. Når Gruppepolitik opdateres, opdateres Windows-skrivebordet. Herved blinker det et øjeblik, og åbne menuer lukkes. Begrænsninger, som er et resultat af gruppepolitikker, f.eks. de politikker, der begrænser, hvilke programmer en bruger kan køre, kan desuden muligvis forstyrre igangværende opgaver.</string>
+      <string id="NewGPODisplayName">Angiv standardnavn for nye gruppepolitikobjekter</string>
+      <string id="NewGPODisplayName_Help">Denne politikindstilling giver dig mulighed for at angive standardnavnet for nye gruppepolitikobjekter.
+
+Med denne indstilling kan du angive standardnavnet på nye gruppepolitikobjekter, der oprettes ud fra administrationsværktøjer til gruppepolitik, som overholder politikken, herunder fanen Gruppepolitik i Active Directory-værktøjer og i objektbrowseren til gruppepolitik.
+
+Det viste navn kan indeholde miljøvariabler og må højst være på 255 tegn.
+
+Hvis indstillingen er deaktiveret eller ikke konfigureret, benyttes standardnavnet Nyt gruppepolitikobjekt.</string>
+      <string id="NewGPOLinksDisabled">Opret nye links til gruppepolitikobjekter, der som standard er deaktiveret</string>
+      <string id="NewGPOLinksDisabled_Help">Denne politikindstilling giver dig mulighed for at oprette nye links til gruppepolitikobjekter i deaktiveret tilstand.
+
+Hvis du aktiverer denne politikindstilling, kan du som standard oprette nye links til gruppepolitikobjekter i deaktiveret tilstand. Når du har konfigureret og testet de nye objektlinks ved hjælp af et administrationsværktøj til gruppepolitik, som overholder politikken, f.eks. Active Directory-brugere og -computere eller Active Directory-områder og -tjenester, kan du aktivere objektlinkene, så de kan bruges på systemet.
+
+Hvis du deaktiverer indstillingen eller undlader at konfigurere den, oprettes nye links til gruppepolitikobjekter i aktiveret tilstand. Hvis de ikke skal fungere, før de er konfigureret og testet, skal du deaktivere objektlinket.</string>
+      <string id="OnlyUseLocalAdminFiles">Brug altid lokale ADM-filer til editoren til gruppepolitikobjekter</string>
+      <string id="OnlyUseLocalAdminFiles_Help">Denne politikindstilling giver dig mulighed for altid at bruge lokale ADM-filer til gruppepolitik-snap-in.
+
+Når du redigerer et gruppepolitikobjekt ved hjælp af snap-in'en til redigeringsprogrammet til gruppepolitik, indlæses ADM-filerne som standard fra gruppepolitikobjektet til snap-in'en til redigeringsprogrammet til gruppepolitik. Dette giver dig mulighed for at bruge den samme version af ADM-filerne, som blev brugt til at oprette gruppepolitikobjektet, når du redigerer dette gruppepolitikobjekt.
+
+Det giver følgende funktionalitet:
+
+-  Hvis du oprindeligt oprettede gruppepolitikobjektet med et dansk system, indeholder gruppepolitikobjektet danske ADM-filer.
+
+-  Hvis du på et senere tidspunkt redigerer gruppepolitikobjektet på et system med et andet sprog, får du de danske ADM-filer, som de var i gruppepolitikobjektet.
+
+Du kan bruge denne indstilling til at ændre funktionaliteten.
+
+Hvis du aktiverer denne indstilling, bruger snap-in'en til redigeringsprogrammet til gruppepolitik altid de lokale ADM-filer i mappen %windir%\inf, når du redigerer gruppepolitikobjekter.
+
+Det giver følgende funktionalitet:
+
+-  Hvis du oprindeligt oprettede gruppepolitikobjektet på et dansk system, og du derefter redigerer gruppepolitikobjektet på et japansk system, bruger snap-in'en til redigeringsprogrammet til gruppepolitik de lokale japanske ADM-filer, og teksten vises på japansk under Administrative skabeloner.
+
+Hvis du deaktiverer indstillingen eller undlader at konfigurere den, indlæser snap-in'en til redigeringsprogrammet til gruppepolitik alle ADM-filerne fra det aktuelle gruppepolitikobjekt.
+
+Bemærk! Hvis de nødvendige ADM-filer ikke findes lokalt i mappen %windir%\inf, får du muligvis ikke vist alle indstillingerne i det gruppepolitikobjekt, du redigerer.</string>
+      <string id="PolicyPolicies">Gruppepolitik</string>
+      <string id="RSoPLogging">Slå logføring af gældende politikindstilling fra</string>
+      <string id="RSoPLogging_Help">Med denne indstilling kan du aktivere eller deaktivere logføring af gældende politikindstilling (RSoP) på en klientcomputer.
+
+Gældende politikindstilling logfører oplysninger om de gruppepolitikindstillinger, der er anvendt på klientcomputeren. Disse data omfatter f.eks. oplysninger om, hvilke gruppepolitikobjekter (GPO) der er brugt, hvor de kom fra, og hvilke indstillinger for udvidelser på klientsiden der er medtaget.
+
+Hvis du aktiverer denne indstilling, slås logføring af gældende politikindstilling fra.
+
+Hvis du deaktiverer eller ikke konfigurerer denne indstilling, slås logføring af gældende politikindstilling til. Som standard er logføring af gældende politikindstilling altid slået til.
+
+Bemærk! Hvis du vil have vist de oplysninger gældende politikindstilling, der er logført på en klientcomputer, kan du bruge snap-in'en til Gældende politikindstilling i MMC (Microsoft Management Console).</string>
+      <string id="UserPolicyMode">Konfigurer tilstand for behandling af tilbagekobling af brugergruppepolitik</string>
+      <string id="UserPolicyMode_Help">Denne politikindstilling giver systemet besked på at anvende sættet af gruppepolitikobjekter for computeren på enhver bruger, som logger på en computer, der er berørt af indstillingen. Den er beregnet til computere med specialbrug, f.eks. på offentlige steder, laboratorier og klasseværelser, hvor du skal ændre brugerindstillingen baseret på den computer, der bruges.
+
+Brugerens gruppepolitikobjekter fastslår som standard, hvilke brugerindstillinger der skal anvendes. Hvis denne indstilling er aktiveret, fastslår computerens gruppepolitikobjekter, når en bruger logger på denne computer, hvilket sæt gruppepolitikobjekter der gælder.
+
+Hvis aktiverer denne politikindstilling, kan du vælge en af følgende tilstande i boksen Tilstand:
+
+"Erstat" angiver, at de brugerindstillinger, der er defineret i computerens gruppepolitikobjekter, erstatter de brugerindstillinger, der normalt gælder for brugeren.
+
+"Flet" angiver, at de brugerindstillinger, der er defineret i computerens gruppepolitikobjekter, og de brugerindstillinger, der normalt gælder for brugeren, flettes sammen. Hvis indstillingerne er i konflikt med hinanden, vil brugerindstillinger i computerens gruppepolitikobjekter tilsidesætte de indstillinger, der normalt gælder for brugeren.
+
+Hvis du deaktiverer eller ikke konfigurerer indstillingen, vil brugerens gruppepolitikobjekter fastslå, hvilke brugerindstillinger der skal gælde.
+
+Bemærk! Denne indstilling gælder kun, når både computerkontoen og brugerkontoen findes i Windows 2000-domæner eller nyere.</string>
+      <string id="UserPolicyMode_Merge">Flet</string>
+      <string id="UserPolicyMode_Replace">Erstat</string>
+      <string id="CorpConnSyncWaitTime">Angiv ventetid for arbejdspladsforbindelsen for behandling af politik</string>
+      <string id="CorpConnSyncWaitTime_Help">Denne politik angiver, hvor længe gruppepolitikken skal vente på beskeder om arbejdspladsforbindelsen under behandling af startpolitik. Hvis behandling af startpolitikken er synkron, blokeres computeren, indtil arbejdspladsforbindelsen er tilgængelig, eller standardventetiden er nået. Hvis behandling af startpolitikken er asynkron, blokeres computeren ikke, og behandling af politik foregår i baggrunden. I begge tilfælde tilsidesætter konfiguration af denne politikindstilling ventetider, der er beregnet af systemet.
+
+Hvis du aktiverer denne politikindstilling, bruger Gruppepolitik denne administrativt konfigurerede maks. ventetid for arbejdspladsforbindelsen og tilsidesætter alle standardventetider og ventetider, der er beregnet af systemet.
+
+Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, anvender Gruppepolitik standardventetiden på 30 sek. på computere, som kører med operativsystemet Windows 7 eller nyere konfigureret til arbejdspladsforbindelse.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Indstillinger for afhjælpning</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">Behandle indstillinger for afhjælpning</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">Tjenesten Windows-skrifttypecache skal have adgang til at downloade skrifttyper og skrifttypekatalogdata fra onlineudbydere af skrifttyper.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">Værdi for langsom forbindelse: [talfelt] millisekunder</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Timeout-værdi: [talfelt] millisekunder</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">minut:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Hvor længe der skal ventes (i sekunder):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Tillad behandling via en langsom netværksforbindelse</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Tillad behandling via en langsom netværksforbindelse</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Anvend ikke under periodisk baggrundsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Tillad behandling via en langsom netværksforbindelse</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Anvend ikke under periodisk baggrundsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Tillad behandling via en langsom netværksforbindelse</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Tillad behandling via en langsom netværksforbindelse</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Anvend ikke under periodisk baggrundsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Tillad behandling via en langsom netværksforbindelse</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Anvend ikke under periodisk baggrundsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Anvend ikke under periodisk baggrundsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Tillad behandling via en langsom netværksforbindelse</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Anvend ikke under periodisk baggrundsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Anvend ikke under periodisk baggrundsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Tillad behandling via en langsom netværksforbindelse</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Anvend ikke under periodisk baggrundsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Tillad behandling via en langsom netværksforbindelse</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Anvend ikke under periodisk baggrundsbehandling</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Udfør behandlingen, selvom gruppepolitikobjekterne ikke er blevet ændret</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Når editoren til gruppepolitikobjekter vælger en domænecontroller, der skal bruges, skal den:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Forbindelseshastighed (Kbps):</decimalTextBox>
+        <text> </text>
+        <text>Skriv 0 for at deaktivere genkendelse af langsomme forbindelser.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Forbindelseshastighed (Kbps):</decimalTextBox>
+        <text> </text>
+        <text>Skriv 0 for at deaktivere genkendelse af langsomme forbindelser.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">Behandl altid WWAN-forbindelser som en langsom forbindelse</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>Med denne indstilling kan du tilpasse, hvor ofte Gruppepolitik anvendes</text>
+        <text>på computere. Intervallet er fra 0 til 44640 minutter (31 dage).</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Minutter:</decimalTextBox>
+        <text> </text>
+        <text>Dette er et vilkårligt tidsrum, som er føjet til opdateringsintervallet for at forhindre,</text>
+        <text>at alle klienter anmoder om gruppepolitik på samme tid.</text>
+        <text>Intervallet er fra 0 til 1440 minutter (24 timer)</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Minutter:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>Med denne indstilling kan du tilpasse, hvor ofte Gruppepolitik anvendes</text>
+        <text>på domænecontrollere. Intervallet er fra 0 til 44640 minutter (31 dage).</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Minutter:</decimalTextBox>
+        <text> </text>
+        <text>Dette er et vilkårligt tidsrum, som er føjet til opdateringsintervallet for at forhindre,</text>
+        <text>at alle klienter anmoder om gruppepolitik på samme tid.</text>
+        <text>Intervallet er fra 0 til 1440 minutter (24 timer)</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Minutter:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>Med denne indstilling kan du tilpasse, hvor ofte Gruppepolitik anvendes</text>
+        <text>på brugere. Intervallet er fra 0 til 44640 minutter (31 dage).</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Minutter:</decimalTextBox>
+        <text> </text>
+        <text>Dette er et vilkårligt tidsrum, som er føjet til opdateringsintervallet for at forhindre,</text>
+        <text>at alle klienter anmoder om gruppepolitik på samme tid.</text>
+        <text>Intervallet er fra 0 til 1440 minutter (24 timer)</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Minutter:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>Navn på gruppepolitikobjekt:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Tilstand:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Hvor længe der skal ventes (i sekunder):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

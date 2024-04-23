@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2015 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Microsoft Windows Device Guard</displayName>
+  <description>Windows Device Guard-säkerhet</description>
+  <resources>
+    <stringTable>
+      <string id="DeviceGuard">Device Guard</string>
+      <string id="VirtualizationBasedSecurity">Aktivera virtualiseringsbaserad säkerhet</string>
+      <string id="VirtualizationBasedSecurityHelp">Anger om Virtualiseringsbaserad säkerhet är aktiverat.
+
+Virtualiseringsbaserad säkerhet använder Hypervisor-programmet i Windows för att ge stöd åt säkerhetstjänster. Virtualiseringsbaserad säkerhet kräver säker start och kan också aktiveras med DMA-skydd. DMA-skydd kräver maskinvarustöd och aktiveras bara på korrekt konfigurerade enheter.
+
+Virtualiseringsbaserat skydd för kodintegritet
+
+Den här inställningen aktiverar virtualiseringsbaserat skydd av kodintegritet i kernelläge. När detta är aktiverat används minnesskydd i kernelläge och sökvägen för kodintegritetsvalidering skyddas av funktionen Virtualiseringsbaserad säkerhet.
+
+Alternativet Inaktiverat fjärrinaktiverade virtualiseringsbaserat skydd för kodintegritet om det tidigare var aktiverat med alternativet Aktiverat utan lås.
+
+Alternativet Aktiverat med UEFI-lås säkerställer att virtualiseringsbaserat skydd för kodintegritet inte kan fjärrinaktiveras. Om du vill inaktivera funktionen måste du ställa in grupprincip på Inaktiverad och ta bort säkerhetsfunktionerna från varje dator med en fysiskt närvarande användare för att kunna rensa den beständiga konfigurationen i UEFI.
+
+Alternativet Aktiverat utan lås gör att Virtualiseringsbaserat skydd för kodintegritet kan fjärrinaktiveras med hjälp av grupprincip.
+
+Alternativet Inte konfigurerat lämnar principinställningen odefinierad. grupprincip skriver inte principinställningen till registret och påverkar inte datorer och användare. Om det finns en aktuell inställning i registret ändras den inte.
+
+Alternativet Kräv UEFI-minnesattributtabell aktiverar endast virtualiseringsbaserat skydd av kodintegritet på enheter med stöd för inbyggd UEFI-programvara för minnesattributtabellen. Enheter utan tabellen för UEFI-minnesattribut kan ha inbyggd programvara som inte är kompatibel med Virtualiseringsbaserat skydd för kodintegritet, vilket i vissa fall kan leda till krascher, dataförluster eller inkompatibilitet med vissa plugin-kort. Om du inte ställer in det här alternativet ska målenheterna testas för att säkerställa kompatibilitet.
+
+Varning! Alla drivrutiner i systemet måste vara kompatibla med den här funktionen eller så kan systemet krascha. Kontrollera att den här principinställningen endast distribueras till datorer som är kända för att vara kompatibla.
+
+Credential Guard
+
+Med den här inställningen kan användare aktivera Credential Guard med virtualiseringsbaserad säkerhet för att skydda autentiseringsuppgifter.
+
+För Windows 11 21H2 och tidigare inaktiveras Credential Guard på distans om det tidigare var aktiverat med alternativet Aktiverat utan lås. För senare versioner fjärrinaktiverade inaktiveras Credential Guard om det tidigare var aktiverat med alternativet Aktiverat utan lås, eller om det inte har konfigurerats.
+
+Alternativet Aktiverat med UEFI-lås säkerställer att Credential Guard inte kan fjärrinaktiveras. Om du vill inaktivera funktionen måste du ställa in grupprincip på Inaktiverad och ta bort säkerhetsfunktionerna från varje dator med en fysiskt närvarande användare för att kunna rensa den beständiga konfigurationen i UEFI.
+
+Alternativet Aktiverat utan lås gör att Credential Guard kan fjärrinaktiveras med hjälp av grupprincip. Enheterna som använder den här inställningen måste köra minst Windows 10 (version 1511).
+
+För Windows 11 21H2 och tidigare innebär alternativet Inte konfigurerat att principinställningen inte är definierad. grupprincip skriver inte principinställningen till registret och påverkar inte datorer och användare. Om det finns en aktuell inställning i registret ändras den inte. Om det inte finns någon aktuell inställning i registret för senare versioner, kommer alternativet Inte konfigurerat att aktivera Credential Guard utan UEFI-lås.
+
+Säker start
+
+Den här inställningen anger konfigurationen av Säker start för att skydda startkedjan.
+
+Inställningen Inte konfigurerad är standardinställningen och gör att administrativa användare kan konfigurera funktionen.
+
+Alternativet Aktiverat aktiverar säker start på maskinvara som stöds.
+
+Alternativet Inaktiverat inaktiverar säker start oavsett maskinvarustöd.
+
+Maskinvarubaserat stackskydd i kernelläge
+
+Den här inställningen aktiverar maskinvarubaserat stackskydd för kernellägeskod. När den här säkerhetsfunktionen är aktiverad härdas datastackar i kernelläge med maskinvarubaserade skuggstackar som lagrar avsedda returadressmål för att säkerställa att programkontrollflödet inte manipuleras.
+
+Den här säkerhetsfunktionen har följande krav:
+1) Processormaskinvaran stöder maskinvarubaserade skuggstackar.
+2) Virtualiseringsbaserat skydd för kodintegritet är aktiverat.
+
+Om någon av kraven inte uppfylls aktiveras inte den här funktionen även om ett aktiverat alternativ har valts för den här funktionen. Observera att om du väljer alternativet Aktiverat för den här funktionen aktiveras inte virtualiseringsbaserat skydd för kodintegritet automatiskt, vilket måste göras separat.
+
+Enheter som aktiverar den här säkerhetsfunktionen måste köra minst Windows 11 (version 22H2).
+
+Alternativet Inaktiverat inaktiverar maskinvarubaserat stackskydd i kernelläge.
+
+Alternativet Aktiverat i granskningsläge aktiverar maskinvarubaserat stackskydd i kernelläge i granskningsläge, där skuggstacksöverträdelser inte är allvarliga och loggas i systemets händelselogg.
+
+Alternativet Aktiverat i tvingande läge aktiverar maskinvarubaserat stackskydd i kernelläge i tvingande läge, där skuggstackfel är allvarliga.
+
+Alternativet Inte konfigurerat lämnar principinställningen odefinierad. grupprincip skriver inte principinställningen till registret och påverkar inte datorer och användare. Om det finns en aktuell inställning i registret ändras den inte.
+
+Varning! Alla drivrutiner i systemet måste vara kompatibla med den här säkerhetsfunktionen eller också kraschar systemet i tvingande läge. Granskningsläge kan användas för att identifiera inkompatibla drivrutiner. Mer information finns i https://go.microsoft.com/fwlink/?LinkId=2162953.
+      </string>
+      <string id="SecureBoot">Säker start</string>
+      <string id="SecureBootAndDmaProtection">Säker start och DMA-skydd</string>
+      <string id="Disabled">Inaktiverad</string>
+      <string id="Enabled">Aktiverad</string>
+      <string id="EnabledWithoutLock">Aktiverat utan lås</string>
+      <string id="EnabledWithUefiLock">Aktiverat med UEFI-lås</string>
+      <string id="EnabledAudit">Aktiverad i granskningsläge</string>
+      <string id="EnabledEnforcement">Aktiverad i tvingande läge</string>
+      <string id="NotConfigured">Inte konfigurerad</string>
+      <string id="ConfigCIPolicy">Distribuera Windows Defender-programreglering</string>
+      <string id="ConfigCIPolicyHelp">Distribuera Windows Defender programkontroll
+
+Med den här principinställningen kan du distribuera en kodintegritetsprincip till en dator för att styra vad som tillåts köras på den datorn.
+
+Om du distribuerar en kodintegritetsprincip begränsar Windows vad som kan köras både i kernelläge och på Windows-skrivbordet baserat på principen. Datorn måste startas om för att den här principen ska kunna aktiveras.
+
+Filsökvägen måste antingen vara en UNC-sökväg (t.ex. \\ServerName\ShareName\SIPolicy.p7b) eller en lokal giltig sökväg (t.ex. C:\FolderName\SIPolicy.p7b).  Det lokala datorkontot (LOCAL SYSTEM) måste ha åtkomstbehörighet till principfilen.
+
+Om du använder en signerad och skyddad princip så tar inte funktionen bort från datorn om du inaktiverar den här principinställningen. I stället måste du antingen:
+
+1) uppdatera principen till en princip som inte är skyddad och inaktivera sedan inställningen, eller
+   2) inaktivera inställningen och ta sedan bort principen från varje dator, med en fysiskt närvarande användare.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="VirtualizationBasedSecurity">
+        <dropdownList refId="RequirePlatformSecurityFeaturesDrop" defaultItem="1">Välj säkerhetsnivå för plattform:</dropdownList>
+        <dropdownList refId="HypervisorEnforcedCodeIntegrityDrop" defaultItem="3">Virtualiseringsbaserat skydd för kodintegritet:</dropdownList>
+        <checkBox refId="CheckboxMAT">Kräv UEFI-stöd för minnesattributtabellen</checkBox>
+        <dropdownList refId="CredentialIsolationDrop" defaultItem="3">Konfiguration för Credential Guard:</dropdownList>
+        <dropdownList refId="SystemGuardDrop" defaultItem="2">Konfiguration för säker start:</dropdownList>
+        <dropdownList refId="KernelShadowStacksDrop" defaultItem="3">Maskinvarubaserat stackskydd i kernelläge:</dropdownList>
+      </presentation>
+      <presentation id="ConfigCIPolicy">
+        <textBox refId="ConfigCIPolicyFilePathText">
+          <label>Sökväg till principfil för kodintegritet:</label>
+        </textBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

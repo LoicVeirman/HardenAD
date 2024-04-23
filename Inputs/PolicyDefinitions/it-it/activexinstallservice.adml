@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Servizio ActiveX Installer</displayName>
+  <description>Installa controlli ActiveX da siti di installazione approvati</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">Servizio ActiveX Installer</string>
+      <string id="AxISURLZonePolicies">Stabilisci criteri di installazione ActiveX per i siti in aree attendibili</string>        
+      <string id="AxISURLZonePolicies_explain">Questa impostazione dei criteri consente di controllare l'installazione dei controlli ActiveX per i siti in aree attendibili. 
+
+Se si abilita questa impostazione dei criteri, i controlli ActiveX verranno installati in base alle impostazioni definite da questa impostazione dei criteri. 
+      
+Se si disabilita o non si configura questa impostazione dei criteri, prima dell'installazione dei controlli ActiveX verrà chiesta conferma all'utente. 
+
+Se il sito attendibile utilizza il protocollo HTTPS, questa impostazione consentirà inoltre di controllare la modalità di risposta del servizio ActiveX Installer agli errori dei certificati. Per impostazione predefinita, tutte le connessioni HTTPS devono fornire un certificato server che superi tutti i criteri di convalida. Se si è a conoscenza della presenza di un errore nel certificato di un sito attendibile ma si desidera comunque considerarlo attendibile, sarà possibile selezionare gli errori del certificato che si desidera ignorare. 
+    
+Nota: questa impostazione dei criteri si applica a tutti i siti inclusi in aree attendibili.
+
+</string>
+      <string id="TrustedZoneDisabled">Non installare</string>
+      <string id="TrustedZonePrompt">Chiedi conferma all'utente</string>
+      <string id="TrustedZoneSilentInstall">Installa automaticamente</string>
+      <string id="ApprovedActiveXInstallSites">Siti di installazione approvati per i controlli ActiveX</string>
+      <string id="ApprovedActiveXInstallSites_explain">Questa impostazione dei criteri determina quali siti di installazione ActiveX possono utilizzare gli utenti standard nell'organizzazione per installare controlli ActiveX nei computer personali. Quando questa impostazione è abilitata, l'amministratore può creare un elenco di siti di installazione ActiveX approvati specificati tramite l'URL host. 
+
+Se si abilita questa impostazione, l'amministratore può creare un elenco di siti di installazione ActiveX approvati specificati tramite l'URL host. 
+      
+Se si disabilita o non si configura questa impostazione dei criteri, prima dell'installazione dei controlli ActiveX verranno richieste credenziali amministrative all'utente. 
+
+Nota: non è possibile utilizzare caratteri jolly per specificare gli URL host.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Criteri di installazione per controllo ActiveX firmato da autore attendibile</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Criteri di installazione per controllo ActiveX firmato</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Criteri di installazione per controllo ActiveX non firmato</dropdownList>
+        <text>Consente la connessione a siti attendibili con gli errori dei certificati server seguenti.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Autorità di certificazione (CA) sconosciuta</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Nome certificato non valido</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Data di convalida del certificato scaduta</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Utilizzo del certificato non corretto</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">URL host</listBox>
+        <text>Contiene il criterio per l'URL host.</text>
+        <text>Ad esempio  </text>
+        <text>Nome host: http://activex.microsoft.com</text>
+        <text>Valore: 2,1,0,0</text>
+        <text>Per ogni URL host il valore è rappresentato da quattro impostazioni in formato CSV.</text>
+        <text>Queste impostazioni corrispondono a "TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy</text>
+        <text>I primi tre valori da sinistra nel criterio controllano l'installazione dei controlli ActiveX sulla base della relativa firma.</text>
+        <text>I valori permessi sono:</text>
+        <text>0: il controllo ActiveX non verrà installato</text>
+        <text>1: chiedi conferma all'utente di installare il controllo ActiveX</text>
+        <text>2: il controllo ActiveX verrà installato automaticamente</text>
+        <text>I controlli firmati da certificati nell'archivio autori attendibili verranno installati automaticamente  </text>
+        <text>L'installazione automatica dei certificati non firmati non è supportata</text>
+        <text></text>
+        <text>L'ultimo valore a destra nel criterio è una maschera di bit</text>
+        <text>I flag vengono utilizzati per ignorare gli errori relativi ai certificati https.</text>
+        <text>Il valore predefinito è 0.</text>
+        <text>Ciò significa che le connessioni https devono superare tutti i controlli di sicurezza</text>
+        <text></text>
+        <text>Utilizzare la combinazione di valori seguente</text>
+        <text>per ignorare gli errori relativi ai certificati non validi</text>
+        <text>0x00000100  Ignora CA sconosciuta</text>
+        <text>0x00001000  Ignora CN non valido</text>
+        <text>0x00002000  Ignora data certificato non valida</text>
+        <text>0x00000200  Ignora utilizzo errato del certificato</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

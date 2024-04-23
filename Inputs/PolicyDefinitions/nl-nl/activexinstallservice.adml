@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>De ActiveX Installer-service</displayName>
+  <description>Deze service installeert ActiveX-besturingselementen vanaf goedgekeurde installatiesites</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">De ActiveX Installer-service</string>
+      <string id="AxISURLZonePolicies">Het ActiveX-installatiebeleid voor sites in vertrouwde zones opgeven.</string>        
+      <string id="AxISURLZonePolicies_explain">Met deze beleidsinstelling regelt u de installatie van ActiveX-besturingselementen in vertrouwde zones. 
+
+Als u deze beleidsinstelling inschakelt, worden ActiveX-besturingselementen  overeenkomstig de instellingen van deze beleidsinstelling geïnstalleerd. 
+      
+Als u deze beleidsinstelling uitschakelt of niet configureert, zal ActiveX de gebruiker vragen voordat met de installatie wordt begonnen. 
+
+Als de vertrouwde site het protocol HTTPS gebruikt, kan deze beleidsinstelling ook bepalen hoe de ActiveX Installer-service certificaatfouten verwerkt. Alle HTTPS-verbindingen moeten namelijk standaard een servercertificaat verstrekken dat voldoet aan alle validatiecriteria. Als u vaststelt dat er een certificaatfout optreedt voor een vertrouwde site maar u de site toch wilt vertrouwen, selecteert u de certificaatfouten die u wilt negeren. 
+    
+Opmerking: deze beleidsinstelling geldt voor alle sites in vertrouwde zones.
+
+</string>
+      <string id="TrustedZoneDisabled">Niet installeren</string>
+      <string id="TrustedZonePrompt">Vragen aan gebruiker</string>
+      <string id="TrustedZoneSilentInstall">Op achtergrond installeren</string>
+      <string id="ApprovedActiveXInstallSites">Goedgekeurde installatiesites voor ActiveX-besturingselementen</string>
+      <string id="ApprovedActiveXInstallSites_explain">Met behulp van deze beleidsinstelling wordt bepaalt welke ActiveX-installatiesites door de standaardgebruikers kunnen worden gebruikt om ActiveX-besturingselementen op hun computers te kunnen installeren. Als deze instelling is ingeschakeld kan de beheerder aan de hand van host-URL's een lijst van goedgekeurde ActiveX-installatiesites opstellen. 
+
+Als u deze instelling inschakelt, kan de beheerder aan de hand van host-URL's een lijst van goedgekeurde ActiveX-installatiesites opstellen. 
+      
+Als u deze beleidsinstelling uitschakelt of niet configureert, zal ActiveX de gebruiker vragen om beheerdersreferenties voordat met de installatie wordt begonnen. 
+
+Opmerking: er kunnen geen jokertekens worden gebruikt om de host-URL's aan te geven.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Installatiebeleid voor ActiveX-besturingselement ondertekend door vertrouwde uitgever</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Installatiebeleid voor ondertekend ActiveX-besturingselement</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Installatiebeleid voor niet-ondertekend ActiveX-besturingselement</dropdownList>
+        <text>Verbinding toestaan met vertrouwde sites met de volgende fouten in het servercertificaat.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Onbekende certificeringsinstantie (CA)</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Ongeldige certificaatnaam (CN)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Validatiedatum van certificaat is verlopen</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Onjuist certificaatgebruik</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">Host-URL's</listBox>
+        <text>Dit item bevat het beleid voor de host-URL.</text>
+        <text>Bijvoorbeeld  </text>
+        <text>Hostnaam: http://activex.microsoft.com</text>
+        <text>Waarde: 2,1,0,0</text>
+        <text>De waarde voor afzonderlijke host-URL's bestaat uit vier instellingen in de CSV-indeling.</text>
+        <text>Deze instellingen staan voor TPSSignedControl, SignedControl, UnsignedControl en ServerCertificatePolicy</text>
+        <text>De drie meest linkse waarden in het beleid voorzien in de installatie van ActiveX-besturingselementen op basis van hun handtekening.</text>
+        <text>Deze instellingen kunnen de volgende waarden hebben:</text>
+        <text>0: het ActiveX-besturingselement wordt niet geïnstalleerd</text>
+        <text>1: de gebruiker wordt gevraagd of hij of zij het ActiveX-besturingselement wil installeren</text>
+        <text>2: het ActiveX-besturingselement wordt op de achtergrond geïnstalleerd</text>
+        <text>Besturingselementen ondertekend met certificaten in het archief met vertrouwde uitgevers worden op de achtergrond geïnstalleerd  </text>
+        <text>Het op de achtergrond installeren van niet-ondertekende besturingselementen wordt niet ondersteund</text>
+        <text></text>
+        <text>De meest rechtse waarde in het beleid is een bitmaskervlag</text>
+        <text>Dergelijke vlaggen worden gebruikt voor het negeren van fouten met https-certificaten.</text>
+        <text>De standaardwaarde is 0.</text>
+        <text>Hierbij moeten de https-verbindingen aan alle beveiligingsvoorwaarden voldoen</text>
+        <text></text>
+        <text>Gebruik een combinatie van de volgende waarden</text>
+        <text>als u fouten met ongeldige certificaten wilt negeren</text>
+        <text>0x00000100 Onbekend certificeringsinstantie negeren</text>
+        <text>0x00001000 Onbekende certificaatnaam negeren</text>
+        <text>0x00002000 Ongeldige certificaatdatum negeren</text>
+        <text>0x00000200 Onjuiste certificaatgebruik negeren</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

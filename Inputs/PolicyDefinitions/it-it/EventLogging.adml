@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Registrazione eventi</displayName>
+    <description>Questo file contiene le opzioni di configurazione per la registrazione degli eventi di Windows</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Registrazione eventi</string>
+            <string id="EnableProtectedEventLogging">Abilita registrazione eventi protetti</string>
+            <string id="EnableProtectedEventLogging_Explain">
+Questa impostazione dei criteri consente di configurare la registrazione degli eventi protetta.
+
+Se si abilita questa impostazione dei criteri, i componenti che la supportano utilizzeranno il certificato fornito per crittografare i dati del registro eventi potenzialmente sensibili prima della scrittura nel registro eventi. I dati verranno crittografati utilizzando lo standard CMS (Cryptographic Message Syntax) e la chiave pubblica specificata. È possibile utilizzare il cmdlet di PowerShell Unprotect-CmsMessage per decrittografare i messaggi crittografati, purché si disponga di accesso alla chiave privata corrispondente alla chiave pubblica con cui sono stati crittografati.
+
+Se si disabilita o non si configura questa impostazione dei criteri, i componenti non crittograferanno i messaggi del registro eventi prima della scrittura nel registro eventi.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+Fornire un certificato di crittografia da utilizzare per la registrazione degli eventi protetta. È possibile fornire:
+
+    - Il contenuto di un certificato X.509 codificato in base 64
+    - L'identificazione personale di un certificato che può essere trovata nell'archivio certificati Computer locale (in genere distribuito dall'infrastruttura PKI)
+    - Il percorso completo di un certificato (può essere locale o una condivisione remota)
+    - Il percorso di una directory che contiene uno o più certificati (può essere locale o una condivisione remota)
+    - Il nome del soggetto di un certificato disponibile nell'archivio certificati Computer locale (in genere distribuito dall'infrastruttura PKI)
+
+L'utilizzo chiavi avanzato del certificato risultante deve essere 'Crittografia documento' (1.3.6.1.4.1.311.80.1) e deve essere abilitato anche l'utilizzo chiavi Crittografia dati o Crittografia chiavi.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

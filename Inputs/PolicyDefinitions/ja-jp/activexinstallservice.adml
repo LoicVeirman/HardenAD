@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ActiveX Installer Service</displayName>
+  <description>承認されたインストール サイトから ActiveX コントロールをインストールする</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">ActiveX Installer Service</string>
+      <string id="AxISURLZonePolicies">信頼済みゾーンのサイトに対する ActiveX のインストール ポリシーを確立する</string>        
+      <string id="AxISURLZonePolicies_explain">このポリシー設定では、信頼済みゾーンのサイトに対する ActiveX コントロールのインストールを制御します。
+
+このポリシー設定を有効にした場合、このポリシー設定で定義した設定に従って ActiveX コントロールがインストールされます。
+      
+このポリシー設定を無効にした場合、または構成しなかった場合は、ActiveX コントロールのインストール前に確認のダイアログが表示されます。
+
+信頼済みサイトで HTTPS プロトコルが使用されている場合、ActiveX インストーラー サービスで証明書エラーにどのように応答するかについてもこのポリシー設定で制御することができます。既定では、HTTPS 接続で送信されるサーバー証明書はすべての検証条件を満たす必要があります。証明書エラーがあることがわかっている信頼済みサイトを信頼する場合は、無視する証明書エラーを選択することができます。
+    
+注: このポリシー設定は、信頼済みゾーンのすべてのサイトに適用されます。
+
+</string>
+      <string id="TrustedZoneDisabled">インストールしない</string>
+      <string id="TrustedZonePrompt">ユーザーに確認する</string>
+      <string id="TrustedZoneSilentInstall">警告なしにインストールする</string>
+      <string id="ApprovedActiveXInstallSites">ActiveX コントロールの承認されたインストール サイト</string>
+      <string id="ApprovedActiveXInstallSites_explain">このポリシー設定では、組織の標準ユーザーがコンピューターに ActiveX コントロールをインストールする際に使用できる ActiveX インストール サイトを決定します。この設定が有効になっている場合、管理者は、ホスト URL で指定された、承認された Activex インストール サイトの一覧を作成できます。
+
+この設定を有効にした場合、管理者は、ホスト URL で指定された、承認された ActiveX インストール サイトの一覧を作成できます。
+      
+このポリシー設定を無効にした場合、または構成しなかった場合は、ActiveX コントロールのインストール前に、管理者資格情報を求めるダイアログが表示されます。
+
+注: ホスト URL を指定する際に、ワイルドカード文字は使用できません。
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">信頼された発行元によって署名された ActiveX コントロールのインストール ポリシー</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">署名済み ActiveX コントロールのインストール ポリシー</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">未署名の ActiveX コントロールのインストール ポリシー</dropdownList>
+        <text>次のサーバー証明書エラーがある信頼済みサイトへの接続を許可します。</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">証明機関 (CA) が不明</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">証明書の名前 (CN) が無効</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">証明書検証日付の期限が切れている</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">証明書の使用方法が正しくない</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">ホスト URL</listBox>
+        <text>ホスト URL のポリシーが含まれています。</text>
+        <text>例  </text>
+        <text>ホスト名: http://activex.microsoft.com</text>
+        <text>値: 2,1,0,0</text>
+        <text>各ホスト URL の値は CSV 形式で 4 つ設定されます。</text>
+        <text>これは "TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy" を表します。</text>
+        <text>ポリシーの左側 3 つの値は、署名に基づいて ActiveX コントロールのインストールを制御します。</text>
+        <text>以下のいずれかを指定できます。</text>
+        <text>0: ActiveX コントロールはインストールされません。</text>
+        <text>1: ActiveX コントロールのインストールを求めるメッセージがユーザーに対して表示されます。</text>
+        <text>2: ActiveX コントロールがサイレント インストールされます。</text>
+        <text>信頼された発行元ストアの証明書で署名されたコントロールは警告なしにインストールされます  </text>
+        <text>署名されていないコントロールのサイレント インストールはサポートされていません。</text>
+        <text></text>
+        <text>ポリシーで一番右側の値はビットマスク化されたフラグです。</text>
+        <text>フラグは https 証明書エラーを無視するために使用されます。</text>
+        <text>既定値は 0 です。</text>
+        <text>これは、https 接続がすべてのセキュリティ チェックに合格する必要があることを意味します。</text>
+        <text></text>
+        <text>無効な証明書エラーを無視するには、</text>
+        <text>次の値の組み合わせを使用します。</text>
+        <text>0x00000100  不明な CA を無視します。</text>
+        <text>0x00001000  無効な CN を無視します。</text>
+        <text>0x00002000  無効な証明書日付を無視します。</text>
+        <text>0x00000200  誤った証明書の使用法を無視します。</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

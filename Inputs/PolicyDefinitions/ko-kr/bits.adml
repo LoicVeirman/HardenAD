@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.2" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>여기에 표시 이름 입력</displayName>
+  <description>여기에 설명 입력</description>
+  <resources>
+    <stringTable>
+      <!-- Supported Platforms -->
+      <string id="SUPPORTED_WindowsXPSP2WindowsNETSP1orBITS20">Windows XP SP2, Windows Server 2003 SP1 또는 BITS 2.0이 설치된 컴퓨터.</string>
+      <string id="SUPPORTED_WindowsXPWindowsNETorBITS15">Windows XP, Windows Server 2003 또는 BITS 1.5가 설치된 컴퓨터.</string>
+      <string id="SUPPORTED_Windows7OrBITS35">Windows 7 또는 BITS 3.5가 설치된 컴퓨터.</string>
+      <string id="SUPPORTED_Windows8OrBITS5">Windows 8, Windows Server 2012, Windows RT 또는 BITS 5가 설치된 컴퓨터.</string>
+      <!-- Supported Platforms -->
+
+      <!-- Component name -->
+      <string id="BITS">BITS(Background Intelligent Transfer Service)</string>
+      <!-- Component name -->
+
+<!-- inactive job timeout -->      
+      <string id="BITS_Job_Timeout">비활성 BITS 작업 시간 제한</string>
+      <string id="BITS_Job_Timeout_Help">이 정책 설정은 대기 중인 BITS 작업이 중단된 것으로 간주되기 전에 비활성 상태로 남아 있을 수 있는 기간(일)을 지정합니다. 기본적으로 BITS는 비활성 작업이 중단된 것으로 간주되기 전에 90일을 기다립니다. 작업이 중단된 것으로 결정되면 BITS에서 삭제되고 해당 작업과 관련하여 다운로드된 파일이 모두 디스크에서 삭제됩니다.
+          참고: 작업 속성이 변경되거나 다운로드 작업이 성공적으로 완료되면 이 시간 제한이 다시 설정됩니다.
+
+          컴퓨터가 오랜 시간 동안 오프라인 상태로 있고 대기 중인 작업이 아직 있으면 시간 제한 값을 증가시켜야 할 수도 있습니다. 
+          디스크 공간을 차지하고 있는 분리된 작업이 있으면 이 값을 감소시켜야 할 수도 있습니다.
+
+          이 정책 설정을 사용하면 비활성 작업의 시간 제한을 지정한 일수로 구성할 수 있습니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 기본값인 90(일)이 비활성 작업 시간 제한에 사용됩니다.</string>
+
+<!-- inactive job timeout -->
+
+<!-- max job download time -->
+      <string id="BITS_MaxDownloadTime">최대 BITS 작업 다운로드 시간</string>
+      <string id="BITS_MaxDownloadTimeText">이 설정은 BITS가 BITS 작업 파일을 다운로드하는 데 걸릴 시간을 제한합니다.
+
+          시간 제한은 실시간이 아니라 BITS가 파일을 실제로 다운로드하는 시간에만 적용됩니다. 누적 다운로드 시간이 이 한도를 초과하면 작업은 오류 상태에 놓입니다.
+
+          기본적으로 BITS에서 사용하는 최대 다운로드 시간은 15일(54000초)입니다.
+
+          이 설정을 사용하면 최대 작업 다운로드 시간을 지정한 초 수로 설정할 수 있습니다.
+
+          이 설정을 사용하지 않거나 구성하지 않으면 기본값인 90일(7,776,000초)이 최대 작업 다운로드 시간에 사용됩니다.</string>
+
+<!-- max job download time -->
+
+<!-- max bandwidth -->
+      <string id="BITS_MaxBandwidth">BITS 백그라운드 전송의 최대 네트워크 대역폭</string>
+      <string id="BITS_MaxBandwidth_Help">이 설정은 BITS가 백그라운드 전송에 사용하는 네트워크 대역폭을 제한합니다. 이 설정은 포그라운드 전송에는 영향을 주지 않습니다.
+
+          특정 시간 동안 사용할 한도와 그 외 시간에 사용할 한도를 지정할 수 있습니다. 예를 들어 오전 8시부터 오후 5시까지는 네트워크 대역폭 사용을 10Kbps로 제한하고 나머지 시간에는 사용할 수 있는 모든 대역폭을 사용합니다.
+
+          이 설정을 사용하면 BITS는 해당 대역폭 사용량을 지정한 값으로 제한합니다. Kbps(킬로비트/초) 단위로 한도를 지정할 수 있습니다. 2Kb 미만의 값을 지정하면 BITS는 계속해서 2Kb 정도를 사용합니다. BITS가 전송되지 않게 하려면 한도를 0으로 지정하십시오.
+
+          이 설정을 사용하지 않거나 구성하지 않으면 BITS는 사용 가능한 모든 미사용 대역폭을 사용합니다.
+
+          참고: 컴퓨터의 NIC(네트워크 인터페이스 카드)가 아니라 네트워크 연결 속도에 따라 한도를 지정해야 합니다. 이 정책 설정은 피어 컴퓨터 간 피어캐싱 전송에 영향을 주지 않고 원본 서버의 전송에 영향을 미칩니다. 이러한 목적으로 "피어캐싱에 사용되는 최대 네트워크 대역폭 제한" 정책 설정을 사용해야 합니다.
+
+          클라이언트 컴퓨터가 빠른 네트워크 카드(10Mbs)를 사용하지만 느린 연결(56Kbs)을 통해 네트워크에 연결되어 있는 경우 이 설정을 사용하여 BITS 전송이 네트워크 대역폭을 두고 경쟁하지 않도록 할 수 있습니다.</string>
+
+      <string id="BITS_MaxBandwidthTime10AM">오전 10시</string>
+      <string id="BITS_MaxBandwidthTime10PM">오후 10시</string>
+      <string id="BITS_MaxBandwidthTime11AM">오전 11시</string>
+      <string id="BITS_MaxBandwidthTime11PM">오후 11시</string>
+      <string id="BITS_MaxBandwidthTime12AM">오전 12시</string>
+      <string id="BITS_MaxBandwidthTime12PM">오후 12시</string>
+      <string id="BITS_MaxBandwidthTime1AM">오전 1시</string>
+      <string id="BITS_MaxBandwidthTime1PM">오후 1시</string>
+      <string id="BITS_MaxBandwidthTime2AM">오전 2시</string>
+      <string id="BITS_MaxBandwidthTime2PM">오후 2시</string>
+      <string id="BITS_MaxBandwidthTime3AM">오전 3시</string>
+      <string id="BITS_MaxBandwidthTime3PM">오후 3시</string>
+      <string id="BITS_MaxBandwidthTime4AM">오전 4시</string>
+      <string id="BITS_MaxBandwidthTime4PM">오후 4시</string>
+      <string id="BITS_MaxBandwidthTime5AM">오전 5시</string>
+      <string id="BITS_MaxBandwidthTime5PM">오후 5시</string>
+      <string id="BITS_MaxBandwidthTime6AM">오전 6시</string>
+      <string id="BITS_MaxBandwidthTime6PM">오후 6시</string>
+      <string id="BITS_MaxBandwidthTime7AM">오전 7시</string>
+      <string id="BITS_MaxBandwidthTime7PM">오후 7시</string>
+      <string id="BITS_MaxBandwidthTime8AM">오전 8시</string>
+      <string id="BITS_MaxBandwidthTime8PM">오후 8시</string>
+      <string id="BITS_MaxBandwidthTime9AM">오전 9시</string>
+      <string id="BITS_MaxBandwidthTime9PM">오후 9시</string>
+
+      <string id="BITS_MaxBandwidthDaysSunday">일요일</string>
+      <string id="BITS_MaxBandwidthDaysMonday">월요일</string>
+      <string id="BITS_MaxBandwidthDaysTuesday">화요일</string>
+      <string id="BITS_MaxBandwidthDaysWednesday">수요일</string>
+      <string id="BITS_MaxBandwidthDaysThursday">목요일</string>
+      <string id="BITS_MaxBandwidthDaysFriday">금요일</string>
+      <string id="BITS_MaxBandwidthDaysSaturday">토요일</string>
+
+      <string id="BITS_MaxBandwidthLimitKbps">Kbps</string>
+      <string id="BITS_MaxBandwidthLimitMbps">Mbps</string>
+      <string id="BITS_MaxBandwidthLimitUnlimited">제한 없음</string>
+
+      <string id="BITS_MaxBandwidthV2_Work">BITS 백그라운드 전송에 사용되는 최대 네트워크 대역폭을 제한하는 작업 일정 설정</string>
+      <string id="BITS_MaxBandwidthV2_Work_Help">이 정책 설정은 근무일 및 휴일과 근무 시간 및 휴무 시간 동안 BITS(Background Intelligent Transfer Service)에서 백그라운드 전송에 사용하는 네트워크 대역폭을 제한합니다. 근무 일정은 요일과 하루 시간으로 구성된 주간 달력을 사용하여 정의됩니다. 근무 일정에 정의되지 않은 모든 날과 시간은 휴무 시간으로 간주됩니다.
+
+          이 정책 설정을 사용하면 근무 및 휴무 시간 동안 네트워크 대역폭을 제한하는 일정을 설정할 수 있습니다. 근무 일정을 정의한 후 세 가지 BITS 백그라운드 우선 순위 수준(높음, 보통, 낮음)에 대해 각각 대역폭 사용 제한을 설정할 수 있습니다.
+
+          근무 일정 동안 백그라운드 작업에 적용할 제한을 지정할 수 있습니다. 예를 들어 월요일부터 금요일까지의 오전 8시부터 오후 5시까지는 낮은 우선 순위 작업의 네트워크 대역폭을 128Kbps로 제한하고, 휴무 시간에는 512Kbps로 제한을 설정할 수 있습니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 사용되고 있지 않아서 사용 가능한 모든 대역폭을 BITS에서 백그라운드 작업 전송에 사용합니다.
+      
+      </string>
+
+      <string id="BITS_MaxBandwidthV2_Maintenance">BITS 백그라운드 전송에 사용되는 최대 네트워크 대역폭을 제한하는 유지 관리 일정 설정</string>
+      <string id="BITS_MaxBandwidthV2_Maintenance_Help">이 정책 설정은 유지 관리 일시 동안 BITS(Background Intelligent Transfer Service)에서 백그라운드 전송에 사용하는 네트워크 대역폭을 제한합니다. 유지 관리 일정은 백그라운드 전송에 사용되는 네트워크 대역폭을 한층 더 제한합니다.
+
+          이 정책 설정을 사용하면 별도의 네트워크 대역폭 제한 집합을 정의하고 유지 관리 기간에 대한 일정을 설정할 수 있습니다.
+
+          유지 관리 일정 동안 백그라운드 작업에 적용할 제한을 지정할 수 있습니다. 예를 들어 근무 일정 동안 보통 우선 순위 작업이 현재 256Kbps로 제한될 경우 유지 관리 일정의 오전 8시부터 오전 10시까지는 보통 우선 순위 작업의 네트워크 대역폭을 0Kbps로 더 제한할 수 있습니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 근무 또는 휴무 일정에 대해 정의된 제한이 사용됩니다.
+
+          참고: 유지 관리 기간 동안에 대해 설정된 대역폭 제한은 근무 및 기타 일정에 대해 정의된 제한을 대체합니다.
+      
+      </string>
+
+      <!-- max bandwidth -->
+
+
+      <!-- cost transfer policies -->
+      <string id="BITS_SetTransferPolicyOnCostedNetwork">Set default download behavior for BITS jobs on costed networks(유료 네트워크에서 BITS 작업의 기본 다운로드 동작 설정)</string>
+      <string id="BITS_SetTransferPolicyOnCostedNetwork_Help">
+          
+          이 정책 설정은 시스템이 3G 등의 유료 네트워크에 연결되어 있는 경우 BITS(Background Intelligent Transfer Service)가 백그라운드 전송에 대해 사용하는 기본 동작을 정의합니다. 다운로드 동작 정책은 백그라운드 전송의 네트워크 사용을 추가로 제한합니다.
+
+          이 정책 설정을 사용하면 각 BITS 작업 우선 순위에 대한 기본 다운로드 정책을 정의할 수 있습니다. 이 설정은 BITS 작업을 만든 응용 프로그램에서 명시적으로 구성한 다운로드 정책보다 우선하지 않지만 우선 순위만 지정하여 만든 작업에 적용됩니다.
+
+          예를 들어 백그라운드 작업은 기본적으로 무료 네트워크에 연결된 경우에만 전송하고 전경 작업은 로밍하지 않을 때만 계속하도록 지정할 수 있습니다. 할당할 수 있는 값은 다음과 같습니다.
+          -         Always transfer(항상 전송)
+          -         Transfer unless roaming(로밍하지 않을 경우 전송)
+          -         Transfer unless surcharge applies (when not roaming or overcap)(추가 요금이 적용되지 않는 경우 전송(로밍 또는 제한을 초과하지 않을 경우))
+          -         Transfer unless nearing limit (when not roaming or nearing cap)(제한에 가깝지 않은 경우 전송(로밍 또는 제한에 가깝지 않은 경우))
+          -         Transfer only if unconstrained(제약되지 않은 경우에만 전송)
+          -         사용자 지정--비트 마스크를 지정할 수 있습니다. 여기서 비트 수는 다음 우선 순위(여기서 설명된 비트 수)에 대해 허용되거나 허용되지 않는 비용 상태를 설명합니다.
+          0x1 - 비용을 알 수 없거나 연결이 무제한으로 허용되며 사용 요금 및 용량 제약 조건에 제한이 없는 것으로 간주됩니다.
+          0x2 - 이 연결 사용은 일정 데이터 한도까지 무제한으로 허용됩니다.
+          0x4 - 이 연결 사용은 일정 데이터 한도까지 무제한으로 허용되고 요금제 사용은 한도의 80%보다 작습니다.
+          0x8 - 이 연결 사용은 일정 데이터 한도까지 무제한으로 허용되고 요금제 사용은 한도의 80%에서 100% 사이입니다.
+          0x10 - 이 연결 사용은 일정 데이터 한도까지 무제한으로 허용되며 이 데이터 한도를 초과했습니다. 추가 요금이 적용되거나 알 수 없습니다.
+          0x20 - 이 연결 사용은 일정 데이터 한도까지 무제한으로 허용되며 이 데이터 한도를 초과했습니다. 추가 요금은 적용되지 않지만 속도가 느려질 수 있습니다.
+          0x40 - 바이트당으로 연결에 비용이 부과됩니다.
+          0x80 - 연결을 로밍합니다.
+          0x80000000 - 정체를 무시합니다.
+      
+      </string>
+      <string id="BITS_TransferPolicyAlwaysTransfer">Always transfer(항상 전송)</string>
+      <string id="BITS_TransferPolicyNotRoamingTransfer">Transfer unless roaming(로밍하지 않을 경우 전송)</string>
+      <string id="BITS_TransferPolicyNoSurcharge">Transfer unless surcharge applies (when not roaming or overcap)(추가 요금이 적용되지 않는 경우 전송(로밍 또는 제한을 초과하지 않을 경우))</string>
+      <string id="BITS_TransferPolicyStandard">Transfer unless nearing limit (when not roaming or nearing cap)(제한에 가깝지 않은 경우 전송(로밍 또는 제한에 가깝지 않은 경우))</string>
+      <string id="BITS_TransferPolicyUnrestricted">Transfer only if unconstrained(제약되지 않은 경우에만 전송)</string>
+      <string id="BITS_Custom">사용자 지정</string>
+      
+      <!-- cost transfer policies -->
+
+      <!-- enable peercaching -->      
+      <string id="BITS_EnablePeercaching">BITS 피어캐싱 허용</string>
+      <string id="BITS_EnablePeercachingText">이 정책 설정은 특정 컴퓨터에서 BITS(Background Intelligent Transfer Service) 피어 캐싱 기능을 사용할지 여부를 지정합니다.  기본적으로 BITS 작업의 파일은 작업 소유자가 지정한 원본 서버에서만 다운로드됩니다.
+
+          BITS 피어 캐싱을 사용할 경우 BITS는 다운로드된 파일을 캐시하여 다른 BITS 피어에서 사용할 수 있도록 합니다. 다운로드 작업을 전송할 때 BITS는 먼저 같은 IP 서브넷에 있는 피어에서 작업 파일을 요청합니다. 서브넷에 요청한 파일이 있는 피어가 없으면 BITS는 원본 서버에서 작업 파일을 다운로드합니다.
+
+          이 정책 설정을 사용하면 BITS는 피어에서 파일을 다운로드하고 파일을 캐시하며 피어의 내용 요청에 응답합니다.  "Do not allow the computer to act as a BITS peer caching server(컴퓨터가 BITS 피어 캐싱 서버로 작동하도록 허용 안 함)" 및 "Do not allow the computer to act as a BITS peer caching client(컴퓨터가 BITS 피어 캐싱 클라이언트로 작동하도록 허용 안 함)" 정책 설정을 사용하면 BITS 피어 캐싱 기능을 더 자세하게 제어할 수 있습니다. 그러나 다른 두 개의 정책 설정이 적용되려면 "BITS 피어 캐싱 허용" 정책 설정을 사용하도록 설정해야 합니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 BITS 피어 캐싱 기능이 사용되지 않으며 BITS는 원본 서버에서 직접 파일을 다운로드합니다.</string>
+<!-- enable peercaching -->
+
+
+<!-- peercache size limit -->
+      <string id="BITS_MaxCacheSize">BITS 피어캐시 크기 제한</string>
+      <string id="BITS_MaxCacheSizeText">이 정책 설정은 BITS 피어 캐시에 사용할 수 있는 최대 디스크 공간을 전체 시스템 디스크 크기에 대한 비율로 제한합니다. BITS는 피어 캐시에 파일을 추가하고 캐시 내용이 지정한 캐시 크기에 도달할 때까지 피어에서 해당 파일을 사용할 수 있게 합니다. 기본적으로 BITS는 전체 시스템 디스크의 1%를 피어 캐시에 사용합니다.
+
+          이 정책 설정을 사용하면 BITS 피어 캐시에 사용할 디스크 공간의 백분율을 입력할 수 있습니다. 1%에서 80% 사이의 값을 입력할 수 있습니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않을 경우 BITS 피어 캐시의 기본 크기는 전체 시스템 디스크 크기의 1%입니다.
+
+          참고: "BITS 피어 캐싱 허용" 설정을 사용하지 않거나 구성하지 않으면 이 정책 설정은 효과가 없습니다.</string>
+<!-- peercache size limit -->
+      
+
+<!-- max peercaching content age limit-->      
+      <string id="BITS_MaxContentAge">BITS 피어캐시의 항목 저장 기간 제한</string>
+      <string id="BITS_MaxContentAgeText">이 정책 설정은 BITS(Background Intelligent Transfer Service) 피어 캐시에 있는 파일의 최대 보존 기간을 제한합니다. 디스크 공간을 가장 효율적으로 사용하기 위해 기본적으로 BITS는 피어 캐시에서 지난 90일 동안 액세스하지 않은 파일을 모두 제거합니다.
+
+          이 설정을 사용하면 캐시에 있는 파일의 최대 보존 기간(일)을 지정할 수 있습니다. 1일에서 120일까지의 값을 입력할 수 있습니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 지난 90일 동안 액세스하지 않은 파일이 피어 캐시에서 제거됩니다.
+
+          참고: "BITS 피어 캐싱 허용" 정책 설정을 사용하지 않거나 구성하지 않으면 이 정책 설정은 효과가 없습니다.</string>
+
+<!-- max peercaching content age limit-->
+      
+<!-- disable peercache client-->
+      <string id="BITS_DisablePeercachingClient">컴퓨터가 BITS 피어캐싱 클라이언트로 작동할 수 없음</string>
+      <string id="BITS_DisablePeercachingClientText">이 정책 설정은 컴퓨터가 BITS 피어 캐싱 클라이언트로 작동할지 여부를 지정합니다. 기본적으로 BITS 피어 캐싱을 사용하면 컴퓨터는 피어 캐싱 서버(피어에 파일 제공)와 피어 캐싱 클라이언트(피어에서 파일 다운로드)로 모두 작동합니다.
+
+          이 정책 설정을 사용하면 컴퓨터는 더 이상 BITS 피어 캐싱 기능을 사용하여 파일을 다운로드하지 않으며, 원본 서버에서만 파일이 다운로드됩니다. 하지만 해당 피어에서 여전히 파일을 사용할 수 있습니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 컴퓨터는 원본 서버로 돌아가기 전에 피어 컴퓨터에서 피어 사용 BITS 작업을 다운로드하려고 시도합니다.
+
+          참고: "BITS 피어 캐싱 허용" 정책 설정을 사용하지 않거나 구성하지 않으면 이 정책 설정은 효과가 없습니다.</string>
+<!-- disable peercache client-->
+
+      
+<!-- disable peercache server-->
+      <string id="BITS_DisablePeercachingServer">컴퓨터가 BITS 피어캐싱 서버로 작동할 수 없음</string>
+      <string id="BITS_DisablePeercachingServerText">이 정책 설정은 컴퓨터가 BITS 피어 캐싱 서버로 작동할지 여부를 지정합니다. 기본적으로 BITS 피어 캐싱을 사용하면 컴퓨터는 피어 캐싱 서버(피어에 파일 제공)와 피어 캐싱 클라이언트(피어에서 파일 다운로드)로 모두 작동합니다.
+
+          이 정책 설정을 사용하면 컴퓨터는 더 이상 다운로드된 파일을 캐시하지 않으며 피어에 이 파일을 제공하지 않습니다. 하지만 피어에서 여전히 파일을 다운로드합니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 컴퓨터는 다운로드 및 캐시된 파일을 피어에 제공합니다.
+
+          참고: "BITS 피어 캐싱 허용" 설정을 사용하지 않거나 구성하지 않으면 이 설정은 효과가 없습니다.</string>
+<!-- disable peercache server-->
+
+      
+<!-- limit peercache bandwidth-->
+      <string id="BITS_MaxBandwidthServedForPeers">피어캐싱에 사용되는 최대 네트워크 대역폭 제한</string>
+      <string id="BITS_MaxBandwidthServedForPeersText">이 정책 설정은 BITS가 피어 캐시 전송에 사용하는 네트워크 대역폭을 제한합니다.이 설정은 원본 서버로부터의 전송에는 영향을 주지 않습니다.
+          다른 피어에 파일을 제공함으로써 컴퓨터에 부정적인 영향을 미치지 않도록 기본적으로 BITS는 가장 느린 활성 네트워크 인터페이스 대역폭의 최대 30%까지 사용합니다. 예를 들어 컴퓨터에 100Mbps 네트워크 카드와 56Kbps 모뎀이 있고 둘 다 활성 상태이면 BITS는 56Kbps의 최대 30%를 사용합니다. 
+          BITS의 기본 동작을 변경하고 BITS가 피어 캐싱에 사용할 최대 고정 대역폭을 지정할 수 있습니다.
+
+          이 정책 설정을 사용하면 피어 캐싱에 사용할 최대 네트워크 대역폭으로 사용할 값을 bps(비트/초) 단위로 1048576에서 4294967200까지 입력할 수 있습니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 기본값인 가장 느린 활성 네트워크 인터페이스의 30%가 사용됩니다.
+
+          참고: "BITS 피어 캐싱 허용" 정책 설정을 사용하지 않거나 구성하지 않으면 이 설정은 효과가 없습니다.</string>
+<!-- limit peercache bandwidth-->
+      
+      
+<!-- max jobs per computer -->    
+      <string id="BITS_MaxJobsPerMachine">이 컴퓨터에 대한 최대 BITS 작업 수</string>
+      <string id="BITS_MaxJobsPerMachineText">이 설정은 컴퓨터의 모든 사용자에 대해 만들 수 있는 최대 BITS 작업 수를 지정합니다. 기본적으로 BITS는 컴퓨터에 만들 수 있는 총 작업 수를 300개 작업으로 제한합니다. 이 정책 설정을 사용하여 최대 사용자 BITS 작업 수를 올리거나 낮출 수 있습니다.
+
+          이 정책 설정을 사용하면 BITS는 최대 BITS 작업 수를 지정한 수로 제한합니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 BITS는 기본 BITS 작업 제한인 300개 작업을 사용합니다.
+
+          참고: 서비스와 로컬 관리자 계정에서 만든 BITS 작업은 이 제한에 포함되지 않습니다.</string>
+
+<!-- max jobs per computer -->
+
+<!-- max jobs per user -->
+      <string id="BITS_MaxJobsPerUser">각 사용자의 최대 BITS 작업 수</string>
+      <string id="BITS_MaxJobsPerUserText">이 설정은 사용자가 만들 수 있는 최대 BITS 작업 수를 지정합니다. 기본적으로 BITS는 사용자가 만들 수 있는 총 작업 수를 60개 작업으로 제한합니다. 이 설정을 사용하여 사용자가 만들 수 있는 최대 사용자 BITS 작업 수를 올리거나 낮출 수 있습니다.
+
+          이 정책 설정을 사용하면 BITS는 사용자가 만들 수 있는 최대 BITS 작업 수를 지정한 수로 제한합니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 BITS는 기본 사용자 BITS 작업 제한인 300개 작업을 사용합니다.
+
+          참고: 이 제한은 "이 컴퓨터에 대한 최대 BITS 작업 수" 정책 설정에 지정된 설정보다 낮아야 하며, "이 컴퓨터에 대한 최대 BITS 작업 수" 정책 설정이 구성되지 않은 경우 300이어야 합니다. 서비스와 로컬 관리자 계정에서 만든 BITS 작업은 이 제한에 포함되지 않습니다.</string>
+
+<!-- max jobs per computer -->
+
+<!-- max files per job -->
+      <string id="BITS_MaxFilesPerJob">BITS 작업에서 허용되는 최대 파일 수</string>
+      <string id="BITS_MaxFilesPerJobText">이 설정은 BITS 작업이 포함할 수 있는 최대 파일 수를 지정합니다. 기본적으로 BITS 작업은 200개 파일로 제한됩니다. 이 설정을 사용하여 BITS 작업이 포함할 수 있는 최대 파일 수를 올리거나 낮출 수 있습니다.
+
+          이 정책 설정을 사용하면 BITS는 작업에 포함될 수 있는 최대 파일 수를 지정한 수로 제한합니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 BITS는 작업에 포함될 수 있는 최대 파일 수에 대해 기본값인 200개를 사용합니다.
+
+          참고: 서비스와 로컬 관리자 계정에서 만든 BITS 작업은 이 제한에 포함되지 않습니다.</string>
+<!-- max files per job -->
+
+<!-- max ranges per file -->      
+      <string id="BITS_MaxRangesPerFile">BITS 작업 파일에 추가할 수 있는 최대 범위 수</string>
+      <string id="BITS_MaxRangesPerFileText">이 설정은 BITS 작업 파일에 추가할 수 있는 최대 범위 수를 지정합니다. 기본적으로 BITS 작업 파일은 파일당 500개 범위로 제한됩니다. 이 설정을 사용하여 파일당 최대 범위 수를 올리거나 낮출 수 있습니다.
+
+          이 정책 설정을 사용하면 BITS는 파일에 추가할 수 있는 최대 범위 수를 지정한 수로 제한합니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 BITS는 범위를 파일당 500개로 제한합니다.
+
+          참고: 서비스와 로컬 관리자 계정에서 만든 BITS 작업은 이 제한에 포함되지 않습니다.</string>
+<!-- max ranges per file -->
+
+<!-- disable branch cache-->
+      <string id="BITS_DisableBranchCache">BITS 클라이언트에 대해 Windows 분기 캐시 사용 허용 안 함</string>
+      <string id="BITS_DisableBranchCacheText">이 설정은 BITS 클라이언트에서 Windows 분기 캐시를 사용할 수 있는지 여부에 영향을 줍니다. 컴퓨터에 Windows 분기 캐시 구성 요소가 설치되어 사용될 경우 이 컴퓨터의 BITS 작업은 기본적으로 Windows 분기 캐시를 사용할 수 있습니다.
+
+          이 정책 설정을 사용하면 BITS 클라이언트에서 Windows 분기 캐시를 사용하지 않습니다.
+
+          이 정책 설정을 사용하지 않거나 구성하지 않으면 BITS 클라이언트에서 Windows 분기 캐시를 사용합니다.
+
+          참고: 이 정책 설정은 BITS가 아닌 응용 프로그램에서 Windows 분기 캐시를 사용하는 것에는 영향을 주지 않습니다. 이 정책 설정은 SMB를 통한 BITS 전송에는 적용되지 않습니다. 컴퓨터의 Windows 분기 캐시에 대한 관리 설정에서 Windows 분기 캐시를 사용할 수 없도록 설정하면 이 설정이 적용되지 않습니다.
+      
+      </string>
+<!-- disable branch cache-->
+
+    </stringTable>
+    <presentationTable>
+      <presentation id="BITS_Job_Timeout">
+        <decimalTextBox refId="BITS_Job_Timeout_Time" defaultValue="90">비활성 작업 시간 제한(일):</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxDownloadTime">
+          <decimalTextBox refId="BITS_MaxDownloadSeconds" defaultValue="54000">활성 작업 시간 제한(초):</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxBandwidth">
+        <decimalTextBox refId="BITS_MaxTransferRateText" defaultValue="10" spinStep="10">백그라운드 전송 속도(Kbps)를 다음으로 제한:</decimalTextBox>
+        <dropdownList refId="BITS_BandwidthLimitSchedFrom" noSort="true" defaultItem="8">하한</dropdownList>
+        <dropdownList refId="BITS_BandwidthLimitSchedTo" noSort="true" defaultItem="17">상한</dropdownList>
+        <text>다른 모든 시간</text>
+        <checkBox refId="BITS_UseSystemMaximum" defaultChecked="true">사용하지 않는 모든 대역폭 사용</checkBox>
+        <text>또는</text>
+        <decimalTextBox refId="BITS_MaxTransferRateText_1" defaultValue="20" spinStep="10">백그라운드 전송 속도(Kbps)를 다음으로 제한:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxContentAge">
+        <decimalTextBox refId="BITS_MaxContentAgeList" defaultValue="90">일 수:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxCacheSize">
+        <decimalTextBox refId="BITS_MaxSize" defaultValue="5">BITS 피어 캐시에 사용할 디스크 공간의 비율(%):</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxBandwidthServedForPeers">
+        <decimalTextBox refId="BITS_MaxBandwidthServedForPeersList" defaultValue="1048576">피어캐싱에 사용되는 최대 네트워크 대역폭(bps):</decimalTextBox>
+      </presentation>
+
+      <presentation id="BITS_MaxJobsPerMachine">
+        <decimalTextBox refId="BITS_MaxJobsPerMachineList" defaultValue="300">이 컴퓨터에 대한 최대 BITS 작업 수:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxJobsPerUser">
+        <decimalTextBox refId="BITS_MaxJobsPerUserList" defaultValue="60">각 사용자의 최대 BITS 작업 수:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxFilesPerJob">
+        <decimalTextBox refId="BITS_MaxFilesPerJobList" defaultValue="200">BITS 작업에서 허용되는 최대 파일 수:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxRangesPerFile">
+        <decimalTextBox refId="BITS_MaxRangesPerFileList" defaultValue="500">BITS 작업 파일에 추가할 수 있는 최대 범위 수:</decimalTextBox>
+      </presentation>
+
+      <presentation id="BITS_MaxBandwidthV2_Work">
+        <checkBox refId="BITS_IgnoreLimitsOnLan" defaultChecked="false">원본과 대상이 동일한 서브넷에 있을 경우 대역폭 제한 무시.</checkBox>
+        <text>근무일</text>
+        <dropdownList refId="BITS_WorkDaysFrom" noSort="true" defaultItem="1">하한</dropdownList>
+        <dropdownList refId="BITS_WorkDaysTo" noSort="true" defaultItem="5">상한</dropdownList>
+        <text> </text>
+        <text>일일 근무 시간</text>
+        <dropdownList refId="BITS_WorkHoursFrom" noSort="true" defaultItem="8">하한</dropdownList>
+        <dropdownList refId="BITS_WorkHoursTo" noSort="true" defaultItem="17">상한</dropdownList>
+        <text> </text>
+        <text>근무 시간 동안의 대역폭 제한</text>
+        <decimalTextBox refId="BITS_WorkHighPriorityLimit" defaultValue="0">높은 우선 순위 제한:</decimalTextBox>
+        <dropdownList refId="BITS_WorkHighPriorityUnit" noSort="true" defaultItem="2">높은 우선 순위 단위:</dropdownList>
+        <decimalTextBox refId="BITS_WorkNormalPriorityLimit" defaultValue="0">보통 우선 순위 제한:</decimalTextBox>
+        <dropdownList refId="BITS_WorkNormalPriorityUnit" noSort="true" defaultItem="2">보통 우선 순위 단위:</dropdownList>
+        <decimalTextBox refId="BITS_WorkLowPriorityLimit" defaultValue="0">낮은 우선 순위 제한:</decimalTextBox>
+        <dropdownList refId="BITS_WorkLowPriorityUnit" noSort="true" defaultItem="2">낮은 우선 순위 단위:</dropdownList>
+        <text> </text>
+        <text>휴무 시간 동안의 대역폭 제한</text>
+        <decimalTextBox refId="BITS_NonWorkHighPriorityLimit" defaultValue="0">높은 우선 순위 제한:</decimalTextBox>
+        <dropdownList refId="BITS_NonWorkHighPriorityUnit" noSort="true" defaultItem="2">높은 우선 순위 단위:</dropdownList>
+        <decimalTextBox refId="BITS_NonWorkNormalPriorityLimit" defaultValue="0">보통 우선 순위 제한:</decimalTextBox>
+        <dropdownList refId="BITS_NonWorkNormalPriorityUnit" noSort="true" defaultItem="2">보통 우선 순위 단위:</dropdownList>
+        <decimalTextBox refId="BITS_NonWorkLowPriorityLimit" defaultValue="0">낮은 우선 순위 제한:</decimalTextBox>
+        <dropdownList refId="BITS_NonWorkLowPriorityUnit" noSort="true" defaultItem="2">낮은 우선 순위 단위:</dropdownList>
+      </presentation>
+
+      <presentation id="BITS_SetTransferPolicyOnCostedNetwork">
+        <text>Set default download behavior for BITS jobs on costed networks(유료 네트워크에서 BITS 작업의 기본 전송 동작 설정)</text>
+        <dropdownList refId="BITS_TransferPolicyForegroundPriorityValue" noSort="true" defaultItem="0">전경  </dropdownList>
+        <decimalTextBox refId="BITS_TransferPolicyForegroundPriorityValueCustom" defaultValue="255">전경(사용자 지정)</decimalTextBox>
+        <dropdownList refId="BITS_TransferPolicyHighPriorityValue" noSort="true" defaultItem="0">높음  </dropdownList>
+        <decimalTextBox refId="BITS_TransferPolicyHighPriorityValueCustom" defaultValue="255">높음(사용자 지정)</decimalTextBox>
+        <dropdownList refId="BITS_TransferPolicyNormalPriorityValue" noSort="true" defaultItem="0">보통  </dropdownList>
+        <decimalTextBox refId="BITS_TransferPolicyNormalPriorityValueCustom" defaultValue="255">보통(사용자 지정)</decimalTextBox>
+        <dropdownList refId="BITS_TransferPolicyLowPriorityValue" noSort="true" defaultItem="0">낮음  </dropdownList>
+        <decimalTextBox refId="BITS_TransferPolicyLowPriorityValueCustom" defaultValue="255">낮음(사용자 지정)</decimalTextBox>
+      </presentation>
+      
+      <presentation id="BITS_MaxBandwidthV2_Maintenance">
+        <text>유지 관리 일</text>
+        <dropdownList refId="BITS_MaintenanceDaysFrom" noSort="true" defaultItem="1">하한</dropdownList>
+        <dropdownList refId="BITS_MaintenanceDaysTo" noSort="true" defaultItem="5">상한</dropdownList>
+        <text> </text>
+        <text>일일 유지 관리 시간</text>
+        <dropdownList refId="BITS_MaintenanceHoursFrom" noSort="true" defaultItem="20">하한</dropdownList>
+        <dropdownList refId="BITS_MaintenanceHoursTo" noSort="true" defaultItem="22">상한</dropdownList>
+        <text> </text>
+        <text>유지 관리 시간 동안의 대역폭 제한</text>
+        <decimalTextBox refId="BITS_MaintenanceHighPriorityLimit" defaultValue="0">높은 우선 순위 제한:</decimalTextBox>
+        <dropdownList refId="BITS_MaintenanceHighPriorityUnit" noSort="true" defaultItem="2">높은 우선 순위 단위:</dropdownList>
+        <decimalTextBox refId="BITS_MaintenanceNormalPriorityLimit" defaultValue="0">보통 우선 순위 제한:</decimalTextBox>
+        <dropdownList refId="BITS_MaintenanceNormalPriorityUnit" noSort="true" defaultItem="2">보통 우선 순위 단위:</dropdownList>
+        <decimalTextBox refId="BITS_MaintenanceLowPriorityLimit" defaultValue="0">낮은 우선 순위 제한:</decimalTextBox>
+        <dropdownList refId="BITS_MaintenanceLowPriorityUnit" noSort="true" defaultItem="2">낮은 우선 순위 단위:</dropdownList>
+      </presentation>
+
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

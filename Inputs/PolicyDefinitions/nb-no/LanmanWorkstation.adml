@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>skriv inn visningsnavn her</displayName>
+  <description>skriv inn beskrivelse her</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">Lanman-arbeidsstasjon</string>
+      <string id="Pol_CipherSuiteOrder_Name">Rekkefølge for chiffreringssamling</string>
+      <string id="Pol_CipherSuiteOrder_Help">Denne policyen fastslår chiffreringssamlingene som brukes av SMB-klienten.
+
+Hvis du aktiverer denne policyinnstillingen, prioriteres chiffreringssamlingene i den angitte rekkefølgen.
+
+Hvis du aktiverer denne policyinnstillingen og ikke angir minst én støttet chiffreringssamling, eller du deaktiverer eller ikke konfigurerer denne policyinnstillingen, brukes standardrekkefølgen for chiffreringssamlingen.
+
+Chiffreringssamlinger for SMB 3.11:
+
+AES_128_GCM
+
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+Chiffreringssamlinger for SMB 3.0 og 3.02:
+
+AES_128_CCM
+
+Slik endrer du denne innstillingen:
+
+Ordne de ønskede chiffreringssamlingene i redigeringsboksen med én chiffreringssamling per linje, i rekkefølgen fra mest til minst foretrukket, og med den mest foretrukkede chiffreringssamlingen øverst. Fjern alle chiffreringssamlinger du ikke vil bruke.
+
+Obs! Når du konfigurerer denne sikkerhetsinnstillingen, trer ikke endringene i kraft før du starter Windows på nytt.</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">Aktiver usikker gjestepålogging</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">Denne policyinnstillingen bestemmer om SMB-klienten tillater pålogging av gjester som er usikre, til en SMB-server.
+
+Hvis denne policyinnstillingen aktiveres, eller hvis du ikke konfigurerer denne policyinnstillingen, tillater ikke SMB-klienten pålogging av gjester som usikre.
+
+Hvis denne policyinnstillingen deaktiveres, avviser SMB-klienten pålogging av usikre gjester.
+
+Pålogging av usikre gjester brukes av filservere som tillater uautorisert tilgang til delte mapper. Mens det er uvanlig i et bedriftsmiljø, brukes pålogging av usikre gjester ofte av NAS-forbrukerapparater (Network Attached Storage) som fungerer som filservere. Windows-filservere krever godkjenning og bruker ikke pålogging av usikre gjester som standard. Siden pålogging av usikre gjester ikke er godkjent, er viktige sikkerhetsfunksjoner som SMB-signering og kryptering for SMB, deaktivert. Derfor er klienter som tillater pålogging av usikre gjester, utsatt for en rekke mellommannbaserte angrep som kan føre til tap av data, skadde data og fare for skadelig programvare. I tillegg er alle data som er skrevet på en filserver ved hjelp av en usikker gjestepålogging, potensielt tilgjengelige for alle på nettverket. Microsoft anbefaler å deaktivere usikre gjestepålogginger og konfigurere filservere til å kreve godkjent tilgang."
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">Tilgjengelighet for frakoblede filer på delte ressurser for Kontinuerlig tilgjengelig</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        Denne policyinnstillingen bestemmer virkemåten av frakoblede filer på klienter som kobler seg til en SMB-ressurs der flagget Kontinuerlig tilgjengelighet (CA) er aktivert.
+
+        Hvis du aktiverer denne policyinnstillingen, vises alternativet Alltid tilgjengelig i frakoblet modus i rullegardinmenyen Filutforsker på en Windows-datamaskin når du kobler til en CA-aktivert delt ressurs. Låsing av filer på CA-aktiverte delte ressurser med hurtigbufring på klientsiden vil også være mulig.
+
+        Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, hindrer Windows bruk av frakoblede filer med CA-aktiverte delte ressurser.
+
+        Obs! Microsoft anbefaler ikke at du aktiverer denne gruppepolicyen. Bruk av CA med frakoblede filer vil føre til svært lange overgangstider mellom tilkoblede og frakoblede tilstander.
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">Håndtere bufring på delte ressurser for Kontinuerlig tilgjengelig</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        Denne policyinnstillingen bestemmer virkemåten til hurtigbufring av SMB-referanse for klienter som kobler seg til en SMB-ressurs der flagget Kontinuerlig tilgjengelighet (CA) er aktivert.
+
+        Hvis du aktiverer denne policyinnstillingen, gir SMB-klienten bufrede referanser til filer på CA-ressurser. Dette kan føre til bedre ytelse ved gjentatt bruk av et stort antall ustrukturerte datafiler på CA-ressurser som kjører i Microsoft Azure-filer.
+
+        Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, hindrer Windows bruk av bufrede referanser til filer som er åpnet via CA-ressurser.
+
+        Obs! Denne policyen har ingen effekt når du kobler til delte ressurser for en filserver for utskalering fra en Windows Server. Microsoft anbefaler ikke at du aktiverer denne policyen for klienter som rutinemessig kobler til filer som driftes i en Windows Failover-klynge med filserveren for rollen Generell bruk. Dette kan føre til negative Failover-tider og økt minne- og CPU-bruk.
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Minst Windows Server 2022, Windows 11</string>
+      <string id="Pol_EnableCompressedTraffic_Name">Bruk SMB-komprimering som standard</string>
+      <string id="Pol_EnableCompressedTraffic_Help">Denne policyen kontrollerer om SMB-klienten bruker trafikkkomprimering som standard.
+
+Hvis du aktiverer denne policyinnstillingen, prøver SMB-klienten å komprimere trafikk som standard når SMB-komprimering er aktivert.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, vil ikke SMB-klienten som standard prøve å komprimere trafikk. Trafikkkomprimering kan imidlertid bes om på andre måter. Se notater nedenfor.
+
+Obs! Denne policyen kombineres med referanseegenskaper per delt ressurs og per fil, der det kan forespørre trafikkkomprimering. SMB-serveren må også støtte og aktivere komprimering. Hvis denne policyen for eksempel deaktiveres (eller ikke konfigureres), kan det hende at SMB-klienten fremdeles utfører komprimering hvis en delt SMB-serverressurs har bedt om komprimering. Hvis dette er uønsket og du ønsker å deaktivere komprimeringen fullstendig, konfigurerer du den medfølgende policyen Deaktiver SMB-komprimering i stedet.
+      </string>
+      <string id="Pol_DisableCompression_Name">Deaktiver SMB-komprimering</string>
+      <string id="Pol_DisableCompression_Help">Denne policyen kontrollerer om SMB-klienten vil deaktivere (fullstendig forhindre) trafikkkomprimering.
+
+Hvis du aktiverer denne policyinnstillingen, vil SMB-klienten aldri komprimere data, uavhengig av andre policyer (for eksempel policyen Bruk SMB-komprimering som standard eller egenskap per delt ressurs).
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, kan SMB-klienten komprimere trafikk (avhengig av en kombinasjon av andre policyer og betingelser).
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>Chiffreringssamlinger:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

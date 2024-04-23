@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Políticas do Serviço do Windows</displayName>
+  <description>Políticas do Serviço do Windows</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">Especificar configurações para a instalação de componentes opcionais e o reparo de componentes</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+Esta configuração de política especifica os locais de rede que serão usados para o reparo do sistema operacional corrompido e para a habilitação de recursos opcionais que tiveram seus arquivos de carga removidos. 
+
+Se você habilitar esta configuração de política e especificar o novo local, os arquivos nesse local serão usados para reparar o sistema operacional corrompido e habilitar os recursos opcionais que tiveram seus arquivos de carga removidos. Você deve inserir o caminho totalmente qualificado referente ao novo local na caixa de texto ""Caminho de origem alternativo"". Vários locais podem ser especificados quando os caminhos são separados por ponto e vírgula. 
+
+O local de rede pode ser uma pasta ou um arquivo WIM. Se for um arquivo WIM, especifique o local adicionando o prefixo “wim:” ao caminho e incluindo o índice da imagem a ser usada no arquivo WIM. Por exemplo, “wim:\\server\share\install.wim:3”.
+
+Se você desabilitar ou não definir esta configuração de política, ou se os arquivos necessários não forem encontrados nos locais especificados nesta configuração de política, os arquivos serão baixados do Windows Update, caso isso seja permitido pelas configurações de política do computador.
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>Caminho de origem alternativo</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">Nunca tentar baixar a carga do Windows Update</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">Baixar o conteúdo de reparo e os recursos opcionais diretamente do Windows Update em vez do Windows Server Update Services (WSUS)</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

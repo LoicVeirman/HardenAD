@@ -1,0 +1,157 @@
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>네트워크 격리  </displayName>
+  <description>앱에 대한 네트워크 격리 옵션 구성  </description>
+  <resources>
+    <stringTable>
+      	<string id="WF_Isolation">네트워크 격리</string>
+		
+
+<!--Define server addresses that proxy to the Internet -->	
+	<string id="WF_NetIsolation_Domain_Proxies">앱의 인터넷 프록시 서버</string>  
+	<string id="WF_NetIsolation_Domain_Proxies_Help">  이 설정은 데스크톱 앱에 적용되지 않습니다.
+	
+세미콜론으로 구분된 인터넷 프록시 서버 IP 주소 목록입니다. 이러한 주소는 Windows 네트워크 격리에 의해 인터넷으로 분류되며 인터넷 클라이언트 또는 인터넷 클라이언트/서버 기능이 있는 앱에서 액세스할 수 있습니다.
+
+이 정책 설정을 사용하면 프록시 네트워크상의 앱은 개인 네트워크 기능에 의존하지 않고 인터넷에 액세스할 수 있습니다. 그러나 대부분의 경우 Windows 네트워크 격리는 프록시를 올바르게 검색할 수 있습니다. 기본적으로 이 설정으로 구성된 모든 프록시는 자동 검색되는 프록시와 병합됩니다. 이 정책 구성을 허용되는 프록시의 단일 목록으로 만들려면 "프록시 정의 신뢰" 설정을 사용하십시오.
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 앱에서 Windows 네트워크 격리에 의해 자동 검색된 인터넷 프록시를 사용합니다.
+
+예: [3efe:3022::1000];18.0.0.1;18.0.0.2 
+
+자세한 내용은 http://go.microsoft.com/fwlink/p/?LinkId=234043(영문)을 참조하십시오. </string> 
+
+
+<!--Define server addresses that proxy to a private network (intranet) -->	
+	<string id="WF_NetIsolation_Intranet_Proxies">앱의 인트라넷 프록시 서버</string>
+	<string id="WF_NetIsolation_Intranet_Proxies_Help">  이 설정은 데스크톱 앱에 적용되지 않습니다.
+	
+세미콜론으로 구분된 인트라넷 프록시 서버 IP 주소 목록입니다. 이러한 주소는 Windows 네트워크 격리에 의해 전용으로 분류되며 홈/회사 네트워킹 기능이 있는 앱에서 액세스할 수 있습니다.
+
+이 정책 설정을 사용하면 관리자는 인트라넷 리소스에 액세스할 수 있도록 하는 프록시 집합을 구성할 수 있습니다.
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 Windows 네트워크 격리는 프록시를 검색한 다음 인터넷 노드로 구성하려고 합니다.
+  
+이 설정을 인터넷 프록시를 구성하는 데는 사용하지 않아야 합니다.
+
+예: [3efe:3022::1000]; 18.0.0.1; 18.0.0.2
+
+자세한 내용은 http://go.microsoft.com/fwlink/p/?LinkId=234043(영문)을 참조하십시오. </string>
+
+
+<!--Define subnet addresses-->	
+	<string id="WF_NetIsolation_PrivateSubnet">앱의 개인 네트워크 범위</string>
+	<string id="WF_NetIsolation_PrivateSubnet_Help"> 이 설정은 데스크톱 앱에 적용되지 않습니다.
+				
+회사 네트워크에 있는 쉼표로 구분된 IP 주소 목록입니다.
+
+이 정책 설정을 사용하면 홈/회사 네트워킹 기능이 있는 앱이 회사 네트워크에 적절하게 액세스할 수 있습니다. 이러한 주소는 앱이 홈/회사 네트워킹 기능을 선언한 경우에만 앱에서 액세스할 수 있습니다.
+
+Windows 네트워크 격리는 개인 네트워크 호스트를 자동으로 검색하려고 합니다. 기본적으로 이 정책 설정으로 구성된 주소는 자동 검색을 통해 개인으로 선언된 호스트와 병합됩니다.
+
+개인으로 분류된 적이 있는 주소만 여기에 해당되게 하려면 "서브넷 정의 신뢰" 정책 설정을 사용하십시오.
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 Windows 네트워크 격리는 개인 네트워크 호스트를 자동으로 검색하려고 합니다.
+
+예: 3efe:1092::/96,18.1.1.1/10 
+
+자세한 내용은 http://go.microsoft.com/fwlink/p/?LinkId=234043(영문)을 참조하십시오. </string>
+
+
+<!--Proxy definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Proxy">프록시 정의 신뢰</string>
+	<string id="WF_NetIsolation_Authoritative_Proxy_Help"> 이 설정은 데스크톱 앱에 적용되지 않습니다.
+				
+도메인 회사 환경에서 Windows 네트워크 격리의 자동 프록시 검색을 끕니다.
+
+이 정책 설정을 사용하면 도메인 회사 환경에서 Windows 네트워크 격리의 자동 프록시 검색이 꺼집니다. 그룹 정책으로 구성된 프록시만 신뢰됩니다. 이러한 설정은 인터넷 및 인트라넷 프록시에 모두 적용됩니다.
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 Windows 네트워크 격리는 프록시 서버 주소를 자동으로 검색하려고 합니다.  
+
+자세한 내용은 http://go.microsoft.com/fwlink/p/?linkid=234043(영문)을 참조하십시오. </string>
+
+
+<!--Subnet definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Subnet">서브넷 정의 신뢰</string>
+	<string id="WF_NetIsolation_Authoritative_Subnet_Help"> 이 설정은 데스크톱 앱에 적용되지 않습니다.
+				
+도메인 회사 환경에서 Windows 네트워크 격리의 개인 네트워크 호스트 자동 검색을 끕니다.
+
+이 정책 설정을 사용하면 도메인 회사 환경에서 Windows 네트워크 격리의 개인 네트워크 호스트 자동 검색이 꺼집니다. 그룹 정책을 통해 구성된 주소 범위 내의 네트워크 호스트만 개인으로 분류됩니다.
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 Windows 네트워크 격리는 도메인 회사 환경에서 개인 네트워크 호스트를 자동으로 검색하려고 합니다. 
+				
+자세한 내용은 http://go.microsoft.com/fwlink/p/?linkid=234043(영문)을 참조하십시오. </string>
+
+
+
+<!--Define cloud resources-->
+  <string id="WF_NetIsolation_EnterpriseCloudResources">클라우드에 호스트된 엔터프라이즈 리소스 도메인</string>
+  <string id="WF_NetIsolation_EnterpriseCloudResources_Help"> 이 설정은 데스크톱 앱에 적용되지 않습니다.
+
+도메인 클라우드 리소스의 파이프로 구분된 목록입니다. 필요에 따라 쉼표와 프록시 주소를 뒤에 차례로 사용하여 각 클라우드 리소스에 내부 프록시 서버를 연결할 수도 있습니다.
+
+클라우드에 호스트된 엔터프라이즈 리소스 도메인 목록을 포함합니다. 이러한 리소스에 대한 연결은 엔터프라이즈 네트워크 연결로 간주됩니다.
+
+프록시에 클라우드 리소스를 연결하면 클라우드 리소스로 전송된 트래픽이 표시된 프록시 서버(포트 80)를 통해 엔터프라이즈 네트워크에서 라우팅됩니다. 이 용도로 사용되는 프록시 서버도 앱의 인트라넷 프록시 서버 정책으로 구성해야 합니다.
+
+예: [cloudresource]|[cloudresource]|[cloudresource],[proxy]|[cloudresource]|[cloudresource],[proxy]|
+
+자세한 내용은 다음을 참조하세요. http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define neutral resources-->
+    <string id="WF_NetIsolation_NeutralResources">도메인이 회사 및 개인 둘 다로 분류됨</string>
+    <string id="WF_NetIsolation_NeutralResources_Help"> 이 설정은 데스크톱 앱에 적용되지 않습니다.
+
+회사 또는 개인 리소스 둘 다로 사용할 수 있는 도메인 이름의 쉼표로 구분된 목록입니다.
+
+자세한 내용은 다음을 참조하세요. http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+    </stringTable>
+ 
+ <!--Start of Presentation Table-->	
+ 
+ <presentationTable>
+
+	<presentation id="WF_NetIsolation_Domain_Proxies">
+        <textBox refId="WF_NetIsolation_Domain_ProxiesBox">
+          <label>도메인 프록시  </label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_Intranet_Proxies">
+        <textBox refId="WF_NetIsolation_Intranet_ProxiesBox">
+          <label>인트라넷의 프록시 서버 IP 주소 입력</label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_PrivateSubnet">
+        <textBox refId="WF_NetIsolation_PrivateSubnetBox">
+          <label>개인 서브넷  </label>
+        </textBox>
+      </presentation>
+
+  <presentation id="WF_NetIsolation_Authoritative_Proxies">
+      </presentation>
+	
+	<presentation id="WF_NetIsolation_Authoritative_Subnets">
+      </presentation>
+
+   <presentation id="WF_NetIsolation_EnterpriseCloudResources">
+     <textBox refId="WF_NetIsolation_EnterpriseCloudResourcesBox">
+       <label>엔터프라이즈 클라우드 리소스 </label>
+     </textBox>
+   </presentation>
+
+   <presentation id="WF_NetIsolation_NeutralResources">
+     <textBox refId="WF_NetIsolation_NeutralResourcesBox">
+       <label>중립 리소스 </label>
+     </textBox>
+   </presentation>
+
+ </presentationTable>
+
+  </resources>
+</policyDefinitionResources>

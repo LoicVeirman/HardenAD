@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>tutaj wprowadź nazwę wyświetlaną</displayName>
+  <description>tutaj wprowadź opis</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Opcje łagodzenia</string>
+      <string id="Font_List">Blokowanie niezaufanych czcionek</string>
+      <string id="Font_List_Help">Ta funkcja zabezpieczeń udostępnia ustawienie globalne, za pomocą którego możesz uniemożliwić programom ładowanie niezaufanych czcionek. Niezaufane czcionki to wszystkie czcionki zainstalowane poza katalogiem %windir%\Fonts. Ta funkcja może działać w trzech trybach: Włączona, Wyłączona i Inspekcja. Domyślnie funkcja jest wyłączona i nie są blokowane żadne czcionki. Jeśli nie chcesz jeszcze wdrażać tej funkcji w swojej organizacji, możesz ją uruchomić w trybie inspekcji, aby sprawdzić, czy blokowanie niezaufanych czcionek powoduje problemy z działaniem lub zgodnością.</string>
+      <string id="FontMitigation_On">Blokuj niezaufane czcionki i rejestruj zdarzenia</string>
+      <string id="FontMitigation_Off">Nie blokuj niezaufanych czcionek</string>
+      <string id="FontMitigation_Audit">Rejestruj zdarzenia, ale nie blokuj niezaufanych czcionek</string>
+
+	  <string id="ProcessMitigationOptions_List">Opcje ograniczania ryzyka procesów</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Ta funkcja zabezpieczeń umożliwia zastępowanie poszczególnych ustawień opcji ograniczania ryzyka procesów. Służy ona do wymuszania różnych zasad zabezpieczeń dla określonych aplikacji. Nazwa aplikacji jest określana jako nazwa wartości (wraz z rozszerzeniem). Wartość jest określana jako pole bitowe z flagami na odpowiednich pozycjach. Bity mogą przyjmować wartości 0 (wymuszone wyłączenie ustawienia), 1 (wymuszone włączenie ustawienia) lub ? (ustawienie zachowuje wartość istniejącą przed wyznaczeniem wartości obiektu zasad grupy). Rozpoznawane lokalizacje bitów:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        Włącza zapobieganie wykonywaniu danych dla procesu podrzędnego.
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        Włącza emulację wywołania 32-bitowego DEP-ATL dla procesu podrzędnego. Emulacja wywołania 32-bitowego DEP-ATL powoduje przechwytywanie przez system błędów NX pochodzących z warstwy wywołań 32-bitowych biblioteki ATL.
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        Włącza funkcję ochrony przed zastępowaniem strukturalnej obsługi wyjątków (SEHOP) dla procesu podrzędnego. Funkcja SEHOP blokuje możliwość wykorzystania luk z użyciem techniki zastępowania strukturalnej obsługi wyjątków (SEH).
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        Zasady losowego generowania układu przestrzeni adresowej (ASLR) wymuszają zmianę bazy obrazów niezgodnych z bazą dynamiczną, symulując konflikt baz obrazów podczas ładowania. Jeśli wymagane są relokacje, obrazy bez sekcji relokacji bazy nie zostaną załadowane.
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        Zasady generowania losowego od dołu do góry, które uwzględniają opcje generowania losowego stosu, powodują używanie losowej lokalizacji jako najniższego adresu użytkownika.
+
+        Na przykład w celu włączenia ustawień PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE oraz PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON należy wyłączyć ustawienie PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF, a w celu pozostawienia wartości domyślnych wszystkich pozostałych opcji należy podać wartość:
+        ???????????????0???????1???????1
+
+        Ustawienie niewymienionych tutaj flag na wartości inne niż ? spowoduje niezdefiniowane zachowanie.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">Włącz synchronizację kontrolera domeny AD/DFS podczas odświeżania zasad</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">Włączenie tego ustawienia spowoduje połączenie klienta zasad grupy z tym samym kontrolerem domeny dla udziałów DFS, który jest używany w przypadku usługi Active Directory.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">Wyłącz optymalizację AOAC usługi klienta zasad grupy</string>
+      <string id="DisableAOACProcessing_Help">To ustawienie zasad zapobiega zatrzymaniu usługi klienta zasad grupy podczas bezczynności.
+
+
+
+</string>
+      <string id="EnableCDP">Ciągłość środowiska na tym urządzeniu</string>
+      <string id="EnableCDP_Help">
+To ustawienie zasad określa, czy urządzenie z systemem Windows może być częścią środowiska wielu urządzeń (ciągłość środowiska).
+
+Jeśli to ustawienie zasad zostanie włączone, urządzenie z systemem Windows będzie możliwe do wykrycia przez inne urządzenia z systemem Windows należące do tego samego użytkownika oraz będzie mogło być częścią środowiska wielu urządzeń.
+
+Jeśli to ustawienie zasad zostanie wyłączone, urządzenie z systemem Windows nie będzie możliwe do wykrycia przez inne urządzenia z systemem Windows i nie będzie mogło być częścią środowiska wielu urządzeń.
+
+Jeśli to ustawienie zasad nie zostanie skonfigurowane, działanie domyślne będzie zależne od wersji systemu Windows. Zmiany tego ustawienia zasad są stosowane po ponownym uruchomieniu.
+      </string>
+      <string id="EnableMMX">Połączenie telefon-komputer na tym urządzeniu</string>
+      <string id="EnableMMX_Help">
+Ta zasada umożliwia administratorom wyłączenie możliwości połączenia telefonu z komputerem w celu kontynuowania czytania, wysyłania wiadomości e-mail i wykonywania innych zadań wymagających połączenia między telefonem a komputerem.
+
+Jeśli włączysz to ustawienie zasad, urządzenie z systemem Windows będzie mogło zarejestrować się w funkcji połączenia telefon-komputer i będzie można używać go w funkcji Kontynuuj na komputerze.
+
+Jeśli wyłączysz to ustawienie zasad, urządzenie z systemem Windows nie będzie mogło być łączone z telefonami, usunie się z listy urządzeń na wszystkich połączonych telefonach i nie będzie można używać go w funkcji Kontynuuj na komputerze.
+
+Jeśli nie skonfigurujesz tego ustawienia zasad, zachowanie domyślne będzie zależne od wersji systemu Windows. Zmiany tej zasady zaczynają obowiązywać po ponownym rozruchu.
+      </string>
+      <string id="EnableAppUriHandlers">Konfiguruj połączenia sieć web-aplikacja z użyciem programów obsługi identyfikatorów URI aplikacji</string>
+      <string id="EnableAppUriHandlers_Help">
+To ustawienie zasad określa, czy system Windows obsługuje połączenia sieć web-aplikacja z użyciem programów obsługi identyfikatorów URI aplikacji.
+
+Włączenie tego ustawienia zasad spowoduje włączenie połączeń sieć web-aplikacja, dzięki czemu będzie można uruchamiać aplikacje przy użyciu identyfikatorów URI protokołu HTTP(S).
+
+Wyłączenie tej zasady spowoduje wyłączenie połączeń sieć web-aplikacja, przez co identyfikatory URI protokołu HTTP(S) będą otwierane w przeglądarce domyślnej, zamiast powodować uruchomienie skojarzonych aplikacji.
+
+Jeśli nie skonfigurujesz tego ustawienia zasad, zachowanie domyślne będzie zależne od wersji systemu Windows. Zmiany w tej zasadzie zaczynają obowiązywać po ponownym rozruchu.
+      </string>
+      <string id="Fonts">Czcionki</string>
+      <string id="EnableFontProviders">Włącz dostawców czcionek</string>
+      <string id="EnableFontProviders_Help">
+        To ustawienie zasad określa, czy system Windows może pobierać czcionki i dane wykazu czcionek od dostawcy czcionek online.
+
+        Jeśli włączysz to ustawienie zasad, system Windows będzie okresowo wysyłał zapytanie do dostawcy czcionek online w celu sprawdzenia, czy jest dostępny nowy wykaz czcionek. System Windows będzie również mógł pobierać dane czcionek, jeśli będzie to wymagane do formatowania lub renderowania tekstu.
+
+        Jeśli wyłączysz to ustawienie zasad, system Windows nie będzie łączyć się z dostawcą czcionek online i będzie wyliczać tylko lokalnie zainstalowane czcionki.
+
+        Jeśli nie skonfigurujesz tego ustawienia zasad, zachowanie domyślne będzie zależne od wersji systemu Windows. Zmiany tej zasady zaczynają obowiązywać po ponownym rozruchu.
+      </string>
+      <string id="EnableLogonOptimization">Konfiguruj buforowanie zasad grupy</string>
+      <string id="EnableLogonOptimization_Help">
+        To ustawienie zasad umożliwia skonfigurowanie zachowania buforowania zasad grupy.
+
+        Jeśli włączysz to ustawienie zasad, zasady grupy będą zapisywać w pamięci podręcznej informacje o zasadach po każdej sesji przetwarzania w tle. W tej pamięci podręcznej są zapisywane odpowiednie obiekty zasad grupy oraz zawarte w nich ustawienia. Gdy zasady grupy są uruchamiane w synchronicznym trybie pierwszoplanowym, odwołują się do tej pamięci podręcznej, dzięki czemu mogą działać szybciej. Podczas odczytywania pamięci podręcznej zasady grupy podejmują próbę nawiązania połączenia z kontrolerem domeny logowania w celu ustalenia szybkości linku. Gdy zasady grupy są uruchamiane w trybie pracy w tle lub w asynchronicznym trybie pierwszoplanowym, jest kontynuowane pobieranie najnowszej wersji informacji o zasadach i przy użyciu szacowanej przepustowości są ustalane progi powolnego linku. (Zobacz ustawienie zasad „Konfiguruj wykrywanie powolnego linku zasad grupy”, aby skonfigurować zachowanie asynchronicznego pierwszego planu).
+
+        Wartość powolnego linku zdefiniowana w tym ustawieniu zasad określa, jak długo zasady grupy mają czekać na odpowiedź kontrolera domeny, zanim zgłoszą szybkość linku jako powolną. Wartość domyślna to 500 milisekund.
+
+        Wartość limitu czasu zdefiniowana w tym ustawieniu zasad określa, jak długo zasady grupy mają czekać na odpowiedź kontrolera domeny przed ustaleniem braku łączności sieciowej. Powoduje to zatrzymanie bieżącego przetwarzania zasad grupy. Przy następnym ustanowieniu połączenia z kontrolerem domeny zasady grupy będą działać w tle. Ustawienie zbyt dużej wartości może spowodować dłuższe czasy oczekiwania użytkownika podczas rozruchu lub logowania. Wartość domyślna to 5000 milisekund.
+
+        Jeśli wyłączysz to ustawienie zasad, klient zasad grupy nie będzie zapisywać w pamięci podręcznej odpowiednich obiektów zasad grupy ani zawartych w nich ustawień. Gdy zasady grupy są uruchamiane synchronicznie, z sieci jest pobierana najnowsza wersja zasad i przy użyciu szacowanej przepustowości są ustalane progi powolnego linku. (Zobacz ustawienie zasad „Konfiguruj wykrywanie powolnego linku zasad grupy”, aby skonfigurować zachowanie asynchronicznego pierwszego planu).
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">Włącz buforowanie zasad grupy dla serwerów</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        To ustawienie zasad pozwala skonfigurować zachowanie buforowania zasad grupy na komputerach z systemem Windows Server.
+        Jeśli to ustawienie zasad zostanie włączone, zasady grupy będą zapisywać w pamięci podręcznej informacje o zasadach po każdej sesji przetwarzania w tle. W tej pamięci podręcznej są zapisywane odpowiednie obiekty zasad grupy oraz zawarte w nich ustawienia. Gdy zasady grupy są uruchamiane w synchronicznym trybie pierwszoplanowym, odwołują się do tej pamięci podręcznej, dzięki czemu mogą działać szybciej. Podczas odczytywania pamięci podręcznej zasady grupy podejmują próbę nawiązania połączenia z kontrolerem domeny logowania w celu ustalenia szybkości linku. Gdy zasady grupy są uruchamiane w trybie pracy w tle lub w asynchronicznym trybie pierwszoplanowym, jest kontynuowane pobieranie najnowszej wersji informacji o zasadach i przy użyciu szacowanej przepustowości są ustalane progi powolnego linku. (Zobacz ustawienie zasad „Konfiguruj wykrywanie powolnego linku zasad grupy”, aby skonfigurować zachowanie asynchronicznego pierwszego planu).
+        Wartość powolnego linku zdefiniowana w tym ustawieniu zasad określa, jak długo zasady grupy mają czekać na odpowiedź kontrolera domeny, zanim zaraportują szybkość linku jako powolną. Wartością domyślną jest 500 milisekund.
+        Wartość limitu czasu zdefiniowana w tym ustawieniu zasad określa, jak długo zasady grupy mają czekać na odpowiedź kontrolera domeny przed ustaleniem braku połączenia z siecią. Powoduje to zatrzymanie bieżącego przetwarzania zasad grupy. Przy następnym ustanowieniu połączenia z kontrolerem domeny zasady grupy będą działać w tle. Ustawienie zbyt wysokiej wartości może spowodować dłuższe czasy oczekiwania użytkownika podczas uruchamiania lub logowania. Wartością domyślną jest 5000 milisekund.
+        Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, klient zasad grupy nie będzie zapisywać w pamięci podręcznej odpowiednich obiektów zasad grupy ani zawartych w nich ustawień. Gdy zasady grupy są uruchamiane synchronicznie, z sieci jest pobierana najnowsza wersja zasad i przy użyciu szacowanej przepustowości są ustalane progi powolnego linku. (Zobacz ustawienie zasad „Konfiguruj wykrywanie powolnego linku zasad grupy”, aby skonfigurować zachowanie asynchronicznego pierwszego planu).
+      
+      </string>
+
+      <string id="LogonScriptDelay">Konfiguruj opóźnienie skryptu logowania</string>
+      <string id="LogonScriptDelay_Help">
+        Wprowadź wartość „0”, aby wyłączyć opóźnienie skryptu logowania.
+
+        To ustawienie zasad umożliwia określenie, jak długo po zalogowaniu ma czekać klient zasad grupy, zanim uruchomi skrypty.
+
+        Domyślnie klient zasad grupy czeka pięć minut, zanim uruchomi skrypty logowania. Pomaga to w tworzeniu sprawnie działającego środowiska pulpitu dzięki zapobieganiu rywalizacji o dysk.
+
+        Jeśli włączysz to ustawienie zasad, zasady grupy będą uruchamiać skrypty logowania po upływie określonego czasu.
+
+        Jeśli wyłączysz to ustawienie zasad, zasady grupy będą uruchamiać skrypty natychmiast po zalogowaniu.
+
+        Jeśli nie skonfigurujesz tego ustawienia zasad, zasady grupy będą uruchamiać skrypty logowania po pięciu minutach.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">Konfiguruj połączenia funkcji DirectAccess jako szybkie połączenie sieciowe</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">To ustawienie zasad umożliwia administratorowi zdefiniowanie połączenia dostępu bezpośredniego jako szybkiego połączenia sieciowego na użytek stosowania i aktualizowania zasad grupy.
+
+Jeśli przepustowość połączenia dostępu bezpośredniego jest wykrywana przez zasady grupy, czasami może brakować informacji dotyczących przepustowości. Jeśli zasady grupy wykryją przepustowość, działają zgodnie ze zwykłymi regułami oceny tego, czy połączenie dostępu bezpośredniego jest szybkim, czy powolnym połączeniem sieciowym. Jeśli przepustowość nie zostanie wykryta, zasady grupy domyślnie traktują połączenie jako powolne połączenie sieciowe. To ustawienie zasad umożliwia administratorowi zastąpienie tego domyślnego powolnego połączenia sieciowego przez szybkie połączenie sieciowe, jeśli nie można określić przepustowości sieci.
+
+Uwaga: jeśli zasady grupy wykryją powolne połączenie sieciowe, przetworzą tylko te rozszerzenia po stronie klienta, które zostały skonfigurowane do przetwarzania przez powolny link (powolne połączenie sieciowe).
+
+Jeśli włączysz tę zasadę, a zasady grupy nie będą mogły określić przepustowości połączenia dostępu bezpośredniego, zasady grupy ocenią połączenie sieciowe jako szybki link i przetworzą wszystkie rozszerzenia po stronie klienta.
+
+Jeśli wyłączysz to ustawienie albo go nie skonfigurujesz, zasady grupy ocenią połączenie sieciowe jako powolny link i przetworzą tylko te rozszerzenia po stronie klienta, które zostały skonfigurowane do przetwarzania przez powolny link.
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">Po wykryciu powolnego połączenia sieciowego zmień przetwarzanie zasad grupy na asynchroniczne</string>
+      <string id="SlowlinkDefaultToAsync_Help">Ta zasada powoduje, że po wykryciu powolnego połączenia sieciowego zasady grupy pomijają przetwarzanie wszystkich rozszerzeń po stronie klienta, które wymagają przetwarzania synchronicznego (czyli oczekiwania przez komputery na pełne zainicjowanie sieci podczas uruchamiania komputera i logowania użytkownika).
+
+Jeśli włączysz to ustawienie zasad, po wykryciu powolnego połączenia sieciowego przetwarzanie zasad grupy zawsze będzie odbywać się w trybie asynchronicznym.
+Komputery klienckie nie będą czekać na pełne zainicjowanie sieci podczas uruchamiania i logowania. Istniejący użytkownicy będą logowani za pomocą buforowanych poświadczeń,
+dzięki czemu logowanie będzie szybsze. Zasady grupy zostaną zastosowane w tle po udostępnieniu połączenia sieciowego.
+Z uwagi na to, że odświeżanie odbywa się w tle, rozszerzenia wymagające przetwarzania synchronicznego (na przykład rozszerzenia Instalacja oprogramowania i Przekierowanie folderu
+oraz rozszerzenie preferencji Mapowania dysków) nie zostaną zastosowane.
+
+Uwaga: Nawet jeśli to ustawienie zasad jest włączone, w dwóch sytuacjach zasady grupy będą przetwarzane synchronicznie:
+1. Podczas pierwszego uruchomienia komputera następującego po przyłączeniu komputera klienckiego do domeny.
+2. Jeśli ustawienie zasad „Zawsze czekaj na sieć podczas uruchomienia komputera i logowania” jest włączone.
+
+Jeśli wyłączysz to ustawienie zasad albo go nie skonfigurujesz, wykrycie powolnego połączenia sieciowego nie będzie miało wpływu na tryb przetwarzania zasad grupy (synchroniczny lub asynchroniczny).
+
+      </string>
+      <string id="DisableLGPOProcessing">Wyłącz przetwarzanie lokalnych obiektów zasad grupy</string>
+      <string id="DisableLGPOProcessing_Help">To ustawienie zasad zapobiega stosowaniu lokalnych obiektów zasad grupy.
+
+Ustawienia w lokalnych obiektach zasad grupy są domyślnie stosowane przed wszelkimi ustawieniami obiektów zasad grupy opartych na domenie. Te ustawienia zasad mogą dotyczyć zarówno użytkowników, jak i komputera lokalnego. Można wyłączyć przetwarzanie i stosowanie wszystkich lokalnych obiektów zasad grupy, aby zagwarantować, że zostaną zastosowane wyłącznie obiekty zasad grupy oparte na domenie.
+
+Jeśli to ustawienie zasad zostanie włączone, system nie będzie przetwarzał ani stosował lokalnych obiektów zasad grupy.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, nadal będą stosowane lokalne obiekty zasad grupy.
+
+Uwaga: zdecydowanie zaleca się, aby w przypadku komputerów przyłączonych do domeny to ustawienie zasad było konfigurowane tylko dla obiektów zasad grupy opartych na domenie. To ustawienie zasad będzie ignorowane na komputerach przyłączonych do grupy roboczej.
+
+</string>
+      <string id="SyncWaitTime">Określ czas oczekiwania na przetworzenie zasad dotyczących uruchamiania</string>
+      <string id="SyncWaitTime_Help">To ustawienie zasad określa czas oczekiwania zasad grupy na powiadomienia o dostępności sieci w czasie przetwarzania zasad dotyczących uruchamiania. Jeśli zasady dotyczące uruchamiania są przetwarzane synchronicznie, komputer zostanie zablokowany do momentu udostępnienia sieci lub upływu domyślnego czasu oczekiwania. Jeśli zasady dotyczące uruchamiania są przetwarzane asynchronicznie, komputer nie zostanie zablokowany i przetwarzanie zasad będzie się odbywać w tle. W obu przypadkach skonfigurowanie tego ustawienia zasad zastępuje wszelkie ustawienia czasu oczekiwania obliczone przez system.
+
+Jeśli to ustawienie zasad zostanie włączone, zasady grupy będą korzystać z tego maksymalnego czasu oczekiwania skonfigurowanego w trybie administracyjnym i zastąpią wszelkie ustawienia czasu oczekiwania — domyślne lub obliczone przez system.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, zasady grupy na komputerach z systemem operacyjnym Windows Vista będą używać domyślnego czasu oczekiwania, wynoszącego 30 sekund. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Zezwalaj na zasady użytkownika między lasami i profile użytkowników mobilnych</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">To ustawienie zasad umożliwia przetwarzanie zasad dla poszczególnych użytkowników, stosowanie profilów użytkowników mobilnych oraz skryptów logowania obiektów użytkowników na potrzeby logowania interakcyjnego między lasami.
+
+To ustawienie zasad ma wpływ na wszystkie konta użytkowników, którzy logują się interakcyjnie na komputerze w innym lesie, w sytuacji gdy istnieje relacja zaufania między lasami lub dwukierunkowa relacja zaufania między lasami.
+
+Jeśli to ustawienie zasad nie zostanie skonfigurowane:
+— Nie są stosowane ustawienia zasad dla poszczególnych użytkowników z lasu użytkownika.
+— Użytkownicy nie otrzymują profilów mobilnych, ale profile lokalne na komputerze z lasu lokalnego. Zostanie wyświetlony komunikat z ostrzeżeniem dla użytkownika, a w dzienniku zdarzeń zostanie opublikowany komunikat (1529).
+— Zostanie zastosowane przetwarzanie zasad grupy ze sprzężeniem zwrotnym, w którym zostaną użyte obiekty zasad grupy związane z danym komputerem.
+— W dzienniku zdarzeń zostanie opublikowany komunikat (1109) z informacją, że sprzężenie zwrotne zostało wywołane w trybie zamiany.
+
+Jeśli to ustawienie zasad zostanie włączone, zachowanie jest takie samo jak w przypadku systemu Windows 2000: zasady użytkownika są stosowane i jest dozwolony profil użytkownika mobilnego z zaufanego lasu.
+
+Jeśli to ustawienie zostanie wyłączone, zachowanie jest takie samo jak w przypadku jego nieskonfigurowania.</string>
+      <string id="CSE_AppMgmt">Konfiguruj przetwarzanie zasad instalacji oprogramowania</string>
+      <string id="CSE_AppMgmt_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady dotyczące instalacji oprogramowania.
+
+To ustawienie zasad ma wpływ na wszystkie ustawienia zasad, które korzystają ze składnika zasad grupy dotyczącego instalacji oprogramowania, takie jak ustawienia zasad w lokalizacji Ustawienia oprogramowania\Instalacja oprogramowania. Zasady dotyczące instalacji oprogramowania można ustawić jedynie dla obiektów zasad grupy przechowywanych w usłudze Active Directory, a nie dla obiektów zasad grupy przechowywanych na komputerze lokalnym.
+
+Te ustawienia zasad zastępują dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego zasady dotyczące instalacji oprogramowania.
+
+Jeśli to ustawienie zasad zostanie włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji. Jeśli to ustawienie zasad jest wyłączone lub nie jest skonfigurowane, nie ma ono wpływu na działanie systemu.
+
+Opcja „Zezwalaj na przetwarzanie przez powolne połączenie sieciowe” powoduje aktualizowanie zasad nawet wtedy, gdy aktualizacja jest przesyłana przez powolne połączenie sieciowe, takie jak linia telefoniczna. Aktualizacje przesyłane przez powolne połączenia sieciowe mogą powodować znaczne opóźnienia.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji ustawień zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować niezmienione ustawienia zasad — na przykład w celu ponownego zastosowania żądanego ustawienia na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+      <string id="CSE_DiskQuota">Konfiguruj przetwarzanie zasad przydziału dysku</string>
+      <string id="CSE_DiskQuota_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady dotyczące przydziału dysku.
+
+To ustawienie ma wpływ na wszystkie ustawienia zasad korzystające ze składnika zasad grupy dotyczącego przydziału dysku, takie jak ustawienia w lokalizacji Konfiguracja komputera\Szablony administracyjne\System\Przydziały dysku.
+
+To ustawienie zasad zastępuje dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego zasady dotyczące przydziału dysku.
+
+Jeśli to ustawienie zasad zostanie włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji. Jeśli to ustawienie zasad jest wyłączone lub nie jest skonfigurowane, nie ma ono wpływu na działanie systemu.
+
+Opcja „Zezwalaj na przetwarzanie przez powolne połączenie sieciowe” powoduje aktualizowanie zasad nawet wtedy, gdy aktualizacja jest przesyłana przez powolne połączenie sieciowe, takie jak linia telefoniczna. Aktualizacje przesyłane przez powolne połączenia sieciowe mogą powodować znaczne opóźnienia.
+
+Opcja „Nie stosuj podczas okresowego przetwarzania w tle” zapobiega aktualizowaniu przez system odpowiednich zasad w tle podczas korzystania z komputera. Gdy aktualizacje w tle są wyłączone, zmiany zasad nie są uwzględniane do momentu następnego zalogowania się użytkownika lub ponownego uruchomienia systemu.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować zasady niezmienione, na przykład w celu ponownego zastosowania żądanego ustawienia na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+      <string id="CSE_EFSRecovery">Konfiguruj przetwarzanie zasad odzyskiwania systemu szyfrowania plików</string>
+      <string id="CSE_EFSRecovery_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady dotyczące szyfrowania.
+
+To ustawienie zasad ma wpływ na wszystkie zasady, które korzystają ze składnika zasad grupy dotyczącego szyfrowania, takie jak zasady tego typu w lokalizacji Ustawienia systemu Windows\Ustawienia zabezpieczeń.
+
+Zastępuje ono dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego zasady dotyczące szyfrowania.
+
+Jeśli to ustawienie zasad zostanie włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji. Jeśli to ustawienie zasad jest wyłączone lub nie jest skonfigurowane, nie ma ono wpływu na działanie systemu.
+
+Opcja „Zezwalaj na przetwarzanie przez powolne połączenie sieciowe” powoduje aktualizowanie zasad nawet wtedy, gdy aktualizacja jest przesyłana przez powolne połączenie sieciowe, takie jak linia telefoniczna. Aktualizacje przesyłane przez powolne połączenia sieciowe mogą powodować znaczne opóźnienia.
+
+Opcja „Nie stosuj podczas okresowego przetwarzania w tle” zapobiega aktualizowaniu przez system odpowiednich zasad w tle podczas korzystania z komputera. Gdy aktualizacje w tle są wyłączone, zmiany zasad nie są uwzględniane do momentu następnego zalogowania się użytkownika lub ponownego uruchomienia systemu.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować zasady niezmienione, na przykład w celu ponownego zastosowania żądanego ustawienia na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+      <string id="CSE_FolderRedirection">Konfiguruj przetwarzanie zasad przekierowania folderu</string>
+      <string id="CSE_FolderRedirection_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady dotyczące przekierowania folderu.
+
+To ustawienie zasad ma wpływ na wszystkie zasady, które korzystają ze składnika zasad grupy dotyczącego przekierowania folderu, takie jak zasady w lokalizacji Ustawienia systemu Windows\Przekierowanie folderu. Zasady dotyczące przekierowania folderu można ustawić jedynie dla obiektów zasad grupy przechowywanych w usłudze Active Directory, a nie dla obiektów zasad grupy przechowywanych na komputerze lokalnym.
+
+To ustawienie zasad zastępuje dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego ustawienie zasad dotyczące przekierowania folderu.
+
+Jeśli to ustawienie zasad zostanie włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji. Jeśli to ustawienie zasad jest wyłączone lub nie jest skonfigurowane, nie ma ono wpływu na działanie systemu.
+
+Opcja „Zezwalaj na przetwarzanie przez powolne połączenie sieciowe” powoduje aktualizowanie zasad nawet wtedy, gdy aktualizacja jest przesyłana przez powolne połączenie sieciowe, takie jak linia telefoniczna. Aktualizacje przesyłane przez powolne połączenia sieciowe mogą powodować znaczne opóźnienia.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować zasady niezmienione, na przykład w celu ponownego zastosowania żądanego ustawienia na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+      <string id="CSE_IEM">Konfiguruj przetwarzanie zasad konserwacji programu Internet Explorer</string>
+      <string id="CSE_IEM_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady dotyczące konserwacji programu Internet Explorer.
+
+To ustawienie zasad ma wpływ na wszystkie zasady, które korzystają ze składnika zasad grupy dotyczącego konserwacji programu Internet Explorer, takie jak zasady w lokalizacji Ustawienia systemu Windows\Konserwacja programu Internet Explorer.
+
+To ustawienie zasad zastępuje dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego zasady dotyczące konserwacji programu Internet Explorer.
+
+Jeśli to ustawienie zasad zostanie włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji. Jeśli to ustawienie zasad jest wyłączone lub nie jest skonfigurowane, nie ma ono wpływu na działanie systemu.
+
+Opcja „Zezwalaj na przetwarzanie przez powolne połączenie sieciowe” powoduje aktualizowanie zasad nawet wtedy, gdy aktualizacja jest przesyłana przez powolne połączenie sieciowe, takie jak linia telefoniczna. Aktualizacje przesyłane przez powolne połączenia sieciowe mogą powodować znaczne opóźnienia.
+
+Opcja „Nie stosuj podczas okresowego przetwarzania w tle” zapobiega aktualizowaniu przez system odpowiednich zasad w tle podczas korzystania z komputera. Gdy aktualizacje w tle są wyłączone, zmiany zasad nie są uwzględniane do momentu następnego zalogowania się użytkownika lub ponownego uruchomienia systemu.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować zasady niezmienione, na przykład w celu ponownego zastosowania żądanego ustawienia zasad na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+      <string id="CSE_IPSecurity">Konfiguruj przetwarzanie zasad zabezpieczeń IP</string>
+      <string id="CSE_IPSecurity_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady dotyczące zabezpieczeń IP.
+
+To ustawienie zasad ma wpływ na wszystkie zasady, które korzystają ze składnika zasad grupy dotyczącego zabezpieczeń IP, takie jak zasady w lokalizacji Konfiguracja komputera\Ustawienia systemu Windows\Ustawienia zabezpieczeń\Zasady zabezpieczeń IP na komputerze lokalnym.
+
+To ustawienie zasad zastępuje dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego zasady zabezpieczeń IP.
+
+Jeśli to ustawienie zasad zostanie włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji. Jeśli to ustawienie zasad jest wyłączone lub nie jest skonfigurowane, nie ma ono wpływu na działanie systemu.
+
+Opcja „Zezwalaj na przetwarzanie przez powolne połączenie sieciowe” powoduje aktualizowanie zasad nawet wtedy, gdy aktualizacja jest przesyłana przez powolne połączenie sieciowe, takie jak linia telefoniczna. Aktualizacje przesyłane przez powolne połączenia sieciowe mogą powodować znaczne opóźnienia.
+
+Opcja „Nie stosuj podczas okresowego przetwarzania w tle” zapobiega aktualizowaniu przez system odpowiednich zasad w tle podczas korzystania z komputera. Gdy aktualizacje w tle są wyłączone, zmiany zasad nie są uwzględniane do momentu następnego zalogowania się użytkownika lub ponownego uruchomienia systemu.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować zasady niezmienione, na przykład w celu ponownego zastosowania żądanego ustawienia zasad na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+      <string id="CSE_Registry">Konfiguruj przetwarzanie zasad rejestru</string>
+      <string id="CSE_Registry_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady dotyczące rejestru.
+
+To ustawienie zasad ma wpływ na wszystkie zasady w folderze Szablony administracyjne oraz wszelkie inne zasady przechowujące wartości w rejestrze. Zastępuje ono dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego zasady dotyczące rejestru.
+
+Jeśli to ustawienie zasad zostanie włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji. Jeśli to ustawienie zasad jest wyłączone lub nie jest skonfigurowane, nie ma ono wpływu na działanie systemu.
+
+Opcja „Nie stosuj podczas okresowego przetwarzania w tle” zapobiega aktualizowaniu przez system odpowiednich zasad w tle podczas korzystania z komputera. Gdy aktualizacje w tle są wyłączone, zmiany zasad nie są uwzględniane do momentu następnego zalogowania się użytkownika lub ponownego uruchomienia systemu.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować zasady niezmienione, na przykład w celu ponownego zastosowania żądanego ustawienia zasad na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+      <string id="CSE_Scripts">Konfiguruj przetwarzanie zasad skryptów</string>
+      <string id="CSE_Scripts_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady przypisujące udostępnione skrypty.
+
+To ustawienie zasad ma wpływ na wszystkie zasady, które korzystają ze składnika zasad grupy dotyczącego skryptów, takie jak zasady w lokalizacji Ustawienia systemu Windows\Skrypty. Zastępuje ono dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego zasady dotyczące skryptów.
+
+Jeśli to ustawienie zasad zostanie włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji. Jeśli to ustawienie jest wyłączone lub nie jest skonfigurowane, nie ma ono wpływu na działanie systemu.
+
+Opcja „Zezwalaj na przetwarzanie przez powolne połączenie sieciowe” powoduje aktualizowanie zasad nawet wtedy, gdy aktualizacja jest przesyłana przez powolne połączenie sieciowe, takie jak linia telefoniczna. Aktualizacje przesyłane przez powolne połączenia sieciowe mogą powodować znaczne opóźnienia.
+
+Opcja „Nie stosuj podczas okresowego przetwarzania w tle” zapobiega aktualizowaniu przez system odpowiednich zasad w tle podczas korzystania z komputera. Gdy aktualizacje w tle są wyłączone, zmiany zasad nie są uwzględniane do momentu następnego zalogowania się użytkownika lub ponownego uruchomienia systemu.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować zasady niezmienione, na przykład w celu ponownego zastosowania żądanego ustawienia zasad na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+      <string id="CSE_Security">Konfiguruj przetwarzanie zasad zabezpieczeń</string>
+      <string id="CSE_Security_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady zabezpieczeń.
+
+To ustawienie zasad ma wpływ na wszystkie zasady, które korzystają ze składnika zasad grupy dotyczącego zabezpieczeń, takie jak zasady w lokalizacji Ustawienia systemu Windows\Ustawienia zabezpieczeń.
+
+To ustawienie zasad zastępuje dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego zasady zabezpieczeń.
+
+Jeśli to ustawienie zasad zostanie włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji. Jeśli to ustawienie zasad jest wyłączone lub nie jest skonfigurowane, nie ma ono wpływu na działanie systemu.
+
+Opcja „Nie stosuj podczas okresowego przetwarzania w tle” zapobiega aktualizowaniu przez system odpowiednich zasad w tle podczas korzystania z komputera. Gdy aktualizacje w tle są wyłączone, zmiany zasad nie są uwzględniane do momentu następnego zalogowania się użytkownika lub ponownego uruchomienia systemu.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować zasady niezmienione, na przykład w celu ponownego zastosowania żądanego ustawienia zasad na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+      <string id="CSE_Wireless">Konfiguruj przetwarzanie zasad sieci bezprzewodowej</string>
+      <string id="CSE_Wireless_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady przypisujące ustawienia sieci bezprzewodowej.
+
+To ustawienie zasad ma wpływ na wszystkie zasady, które korzystają ze składnika zasad grupy dotyczącego sieci bezprzewodowej, takie jak zasady w lokalizacji Ustawienia systemu Windows\Zasady sieci bezprzewodowej.
+
+Zastępuje ono dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego zasady dotyczące sieci bezprzewodowej.
+
+Jeśli te zasady zostaną włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, nie będzie miało wpływu na działanie systemu.
+
+Opcja „Zezwalaj na przetwarzanie przez powolne połączenie sieciowe” powoduje aktualizowanie zasad nawet wtedy, gdy aktualizacja jest przesyłana przez powolne połączenie sieciowe, takie jak linia telefoniczna. Aktualizacje przesyłane przez powolne połączenia sieciowe mogą powodować znaczne opóźnienia.
+
+Opcja „Nie stosuj podczas okresowego przetwarzania w tle” zapobiega aktualizowaniu przez system odpowiednich zasad w tle podczas korzystania z komputera. Gdy aktualizacje w tle są wyłączone, zmiany zasad nie są uwzględniane do momentu następnego zalogowania się użytkownika lub ponownego uruchomienia systemu.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować zasady niezmienione, na przykład w celu ponownego zastosowania żądanego ustawienia na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+      <string id="CSE_Wired">Konfiguruj przetwarzanie zasad sieci przewodowej</string>
+      <string id="CSE_Wired_Help">To ustawienie zasad określa, kiedy są aktualizowane zasady przypisujące ustawienia sieci przewodowej.
+
+To ustawienie zasad ma wpływ na wszystkie zasady, które korzystają ze składnika zasad grupy dotyczącego sieci przewodowej, takie jak zasady w lokalizacji Ustawienia systemu Windows\Zasady sieci przewodowej.
+
+Zastępuje ono dostosowane ustawienia, które zostały wprowadzone podczas instalacji programu implementującego zasady dotyczące sieci przewodowej.
+
+Jeśli te zasady zostaną włączone, przy użyciu udostępnionych pól wyboru można wprowadzać zmiany opcji.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, nie będzie miało wpływu na działanie systemu.
+
+Opcja „Zezwalaj na przetwarzanie przez powolne połączenie sieciowe” powoduje aktualizowanie zasad nawet wtedy, gdy aktualizacja jest przesyłana przez powolne połączenie sieciowe, takie jak linia telefoniczna. Aktualizacje przesyłane przez powolne połączenia sieciowe mogą powodować znaczne opóźnienia.
+
+Opcja „Nie stosuj podczas okresowego przetwarzania w tle” zapobiega aktualizowaniu przez system odpowiednich zasad w tle podczas korzystania z komputera. Gdy aktualizacje w tle są wyłączone, zmiany zasad nie są uwzględniane do momentu następnego zalogowania się użytkownika lub ponownego uruchomienia systemu.
+
+Opcja „Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione” powoduje aktualizowanie i ponowne stosowanie zasad, nawet jeśli nie uległy one zmianie. Wiele implementacji zasad określa, że są one aktualizowane tylko w razie zmiany. Można jednak aktualizować zasady niezmienione, na przykład w celu ponownego zastosowania żądanego ustawienia na wypadek, gdyby to ustawienie zostało wcześniej zmienione przez użytkownika.</string>
+
+      <string id="DenyRsopToInteractiveUser">Określ, czy użytkownicy interakcyjni mogą generować dane wynikowego zestawu zasad</string>
+      <string id="DenyRsopToInteractiveUser_Help">To ustawienie zasad steruje możliwością wyświetlania danych wynikowego zestawu zasad przez użytkowników.
+
+Domyślnie użytkownicy zalogowani interakcyjnie mogą wyświetlać swoje dane wynikowego zestawu zasad.
+
+Jeśli to ustawienie zasad zostanie włączone, użytkownicy interakcyjni nie będą mogli generować danych wynikowego zestawu zasad.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, użytkownicy interakcyjni będą mogli generować dane wynikowego zestawu zasad.
+
+Uwaga: to ustawienie zasad nie dotyczy administratorów. Bez względu na to, czy to ustawienie zasad jest włączone, czy wyłączone, administratorzy domyślnie mogą wyświetlać dane wynikowego zestawu zasad.
+
+Uwaga: aby wyświetlić dane wynikowego zestawu zasad na komputerze klienckim, należy użyć przystawki Wynikowy zestaw zasad w programie Microsoft Management Console. Przystawkę Wynikowy zestaw zasad można uruchomić z wiersza polecenia, wpisując nazwę RSOP.msc
+
+Uwaga: to ustawienie zasad funkcjonuje zarówno jako ustawienie konfiguracji użytkownika, jak i jako ustawienie konfiguracji komputera.
+
+Zobacz też ustawienie zasad „Wyłącz rejestrowanie wynikowego zestawu zasad” w lokalizacji Konfiguracja komputera\Szablony administracyjne\System\Zasady grupy.</string>
+      <string id="DisableAutoADMUpdate">Wyłącz automatyczne aktualizowanie plików ADM</string>
+      <string id="DisableAutoADMUpdate_Help">Zapobiega automatycznemu aktualizowaniu plików źródłowych Szablonów administracyjnych przez system podczas otwierania Edytora obiektów zasad grupy.  Administratorzy mogą skorzystać z tej opcji, jeśli mają obawy co do ilości miejsca używanego w woluminie systemowym kontrolera domeny.
+
+Domyślnie po uruchomieniu Edytora obiektów zasad grupy przeprowadzane jest porównanie sygnatur czasowych plików źródłowych, które znajdują się w lokalnym katalogu %SYSTEMROOT%\inf, oraz plików źródłowych przechowywanych w obiekcie zasad grupy.  Jeśli pliki lokalne są nowsze, są kopiowane do obiektu zasad grupy.
+
+Zmiana stanu tego ustawienia na Włączone uniemożliwi kopiowanie jakichkolwiek plików źródłowych do obiektu zasad grupy.
+
+Zmiana stanu tego ustawienia na Wyłączone wymusi zachowanie domyślne.  Jeśli pliki będą miały nowszą sygnaturę czasową, będą zawsze kopiowane do obiektu zasad grupy.
+
+UWAGA: jeśli ustawienie zasad Konfiguracja komputera „Zawsze używaj lokalnych plików ADM w Edytorze obiektów zasad grupy” jest włączone, stan tego ustawienia jest ignorowany i zawsze traktowany jak Włączone.</string>
+      <string id="DisableBackgroundPolicy">Wyłącz odświeżanie w tle zasad grupy</string>
+      <string id="DisableBackgroundPolicy_Help">To ustawienie zasad zapobiega aktualizacjom zasad grupy podczas użytkowania komputera. To ustawienie zasad jest stosowane do zasad grupy dotyczących komputerów, użytkowników i kontrolerów domeny.
+
+Jeśli to ustawienie zasad zostanie włączone, system będzie czekać z aktualizacją ustawień dotyczących komputera i użytkownika do momentu wylogowania się bieżącego użytkownika z systemu.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, aktualizacje będzie można przeprowadzać w trakcie pracy użytkowników. Częstotliwość aktualizacji określają ustawienia zasad „Ustaw interwał odświeżania zasad grupy dla komputerów” oraz „Ustaw interwał odświeżania zasad grupy dla użytkowników”.
+
+Uwaga: w razie dokonania zmian w tym ustawieniu zasad należy ponownie uruchomić komputer, aby zmiany zostały wprowadzone.</string>
+      <string id="DisableUsersFromMachGP">Usuń możliwość wywoływania odświeżania zasad komputera przez użytkowników</string>
+      <string id="DisableUsersFromMachGP_Help">To ustawienie zasad pozwala sterować możliwością wywoływania odświeżania zasad komputera przez użytkownika.
+
+Jeśli to ustawienie zasad zostanie włączone, użytkownicy nie będą mogli wywoływać odświeżania zasad komputera. Zasady komputera będą nadal stosowane przy uruchamianiu systemu lub gdy będzie przeprowadzane oficjalne odświeżanie zasad.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, będzie obowiązywać zachowanie domyślne. Domyślnie zasady komputera są stosowane podczas uruchamiania. Są one też stosowane po upływie określonego interwału odświeżania lub w wyniku ręcznego wywołania przez użytkownika.
+
+Uwaga: to ustawienie zasad dotyczy tylko użytkowników innych niż administratorzy. Administratorzy mogą nadal wywoływać odświeżanie zasad komputera w dowolnym czasie, bez względu na sposób skonfigurowania tego ustawienia zasad.
+
+Zobacz też ustawienie zasad „Ustaw interwał odświeżania zasad grupy dla komputerów” umożliwiające zmianę interwału odświeżania zasad.
+
+Uwaga: w razie dokonania zmian w tym ustawieniu zasad należy ponownie uruchomić komputer, aby zmiany zostały wprowadzone.</string>
+      <string id="EnforcePoliciesOnly">Wymuszaj polecenie Pokaż tylko zasady</string>
+      <string id="EnforcePoliciesOnly_Help">To ustawienie zasad zapobiega wyświetlaniu lub używaniu przez administratorów preferencji dotyczących zasad grupy.
+
+Plik administracyjny zasad grupy (z rozszerzeniem ADM) może zawierać zarówno rzeczywiste ustawienia, jak i preferencje. Rzeczywiste ustawienia, które są w pełni obsługiwane przez zasady grupy, muszą korzystać z wpisów rejestru w podkluczach rejestru Software\Policies lub Software\Microsoft\Windows\CurrentVersion\Policies. Preferencje, które nie są w pełni obsługiwane, korzystają z wpisów rejestru w innych podkluczach.
+
+Jeśli to ustawienie zasad zostanie włączone, zostanie włączone polecenie „Pokaż tylko zasady”, którego administratorzy nie będą mogli wyłączyć. W rezultacie w Edytorze obiektów zasad grupy zostaną wyświetlone tylko rzeczywiste ustawienia, a nie preferencje.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, polecenie „Pokaż tylko zasady” będzie domyślnie włączone, ale administratorzy będą mogli wyświetlać preferencje, wyłączając polecenie „Pokaż tylko zasady”.
+
+Uwaga: aby znaleźć polecenie „Pokaż tylko zasady”, w Edytorze obiektów zasad grupy należy kliknąć folder Szablony administracyjne (dowolny), kliknąć prawym przyciskiem myszy ten sam folder, a następnie wskazać pozycję Wyświetl.
+
+W Edytorze obiektów zasad grupy preferencje są oznaczone czerwoną ikoną, dzięki czemu może je odróżnić od rzeczywistych ustawień (oznaczonych niebieską ikoną).</string>
+      <string id="GPDCOptionAny">Użyj dowolnego dostępnego kontrolera domeny</string>
+      <string id="GPDCOptionInherit">Dziedzicz po przystawkach usługi Active Directory</string>
+      <string id="GPDCOptionPDC">Użyj podstawowego kontrolera domeny</string>
+      <string id="GPDCOptions">Konfiguruj wybieranie kontrolera domeny zasad grupy</string>
+      <string id="GPDCOptions_Help">To ustawienie zasad określa, z którego kontrolera domeny korzysta przystawka Edytor obiektów zasad grupy.
+
+Jeśli to ustawienie jest włączone, można zdecydować, który kontroler domeny jest używany zgodnie z tymi opcjami:
+
+Opcja „Użyj podstawowego kontrolera domeny” wskazuje, że przystawka Edytor obiektów zasad grupy dokonuje odczytu i zapisu zmian na kontrolerze domeny wyznaczonym jako wzorzec operacji podstawowego kontrolera domeny dla domeny.
+
+Opcja „Dziedzicz po przystawkach usługi Active Directory” wskazuje, że przystawka Edytor obiektów zasad grupy dokonuje odczytu i zapisu zmian na kontrolerze domeny, z którego korzysta przystawka Użytkownicy i komputery usługi Active Directory lub przystawka Lokacje i usługi Active Directory.
+
+Opcja „Użyj dowolnego dostępnego kontrolera domeny” wskazuje, że przystawka Edytor obiektów zasad grupy dokonuje odczytu i zapisu zmian na dowolnym dostępnym kontrolerze domeny.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, przystawka Edytor obiektów zasad grupy będzie korzystać z kontrolera domeny wyznaczonego jako wzorzec operacji kontrolera podstawowego kontrolera domeny dla domeny.
+
+Uwaga: aby zmienić wzorzec operacji podstawowego kontrolera domeny dla domeny, w przystawce Użytkownicy i komputery usługi Active Directory kliknij prawym przyciskiem myszy domenę, a następnie kliknij polecenie „Wzorzec operacji”.</string>
+      <string id="GPTransferRate">Konfiguruj wykrywanie powolnego linku zasad grupy</string>
+      <string id="GPTransferRate_Help">To ustawienie zasad definiuje powolne połączenie do celów związanych ze stosowaniem i aktualizowaniem zasad grupy.
+
+Jeśli szybkość transferu danych, które zapewniają aktualizację zasad, z kontrolera domeny do komputerów w tej grupie jest mniejsza niż szybkość określona w tym ustawieniu, połączenie jest uznawane przez system za powolne.
+
+Odpowiedź systemu na powolne połączenie dotyczące zasad jest różna dla różnych zasad. Program implementujący zasadę może określić odpowiedź na powolne połączenie. Ponadto ustawienia przetwarzania zasad w tym folderze umożliwiają zastąpienie odpowiedzi na powolny link określonych na poziomie programu.
+
+Jeśli to ustawienie zostanie włączone, w polu „Szybkość połączenia” można wpisać liczbę dziesiętną z przedziału od 0 do 4 294 967 200, wskazującą szybkość transferu w kilobitach na sekundę. Każde połączenie, którego szybkość jest mniejsza, jest uznawane za powolne. Jeśli zostanie wpisane zero, wszystkie połączenia będą traktowane jako szybkie.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, system będzie korzystać z wartości domyślnej równej 500 kilobitów na sekundę.
+
+To ustawienie występuje w folderach Konfiguracja komputera i Konfiguracja użytkownika. Ustawienie w folderze Konfiguracja komputera definiuje powolne łącze dla zasad w folderze Konfiguracja komputera. Ustawienie w folderze Konfiguracja użytkownika definiuje powolne łącze dla ustawień w folderze Konfiguracja użytkownika.
+
+Zobacz też ustawienie „Nie wykrywaj powolnych połączeń sieciowych” i zasady pokrewne w lokalizacji Konfiguracja komputera\Szablony administracyjne\System\Profil użytkownika. Uwaga: jeśli serwer profilów ma łączność typu IP, używane jest ustawienie szybkości połączenia. Jeśli serwer profilów nie ma łączności typu IP, używany jest chronometraż SMB.</string>
+      <string id="GroupPolicyRefreshRate">Ustaw interwał odświeżania zasad grupy dla komputerów</string>
+      <string id="GroupPolicyRefreshRate_Help">To ustawienie zasad określa, jak często zasady grupy dla komputerów są aktualizowane podczas pracy komputera (w tle). To ustawienie określa częstotliwość przeprowadzania aktualizacji w tle tylko dla zasad grupy w folderze Konfiguracja komputera.
+
+Oprócz aktualizacji w tle zasady grupy dla komputera są zawsze aktualizowane podczas uruchamiania systemu.
+
+Domyślnie zasady grupy dla komputera są aktualizowane w tle co 90 minut z losowym przesunięciem od 0 do 30 minut.
+
+Jeśli to ustawienie zostanie włączone, częstotliwość aktualizacji można określić w zakresie od 0 do 64 800 minut (45 dni). Jeśli zostanie wybrana wartość 0 minut, komputer będzie próbował aktualizować zasady grupy co 7 sekund. Ponieważ jednak aktualizacje mogą przeszkadzać użytkownikom w pracy i powodować wzrost ruchu w sieci, w przypadku większości instalacji ustawienie bardzo krótkich interwałów nie jest zalecane.
+
+Jeśli to ustawienie zostanie wyłączone, zasady grupy będą aktualizowane co 90 minut (wartość domyślna). Aby określić, że zasady grupy nie powinny być nigdy aktualizowane wtedy, gdy komputer jest używany, należy wybrać zasady „Wyłącz odświeżanie w tle zasad grupy”.
+
+Zasady „Ustaw interwał odświeżania zasad grupy dla komputerów” umożliwiają również określenie, w jakim stopniu zmienia się rzeczywisty interwał aktualizacji. Aby zapobiec jednoczesnym żądaniom aktualizacji przez klientów z tym samym interwałem aktualizacji, system zmienia interwał aktualizacji dla każdego klienta za pomocą losowej liczby minut. Liczba wpisana w polu czasu losowego ustawia górny limit dla zakresu odchylenia. Jeśli na przykład zostanie wpisana wartość 30 minut, system wybierze odchylenie od 0 do 30 minut. Wpisanie dużej liczby ustanawia szeroki zakres i zmniejsza prawdopodobieństwo nakładania się żądań klientów. Jednak aktualizacje mogą być wtedy znacznie opóźnione.
+
+To ustawienie ustanawia częstotliwość aktualizacji dla zasad grupy dotyczących komputera. Aby ustawić częstotliwość aktualizacji dla zasad użytkownika, należy skorzystać z ustawienia „Ustaw interwał odświeżania zasad grupy dla użytkowników” (znajdującego się w lokalizacji Konfiguracja użytkownika\Szablony administracyjne\System\Zasady grupy).
+
+To ustawienie jest używane tylko wtedy, gdy nie jest włączone ustawienie „Wyłącz odświeżanie w tle zasad grupy”.
+
+Uwaga: warto rozważyć powiadomienie użytkowników, że ich zasady są okresowo aktualizowane, tak aby rozpoznawali oni oznaki aktualizacji zasad. Po zaktualizowaniu zasad grupy zostanie odświeżony pulpit systemu Windows, który przez chwilę będzie migać, a następnie zamknie otwarte menu. Ponadto ograniczenia nakładane na zasady grupy, takie jak limit programów, które mogą uruchamiać użytkownicy, mogą kolidować z wykonywanymi zadaniami.</string>
+      <string id="GroupPolicyRefreshRateDC">Ustaw interwał odświeżania zasad grupy dla kontrolerów domeny</string>
+      <string id="GroupPolicyRefreshRateDC_Help">To ustawienie zasad określa, jak często zasady grupy są aktualizowane na kontrolerach domeny podczas ich pracy (w tle). Aktualizacje określone w tym ustawieniu są stosowane dodatkowo w stosunku do aktualizacji przeprowadzanych podczas uruchamiania systemu.
+
+Domyślnie zasady grupy na kontrolerach domeny są aktualizowane co pięć minut.
+
+Jeśli to ustawienie zostanie włączone, częstotliwość aktualizacji można określić w zakresie od 0 do 64 800 minut (45 dni). Jeśli zostanie wybrana wartość 0 minut, kontroler domeny będzie próbował aktualizować zasady grupy co 7 sekund. Ponieważ jednak aktualizacje mogą przeszkadzać użytkownikom w pracy i powodować wzrost ruchu w sieci, w przypadku większości instalacji ustawienie bardzo krótkich interwałów nie jest zalecane.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, kontroler domeny będzie aktualizować zasady grupy co 5 minut (wartość domyślna). Aby określić, że zasady grupy dla użytkowników nie powinny być nigdy aktualizowane wtedy, gdy komputer jest używany, należy wybrać ustawienie „Wyłącz odświeżanie w tle zasad grupy”.
+
+To ustawienie umożliwia również określenie, w jakim stopniu zmienia się rzeczywisty interwał aktualizacji. Aby zapobiec jednoczesnym żądaniom aktualizacji przez kontrolery domeny z tym samym interwałem aktualizacji, system zmienia interwał aktualizacji dla każdego kontrolera za pomocą losowej liczby minut. Liczba wpisana w polu czasu losowego ustawia górny limit dla zakresu odchylenia. Jeśli na przykład zostanie wpisana wartość 30 minut, system wybierze odchylenie od 0 do 30 minut. Wpisanie dużej liczby ustanawia szeroki zakres i zmniejsza prawdopodobieństwo nakładania się żądań aktualizacji. Jednak aktualizacje mogą być wtedy znacznie opóźnione.
+
+Uwaga: to ustawienie jest używane tylko podczas ustanawiania zasad dla domeny, witryny, jednostki organizacyjnej lub dostosowywanej grupy. Jeśli zasady są ustanawiane tylko dla komputera lokalnego, system zignoruje to ustawienie.</string>
+      <string id="GroupPolicyRefreshRateUser">Ustaw interwał odświeżania zasad grupy dla użytkowników</string>
+      <string id="GroupPolicyRefreshRateUser_Help">To ustawienie zasad określa, jak często zasady grupy dla użytkowników są aktualizowane podczas pracy komputera (w tle). To ustawienie określa częstotliwość przeprowadzania aktualizacji w tle tylko dla zasad grupy w folderze Konfiguracja użytkownika.
+
+Oprócz aktualizacji w tle zasady grupy dla użytkowników są zawsze aktualizowane podczas logowania się użytkowników.
+
+Domyślnie zasady grupy użytkownika są aktualizowane w tle co 90 minut z losowym przesunięciem od 0 do 30 minut.
+
+Jeśli to ustawienie zostanie włączone, częstotliwość aktualizacji można określić w zakresie od 0 do 64 800 minut (45 dni). Jeśli zostanie wybrana wartość 0 minut, komputer będzie próbował aktualizować zasady grupy użytkownika co 7 sekund. Ponieważ jednak aktualizacje mogą przeszkadzać użytkownikom w pracy i powodować wzrost ruchu w sieci, w przypadku większości instalacji ustawienie bardzo krótkich interwałów nie jest zalecane.
+
+Jeśli to ustawienie zostanie wyłączone, zasady grupy użytkownika będą aktualizowane co 90 minut (wartość domyślna). Aby określić, że zasady grupy dla użytkowników nie powinny być nigdy aktualizowane wtedy, gdy komputer jest używany, należy wybrać ustawienie „Wyłącz odświeżanie w tle zasad grupy”.
+
+To ustawienie umożliwia również określenie, w jakim stopniu zmienia się rzeczywisty interwał aktualizacji. Aby zapobiec jednoczesnym żądaniom aktualizacji przez klientów z tym samym interwałem aktualizacji, system zmienia interwał aktualizacji dla każdego klienta za pomocą losowej liczby minut. Liczba wpisana w polu czasu losowego ustawia górny limit dla zakresu odchylenia. Jeśli na przykład zostanie wpisana wartość 30 minut, system wybierze odchylenie od 0 do 30 minut. Wpisanie dużej liczby ustanawia szeroki zakres i zmniejsza prawdopodobieństwo nakładania się żądań klientów. Jednak aktualizacje mogą być wtedy znacznie opóźnione.
+
+Ważne: jeśli ustawienie „Wyłącz odświeżanie w tle zasad grupy” zostanie włączone, to ustawienie będzie ignorowane.
+
+Uwaga: to ustawienie ustanawia częstotliwość aktualizacji dla zasad grupy użytkownika. Aby ustawić częstotliwość aktualizacji dla zasad grupy komputera, należy użyć ustawienia „Interwał odświeżania zasad grupy dla komputerów” (znajdującego się w folderze Konfiguracja komputera\Szablony administracyjne\System\Zasady grupy).
+
+Porada: warto rozważyć powiadomienie użytkowników, że ich zasady są okresowo aktualizowane, tak aby rozpoznawali oni oznaki aktualizacji zasad. Po zaktualizowaniu zasad grupy zostanie odświeżony pulpit systemu Windows, który przez chwilę będzie migać, a następnie zamknie otwarte menu. Ponadto ograniczenia nakładane na zasady grupy, takie jak limit programów, które mogą uruchamiać użytkownicy, mogą kolidować z wykonywanymi zadaniami.</string>
+      <string id="NewGPODisplayName">Ustaw nazwę domyślną dla nowych obiektów zasad grupy</string>
+      <string id="NewGPODisplayName_Help">To ustawienie zasad umożliwia ustawienie domyślnej nazwy wyświetlanej dla nowych obiektów zasad grupy.
+
+To ustawienie umożliwia określenie domyślnej nazwy dla nowych obiektów zasad grupy utworzonych przy użyciu zgodnych z zasadami narzędzi do zarządzania zasadami grupy, w tym karty Zasady grupy w narzędziach usługi Active Directory oraz przeglądarki obiektów zasad grupy.
+
+Nazwa wyświetlana może zawierać zmienne środowiskowe i może zawierać najwyżej 255 znaków.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, zostanie użyta domyślna nazwa wyświetlana nowego obiektu zasad grupy.</string>
+      <string id="NewGPOLinksDisabled">Utwórz nowe linki obiektu zasad grupy wyłączone domyślnie</string>
+      <string id="NewGPOLinksDisabled_Help">To ustawienie zasad umożliwia utworzenie nowych linków obiektu zasad grupy będących w stanie wyłączonym.
+
+Jeśli to ustawienie zostanie włączone, można tworzyć wszystkie nowe linki obiektów zasad grupy, które domyślnie są w stanie wyłączonym. Po skonfigurowaniu i przetestowaniu nowych linków obiektów przy użyciu zgodnych narzędzi do zarządzania zasadami grupy, takich jak przystawka Użytkownicy i komputery usługi Active Directory lub przystawka Lokacje i usługi Active Directory, linki obiektów można włączyć, tak aby były używane w systemie.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, nowe linki obiektu zasad grupy są tworzone w stanie włączonym. Jeśli użytkownik nie chce, aby działały, dopóki nie zostaną skonfigurowane i przetestowane, należy wyłączyć link obiektu.</string>
+      <string id="OnlyUseLocalAdminFiles">Zawsze używaj lokalnych plików ADM w Edytorze obiektów zasad grupy</string>
+      <string id="OnlyUseLocalAdminFiles_Help">To ustawienie zasad umożliwia zawsze używanie lokalnych plików ADM w przystawce obsługującej zasady grupy.
+
+Domyślnie podczas edytowania obiektu zasad grupy za pomocą przystawki Edytor obiektów zasad grupy pliki ADM są ładowane z danego obiektu zasad grupy do przystawki Edytor obiektów zasad grupy. Dzięki temu podczas edytowania obiektu zasad grupy można używać plików ADM w tej samej wersji, która została użyta do utworzenia danego obiektu zasad grupy.
+
+To prowadzi do następującego zachowania:
+
+— Jeśli obiekt zasad grupy został pierwotnie utworzony na przykład przy użyciu systemu w wersji angielskiej, obiekt ten zawiera angielskie pliki ADM.
+
+— Jeśli obiekt ten będzie później edytowany przy użyciu systemu w innej wersji językowej, w obiekcie będą nadal używane angielskie pliki ADM.
+
+Przy użyciu tego ustawienia można zmienić to zachowanie.
+
+Jeśli to ustawienie zostanie włączone, podczas edytowania obiektów zasad grupy przy użyciu przystawki Edytor obiektów zasad grupy będą zawsze używane lokalne pliki ADM znajdujące się w katalogu %windir%\inf.
+
+To prowadzi do następującego zachowania:
+
+— Jeśli obiekt zasad grupy został pierwotnie utworzony przy użyciu systemu w wersji angielskiej, a następnie będzie edytowany przy użyciu systemu w wersji japońskiej, w przystawce Edytor obiektów zasad grupy będą używane lokalne japońskie pliki ADM, a w obszarze Szablony administracyjne tekst będzie wyświetlany w języku japońskim.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, przystawka Edytor obiektów zasad grupy będzie zawsze ładować wszystkie pliki ADM z rzeczywistego obiektu zasad grupy.
+
+Uwaga: jeśli nie wszystkie wymagane pliki ADM są dostępne lokalnie w katalogu %windir%inf, nie wszystkie ustawienia, które skonfigurowano w edytowanym obiekcie zasad grupy, zostaną wyświetlone.</string>
+      <string id="PolicyPolicies">Zasady grupy</string>
+      <string id="RSoPLogging">Wyłącz rejestrowanie wynikowego zestawu zasad</string>
+      <string id="RSoPLogging_Help">To ustawienie umożliwia włączanie lub wyłączanie rejestrowania wynikowego zestawu zasad na komputerze klienckim.
+
+W wynikowym zestawie zasad rejestrowane są informacje na temat ustawień zasad grupy, które zostały zastosowane względem klienta. Te informacje obejmują między innymi następujące szczegóły: zastosowane obiekty zasad grupy i ich pochodzenie oraz uwzględnione ustawienia rozszerzenia po stronie klienta.
+
+Jeśli to ustawienie zostanie włączone, rejestrowanie wynikowego zestawu zasad zostanie wyłączone.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, rejestrowanie wynikowego zestawu zasad zostanie włączone. Domyślnie rejestrowanie wynikowego zestawu zasad jest zawsze włączone.
+
+Uwaga: aby wyświetlić informacje wynikowego zestawu zasad zarejestrowane na komputerze klienckim, można użyć przystawki Wynikowy zestaw zasad w programie Microsoft Management Console (MMC).</string>
+      <string id="UserPolicyMode">Konfiguruj tryb przetwarzania sprzężenia zwrotnego zasad grupy użytkownika</string>
+      <string id="UserPolicyMode_Help">To ustawienie zasad zleca systemowi zastosowanie zestawu obiektów zasad grupy dla danego komputera względem dowolnego użytkownika logującego się na komputerze, którego dotyczy to ustawienie. Jest ono przeznaczone dla komputerów o specjalnym zastosowaniu, takich jak komputery w miejscach publicznych, laboratoriach i salach wykładowych, gdzie ustawienie użytkownika trzeba modyfikować na podstawie używanego przez niego komputera.
+
+Domyślnie obiekty zasad grupy użytkownika określają, które ustawienia użytkownika mają zostać zastosowane. Jeśli to ustawienie zostanie włączone, wówczas w razie logowania się użytkownika na tym komputerze obiekty zasad grupy komputera określają, który zestaw obiektów zasad grupy ma zostać zastosowany.
+
+Jeśli to ustawienie zostanie włączone, można wybrać jeden z trybów dostępnych w polu Tryby:
+
+Tryb „Zamień” wskazuje, że ustawienia użytkownika zdefiniowane w obiektach zasad grupy komputera zastępują ustawienia użytkownika stosowane zwykle względem użytkownika.
+
+Tryb „Scal” wskazuje, że ustawienia użytkownika zdefiniowane w obiektach zasad grupy komputera oraz ustawienia użytkownika stosowane zwykle względem użytkownika zostają połączone. W przypadku konfliktu ustawień ustawienia użytkownika w obiektach zasad grupy komputera mają priorytet względem zwykłych ustawień użytkownika.
+
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, obiekty zasad grupy użytkownika określają, które ustawienia użytkownika mają zostać zastosowane.
+
+Uwaga: to ustawienie obowiązuje tylko wtedy, gdy zarówno konto użytkownika, jak i konto komputera znajdują się w domenach co najmniej systemu Windows 2000.</string>
+      <string id="UserPolicyMode_Merge">Scal</string>
+      <string id="UserPolicyMode_Replace">Zamień</string>
+      <string id="CorpConnSyncWaitTime">Określ czas oczekiwania na łączność z miejscem pracy w zakresie przetwarzania zasad</string>
+      <string id="CorpConnSyncWaitTime_Help">To ustawienie zasad określa czas oczekiwania zasad grupy na powiadomienia o łączności z miejscem pracy w czasie przetwarzania zasad dotyczących uruchamiania. Jeśli zasady dotyczące uruchamiania są przetwarzane synchronicznie, komputer zostanie zablokowany do momentu uzyskania łączności z miejscem pracy lub upływu domyślnego czasu oczekiwania. Jeśli zasady dotyczące uruchamiania są przetwarzane asynchronicznie, komputer nie zostanie zablokowany i przetwarzanie zasad będzie się odbywać w tle. W obu przypadkach skonfigurowanie tego ustawienia zasad zastępuje wszelkie ustawienia czasu oczekiwania obliczone przez system.
+
+Jeśli to ustawienie zasad zostanie włączone, zasady grupy będą korzystać z tego maksymalnego czasu oczekiwania skonfigurowanego dla miejsca pracy w trybie administracyjnym i zastąpią wszelkie ustawienia czasu oczekiwania — domyślne lub obliczone przez system.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, zasady grupy na komputerach z systemem operacyjnym nowszym niż Windows 7 będą używać domyślnego czasu oczekiwania skonfigurowanego dla łączności z miejscem pracy, który wynosi 60 sekund.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Opcje łagodzenia</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">Opcje ograniczania ryzyka procesów</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">Usługa systemu Windows buforowania czcionek musi mieć możliwość pobierania czcionek i danych wykazu czcionek od dostawców czcionek online.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">Wartość powolnego połączenia:[pole liczbowe] milisekund</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Wartość limitu czasu:[pole liczbowe] milisekund</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">min:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Czas oczekiwania (w sekundach):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Zezwalaj na przetwarzanie przez powolne połączenie sieciowe</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Zezwalaj na przetwarzanie przez powolne połączenie sieciowe</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Nie stosuj podczas okresowego przetwarzania w tle</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Zezwalaj na przetwarzanie przez powolne połączenie sieciowe</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Nie stosuj podczas okresowego przetwarzania w tle</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Zezwalaj na przetwarzanie przez powolne połączenie sieciowe</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Zezwalaj na przetwarzanie przez powolne połączenie sieciowe</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Nie stosuj podczas okresowego przetwarzania w tle</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Zezwalaj na przetwarzanie przez powolne połączenie sieciowe</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Nie stosuj podczas okresowego przetwarzania w tle</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Nie stosuj podczas okresowego przetwarzania w tle</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Zezwalaj na przetwarzanie przez powolne połączenie sieciowe</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Nie stosuj podczas okresowego przetwarzania w tle</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Nie stosuj podczas okresowego przetwarzania w tle</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Zezwalaj na przetwarzanie przez powolne połączenie sieciowe</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Nie stosuj podczas okresowego przetwarzania w tle</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Zezwalaj na przetwarzanie przez powolne połączenie sieciowe</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Nie stosuj podczas okresowego przetwarzania w tle</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Przetwarzaj, nawet jeśli obiekty zasad grupy nie zostały zmienione</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Kiedy przystawka Edytor obiektów zasad grupy wybiera kontroler domeny do użytku:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Szybkość połączenia (Kb/s):</decimalTextBox>
+        <text> </text>
+        <text>Wprowadź 0, aby wyłączyć wykrywanie powolnego łącza.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Szybkość połączenia (Kb/s):</decimalTextBox>
+        <text> </text>
+        <text>Wprowadź 0, aby wyłączyć wykrywanie powolnego łącza.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">Zawsze traktuj połączenia WWAN jak powolne łącze</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>To ustawienie umożliwia zmianę częstotliwości stosowania zasad grupy</text>
+        <text>na komputerach. Zakres od 0 do 44 640 minut (31 dni).</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Minuty:</decimalTextBox>
+        <text> </text>
+        <text>Jest to losowy okres dodawany do interwału odświeżania, aby uniknąć</text>
+        <text>jednoczesnego wysyłania żądań zasad grupy przez wszystkich klientów.</text>
+        <text>Zakres od 0 do 1440 minut (24 godziny)</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Minuty:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>To ustawienie umożliwia zmianę częstotliwości stosowania zasad grupy</text>
+        <text>na kontrolerach domen. Zakres od 0 do 44 640 minut (31 dni).</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Minuty:</decimalTextBox>
+        <text> </text>
+        <text>Jest to losowy okres dodawany do interwału odświeżania, aby uniknąć</text>
+        <text>jednoczesnego wysyłania żądań zasad grupy przez wszystkich klientów.</text>
+        <text>Zakres od 0 do 1440 minut (24 godziny)</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Minuty:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>To ustawienie umożliwia zmianę częstotliwości stosowania zasad grupy</text>
+        <text>wobec użytkowników. Zakres od 0 do 44 640 minut (31 dni).</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Minuty:</decimalTextBox>
+        <text> </text>
+        <text>Jest to losowy okres dodawany do interwału odświeżania, aby uniknąć</text>
+        <text>jednoczesnego wysyłania żądań zasad grupy przez wszystkich klientów.</text>
+        <text>Zakres od 0 do 1440 minut (24 godziny)</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Minuty:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>Nazwa obiektu zasad grupy:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Tryb:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Czas oczekiwania (w sekundach):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

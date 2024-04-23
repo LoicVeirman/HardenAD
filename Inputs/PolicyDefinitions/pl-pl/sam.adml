@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Ustawienia SAM</displayName>
+  <description>Ustawienia konfiguracji menedżera kont zabezpieczeń</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">Przeprowadź inspekcję SAM</string>
+      <string id="SecurityAccountManager">Menedżer kont zabezpieczeń</string>
+      <string id="SamNGCKeyROCAValidation">Konfigurowanie sprawdzania poprawności kluczy WHdf (podatnych na ROCA) podczas uwierzytelniania</string>
+      <string id="SamNGCKeyROCAValidationNone">Ignoruj klucze WHdf podatne na ROCA</string>
+      <string id="SamNGCKeyROCAValidationAudit">Dokonuj inspekcji użytkowanych kluczy WHdf podatnych na ROCA</string>
+      <string id="SamNGCKeyROCAValidationBlock">Blokuj użytkowane klucze WHdf podatne na ROCA</string>
+      <string id="SamNGCKeyROCAValidation_explain">To ustawienie zasad umożliwia skonfigurowanie sposobu obsługiwania kluczy usługi Windows Hello dla firm (WHdf) przez kontrolery domeny, które są podatne na „powrót ataku Coppersmitha” (ROCA).
+
+Aby uzyskać więcej informacji o podatności na ROCA, zobacz:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+Jeśli włączysz to ustawienie zasad, następujące opcje będą obsługiwane:
+
+ignorowanie : podczas uwierzytelniania kontroler domeny nie przeprowadzi sondowania żadnego klucza WHdf pod kątem podatności na ROCA;
+
+inspekcja: podczas uwierzytelniania kontroler domeny będzie emitować zdarzenia inspekcji dotyczące kluczy WHdf podatnych na ROCA (uwierzytelnienie będzie nadal działać);
+
+blokowanie: podczas uwierzytelniania kontroler domeny zablokuje możliwość korzystania z kluczy WHdf podatnych na ROCA (uwierzytelnianie nie powiedzie się).
+
+To ustawienie działa tylko w odniesieniu do kontrolerów domeny.
+
+Jeśli nie skonfigurowano usługi, kontrolery domen będą domyślnie korzystać z ich konfiguracji lokalnej. Domyślna konfiguracja lokalna to inspekcja.
+
+Ponowne uruchomienie nie jest konieczne, aby zmiany tego ustawienia zaczęły obowiązywać.
+
+Uwaga: aby uniknąć nieoczekiwanych zakłóceń, nie należy korzystać z ustawienia blokowanie, zanim nie zostaną podjęte odpowiednie działania w celu ograniczenia ryzyka, na przykład wprowadzenie poprawek w podatnych TPM.
+
+Więcej informacji znajdziesz na stronie https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Opcje obsługi kluczy WHdf podatnych na ROCA:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

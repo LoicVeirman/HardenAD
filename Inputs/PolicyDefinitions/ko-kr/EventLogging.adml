@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>이벤트 로깅</displayName>
+    <description>이 파일에는 Windows 이벤트 로깅에 대한 구성 옵션이 포함되어 있습니다.</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">이벤트 로깅</string>
+            <string id="EnableProtectedEventLogging">보호된 이벤트 로깅 사용</string>
+            <string id="EnableProtectedEventLogging_Explain">
+이 정책 설정을 통해 보호된 이벤트 로깅을 구성할 수 있습니다.
+
+이 정책 설정을 사용하면 이벤트 로깅을 지원하는 구성 요소가 잠재적으로 중요한 이벤트 로그 데이터를 이벤트 로그에 기록하기 전에 암호화하기 위해 제공된 인증서를 사용합니다. 제공된 CMS(암호화 메시지 구문) 표준 및 공개 키를 사용하여 데이터가 암호화됩니다. 암호화에 사용된 공개 키에 해당하는 개인 키에 액세스할 수 있는 경우 이렇게 암호화된 메시지를 해독하는 데 Unprotect-CmsMessage PowerShell cmdlet을 사용할 수 있습니다.
+
+이 정책 설정을 사용하지 않거나 구성하지 않으면 구성 요소는 이벤트 로그 메시지를 이벤트 로그에 기록하기 전에 암호화하지 않습니다.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+보호된 이벤트 로깅에서 사용할 암호화 인증서를 제공합니다. 다음 중 하나를 제공할 수 있습니다.
+
+    - base-64로 인코드된 X.509 인증서의 콘텐츠
+    - 로컬 컴퓨터 인증서 저장소(일반적으로 PKI 인프라에서 배포)에서 찾을 수 있는 인증서의 지문
+    - 인증서에 대한 전체 경로(로컬 또는 원격 공유될 수 있음)
+    - 하나의 인증서 또는 여러 인증서를 포함하는 디렉터리 경로(로컬 또는 원격 공유일 수 있음)
+    - 로컬 컴퓨터 인증서 저장소(일반적으로 PKI 인프라에서 배포)에서 찾을 수 있는 인증서의 주체 이름
+
+결과적인 인증서에서는 확장된 키 사용(1.3.6.1.4.1.311.80.1)으로 '문서 암호화'는 물론 데이터 암호화 또는 키 암호화 키 사용도 활성화해야 합니다.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

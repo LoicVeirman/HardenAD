@@ -1,0 +1,132 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>DirectAccess 客户端体验设置组策略模板</displayName>
+  <description>此 admx 文件描述 DirectAccess 客户端 NCA 组件的策略模板</description>
+  <resources>
+    <stringTable>
+      <string id="NCA">DirectAccess 客户端体验设置</string>
+      <string id="NCA_Help">这是 DirectAccess 客户端体验设置的组策略模板。有关更多信息，请阅读 DirectAccess 部署指南。</string>
+      <string id="SupportEmail">支持电子邮件地址</string>
+      <string id="SupportEmail_Help">指定将 NCA 生成的日志文件发送给网络管理员时将使用的电子邮件地址。
+
+当用户将日志文件发送给管理员时，NCA 使用默认电子邮件客户端打开新的消息，消息的“收件人”字段中支持电子邮件地址，然后附上生成的 .html 格式的日志文件。在发送消息之前，用户可以检查消息并添加其他信息。
+
+</string>
+      <string id="FriendlyName">友好名称</string>
+      <string id="FriendlyName_Help">指定当用户单击网络通知区域图标时针对 DirectAccess 连接显示的字符串。例如，可以为 Contoso Corporation 的 DirectAccess 客户端指定“Contoso Intranet 访问”。
+
+如果未配置此设置，则针对 DirectAccess 连接显示的字符串为“Corporate Connection”。
+
+</string>
+      <string id="ShowUI">用户界面</string>
+      <string id="ShowUI_Help">指定当用户单击网络通知区域图标时是否显示 DirectAccess 连接的条目。
+
+如果只是使用 DirectAccess 从 Intranet 远程管理 DirectAccess 客户端计算机，且不提供无缝的 Intranet 访问，则将此选项设置为“禁用”以避免用户感到困惑。
+
+如果未配置此设置，则显示 DirectAccess 连接的条目。
+
+</string>
+      <string id="PassiveMode">DirectAccess 被动模式</string>
+      <string id="PassiveMode_Help">指定 NCA 服务是否在“被动模式”下运行。
+
+将此选项设置为“禁用”，则 NCA 探测始终处于活动模式。如果未配置此设置，在默认情况下，NCA 探测处于活动模式。
+
+</string>
+      <string id="LocalNamesOn">启用首选本地名称</string>
+      <string id="LocalNamesOn_Help">指定当用户单击网络通知区域图标时用户是否显示 DirectAccess 条目的“连接”和“断开连接”选项。
+
+如果用户单击“断开连接”选项，则 NCA 将从名称解析策略表(NRPT)中删除 DirectAccess 规则，并且 DirectAccess 客户端计算机使用其当前网络配置中提供的任何正常的名称解析，如将所有 DNS 查询发送到本地 Intranet 或 Internet DNS 服务器。请注意，NCA 不会删除现有 IPsec 隧道，通过指定 IPv6 地址而不指定名称，用户仍可以跨 DirectAccess 服务器访问 Intranet 资源。
+
+如果网络位置检测未正确确定 DirectAccess 客户端计算机是否已连接到自己的 Intranet，则当用户连接到其他 Intranet 和临时访问 Intranet 资源时，可使用断开连接功能为本地资源指定单标签的不合格名称(如“PRINTSVR”)。
+
+若要将 DirectAccess 规则还原为 NRPT 并继续正常的 DirectAccess 功能，则用户可以单击“连接”。
+
+请注意，
+如果 DirectAccess 客户端计算机在 Intranet 中，并已正确确定其网络位置，则“断开连接”选项将不起作用，因为 DirectAccess 的规则已从 NRPT 删除。
+
+如果未配置此设置，则用户没有“连接”或“断开连接”选项。
+
+</string>
+      <string id="DTEs">IPsec 隧道终结点</string>
+      <string id="DTEs_Help">指定启用 DirectAccess 的 Internet 协议安全(IPsec)隧道终结点的 IPv6 地址。NCA 尝试通过这些配置的隧道终结点访问在“企业资源”设置中指定的资源。
+
+默认情况下，NCA 与 DirectAccess 客户端计算机连接使用同一 DirectAccess 服务器。在 DirectAccess 的默认配置中，通常有两个 IPsec 隧道终结点: 一个用于基础结构隧道，一个是用于 Intranet 隧道。应为每个隧道配置一个终结点。
+	  
+每个条目都包含文本 PING: 后跟 IPsec 隧道终结点的 IPv6 地址。示例: PING:2002:836b:1::836b:1。
+
+若要完善 NCA 功能，则必须配置此设置。
+
+</string>
+      <string id="CorporateResources">企业资源</string>
+      <string id="CorporateResources_Help">指定 Intranet 中 DirectAccess 客户端可正常访问的资源。每个条目都是一个字符串，用于标识资源类型和资源位置。
+
+字符串可以是以下类型之一:
+	  
+-  DNS 名称或 NCA ping 的 IPv6 地址。语法是“PING:”，后跟解析到 IPv6 地址或包含 IPv6 地址的完全限制的域名(FQDN)。示例: PING:myserver.corp.contoso.com 或 PING:2002:836b:1::1。
+ 
+注意
+
+我们建议你在任何可能的情况下使用 FQDN，而不使用 IPv6 地址。
+
+重要提示
+
+必须至少有一个条目是 PING: resource。
+
+-	NCA 通过超文本传输协议(HTTP)请求查询的统一资源定位器(URL)。网页的内容与此无关。语法是“HTTP:”，后跟 URL。URL 的主机部分必须解析到 Web 服务器的 IPv6 地址或包含 IPv6 地址。示例: HTTP:http://myserver.corp.contoso.com/ 或 HTTP:http://2002:836b:1::1/。
+
+-	NCA 将检查文件的通用命名约定(UNC)路径是否存在。文件的内容与此无关。语法是“FILE:”，后跟 UNC 路径。UNC 路径的 ComputerName 部分必须解析到 IPv6 地址或包含 IPv6 地址。示例: FILE:\\myserver\myshare\test.txt 或 FILE:\\2002:836b:1::1\myshare\test.txt。
+
+若要完善 NCA 功能，则必须配置此设置。
+
+</string>
+
+      <string id="CustomCommands">自定义命令</string>
+      <string id="CustomCommands_Help">指定管理员配置的用于自定义记录的命令。除默认日志命令外，这些命令也将运行。</string>
+
+    </stringTable>
+    
+    <presentationTable>
+      <presentation id="POL_08EF8AE6_3960_4852_93B5_3E068D6C2E6B">
+        <textBox refId="TXT_60660913_5491_4D50_AF96_770639FF243D">
+          <label>疑难解答门户</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="SupportEmail">
+        <textBox refId="SupportEmail_Control">
+          <label>支持电子邮件</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="FriendlyName">
+        <textBox refId="FriendlyName_Control">
+          <label>友好名称</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="LocalNamesOn"/>
+      <presentation id="ShowUI"/>
+      <presentation id="CorporateResources">
+        <listBox refId="CorporateResources_Control">企业资源</listBox>
+      </presentation>
+      <presentation id="PortalName">
+        <textBox refId="PortalName_Control">
+          <label>门户名称</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="DTEs">
+        <listBox refId="DTEs_Control">DTE</listBox>
+      </presentation>
+      <presentation id="PassiveMode"/>
+      <presentation id="CoporatePortalSite">
+        <textBox refId="CoporatePortalSite_Control">
+          <label>企业门户站点 - URL</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="CustomCommands">
+        <listBox refId="CustomCommands_Control">CustomCommands</listBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

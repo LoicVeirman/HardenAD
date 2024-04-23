@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+    <displayName>BranchCache</displayName>
+    <description>使用 BranchCache，客户端可以安全地从分支机构内检索内容，而不是从托管该内容的服务器上进行检索。根据具体的部署模式，可以从分支机构的其他客户端或托管缓存服务器检索该内容。如果服务器仅授权客户端从分支内检索内容，则客户端仅能执行此类检索。使用 BranchCache 可降低连接分支机构和数据中心或总部的广域网(WAN)链接的成本，还能够提高对已下载到分支机构的内容的下载速度。
+    
+    </description>
+
+    <resources>
+        <stringTable>
+            <!-- Supported Platforms -->
+            <string id="SUPPORTED_Windows7OrBITS4">Windows 7 或 Windows Server 2008 R2* 及以上版本</string>
+            <!-- Supported Platforms -->
+
+            <string id="WBC_Cat">BranchCache</string>
+
+            <string id="WBC_Enable">启用 BranchCache</string>
+
+            <string id="WBC_Enable_Help">此策略设置指定是否在应用此策略的客户端计算机上启用 BranchCache。除了此策略设置，还必须指定客户端计算机为托管缓存模式客户端还是分布式缓存模式客户端。若要执行此操作，请配置以下任一策略设置:
+
+- 设置 BranchCache 分布式缓存模式
+
+- 设置 BranchCache 托管缓存模式
+
+- 配置托管缓存服务器
+
+策略配置
+
+设置以下任一选项:
+
+- 未配置。如果选择此选项，则此策略不会将 BranchCache 设置应用于客户端计算机。在客户端计算机为域成员但是不希望在所有客户端计算机上启用 BranchCache 的情况下，可以对此域的组策略设置指定“未配置”，然后配置本地计算机策略以在个别计算机上启用 BranchCache。由于未配置域的组策略设置，因此系统不会覆盖用于个别客户端计算机(希望对其启用 BranchCache)的已启用的设置。
+
+- 已启用。如果选择此选项，则系统将针对所有已应用了该策略的客户端计算机启用 BranchCache。例如，如果在域的组策略中启用此策略，则系统将针对已应用了该策略的所有域成员客户端计算机启用 BranchCache。
+
+- 已禁用。如果选择此选项，则系统将针对所有应用了该策略的客户端计算机关闭 BranchCache。
+
+* 此策略设置在运行 Windows Vista Business、Enterprise 和 Ultimate 版本且安装了后台智能传输服务(BITS) 4.0 的计算机上可用。
+            
+            </string>
+
+            <string id="WBC_Cache_Percent">设置用于客户端计算机缓存的磁盘空间百分比</string>
+
+            <string id="WBC_Cache_Percent_Help">此策略设置指定客户端计算机上为 BranchCache 磁盘缓存分配的默认总磁盘空间百分比。
+
+如果启用此策略设置，则可以配置分配用于缓存的总磁盘空间百分比。
+
+如果禁用或未配置此策略设置，则在客户端计算机上，缓存所占的空间为总磁盘空间的 5%。
+
+策略配置
+
+选择以下任一选项:
+
+- 未配置。如果选择此选项，则此策略不会将 BranchCache 客户端计算机缓存设置应用于客户端计算机。在客户端计算机为域成员但是不希望在所有客户端计算机上配置 BranchCache 客户端计算机缓存设置的情况下，可以对此域的组策略设置指定“未配置”，然后配置本地计算机策略以在个别计算机上启用 BranchCache 客户端计算机缓存设置。由于未配置域的组策略设置，因此系统不会覆盖用于个别客户端计算机的客户端计算机缓存设置。
+
+- 已启用。如果选择此选项，则系统将针对所有已应用了该策略的客户端计算机启用 BranchCache 客户端计算机缓存设置。例如，如果在域的组策略中启用了“设置用于客户端计算机缓存的磁盘空间百分比”，则在策略中指定的 BranchCache 客户端计算机缓存设置将对应用了该策略的所有域成员客户端计算机启用。
+
+- 已禁用。如果选择此选项，则 BranchCache 客户端计算机将使用客户端计算机上的默认客户端计算机缓存设置 5%。
+
+在启用此设置的情况下，还可以选择并配置以下选项:
+
+- 指定为缓存分配的总磁盘空间百分比。指定用于 BranchCache 客户端计算机缓存的客户端计算机总磁盘空间的百分比(整数)。
+
+* 此策略设置在运行 Windows Vista Business、Enterprise 和 Ultimate 版本且安装了后台智能传输服务(BITS) 4.0 的计算机上可用。
+            
+            </string>
+
+            <string id="WBC_HostedCache_Location">设置 BranchCache 托管缓存模式</string>
+
+            <string id="WBC_HostedCache_Location_Help">此策略设置指定是否在应用了此策略的客户端计算机上启用 BranchCache 托管缓存模式。除了此策略之外，还必须使用策略“启用 BranchCache”才能启用客户端计算机上的 BranchCache。
+
+当客户端计算机配置为托管缓存模式客户端时，该计算机能够从位于分公司的托管缓存服务器上下载缓存内容。此外，当托管缓存客户端从内容服务器上获取内容时，该客户端可以将内容上载到托管缓存服务器，以供分公司的其他托管缓存客户端访问。
+
+策略配置
+
+选择以下任一选项:
+
+- 未配置。如果选择此选项，则此策略不会将 BranchCache 设置应用于客户端计算机。在客户端计算机为域成员但是不希望在所有客户端计算机上启用 BranchCache 的情况下，可以对此域的组策略设置指定“未配置”，然后配置本地计算机策略以在个别计算机上启用 BranchCache。由于未配置域的组策略设置，因此系统不会覆盖用于个别客户端计算机(希望对其启用 BranchCache)的已启用的设置。
+
+- 已启用。如果选择此选项，则系统将针对所有已应用了该策略的客户端计算机启用 BranchCache 托管缓存模式。例如，如果在域的组策略中启用此策略，则系统将针对已应用了该策略的所有域成员客户端计算机启用 BranchCache 托管缓存模式。
+
+- 已禁用。如果选择此选项，则系统将针对所有已应用了该策略的客户端计算机关闭 BranchCache 托管缓存模式。
+
+在启用此设置的情况下，还可以选择并配置以下选项:
+
+- 键入托管缓存服务器的名称。指定托管缓存服务器的计算机名。由于托管缓存服务器名也是在登记到托管缓存服务器的证书中指定的，因此此处键入的名称必须与在服务器证书中指定的托管缓存服务器名一致。
+
+托管缓存客户端必须信任颁发给托管缓存服务器的服务器证书。确保颁发的 CA 证书安装在所有托管缓存客户端计算机的受信任的根证书颁发机构的证书存储中。
+
+* 此策略设置在运行 Windows Vista Business、Enterprise 和 Ultimate 版本且安装了后台智能传输服务(BITS) 4.0 的计算机上可用。
+            
+            </string>
+
+            <string id="WBC_Distributed_Enable">设置 BranchCache 分布式缓存模式</string>
+
+            <string id="WBC_Distributed_Enable_Help">此策略设置指定是否在应用了此策略的客户端计算机上启用 BranchCache 分布式缓存模式。除了此策略之外，还必须使用策略“启用 BranchCache”才能启用客户端计算机上的 BranchCache。
+
+在分布式缓存模式中，客户端计算机从启用了 BranchCache 的总部内容服务器上下载内容，然后以本地方式缓存这些内容，再将内容分发给分公司的其他 BranchCache 分布式缓存模式客户端。
+
+策略配置
+
+选择以下任一选项:
+
+- 未配置。如果选择此选项，则此策略不会将 BranchCache 设置应用于客户端计算机。在客户端计算机为域成员但是不希望在所有客户端计算机上启用 BranchCache 的情况下，可以对此域的组策略设置指定“未配置”，然后配置本地计算机策略以在个别计算机上启用 BranchCache。由于未配置域的组策略设置，因此系统不会覆盖用于个别客户端计算机(希望对其启用 BranchCache)的已启用的设置。
+
+- 已启用。如果选择此选项，则系统将针对所有已应用了该策略的客户端计算机启用 BranchCache 分布式缓存模式。例如，如果在域的组策略中启用此策略，则系统将针对已应用了该策略的所有域成员客户端计算机启用 BranchCache 分布式缓存模式。
+
+- 已禁用。如果选择此选项，则系统将针对所有已应用了该策略的客户端计算机关闭 BranchCache 分布式缓存模式。
+
+* 此策略设置在运行 Windows Vista Business、Enterprise 和 Ultimate 版本且安装了后台智能传输服务(BITS) 4.0 的计算机上可用。
+            
+            </string>
+
+            <string id="WBC_SMB_Enable">配置网络文件的 BranchCache</string>
+
+            <string id="WBC_SMB_Enable_Help">仅在总部部署一个或多个启用 BranchCache 文件服务器时才可使用此策略设置。此策略设置指定分公司中的客户端计算机根据网络延迟或滞后(客户端通过广域网(WAN))链接从总部下载内容时出现的延迟或滞后)开始缓存文件服务器上的内容的时间。 配置此设置的值(此值为缓存开始前允许的最大双程网络延迟时间)后，在网络延迟时间达到指定的值之前，客户端不会开始缓存内容；当网络延迟时间大于该值时，客户端在收到来自文件服务器的内容后才开始缓存这些内容。
+
+策略配置
+
+选择以下任一选项:
+
+- 未配置。如果选择此选项，则此策略不会将 BranchCache 延迟设置应用于客户端计算机。在客户端计算机为域成员但是不希望在所有客户端计算机上配置 BranchCache 延迟设置的情况下，可以对此域的组策略设置指定“未配置”，然后配置本地计算机策略以在个别计算机上启用 BranchCache 延迟设置。由于未配置域的组策略设置，因此系统不会覆盖用于个别客户端计算机的延迟设置。
+
+- 已启用。如果选择此选项，则系统将针对所有已应用了该策略的客户端计算机启用 BranchCache 最大双程延迟设置。例如，如果在域的组策略中启用了“配置网络文件的 BranchCache”，则在策略中指定的 BranchCache 延迟设置将对应用了该策略的所有域成员客户端计算机启用。
+
+- 已禁用。如果选择此选项，则 BranchCache 客户端计算机将使用默认的延迟设置 80 毫秒。
+
+在启用此策略设置的情况下，还可以选择并配置以下选项:
+
+- 键入缓存开始前的最大双程网络延迟(毫秒)。指定 BranchCache 客户端计算机在开始本地缓存内容之前的时间量(毫秒)。
+            
+            </string>
+
+            <string id="WBC_HostedCacheDiscovery_Enable">通过服务连接点启用自动托管缓存发现</string>
+
+            <string id="WBC_HostedCacheDiscovery_Enable_Help">此策略设置指定客户端计算机是否应通过搜索与客户端的当前 Active Directory 站点关联的托管缓存服务器发布服务连接点来尝试自动配置托管缓存模式。 如果启用此策略设置，则应用了该策略设置的客户端计算机可使用 Active Directory 搜索托管缓存服务器，并且会更倾向于这种服务器和托管缓存模式，而不是手动配置 BranchCache 或通过其他组策略配置 BranchCache。
+
+如果同时启用此策略设置和“启用 BranchCache”策略设置，则 BranchCache 客户端将尝试发现本地分公司的托管缓存服务器。 如果客户端计算机检测到托管缓存服务器，则启用托管缓存模式。 如果未检测到托管缓存服务器，则不启用托管缓存模式，同时客户端将使用手动或由组策略指定的任何其他配置。
+
+应用此策略设置后，客户端计算机将在以下情况下执行自动托管缓存服务器发现:
+
+如果未应用其他基于 BranchCache 模式的策略设置，则客户端计算机将执行自动托管缓存服务器发现。如果发现一个或多个托管缓存服务器，则客户端计算机将自我配置为托管缓存模式。
+
+如果同时应用此策略和“设置 BranchCache 分布式缓存模式”，则客户端计算机将执行自动托管缓存服务器发现。如果发现一个或多个托管缓存服务器，则客户端计算机将仅自我配置为托管缓存模式。
+
+如果应用“设置 BranchCache 托管缓存模式”，则客户端计算机不会执行自动托管缓存发现。在应用“配置托管缓存服务器”策略设置时，也会出现这种情况。
+
+此策略设置仅适用于在 Windows 8 及以上版本中运行的客户端计算机。 此策略对运行 Windows 7 或 Windows Vista 的计算机无效。 
+
+如果禁用或未配置此设置，则客户端将不会尝试通过服务连接点发现托管缓存服务器。
+
+策略配置
+
+选择以下任一选项:
+
+- 未配置。如果选择此选项，则此策略设置不会将 BranchCache 设置应用于客户端计算机，而客户端计算机也不会执行托管缓存服务器发现。
+
+- 已启用。如果选择此选项，则系统将此策略设置应用于客户端计算机，该计算机执行自动托管缓存服务器发现并被配置为托管缓存模式客户端。
+
+- 已禁用。如果选择此选项，则此策略不会应用于客户计算机。
+            
+            </string>
+
+            <string id="WBC_HostedCache_MultipleServers">配置托管缓存服务器</string>
+
+            <string id="WBC_HostedCache_MultipleServers_Help">此策略设置指定是否将客户端计算机配置为使用托管缓存模式，并提供适用于该客户端计算机的托管缓存服务器的计算机名。 使用托管缓存模式，分公司中的客户端计算机可从安装在同一办公室位置的一个或多个托管缓存服务器检索内容。 可以使用此设置自动配置为分公司内具有托管缓存服务器的计算机名的托管缓存模式配置的客户端计算机。
+
+如果启用此策略设置，并为托管缓存服务器指定有效的计算机名，则系统将为所有应用了该策略设置的客户端计算机启用托管缓存模式。若要此策略设置有效，则还必须启用“启用 BranchCache”策略设置。
+
+此策略设置仅适用于在 Windows 8 及以上版本中运行的客户端计算机。 此策略对运行 Windows 7 或 Windows Vista 的计算机无效。 同时应用了此策略设置以及“设置 BranchCache 托管缓存模式”策略设置的客户端计算机将使用在此策设置中指定的托管缓存服务器，而不使用在“设置 BranchCache 托管缓存模式”策略设置中配置的托管缓存服务器。
+
+如果未配置或禁用此策略设置，则配置为托管缓存模式的计算机仍然能够正常工作。
+
+策略配置
+
+选择以下任一选项:
+
+- 未配置。如果选择此选项，则此策略设置不会将 BranchCache 设置应用于客户端计算机。
+
+- 已启用。如果选择此选项，则系统将此策略设置应用于客户端计算机，这些计算机已配置为使用托管缓存服务器的托管缓存模式客户端(已在“托管缓存服务器”中指定)。
+
+- 已禁用。如果选择此选项，则此策略不会应用于客户计算机。
+
+在启用此设置的情况下，还可以选择并配置以下选项:
+
+- 托管缓存服务器。若要将托管缓存服务器的计算机名添加到此策略设置中，请单击“已启用”，然后单击“显示”。此时将打开“显示内容”对话框。单击“值”，然后键入托管缓存服务器的计算机名。
+            
+            </string>
+
+            <string id="WBC_Downgrading">配置客户端 BranchCache 版本支持</string>
+
+            <string id="WBC_Downgrading_Help">此策略设置指定适用 BranchCache 的客户端计算机是否在降级模式中运行，以便维护其与之前版本的 BranchCache 的兼容性。 如果客户端计算机不使用同一 BranchCache 版本，则缓存效率可能会降低，因为使用不同 BranchCache 版本的客户端计算机可能会以不兼容的格式存储缓存数据。
+
+如果启用此策略设置，则所有客户端都将使用在“从以下版本中选择”中指定的 BranchCache 版本。
+
+如果未配置此设置，则所有客户端将使用与其操作系统匹配的 BranchCache 版本。
+
+策略配置
+
+选择以下任一选项:
+
+- 未配置。如果选择此选项，则此策略设置将不会应用于客户端计算机，而客户端将运行其操作系统附带的 BranchCache 版本。
+
+- 已启用。如果选择此选项，则此策略设置将根据在“从以下版本中选择”中设置的选项值应用于客户端计算机。
+
+- 已禁用。如果选择此选项，则此策略设置将不会应用于客户端计算机，而客户端将运行其操作系统附带的 BranchCache 版本。
+
+在启用此设置的情况下，还可以选择并配置以下选项:
+
+从以下版本中选择
+
+- 安装了 BITS 4.0 的 Windows Vista、Windows 7 或 Windows Server 2008 R2。如果选择此版本，则更高版本的 Windows 将运行这些操作系统中附带的 BranchCache 版本，而不是相应的更高版本的 BranchCache。
+
+- Windows 8。如果选择此版本，则 Windows 8 将运行操作系统中附带的 BranchCache 版本。
+            
+            </string>
+
+            <string id="WBC_Downgrading_Version_Win7">安装了 BITS 4.0 的 Windows Vista、Windows 7 或 Windows Server 2008 R2</string>
+            <string id="WBC_Downgrading_Version_Win8">Windows 8</string>
+
+            <string id="WBC_Cache_MaxAge">设置数据缓存中段的存在时间</string>
+
+            <string id="WBC_Cache_MaxAge_Help">此策略设置指定客户端计算机上 BranchCache 数据缓存中段的有效存在时间(以天为单位)。
+
+如果启用此策略设置，则可以配置数据缓存中段的存在时间。
+
+如果禁用或未配置此策略设置，则存在时间设置为 28 天。
+
+策略配置
+
+选择以下任一选项:
+
+- 未配置。如果选择此选项，则此策略不会将 BranchCache 客户端计算机缓存存在时间设置应用于客户端计算机。在客户端计算机为域成员但是不希望在所有客户端计算机上配置 BranchCache 客户端计算机缓存存在时间设置的情况下，可以对此域的组策略设置指定“未配置”，然后配置本地计算机策略以在个别计算机上启用 BranchCache 客户端计算机缓存存在时间设置。由于未配置域的组策略设置，因此系统不会覆盖用于个别客户端计算机的客户端计算机缓存存在时间设置。
+
+- 已启用。如果选择此选项，则系统将针对所有已应用了该策略的客户端计算机启用 BranchCache 客户端计算机缓存存在时间设置。例如，如果在域的组策略中启用了此策略设置，则在策略中指定的 BranchCache 客户端计算机缓存存在时间将对应用了该策略的所有域成员客户端计算机启用。
+
+- 已禁用。如果选择此选项，则 BranchCache 客户端计算机将使用客户端计算机上的默认客户端计算机缓存存在时间设置 28 天。
+
+在启用此设置的情况下，还可以选择并配置以下选项:
+
+- 指定数据缓存中段的有效存在时间(以天为单位)。
+            
+            </string>
+
+        </stringTable>
+
+        <presentationTable>
+            <presentation id="WBC_Cache_Size_Exact_Presentation">
+                <decimalTextBox refId="WBC_Cache_Size_Exact_dctxtbox" defaultValue="10485760" spinStep="10485760">
+                </decimalTextBox>
+            </presentation>
+
+            <presentation id="WBC_Cache_Size_Percent_Presentation">
+                <text>指定为该缓存分配的总磁盘空间百分比</text>
+                <decimalTextBox refId="WBC_Cache_Size_Percent_dctxtbox" defaultValue="5" spinStep="5">
+                </decimalTextBox>
+            </presentation>
+
+            <presentation id="WBC_Cache_Location_TextBox">
+                <textBox refId="WBC_Cache_TextBox">
+                    <label>输入客户端计算机缓存位置</label>
+                </textBox>
+            </presentation>
+
+            <presentation id="WBC_Hosted_Cache_Location_TextBox">
+                <textBox refId="WBC_Cache_TextBox">
+                    <label>键入托管缓存服务器的名称</label>
+                </textBox>
+            </presentation>
+
+            <presentation id="WBC_SMB_DecimalTextBox">
+              <text>键入缓存开始前的最大双程网络延迟时间(以毫秒为单位)</text>  
+              <decimalTextBox refId="WBC_SMBLatency_DecimalTextBox" defaultValue="80" spinStep="20">
+                </decimalTextBox>
+            </presentation>
+
+            <presentation id="WBC_MultipleServers">
+              <text>托管缓存服务器</text>  
+              <listBox refId="WBC_MultipleServers_Listbox"/>
+            </presentation>
+
+            <presentation id="WBC_Downgrading_VersionSelection">
+              <dropdownList refId="Downgrading_Version" noSort="true" defaultItem="0">从以下版本中选择:</dropdownList>
+            </presentation>
+
+            <presentation id="WBC_Cache_MaxAge_Presentation">
+                <text>指定数据缓存中段的有效存在时间(以天为单位)</text>
+                <decimalTextBox refId="WBC_Cache_MaxAge_dctxtbox" defaultValue="28" spinStep="5">
+                </decimalTextBox>
+            </presentation>
+
+        </presentationTable>
+    </resources>
+</policyDefinitionResources>

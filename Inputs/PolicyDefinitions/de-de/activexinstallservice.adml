@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ActiveX-Installerdienst</displayName>
+  <description>Installiert ActiveX-Steuerelemente von genehmigten Installationsorten.</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">ActiveX-Installerdienst</string>
+      <string id="AxISURLZonePolicies">ActiveX-Installationsrichtlinie für Sites in vertrauenswürdigen Zonen erstellen</string>        
+      <string id="AxISURLZonePolicies_explain">Mit dieser Richtlinieneinstellung wird die Installation von ActiveX-Steuerelementen für Sites in vertrauenswürdigen Zonen gesteuert. 
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, werden ActiveX-Steuerelemente gemäß den Vorgaben in dieser Richtlinieneinstellung installiert. 
+      
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wird vor der Installation von ActiveX-Steuerelementen eine Eingabe angefordert. 
+
+Wenn die vertrauenswürdige Site das HTTPS-Protokoll verwendet, kann über diese Richtlinieneinstellung auch gesteuert werden, wie der ActiveX-Installationsdienst auf Zertifikatfehler reagiert. Alle HTTPS-Verbindungen müssen standardmäßig ein Serverzertifikat vorweisen, das alle Gültigkeitskriterien erfüllt. Wenn Ihnen bekannt ist, dass eine vertrauenswürdige Site einen Zertifikatfehler aufweist, Sie ihr aber trotzdem vertrauen möchten, können Sie die Zertifikatfehler auswählen, die Sie ignorieren möchten. 
+    
+Hinweis: Diese Richtlinieneinstellung gilt für alle Sites in vertrauenswürdigen Zonen.
+
+</string>
+      <string id="TrustedZoneDisabled">Nicht installieren</string>
+      <string id="TrustedZonePrompt">Benutzer zur Eingabe auffordern</string>
+      <string id="TrustedZoneSilentInstall">Automatisch installieren</string>
+      <string id="ApprovedActiveXInstallSites">Genehmigte Installationsorte für ActiveX-Steuerelemente</string>
+      <string id="ApprovedActiveXInstallSites_explain">Diese Richtlinieneinstellung legt fest, welche ActiveX-Installationsorte von Standardbenutzern in Ihrer Organisation zur Installation von ActiveX-Steuerelemente auf ihren Computern verwendet werden können. Wenn diese Richtlinieneinstellung aktiviert ist, kann der Administrator eine Liste mit genehmigten ActiveX-Installationsorten erstellen, die durch die Host-URL festgelegt sind. 
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, kann der Administrator eine Liste mit genehmigten ActiveX-Installationsorten erstellen, die durch die Host-URL festgelegt sind. 
+      
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wird der Benutzer vor der Installation von ActiveX-Steuerelementen zur Eingabe von Administratoranmeldeinformationen aufgefordert. 
+
+Hinweis: Beim Angeben der Host-URLs können keine Platzhalterzeichen verwendet werden.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Von vertrauenswürdigem Herausgeber signierte Installationsrichtlinie für ActiveX-Steuerelement</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Installationsrichtlinie für signiertes ActiveX-Steuerelement</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Installationsrichtlinie für nicht signiertes ActiveX-Steuerelement</dropdownList>
+        <text>Verbindungen mit vertrauenswürdigen Sites mit folgenden Serverzertifikatfehlern zulassen.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Unbekannte Zertifizierungsstelle</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Ungültiger Zertifikatname</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Datum für Zertifikatverifizierung überschritten</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Falsche Zertifikatverwendung</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">Host-URLs</listBox>
+        <text>Enthält die Richtlinie für die Host-URL.</text>
+        <text>Beispiel  </text>
+        <text>Hostname: http://activex.microsoft.com</text>
+        <text>Wert: 2,1,0,0</text>
+        <text>Der Wert für jede Host-URL besteht aus vier Einstellungen im CSV-Format.</text>
+        <text>Die Werte stellen "TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy" dar.</text>
+        <text>Die drei linken Werte in der Richtlinie steuern die Installation der ActiveX-Steuerelemente basierend auf deren Signatur.</text>
+        <text>Folgende Werte sind verfügbar.</text>
+        <text>0: ActiveX-Steuerelement wird nicht installiert.</text>
+        <text>1: Benutzer zur Installation des ActiveX-Steuerelements auffordern.</text>
+        <text>2: ActiveX-Steuerelement wird automatisch installiert.</text>
+        <text>Steuerelemente, die mit Zertifikaten im Speicher für vertrauenswürdige Herausgeber signiert sind, werden automatisch installiert  </text>
+        <text>Die automatische Installation wird für nicht signierte Steuerelemente nicht unterstützt.</text>
+        <text></text>
+        <text>Der rechte Wert in der Richtlinie ist ein Flag mit Bitmaske.</text>
+        <text>Die Flags werden zum Ignorieren von https-Zertifikatfehlern verwendet.</text>
+        <text>Der Standardwert ist "0".</text>
+        <text>Das bedeutet, dass die https-Verbindungen alle Sicherheitsüberprüfungen bestehen müssen.</text>
+        <text></text>
+        <text>Verwenden Sie eine Kombination der folgenden Werte</text>
+        <text>, um Fehler aufgrund ungültiger Zertifikate zu ignorieren:</text>
+        <text>0x00000100  Unbekannte Zertifizierungsstelle ignorieren</text>
+        <text>0x00001000  Ungültigen allgemeinen Namen ignorieren</text>
+        <text>0x00002000  Ungültiges Zertifikatsdatum ignorieren</text>
+        <text>0x00000200  Falschen Zertifikatsverwendungszweck ignorieren</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

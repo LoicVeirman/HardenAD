@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Rejestrowanie zdarzeń</displayName>
+    <description>Ten plik zawiera opcje konfiguracji rejestrowania zdarzeń systemu Windows</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Rejestrowanie zdarzeń</string>
+            <string id="EnableProtectedEventLogging">Włącz chronione rejestrowanie zdarzeń</string>
+            <string id="EnableProtectedEventLogging_Explain">
+To ustawienie zasad umożliwia skonfigurowanie chronionego rejestrowania zdarzeń.
+
+Jeśli to ustawienie zasad zostanie włączone, składniki obsługujące to ustawienie będą szyfrować za pomocą podanego certyfikatu potencjalnie poufne dane dziennika zdarzeń przed zapisaniem ich w dzienniku zdarzeń. Dane zostaną zaszyfrowane przy użyciu standardu składni komunikatów kryptograficznych (CMS, Cryptographic Message Syntax) i podanego klucza publicznego. Zaszyfrowane komunikaty można odszyfrować przy użyciu polecenia cmdlet programu PowerShell Unprotect-CmsMessage pod warunkiem, że masz dostęp do klucza prywatnego odpowiadającego kluczowi publicznemu, za pomocą którego zaszyfrowano te komunikaty.
+
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, składniki nie będą szyfrować komunikatów dziennika zdarzeń przed zapisaniem ich w dzienniku zdarzeń.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+Podaj certyfikat szyfrowania, który ma być używany przez chronione rejestrowanie zdarzeń. Dostępne są następujące ustawienia:
+
+    — Zawartość certyfikatu X.509 szyfrowanego za pomocą algorytmu base-64
+    — Odcisk palca certyfikatu, który jest dostępny w magazynie certyfikatów komputera lokalnego (zazwyczaj wdrażanym przez infrastrukturę kluczy publicznych)
+    — Pełna ścieżka do certyfikatu (może to być ścieżka lokalna lub udział zdalny)
+    — Ścieżka do katalogu zawierającego certyfikat lub certyfikaty (może to być ścieżka lokalna lub udział zdalny)
+    — Nazwa podmiotu certyfikatu, który jest dostępny w magazynie certyfikatów komputera lokalnego (zazwyczaj wdrażanym przez infrastrukturę kluczy publicznych)
+
+Certyfikat wynikowy musi mieć ustawioną wartość „Szyfrowanie dokumentów” dla ulepszonego użycia klucza (1.3.6.1.4.1.311.80.1) oraz włączone szyfrowanie danych lub szyfrowanie klucza.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>请在此处输入显示名称</displayName>
+  <description>请在此处输入描述</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">缓解选项</string>
+      <string id="Font_List">阻止不受信任的字体</string>
+      <string id="Font_List_Help">此安全功能提供全局设置，以防程序加载不受信任的字体。不受信任的字体是任何在 %windir%\Fonts 目录之外安装的字体。此功能可以配置为以下 3 种模式:“开”、“关”和“审核”。默认情况下，该模式为“关”，任何字体都不受阻止。如果你确实没准备好将此功能部署到你的组织，则可以在“审核”模式下运行它，以了解阻止不受信任的字体是否会导致任何使用性或兼容性问题。</string>
+      <string id="FontMitigation_On">阻止不受信任的字体和日志事件</string>
+      <string id="FontMitigation_Off">不阻止不受信任的字体</string>
+      <string id="FontMitigation_Audit">记录事件而不阻止不受信任的字体</string>
+
+	  <string id="ProcessMitigationOptions_List">进程缓解选项</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        此安全功能提供了替代单个进程 MitigationOptions 设置的方法。此功能可用于强制实施多个特定于应用程序的安全策略。应用程序名称将指定为值名称，包括扩展名。值将指定为在特定位置上有一系列标志的位字段。位可设置为0 (强制关闭设置)、1 (强制启用设置)或 ? (在进行 GPO 评估前保留现有设置值)。已识别的位位置为:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        为子进程启用数据执行保护(DEP)
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        为子进程启用 DEP-ATL 形实转换模拟。DEP-ATL 形实转换模拟使系统可以拦截源自活动模板库(ATL)形实转换层的 NX 故障。
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        为子进程启用结构化异常处理程序覆盖保护(SEHOP)。SEHOP 阻止使用结构化异常处理程序(SEH)覆盖技术的攻击。
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        强制性地址空间布局随机化(ASLR)策略按照加载时发生映像基冲突的情形强行重定基与动态基不兼容的映像。如果需要重定位，则不包含基重定位部分的映像将不会加载。
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        根据自下而上的随机化策略(包括堆栈随机选项)，随机位置可用作最低用户地址。
+
+        例如，若要启用 PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE 和 PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON，请禁用 PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF；若要将所有其他选项保留为其默认值，请指定以下值:
+        ???????????????0???????1???????1
+
+        将此处未指定的标志设置为 ? 以外的任何值将导致不确定的行为。
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">在策略刷新期间启用 AD/DFS 域控制器同步</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">启用此设置将使组策略客户端连接到 DFS 共享用于 Active Directory 的域控制器。
+
+
+
+</string>
+      <string id="DisableAOACProcessing">关闭组策略客户端服务 AOAC 优化</string>
+      <string id="DisableAOACProcessing_Help">此策略设置阻止组策略客户端服务在空闲时停止。
+
+
+
+</string>
+      <string id="EnableCDP">在此设备上继续体验</string>
+      <string id="EnableCDP_Help">
+此策略设置确定是否允许 Windows 设备参与跨设备体验(继续体验)。
+
+如果启用此策略设置，则该 Windows 设备可以被属于同一用户的其他 Windows 设备发现，并且可以参与跨设备体验。
+
+如果禁用此策略设置，则该 Windows 设备无法被其他设备发现，并且无法参与跨设备体验。
+
+如果未配置此策略设置，则默认行为取决于 Windows 版本。对此策略的更改将在重新启动后生效。
+      </string>
+      <string id="EnableMMX">此设备上的手机-电脑链接</string>
+      <string id="EnableMMX_Help">
+此策略允许 IT 管理员关闭将手机与电脑相链接的功能，该功能支持通过手机和电脑之间的链接继续阅读、收发电子邮件和其他任务。
+
+如果启用此策略设置，Windows 设备将能够注册手机-电脑链接功能，从而继续在电脑上的体验。
+
+如果禁用此策略设置，Windows 设备将无法链接到手机，从所有链接的手机的设备列表中消失，并且不能继续电脑上的体验。
+
+如果不配置此策略设置，默认行为将取决于 Windows 版本。对此策略的更改将在重启后生效。
+      </string>
+      <string id="EnableAppUriHandlers">配置包含应用 URI 处理程序的 Web 到应用链接</string>
+      <string id="EnableAppUriHandlers_Help">
+此策略设置确定 Windows 是否支持包含应用 URI 处理程序的 Web 到应用链接。
+
+启用此策略设置将会启用 Web 到应用链接，以便可以使用 http(s) URI 来启动应用。
+
+禁用此策略将会禁用 Web 到应用链接，并会在默认浏览器中打开 http(s) URI 而不是启动相关应用。
+
+如果不配置此策略设置，则默认行为取决于 Windows 版本。对此策略进行的更改将会在重新启动后生效。
+      </string>
+      <string id="Fonts">字体</string>
+      <string id="EnableFontProviders">启用字体提供程序</string>
+      <string id="EnableFontProviders_Help">
+        此策略设置确定 Windows 是否可以从联机字体提供程序下载字体和字体目录数据。
+
+        如果启用此策略设置，则 Windows 将定期查询联机字体提供程序，以确定是否有新的字体目录可用。如果需要设置文本格式或呈现文本，Windows 还可以下载字体数据。
+
+        如果禁用此策略设置，则 Windows 不会连接到联机字体提供程序，仅会枚举本地安装的字体。
+
+        如果未配置此策略设置，则默认行为取决于 Windows 版本。对此策略的更改将在重启后生效。
+      </string>
+      <string id="EnableLogonOptimization">配置组策略缓存</string>
+      <string id="EnableLogonOptimization_Help">
+        此策略设置允许你配置组策略缓存行为。
+
+        如果启用或不配置此策略设置，那么组策略将在每次后台处理会话完成后缓存策略信息。此缓存会保存相应的 GPO 和其中包含的设置。当组策略在同步前台模式下运行时，它会引用此缓存，从而使组策略的运行速度更快。当读取缓存时，组策略会尝试联系登录域控制器以确定链接速度。当组策略在后台模式或异步前台模式下运行时，它会继续下载最新版本的策略信息，并使用估计带宽值确定慢速链接阈值。(请参阅“配置组策略慢速链接检测”策略设置以配置异步前台行为。)
+
+        此策略设置中定义的慢速链接值决定了组策略在将链接速度报告为慢速前等待域控制器响应的时间。默认值为 500 毫秒。
+
+        此策略设置中定义的超时值决定了组策略在确定无网络连接前等待域控制器响应的时间。该操作将停止当前的组策略处理。下次与域控制器建立连接后，组策略会在后台运行。将此值设置过高可能会导致在启动或登录时用户等待时间更长。默认值为 5000 毫秒。
+
+        如果禁用此策略设置，那么组策略客户端将不会缓存适用的 GPO 或这些 GPO 内包含的设置。当组策略同步运行时，它会从网络下载最新版本的策略，并使用估计带宽值确定慢速链接阈值。(请参阅“配置组策略慢速链接检测”策略设置以配置异步前台行为。)
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">为服务器启用组策略缓存</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        此策略设置允许你配置 Windows Server 计算机上的组策略缓存行为。
+        如果启用此策略设置，那么组策略将在每次后台处理会话完成后缓存策略信息。此缓存会保存相应的 GPO 和其中包含的设置。当组策略在同步前台模式下运行时，它会引用此缓存，从而使组策略的运行速度更快。当读取缓存时，组策略会尝试联系登录域控制器以确定链接速度。当组策略在后台模式或异步前台模式下运行时，它会继续下载最新版本的策略信息，并使用估计带宽值确定慢速链接阈值。（参阅“配置组策略慢速链接检测”策略设置以配置异步前台行为。）
+        此策略设置中定义的慢速链接值决定了组策略在将链接速度报告为慢速前已等待域控制器响应的时间。默认值为 500 毫秒。
+        此策略设置中定义的超时值决定了组策略在确定无网络连接前已等待域控制器响应的时间。该操作将停止当前的组策略处理。下次与域控制器建立连接后，组策略会在后台运行。将此值设置过高可能会导致在启动或登录时用户等待的时间更长。默认值为 5000 毫秒。
+        如果禁用或不配置此策略设置，那么组策略客户端将不会缓存适用的 GPO 或这些 GPO 内包含的设置。当组策略同步运行时，它会从网络下载最新版本的策略，并使用估计带宽值确定慢速链接阈值。（参阅“配置组策略慢速链接检测”策略设置以配置异步前台行为。）
+      
+      </string>
+
+      <string id="LogonScriptDelay">配置登录脚本延迟</string>
+      <string id="LogonScriptDelay_Help">
+        输入 "0" 可禁用登录脚本延迟。
+
+        通过此策略设置，可以配置组策略客户端在登录后运行脚本之前等待的时间。
+
+        默认情况下，组策略客户端在运行登录脚本之前会等待 5 分钟。这有助于阻止磁盘争用，创建具有良好响应性的桌面环境。
+
+        如果启用此策略设置，组策略会在运行登录脚本前等待指定的时间长度。
+
+        如果禁用此策略设置，组策略会在登录后立即运行脚本。
+
+        如果未配置此策略设置，则组策略会在运行登录脚本前等待 5 分钟。
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">将直接访问连接配置为快速网络连接</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">使用此策略设置，管理员可定义直接访问连接是否为快速网络连接，以应用和更新组策略。
+
+当组策略检测直接访问连接的带宽速度时，有时检测无法提供任何带宽速度信息。如果组策略检测到带宽速度，它将遵循标准规则来评估直接访问连接是快速还是慢速网络连接。如果未检测到带宽速度，则组策略将默认使用慢速网络连接。使用此策略设置，管理员可以选择在未能确定网络带宽速度时替代默认使用慢速网络连接的设置，而改为默认使用快速网络连接。
+
+注意:当组策略检测到慢速网络连接时，将仅处理配置为通过慢速链接(慢速网络连接)处理的客户端扩展。
+
+如果启用此策略，当组策略无法确定直接访问的带宽速度时，会将网络连接评估为快速链接，并处理所有客户端扩展。
+
+如果禁用或未配置此设置，组策略会将网络连接评估为慢速链接，并仅处理配置为通过慢速链接处理的客户端扩展。
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">检测到慢速网络连接时，将组策略处理更改为异步运行。</string>
+      <string id="SlowlinkDefaultToAsync_Help">检测到慢速网络连接时，此策略将指示组策略处理跳过处理要求同步处理(即计算机是否在启动和用户登录期间等待网络完全初始化)的任何客户端扩展。
+
+如果启用此策略设置，则检测到慢速网络连接时，组策略处理始终将以异步方式运行。
+客户端计算机不会在启动和登录时等待网络完全初始化。现有用户将使用缓存的凭据来登录，
+这可缩短登录时间。网络可用之后，组策略将在后台应用。
+注意，因为采用后台刷新的方式，所以不会应用软件安装、文件夹重定向
+
+和驱动器映射首选项扩展等要求同步处理的扩展。
+
+注意:即使启用此策略设置，仍存在两种导致同步处理组策略的情况:
+1 - 客户端计算机在加入域之后首次启动。
+2 - 启用了组策略“在计算机启动和登录时始终等待网络”。
+
+如果禁用或未配置此策略设置，检测慢速网络连接将不影响组策略处理采用同步还是异步方式。
+
+      </string>
+      <string id="DisableLGPOProcessing">关闭本地组策略对象处理</string>
+      <string id="DisableLGPOProcessing_Help">此策略设置阻止应用本地组策略对象(本地 GPO)。
+
+默认情况下，在任何基于域的 GPO 策略设置之前应用本地 GPO 中的此策略设置。这些策略设置可同时应用到用户和本地计算机。可以禁用所有本地 GPO 的处理和应用，以确保仅应用基于域的 GPO。
+
+如果启用此策略设置，则系统不会处理和应用任何本地 GPO。
+
+如果禁用或未配置此策略设置，则会继续应用本地 GPO。
+
+注意: 对于加入了域的计算机，强烈建议你仅在基于域的 GPO 中配置此策略设置。在加入了工作组的计算机上，将忽略此策略设置。
+
+</string>
+      <string id="SyncWaitTime">指定启动策略处理等待时间</string>
+      <string id="SyncWaitTime_Help">此策略设置指定在启动策略处理过程中组策略等待网络可用性通知的时间。如果启动策略处理是同步的，则在网络可用或达到默认等待时间之前，该计算机会被阻止。如果启动策略处理是异步的，则不会阻止该计算机，并且策略处理将在后台发生。无论何种情况，配置此策略设置都将替代系统计算的任何等待时间。
+
+如果启用此策略设置，组策略将使用此管理配置的最大等待时间并替代任何默认或系统计算的等待时间。
+
+如果禁用或未配置此策略设置，则在运行 Windows Vista 操作系统的计算机上，组策略将使用 30 秒的默认等待时间。
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">允许跨林的用户策略和漫游用户配置文件</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">此策略设置允许基于用户的策略处理、漫游用户配置文件以及用于跨林交互登录的用户对象登录脚本。
+
+如果存在跨林信任或双向林信任，此策略设置会影响交互式登录到位于不同林的计算机的所有用户帐户。
+
+如果未配置此策略设置:
+-  不会应用用户林中任何基于用户的策略设置。
+-  用户不会收到自己的漫游配置文件；他们将收到本地林中计算机上的本地配置文件。系统会向用户显示一条警告消息，并张贴事件日志消息(1529)。
+-  通过使用该计算机范围内的组策略对象(GPO)，应用环回组策略处理。
+- 张贴事件日志消息(1109)，指出环回是在替换模式下调用的。
+
+如果启用此策略设置，行为与 Windows 2000 中的行为完全相同: 应用用户策略，允许从受信任的林获得漫游用户配置文件。
+
+如果禁用此策略设置，行为与未配置该策略设置时的行为一样。</string>
+      <string id="CSE_AppMgmt">配置软件安装策略处理</string>
+      <string id="CSE_AppMgmt_Help">此策略设置用于确定何时更新软件安装策略。
+
+此策略设置影响使用组策略的软件安装组件的所有策略设置，例如“软件设置\软件安装”中的策略设置。只能为 Active Directory 中存储的组策略对象设置软件安装策略，不能为本地计算机上的组策略对象设置该策略。
+
+此策略设置将替代在安装实现软件安装策略的程序时由该程序设置的自定义设置。
+
+如果启用此策略设置，则可以使用提供的复选框来更改选项。如果禁用或未配置此策略设置，则它对系统无效。
+
+即使更新是通过慢速的网络连接(如电话线)传输的，“允许通过慢速网络连接进行处理”选项依旧会更新策略。通过慢速连接进行更新可能会导致相当长的延迟。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略设置实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略设置，诸如，一旦用户改变所需的策略就重新应用它。</string>
+      <string id="CSE_DiskQuota">配置磁盘配额策略处理</string>
+      <string id="CSE_DiskQuota_Help">此策略设置用于确定何时更新磁盘配额策略。
+
+此策略设置影响使用组策略的磁盘配额组件的所有策略，例如“计算机配置\管理模板\系统\磁盘配额”中的策略。
+
+此策略设置将替代在安装实现磁盘配额策略的程序时由该程序设置的自定义设置。
+
+如果启用此策略设置，则可以使用提供的复选框来更改选项。如果禁用或未配置此策略设置，则它对系统无效。
+
+即使更新是通过慢速的网络连接(如电话线)传输的，“允许通过慢速网络连接进行处理”选项依旧会更新策略。通过慢速连接进行更新可能会导致相当长的延迟。
+
+“周期性后台处理期间不要应用”选项阻止系统在计算机正在使用时后台更新受影响的策略。如果禁用后台更新，策略更改将在下一用户登录或者系统重新启动之后生效。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略，诸如，一旦用户改变所需的设置就重新应用它。</string>
+      <string id="CSE_EFSRecovery">配置 EFS 恢复策略处理</string>
+      <string id="CSE_EFSRecovery_Help">此策略设置用于确定何时更新加密策略。
+
+此策略设置影响使用组策略的加密组件的所有策略，例如“Windows 设置\安全设置”中与加密相关的策略。
+
+它将替代在安装实现加密策略的程序时由该程序设置的自定义设置。
+
+如果启用此策略设置，则可以使用提供的复选框来更改选项。如果禁用或未配置此策略设置，则它对系统无效。
+
+即使更新是通过慢速的网络连接(如电话线)传输的，“允许通过慢速网络连接进行处理”选项依旧会更新策略。通过慢速连接进行更新可能会导致相当长的延迟。
+
+“周期性后台处理期间不要应用”选项阻止系统在计算机正在使用时后台更新受影响的策略。如果禁用后台更新，策略更改将在下一用户登录或者系统重新启动之后生效。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略，诸如，一旦用户改变所需的设置就重新应用它。</string>
+      <string id="CSE_FolderRedirection">配置文件夹重定向策略处理</string>
+      <string id="CSE_FolderRedirection_Help">此策略设置用于确定何时更新文件夹重定向策略。
+
+此策略设置影响使用组策略的文件夹重定向组件的所有策略，例如“Windows 设置\文件夹重定向”中的策略。只能为 Active Directory 中存储的组策略对象设置文件夹重定向策略，不能为本地计算机上的组策略对象设置该策略。
+
+此策略设置将替代在安装实现文件夹重定向策略设置的程序时由该程序设置的自定义设置。
+
+如果启用此策略设置，则可以使用提供的复选框来更改选项。如果禁用或未配置此策略设置，则它对系统无效。
+
+即使更新是通过慢速的网络连接(如电话线)传输的，“允许通过慢速网络连接进行处理”选项依旧会更新策略。通过慢速连接进行更新可能会导致相当长的延迟。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略，诸如，一旦用户改变所需的设置就重新应用它。</string>
+      <string id="CSE_IEM">配置 Internet Explorer 维护策略处理</string>
+      <string id="CSE_IEM_Help">此策略设置用于确定何时更新 Internet Explorer 维护策略。
+
+此策略设置影响使用组策略的 Internet Explorer 维护组件的所有策略，例如“Windows 设置\Internet Explorer 维护”中的策略。
+
+此策略设置将替代在安装实现 Internet Explorer 维护策略的程序时由该程序设置的自定义设置。
+
+如果启用此策略设置，则可以使用提供的复选框来更改选项。如果禁用或未配置此策略设置，则它对系统无效。
+
+即使更新是通过慢速的网络连接(如电话线)传输的，“允许通过慢速网络连接进行处理”选项依旧会更新策略。通过慢速连接进行更新可能会导致相当长的延迟。
+
+“周期性后台处理期间不要应用”选项阻止系统在计算机正在使用时后台更新受影响的策略。如果禁用后台更新，策略更改将在下一用户登录或者系统重新启动之后生效。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略，诸如，一旦用户改变所需的策略设置就重新应用它。</string>
+      <string id="CSE_IPSecurity">配置 IP 安全策略处理</string>
+      <string id="CSE_IPSecurity_Help">此策略设置用于确定何时更新 IP 安全策略。
+
+此策略设置影响使用组策略的 IP 安全组件的所有策略，例如“计算机配置\Windows 设置\安全设置\本地计算机上的 IP 安全策略”中的策略。
+
+此策略设置将替代在安装实现 IP 安全策略的程序时由该程序设置的自定义设置。
+
+如果启用此策略设置，则可以使用提供的复选框来更改选项。如果禁用或未配置此策略设置，则它对系统无效。
+
+即使更新是通过慢速的网络连接(如电话线)传输的，“允许通过慢速网络连接进行处理”选项依旧会更新策略。通过慢速连接进行更新可能会导致相当长的延迟。
+
+“周期性后台处理期间不要应用”选项阻止系统在计算机正在使用时后台更新受影响的策略。如果禁用后台更新，策略更改将在下一用户登录或者系统重新启动之后生效。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略，诸如，一旦用户改变所需的策略设置就重新应用它。</string>
+      <string id="CSE_Registry">配置注册表策略处理</string>
+      <string id="CSE_Registry_Help">此策略设置用于确定何时更新注册表策略。
+
+此策略设置影响“管理模板”文件夹中的所有策略以及任何其他在注册表中存储值的策略。它将替代在安装实现注册表策略的程序时由该程序设置的自定义设置。
+
+如果启用此策略设置，则可以使用提供的复选框来更改选项。如果禁用或未配置此策略设置，则它对系统无效。
+
+“周期性后台处理期间不要应用”选项阻止系统在计算机正在使用时后台更新受影响的策略。如果禁用后台更新，策略更改将在下一用户登录或者系统重新启动之后生效。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略，诸如，一旦用户改变所需的策略设置就重新应用它。</string>
+      <string id="CSE_Scripts">配置脚本策略处理</string>
+      <string id="CSE_Scripts_Help">此策略设置用于确定何时更新分配共享脚本的策略。
+
+此策略设置影响使用组策略的脚本组件的所有策略，例如“Windows 设置\脚本”中的策略。它将替代在安装实现脚本策略的程序时由该程序设置的自定义设置。
+
+如果启用此策略设置，则可以使用提供的复选框来更改选项。如果禁用或未配置此设置，则它对系统无效。
+
+即使更新是通过慢速的网络连接(如电话线)传输的，“允许通过慢速网络连接进行处理”选项依旧会更新策略。通过慢速连接进行更新可能会导致相当长的延迟。
+
+“周期性后台处理期间不要应用”选项阻止系统在计算机正在使用时后台更新受影响的策略。如果禁用后台更新，策略更改将在下一用户登录或者系统重新启动之后生效。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略，诸如，一旦用户改变所需的策略设置就重新应用它。</string>
+      <string id="CSE_Security">配置安全策略处理</string>
+      <string id="CSE_Security_Help">此策略设置用于确定何时更新安全策略。
+
+此策略设置影响使用组策略的安全组件的所有策略，例如“Windows 设置\安全设置”中的策略。
+
+此策略设置将替代在安装实现安全策略的程序时由该程序设置的自定义设置。
+
+如果启用此策略设置，则可以使用提供的复选框来更改选项。如果禁用或未配置此策略设置，则它对系统无效。
+
+“周期性后台处理期间不要应用”选项阻止系统在计算机正在使用时后台更新受影响的策略。如果禁用后台更新，策略更改将在下一用户登录或者系统重新启动之后生效。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略，诸如，一旦用户改变所需的策略设置就重新应用它。</string>
+      <string id="CSE_Wireless">配置无线策略处理</string>
+      <string id="CSE_Wireless_Help">此策略设置用于确定何时更新分配无线网络设置的策略。
+
+此策略设置影响使用组策略的无线网络组件的所有策略，例如“Windows 设置\无线网络策略”中的策略。
+
+它将替代在安装实现无线网络策略的程序时由该程序设置的自定义设置。
+
+如果启用此策略，则可以使用提供的复选框来更改选项。
+
+如果禁用或未配置此设置，则它对系统无效。
+
+即使更新是通过慢速的网络连接(如电话线)传输的，“允许通过慢速网络连接进行处理”选项依旧会更新策略。通过慢速连接进行更新可能会导致相当长的延迟。
+
+“周期性后台处理期间不要应用”选项阻止系统在计算机正在使用时后台更新受影响的策略。如果禁用后台更新，策略更改将在下一用户登录或者系统重新启动之后生效。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略，诸如，一旦用户改变所需的设置就重新应用它。</string>
+      <string id="CSE_Wired">配置有线策略处理</string>
+      <string id="CSE_Wired_Help">此策略设置用于确定何时更新分配有线网络设置的策略。
+
+此策略设置影响使用组策略的有线网络组件的所有策略，例如“Windows 设置\有线网络策略”中的策略。
+
+它将替代在安装实现有线网络的程序时由该程序设置的自定义设置。
+
+如果启用此策略，则可以使用提供的复选框来更改选项。
+
+如果禁用或未配置此设置，则它对系统无效。
+
+即使更新是通过慢速的网络连接(如电话线)传输的，“允许通过慢速网络连接进行处理”选项依旧会更新策略。通过慢速连接进行更新可能会导致相当长的延迟。
+
+“周期性后台处理期间不要应用”选项阻止系统在计算机正在使用时后台更新受影响的策略。如果禁用后台更新，策略更改将在下一用户登录或者系统重新启动之后生效。
+
+“即使尚未更改组策略对象也进行处理”选项即使在策略没有更改的情况下也会更新并重新应用策略。许多策略实现指定仅在更改后才更新。但是，你可能还是想要更新未更改的策略，诸如，一旦用户改变所需的设置就重新应用它。</string>
+
+      <string id="DenyRsopToInteractiveUser">确定交互用户是否可生成策略的结果集数据</string>
+      <string id="DenyRsopToInteractiveUser_Help">此策略设置控制用户查看其策略的结果集(RSoP)数据的能力。
+
+默认情况下，交互式登录的用户可以查看其策略的结果集(RSoP)数据。
+
+如果启用此策略设置，则交互用户将无法重生成 RSoP 数据。
+
+如果禁用或未配置此策略设置，则交互用户可以生成 RSoP 数据。
+
+注意: 此策略设置不会对管理员产生影响。如果启用或禁用此策略设置，则默认情况下管理员可以查看 RSoP 数据。
+
+注意: 若要在客户端计算机上查看 RSoP 数据，请使用 Microsoft 管理控制台的 RSoP 管理单元。可以通过键入 RSOP.msc 从命令行启动 RSoP 管理单元
+
+注意: 此策略设置同时作为用户配置设置和计算机配置设置而存在。
+
+另请参阅“计算机配置\管理模板\系统\组策略”中的“关闭策略的结果集记录”策略设置。</string>
+      <string id="DisableAutoADMUpdate">关闭 ADM 文件的自动更新</string>
+      <string id="DisableAutoADMUpdate_Help">禁止系统在你打开组策略对象编辑器时自动更新“管理模板”源文件。 如果管理员关心 DC 的系统卷上使用的空间量，他们可能希望使用此设置。
+
+默认情况下，在你启动组策略对象编辑器时，会对本地 %SYSTEMROOT%\inf 目录中的源文件和存储在 GPO 中的源文件进行时间戳比较。 如果本地文件比较新，则会将它们复制到 GPO 中。
+
+将此设置的状态更改为“已启用”会阻止将任何源文件复制到 GPO。
+
+将此设置的状态更改为“已禁用”将强制执行默认行为。 如果文件具有较新的时间戳，则总是将其复制到 GPO。
+
+注意: 如果启用“对于组策略对象编辑器，总是使用本地 ADM 文件”计算机配置策略设置，则忽略此设置的状态并且始终将其视为“已启用”。</string>
+      <string id="DisableBackgroundPolicy">关闭组策略的后台刷新</string>
+      <string id="DisableBackgroundPolicy_Help">此策略设置禁止在计算机正在使用时更新组策略。此策略设置适用于计算机、用户以及域控制器的组策略。
+
+如果启用此策略设置，则系统会等到当前用户从系统注销后才更新计算机和用户的设置。
+
+如果禁用或未配置此策略设置，则系统可在用户工作时应用更新。更新频率由“设置计算机的组策略刷新间隔”和“设置用户的组策略刷新间隔”策略设置确定。
+
+注意: 如果更改此策略设置，则必须重新启动计算机才能使更改生效。</string>
+      <string id="DisableUsersFromMachGP">删除用户调用计算机策略刷新的能力</string>
+      <string id="DisableUsersFromMachGP_Help">使用此策略设置，你可控制用户调用计算机策略刷新的能力。
+
+如果启用此策略设置，用户就无法调用计算机策略刷新。在计算机启动或正式策略刷新发生时，仍将应用计算机策略。
+
+如果禁用或未配置此策略设置，则应用默认行为。默认情况下，在计算机启动时应用计算机策略。在特定刷新间隔或用户手动调用时，也会应用计算机策略。
+
+注意: 此策略设置仅应用于非管理员。不管如何配置此策略设置，管理员都可以随时调用计算机策略刷新。
+
+另请参阅“设置计算机的组策略刷新间隔”策略设置，以更改策略刷新间隔。
+
+注意: 如果更改此策略设置，则必须重新启动计算机才能使更改生效。</string>
+      <string id="EnforcePoliciesOnly">强制仅显示策略</string>
+      <string id="EnforcePoliciesOnly_Help">此策略设置阻止管理员查看或使用组策略首选项。
+
+组策略管理(.adm)文件可同时包含真实设置和首选项。完全受组策略支持的真实设置必须使用位于 Software\Policies 或 Software\Microsoft\Windows\CurrentVersion\Policies 注册表子项中的注册表项。对于不完全受组策略支持的首选项，则使用其他子项中的注册表项。
+
+如果启用此策略设置，则启用“仅显示策略”命令，并且管理员无法将其关闭。因此，组策略对象编辑器只显示真实的设置，不显示首选项。
+
+如果禁用或未配置此策略设置，则默认启用“仅显示策略”命令，但是管理员可通过关闭“仅显示策略”命令来查看首选项。
+
+注意: 若要找到“仅显示策略”命令，请在组策略对象编辑器中单击任何一个“管理模板”文件夹，右键单击该文件夹，然后指向“查看”。
+
+在组策略对象编辑器中，首选项用红色图标表示，真实设置用蓝色图标表示，很好区分。</string>
+      <string id="GPDCOptionAny">使用任何可用的域控制器</string>
+      <string id="GPDCOptionInherit">从 Active Directory 管理单元继承</string>
+      <string id="GPDCOptionPDC">使用主域控制器</string>
+      <string id="GPDCOptions">配置组策略域控制器选择</string>
+      <string id="GPDCOptions_Help">此策略设置用于确定组策略对象编辑器管理单元使用哪一个域控制器。
+
+如果启用此设置，则可根据下列选项选择使用哪一个域控制器:
+
+“使用主域控制器”表示组策略对象编辑器管理单元读取并将更改写入指定为域 PDC 操作主机的域控制器。
+
+“从 Active Directory 管理单元继承”表示组策略对象编辑器管理单元读取更改并将其写入“Active Directory 用户和计算机”或 “Active Directory 站点和服务”管理单元所使用的域控制器。
+
+“使用任何可用的域控制器”表示组策略对象编辑器管理单元能够读取更改并将其写入任何可用的域控制器。
+
+如果禁用或未配置此设置，则组策略对象编辑器管理单元将使用指定为域 PDC 操作主机的域控制器。
+
+注意: 若要更改域 PDC 操作主机，请在“Active Directory 用户和计算机”上右键单击一个域，然后单击“操作主机”。</string>
+      <string id="GPTransferRate">配置组策略慢速链接检测</string>
+      <string id="GPTransferRate_Help">此策略设置为应用和更新组策略而定义慢速连接。
+
+如果从提供策略更新的域控制器到这个组中的计算机的数据传输速度低于此设置指定的速度，系统就认为该连接为慢速连接。
+
+系统对慢速策略连接的响应在各个策略之间有所不同。实现策略的程序可以指定对慢速链接的响应。同时，此文件夹中的策略处理设置允许你替代程序指定的对慢速链接的响应。
+
+如果启用此设置，可在“连接速度”对话框中键入介于 0 和 4,294,967,200 之间的十进制数字，该数字表示单位为 kb/秒的传输速度。低于此速度的任何连接都将被认为是慢速连接。如果键入 0，则所有连接都将被认为是快速连接。
+
+如果禁用或未配置此设置，系统将使用默认值 500 kb/秒。
+
+“计算机配置”和“用户配置”文件夹中均有此设置。“计算机配置”中的设置为“计算机配置”文件夹中的策略定义慢速链接。“用户配置”中的设置为“用户配置”文件夹中的设置定义慢速链接。
+
+另请参阅“计算机配置\管理模板\系统\用户配置文件”中的“不检测慢速网络连接”以及相关策略。注意: 如果配置文件服务器拥有 IP 连接，则使用连接速度设置。如果配置文件服务器没有 IP 连接，则使用 SMB 计时。</string>
+      <string id="GroupPolicyRefreshRate">设置计算机的组策略刷新间隔</string>
+      <string id="GroupPolicyRefreshRate_Help">此策略设置指定当计算机正在使用时计算机组策略的后台更新频率。此设置只为“计算机配置”文件夹中的组策略指定后台更新频率。
+
+除了后台更新之外，在系统启动时总会更新计算机的组策略。
+
+默认情况下，计算机组策略会在后台每隔 90 分钟更新一次，并将时间作 0 到 30 分钟的随机调整。
+
+如果启用此设置，则可以指定从 0 到 64,800 分钟(45 天)的时间间隔。如果选择 0 分钟，则计算机会每隔 7 秒尝试更组策略一次。但是，由于更新操作可能会影响用户工作并增加网络流量，对于大多数安装，设置太短的更新时间间隔是不合适的。
+
+如果禁用此设置，组策略会每隔 90 分钟更新一次(默认值)。若要指定在计算机正在使用时不更新组策略，请选择“关闭组策略的后台刷新”策略。
+
+通过“计算机的组策略刷新间隔”策略，你也可以指定实际更新时间间隔的变化范围。为了防止具有相同更新时间间隔的多个客户端同时请求更新，系统会使用随机的分钟数来调整每个客户端的更新时间间隔。你在随机时间框中键入的数值将设定变化范围的上限。例如，如果键入 30 分钟，系统将选择 0 到 30 分钟的变化范围。键入大数值将建立一个宽范围，从而减少客户端请求重叠的可能性。但是，这样可能导致明显的更新延迟。
+
+此设置确定计算机组策略的更新频率。若要设置用户策略的更新频率，请使用“用户的组策略刷新间隔”设置(位于“用户配置\管理模板\系统\组策略”中)。
+
+此设置仅在未启用“关闭组策略的后台刷新”设置时使用。
+
+注意: 建议通知用户他们的策略会定期更新，以便他们会注意到策略更新的发生。在更新组策略时，系统会刷新 Windows 桌面；桌面会产生短暂闪烁并会关闭打开的菜单。此外，组策略施加的约束(如限制用户可运行的程序)可能会干扰正在进行的任务。</string>
+      <string id="GroupPolicyRefreshRateDC">设置域控制器的组策略刷新间隔</string>
+      <string id="GroupPolicyRefreshRateDC_Help">此策略设置指定在正在运行的域控制器上组策略的后台更新频率。除了在系统启动时执行更新外，还会依照此设置执行更新。
+
+默认情况下，域控制器上的组策略会每隔 5 分钟更新一次。
+
+如果启用此设置，则可以指定从 0 到 64,800 分钟(45 天)的时间间隔。如果选择 0 分钟，则域控制器会每隔 7 秒尝试更新组策略一次。但是，由于更新操作可能会影响用户工作并增加网络流量，对于大多数安装，设置太短的更新时间间隔是不合适的。
+
+如果禁用或未配置此设置，域控制器会每隔 5 分钟更新组策略一次(默认值)。若要指定在计算机正在使用时不更新用户的组策略，请选择“关闭组策略的后台刷新”设置。
+
+通过此设置，你还可以指定实际更新时间间隔的变化范围。为了防止具有相同更新时间间隔的多个域控制器同时请求更新，系统会使用随机的分钟数来调整每个域控制器的更新时间间隔。你在随机时间框中键入的数值将设定变化范围的上限。例如，如果键入 30 分钟，系统将选择 0 到 30 分钟的变化范围。键入大数值将建立一个宽范围，从而减少更新请求重叠的可能性。但是，这样可能导致明显的更新延迟。
+
+注意: 此设置仅在你建立域、站点、组织单位(OU)或自定义组的策略时使用。如果只是为本地计算机建立策略，系统将忽略此设置。</string>
+      <string id="GroupPolicyRefreshRateUser">设置用户的组策略刷新间隔</string>
+      <string id="GroupPolicyRefreshRateUser_Help">此策略设置指定当计算机正在使用时用户组策略的后台更新频率。此设置只为“用户配置”文件夹中的组策略指定后台更新频率。
+
+除了后台更新之外，在用户登录时总会更新用户组策略。
+
+默认情况下，用户组策略会在后台每隔 90 分钟更新一次，并将时间作 0 到 30 分钟的随机调整。
+
+如果启用此设置，则可以指定从 0 到 64,800 分钟(45 天)的时间间隔。如果选择 0 分钟，则计算机会每隔 7 秒尝试更新用户组策略一次。但是，由于更新操作可能会影响用户工作并增加网络流量，对于大多数安装，设置太短的更新时间间隔是不合适的。
+
+如果禁用此设置，用户组策略会每隔 90 分钟更新一次(默认值)。要指定在计算机正在使用时不更新用户的组策略，请选择“关闭组策略的后台刷新”设置。
+
+通过此设置，你还可以指定实际更新时间间隔的变化范围。为了防止具有相同更新时间间隔的多个客户端同时请求更新，系统会使用随机的分钟数来调整每个客户端的更新时间间隔。你在随机时间框中键入的数值将设定变化范围的上限。例如，如果键入 30 分钟，系统将选择 0 到 30 分钟的变化范围。键入大数值将建立一个宽范围，从而减少客户端请求重叠的可能性。但是，这样可能导致明显的更新延迟。
+
+重要信息: 如果启用“关闭组策略的后台刷新”设置，则此设置将被忽略。
+
+注意: 此设置确定用户组策略的更新频率。若要设置计算机组策略的更新频率，请使用“计算机组策略刷新间隔”设置(位于“计算机配置\管理模板\系统\组策略”中)。
+
+提示: 建议通知用户他们的策略会定期更新，以便他们会注意到策略更新的发生。在更新组策略时，系统会刷新 Windows 桌面；桌面会产生短暂闪烁并会关闭打开的菜单。此外，组策略施加的约束(如限制用户可运行的程序)可能会干扰正在进行的任务。</string>
+      <string id="NewGPODisplayName">设置新组策略对象的默认名称</string>
+      <string id="NewGPODisplayName_Help">使用此策略设置，可以设置新组策略对象的默认显示名称。
+
+通过此设置，你可以为使用策略兼容的“组策略管理”工具创建的新组策略对象指定默认名称，这些工具包括 GPO 浏览器 和 Active Directory 工具中的“组策略”选项卡。
+
+显示名称可包含环境变量，最大长度为 255 个字符。
+
+如果禁用或未配置此设置，则使用新组策略对象的默认显示名称。</string>
+      <string id="NewGPOLinksDisabled">创建新的组策略对象链接，默认成禁用</string>
+      <string id="NewGPOLinksDisabled_Help">使用此策略设置，则创建的新组策略对象链接将处于已禁用状态。
+
+如果启用此设置，则创建的所有新组策略对象链接默认将处于已禁用状态。通过使用策略兼容的组策略管理工具(例如 “Active Directory 用户和计算机”或 “Active Directory 站点和服务”)配置并检测新对象链接后，你可以启用对象链接以便在系统上使用。
+
+如果禁用或未配置此设置，则创建的新组策略对象链接将处于已启用状态。如果不希望对象链接未经配置和测试就生效，就必须禁用它们。</string>
+      <string id="OnlyUseLocalAdminFiles">对于组策略对象编辑器，总是使用本地 ADM 文件</string>
+      <string id="OnlyUseLocalAdminFiles_Help">通过此策略设置，对于组策略管理单元，你可以总是使用本地 ADM 文件。
+
+默认情况下，使用组策略对象编辑器管理单元编辑某个组策略对象(GPO)时，会将该 GPO 中的 ADM 文件加载到组策略对象编辑器管理单元中。因而，在编辑该 GPO 时，可以使用与创建该 GPO 时所用的版本相同的 ADM 文件。
+
+这将导致以下行为:
+
+-  如果最初使用英文系统创建 GPO，则该 GPO 将包含英文 ADM 文件。
+
+-  如果以后使用不同语言系统编辑该 GPO，则编辑时得到的是 GPO 中的英文 ADM 文件。
+
+你可以使用此设置更改这一行为。
+
+如果启用此设置，则在编辑 GPO 时，组策略对象编辑器管理单元总是使用 %windir%\inf 目录中的本地 ADM 文件。
+
+这将导致以下行为:
+
+-  如果最初使用英文系统创建 GPO，后来使用日语系统编辑该 GPO，则组策略对象编辑器管理单元将使用本地日语 ADM 文件，因此“管理模板”下显示的是日语文本。
+
+如果禁用或者未配置此设置，则组策略对象编辑器管理单元将总是从实际 GPO 加载所有 ADM 文件。
+
+注意: 如果需要的 ADM 并不能全部从本地 %windir%\inf 目录中获得，则可能无法看到在所编辑的 GPO 中已经配置好的全部设置。</string>
+      <string id="PolicyPolicies">组策略</string>
+      <string id="RSoPLogging">关闭策略的结果集记录</string>
+      <string id="RSoPLogging_Help">使用此设置，你可以在客户端计算机上启用或禁用策略的结果集(RSoP)记录。
+
+RSoP 记录有关已应用到客户端的组策略设置的信息。此信息中包括很多详细内容，例如: 应用了哪些组策略对象(GPO)、GPO 的来源、包含的客户端扩展设置。
+
+如果启用此设置，则会关闭 RSoP 记录。
+
+如果禁用或未配置此设置，则会启用 RSoP 记录。默认情况下，总是启用 RSoP 记录。
+
+注意: 若要查看在客户端计算机上记录的 RSoP 信息，可以使用 Microsoft 管理控制台(MMC)中的 RSoP 管理单元。</string>
+      <string id="UserPolicyMode">配置用户组策略环回处理模式</string>
+      <string id="UserPolicyMode_Help">此策略设置指示系统将计算机的组策略对象集应用到登录到受此设置影响的计算机上的任何用户。这专用于具有特殊用途的计算机，比如在公共场所、实验室和教室中使用的计算机；你必须根据正在使用的计算机修改用户设置。
+
+默认情况下，用户的组策略对象确定应用哪些用户设置。如果启用此设置，则在用户登录到此计算机时，计算机的组策略对象将确定应用哪个组策略对象集。
+
+如果启用此设置，则可从“模式”框中选择下列模式之一:
+
+“替换”表示用这台计算机的组策略对象中定义的用户设置替换通常情况下应用于用户的用户设置。
+
+“合并”表示将在这台计算机的组策略对象中定义的用户设置与通常情况下应用于用户的用户设置组合在一起。如果设置相冲突，则计算机的组策略对象中的用户设置优先于用户的通常设置。
+
+如果禁用或未配置此设置，则用户的组策略对象将确定应用哪些用户设置。
+
+注意: 只有当计算机帐户和用户帐户都位于 Windows 2000 及以上版本的域中时，此设置才有效。</string>
+      <string id="UserPolicyMode_Merge">合并</string>
+      <string id="UserPolicyMode_Replace">替换</string>
+      <string id="CorpConnSyncWaitTime">指定策略处理的工作区连接等待时间</string>
+      <string id="CorpConnSyncWaitTime_Help">此策略设置指定在启动策略处理过程中组策略等待工作区连接通知的时间。如果启动策略处理是同步的，则在工作区连接可用或达到等待时间之前，该计算机会被阻止。如果启动策略处理是异步的，则不会阻止该计算机，并且策略处理将在后台发生。无论何种情况，配置此策略设置都将替代系统计算的任何等待时间。
+
+如果启用此策略设置，则组策略将使用此管理配置的最长工作区连接等待时间，并替代任何默认或系统计算的等待时间。
+
+如果禁用或未配置此策略设置，则在运行版本高于 Windows 7 的 Windows 操作系统的计算机上，组策略将使用为工作区连接配置的大小为 60 秒的默认等待时间。</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">缓解选项</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">进程缓解选项</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">Windows 字体缓存服务应可以从联机字体提供程序下载字体和字体目录数据。</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">慢速链接值:[数字字段] 毫秒</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">超时值:[数字字段] 毫秒</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">分钟：</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">等待的时间(秒): </decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">允许通过慢速网络连接进行处理</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">允许通过慢速网络连接进行处理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">周期性后台处理期间不要应用</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">允许通过慢速网络连接进行处理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">周期性后台处理期间不要应用</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">允许通过慢速网络连接进行处理</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">允许通过慢速网络连接进行处理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">周期性后台处理期间不要应用</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">允许通过慢速网络连接进行处理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">周期性后台处理期间不要应用</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">周期性后台处理期间不要应用</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">允许通过慢速网络连接进行处理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">周期性后台处理期间不要应用</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">周期性后台处理期间不要应用</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">允许通过慢速网络连接进行处理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">周期性后台处理期间不要应用</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">允许通过慢速网络连接进行处理</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">周期性后台处理期间不要应用</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">即使尚未更改组策略对象也进行处理</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">当“组策略对象编辑器”选择要使用的域控制器时，它应该: </dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">连接速度(Kbps):</decimalTextBox>
+        <text> </text>
+        <text>输入 0 来禁用慢速链接检测。</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">连接速度(Kbps):</decimalTextBox>
+        <text> </text>
+        <text>输入 0 来禁用慢速链接检测。</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">始终将 WWAN 连接视为慢速链接</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>使用此设置可自定义组策略应用到计算机的频率</text>
+        <text>。范围从 0 到 44640 分钟(31 天)。</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">分钟:</decimalTextBox>
+        <text> </text>
+        <text>这是一个添加到刷新间隔的随机时间，可用来防止</text>
+        <text>所有客户端同时请求组策略。</text>
+        <text>范围从 0 到 1440 分钟(24 小时)</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">分钟:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>使用此设置可自定义组策略应用到域控制器的频率</text>
+        <text>。范围从 0 到 44640 分钟(31 天)。</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">分钟:</decimalTextBox>
+        <text> </text>
+        <text>这是一个添加到刷新间隔的随机时间，可用来防止</text>
+        <text>所有客户端同时请求组策略。</text>
+        <text>范围从 0 到 1440 分钟(24 小时)</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">分钟:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>使用此设置可自定义组策略应用到用户的频率</text>
+        <text>。范围从 0 到 44640 分钟(31 天)。</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">分钟:</decimalTextBox>
+        <text> </text>
+        <text>这是一个添加到刷新间隔的随机时间，可用来防止</text>
+        <text>所有客户端同时请求组策略。</text>
+        <text>范围从 0 到 1440 分钟(24 小时)</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">分钟:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>GPO 名称: </label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">模式: </dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">等待的时间(秒):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

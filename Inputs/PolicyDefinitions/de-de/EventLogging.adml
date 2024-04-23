@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Ereignisprotokollierung</displayName>
+    <description>Diese Datei enthält die Konfigurationsoptionen für die Windows-Ereignisprotokollierung.</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Ereignisprotokollierung</string>
+            <string id="EnableProtectedEventLogging">Geschützte Ereignisprotokollierung aktivieren</string>
+            <string id="EnableProtectedEventLogging_Explain">
+Mit dieser Richtlinieneinstellung können Sie die geschützte Ereignisprotokollierung konfigurieren.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, verwenden Komponenten, die die Richtlinie unterstützen, das von Ihnen bereitgestellte Zertifikat zum Verschlüsseln potenziell sensibler Ereignisprotokolldaten, bevor sie in das Ereignisprotokoll geschrieben werden. Daten werden unter Verwendung des Syntaxstandards kryptografischer Meldungen (CMS) und des von Ihnen bereitgestellten öffentlichen Schlüssels verschlüsselt. Sie können das Unprotect-CmsMessage PowerShell-Cmdlet zum Entschlüsseln dieser verschlüsselten Meldungen verwenden, vorausgesetzt, Sie haben Zugriff auf den privaten Schlüssel, der dem öffentlichen Schlüssel entspricht, mit dem sie verschlüsselt wurden.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden Ereignisprotokollmeldungen von den Komponenten nicht verschlüsselt, bevor sie in das Ereignisprotokoll geschrieben werden.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+Geben Sie ein Verschlüsselungszertifikat an, das von der geschützten Ereignisprotokollierung verwendet werden soll. Sie können Folgendes angeben:
+
+    - Den Inhalt eines Base-64-codierten X.509-Zertifikats
+    - Den Fingerabdruck eines Zertifikats, das im Zertifikatspeicher des lokalen Computers enthalten ist (in der Regel durch die PKI-Infrastruktur bereitgestellt)
+    - Den vollständigen Pfad zu einem Zertifikat (kann lokal oder eine Remotefreigabe sein)
+    - Den Pfad zu einem Verzeichnis mit mindestens einem Zertifikat (kann lokal oder eine Remotefreigabe sein)
+    - Den Antragstellernamen eines Zertifikats, das im Zertifikatspeicher des lokalen Computers enthalten ist (in der Regel durch die PKI-Infrastruktur bereitgestellt)
+
+Das resultierende Zertifikat muss "Dokumentverschlüsselung" als erweiterte Schlüsselverwendung aufweisen  (1.3.6.1.4.1.311.80.1). Außerdem muss entweder die Schlüsselverwendung "Datenverschlüsselung" oder "Schlüsselverschlüsselung" aktiviert sein.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

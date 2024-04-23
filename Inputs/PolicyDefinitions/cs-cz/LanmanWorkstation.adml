@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Sem zadejte zobrazovaný název.</displayName>
+  <description>Sem zadejte popis.</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">Pracovní stanice Lanman</string>
+      <string id="Pol_CipherSuiteOrder_Name">Pořadí sad šifer</string>
+      <string id="Pol_CipherSuiteOrder_Help">Nastavení této zásady určuje sady šifrování používané klientem SMB.
+
+Pokud nastavení této zásady povolíte, budou se sady šifer prioritizovat v uvedeném pořadí.
+
+Pokud nastavení této zásady povolíte a nezadáte minimálně jednu podporovanou sadu šifer nebo pokud nastavení této zásady zakážete nebo nenakonfigurujete, použije se výchozí pořadí sad šifer.
+
+Sady šifer protokolu SMB 3.11:
+
+AES_128_GCM
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+Sady šifer protokolu SMB 3.0 a 3.02:
+
+AES_128_CCM
+
+Jak změnit toto nastavení:
+
+Uspořádejte požadované sady šifer v textovém poli (jedna sada šifer na řádek) v pořadí od nejvíce po nejméně upřednostňovanou, přičemž nejvíce upřednostňovaná sada šifrování bude nahoře. Odeberte všechny sady šifer, které nechcete používat.
+
+Poznámka: Pokud nakonfigurujete toto nastavení zabezpečení, změny se projeví až po restartování systému Windows.</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">Povolit nezabezpečená přihlášení hostů</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">Nastavení této zásady určuje, jestli klient SMB povoluje nezabezpečená přihlášení hostů k serveru SMB.
+
+Pokud nastavení této zásady povolíte nebo nenakonfigurujete, klient SMB bude nezabezpečená přihlášení hostů povolovat.
+
+Pokud nastavení této zásady zakážete, bude klient SMB nezabezpečená přihlášení hostů odmítat.
+
+Nezabezpečená přihlášení hostů využívají souborové servery k umožnění neověřeného přístupu ke sdíleným složkám. Tento typ přihlášení sice není běžný v podnikovém prostředí, ale často se používá ve spotřebitelských zařízeních NAS (Network Attached Storage), která působí jako souborové servery. Souborové servery s Windows vyžadují ověření a ve výchozím nastavení nezabezpečená přihlášení hostů nepoužívají. Vzhledem k tomu, že tato přihlášení nejsou ověřená, deaktivují se důležité funkce zabezpečení, jako je podepisování a šifrování paketů SMB. V důsledku toho jsou klienti, kteří nezabezpečená přihlášení hostů povolují, zranitelní vůči různým útokům prostředníkem (man-in-the-middle), které můžou vést ke ztrátě nebo poškození dat a ohrožení malwarem. Kromě toho jsou všechna data zapsaná na souborový server při nezabezpečeném přihlášení hosta potenciálně přístupná pro všechny uživatele v síti. Microsoft doporučuje, abyste nezabezpečená přihlášení hostů zakázali a nakonfigurovali souborové servery tak, aby vyžadovaly ověřený přístup.
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">Dostupnost funkce Offline soubory ve sdílených složkách s nepřetržitou dostupností</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        Toto nastavení zásad určuje chování funkce Offline soubory na klientech připojujících se ke sdílené složce SMB s povoleným příznakem Nepřetržitá dostupnost.
+
+        Pokud toto nastavení zásad povolíte, objeví se na počítači s Windows při připojování ke sdílené složce podporující nepřetržitou dostupnost v nabídce Průzkumníku souborů možnost Vždy přístupné offline. Bude taky možné připínat soubory ve sdílených složkách podporujících nepřetržitou dostupnost pomocí ukládání do mezipaměti na straně klienta.
+
+        Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, systém Windows nebude umožňovat použití funkce Offline soubory ve sdílených složkách podporujících nepřetržitou dostupnost.
+
+        Poznámka: Microsoft nedoporučuje, abyste tuto zásadu skupiny povolovali. Použití nepřetržité dostupnosti s funkcí Offline soubory povede k velmi dlouhým přechodovým dobám mezi stavy online a offline.
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">Ukládání popisovačů do mezipaměti ve sdílených složkách s nepřetržitou dostupností</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        Toto nastavení zásad určuje chování ukládání popisovačů SMB do mezipaměti na klientech připojujících se ke sdílené složce SMB s povoleným příznakem Nepřetržitá dostupnost.
+
+        Pokud toto nastavení zásad povolíte, klient SMB umožní použít v mezipaměti uložené popisovače souborů ve sdílených složkách s nepřetržitou dostupností. To může vést k lepšímu výkonu při opakovaném přístupu k většímu počtu nestrukturovaných datových souborů ve sdílených složkách s nepřetržitou dostupností ve službě Soubory Microsoft Azure.
+
+        Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, systém Windows nebude umožňovat použití v mezipaměti uložených popisovačů souborů otevíraných prostřednictvím sdílených složek s nepřetržitou dostupností.
+
+        Poznámka: Tato zásada nemá žádný vliv při připojování ke sdíleným složkám na souborovém serveru se škálováním na více systémů založeným na systému Windows Server. Microsoft nedoporučuje povolovat tuto zásadu pro klienty, kteří se často připojují k souborům v clusteru Windows s podporou převzetí služeb při selhání s rolí Souborový server pro obecné použití, protože by to mohlo vést k pomalejšímu přebírání služeb při selhání a zvýšenému využití paměti a procesoru.
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Minimálně Windows Server 2022, Windows 11</string>
+      <string id="Pol_EnableCompressedTraffic_Name">Ve výchozím nastavení použít kompresi SMB</string>
+      <string id="Pol_EnableCompressedTraffic_Help">Tato zásada určuje, jestli klient SMB ve výchozím nastavení používá kompresi provozu.
+
+Pokud toto nastavení zásad povolíte, klient SMB se ve výchozím nastavení pokusí komprimovat provoz, když je povolená komprese SMB.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, klient SMB se ve výchozím nastavení nebude pokoušet komprimovat provoz. Komprese provozu se ale může požadovat jinými způsoby. Přečtěte si poznámky níže.
+
+Poznámka: Tato zásada se kombinuje s vlastnostmi popisovačů jednotlivých sdílených složek a souborů, jejichž prostřednictvím se může požadovat komprese provozu. Server SMB také musí podporovat a povolit kompresi. Pokud je například tato zásada zakázaná (nebo nenakonfigurovaná), klient SMB může nadále provádět kompresi, pokud sdílená složka serveru SMB požaduje kompresi. Pokud je to nežádoucí a chcete kompresi úplně zakázat, nakonfigurujte místo toho doprovodné zásady Zakázat kompresi SMB.
+      </string>
+      <string id="Pol_DisableCompression_Name">Zakázat kompresi SMB</string>
+      <string id="Pol_DisableCompression_Help">Tato zásada určuje, jestli klient SMB zakáže (zcela zabrání) kompresi provozu.
+
+Pokud toto nastavení zásad povolíte, nebude klient SMB nikdy komprimovat data bez ohledu na jiné zásady (například zásadu Použít kompresi SMB ve výchozím nastavení“ nebo vlastnosti jednotlivých sdílených složek).
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, klient SMB může komprimovat provoz (v závislosti na kombinaci jiných zásad a podmínek).
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>Sady šifer:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

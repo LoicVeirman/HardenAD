@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.2" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>表示名をここに入力する</displayName>
+  <description>説明をここに入力する</description>
+  <resources>
+    <stringTable>
+      <!-- Supported Platforms -->
+      <string id="SUPPORTED_WindowsXPSP2WindowsNETSP1orBITS20">Windows XP SP2 または Windows Server 2003 SP1、または BITS 2.0 のインストールされているコンピューター</string>
+      <string id="SUPPORTED_WindowsXPWindowsNETorBITS15">Windows XP または Windows Server 2003、または BITS 1.5 のインストールされているコンピューター</string>
+      <string id="SUPPORTED_Windows7OrBITS35">Windows 7 または BITS 3.5 がインストールされたコンピューター。</string>
+      <string id="SUPPORTED_Windows8OrBITS5">Windows 8 または Windows Server 2012 または Windows RT、または BITS 5 がインストールされているコンピューター。</string>
+      <!-- Supported Platforms -->
+
+      <!-- Component name -->
+      <string id="BITS">バックグラウンド インテリジェント転送サービス (BITS)</string>
+      <!-- Component name -->
+
+<!-- inactive job timeout -->      
+      <string id="BITS_Job_Timeout">非アクティブな BITS ジョブのタイムアウト</string>
+      <string id="BITS_Job_Timeout_Help">このポリシー設定では、保留中の非アクティブ状態の BITS ジョブが破棄されたと判断されるまでの日数を指定します。既定では、BITS は 90 日間待機してから、非アクティブ状態のジョブが破棄されたと判断します。破棄されたと判断されたジョブは BITS から削除され、そのジョブ用にダウンロードされたすべてのファイルがディスクから削除されます。
+          注: ジョブのプロパティの変更や正常なダウンロード操作が一度でも行われた場合、このタイムアウトはリセットされます。
+
+          コンピューターを長い時間オフラインにしてジョブを保留状態にする必要がある場合は、タイムアウトの値を大きくすることをお勧めします。
+          孤立したジョブがディスクの空き領域を占有することを避けるには、この値を小さくしてください。
+
+          このポリシー設定を有効にした場合、非アクティブなジョブがタイムアウトするまでの日数を指定することができます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合、非アクティブなジョブがタイムアウトするまでの日数として既定値の 90 日が使用されます。</string>
+
+<!-- inactive job timeout -->
+
+<!-- max job download time -->
+      <string id="BITS_MaxDownloadTime">BITS ジョブの最長ダウンロード時間を制限する</string>
+      <string id="BITS_MaxDownloadTimeText">このポリシー設定は、バックグラウンド インテリジェント転送サービス (BITS) ジョブにおいて BITS がダウンロードに費やすことができる時間を制限します。
+
+          この制限時間は、BITS がアクティブにファイルをダウンロードする時間に対してのみ適用されます。累積ダウンロード時間がこの制限時間を越えると、そのジョブはエラー状態になります。
+
+          既定の BITS のダウンロード時間は最大値の 90 日 (7,776,000 秒) です。
+
+          このポリシー設定を有効にした場合、最大ジョブ ダウンロード時間を秒数で指定することができます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合は、既定値の 90 日 (7,776,000 秒) が使用されます。</string>
+
+<!-- max job download time -->
+
+<!-- max bandwidth -->
+      <string id="BITS_MaxBandwidth">BITS バックグラウンド転送の最大ネットワーク帯域幅を制限する</string>
+      <string id="BITS_MaxBandwidth_Help">このポリシー設定は、バックグラウンド インテリジェント転送サービス (BITS) によってバックグラウンド転送に使用されるネットワーク帯域幅を制限します (フォアグラウンド転送はこのポリシー設定に影響されません)。
+
+          特定の時間間隔で使用する制限値と、それ以外の時間に使用する制限値を指定することができます。たとえば、午前 8 時から午後 5 時まではネットワーク帯域幅の使用を 10 Kbps に制限し、それ以外の時間は未使用で利用可能なすべての帯域幅を使用するように指定できます。
+
+          このポリシー設定を有効にすると、BITS によってバックグラウンド転送に使用されるネットワーク帯域幅の使用量が、ここで指定した値に制限されます。制限値は、キロビット/秒 (Kbps) で指定できます。2 キロビットより小さい値を指定した場合でも、BITS によって常に約 2 キロビットが使用されます。BITS 転送をしないようにするには、制限値 0 を指定してください。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合は、BITS によって未使用で利用可能なすべての帯域幅が使用されます。
+
+          注: 制限値は、コンピューターのネットワーク インターフェイス カード (NIC) の速度ではなく、ネットワーク リンクの速度を基準にしてください。このポリシー設定はピア コンピューター間のピアキャッシュ転送には影響しません (元のサーバーからの転送に影響します)。その目的には、"ピアキャッシュに使用される最大ネットワーク帯域幅を制限する" ポリシー設定を使用します。
+
+          高速なネットワーク カード (10 Mbs) と低速なリンク (56 Kbs) を使用してクライアント コンピューターが接続されている場合は、BITS の転送がネットワーク帯域幅と競合しないように、このポリシーを使用することをお勧めします。</string>
+
+      <string id="BITS_MaxBandwidthTime10AM">10 AM</string>
+      <string id="BITS_MaxBandwidthTime10PM">10 PM</string>
+      <string id="BITS_MaxBandwidthTime11AM">11 AM</string>
+      <string id="BITS_MaxBandwidthTime11PM">11 PM</string>
+      <string id="BITS_MaxBandwidthTime12AM">12 AM</string>
+      <string id="BITS_MaxBandwidthTime12PM">12 PM</string>
+      <string id="BITS_MaxBandwidthTime1AM">1 AM</string>
+      <string id="BITS_MaxBandwidthTime1PM">1 PM</string>
+      <string id="BITS_MaxBandwidthTime2AM">2 AM</string>
+      <string id="BITS_MaxBandwidthTime2PM">2 PM</string>
+      <string id="BITS_MaxBandwidthTime3AM">3 AM</string>
+      <string id="BITS_MaxBandwidthTime3PM">3 PM</string>
+      <string id="BITS_MaxBandwidthTime4AM">4 AM</string>
+      <string id="BITS_MaxBandwidthTime4PM">4 PM</string>
+      <string id="BITS_MaxBandwidthTime5AM">5 AM</string>
+      <string id="BITS_MaxBandwidthTime5PM">5 PM</string>
+      <string id="BITS_MaxBandwidthTime6AM">6 AM</string>
+      <string id="BITS_MaxBandwidthTime6PM">6 PM</string>
+      <string id="BITS_MaxBandwidthTime7AM">7 AM</string>
+      <string id="BITS_MaxBandwidthTime7PM">7 PM</string>
+      <string id="BITS_MaxBandwidthTime8AM">8 AM</string>
+      <string id="BITS_MaxBandwidthTime8PM">8 PM</string>
+      <string id="BITS_MaxBandwidthTime9AM">9 AM</string>
+      <string id="BITS_MaxBandwidthTime9PM">9 PM</string>
+
+      <string id="BITS_MaxBandwidthDaysSunday">日曜日</string>
+      <string id="BITS_MaxBandwidthDaysMonday">月曜日</string>
+      <string id="BITS_MaxBandwidthDaysTuesday">火曜日</string>
+      <string id="BITS_MaxBandwidthDaysWednesday">水曜日</string>
+      <string id="BITS_MaxBandwidthDaysThursday">木曜日</string>
+      <string id="BITS_MaxBandwidthDaysFriday">金曜日</string>
+      <string id="BITS_MaxBandwidthDaysSaturday">土曜日</string>
+
+      <string id="BITS_MaxBandwidthLimitKbps">Kbps</string>
+      <string id="BITS_MaxBandwidthLimitMbps">Mbps</string>
+      <string id="BITS_MaxBandwidthLimitUnlimited">無制限</string>
+
+      <string id="BITS_MaxBandwidthV2_Work">作業スケジュールを設定して BITS バックグラウンド転送に使用される最大ネットワーク帯域幅を制限する</string>
+      <string id="BITS_MaxBandwidthV2_Work_Help">このポリシー設定では、バックグラウンド インテリジェント転送サービス (BITS) によって作業時間内および作業時間外にバックグラウンド転送に使用されるネットワーク帯域幅を制限します。作業スケジュールは、曜日と時間が示された週単位のカレンダーを使用して定義できます。作業スケジュールで定義されていない時間と日付はすべて作業時間外と見なされます。
+
+          このポリシー設定を有効にした場合、作業時間内と作業時間外の両方のネットワーク帯域幅を制限するスケジュールを設定できます。作業スケジュールを定義した後で、3 つの BITS バックグラウンド優先順位レベル (高、通常、低) のそれぞれについて使用帯域幅の制限を設定できます。
+
+          作業スケジュールでバックグラウンド ジョブに使用する制限値を指定できます。たとえば、優先順位が低いジョブのネットワーク帯域幅を月曜日から金曜日までの午前 8 時から午後 5 時までは 128 Kbps に制限し、作業時間外の制限値は 512 Kbps に設定することができます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合は、バックグラウンド ジョブの転送に未使用で利用可能なすべての帯域幅が使用されます。
+      
+      </string>
+
+      <string id="BITS_MaxBandwidthV2_Maintenance">メンテナンス スケジュールを設定して BITS バックグラウンド転送に使用される最大ネットワーク帯域幅を制限する</string>
+      <string id="BITS_MaxBandwidthV2_Maintenance_Help">このポリシー設定では、バックグラウンド インテリジェント転送サービス (BITS) によってメンテナンス期間内にバックグラウンド転送に使用されるネットワーク帯域幅を制限します。メンテナンス スケジュールにより、バックグラウンド転送に使用されるネットワーク帯域幅がさらに制限されます。
+
+          このポリシー設定を有効にした場合、ネットワーク帯域幅の制限のセットを別途定義し、メンテナンス期間のスケジュールを設定できます。
+
+          メンテナンス スケジュールでバックグラウンド ジョブに使用する制限値を指定できます。たとえば、作業スケジュールで通常の優先順位のジョブを 256 Kbps に制限している場合に、通常の優先順位のジョブのネットワーク帯域幅をメンテナンス スケジュールでさらに午前 8 時から午前 10 時までは 0 Kbps に制限することができます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合は、作業スケジュールや作業時間外のスケジュールに定義された制限が使用されます。
+
+          注: メンテナンス期間に対して設定された帯域幅の制限は、作業スケジュールや他のスケジュールに定義された制限よりも優先されます。
+      
+      </string>
+
+      <!-- max bandwidth -->
+
+
+      <!-- cost transfer policies -->
+      <string id="BITS_SetTransferPolicyOnCostedNetwork">コストのかかるネットワークでの BITS ジョブの既定のダウンロード動作を設定する</string>
+      <string id="BITS_SetTransferPolicyOnCostedNetwork_Help">
+          
+          このポリシー設定では、コストのかかるネットワーク (3G など) にシステムが接続されているときに、バックグラウンド インテリジェント転送サービス (BITS) によってバックグラウンド転送に使用される既定の動作を定義します。ダウンロード動作ポリシーにより、バックグラウンド転送のネットワーク使用率がさらに制限されます。
+
+          このポリシー設定を有効にした場合、BITS ジョブの優先順位ごとに既定のダウンロード ポリシーを定義できます。この設定は、BITS ジョブを作成したアプリケーションによって明示的に構成されたダウンロード ポリシーより優先されることはありませんが、優先順位のみを指定して作成されているジョブに適用されます。
+
+          たとえば、バックグラウンド ジョブを既定でコストのかからないネットワークへの接続時にのみ転送するように指定できますが、フォアグラウンド ジョブはローミングされていないときにのみ処理する必要があります。割り当てることのできる値は次のとおりです。
+          -         常に転送
+          -         ローミング時以外に転送
+          -         追加料金が適用される場合を除いて (ローミング時または容量を超えているとき以外に) 転送
+          -         制限に近づいている場合を除いて (ローミング時または容量に近づいているとき以外に) 転送
+          -         制約がない場合のみ転送
+          -         カスタム -- ビットがこの優先順位に対して許可されるか許可されていないコストの状態を説明するビットマスクを指定できます: (以下はビットの説明です)
+          0x1 - コストが不明であるか、接続が無制限で使用料金と容量の制約がないと見なされている。
+          0x2 - この接続の使用ではデータ量の上限が規制されていない。
+          0x4 - この接続の使用ではデータ量の上限が規制されておらず、プランの使用状況が制限の 80% を下回っている。
+          0x8 - この接続の使用ではデータ量の上限が規制されておらず、プランの使用状況が制限の 80% から 100% の間である。
+          0x10 - この接続の使用ではデータ量の上限は規制されていないが、容量を超えている。追加料金が適用されるか、不明です。
+          0x20 - この接続の使用ではデータ量の上限が規制されていないが、容量を超えている。追加料金は適用されませんが、速度は低下する可能性があります。
+          0x40 - 接続のコストがバイト単位でかかる。
+          0x80 - 接続がローミングしている。
+          0x80000000 - 輻輳を無視する。
+      
+      </string>
+      <string id="BITS_TransferPolicyAlwaysTransfer">常に転送</string>
+      <string id="BITS_TransferPolicyNotRoamingTransfer">ローミング時以外に転送</string>
+      <string id="BITS_TransferPolicyNoSurcharge">追加料金が適用される場合を除いて (ローミング時または容量を超えているとき以外に) 転送</string>
+      <string id="BITS_TransferPolicyStandard">制限に近づいている場合を除いて (ローミング時または容量に近づいているとき以外に) 転送</string>
+      <string id="BITS_TransferPolicyUnrestricted">制約がない場合のみ転送</string>
+      <string id="BITS_Custom">カスタム</string>
+      
+      <!-- cost transfer policies -->
+
+      <!-- enable peercaching -->      
+      <string id="BITS_EnablePeercaching">BITS のピアキャッシュを許可する</string>
+      <string id="BITS_EnablePeercachingText">このポリシー設定により、バックグラウンド インテリジェント転送サービス (BITS) のピアキャッシュ機能が特定のコンピューター上で有効になっているかどうかが判断されます。 既定では、BITS ジョブのファイルは、そのジョブの所有者によって指定された元のサーバーからのみダウンロードされます。
+
+          BITS のピアキャッシュを有効にすると、ダウンロードしたファイルが BITS によってキャッシュされ、他の BITS ピアでそれらを使用できるようになります。ダウンロードしたジョブの転送中、同じ IP サブセット内のピアから、そのジョブに対するファイルが BITS によって最初に要求されます。要求されたファイルを持つピアがサブセット内にない場合、BITS によって元のサーバーからそれらがダウンロードされます。
+
+          このポリシー設定を有効にした場合、BITS はファイルをピアからダウンロードしてそのファイルをキャッシュし、ピアからのコンテンツ要求に応答します。 "コンピューターが BITS のピアキャッシュ サーバーとして動作しないようにする" ポリシー設定および "コンピューターが BITS のピアキャッシュ クライアントとして動作しないようにする" ポリシー設定を使用すると、より詳細なレベルで BITS のピアキャッシュ機能を制御することができます。ただし、これらの 2 つのポリシー設定を有効にするには、"BITS のピアキャッシュを許可する" ポリシー設定を有効にする必要があることに注意してください。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合は、BITS のピアキャッシュ機能が無効になり、BITS によって元のサーバーから直接ファイルがダウンロードされます。</string>
+<!-- enable peercaching -->
+
+
+<!-- peercache size limit -->
+      <string id="BITS_MaxCacheSize">BITS のピアキャッシュ サイズを制限する</string>
+      <string id="BITS_MaxCacheSizeText">このポリシー設定は、BITS のピアキャッシュ用に使用できるディスク領域の最大サイズを、システム ディスク全体のサイズに対する割合で制限します。BITS はファイルをピアキャッシュに追加し、キャッシュのコンテンツが指定されたキャッシュ サイズに達するまで、これらのファイルがピアで使用できるようにします。既定では、システム ディスク全体の 1% が BITS によってピアキャッシュ用に使用されます。
+
+          このポリシー設定を有効にすると、BITS のピアキャッシュに使用されるディスク領域の割合を入力することができます。1% から 80% までの値を入力することができます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合、BITS のピアキャッシュの既定値はシステム ディスク全体のサイズの 1% になります。
+
+          注: "BITS のピアキャッシュを許可する" 設定が無効になっているか構成されていない場合、このポリシー設定の効果はありません。</string>
+<!-- peercache size limit -->
+      
+
+<!-- max peercaching content age limit-->      
+      <string id="BITS_MaxContentAge">BITS ピアキャッシュ内のファイルの保存期間を制限する</string>
+      <string id="BITS_MaxContentAgeText">このポリシー設定は、バックグラウンド インテリジェント転送サービス (BITS) のピアキャッシュ内のファイルの最大保存期間を制限します。ディスク領域を最も効果的に使用できるように、既定では、90 日間アクセスされていないピアキャッシュ内のすべてのファイルが BITS によって削除されます。
+
+          このポリシー設定を有効にすると、キャッシュ内のファイルの最大保存期間を日数で指定することができます。1 から 120 日までの値を入力することができます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合、90 日間アクセスされていないファイルはピアキャッシュから削除されます。
+
+          注: "BITS のピアキャッシュを許可する" ポリシー設定が無効になっているか構成されていない場合、このポリシー設定の効果はありません。</string>
+
+<!-- max peercaching content age limit-->
+      
+<!-- disable peercache client-->
+      <string id="BITS_DisablePeercachingClient">コンピューターが BITS のピアキャッシュ クライアントとして動作しないようにする</string>
+      <string id="BITS_DisablePeercachingClientText">このポリシー設定は、コンピューターが BITS のピアキャッシュ クライアントとして動作するかどうかを指定します。既定では、BITS のピアキャッシュが有効になっている場合、コンピューターは (ピアにファイルを提供する) ピアキャッシュ サーバーと (ピアからファイルをダウンロードする) ピアキャッシュ クライアントの両方として動作します。
+
+          このポリシー設定を有効にすると、コンピューターはファイルのダウンロード時に BITS のピアキャッシュ機能を使用しなくなります。ファイルがダウンロードされるのは、元のサーバーからのみになります。ただし、コンピューターからピアに対するファイルの提供は行われます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合、コンピューターは元のサーバーからのダウンロードを行う前に、ピア用に有効になっている BITS ジョブをピア コンピューターからダウンロードしようとします。
+
+          注: "BITS のピアキャッシュを許可する" ポリシー設定が無効になっているか構成されていない場合、このポリシー設定の効果はありません。</string>
+<!-- disable peercache client-->
+
+      
+<!-- disable peercache server-->
+      <string id="BITS_DisablePeercachingServer">コンピューターが BITS のピアキャッシュ サーバーとして動作しないようにする</string>
+      <string id="BITS_DisablePeercachingServerText">このポリシー設定は、コンピューターが BITS のピアキャッシュ サーバーとして動作するかどうかを指定します。既定では、BITS のピアキャッシュが有効になっている場合、コンピューターは (ピアにファイルを提供する) ピアキャッシュ サーバーと (ピアからファイルをダウンロードする) ピアキャッシュ クライアントの両方として動作します。
+
+          このポリシー設定を有効にすると、コンピューターはダウンロードしたファイルのキャッシュを行わなくなり、ダウンロードしたファイルもピアへ提供されなくなります。ただし、コンピューターによるピアからのファイルのダウンロードは行われます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合、コンピューターはダウンロードしてキャッシュしたファイルをピアに対して提供します。
+
+          注: "BITS のピアキャッシュを許可する" 設定が無効になっているか構成されていない場合、この設定の効果はありません。</string>
+<!-- disable peercache server-->
+
+      
+<!-- limit peercache bandwidth-->
+      <string id="BITS_MaxBandwidthServedForPeers">ピアキャッシュに使用される最大ネットワーク帯域幅を制限する</string>
+      <string id="BITS_MaxBandwidthServedForPeersText">このポリシー設定は、BITS でピアキャッシュ転送に使用されるネットワーク帯域幅を制限します (元のサーバーからの転送はこの設定に影響されません)。
+          他のピアへの提供により生じるコンピューターへの悪影響を防ぐため、既定では、最も低速でアクティブなネットワーク インターフェイス帯域幅の最大 30% が BITS によって使用されます。たとえば、コンピューターに 100 Mbps のネットワーク カードと 56 Kbps のモデムが取り付けられ、どちらもアクティブな場合、56 Kbps に対して最大 30% の帯域幅が BITS によって使用されます。
+          BITS の既定の動作を変更して、BITS によってピアキャッシュ用に使用される最大帯域幅の固定値を指定することができます。
+
+          このポリシー設定を有効にすると、ピアキャッシュに使用する最大ネットワーク帯域幅を、1048576 から 4294967200 までのビット/秒 (bps) の値で指定することができます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合は、最も低速でアクティブなネットワーク インターフェイスの 30% が既定値として使用されます。
+
+          注: "BITS のピアキャッシュを許可する" ポリシー設定が無効になっているか構成されていない場合、この設定の効果はありません。</string>
+<!-- limit peercache bandwidth-->
+      
+      
+<!-- max jobs per computer -->    
+      <string id="BITS_MaxJobsPerMachine">このコンピューターの最大 BITS ジョブ数を制限する</string>
+      <string id="BITS_MaxJobsPerMachineText">このポリシー設定は、このコンピューター上のすべてのユーザーが生成できる最大 BITS ジョブ数を制限します。既定では、コンピューターに生成できるジョブの合計数は、BITS によって 300 までに制限されています。このポリシー設定を使用すると、ユーザーの BITS ジョブの最大数を変更することができます。
+
+          このポリシー設定を有効にした場合、BITS ジョブの最大数が、ここで指定した値に制限されます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合、300 ジョブが既定の BITS ジョブ制限数として使用されます。
+
+          注: サービスおよびローカル管理者のアカウントにより生成された BITS ジョブは、この制限数には含まれません。</string>
+
+<!-- max jobs per computer -->
+
+<!-- max jobs per user -->
+      <string id="BITS_MaxJobsPerUser">各ユーザーの最大 BITS ジョブ数を制限する</string>
+      <string id="BITS_MaxJobsPerUserText">このポリシー設定は、1 人のユーザーが生成できる最大 BITS ジョブ数を制限します。既定では、1 人のユーザーが生成できるジョブの合計数は、BITS によって 60 までに制限されています。この設定を使用すると、ユーザーが生成できる BITS ジョブの最大数を変更することができます。
+
+          このポリシー設定を有効にした場合、1 人のユーザーが生成できる BITS ジョブの最大数が、ここで指定した値に制限されます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合、300 ジョブが既定のユーザー BITS ジョブ制限数として使用されます。
+
+          注: この制限数は、"このコンピューターの最大 BITS ジョブ数" ポリシー設定で指定した設定値よりも小さい値にする必要があります。または、"このコンピューターの最大 BITS ジョブ数" ポリシー設定が構成されていない場合は、300 にする必要があります。サービスおよびローカル管理者のアカウントにより生成された BITS ジョブは、この制限数には含まれません。</string>
+
+<!-- max jobs per computer -->
+
+<!-- max files per job -->
+      <string id="BITS_MaxFilesPerJob">BITS ジョブで許可されるファイルの最大数を制限する</string>
+      <string id="BITS_MaxFilesPerJobText">このポリシー設定は、1 つの BITS ジョブに含めることができるファイル数を制限します。既定の制限数は、1 つの BITS ジョブに対して 200 ファイルまでとなっています。この設定を使用すると、BITS ジョブに含めることができるファイルの最大数を変更することができます。
+
+          このポリシー設定を有効にした場合、1 つのジョブに含めることができるファイルの最大数が、ここで指定した値に制限されます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合、1 つのジョブに含めることができるファイルの最大数として、既定値の 200 が使用されます。
+
+          注: サービスおよびローカル管理者のアカウントにより生成された BITS ジョブは、この制限数には含まれません。</string>
+<!-- max files per job -->
+
+<!-- max ranges per file -->      
+      <string id="BITS_MaxRangesPerFile">BITS ジョブのファイルに追加できる範囲の最大値を制限する</string>
+      <string id="BITS_MaxRangesPerFileText">このポリシー設定は、BITS ジョブの 1 ファイルに追加できる範囲の値を制限します。既定では、BITS ジョブのファイルに対する範囲は、1 ファイルにつき 500 までに制限されています。この設定を使用すると、各ファイルの範囲の最大値を変更することができます。
+
+          このポリシー設定を有効にした場合、1 つのファイルに追加できる範囲の最大値が、ここで指定した値に制限されます。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合、各ファイルの範囲は 500 に制限されます。
+
+          注: サービスおよびローカル管理者のアカウントにより生成された BITS ジョブは、この制限数には含まれません。</string>
+<!-- max ranges per file -->
+
+<!-- disable branch cache-->
+      <string id="BITS_DisableBranchCache">BITS クライアントでの Windows ブランチ キャッシュの使用を許可しない</string>
+      <string id="BITS_DisableBranchCacheText">この設定は、BITS クライアントで Windows ブランチ キャッシュの使用が許可されるかどうかに影響します。Windows ブランチ キャッシュ コンポーネントがコンピューターにインストールされて有効になっている場合、既定では、そのコンピューターの BITS ジョブで Windows ブランチ キャッシュを使用できます。
+
+          このポリシー設定を有効にした場合、BITS クライアントで Windows ブランチ キャッシュが使用されません。
+
+          このポリシー設定を無効にした場合、または構成しなかった場合は、BITS クライアントで Windows ブランチ キャッシュが使用されます。
+
+          注: このポリシー設定は、BITS 以外のアプリケーションによる Windows ブランチ キャッシュの使用には影響しません。このポリシー設定は、SMB での BITS 転送には適用されません。この設定は、コンピューターの管理設定で Windows ブランチ キャッシュの使用が完全に無効に設定されている場合は、効果がありません。
+      </string>
+<!-- disable branch cache-->
+
+    </stringTable>
+    <presentationTable>
+      <presentation id="BITS_Job_Timeout">
+        <decimalTextBox refId="BITS_Job_Timeout_Time" defaultValue="90">非アクティブなジョブがタイムアウトするまでの日数:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxDownloadTime">
+          <decimalTextBox refId="BITS_MaxDownloadSeconds" defaultValue="54000">アクティブなジョブがタイムアウトするまでの秒数:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxBandwidth">
+        <decimalTextBox refId="BITS_MaxTransferRateText" defaultValue="10" spinStep="10">バックグラウンド転送レート (Kbps) の制限値:</decimalTextBox>
+        <dropdownList refId="BITS_BandwidthLimitSchedFrom" noSort="true" defaultItem="8">開始</dropdownList>
+        <dropdownList refId="BITS_BandwidthLimitSchedTo" noSort="true" defaultItem="17">最大</dropdownList>
+        <text>それ以外の時</text>
+        <checkBox refId="BITS_UseSystemMaximum" defaultChecked="true">未使用で利用可能な帯域幅をすべて使用する</checkBox>
+        <text>または</text>
+        <decimalTextBox refId="BITS_MaxTransferRateText_1" defaultValue="20" spinStep="10">バックグラウンド転送レート (Kbps) の制限値:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxContentAge">
+        <decimalTextBox refId="BITS_MaxContentAgeList" defaultValue="90">日数:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxCacheSize">
+        <decimalTextBox refId="BITS_MaxSize" defaultValue="5">BITS のピアキャッシュに使用されるディスク領域の割合:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxBandwidthServedForPeers">
+        <decimalTextBox refId="BITS_MaxBandwidthServedForPeersList" defaultValue="1048576">ピアキャッシュに使用される最大ネットワーク帯域幅 (bps):</decimalTextBox>
+      </presentation>
+
+      <presentation id="BITS_MaxJobsPerMachine">
+        <decimalTextBox refId="BITS_MaxJobsPerMachineList" defaultValue="300">このコンピューターの最大 BITS ジョブ数:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxJobsPerUser">
+        <decimalTextBox refId="BITS_MaxJobsPerUserList" defaultValue="60">各ユーザーの最大 BITS ジョブ数:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxFilesPerJob">
+        <decimalTextBox refId="BITS_MaxFilesPerJobList" defaultValue="200">BITS ジョブで許可されるファイルの最大数:</decimalTextBox>
+      </presentation>
+      <presentation id="BITS_MaxRangesPerFile">
+        <decimalTextBox refId="BITS_MaxRangesPerFileList" defaultValue="500">BITS ジョブのファイルに追加できる範囲の最大値:</decimalTextBox>
+      </presentation>
+
+      <presentation id="BITS_MaxBandwidthV2_Work">
+        <checkBox refId="BITS_IgnoreLimitsOnLan" defaultChecked="false">発信元と宛先が同じサブネットにある場合は帯域幅の制限を無視します。</checkBox>
+        <text>作業日</text>
+        <dropdownList refId="BITS_WorkDaysFrom" noSort="true" defaultItem="1">開始</dropdownList>
+        <dropdownList refId="BITS_WorkDaysTo" noSort="true" defaultItem="5">終了</dropdownList>
+        <text> </text>
+        <text>1 日の作業時間</text>
+        <dropdownList refId="BITS_WorkHoursFrom" noSort="true" defaultItem="8">開始</dropdownList>
+        <dropdownList refId="BITS_WorkHoursTo" noSort="true" defaultItem="17">終了</dropdownList>
+        <text> </text>
+        <text>作業時間内の帯域幅の制限</text>
+        <decimalTextBox refId="BITS_WorkHighPriorityLimit" defaultValue="0">高い優先順位の制限:</decimalTextBox>
+        <dropdownList refId="BITS_WorkHighPriorityUnit" noSort="true" defaultItem="2">高い優先順位の単位:</dropdownList>
+        <decimalTextBox refId="BITS_WorkNormalPriorityLimit" defaultValue="0">通常の優先順位の制限:</decimalTextBox>
+        <dropdownList refId="BITS_WorkNormalPriorityUnit" noSort="true" defaultItem="2">通常の優先順位の単位:</dropdownList>
+        <decimalTextBox refId="BITS_WorkLowPriorityLimit" defaultValue="0">低い優先順位の制限:</decimalTextBox>
+        <dropdownList refId="BITS_WorkLowPriorityUnit" noSort="true" defaultItem="2">低い優先順位の単位:</dropdownList>
+        <text> </text>
+        <text>作業時間外の帯域幅の制限</text>
+        <decimalTextBox refId="BITS_NonWorkHighPriorityLimit" defaultValue="0">高い優先順位の制限:</decimalTextBox>
+        <dropdownList refId="BITS_NonWorkHighPriorityUnit" noSort="true" defaultItem="2">高い優先順位の単位:</dropdownList>
+        <decimalTextBox refId="BITS_NonWorkNormalPriorityLimit" defaultValue="0">通常の優先順位の制限:</decimalTextBox>
+        <dropdownList refId="BITS_NonWorkNormalPriorityUnit" noSort="true" defaultItem="2">通常の優先順位の単位:</dropdownList>
+        <decimalTextBox refId="BITS_NonWorkLowPriorityLimit" defaultValue="0">低い優先順位の制限:</decimalTextBox>
+        <dropdownList refId="BITS_NonWorkLowPriorityUnit" noSort="true" defaultItem="2">低い優先順位の単位:</dropdownList>
+      </presentation>
+
+      <presentation id="BITS_SetTransferPolicyOnCostedNetwork">
+        <text>コストのかかるネットワーク上の BITS ジョブの既定の転送動作を設定する</text>
+        <dropdownList refId="BITS_TransferPolicyForegroundPriorityValue" noSort="true" defaultItem="0">フォアグラウンド </dropdownList>
+        <decimalTextBox refId="BITS_TransferPolicyForegroundPriorityValueCustom" defaultValue="255">フォアグラウンド (カスタム)</decimalTextBox>
+        <dropdownList refId="BITS_TransferPolicyHighPriorityValue" noSort="true" defaultItem="0">高 </dropdownList>
+        <decimalTextBox refId="BITS_TransferPolicyHighPriorityValueCustom" defaultValue="255">高 (カスタム)</decimalTextBox>
+        <dropdownList refId="BITS_TransferPolicyNormalPriorityValue" noSort="true" defaultItem="0">標準 </dropdownList>
+        <decimalTextBox refId="BITS_TransferPolicyNormalPriorityValueCustom" defaultValue="255">標準 (カスタム)</decimalTextBox>
+        <dropdownList refId="BITS_TransferPolicyLowPriorityValue" noSort="true" defaultItem="0">低 </dropdownList>
+        <decimalTextBox refId="BITS_TransferPolicyLowPriorityValueCustom" defaultValue="255">低 (カスタム)</decimalTextBox>
+      </presentation>
+      
+      <presentation id="BITS_MaxBandwidthV2_Maintenance">
+        <text>メンテナンス日</text>
+        <dropdownList refId="BITS_MaintenanceDaysFrom" noSort="true" defaultItem="1">開始</dropdownList>
+        <dropdownList refId="BITS_MaintenanceDaysTo" noSort="true" defaultItem="5">終了</dropdownList>
+        <text> </text>
+        <text>1 日のメンテナンス時間</text>
+        <dropdownList refId="BITS_MaintenanceHoursFrom" noSort="true" defaultItem="20">開始</dropdownList>
+        <dropdownList refId="BITS_MaintenanceHoursTo" noSort="true" defaultItem="22">終了</dropdownList>
+        <text> </text>
+        <text>メンテナンス時間内の帯域幅の制限</text>
+        <decimalTextBox refId="BITS_MaintenanceHighPriorityLimit" defaultValue="0">高い優先順位の制限:</decimalTextBox>
+        <dropdownList refId="BITS_MaintenanceHighPriorityUnit" noSort="true" defaultItem="2">高い優先順位の単位:</dropdownList>
+        <decimalTextBox refId="BITS_MaintenanceNormalPriorityLimit" defaultValue="0">通常の優先順位の制限:</decimalTextBox>
+        <dropdownList refId="BITS_MaintenanceNormalPriorityUnit" noSort="true" defaultItem="2">通常の優先順位の単位:</dropdownList>
+        <decimalTextBox refId="BITS_MaintenanceLowPriorityLimit" defaultValue="0">低い優先順位の制限:</decimalTextBox>
+        <dropdownList refId="BITS_MaintenanceLowPriorityUnit" noSort="true" defaultItem="2">低い優先順位の単位:</dropdownList>
+      </presentation>
+
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

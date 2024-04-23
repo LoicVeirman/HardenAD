@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>SAM の設定</displayName>
+  <description>セキュリティ アカウント マネージャーの構成設定</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">セキュリティ アカウント マネージャー</string>
+      <string id="SamNGCKeyROCAValidation">ROCA に対して脆弱な WHfB キーの認証中の検証を構成する</string>
+      <string id="SamNGCKeyROCAValidationNone">ROCA に対して脆弱な WHfB キーを無視</string>
+      <string id="SamNGCKeyROCAValidationAudit">ROCA に対して脆弱な WHfB キーの使用を監査</string>
+      <string id="SamNGCKeyROCAValidationBlock">ROCA に対して脆弱な WHfB キーの使用をブロック</string>
+      <string id="SamNGCKeyROCAValidation_explain">このポリシー設定では、"Return of Coppersmith's attack" (ROCA) に対して脆弱な Windows Hello for Business (WHfB) キーをドメイン コントローラーが処理する方法を構成できます。
+
+ROCA の脆弱性に関する詳細については、以下をご覧ください:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+このポリシー設定を有効にすると、次のオプションがサポートされます:
+
+無視: 認証中にドメイン コントローラーは WHfB キーで ROCA の脆弱性について調べません。
+
+監査: 認証中にドメイン コントローラーは ROCA に対して脆弱な WHfB キーの監査イベントを生成します (それでも認証は成功します)。
+
+ブロック: 認証中にドメイン コントローラーは ROCA に対して脆弱な WHfB キーの使用をブロックします (認証は失敗します)。
+
+この設定はドメイン コントローラーにのみ反映されます。
+
+構成されていない場合、ドメイン コントローラーは既定でローカル構成を使用します。既定のローカル構成は [監査] です。
+
+この設定を有効にするのに再起動は必要ありません。
+
+注: 予期しない中断を防ぐために、適切な対策 (脆弱な TPM の修正など) が実行されるまでは、この設定は [ブロック] に設定しないでください。
+
+詳細については、https://go.microsoft.com/fwlink/?linkid=2116430 をご覧ください。
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">ROCA に対して脆弱な WHfB キーを処理するためのオプション:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

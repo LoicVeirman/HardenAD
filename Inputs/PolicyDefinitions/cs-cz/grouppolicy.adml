@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Sem zadejte zobrazovaný název.</displayName>
+  <description>Sem zadejte popis.</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Možnosti zmírnění problémů</string>
+      <string id="Font_List">Blokování nedůvěryhodných písem</string>
+      <string id="Font_List_Help">Tato funkce zabezpečení poskytuje globální nastavení a brání programům v načítání nedůvěryhodných písem. Nedůvěryhodná písma jsou všechna písma, která nejsou v adresáři %windir%\Fonts. Tuto funkci je možné nakonfigurovat na jeden ze 3 režimů: Zapnuto, Vypnuto a Auditování. Výchozí nastavení je Zapnuto a žádná písma se neblokují. Pokud ještě nejste připravení nasadit tuto funkci ve své organizaci, můžete ji spustit v režimu Auditování, abyste viděli, jestli blokování nedůvěryhodných písem nezpůsobí nějaké problémy s použitelností nebo kompatibilitou.</string>
+      <string id="FontMitigation_On">Blokovat nedůvěryhodná písma a protokolovat události</string>
+      <string id="FontMitigation_Off">Neblokovat nedůvěryhodná písma</string>
+      <string id="FontMitigation_Audit">Protokolovat události bez blokování nedůvěryhodných písem</string>
+
+	  <string id="ProcessMitigationOptions_List">Možnosti pro zmírnění rizik u procesu</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Tato funkce zabezpečení slouží k přepisu nastavení možností pro zmírnění rizik u jednotlivých procesů. Díky tomu je možné vynutit určitý počet zásad zabezpečení specifických pro aplikace. Název aplikace se zadává jako hodnota, včetně rozšíření. Hodnota se zadává jako bitové pole s řadou příznaků na konkrétních pozicích. Bity je možné nastavit na 0 (nastavení je vypnuté), na 1 (nastavení je zapnuté) nebo na ? (nastavení si před vyhodnocením objektů zásad skupiny zachová svou aktuální hodnotu). Rozpoznávané bitové pozice:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        Povolí u podřízeného procesu Zabránění spuštění dat (DEP).
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        Povolí u podřízeného procesu emulaci převodních rutin DEP-ATL. Tato emulace způsobí, že systém bude zachycovat chyby NX pocházející z vrstvy převodních rutin knihovny ATL (Active Template Library). 
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        Povolí u podřízeného procesu ochranu před přepisem popisovačů strukturovaných výjimek (SEHOP). Metoda SEHOP blokuje pokusy o zneužití, které využívají techniku přepisu popisovačů strukturovaných výjimek (SEH).
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        Zásada randomizace rozložení adresního prostoru (ASLR) nuceně změní základnu imagí, které nejsou kompatibilní s dynamickou základnou – chová se při tom, jako by v době načítání došlo ke kolizi základen imagí. Pokud se relokace vyžadují, image bez sekce pro přemístění základny se nenačtou.
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        Zásady pro randomizaci odspodu nahoru, které zahrnují možnosti pro randomizaci zásobníku, způsobí použití náhodné pozice jako nejnižší uživatelské adresy.
+
+        Pokud chcete například povolit PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE a PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON, zakažte PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF, a pokud chcete ponechat u všech možností výchozí nastavení, zadejte hodnotu:
+        ???????????????0???????1???????1
+
+        Nastavení zde neuvedených příznaků na jakoukoli jinou hodnotu než ? bude mít za následek nedefinované chování.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">Povolit synchronizaci řadiče domény služby AD/DFS během aktualizace zásad</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">Při povolení tohoto nastavení se Klient Zásad skupiny u sdílených složek systému souborů DFS připojí ke stejnému řadiči domény, jaký se používá pro službu Active Directory.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">Vypnout optimalizaci AOAC služby klienta zásad skupiny</string>
+      <string id="DisableAOACProcessing_Help">Toto nastavení zásad skupiny zabraňuje zastavení služby klienta zásad skupiny při nečinnosti.
+
+
+
+</string>
+      <string id="EnableCDP">Používat na tomto zařízení spojitá prostředí</string>
+      <string id="EnableCDP_Help">
+Nastavení této zásady určuje, jestli se toto zařízení s Windows může zapojit do prostředí napříč zařízeními (spojitá prostředí).
+
+Pokud toto nastavení povolíte, bude toto zařízení s Windows zjistitelné pro jiná zařízení s Windows, která patří stejnému uživateli, a může se zapojit do prostředí napříč zařízeními.
+
+Pokud toto nastavení zakážete, nebude toto zařízení s Windows zjistitelné pro jiná zařízení a nebude se moct zapojit do prostředí napříč zařízeními.
+
+Pokud toto nastavení nenakonfigurujete, bude výchozí chování záviset na edici Windows. Změny této zásady se projeví po restartování.
+      </string>
+      <string id="EnableMMX">Propojení telefonu a počítače na tomto zařízení</string>
+      <string id="EnableMMX_Help">
+Tato zásada umožňuje správcům IT vypnout možnost propojení telefonu s osobním počítačem, aby bylo možné pokračovat ve čtení, e-mailování a dalších úlohách, při kterých se toto propojení vyžaduje.
+
+Pokud tuto zásadu povolíte, zařízení s Windows se bude moct zaregistrovat do funkce pro propojení telefonu s osobním počítačem a zapojit se do prostředí Pokračovat na osobním počítači.
+
+Pokud toto nastavení zakážete, zařízení s Windows nebude možné propojit s telefony, odebere se ze seznamu zařízení na všech propojených telefonech a zapojit se do prostředí Pokračovat na osobním počítači.
+
+Pokud toto nastavení nenakonfigurujete, bude výchozí chování záviset na konkrétní edici Windows. Změny této zásady se projeví až po restartování počítače.
+      </string>
+      <string id="EnableAppUriHandlers">Nakonfigurovat propojení webu s aplikací pomocí obslužných rutin adres URL</string>
+      <string id="EnableAppUriHandlers_Help">
+Tato zásada určuje, zda systém Windows podporuje obslužné rutiny pro propojení webu s aplikací.
+
+Pokud tuto zásadu povolíte, bude fungovat propojování webů s aplikacemi, takže aplikace bude možné spouštět pomocí adres URL s protokolem http(s).
+
+Zákaz této zásady nepovolí propojování webů s aplikacemi, takže se adresy URL s protokolem http(s) budou otevírat ve webovém prohlížeči namísto v přidružených aplikacích.
+
+Pokud nastavení těchto zásad nenakonfigurujete, bude výchozí chování záviset na verzi systému Windows. Změny této zásady se projeví až po restartu.
+      </string>
+      <string id="Fonts">Písma</string>
+      <string id="EnableFontProviders">Povolit poskytovatele písem</string>
+      <string id="EnableFontProviders_Help">
+        Toto nastavení zásad určuje, jestli má systém Windows povoleno stahovat písma a data katalogu písem od online poskytovatele písem.
+        
+        Pokud toto nastavení zásad povolíte, systém Windows se bude pravidelně dotazovat poskytovatele online písem, aby zjistil, jestli není dostupný nový katalog písem. Systém Windows může také v případě potřeby stahovat data písem za účelem formátování a vykreslení textu.
+        
+        Pokud toto nastavení zásad zakážete, systém Windows se nepřipojí k online poskytovateli písem a pouze vytvoří výčet místně nainstalovaných písem.
+        
+        Pokud toto nastavení zásad nenakonfigurujete, bude výchozí chování záviset na edici systému Windows. Změny této zásady se projeví po restartování.
+      </string>
+      <string id="EnableLogonOptimization">Konfigurovat ukládání zásad skupiny do mezipaměti</string>
+      <string id="EnableLogonOptimization_Help">
+        Toto nastavení zásad umožňuje nakonfigurovat chování ukládání zásad skupiny do mezipaměti.
+        Pokud toto nastavení zásad povolíte nebo nenakonfigurujete, modul Zásady skupiny bude po každé relaci zpracování na pozadí ukládat informace o zásadách do mezipaměti. Do této mezipaměti jsou ukládány příslušné objekty zásad skupiny a nastavení, která jsou v nich obsažena. Jestliže modul Zásady skupiny běží v synchronním režimu na popředí, odkazuje se na tuto mezipaměť, což urychluje jeho chod. Po přečtení mezipaměti se modul Zásady skupiny pokusí kontaktovat řadič přihlašovací domény a určit rychlost připojení. Jestliže je modul Zásady skupiny spuštěn na pozadí nebo v asynchronním režimu na popředí, dál stahuje nejnovější verzi informací o zásadách a k určení limitních hodnot pomalého připojení používá odhad šířky pásma. (Možnosti konfigurace chování v asynchronním režimu na popředí můžete určit v nastavení Konfigurovat rozpoznání pomalého připojení zásad skupiny.)
+        Hodnota pomalého připojení, která je definována v tomto nastavení zásad, určuje, jak dlouho bude modul Zásady skupiny čekat na odpověď řadiče domény, než oznámí, že je rychlost spojení pomalá. Výchozí hodnota je 500 milisekund.
+        Hodnota časového limitu, která je definována v tomto nastavení zásad, určuje, jak dlouho bude modul Zásady skupiny čekat na odpověď řadiče domény, než oznámí, že připojení k síti není k dispozici. V takovém případě se zastaví aktuální zpracovávání zásad skupiny. Při dalším navázání připojení k řadiči domény se modul Zásady skupiny spustí na pozadí. Nastavíte-li tuto hodnotu příliš vysokou, může uživatel při spouštění systému nebo přihlašování zaznamenat delší prodlevy. Výchozí hodnota je 5000 milisekund.
+        Pokud toto nastavení zásad zakážete, klient zásad skupiny nebude příslušné objekty zásad skupiny ani nastavení v nich obsažená ukládat do mezipaměti. Pokud je modul Zásady skupiny spuštěn v synchronním režimu, stahuje nejnovější verzi zásad ze sítě a k určení prahové hodnoty pomalého připojení používá odhad šířky pásma. (Možnosti konfigurace chování v asynchronním režimu na popředí můžete určit v nastavení Konfigurovat rozpoznání pomalého připojení zásad skupiny.)
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">Povolit ukládání zásad skupiny do mezipaměti pro servery</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        Toto nastavení zásad umožňuje nakonfigurovat chování ukládání zásad skupiny do mezipaměti v počítačích se systémem Windows Server.
+        Pokud toto nastavení zásad povolíte, modul Zásady skupiny bude po každé relaci zpracování na pozadí ukládat informace o zásadách do mezipaměti. Do této mezipaměti jsou ukládány příslušné objekty zásad skupiny a nastavení, která jsou v nich obsažena. Jestliže modul Zásady skupiny běží v synchronním režimu na popředí, odkazuje se na tuto mezipaměť, což urychluje jeho chod. Po přečtení mezipaměti se modul Zásady skupiny pokusí kontaktovat řadič přihlašovací domény a určit rychlost připojení. Jestliže je modul Zásady skupiny spuštěn na pozadí nebo v asynchronním režimu na popředí, dál stahuje nejnovější verzi informací o zásadách a k určení limitních hodnot pomalého připojení používá odhad šířky pásma. (Možnosti konfigurace chování v asynchronním režimu na popředí můžete určit v nastavení Konfigurovat rozpoznání pomalého připojení zásad skupiny.)
+        Hodnota pomalého připojení, která je definována v tomto nastavení zásad, určuje, jak dlouho bude modul Zásady skupiny čekat na odpověď řadiče domény, než oznámí, že je rychlost spojení pomalá. Výchozí hodnota je 500 milisekund.
+        Hodnota časového limitu, která je definována v tomto nastavení zásad, určuje, jak dlouho bude modul Zásady skupiny čekat na odpověď řadiče domény, než oznámí, že připojení k síti není k dispozici. V takovém případě se zastaví aktuální zpracovávání zásad skupiny. Při dalším navázání připojení k řadiči domény se modul Zásady skupiny spustí na pozadí. Nastavíte-li tuto hodnotu příliš vysokou, může uživatel při spouštění systému nebo přihlašování zaznamenat delší prodlevy. Výchozí hodnota je 5000 milisekund.
+        Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, klient zásad skupiny nebude příslušné objekty zásad skupiny ani nastavení v nich obsažená ukládat do mezipaměti. Pokud je modul Zásady skupiny spuštěn v synchronním režimu, stahuje nejnovější verzi zásad ze sítě a k určení prahové hodnoty pomalého připojení používá odhad šířky pásma. (Možnosti konfigurace chování v asynchronním režimu na popředí můžete určit v nastavení Konfigurovat rozpoznání pomalého připojení zásad skupiny.)
+      
+      </string>
+
+      <string id="LogonScriptDelay">Konfigurovat prodlevu přihlašovacího skriptu</string>
+      <string id="LogonScriptDelay_Help">
+        Zadáním hodnoty 0 zakážete prodlevu přihlašovacího skriptu.
+        
+        Toto nastavení zásad umožňuje nakonfigurovat, jak dlouho klient zásad skupiny po přihlášení čeká, než spustí skripty.
+        
+        Ve výchozím nastavení čeká klient zásad skupiny před spuštěním přihlašovacích skriptů pět minut. Toto nastavení podporuje flexibilní systémové prostředí, protože pomáhá předcházet sporům disku.
+        
+        Když toto nastavení zásad povolíte, zásady skupiny budou před spuštěním přihlašovacích skriptů čekat zadanou dobu.
+        
+        Jestliže toto nastavení zásad zakážete, zásady skupiny spustí skripty okamžitě po přihlášení.
+        
+        Pokud toto nastavení zásad nenakonfigurujete, zásady skupiny budou před spuštěním přihlašovacích skriptů čekat pět minut.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">Konfigurovat připojení Direct Access jako rychlá síťová připojení</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">Toto nastavení zásad umožňuje správci definovat, že připojení Direct Access má být pro účely použití a aktualizace zásad skupiny považováno za rychlé síťové připojení. 
+ 
+Když zásady skupiny zjišťují širokopásmovou rychlost připojení Direct Access, nemusí se někdy podařit získat informace o širokopásmové rychlosti. Pokud zásady skupiny zjistí širokopásmovou rychlost, použijí normální pravidla k vyhodnocení toho, zda připojení Direct Access je rychlé nebo pomalé síťové připojení. Pokud zásady skupiny nezjistí širokopásmovou rychlost, použijí jako výchozí pomalé síťové připojení. Toto nastavení zásad nabízí správci možnost, aby v případě, že není zjištěna širokopásmová rychlost sítě, nebylo jako výchozí použito pomalé síťové připojení, ale rychlé síťové připojení.
+ 
+Poznámka: Když zásady skupiny zjistí pomalé síťové připojení, zpracují pouze ta klientská rozšíření, která jsou nakonfigurována na zpracování přes pomalý spoj (pomalé síťové připojení).  
+ 
+Pokud toto nastavení zásad povolíte a zásady skupiny nebudou moci zjistit širokopásmovou rychlost přes připojení Direct Access, bude síťové připojení vyhodnoceno jako rychlé a zpracují se všechna klientská rozšíření.
+ 
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, zásady skupiny vyhodnotí síťové připojení jako pomalé a zpracují pouze ta klientská rozšíření, která jsou nakonfigurována ke zpracování přes pomalý spoj.
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">Při zjištění pomalého síťového připojení změnit zpracování zásad skupiny na asynchronní</string>
+      <string id="SlowlinkDefaultToAsync_Help">Toto nastavení zásad způsobí, že pokud je zjištěno pomalé síťové připojení, zásady skupiny vynechají zpracování všech klientských rozšíření, která vyžadují synchronní zpracování (určuje tedy, zda počítače během spouštění počítače a přihlašování uživatele čekají, než bude zcela inicializována síť).  
+ 
+Pokud toto nastavení zásad povolíte a bude zjištěno pomalé síťové připojení, bude zpracování zásad skupiny probíhat vždy asynchronně.
+Klientské počítače nebudou při spouštění a přihlašování čekat na úplnou inicializaci sítě. Existující uživatelé budou přihlášeni pomocí přihlašovacích údajů uložených do mezipaměti, což znamená kratší přihlašovací dobu. Zásady skupiny budou použity na pozadí, jakmile bude síť k dispozici.   
+Protože se jedná o aktualizaci na pozadí, nebudou použita rozšíření vyžadující synchronní zpracování, například rozšíření předvoleb Instalace softwaru, Přesměrování složek a Mapování jednotek.
+ 
+Poznámka: Existují dvě podmínky, které způsobí, že zásady skupiny se budou zpracovávat synchronně, i když je toto nastavení zásad povoleno:
+1. Při prvním spuštění počítače po připojení klientského počítače k doméně.
+2. Pokud je povoleno nastavení zásad Při spouštění a přihlašování počítače vždy počkat na síť.
+ 
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude mít zjištění pomalého síťového připojení vliv na to, zda zpracování zásad skupiny bude synchronní nebo asynchronní.
+
+      </string>
+      <string id="DisableLGPOProcessing">Vypnout zpracování místních objektů zásad skupiny</string>
+      <string id="DisableLGPOProcessing_Help">Toto nastavení zásad brání použití místních objektů zásad skupiny.
+
+Ve výchozím nastavení jsou nastavení zásad v místních objektech zásad skupiny použity před případným nastavením zásad objektů zásad skupiny na úrovni jednotlivých domén. Tato nastavení zásad lze použít u uživatelů i místního počítače. Pokud zakážete zpracování a použití všech místních objektů zásad skupiny, budou používány pouze objekty zásad skupiny na úrovni jednotlivých domén.
+
+Pokud toto nastavení zásad povolíte, nebude systém zpracovávat ani používat žádné místní objekty zásad skupiny.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, budou nadále používány místní objekty zásad skupiny.
+
+Poznámka: V případě počítačů připojených k doméně se důrazně doporučuje konfigurovat toto nastavení zásad pouze v objektech zásad skupiny na úrovni jednotlivých domén. V počítačích připojených k pracovní skupině bude toto nastavení zásad ignorováno.
+
+</string>
+      <string id="SyncWaitTime">Zadat dobu čekání pro zpracování zásad při spuštění</string>
+      <string id="SyncWaitTime_Help">Toto nastavení zásad určuje, jak dlouho mají zásady skupiny během zpracování zásad při spuštění čekat na oznámení o dostupnosti sítě. Jestliže je zpracování zásad při spuštění synchronní, bude počítač blokován, dokud nebude dostupná síť nebo dokud neuplyne výchozí doba čekání. Pokud je zpracování zásad při spuštění asynchronní, počítač blokován nebude a zpracování zásad proběhne na pozadí. V obou případech jsou konfigurací tohoto natavení zásad přepsány všechny doby čekání vypočítané systémem.
+
+Pokud toto nastavení zásad povolíte, použijí zásady skupiny tuto maximální dobou čekání nakonfigurovanou správcem a přepíší výchozí nebo systémem vypočítanou dobu čekání.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, použijí zásady skupiny v počítačích s operačním systémem Windows Vista výchozí 30sekundovou dobu čekání. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Povolit zásady uživatele mezi doménovými strukturami a cestovní profily uživatelů</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">Toto nastavení zásad povoluje zpracování zásad na úrovni uživatelů, cestovní profily uživatelů a přihlašovací skripty uživatelských objektů pro interaktivní přihlašování v různých doménových strukturách.
+
+Toto nastavení zásad má vliv na všechny uživatelské účty, které se interaktivně přihlašují k počítači v jiné doménové struktuře, jestliže existuje vztah důvěryhodnosti mezi doménovými strukturami nebo obousměrný vztah důvěryhodnosti doménové struktury.
+
+Pokud toto nastavení zásad nenakonfigurujete:
+– Nebude použito žádné nastavení zásad na úrovni uživatele z doménové struktury uživatele.
+– Uživatelé obdrží místo svých cestovních profilů místní profil z počítače v místní doménové struktuře. Uživateli se zobrazí zpráva upozornění a bude publikována zpráva protokolu událostí (1529).
+– Bude použito zpracování zásad skupiny ve zpětné smyčce s využitím objektů zásad skupiny vymezených pro daný počítač.
+– Bude publikována zpráva protokolu událostí (1109) informující o tom, že byla vyvolána zpětná smyčka v režimu nahrazení.
+
+Pokud toto nastavení zásad povolíte, bude chování přesně stejné jako v systému Windows 2000: budou použity zásady uživatele a bude povolen cestovní profil uživatele z důvěryhodné doménové struktury.
+
+Pokud toto nastavení zásad zakážete, bude chování stejné jako v případě, že nastavení není nakonfigurováno.</string>
+      <string id="CSE_AppMgmt">Konfigurovat zpracování zásad instalace softwaru</string>
+      <string id="CSE_AppMgmt_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady instalace softwaru.
+
+Toto nastavení zásad ovlivňuje všechna nastavení zásad, která používají součást zásad skupiny týkající se instalace softwaru, například nastavení zásad ve složce Nastavení softwaru\Instalace softwaru. Zásady instalace softwaru můžete nastavit pouze pro objekty zásad skupiny uložené ve službě Active Directory, nikoli pro objekty zásad skupiny v místním počítači.
+
+Toto nastavení zásad přepíše upravená nastavení, která program implementující zásady instalace softwaru nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti. Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Povolit zpracování aktualizace odeslané pomalým síťovým připojením aktualizuje zásady i tehdy, je-li aktualizace odeslána prostřednictvím pomalého síťového připojení, jako je například telefonní linka. Aktualizace mohou při pomalém síťovém připojení způsobit výrazná zpoždění.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací nastavení zásad určuje, že k aktualizaci nastavení zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat nastavení zásad, která změněna nebyla, například v případě nového použití požadovaných zásad změněných uživatelem.</string>
+      <string id="CSE_DiskQuota">Konfigurovat zpracování zásad diskových kvót</string>
+      <string id="CSE_DiskQuota_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady diskových kvót.
+
+Toto nastavení zásad má vliv na všechny zásady, které používají součást zásad skupiny týkající se diskových kvót, například zásady ve složce Konfigurace počítače\Šablony pro správu\Systém\Diskové kvóty.
+
+Toto nastavení zásad přepíše upravená nastavení, která program implementující zásady diskových kvót nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti. Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Povolit zpracování aktualizace odeslané pomalým síťovým připojením aktualizuje zásady i tehdy, je-li aktualizace odeslána prostřednictvím pomalého síťového připojení, jako je například telefonní linka. Aktualizace mohou při pomalém síťovém připojení způsobit výrazná zpoždění.
+
+Možnost Nepoužívat aktualizace během pravidelného zpracování na pozadí zabrání systému v aktualizaci ovlivněných zásad na pozadí v době, kdy je počítač používán. Jestliže jsou aktualizace na pozadí zakázány, projeví se změny zásad až při dalším přihlášení uživatele nebo restartování systému.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací zásad určuje, že k aktualizaci zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat zásady, které změněny nebyly, například v případě nového použití požadovaného nastavení změněného uživatelem.</string>
+      <string id="CSE_EFSRecovery">Konfigurovat zpracování zásad obnovení v systému souborů EFS</string>
+      <string id="CSE_EFSRecovery_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady šifrování.
+
+Toto nastavení zásad má vliv na všechny zásady, které používají součást zásad skupiny týkající se šifrování, například zásady související s šifrováním ve složce Nastavení systému Windows\Nastavení zabezpečení.
+
+Toto nastavení zásad přepíše upravená nastavení, která program implementující zásady šifrování nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti. Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Povolit zpracování aktualizace odeslané pomalým síťovým připojením aktualizuje zásady i tehdy, je-li aktualizace odeslána prostřednictvím pomalého síťového připojení, jako je například telefonní linka. Aktualizace mohou při pomalém síťovém připojení způsobit výrazná zpoždění.
+
+Možnost Nepoužívat aktualizace během pravidelného zpracování na pozadí zabrání systému v aktualizaci ovlivněných zásad na pozadí v době, kdy je počítač používán. Jestliže jsou aktualizace na pozadí zakázány, projeví se změny zásad až při dalším přihlášení uživatele nebo restartování systému.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací zásad určuje, že k aktualizaci zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat zásady, které změněny nebyly, například v případě nového použití požadovaného nastavení změněného uživatelem.</string>
+      <string id="CSE_FolderRedirection">Konfigurovat zpracování zásad přesměrování složek</string>
+      <string id="CSE_FolderRedirection_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady přesměrování složek.
+
+Toto nastavení zásad má vliv na všechny zásady, které používají součást zásad skupiny týkající se přesměrování složek, například zásady ve složce Nastavení systému Windows\Přesměrování složek. Zásady přesměrování složek můžete nastavit pouze pro objekty zásad skupiny uložené ve službě Active Directory, nikoli pro objekty zásad skupiny v místním počítači.
+
+Toto nastavení zásad přepíše upravená nastavení, která program implementující nastavení zásad přesměrování složek nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti. Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Povolit zpracování aktualizace odeslané pomalým síťovým připojením aktualizuje zásady i tehdy, je-li aktualizace odeslána prostřednictvím pomalého síťového připojení, jako je například telefonní linka. Aktualizace mohou při pomalém síťovém připojení způsobit výrazná zpoždění.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací zásad určuje, že k aktualizaci zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat zásady, které změněny nebyly, například v případě nového použití požadovaného nastavení změněného uživatelem.</string>
+      <string id="CSE_IEM">Konfigurovat zpracování zásad údržby aplikace Internet Explorer</string>
+      <string id="CSE_IEM_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady údržby aplikace Internet Explorer.
+
+Toto nastavení zásad má vliv na všechny zásady, které používají součást zásad skupiny týkající se údržby aplikace Internet Explorer, například zásady ve složce Nastavení systému Windows\Údržba aplikace Internet Explorer.
+
+Toto nastavení zásad přepíše upravená nastavení, která program implementující zásady údržby aplikace Internet Explorer nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti. Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Povolit zpracování aktualizace odeslané pomalým síťovým připojením aktualizuje zásady i tehdy, je-li aktualizace odeslána prostřednictvím pomalého síťového připojení, jako je například telefonní linka. Aktualizace mohou při pomalém síťovém připojení způsobit výrazná zpoždění.
+
+Možnost Nepoužívat aktualizace během pravidelného zpracování na pozadí zabrání systému v aktualizaci ovlivněných zásad na pozadí v době, kdy je počítač používán. Jestliže jsou aktualizace na pozadí zakázány, projeví se změny zásad až při dalším přihlášení uživatele nebo restartování systému.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací zásad určuje, že k aktualizaci zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat zásady, které změněny nebyly, například v případě nového použití požadovaného nastavení zásad změněného uživatelem.</string>
+      <string id="CSE_IPSecurity">Konfigurovat zpracování zásad zabezpečení protokolu IP</string>
+      <string id="CSE_IPSecurity_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady zabezpečení protokolu IP.
+
+Toto nastavení zásad má vliv na všechny zásady, které používají součást zásad skupiny týkající se zabezpečení protokolu IP, například zásady ve složce Konfigurace počítače\Nastavení systému Windows\Nastavení zabezpečení\Zásady zabezpečení protokolu IP v místním počítači.
+
+Toto nastavení zásad přepíše upravená nastavení, která program implementující zásady zabezpečení protokolu IP nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti. Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Povolit zpracování aktualizace odeslané pomalým síťovým připojením aktualizuje zásady i tehdy, je-li aktualizace odeslána prostřednictvím pomalého síťového připojení, jako je například telefonní linka. Aktualizace mohou při pomalém síťovém připojení způsobit výrazná zpoždění.
+
+Možnost Nepoužívat aktualizace během pravidelného zpracování na pozadí zabrání systému v aktualizaci ovlivněných zásad na pozadí v době, kdy je počítač používán. Jestliže jsou aktualizace na pozadí zakázány, projeví se změny zásad až při dalším přihlášení uživatele nebo restartování systému.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací zásad určuje, že k aktualizaci zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat zásady, které změněny nebyly, například v případě nového použití požadovaného nastavení zásad změněného uživatelem.</string>
+      <string id="CSE_Registry">Konfigurovat zpracování zásad registru</string>
+      <string id="CSE_Registry_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady registru.
+
+Toto nastavení zásad má vliv na všechny zásady ve složce Šablony pro správu a všechny ostatní zásady, které ukládají hodnoty v registru. Toto nastavení zásad přepíše upravená nastavení, která program implementující zásady registru nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti. Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Nepoužívat aktualizace během pravidelného zpracování na pozadí zabrání systému v aktualizaci ovlivněných zásad na pozadí v době, kdy je počítač používán. Jestliže jsou aktualizace na pozadí zakázány, projeví se změny zásad až při dalším přihlášení uživatele nebo restartování systému.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací zásad určuje, že k aktualizaci zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat zásady, které změněny nebyly, například v případě nového použití požadovaného nastavení zásad změněného uživatelem.</string>
+      <string id="CSE_Scripts">Konfigurovat zpracování zásad skriptů</string>
+      <string id="CSE_Scripts_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady přiřazující sdílené skripty.
+
+Toto nastavení zásad má vliv na všechny zásady, které používají součást zásad skupiny týkající se skriptů, například zásady ve složce Nastavení systému Windows\Skripty. Toto nastavení zásad přepíše upravená nastavení, která program implementující zásady skriptů nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti. Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Povolit zpracování aktualizace odeslané pomalým síťovým připojením aktualizuje zásady i tehdy, je-li aktualizace odeslána prostřednictvím pomalého síťového připojení, jako je například telefonní linka. Aktualizace mohou při pomalém síťovém připojení způsobit výrazná zpoždění.
+
+Možnost Nepoužívat aktualizace během pravidelného zpracování na pozadí zabrání systému v aktualizaci ovlivněných zásad na pozadí v době, kdy je počítač používán. Jestliže jsou aktualizace na pozadí zakázány, projeví se změny zásad až při dalším přihlášení uživatele nebo restartování systému.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací zásad určuje, že k aktualizaci zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat zásady, které změněny nebyly, například v případě nového použití požadovaného nastavení zásad změněného uživatelem.</string>
+      <string id="CSE_Security">Konfigurovat zpracování zásad zabezpečení</string>
+      <string id="CSE_Security_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady zabezpečení.
+
+Toto nastavení zásad má vliv na všechny zásady, které používají součást zásad skupiny týkající se zabezpečení, například zásady ve složce Nastavení systému Windows\Nastavení zabezpečení.
+
+Toto nastavení zásad přepíše upravená nastavení, která program implementující zásady zabezpečení nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti. Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Nepoužívat aktualizace během pravidelného zpracování na pozadí zabrání systému v aktualizaci ovlivněných zásad na pozadí v době, kdy je počítač používán. Jestliže jsou aktualizace na pozadí zakázány, projeví se změny zásad až při dalším přihlášení uživatele nebo restartování systému.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací zásad určuje, že k aktualizaci zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat zásady, které změněny nebyly, například v případě nového použití požadovaného nastavení zásad změněného uživatelem.</string>
+      <string id="CSE_Wireless">Konfigurovat zpracování zásad bezdrátové sítě</string>
+      <string id="CSE_Wireless_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady přiřazující nastavení pro bezdrátovou síť.
+
+Toto nastavení zásad má vliv na všechny zásady, které používají součást zásad skupiny týkající se bezdrátové sítě, například zásady ve složce Nastavení systému Windows\Zásady bezdrátové sítě.
+
+Toto nastavení zásad přepíše upravená nastavení, která program implementující bezdrátovou síť nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti.
+
+Jestliže toto nastavení zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Povolit zpracování aktualizace odeslané pomalým síťovým připojením aktualizuje zásady i tehdy, je-li aktualizace odeslána prostřednictvím pomalého síťového připojení, jako je například telefonní linka. Aktualizace mohou při pomalém síťovém připojení způsobit výrazná zpoždění.
+
+Možnost Nepoužívat aktualizace během pravidelného zpracování na pozadí zabrání systému v aktualizaci ovlivněných zásad na pozadí v době, kdy je počítač používán. Jestliže jsou aktualizace na pozadí zakázány, projeví se změny zásad až při dalším přihlášení uživatele nebo restartování systému.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací zásad určuje, že k aktualizaci zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat zásady, které změněny nebyly, například v případě nového použití požadovaného nastavení změněného uživatelem.</string>
+      <string id="CSE_Wired">Konfigurovat zpracování zásad drátové sítě</string>
+      <string id="CSE_Wired_Help">Toto nastavení zásad určuje, kdy jsou aktualizovány zásady přiřazující nastavení pro drátovou síť.
+
+Toto nastavení zásad má vliv na všechny zásady, které používají součást zásad skupiny týkající se drátové sítě, například zásady ve složce Nastavení systému Windows\Zásady drátové sítě.
+
+Toto nastavení zásad přepíše upravená nastavení, která program implementující drátovou síť nastavil při instalaci.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí zaškrtávacích políček měnit příslušné možnosti.
+
+Jestliže toto nastavení zakážete nebo nenakonfigurujete, nebude mít na systém žádný vliv.
+
+Možnost Povolit zpracování aktualizace odeslané pomalým síťovým připojením aktualizuje zásady i tehdy, je-li aktualizace odeslána prostřednictvím pomalého síťového připojení, jako je například telefonní linka. Aktualizace mohou při pomalém síťovém připojení způsobit výrazná zpoždění.
+
+Možnost Nepoužívat aktualizace během pravidelného zpracování na pozadí zabrání systému v aktualizaci ovlivněných zásad na pozadí v době, kdy je počítač používán. Jestliže jsou aktualizace na pozadí zakázány, projeví se změny zásad až při dalším přihlášení uživatele nebo restartování systému.
+
+Možnost Zpracovat i nezměněné objekty zásad skupiny aktualizuje a znovu použije zásady i tehdy, pokud nebyly změněny. Mnoho implementací zásad určuje, že k aktualizaci zásad dochází pouze při jejich změně. Je však možné, že budete chtít aktualizovat zásady, které změněny nebyly, například v případě nového použití požadovaného nastavení změněného uživatelem.</string>
+
+      <string id="DenyRsopToInteractiveUser">Určit, zda mohou interaktivní uživatelé generovat data výsledné sady zásad</string>
+      <string id="DenyRsopToInteractiveUser_Help">Toto nastavení zásad určuje, zda mohou uživatelé zobrazit svá data výsledné sady zásad.
+
+Ve výchozím nastavení mohou interaktivně přihlášení uživatelé svá vlastní data výsledné sady zásad zobrazit.
+
+Pokud toto nastavení zásad povolíte, nebudou moci interaktivní uživatelé generovat data výsledné sady zásad.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, budou moci interaktivní uživatelé generovat data výsledné sady zásad.
+
+Poznámka: Toto nastavení zásad neplatí pro správce. Bez ohledu na to, zda toto nastavení zásad povolíte nebo zakážete, mohou správci ve výchozím nastavení data výsledné sady zásad zobrazit.
+
+Poznámka: Chcete-li zobrazit data výsledné sady zásad v klientském počítači, použijte modul snap-in Výsledná sada zásad pro konzolu MMC (Microsoft Management Console). Modul snap-in Výsledná sada zásad lze spustit z příkazového řádku zadáním příkazu RSOP.msc.
+
+Poznámka: Toto nastavení zásad existuje ve složce Konfigurace uživatele i Konfigurace počítače.
+
+Další informace naleznete v popisu nastavení zásad Vypnout protokolování výsledné sady zásad ve složce Konfigurace počítače\Šablony pro správu\Systém\Zásady skupiny.</string>
+      <string id="DisableAutoADMUpdate">Vypnout automatickou aktualizaci souborů ADM</string>
+      <string id="DisableAutoADMUpdate_Help">Zabrání systému v automatické aktualizaci zdrojových souborů šablon pro správu při spuštění Editoru objektů zásad skupiny.  Správci budou chtít pravděpodobně použít toto nastavení zásad v případě, že je zajímá velikost využitého místa na systémovém svazku řadiče domény.
+
+Ve výchozím nastavení je při spuštění Editoru objektů zásad skupiny porovnáno časové razítko u zdrojových souborů v místním adresáři %SYSTEMROOT%\inf a u zdrojových souborů uložených v objektu zásad skupiny (GPO).  Pokud jsou místní soubory novější, jsou zkopírovány do objektu zásad skupiny.
+
+Změníte-li stav tohoto nastavení na hodnotu Povoleno, nebudou do objektu zásad skupiny kopírovány žádné zdrojové soubory.
+
+Změníte-li stav tohoto nastavení na hodnotu Zakázáno, bude vynuceno výchozí chování.  Soubory s pozdějším časovým razítkem budou vždy zkopírovány do objektu zásad skupiny.
+
+POZNÁMKA: Pokud je povoleno nastavení zásad Vždy používat místní soubory ADM pro Editor objektů zásad skupiny pro konfiguraci počítače, je stav tohoto nastavení ignorován a vždy se předpokládá stav Povoleno.</string>
+      <string id="DisableBackgroundPolicy">Vypnout aktualizace zásad skupiny na pozadí</string>
+      <string id="DisableBackgroundPolicy_Help">Toto nastavení zásad zabrání aktualizaci zásad skupiny v době, kdy je počítač používán. Toto nastavení platí pro zásady skupiny pro počítače, uživatele a řadiče domény.
+
+Pokud toto nastavení zásad povolíte, systém před aktualizací nastavení uživatele a počítače počká, dokud se aktuální uživatel neodhlásí.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, bude možné provádět aktualizace během práce uživatelů. Četnost aktualizací je určena nastavením zásad Nastavit interval aktualizace zásad skupiny pro počítače a nastavením zásad Nastavit interval aktualizace zásad skupiny pro uživatele.
+
+Poznámka: Změny tohoto nastavení zásad se projeví až po restartování počítače.</string>
+      <string id="DisableUsersFromMachGP">Odebrat uživateli možnost vyvolat aktualizaci zásad počítače</string>
+      <string id="DisableUsersFromMachGP_Help">Toto nastavení zásad umožňuje určit, zda bude moci uživatel vyvolat aktualizaci zásad počítače.
+
+Pokud toto nastavení zásad povolíte, nebudou moci uživatelé vyvolat aktualizaci zásad počítače. Zásady počítače budou vždy použity při spuštění počítače či při oficiální aktualizaci zásad.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, bude použito výchozí chování. Ve výchozím nastavení jsou zásady počítače použity při jeho spuštění. Jsou použity také v zadaných intervalech aktualizace nebo v případě, že je uživatel vyvolá ručně.
+
+Poznámka: Toto nastavení zásad platí pouze pro uživatele, kteří nejsou správci. Správci mohou bez ohledu na konfiguraci tohoto nastavení zásad vyvolat aktualizaci zásad počítače kdykoli.
+
+Informace o změně intervalu aktualizace zásad najdete také v popisu nastavení zásad Nastavit interval aktualizace zásad skupiny pro počítače.
+
+Poznámka: Změny tohoto nastavení zásad se projeví až po restartování počítače.</string>
+      <string id="EnforcePoliciesOnly">Zásady vždy pouze zobrazovat</string>
+      <string id="EnforcePoliciesOnly_Help">Toto nastavení zásad zabraňuje správcům zobrazovat či používat předvolby zásad skupiny.
+
+Soubor pro správu zásad skupiny (s příponou ADM) může obsahovat skutečná nastavení i předvolby. Skutečná nastavení, která jsou plně podporována zásadami skupiny, musí používat položky registru v podklíčích registru Software\Policies nebo Software\Microsoft\Windows\CurrentVersion\Policies. Předvolby, které nejsou plně podporovány, používají položky registru v jiných podklíčích.
+
+Jestliže toto nastavení zásad povolíte, zapne se příkaz Zobrazit pouze zásady, který správci nemohou vypnout.. V důsledku toho Editor objektů zásad skupiny zobrazí pouze skutečná nastavení, nikoli předvolby.
+
+Jestliže toto nastavení zásad zakážete nebo nenakonfigurujete, bude ve výchozím nastavení příkaz Zobrazit pouze zásady zapnut, ale správci jej mohou vypnout a předvolby tak zobrazit.
+
+Poznámka: Příkaz Zobrazit pouze zásady najdete tak, že v Editoru objektů zásad skupiny kliknete na libovolnou složku Šablony pro správu, pravým tlačítkem myši kliknete na stejnou složku a přejdete na příkaz Zobrazit.
+
+V Editoru objektů zásad skupiny mají předvolby červenou ikonu, čímž se odlišují od skutečných nastavení, která mají ikonu modrou.</string>
+      <string id="GPDCOptionAny">Použít libovolný řadič domény</string>
+      <string id="GPDCOptionInherit">Zdědit z modulů snap-in služby Active Directory</string>
+      <string id="GPDCOptionPDC">Použít primární řadič domény</string>
+      <string id="GPDCOptions">Konfigurovat výběr řadiče domény zásad skupiny</string>
+      <string id="GPDCOptions_Help">Toto nastavení zásad určuje, který řadič domény je používán modulem snap-in Editor objektů zásad skupiny.
+
+Pokud toto nastavení zásad povolíte, budete moci pomocí následujících možností určit, který řadič domény má být použit:
+
+Možnost Použít primární řadič domény označuje, že modul snap-in Editor objektů zásad skupiny načítá a zapisuje změny pomocí řadiče domény, který je určen jako hlavní operační server primárního řadiče domény pro doménu.
+
+Možnost Zdědit z modulů snap-in služby Active Directory označuje, že modul snap-in Editor objektů zásad skupiny načítá a zapisuje změny pomocí řadiče domény, který používají moduly snap-in Uživatelé a počítače služby Active Directory a Lokality a služby Active Directory.
+
+Možnost Použít libovolný řadič domény označuje, že modul snap-in Editor objektů zásad skupiny může načítat a zapisovat změny pomocí libovolného dostupného řadiče domény.
+
+Jestliže toto nastavení zásad zakážete nebo nenakonfigurujete, bude modul snap-in Editor objektů zásad skupiny používat řadič domény, který je určen jako hlavní operační server primárního řadiče domény pro doménu.
+
+Poznámka: Chcete-li změnit hlavní operační server primárního řadiče domény pro doménu, klikněte v modulu snap-in Uživatelé a počítače služby Active Directory pravým tlačítkem myši na doménu a poté klikněte na příkaz Hlavní operační servery.</string>
+      <string id="GPTransferRate">Konfigurovat rozpoznání pomalého připojení zásad skupiny</string>
+      <string id="GPTransferRate_Help">Toto nastavení zásad definuje pomalé připojení pro účely použití a aktualizace zásad skupiny.
+
+Je-li rychlost přenosu dat z řadiče domény, který zajišťuje aktualizaci zásad, do počítačů v této skupině pomalejší než rychlost zadaná tímto nastavením, je toto připojení považováno za pomalé.
+
+Odezva systému na pomalé připojení se u jednotlivých zásad liší. Odezvu na pomalé připojení může určit program, který zásady implementuje. Nastavení zpracování zásad v této složce vám také umožní přepsat odezvy na pomalá připojení určené programem.
+
+Pokud toto nastavení povolíte, můžete do pole Rychlost připojení zadat desetinné číslo v intervalu 0 až 4 294 967 200, které označuje přenosovou rychlost v kilobitech za sekundu. Každé připojení, které je pomalejší než tato rychlost, je považováno za pomalé. Zadáte-li hodnotu 0, budou všechna připojení považována za rychlá.
+
+Jestliže toto nastavení zakážete nebo nenakonfigurujete, použije systém výchozí hodnotu 500 kilobitů za sekundu.
+
+Toto nastavení se nachází ve složkách Konfigurace počítače a Konfigurace uživatele. Nastavení ve složce Konfigurace počítače definuje pomalé připojení pro nastavení zásad v této složce. Nastavení ve složce Konfigurace uživatele definuje pomalé připojení pro nastavení zásad v této složce.
+
+Další informace naleznete v popisu nastavení zásad Nezjišťovat pomalá síťová připojení a souvisejících zásad ve složce Konfigurace počítače\Šablony pro správu\Systém\Profil uživatele. Poznámka: Pokud server profilů používá připojení pomocí protokolu IP, bude použito nastavení rychlosti připojení. Pokud server profilů nepoužívá připojení pomocí protokolu IP, bude použito časování protokolu SMB.</string>
+      <string id="GroupPolicyRefreshRate">Nastavit interval aktualizace zásad skupiny pro počítače</string>
+      <string id="GroupPolicyRefreshRate_Help">Toto nastavení zásad určuje, jak často jsou aktualizovány zásady skupiny pro počítače v době, kdy je počítač používán (aktualizace prováděné na pozadí). Toto nastavení určuje frekvenci aktualizací prováděných na pozadí pouze pro zásady skupiny ve složce Konfigurace počítače.
+
+Kromě aktualizací prováděných na pozadí jsou zásady skupiny pro počítač aktualizovány při každém spuštění systému.
+
+Ve výchozím nastavení jsou zásady skupiny počítače aktualizovány na pozadí každých 90 minut s náhodným posunem 0 až 30 minut.
+
+Pokud toto nastavení povolíte, můžete zadat frekvenci aktualizací v intervalu 0 až 64 800 minut (45 dnů). Jestliže vyberete hodnotu 0 minut, bude se počítač pokoušet o aktualizaci zásad skupiny každých 7 sekund. Velmi krátké intervaly aktualizace však mohou narušovat práci uživatelů a zvyšovat zatížení sítě, proto nejsou u většiny instalací vhodné.
+
+Pokud toto nastavení zakážete, budou zásady skupiny aktualizovány každých 90 minut (výchozí nastavení). Chcete-li zcela zakázat aktualizace zásad skupiny v době, kdy je počítač používán, vyberte nastavení zásad Vypnout aktualizace zásad skupiny na pozadí..
+
+Pomocí zásady Nastavit interval aktualizace zásad skupiny pro počítače lze také zadat, o kolik se liší skutečné intervaly aktualizace. Aby klienti se stejným intervalem aktualizace nežádali o aktualizaci současně, mění systém interval aktualizace jednotlivých klientů o náhodný počet minut. Číslo zadané do pole pro náhodný čas nastaví horní limit pro rozsah odchylek. Jestliže například zadáte hodnotu 30 minut, bude systém vybírat odchylky v rozsahu 0 až 30 minut. Zadáním vyššího čísla nastavíte široký rozsah a bude méně pravděpodobné, že se žádosti klientů budou překrývat. Může však docházet k výraznému zpoždění aktualizací.
+
+Toto nastavení určí frekvenci aktualizací zásad skupiny počítače. Chcete-li nastavit frekvenci aktualizací zásad uživatele, použijte nastavení Nastavit interval aktualizace zásad skupiny pro uživatele (ve složce Konfigurace počítače\Šablony pro správu\Systém\Zásady skupiny).
+
+Toto nastavení je použito pouze tehdy, není-li povoleno nastavení Vypnout aktualizace zásad skupiny na pozadí.
+
+Poznámka: Zvažte, zda byste neměli uživatelům oznámit, že jsou jejich zásady pravidelně aktualizovány, aby poznali známky aktualizace zásad. Při aktualizaci zásad skupiny je aktualizována plocha systému Windows. Krátce zabliká a zavřou se otevřené nabídky. Probíhající úlohy mohou být také narušeny omezeními danými zásadami skupiny, jako jsou například omezení počtu programů, které může uživatel spustit.</string>
+      <string id="GroupPolicyRefreshRateDC">Nastavit interval aktualizace zásad skupiny pro řadiče domény</string>
+      <string id="GroupPolicyRefreshRateDC_Help">Toto nastavení zásad určuje, jak často jsou aktualizovány zásady skupiny v řadičích domény v době, kdy jsou spuštěny (aktualizace prováděné na pozadí). Aktualizace zadané tímto nastavením se provádějí nezávisle na aktualizacích prováděných při spuštění systému.
+
+Ve výchozím nastavení jsou zásady skupiny v řadičích domény aktualizovány každých 5 minut.
+
+Pokud toto nastavení povolíte, můžete zadat frekvenci aktualizací v intervalu 0 až 64 800 minut (45 dnů). Jestliže vyberete hodnotu 0 minut, bude se řadič domény pokoušet o aktualizaci zásad skupiny každých 7 sekund. Velmi krátké intervaly aktualizace však mohou narušovat práci uživatelů a zvyšovat zatížení sítě, proto nejsou u většiny instalací vhodné.
+
+Pokud toto nastavení zakážete nebo nenakonfigurujete, bude řadič domény aktualizovat zásady skupiny každých 5 minut (výchozí nastavení). Chcete-li zcela zakázat aktualizace zásad skupiny pro uživatele v době, kdy je počítač používán, vyberte nastavení zásad Vypnout aktualizace zásad skupiny na pozadí.
+
+Pomocí tohoto nastavení lze také zadat, o kolik se liší skutečné intervaly aktualizace. Aby řadiče domény se stejným intervalem aktualizace nežádaly o aktualizaci současně, mění systém interval aktualizace jednotlivých řadičů o náhodný počet minut. Číslo zadané do pole pro náhodný čas nastaví horní limit pro rozsah odchylek. Jestliže například zadáte hodnotu 30 minut, bude systém vybírat odchylky v rozsahu 0 až 30 minut. Zadáním vyššího čísla nastavíte široký rozsah a bude méně pravděpodobné, že se žádosti o aktualizaci budou překrývat. Může však docházet k výraznému zpoždění aktualizací.
+
+Poznámka: Toto nastavení se používá pouze při vytváření zásad pro doménu, síť, organizační jednotku nebo vlastní skupinu. Při vytváření zásad pouze pro místní počítač je toto nastavení systémem ignorováno.</string>
+      <string id="GroupPolicyRefreshRateUser">Nastavit interval aktualizace zásad skupiny pro uživatele</string>
+      <string id="GroupPolicyRefreshRateUser_Help">Toto nastavení zásad určuje, jak často jsou aktualizovány zásady skupiny pro uživatele v době, kdy je počítač používán (aktualizace prováděné na pozadí). Toto nastavení určuje frekvenci aktualizací prováděných na pozadí pouze pro zásady skupiny ve složce Konfigurace uživatele.
+
+Kromě aktualizací prováděných na pozadí jsou zásady skupiny pro uživatele aktualizovány při každém přihlášení uživatelů.
+
+Ve výchozím nastavení jsou zásady skupiny uživatele aktualizovány na pozadí každých 90 minut s náhodným posunem 0 až 30 minut.
+
+Pokud toto nastavení povolíte, můžete zadat frekvenci aktualizací v intervalu 0 až 64 800 minut (45 dnů). Jestliže vyberete hodnotu 0 minut, bude se počítač pokoušet o aktualizaci zásad skupiny uživatele každých 7 sekund. Velmi krátké intervaly aktualizace však mohou narušovat práci uživatelů a zvyšovat zatížení sítě, proto nejsou u většiny instalací vhodné.
+
+Jestliže toto nastavení zakážete, budou zásady skupiny uživatele aktualizovány každých 90 minut (výchozí nastavení). Chcete-li zcela zakázat aktualizace zásad skupiny pro uživatele v době, kdy je počítač používán, vyberte nastavení zásad Vypnout aktualizace zásad skupiny na pozadí.
+
+Pomocí tohoto nastavení lze také zadat, o kolik se liší skutečné intervaly aktualizace. Aby klienti se stejným intervalem aktualizace nežádali o aktualizaci současně, mění systém interval aktualizace jednotlivých klientů o náhodný počet minut. Číslo zadané do pole pro náhodný čas nastaví horní limit pro rozsah odchylek. Jestliže například zadáte hodnotu 30 minut, bude systém vybírat odchylky v rozsahu 0 až 30 minut. Zadáním vyššího čísla nastavíte široký rozsah a bude méně pravděpodobné, že se žádosti klientů budou překrývat. Může však docházet k výraznému zpoždění aktualizací.
+
+Důležité: Je-li povoleno nastavení Vypnout aktualizace zásad skupiny na pozadí, bude toto nastavení ignorováno.
+
+Poznámka: Toto nastavení určí frekvenci aktualizací pro zásady skupiny uživatele. Chcete-li nastavit frekvenci aktualizací zásad skupiny počítače, použijte nastavení Nastavit interval aktualizace zásad skupiny pro počítače (ve složce Konfigurace počítače\Šablony pro správu\Systém\Zásady skupiny).
+
+Tip: Zvažte, zda byste neměli uživatelům oznámit, že jsou jejich zásady pravidelně aktualizovány, aby poznali známky aktualizace zásad. Při aktualizaci zásad skupiny je aktualizována plocha systému Windows. Krátce zabliká a zavřou se otevřené nabídky. Probíhající úlohy mohou být také narušeny omezeními danými zásadami skupiny, jako jsou například omezení počtu programů, které může uživatel spustit.</string>
+      <string id="NewGPODisplayName">Nastavit výchozí název nových objektů zásad skupiny</string>
+      <string id="NewGPODisplayName_Help">Toto nastavení zásad umožňuje nastavit výchozí zobrazovaný název nových objektů zásad skupiny.
+
+Toto nastavení umožňuje zadat výchozí název nových objektů zásad skupiny vytvořených pomocí odpovídajících nástrojů pro správu zásad skupiny, například pomocí karty Zásady skupiny v nástrojích služby Active Directory nebo prohlížeče objektů zásad skupiny.
+
+Zobrazovaný název může obsahovat proměnné prostředí a jeho délka může být maximálně 255 znaků.
+
+Jestliže je toto nastavení zakázáno nebo není nakonfigurováno, bude použit výchozí zobrazovaný název nového objektu zásad skupiny.</string>
+      <string id="NewGPOLinksDisabled">Vytvořit nová propojení objektů zásad skupiny, která budou ve výchozím nastavení zakázaná</string>
+      <string id="NewGPOLinksDisabled_Help">Toto nastavení zásad umožňuje vytvářet nová propojení objektů zásad skupiny v zakázaném stavu.
+
+Pokud toto nastavení povolíte, můžete všechna nová propojení objektů zásad skupiny vytvářet ve výchozím nastavení v zakázaném stavu. Po konfiguraci a otestování nových propojení objektů pomocí odpovídajících nástrojů pro správu zásad skupiny, jako jsou například moduly snap-in Uživatelé a počítače služby Active Directory nebo Lokality a služby Active Directory, můžete povolit používání těchto propojení objektů v systému.
+
+Pokud toto nastavení zakážete nebo nenakonfigurujete, budou nová propojení objektů zásad skupiny vytvářena v povoleném stavu. Jestliže nechcete, aby byla propojení objektů před konfigurací a otestováním aktivní, je třeba je zakázat.</string>
+      <string id="OnlyUseLocalAdminFiles">Vždy používat místní soubory ADM pro Editor objektů zásad skupiny</string>
+      <string id="OnlyUseLocalAdminFiles_Help">Toto nastavení zásad umožní vždy používat pro modul snap-in Zásady skupiny místní soubory ADM.
+
+Při úpravě objektu zásad skupiny (GPO) pomocí modulu snap-in Editor objektů zásad skupiny jsou soubory ADM ve výchozím nastavení načteny z objektu zásad skupiny do modulu snap-in Editor objektů zásad skupiny. Díky tomu můžete při úpravách objektu zásad skupiny používat stejnou verzi souborů ADM, které byly použity k vytvoření tohoto objektu.
+
+To má za následek následující chování:
+
+– Pokud jste původně vytvořili objekt zásad skupiny například v anglické jazykové verzi systému, bude objekt zásad skupiny obsahovat soubory ADM v angličtině.
+
+– Jestliže později budete objekt zásad skupiny upravovat ze systému v jiném jazyce, budou načteny soubory ADM v angličtině, protože byly obsaženy v objektu zásad skupiny.
+
+Pomocí tohoto nastavení lze toto chování změnit.
+
+Pokud toto nastavení povolíte, bude modul snap-in Editor objektů zásad skupiny při úpravách objektů zásad skupiny vždy používat místní soubory ADM uložené v adresáři %windir%\inf.
+
+To má za následek následující chování:
+
+– Pokud jste původně vytvořili objekt zásad skupiny v anglické jazykové verzi systému a potom jej budete upravovat pomocí české jazykové verze systému, použije modul snap-in Editor objektů zásad skupiny místní soubory ADM v češtině a text ve složce Šablony pro správu bude zobrazen v češtině.
+
+Pokud toto nastavení zakážete nebo nenakonfigurujete, bude modul snap-in Editor objektů zásad skupiny načítat všechny soubory ADM vždy z aktuálního objektu zásad skupiny.
+
+Poznámka: Jestliže nejsou požadované soubory ADM v místním adresáři %windir%\inf k dispozici, nebude pravděpodobně možné zobrazit všechna nastavení, která byla nakonfigurována v upravovaném objektu zásad skupiny.</string>
+      <string id="PolicyPolicies">Zásady skupiny</string>
+      <string id="RSoPLogging">Vypnout protokolování výsledné sady zásad</string>
+      <string id="RSoPLogging_Help">Toto nastavení umožňuje v klientském počítači povolit nebo zakázat protokolování výsledné sady zásad.
+
+Výsledná sada zásad zaznamenává do protokolu informace o nastavení zásad skupiny, která platí pro klienta. Mezi tyto informace patří například podrobnosti o tom, které objekty zásad skupiny byly použity a odkud pocházejí, a nastavení rozšíření na straně klienta, jež byla zahrnuta.
+
+Pokud toto nastavení povolíte, bude protokolování výsledné sady zásad vypnuto.
+
+Pokud toto nastavení zakážete nebo nenakonfigurujete, bude protokolování výsledné sady zásad zapnuto. Ve výchozím nastavení je protokolování výsledné sady zásad vždy zapnuto.
+
+Poznámka: Chcete-li zobrazit informace výsledné sady zásad zaznamenané do protokolu v klientském počítači, můžete použít modul snap-in Výsledná sada zásad v konzole MMC (Microsoft Management Console).</string>
+      <string id="UserPolicyMode">Konfigurovat režim zpracování zásad skupiny uživatele ve zpětné smyčce</string>
+      <string id="UserPolicyMode_Help">Toto nastavení zásad nařizuje systému použít sadu objektů zásad skupiny počítače pro každého uživatele, který se přihlásí k počítači, pro nějž toto nastavení platí. Je určeno pro počítače používané ve zvláštních podmínkách, například na veřejných místech, v laboratořích či učebnách, kde je nutné upravit uživatelské nastavení na základě počítače, který je právě používán.
+
+Ve výchozím nastavení jsou platná uživatelská nastavení určena objekty zásad skupiny uživatele. Pokud je toto nastavení povoleno a uživatel se přihlásí k tomuto počítači, bude použitá sada objektů zásad skupiny určena objekty zásad skupiny daného počítače.
+
+Pokud toto nastavení povolíte, budete si moci v poli Režim vybrat jeden z následujících režimů:
+
+Režim Nahradit označuje, že budou nastavení týkající se uživatele, která jsou pro uživatele obvykle použita, nahrazena nastaveními pro uživatele definovanými v objektech zásad skupiny počítače.
+
+Režim Sloučit označuje, že budou nastavení pro uživatele definovaná v objektech zásad skupiny počítače a nastavení týkající se uživatele, která jsou pro uživatele obvykle použita, sloučena. V případě konfliktu nastavení mají nastavení pro uživatele definovaná v objektech zásad skupiny počítače přednost před obvyklým nastavením pro uživatele.
+
+Pokud toto nastavení zakážete nebo nenakonfigurujete, budou použitá nastavení pro uživatele určena objekty zásad skupiny uživatele.
+
+Poznámka: Toto nastavení je platné pouze v případě, že je účet počítače i uživatelský účet součástí alespoň domén systému Windows 2000.</string>
+      <string id="UserPolicyMode_Merge">Sloučit</string>
+      <string id="UserPolicyMode_Replace">Nahradit</string>
+      <string id="CorpConnSyncWaitTime">Zadat dobu čekání pro zpracování zásad při připojení pracovní plochy</string>
+      <string id="CorpConnSyncWaitTime_Help">Toto nastavení zásad určuje, jak dlouho mají zásady skupiny během zpracování zásad při spuštění čekat na oznámení o připojení pracovní plochy. Jestliže je zpracování zásad při spuštění synchronní, bude počítač blokován, dokud nebude k dispozici připojení pracovní plochy nebo dokud neuplyne doba čekání. Pokud je zpracování zásad při spuštění asynchronní, počítač blokován nebude a zpracování zásad proběhne na pozadí. V obou případech jsou konfigurací tohoto natavení zásad přepsány všechny doby čekání vypočítané systémem.
+
+Pokud toto nastavení zásad povolíte, použijí zásady skupiny tuto maximální dobou čekání nakonfigurovanou správcem pro připojení pracovní plochy a přepíší výchozí nebo systémem vypočítanou dobu čekání.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, použijí zásady skupiny v počítačích s operačním systémem novějším než Windows 7, které jsou nakonfigurovány na připojení pracovní plochy, výchozí 60sekundovou dobu čekání.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Možnosti zmírnění problémů</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">Možnosti pro zmírnění rizik u procesu</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">Služba Mezipaměť písem Windows by měla mít povoleno stahovat písma a data katalogu písem od online poskytovatelů písem.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">Hodnota pomalého připojení: [číselné pole] milisekund</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Hodnota časového limitu: [číselné pole] milisekund</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">minuta:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Doba čekání (v sekundách):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Povolit zpracování aktualizace odeslané pomalým síťovým připojením</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Povolit zpracování aktualizace odeslané pomalým síťovým připojením</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Nepoužívat aktualizace během pravidelného zpracování na pozadí</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Povolit zpracování aktualizace odeslané pomalým síťovým připojením</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Nepoužívat aktualizace během pravidelného zpracování na pozadí</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Povolit zpracování aktualizace odeslané pomalým síťovým připojením</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Povolit zpracování aktualizace odeslané pomalým síťovým připojením</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Nepoužívat aktualizace během pravidelného zpracování na pozadí</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Povolit zpracování aktualizace odeslané pomalým síťovým připojením</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Nepoužívat aktualizace během pravidelného zpracování na pozadí</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Nepoužívat aktualizace během pravidelného zpracování na pozadí</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Povolit zpracování aktualizace odeslané pomalým síťovým připojením</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Nepoužívat aktualizace během pravidelného zpracování na pozadí</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Nepoužívat aktualizace během pravidelného zpracování na pozadí</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Povolit zpracování aktualizace odeslané pomalým síťovým připojením</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Nepoužívat aktualizace během pravidelného zpracování na pozadí</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Povolit zpracování aktualizace odeslané pomalým síťovým připojením</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Nepoužívat aktualizace během pravidelného zpracování na pozadí</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Zpracovat i nezměněné objekty zásad skupiny</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Jestliže si Editor objektů zásad skupiny vybírá řadič domény, který použije, měl by splňovat následující požadavky:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Rychlost připojení (kb/s):</decimalTextBox>
+        <text> </text>
+        <text>Zadáním hodnoty 0 zakážete zjišťování pomalého připojení.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Rychlost připojení (kb/s):</decimalTextBox>
+        <text> </text>
+        <text>Zadáním hodnoty 0 zakážete zjišťování pomalého připojení.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">Připojení WWAN vždy považovat za pomalá</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>Toto nastavení umožňuje upravovat četnost použití zásad skupiny </text>
+        <text>u počítačů. Rozsah je 0 až 44 640 minut (31 dnů).</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Minuty:</decimalTextBox>
+        <text> </text>
+        <text>Jedná se o náhodný čas přidaný k intervalu aktualizace,</text>
+        <text>aby nemohli všichni klienti vyžadovat zásady skupiny současně.</text>
+        <text>Rozsah je 0 až 1 440 minut (24 hodin).</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Minuty:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>Toto nastavení umožňuje upravovat četnost použití zásad skupiny </text>
+        <text>u řadičů domény. Rozsah je 0 až 44 640 minut (31 dnů).</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Minuty:</decimalTextBox>
+        <text> </text>
+        <text>Jedná se o náhodný čas přidaný k intervalu aktualizace,</text>
+        <text>aby nemohli všichni klienti vyžadovat zásady skupiny současně.</text>
+        <text>Rozsah je 0 až 1 440 minut (24 hodin).</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Minuty:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>Toto nastavení umožňuje upravovat četnost použití zásad skupiny </text>
+        <text>u uživatelů. Rozsah je 0 až 44 640 minut (31 dnů).</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Minuty:</decimalTextBox>
+        <text> </text>
+        <text>Jedná se o náhodný čas přidaný k intervalu aktualizace,</text>
+        <text>aby nemohli všichni klienti vyžadovat zásady skupiny současně.</text>
+        <text>Rozsah je 0 až 1 440 minut (24 hodin).</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Minuty:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>Název objektu zásad skupiny:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Režim:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Doba čekání (v sekundách):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

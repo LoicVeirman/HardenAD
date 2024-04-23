@@ -27,7 +27,7 @@ function Write-DebugMessage {
 ## This function will prepare the migration table file for GPO  ##
 ## import                                                       ##
 ##                                                              ##
-## Version: 02.00.000                                           ##
+## Version: 02.02.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Convert-MigrationTable {
@@ -51,6 +51,10 @@ Function Convert-MigrationTable {
             Version: 02.01
             Author.: contact@hardenad.net  - MSSEC
             Desc...: Function rewrite. Logging are no more used to ease the script analysis.
+
+            Version: 02.02
+            Author.: contact@hardenad.net  - MSSEC
+            Desc...: Optimized translation section by removing "select object" which was useless.
     #>
 
     Param(
@@ -120,53 +124,13 @@ Function Convert-MigrationTable {
                     $Destination = $Destination -replace $ref.translateFrom, $ref.TranslateTo
                 }
             }
-            #Write-Host $Destination
-            #write-host $($obj.objectClass)
 
             # Generate the translated.migtable file (result file) 
-            switch ($obj.Type) {
-                "User" { 
-                    Try { 
-                        $xmlData = $xmlData -replace $obj.Destination, $Destination 
-                    }
-                    Catch {
-                        #.No replace
-                    }
-                }
-                "Computer" { 
-                    Try {
-                        $xmlData = $xmlData -replace $obj.Destination, $Destination 
-                    }
-                    Catch {
-                        #.No replace
-                    }
-                }
-                "LocalGroup" { 
-                    Try {
-                        $xmlData = $xmlData -replace $obj.Destination, $Destination
-                    }
-                    Catch {
-                        #.No replace
-                    }
-                }
-                "GlobalGroup" { 
-                    Try {
-                        $xmlData = $xmlData -replace $obj.Destination, $Destination
-                    }
-                    Catch {
-                        #.Noreplace
-                    }
-                }
-                "UniversalGroup" { 
-                    Try {
-                        $xmlData = $xmlData -replace $obj.Destination, $Destination
-                    }
-                    Catch {
-                        #.No replace
-                    }
-                }
-                "UNCPath" { $xmlData = $xmlData -replace $obj.Destination, $Destination }
-                "Unknown" { $xmlData = $xmlData -replace $obj.Destination, $Destination }
+            Try { 
+                $xmlData = ($xmlData).replace($obj.Destination, $Destination)
+            }
+            Catch {
+                #.No replace
             }
         }
 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>表示名をここに入力する</displayName>
+  <description>説明をここに入力する</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">Lanman ワークステーション</string>
+      <string id="Pol_CipherSuiteOrder_Name">暗号の順位</string>
+      <string id="Pol_CipherSuiteOrder_Help">このポリシー設定では、SMB クライアントで使用する暗号を決定します。
+
+このポリシー設定を有効にした場合、指定されている順位で暗号が優先されます。
+
+このポリシー設定を有効にしても、サポートされている暗号を 1 つも指定しなかった場合、またはこのポリシー設定を無効にした場合や構成しなかった場合は、既定の暗号の順位が使用されます。
+
+SMB 3.11 の暗号:
+
+AES_128_GCM
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+SMB 3.0 および 3.02 暗号:
+
+AES_128_CCM
+
+この設定の変更方法:
+
+編集ボックスで、希望する暗号を、優先順位が高い方から 1 行に 1 つずつ配置します (優先順位の最も高い暗号が一番上になります)。使用しない暗号は削除します。
+
+注: このセキュリティ設定を構成した場合、変更は Windows を再起動するまで有効になりません。</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">安全でないゲスト ログオンを有効にする</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">このポリシー設定では、SMB クライアントが SMB サーバーへの安全でないゲスト ログオンを許可するかどうかを決定します。
+
+このポリシー設定を有効にした場合、またはこのポリシー設定を構成しなかった場合、SMB クライアントは安全でないゲスト ログオンを許可します。
+
+このポリシー設定を無効にした場合、SMB クライアントは安全でないゲスト ログオンを拒否します。
+
+安全でないゲスト ログオンがファイル サーバーによって使用されるのは、共有フォルダーに対する認証されていないアクセスを許可することが目的です。エンタープライズ環境では一般的ではありませんが、ファイル サーバーとして動作しているコンシューマー NAS (ネットワーク接続ストレージ) アプライアンスでは、安全でないゲスト ログオンが頻繁に使用されています。Windows ファイル サーバーでは認証を要求し、既定では安全でないゲスト ログオンを使用しません。安全でないゲスト ログオンは認証されていないため、SMB 署名、SMB 暗号化などの重要なセキュリティ機能が無効になります。結果として、安全でないゲスト ログオンを許可するクライアントは、さまざまな man-in-the-middle 攻撃に対して脆弱になり、データ損失、データの破損、マルウェアに対するリスクにつながる可能性があります。また、安全でないゲスト ログオンを使用してファイル サーバーに書き込まれたデータには、ネットワーク上のすべてのユーザーからアクセスできる可能性があります。Microsoft では、安全でないゲスト ログオンを無効にして、認証されたアクセスが要求されるようにファイル サーバーを構成することをお勧めします。
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">継続的可用性共有上のオフライン ファイルの可用性</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        このポリシー設定は、SMB 共有の継続的可用性 (CA) フラグが有効になっている場合に、SMB 共有に接続するクライアントのオフライン ファイルの動作を決定します。
+
+このポリシー設定を有効にした場合、CA が有効な共有に接続するときに、"常にオフラインで使用する" オプションが Windows コンピューターのエクスプローラーのメニューに表示されます。クライアント側のキャッシュを使用して、CA が有効な共有にファイルを固定することも可能になります。
+
+        このポリシー設定を無効にした場合、または構成しなかった場合、CA が有効な共有でオフライン ファイルを使用することはできません。
+
+注: このグループ ポリシーを有効にすることは推奨されません。オフライン ファイルでの CA の使用は、オンライン状態とオフライン状態の切り替え時間が非常に長くなることにつながります。
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">継続的可用性共有でのキャッシュを処理します</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        このポリシー設定は、SMB 共有の継続的可用性 (CA) フラグが有効になっている場合、その SMB 共有に接続するクライアントに対する SMB ハンドル キャッシュの動作を決定します。
+
+        このポリシー設定を有効にした場合、SMB クライアントで CA 共有のファイルへのキャッシュされたハンドルが許可されます。これにより、Microsoft Azure Files で実行されている CA 共有で多数の非構造化データ ファイルに繰り返しアクセスする場合に、パフォーマンスが向上する可能性があります。
+
+        このポリシー設定を無効にした場合、または構成しなかった場合、CA 共有を経由して開かれるファイルへのキャッシュされたハンドルは使用できません。
+
+        注: このポリシーは、Windows Server によって提供されるスケールアウト ファイル サーバーに接続する場合には、影響しません。汎用ファイル サーバーの役割を持つ Windows フェールオーバー クラスターでホストされるファイルに定期的に接続するクライアントに対しては、このポリシーを有効にしないことをお勧めします。有効にすると、フェールオーバー回数、メモリ使用率、CPU 使用率が不当に増える可能性があります。
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Windows Server 2022 以降または Windows 11 以降</string>
+      <string id="Pol_EnableCompressedTraffic_Name">既定で SMB 圧縮を使用する</string>
+      <string id="Pol_EnableCompressedTraffic_Help">このポリシーは、SMB クライアントが既定でトラフィック圧縮を使用するかどうかを制御します。
+
+このポリシー設定を有効にした場合、SMB 圧縮が有効になっている場合、SMB クライアントは既定でトラフィックの圧縮を試みます。
+
+このポリシー設定を無効にするか、または構成しなかった場合、SMB クライアントは既定でトラフィックの圧縮を試みません。ただし、トラフィックの圧縮は他の方法で要求される可能性があります。以下のメモを参照してください。
+
+注: このポリシーは、共有ごとのプロパティとファイルごとのハンドル プロパティで組み合わされ、それを通じてトラフィックの圧縮が要求される場合があります。また、SMB サーバーは圧縮をサポートし、有効にする必要があります。たとえば、このポリシーを無効にした (または構成しなかった) 場合、SMB サーバー共有が圧縮を要求されていると、SMB クライアントは圧縮を実行できます。これが望ましくない場合で、圧縮を完全に無効にしたい場合は、代わりに付随する 'SMB 圧縮を無効にする' ポリシーを構成します。
+      </string>
+      <string id="Pol_DisableCompression_Name">SMB 圧縮を無効にする</string>
+      <string id="Pol_DisableCompression_Help">このポリシーは、SMB クライアントがトラフィック圧縮を無効にする (完全に禁止する) かどうかを制御します。
+
+このポリシー設定を有効にした場合、他のポリシー ([既定で SMB 圧縮を使用する] ポリシーや共有ごとのプロパティなど) に関係なく、SMB クライアントはデータを圧縮しません。
+
+このポリシー設定を無効にするか、未構成にした場合、SMB クライアントはトラフィックを圧縮する可能性があります (他のポリシーと条件の組み合わせによって異なります)。
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>暗号:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

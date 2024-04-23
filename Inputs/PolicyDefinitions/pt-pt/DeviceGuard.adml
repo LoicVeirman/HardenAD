@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2015 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Segurança do Device Guard da Microsoft Windows</displayName>
+  <description>Segurança do Device Guard do Windows</description>
+  <resources>
+    <stringTable>
+      <string id="DeviceGuard">Device Guard</string>
+      <string id="VirtualizationBasedSecurity">Ativar Segurança baseada em Virtualização</string>
+      <string id="VirtualizationBasedSecurityHelp">Especifica se a Segurança Baseada em Virtualização está ativada.
+
+A Segurança Baseada em Virtualização utiliza o Hipervisor do Windows para dar suporte a serviços de segurança. A Segurança Baseada em Virtualização necessita de Arranque Seguro e, opcionalmente, pode ser ativada utilizando Proteções DMA. As proteções DMA necessitam de suporte de hardware e só serão ativadas em dispositivos configurados corretamente.
+
+Proteção Baseada em Virtualização da Integridade do Código
+
+Esta definição ativa a proteção baseada em virtualização da Integridade do Código do Modo de Kernel. Quando ativada, as proteções de memória do modo de kernel são impostas e o caminho de validação da Integridade do Código é protegido pela funcionalidade de Segurança Baseada em Virtualização.
+
+A opção "Desativada" desativa remotamente a Proteção Baseada em Virtualização da Integridade do Código caso esta tenha sido anteriormente ativada através da opção "Ativada sem bloqueio".
+
+A opção "Ativada com bloqueio UEFI" assegura que a Proteção Baseada em Virtualização da Integridade do Código não pode ser desativada remotamente. Para desativar a funcionalidade, tem de definir a Política de Grupo para "Desativada" e remover a funcionalidade de segurança de cada computador, com um utilizador fisicamente presente, de forma a limpar a configuração persistente na UEFI.
+
+A opção "Ativada sem bloqueio" permite desativar remotamente a Proteção Baseada em Virtualização da Integridade do Código ao utilizar a Política de Grupo.
+
+A opção "Não Configurada" deixa a definição de política indefinida. A Política de Grupo não escreve a definição de política no registo, pelo que não tem qualquer impacto nos computadores ou utilizadores. Se existir uma definição atual no registo, não será modificada.
+
+A opção "Exigir Tabela de Atributos de Memória UEFI" só irá ativar a Proteção Baseada em Virtualização da Integridade do Código em dispositivos com suporte de firmware UEFI para a Tabela de Atributos de Memória. Os dispositivos sem a Tabela de Atributos de Memória UEFI podem ter firmware incompatível com a Proteção Baseada em Virtualização da Integridade do Código, o que, em alguns casos, pode originar falhas ou perdas de dados ou incompatibilidades com determinadas placas plug-in. Se esta opção não for definida, os dispositivos visados devem ser testados para garantir a compatibilidade.
+
+Aviso: todos os controladores no sistema têm de ser compatíveis com esta funcionalidade ou pode ocorrer uma falha de sistema. Certifique-se de que esta definição de política só é implementada em computadores cuja compatibilidade seja conhecida.
+
+Credential Guard
+
+Esta definição permite aos utilizadores ativar o Credential Guard com segurança baseada em virtualização para ajudar a proteger credenciais.
+
+Para o Windows 11 21H2 e versões anteriores, a opção "Desativado" desativa remotamente o Credential Guard caso este tenha sido anteriormente ativado através da opção "Ativado sem bloqueio". Para versões posteriores, a opção "Desativado" desativa remotamente o Credential Guard caso este tenha sido anteriormente ativado através da opção "Ativado sem bloqueio" ou estivesse "Não Configurado"
+
+A opção "Ativado com bloqueio UEFI" assegura que o Credential Guard não pode ser desativado remotamente. Para desativar a funcionalidade, tem de definir a Política de Grupo como "Desativada" e remover a funcionalidade de segurança de cada computador, com um utilizador fisicamente presente, para limpar a configuração persistente na UEFI.
+
+A opção "Ativado sem bloqueio" permite desativar remotamente o Credential Guard através da utilização da Política de Grupo. Os dispositivos que utilizam esta definição têm de ter, pelo menos, o Windows 10 (Versão 1511).
+
+Para o Windows 11 21H2 e versões anteriores, a opção "Não Configurado" deixa a definição de política indefinida. A Política de Grupo não escreve a definição de política no registo, pelo que não tem qualquer impacto nos computadores ou utilizadores. Se existir uma definição atual no registo, não será modificada. Para versões posteriores, se não existir uma definição atual no registo, a opção "Não Configurado" irá ativar o Credential Guard sem bloqueio UEFI.
+
+Iniciação Segura
+
+Esta definição configura a Iniciação Segura para proteger a cadeia de arranque.
+
+A definição "Não Configurada" é a predefinição e permite a configuração da funcionalidade por utilizadores Administrativos.
+
+A opção "Ativada" ativa a Iniciação Segura no hardware suportado.
+
+A opção "Desativada" desativa a Iniciação Segura, independentemente do suporte do hardware.
+
+Proteção de Pilha imposta por Hardware do modo de Kernel
+
+Esta definição ativa a Proteção de Pilha imposta por Hardware para o código em modo de kernel. Quando esta funcionalidade de segurança está ativada, as pilhas de dados do modo de kernel são protegidas com pilhas de sombra baseadas em hardware, que armazenam destinos de endereços de retorno pretendidos para garantir que o fluxo de controlo de programas não é adulterado.
+
+Esta funcionalidade de segurança tem os seguintes pré-requisitos:
+1) O hardware da CPU suporta pilhas de sombra baseadas em hardware.
+2) A Proteção Baseada em Virtualização da Integridade do Código está ativada.
+
+Se qualquer um dos pré-requisitos não for satisfeito, esta funcionalidade não será ativada, mesmo que seja selecionada uma opção "Ativada" para esta funcionalidade. Tenha em atenção que selecionar uma opção "Ativada" para esta funcionalidade não irá ativar automaticamente a Proteção Baseada em Virtualização da Integridade do Código, isso tem de ser efetuado separadamente.
+
+Os dispositivos que ativem esta funcionalidade de segurança têm de ter, pelo menos, o Windows 11 (versão 22H2).
+
+A opção "Desativada" desativa a Proteção de Pilha imposta por Hardware de modo de kernel.
+
+A opção "Ativada no modo de auditoria" permite a Proteção de Pilha imposta por Hardware em modo de kernel no modo de auditoria, em que as violações da pilha de sombra não são fatais e serão registadas no registo de eventos do sistema.
+
+A opção "Ativada no modo de imposição" permite a Proteção de Pilha imposta por Hardware em modo de kernel em modo de imposição, em que as violações da pilha de sombra são fatais.
+
+A opção "Não configurada" deixa a definição de política indefinida. A Política de Grupo não escreve a definição de política no registo, pelo que não tem qualquer impacto em computadores ou utilizadores. Se existir uma definição atual no registo, esta não será modificada.
+
+Aviso: todos os controladores no sistema têm de ser compatíveis com esta funcionalidade de segurança ou pode ocorrer uma falha de sistema no modo de imposição. O modo de auditoria pode ser utilizado para detetar controladores incompatíveis. Para obter mais informações, consulte https://go.microsoft.com/fwlink/?LinkId=2162953.
+      </string>
+      <string id="SecureBoot">Arranque Seguro</string>
+      <string id="SecureBootAndDmaProtection">Arranque Seguro e Proteção DMA</string>
+      <string id="Disabled">Desativado</string>
+      <string id="Enabled">Ativado</string>
+      <string id="EnabledWithoutLock">Ativada sem bloqueio</string>
+      <string id="EnabledWithUefiLock">Ativada com bloqueio UEFI</string>
+      <string id="EnabledAudit">Ativado no modo de auditoria</string>
+      <string id="EnabledEnforcement">Ativado no modo de imposição</string>
+      <string id="NotConfigured">Não Configurado</string>
+      <string id="ConfigCIPolicy">Implementar o Controlo de Aplicações do Windows Defender</string>
+      <string id="ConfigCIPolicyHelp">Implementar o Controlo de Aplicações do Windows Defender
+
+Esta definição de política permite implementar uma Política de Integridade de Código num computador para controlar o que pode ser executado nesse computador.
+
+Se implementar uma Política de Integridade de Código, o Windows restringe o que pode ser executado no modo de kernel e no Ambiente de Trabalho do Windows com base na política. Para ativar esta política, o computador tem de ser reiniciado. 
+
+O caminho do ficheiro tem de ser um caminho UNC (por exemplo, \\NomeDoServidor\NomeDaPartilha\SIPolicy.p7b), ou um caminho válido localmente (por exemplo, C:\NomeDaPasta\SIPolicy.p7b). A conta do computador local (SISTEMA LOCAL) tem de ter permissão de acesso ao ficheiro da política.
+
+Caso esteja a utilizar uma política assinada e protegida, a desativação desta definição de política não remove a funcionalidade do computador. Em vez disso, tem de:
+
+   1) atualizar primeiro a política para uma política sem proteção e desativar a definição; ou
+   2) desativar a definição e remover a política de cada computador com um utilizador fisicamente presente.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="VirtualizationBasedSecurity">
+        <dropdownList refId="RequirePlatformSecurityFeaturesDrop" defaultItem="1">Selecionar Nível de Segurança da Plataforma:</dropdownList>
+        <dropdownList refId="HypervisorEnforcedCodeIntegrityDrop" defaultItem="3">Proteção Baseada em Virtualização da Integridade do Código:</dropdownList>
+        <checkBox refId="CheckboxMAT">Exigir Tabela de Atributos de Memória UEFI</checkBox>
+        <dropdownList refId="CredentialIsolationDrop" defaultItem="3">Configuração do Credential Guard:</dropdownList>
+        <dropdownList refId="SystemGuardDrop" defaultItem="2">Configuração do Início Seguro:</dropdownList>
+        <dropdownList refId="KernelShadowStacksDrop" defaultItem="3">Proteção de Pilha Imposta pelo Hardware no modo kernel:</dropdownList>
+      </presentation>
+      <presentation id="ConfigCIPolicy">
+        <textBox refId="ConfigCIPolicyFilePathText">
+          <label>Caminho do ficheiro da Política de Integridade do Código:</label>
+        </textBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

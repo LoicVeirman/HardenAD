@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Eseménynaplózás</displayName>
+    <description>Ez a fájl a Windows eseménynaplózás konfigurációs beállításait tartalmazza</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Eseménynaplózás</string>
+            <string id="EnableProtectedEventLogging">Védett eseménynaplózás engedélyezése</string>
+            <string id="EnableProtectedEventLogging_Explain">
+Ez a házirend-beállítás lehetővé teszi a védett eseménynaplózás konfigurálását.
+
+Ha engedélyezi ezt a házirend-beállítást, az ezt támogató összetevők használni fogják azt a rendszergazda által biztosított tanúsítványt, amelynek segítségével titkosíthatók a vélhetően bizalmas információkat tartalmazó eseménynapló-adatok az eseménynaplóba való bevitelük előtt. A rendszer a Cryptographic Message Syntax (CMS) szabvány és a rendszergazda által biztosított nyilvános kulcs használatával titkosítja az adatokat. A titkosított üzenetek az Unprotect-CmsMessage PowerShell-parancsmaggal fejthetők vissza, feltéve, hogy elérhető az a nyilvános kulcsnak megfelelő titkos kulcs, amellyel az üzeneteket titkosították.
+
+Ha letiltja vagy nem konfigurálja a házirend-beállítást, az összetevők nem titkosítják az eseménynapló-üzeneteket az eseménynaplóba való bevitel előtt.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+A védett eseménynaplózáshoz használandó titkosítási tanúsítvány megadása. Az alábbiak bármelyikét megadhatja:
+
+    - base-64 kódolású X.509-tanúsítvány tartalma
+    - Helyi számítógép (rendszerint nyilvános kulcsokra épülő infrastruktúra által üzembe helyezett) tanúsítványtárolójában található tanúsítvány ujjlenyomata
+    - Helyileg vagy távoli megosztáson tárolt tanúsítvány teljes elérési útja
+    - Helyileg vagy távoli megosztáson tárolt tanúsítvány(ok) könyvtárának elérési útja
+    - Helyi számítógép (rendszerint nyilvános kulcsokra épülő infrastruktúra által üzembe helyezett) tanúsítványtárolójában található tanúsítvány tulajdonosának neve
+
+Az eredő tanúsítvány esetében kibővített kulcshasználatként engedélyezni kell a dokumentumtitkosítást (1.3.6.1.4.1.311.80.1), továbbá az Adattitkosítás vagy a Kulcstitkosítás típusú kulcshasználatot.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

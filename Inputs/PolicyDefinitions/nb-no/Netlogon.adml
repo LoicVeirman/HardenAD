@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>skriv inn visningsnavn her</displayName>
+  <description>skriv inn beskrivelse her</description>
+  <resources>
+    <stringTable>
+      <string id="Netlogon">Nettverkspålogging</string>
+      <string id="Netlogon_AllowSingleLabelDnsDomain">Bruk DNS-navneløsing med et ettledds domenenavn i stedet for NetBIOS-navneløsing til å finne domenekontrolleren</string>
+      <string id="Netlogon_AllowSingleLabelDnsDomain_Help">Denne policyinnstillingen angir om datamaskinene som policyinnstillingen gjelder for, skal prøve DNS-navneløsing med et ettledds domenenavn.
+
+Som standard brukes virkemåten som er angitt i AllowDnsSuffixSearch. Hvis policyen AllowDnsSuffixSearch deaktiveres, brukes NetBIOS-navneløsingen eksklusivt for å finne en domenekontroller som er vert for et Active Directory-domene, som er angitt med et ettleddsnavn som bruker DNS-navneløsing.
+
+Hvis du aktiverer denne policyinnstillingen, prøver datamaskiner som policyinnstillingen gjelder for, å finne en domenekontroller som er vert for et Active Directory-domene angitt med et ettleddsnavn som bruker DNS-navneløsing.
+
+Hvis du deaktiverer denne policyinnstillingen, bruker datamaskiner som denne innstillingen trer i kraft på, policyen AllowDnsSuffixSearch, hvis den ikke deaktiveres eller utfører NetBIOS-navneløsing, til å forsøke å finne en domenekontroller som drifter et Active Directory-domene som er angitt med et ettleddsnavn. Datamaskinene bruker ikke DNS-navneløsing i dette tilfellet, med mindre datamaskinen søker etter et domene med et ettledds DNS-navn som finnes i Active Directory-skogen som datamaskinen er tilknyttet.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen datamaskiner, og datamaskinene bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_AllowDnsSuffixSearch">Bruk DNS-navneløsingen når et domenenavn med ett ledd brukes, ved å føye til forskjellige registrerte DNS-suffikser, hvis innstillingen AllowSingleLabelDnsDomain ikke er aktivert.</string>
+      <string id="Netlogon_AllowDnsSuffixSearch_Help">Denne policyinnstillingen angir om datamaskinene som denne innstillingen trer i kraft på, forsøker DNS-navneløsing for domenenavn med ett ledd, ved å føye til forskjellige registrerte DNS-suffikser, og bruker NetBIOS-navneløsing bare hvis DNS-navneløsing mislykkes. Denne policyen, inkludert den angitte virkemåten, brukes ikke hvis policyinnstillingen AllowSingleLabelDnsDomain er aktivert.
+
+Når ingen innstilling er angitt for denne policyen, er virkemåten som standard den samme som eksplisitt å aktivere denne policyen, med mindre policyinnstillingen AllowSingleLabelDnsDomain er aktivert.
+
+Hvis du aktiverer denne policyinnstillingen når policyen AllowSingleLabelDnsDomain ikke er aktivert, finner datamaskiner som denne policyen brukes på, en domenekontroller som drifter et Active Directory-domene som er angitt med et ettleddsnavn, ved å føye til forskjellige registrerte DNS-suffikser for å utføre DNS-navneløsing. Ettleddsnavnet brukes ikke uten å føye til DNS-suffikser, med mindre ikke datamaskinen knyttes til et domene som har et DNS-navn med ett ledd i Active Directory-skogen. NetBIOS-navneløsing utføres bare på ettleddsnavnet hvis DNS-løsingen mislykkes.
+
+Hvis du deaktiverer denne policyinnstillingen når policyen AllowSingleLabelDnsDomain ikke er aktivert, bruker datamaskiner som policyen brukes på, bare NetBIOS-navneløsing til å prøve å finne en domenekontroller som drifter et Active Directory-domene angitt med et ettleddsnavn. Datamaskinene forsøker ikke DNS-navneløsing i dette tilfellet, med mindre datamaskinen søker etter et domene med et ettledds DNS-navn som datamaskinen er tilknyttet, i Active Directory-skogen.
+
+</string>
+      <string id="Netlogon_AutoSiteCoverage">Bruk automatisert områdedekning av DNS SRV-oppføringer for DC-posisjonsindikator</string>
+      <string id="Netlogon_AutoSiteCoverage_Help">Denne policyinnstillingen fastslår om domenekontrollere (DC) registrerer områdespesifikke SRV-poster dynamisk for DC-posisjonsindikatoren for de nærmeste områdene der ingen domenekontroller for det samme domenet finnes (eller ingen global katalog for den samme skogen finnes). Disse DNS-oppføringene registreres dynamisk av tjenesten Net Logon og brukes til å finne domenekontrolleren.
+
+Hvis du aktiverer denne policyinnstillingen, registrerer domenekontrollerne som denne innstillingen gjelder for, områdespesifikke DNS SRV-poster dynamisk for DC-posisjonsindikatoren for de nærmeste områdene der ingen domenekontroller for det samme domenet finnes, eller ingen global katalog for den samme skogen finnes.
+
+Hvis du deaktiverer denne policyinnstillingen, registrerer ikke domenekontrollerne områdespesifikke DNS SRV-poster for DC-posisjonsindikatoren for andre områder enn sitt eget område.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen domenekontrollere, og domenekontrollerne bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_AvoidPdcOnWan">Kontakt PDC ved mislykket pålogging</string>
+      <string id="Netlogon_AvoidPdcOnWan_Help">Denne policyinnstillingen angir om en domenekontroller (DC) skal prøve å bruke den primære domenekontrolleren (PDC) til å kontrollere det angitte passordet fra en klient hvis domenekontrolleren ikke kan validere passordet.
+
+Det kan være nyttig å kontakte den primære domenekontrolleren i tilfelle klientens passord nylig er blitt endret, men ennå ikke overført til domenekontrolleren. Det kan hende at brukerne ønsker å deaktivere denne funksjonen hvis PDC-emulatoren finnes på en langsom WAN-tilkobling.
+
+Hvis du aktiverer denne policyinnstillingen, prøver domenekontrollerne som policyinnstillingen gjelder for, å kontrollere et passord ved hjelp av PDC-emulatoren hvis domenekontrolleren ikke kan validere passordet.
+
+Hvis du deaktiverer denne policyinnstillingen, prøver ikke domenekontrollerne å kontrollere noen passord ved hjelp av PDC-emulatoren. 
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke på noen domenekontrollere.</string>
+      <string id="Netlogon_BackgroundRetryInitialPeriod">Bruk innledende innstilling for nytt DC-søk for bakgrunnsoppkallere</string>
+      <string id="Netlogon_BackgroundRetryInitialPeriod_Help">Denne policyinnstillingen angir hvor lang tid (i sekunder) det skal gå før første søkeforsøk for programmer som utfører periodiske søk etter domenekontrollere, men ikke finner en domenekontroller.
+
+Standardverdien for denne policyinnstillingen er 10 minutter (10*60). Maksimumsverdien for denne policyinnstillingen er 49 dager (0x49*24*60*60=4233600). Minimumsverdien for denne policyinnstillingen er 0.
+
+Denne policyinnstillingen er bare relevant for de oppkallerne fra DsGetDcName som har angitt flagget DS_BACKGROUND_ONLY.
+
+Hvis verdien for denne policyinnstillingen er lavere enn verdien angitt i undernøkkelen NegativeCachePeriod, brukes verdien i denne undernøkkelen.
+
+Advarsel!  Hvis verdien for denne policyinnstillingen er for høy, vil ikke en klient gjøre noe forsøk på å finne domenekontrollere som har vært utilgjengelige. Hvis verdien i policyinnstillingen er svært lav og domenekontrolleren ikke er tilgjengelig, kan trafikken som forårsakes av periodiske søk etter domenekontroller, bli for stor.</string>
+      <string id="Netlogon_BackgroundRetryMaximumPeriod">Bruk innstilling for maksimumsintervall for nytt DC-søk for bakgrunnsoppkallere</string>
+      <string id="Netlogon_BackgroundRetryMaximumPeriod_Help">Denne policyinnstillingen angir det tillatte maksimumsintervallet mellom søkeforsøk når programmer som utfører periodiske søk etter domenekontrollere (DC), ikke kan finne en domenekontroller.
+
+Intervallet mellom søkeforsøk kan for eksempel settes til 10 minutter, så 20 minutter og deretter 40 minutter, men når intervallet når verdien angitt i denne policyinnstillingen, blir den verdien intervallet for alle videre søk, helt til verdien i den endelige innstillingen for nytt DC-søk er nådd.
+
+Standardverdien for denne policyinnstillingen er 60 minutter (60*60). Maksimumsverdien for denne policyinnstillingen er 49 dager (0x49*24*60*60=4233600). Minimumsverdien for denne policyinnstillingen er 0.
+
+Hvis verdien for denne policyinnstillingen er lavere enn verdien angitt for den innledende innstillingen for nytt DC-søk, brukes den innledende innstillingen.
+
+Advarsel!  Hvis verdien for denne policyinnstillingen er for høy, kan klienten bruke lang tid på å finne en domenekontroller.
+
+Hvis verdien for denne policyinnstillingen er for lav og domenekontrolleren ikke er tilgjengelig, kan de mange gjentatte forsøkene føre til stor nettverkstrafikk.</string>
+      <string id="Netlogon_BackgroundRetryQuitTime">Bruk endelig innstilling for nytt DC-søk for bakgrunnsoppkallere</string>
+      <string id="Netlogon_BackgroundRetryQuitTime_Help">Denne policyinnstillingen angir når det ikke lenger er tillatt å søke på nytt for programmer som utfører periodiske søk etter domenekontrollere (DC), men ikke finner en domenekontroller. Nye søk kan for eksempel angis i henhold til policyinnstillingen Bruk innstilling for maksimumsintervall for nytt DC-søk, men når verdien for denne policyinnstillingen er nådd, blir det ikke gjort flere søk. Hvis en verdi for denne policyinnstillingen er lavere enn verdien i policyinnstillingen Bruk innstilling for maksimumsintervall for nytt DC-søk, brukes verdien i policyinnstillingen Bruk innstilling for maksimumsintervall for nytt DC-søk.
+
+Standardverdien for denne policyinnstillingen er gjøre nye forsøk på (0). Maksimumsverdien for denne policyinnstillingen er 49 dager (0x49*24*60*60=4233600). Minimumsverdien for denne policyinnstillingen er 0.
+
+Advarsel!  Hvis verdien for denne policyinnstillingen er for lav, vil en klient slutte å søke etter en domenekontroller for tidlig.</string>
+      <string id="Netlogon_BackgroundSuccessfulRefreshPeriod">Bruk positiv periodisk oppdatering av DC-buffer for bakgrunnsoppkallere</string>
+      <string id="Netlogon_BackgroundSuccessfulRefreshPeriod_Help">Denne policyinnstillingen angir når en vellykket hurtigbufferoppføring for domenekontroller (DC) oppdateres. Denne policyinnstillingen brukes for kalleprogrammer som periodevis prøver å finne domenekontrollere, og den brukes før DC-informasjonen returneres til kalleprogrammet. Standardverdien for denne policyinnstillingen er uendelig (4294967200). Maksimumsverdien for denne policyinnstillingen er (4294967200), mens maksimumsverdien som ikke behandles som uendelig, er 49 dager (49*24*60*60=4233600). Større verdier blir behandlet som uendelig. Minimumsverdien for denne policyinnstillingen er alltid å oppdatere (0).</string>
+      <string id="Netlogon_DC_Locator_DNS_Records">DNS-oppføringer for DC-posisjonsindikator</string>
+      <string id="Netlogon_DebugFlag">Angi nivå for feilsøkingsutdata for loggfil</string>
+      <string id="Netlogon_DebugFlag_Help">Denne policyinnstillingen angir nivået for feilsøkingsutdata for tjenesten Net Logon.
+
+Tjenesten Net Logon sender feilsøkingsinformasjon til loggfilen Netlogon.log i mappen %windir%\debug. Som standard logges ingen feilsøkingsinformasjon.
+
+Hvis du aktiverer denne policyinnstillingen og angir en annen verdi enn null, logges feilsøkingsinformasjon i filen.  Høyere verdier fører til mer utførlig logging. Verdien 536936447 regnes generelt sett for å være den optimale innstillingen.
+
+Hvis du angir null for denne policyinnstillingen, brukes standardvirkemåten beskrevet ovenfor.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, brukes standardvirkemåten beskrevet ovenfor.</string>
+      <string id="Netlogon_DnsAvoidRegisterRecords">Angi DNS-oppføringer for DC-posisjonsindikator som ikke registreres av domenekontrollere</string>
+      <string id="Netlogon_DnsAvoidRegisterRecords_Help">Denne policyinnstillingen angir hvilke DNS-oppføringer for DC-posisjonsindikator som ikke registreres av tjenesten Net Logon.
+
+Du aktiverer denne policyinnstillingen ved å velge Aktivert og angi en liste over huskekoder (instruksjoner), atskilt med mellomrom, for DNS-oppføringene for DC-posisjonsindikator som ikke blir registret av domenekontrollerne (DC) som policyinnstillingen gjelder for.
+
+Velg huskekoder fra følgende liste:
+
+Huskekode         Type DNS-oppføring
+
+LdapIpAddress    A     &lt;DnsDomainName&gt;
+Ldap             SRV   _ldap._tcp.&lt;DnsDomainName&gt;
+LdapAtSite       SRV   _ldap._tcp.&lt;SiteName&gt;._sites.&lt;DnsDomainName&gt;
+Pdc              SRV   _ldap._tcp.pdc._msdcs.&lt;DnsDomainName&gt;
+Gc               SRV   _ldap._tcp.gc._msdcs.&lt;DnsForestName&gt;
+GcAtSite         SRV   _ldap._tcp.&lt;SiteName&gt;._sites.gc._msdcs.&lt;DnsForestName&gt;
+DcByGuid         SRV   _ldap._tcp.&lt;DomainGuid&gt;.domains._msdcs.&lt;DnsForestName&gt;
+GcIpAddress      A     gc._msdcs.&lt;DnsForestName&gt;
+DsaCname         CNAME &lt;DsaGuid&gt;._msdcs.&lt;DnsForestName&gt;
+Kdc              SRV   _kerberos._tcp.dc._msdcs.&lt;DnsDomainName&gt;
+KdcAtSite        SRV   _kerberos._tcp.&lt;SiteName&gt;._sites.dc._msdcs.&lt;DnsDomainName&gt;
+Dc               SRV   _ldap._tcp.dc._msdcs.&lt;DnsDomainName&gt;
+DcAtSite         SRV   _ldap._tcp.&lt;SiteName&gt;._sites.dc._msdcs.&lt;DnsDomainName&gt;
+Rfc1510Kdc       SRV   _kerberos._tcp.&lt;DnsDomainName&gt;
+Rfc1510KdcAtSite SRV   _kerberos._tcp.&lt;SiteName&gt;._sites.&lt;DnsDomainName&gt;
+GenericGc        SRV   _gc._tcp.&lt;DnsForestName&gt;
+GenericGcAtSite  SRV   _gc._tcp.&lt;SiteName&gt;._sites.&lt;DnsForestName&gt;
+Rfc1510UdpKdc    SRV   _kerberos._udp.&lt;DnsDomainName&gt;
+Rfc1510Kpwd      SRV   _kpasswd._tcp.&lt;DnsDomainName&gt;
+Rfc1510UdpKpwd   SRV   _kpasswd._udp.&lt;DnsDomainName&gt;
+
+Hvis du deaktiverer denne policyinnstillingen, vil domenekontrollere som er konfigurert til å utføre dynamisk registrering av DNS-oppføringer for DC-posisjonsindikator, registrere alle DNS-ressursoppføringer for DC-posisjonsindikator.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, bruker domenekontrollerne sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_DnsRefreshInterval">Angi oppdateringsintervall for DNS-oppføringer for DC-posisjonsindikator</string>
+      <string id="Netlogon_DnsRefreshInterval_Help">Denne policyinnstillingen angir oppdateringsintervallet for DNS-ressursoppføringer for DC-posisjonsindikator for domenekontrollere (DC) som policyinnstillingen gjelder for. Disse DNS-oppføringene registreres dynamisk av tjenesten Net Logon og brukes av algoritmen for DC-posisjonsindikatoren til å finne domenekontrolleren. Policyinnstillingen kan bare brukes for domenekontrollere som bruker dynamisk oppdatering.
+
+Domenekontrollere som er konfigurert til å utføre dynamisk registrering av DNS-ressursoppføringer for DC-posisjonsindikator, registrerer periodisk oppføringene på nytt på DNS-servere, selv om dataene i oppføringene ikke er endret. Hvis autoritative DNS-servere er konfigurert til å utføre renovering av foreldede oppføringer, trengs denne nyregistreringen for å instruere DNS-serverne som er konfigurert til automatisk å fjerne (renovere) foreldede oppføringer, om at disse oppføringene er aktuelle og skal lagres i databasen.
+
+Advarsel!  Hvis DNS-ressursoppføringene er registrert i soner med renovering aktivert, må verdien for denne policyinnstillingen aldri overstige oppdateringsintervallet som er konfigurert for disse sonene. Hvis oppdateringsintervallet for DNS-oppføringene for DC-posisjonsindikator er lengre enn oppdateringsintervallet for DNS-sonene, kan resultatet bli uønsket sletting av DNS-ressursoppføringer.
+
+Du angir oppdateringsintervall for DC-oppføringene ved å klikke Aktivert og deretter angi en verdi større enn 1800. Denne verdien angir oppdateringsintervallet for DC-oppføringene i sekunder (verdien 3600 er for eksempel 60 minutter).
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen domenekontrollere, og domenekontrollerne bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_DnsTtl">Angi TTL i DNS-oppføringer for DC-posisjonsindikator</string>
+      <string id="Netlogon_DnsTtl_Help">Denne policyinnstillingen angir verdien for TTL-feltet (Time To Live) i SRV-ressursoppføringer som registreres av tjenesten Net Logon. Disse DNS-oppføringene registreres dynamisk og brukes til å finne domenekontrolleren (DC).
+
+Du angir TTL for DNS-oppføringene for DC-posisjonsindikator ved å klikke Aktivert og angi en verdi i sekunder (verdien 900 er for eksempel 15 minutter).
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen domenekontrollere, og domenekontrollerne bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_ExpectedDialupDelay">Angi forventet oppringingsforsinkelse ved pålogging</string>
+      <string id="Netlogon_ExpectedDialupDelay_Help">Denne policyinnstillingen angir tilleggstiden som datamaskinen venter på domenekontrollerens (DC) svar ved pålogging på nettverket.
+
+Du angir forventet oppringingsforsinkelse ved pålogging ved å klikke på Aktivert og angi ønsket verdi i sekunder (verdien 60 er for eksempel 1 minutt).
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen datamaskiner, og datamaskinene bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_GcSiteCoverage">Angi områder dekket av DNS SRV-oppføringer for GC-posisjonsindikator</string>
+      <string id="Netlogon_GcSiteCoverage_Help">Denne policyinnstillingen angir områdene som globale kataloger (GC) skal registrere områdespesifikke DNS SRV-ressursoppføringer for GC-posisjonsindikator for. Disse oppføringene registreres i tillegg til de områdespesifikke SRV-oppføringene registrert for området der den globale katalogen er, og oppføringer registrert av en global katalog som er konfigurert til å registrere DNS SRV-oppføringer for GC-posisjonsindikator for områdene uten en global katalog som er nærmest den. 
+
+DNS-oppføringene for GC-posisjonsindikator og de områdespesifikke SRV-oppføringene registreres dynamisk av tjenesten Net Logon og brukes til å finne den globale katalogen. Et Active Directory-område er ett eller flere tilkoblede TCP/IP-delnett som tillater at administratorer konfigurerer Active Directory-tilgang og -replikering. En global katalog er en domenekontroller som inneholder en delvis replika av alle domener i Active Directory.
+
+Du angir områdene som dekkes av DNS SRV-oppføringene for GC-posisjonsindikator ved å klikke Aktivert og angi områdenavnene, atskilt med mellomrom.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen globale kataloger, og de globale katalogene bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_LdapSrvPriority">Angi prioritet i DNS SRV-oppføringer for DC-posisjonsindikator</string>
+      <string id="Netlogon_LdapSrvPriority_Help">Denne policyinnstillingen angir Prioritet-feltet i SRV-ressursoppføringene registrert av domenekontrollere (DC) som policyinnstillingen gjelder for. Disse DNS-oppføringene registreres dynamisk av tjenesten Net Logon og brukes til å finne domenekontrolleren.
+
+Prioritet-feltet i SRV-oppføringen angir preferansen for målverter (angitt i SRV-oppføringens Mål-felt). DNS-klienter som spør etter SRV-ressursoppføringer, prøver å kontakte den første tilgjengelige verten med det laveste prioriteringsnummeret.
+
+Du angir prioritet i DNS SRV-ressursoppføringene for DC-posisjonsindikator ved å klikke Aktivert og angi en verdi. Verdiområdet er fra 0 til 65535.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen domenekontrollere, og domenekontrollerne bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_LdapSrvWeight">Angi vekt i DNS SRV-oppføringer for DC-posisjonsindikator</string>
+      <string id="Netlogon_LdapSrvWeight_Help">Denne policyinnstillingen angir Vekt-feltet i SRV-ressursoppføringene registrert av domenekontrollerne (DC) som policyinnstillingen gjelder for. Disse DNS-oppføringene registreres dynamisk av tjenesten Net Logon og brukes til å finne domenekontrolleren.
+
+Vekt-feltet i SRV-oppføringen kan brukes i tillegg til verdien i Prioritet-feltet for å angi en mekanisme for belastningsfordeling der flere servere er angitt i SRV-oppføringenes Mål-felt, alle med samme prioritet. Sannsynligheten som DNS-klienten bruker til vilkårlig å velge målverten som skal kontaktes, er proporsjonal med verdien i Vekt-feltet i SRV-oppføringen.
+
+Du angir vekt i DNS SRV-oppføringene for DC-posisjonsindikator ved å klikke Aktivert og angi en verdi. Verdiområdet er fra 0 til 65535.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen domenekontrollere, og domenekontrollerne bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_MaximumLogFileSize">Angi maksimal loggfilstørrelse</string>
+      <string id="Netlogon_MaximumLogFileSize_Help">Denne policyinnstillingen angir den maksimale størrelsen i byte for loggfilen Netlogon.log i mappen %windir%\debug når logging er aktivert.
+
+Maksimal størrelse på loggfilen er 20 MB som standard. Hvis du aktiverer denne policyinnstillingen, settes den maksimale størrelsen på loggfilen til den angitte størrelsen.  Når denne størrelsen nås, lagres loggfilen som Netlogon.bak, og Netlogon.log avkortes. Angi en rimelig verdi i forhold til tilgjengelig lagringsplass.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, brukes standardvirkemåten beskrevet ovenfor.</string>
+      <string id="Netlogon_NdncSiteCoverage">Angi områder dekket av DNS SRV-oppføringer for programmappepartisjon for DC-posisjonsindikator</string>
+      <string id="Netlogon_NdncSiteCoverage_Help">Denne policyinnstillingen angir områdene som domenekontrollerne (DC) som er vert for programmappepartisjonen, skal registrere områdespesifikke og partisjonsspesifikke DNS SRV-ressursoppføringer for DC-posisjonsindikator for. Disse oppføringene registreres i tillegg til de områdespesifikke SRV-oppføringene registrert for området der domenekontrolleren er, og oppføringer registrert av en domenekontroller som er konfigurert til å registrere DNS SRV-oppføringer for DC-posisjonsindikator for områdene uten en domenekontroller som er nærmest den. 
+
+DNS-oppføringene for programmappepartisjonen for DC-posisjonsindikator og de områdespesifikke SRV-oppføringene registreres dynamisk av tjenesten Net Logon og brukes til å finne den partisjonsspesifikke domenekontrolleren. Et Active Directory-område er ett eller flere tilkoblede TCP/IP-delnett som tillater at administratorer konfigurerer Active Directory-tilgang og -replikering.
+
+Du angir områdene som dekkes av DC-posisjonsindikatorens partisjonsspesifikke DNS SRV-oppføringer, ved å klikke Aktivert og angi områdenavnene, atskilt med mellomrom.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen domenekontrollere, og domenekontrollerne bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_NegativeCachePeriod">Angi negativ hurtigbufferinnstilling for DC-søk</string>
+      <string id="Netlogon_NegativeCachePeriod_Help">Denne policyinnstillingen angir hvor lenge (i sekunder) DC-posisjonsindikatoren husker at en domenekontroller (DC) ikke ble funnet i et domene. Når et senere forsøk på å finne domenekontrolleren skjer innenfor tidsrommet som er angitt i policyinnstillingen, mislykkes DC-søket umiddelbart, uten at det blir gjort noe forsøk på å finne domenekontrolleren.
+
+Standardverdien for denne policyinnstillingen er 45 sekunder. Maksimumsverdien for denne policyinnstillingen er 7 dager (7*24*60*60). Minimumsverdien for denne policyinnstillingen er 0.
+
+Advarsel!  Hvis verdien for denne policyinnstillingen er for høy, vil ikke en klient gjøre noe forsøk på å finne domenekontrollere som har vært utilgjengelige. Hvis verdien for denne policyinnstillingen er for lav, vil klienter prøve å finne domenekontrollere selv om ingen er tilgjengelige.</string>
+      <string id="Netlogon_NetlogonShareCompatibilityMode">Angi kompatibilitet for nettpåloggingsressurs</string>
+      <string id="Netlogon_NetlogonShareCompatibilityMode_Help">Denne policyinnstillingen angir om nettpåloggingsressursen som ble opprettet av tjenesten Net Logon på en domenekontroller (DC), skal støtte en fildelingssemantikk som er kompatibel med tidligere programmer.
+
+Hvis du aktiverer denne policyinnstillingen, støtter nettpåloggingsressursen fildelingssemantikk som gir eksklusiv lesetilgang til filer på den delte ressursen, selv når oppkalleren bare har lesetilgang.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, gir nettpåloggingsressursen delt lesetilgang til filer på den delte ressursen når det bes om eksklusiv tilgang og oppkalleren bare har lesetilgang.
+
+Nettpåloggingsressursen gir som standard delt lesetilgang til filer på den delte ressursen når det bes om eksklusiv tilgang.
+
+Obs!  Nettpåloggingsressursen er en delt ressurs som er opprettet av tjenesten Net Logon for bruk på klientdatamaskiner i domenet. Standardvirkemåten for nettpåloggingsressursen sikrer at ingen programmer som bare har lesetilgang til filer på nettpåloggingsressursen, kan låse filene ved å be om eksklusiv lesetilgang, noe som kan forhindre oppdatering av gruppepolicyinnstillinger på klienter i domenet. Hvis du aktiverer denne policyinnstillingen, kan et program som er avhengig av å kunne låse filer på nettpåloggingsressursen med bare lesetilgang, hindre at gruppepolicyklienter leser filene, og generelt sett blir tilgjengeligheten til nettpåloggingsressursen i domenet redusert.
+
+Hvis du aktiverer denne policyinnstillingen, bør domeneadministratorer forsikre seg om at eksklusiv lesetilgang i domenet bare gis til programmer som er godkjent av administratoren.</string>
+      <string id="Netlogon_NonBackgroundSuccessfulRefreshPeriod">Angi positiv periodisk oppdatering av DC-buffer for ikke-bakgrunnsoppkallere</string>
+      <string id="Netlogon_NonBackgroundSuccessfulRefreshPeriod_Help">Denne policyinnstillingen angir når en vellykket hurtigbufferoppføring for domenekontroller (DC) oppdateres. Policyinnstillingen gjelder for kalleprogrammer som ikke prøver å finne domenekontrollere periodevis, og den brukes før DC-informasjonen returneres til kalleprogrammet. Den er bare relevant for de oppkallerne fra DsGetDcName som ikke har angitt flagget DS_BACKGROUND_ONLY.
+
+Standardverdien for denne policyinnstillingen er 30 minutter (1800). Maksimumsverdien for denne policyinnstillingen er (4294967200), mens maksimumsverdien som ikke behandles som uendelig, er 49 dager (49*24*60*60=4233600). Større verdier behandles som uendelig. Minimumsverdien for denne policyinnstillingen er alltid å oppdatere (0).</string>
+      <string id="Netlogon_ScavengeInterval">Angi renskingsintervall</string>
+      <string id="Netlogon_ScavengeInterval_Help">Denne policyinnstillingen angir intervallet for hvor ofte Net Logon utfører følgende renovasjonsoperasjoner:
+
+– Kontrollerer om et passord på en sikker kanal må endres, og endrer det om nødvendig.
+
+- Finner en domenekontroller (DC) som ikke er blitt oppdaget, på domenekontrollerne.
+
+- Prøver å legge til &lt;domenenavn&gt;[1B] NetBIOS-navn på den primære domenekontrolleren (PDC) hvis dette ikke allerede er gjort.
+
+Ingen av disse operasjonene er kritiske. 15 minutter er optimalt i de fleste tilfeller, unntatt i de mest ekstreme. Hvis for eksempel en domenekontroller er atskilt fra et klarert domene gjennom en kostbar linje (for eksempel ISDN), kan denne parameteren justeres oppover for å unngå at det blir søkt automatisk etter domenekontrolleren altfor ofte i et klarert domene.
+
+Du aktiverer denne policyinnstillingen ved å klikke Aktivert og angi intervallet i sekunder.</string>
+      <string id="Netlogon_SiteCoverage">Angi områder dekket av DNS SRV-oppføringer for DC-posisjonsindikator</string>
+      <string id="Netlogon_SiteCoverage_Help">Denne policyinnstillingen angir områdene der domenekontrollerne (DC) registrerer områdespesifikke DNS SRV-ressursoppføringer for DC-posisjonsindikator. Disse oppføringene registreres i tillegg til de områdespesifikke SRV-oppføringene registrert for området der domenekontrolleren er, og oppføringer registrert av en domenekontroller som er konfigurert til å registrere DNS SRV-oppføringer for DC-posisjonsindikator for områdene uten en domenekontroller som er nærmest den. 
+
+DNS-oppføringene for DC-posisjonsindikator registreres dynamisk av tjenesten Net Logon og brukes til å finne domenekontrolleren. Et Active Directory-område er ett eller flere tilkoblede TCP/IP-delnett som tillater at administratorer konfigurerer Active Directory-tilgang og -replikering.
+
+Du angir områdene som dekkes av DNS SRV-oppføringene for DC-posisjonsindikator ved å klikke Aktivert og angi områdenavnene, atskilt med mellomrom.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen domenekontrollere, og domenekontrollerne bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_SiteName">Angi områdenavn</string>
+      <string id="Netlogon_SiteName_Help">Denne policyinnstillingen angir hvilket Active Directory-område datamaskiner tilhører.
+
+Et Active Directory-område er ett eller flere tilkoblede TCP/IP-delnett som tillater at administratorer konfigurerer Active Directory-tilgang og -replikering.
+
+Du angir områdenavnet for denne policyinnstillingen ved å klikke Aktivert og angi områdenavnet. Når området som en datamaskin tilhører, ikke er angitt, finner datamaskinen automatisk området fra Active Directory.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen datamaskiner, og datamaskinene bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_SysvolShareCompatibilityMode">Angi kompatibilitet for SYSVOL-ressurs</string>
+      <string id="Netlogon_SysvolShareCompatibilityMode_Help">Denne policyinnstillingen angir om SYSVOL-ressursen som er opprettet av tjenesten Net Logon på en domenekontroller (DC), skal støtte en fildelingssemantikk som er kompatibel med tidligere programmer.
+
+Hvis du aktiverer denne policyinnstillingen, støtter SYSVOL-ressursen fildelingssemantikk som gir eksklusiv lesetilgang til filer på den delte ressursen, selv når oppkalleren bare har lesetilgang.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, gir SYSVOL-ressursen delt lesetilgang til filer på den delte ressursen når det bes om eksklusiv tilgang og oppkalleren bare har lesetilgang.
+
+SYSVOL-ressursen gir som standard delt lesetilgang til filer på den delte ressursen når det bes om eksklusiv tilgang.
+
+Obs!  SYSVOL-ressursen er en delt ressurs som er opprettet av tjenesten Net Logon for bruk av gruppepolicyklienter i domenet. Standardvirkemåten for SYSVOL-ressursen sikrer at ingen programmer som bare har lesetilgang til filer på SYSVOL-ressursen, kan låse filene ved å be om eksklusiv lesetilgang, noe som kan forhindre oppdatering av gruppepolicyinnstillinger på klienter i domenet. Hvis du aktiverer denne policyinnstillingen, kan et program som er avhengig av å kunne låse filer på SYSVOL-ressursen med bare lesetilgang, hindre at gruppepolicyklienter leser filene, og generelt sett blir tilgjengeligheten til SYSVOL-ressursen i domenet redusert.
+
+Hvis du aktiverer denne policyinnstillingen, bør domeneadministratorer forsikre seg om at eksklusiv lesetilgang i domenet bare gis til programmer som er godkjent av administratoren.</string>
+      <string id="Netlogon_UseDynamicDns">Angi dynamisk registrering av DNS-oppføringer for DC-posisjonsindikator</string>
+      <string id="Netlogon_UseDynamicDns_Help">Denne policyinnstillingen angir om dynamisk registrering av DNS-ressursoppføringene for DC-posisjonsindikator er aktivert. Disse DNS-oppføringene registreres dynamisk av tjenesten Net Logon og brukes av algoritmen for DC-posisjonsindikatoren til å finne domenekontrolleren (DC).
+
+Hvis du aktiverer denne policyinnstillingen, registrerer domenekontrollerne som policyinnstillingen gjelder for, DNS-ressursoppføringer for DC-posisjonsindikator gjennom dynamiske DNS-oppdaterbare nettverkstilkoblinger.
+
+Hvis du deaktiverer denne policyinnstillingen, registrerer ikke domenekontrollerne DNS-ressursoppføringer for DC-posisjonsindikator.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen domenekontrollere, og domenekontrollerne bruker sine lokale konfigurasjoner.</string>
+      <string id="Netlogon_TryNextClosestSite">Prøv neste nærmeste område</string>
+      <string id="Netlogon_TryNextClosestSite_Help">Denne policyinnstillingen gjør det mulig for DC-posisjonsindikatoren å finne en domenekontroller (DC) i det nærmeste området basert på områdekoblingskostnadene, hvis det ikke blir funnet en domenekontroller i det samme området. I tilfeller med flere områder vil failover til neste nærmeste område under DC-plasseringen gjøre nettverkstrafikken mer effektiv.
+
+Tjenesten for DC-posisjonsindikator brukes av klienter til å finne domenekontrollere for sitt Active Directory-område. Standard virkemåte for DC posisjonsindikatoren er å finne en domenekontroller i samme område. Hvis det ikke blir funnet noen i samme område, kan DC-posisjonsindikatoren returnere en domenekontroller i et annet område, som kan være flere områdehopp unna. Avstanden mellom to områder bestemmes av de totale kostnadene for områdekoblingen mellom dem. Et område er nærmere hvis det har lavere områdekoblingskostnader enn et annet område med høyere områdekoblingskostnader. 
+
+Hvis du aktiverer denne policyinnstillingen, aktiveres Prøv neste nærmeste område for DC-plassering for datamaskinen.
+
+Hvis du deaktiverer denne policyinnstillingen, brukes ikke Prøv neste nærmeste område for DC-plassering som standard for datamaskinen. Hvis imidlertid et DC-posisjonsindikatorkall foretas eksplisitt ved hjelp av flagget DS_TRY_NEXTCLOSEST_SITE, blir virkemåten for Prøv neste nærmeste område brukt.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes ikke Prøv neste nærmeste område for DC-plassering som standard for datamaskinen. Hvis flagget DS_TRY_NEXTCLOSEST_SITE brukes eksplisitt, blir virkemåten for Prøv neste nærmeste område brukt.</string>
+      <string id="Netlogon_ForceRediscoveryInterval">Tving nytt søk-intervall</string>
+      <string id="Netlogon_ForceRediscoveryInterval_Help">Denne policyinnstillingen angir intervallet for hvor ofte tvunget nytt søk utføres av en DC-posisjonsindikator.
+
+Tjenesten for DC-posisjonsindikator brukes av klienter til å finne domenekontrollere (DC) for sitt Active Directory-område. Når DC-posisjonsindikatoren finner en domenekontroller, bufrer den domenekontrollere for å gjøre posisjonsalgoritmen mer effektiv. Så lenge den bufrede domenekontrolleren oppfyller kravene og kjører, fortsetter DC-posisjonsindikatoren å returnere den. Hvis en ny domenekontroller introduseres, oppdager de eksisterende klientene kontrollene når et tvunget nytt søk utføres av DC-posisjonsindikatoren. For å tilpasse endringer i nettverksforholdene utfører DC-posisjonsindikatoren som standard et tvunget nytt søk i samsvar med et angitt tidsintervall og opprettholder effektiv belastningsfordeling for klienter på tvers av alle tilgjengelige domenekontroller i alle domener eller skoger. Standard tidsintervall for tvunget nytt søk av DC-posisjonsindikatoren er 12 timer. Tvunget nytt søk kan også utløses hvis flagget DS_FORCE_REDISCOVERY brukes i et kall til DC-posisjonsindikatoren. Nytt søk tilbakestiller tidtakeren for de bufrede domenekontrolleroppføringene.
+
+Hvis du aktiverer denne policyinnstillingen, utfører DC-posisjonsindikatoren på maskinen periodiske tvungne nye søk i samsvar med det konfigurerte tidsintervallet. Minimumstidsintervallet er 3600 sekunder (1 time) for å unngå for stor nettverkstrafikk på grunn av nytt søk. Det tillatte maksimumstidsintervallet er 4294967200 sekunder, mens en verdi større enn 4294967 sekunder (~49 dager) blir behandlet som uendelig.
+
+Hvis du deaktiverer denne policyinnstillingen, brukes tvunget nytt søk som standard for maskinen hver 12. time.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes tvunget nytt søk som standard for maskinen hver 12. time, med mindre den lokale maskininnstillingen i registret har en annen verdi.</string>
+      <string id="Netlogon_AddressTypeReturned">Returner adressetype for domenekontroller</string>
+      <string id="Netlogon_AddressTypeReturned_Help">Denne policyinnstillingen angir hvilken type IP-adresse som returneres for en domenekontroller (DC). APIene for DC-posisjonsidentifikator returnerer IP-adressen til domenekontrolleren sammen med andre deler av informasjonen. Før IPv6 var støttet, ble IPv4 returnert som DC IP-adresse. Med IPv6-støtten kan imidlertid APIene for DC-posisjonsindikator returnere IPv6 DC-adresse. Det kan hende at den returnerte IPv6 DC-adressen ikke blir riktig håndtert av noen av de eksisterende programmene. Hensikten med denne policyinnstillingen er å støtte slike tilfeller.
+
+Som standard kan APIene for DC-posisjonsindikator returnere IPv4/IPv6 DC-adresse. Hvis imidlertid noen programmer blir avbrutt på grunn av den returnerte IPv6 DC-adressen, kan denne policyinnstillingen brukes til å deaktivere standardvirkemåten og tvinge retur av BARE IPv4 DC-adresse. Når programmet er reparert, kan policyinnstillingen brukes til å aktivere standardvirkemåten.
+
+Hvis du aktiverer denne policyinnstillingen, kan APIene for DC-posisjonsindikator returnere IPv4/IPv6 DC-adresse. Dette er standardvirkemåten for DC-posisjonsindikatoren.
+
+Hvis du deaktiverer denne policyinnstillingen, returnerer APIene for DC-posisjonsindikator BARE en eventuell IPv4 DC-adresse. Hvis domenekontrolleren støtter både IPv4- og IPv6-adresser, vil APIene for DC-posisjonsindikator dermed returnere IPv4-adresse. Hvis domenekontrolleren bare støtter IPv6-adresser, mislykkes APIene for DC-posisjonsindikator.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, kan APIene for DC-posisjonsindikator returnere IPv4/IPv6 DC-adresse. Dette er standardvirkemåten for DC-posisjonsindikatoren.</string>
+      <string id="Netlogon_AllowNT4Crypto">Tillat kryptografialgoritmer som er kompatible med Windows NT 4.0</string>
+      <string id="Netlogon_AllowNT4Crypto_Help">Denne policyinnstillingen angir om tjenesten Net Logon tillater bruk av eldre kryptografialgoritmer som brukes i Windows NT 4.0. Kryptografialgoritmene som brukes i Windows NT 4.0 og tidligere, er ikke like sikre som de nyere algoritmene i Windows 2000 eller senere, inkludert denne versjonen av Windows.
+
+Net Logon tillater som standard ikke at eldre kryptografialgoritmer brukes, og inkluderer dem ikke i forhandlingen om kryptografialgoritmer. Datamaskiner som kjører Windows NT 4.0, kan derfor ikke opprette en tilkobling til denne domenekontrolleren.
+ 
+Hvis du aktiverer denne policyinnstillingen, tillater Net Logon forhandling om og bruk av eldre kryptografialgoritmer som er kompatible med Windows NT 4.0. Bruk av eldre algoritmer representerer imidlertid en potensiell sikkerhetsrisiko.
+
+Hvis du deaktiverer denne policyinnstillingen, tillater ikke Net Logon forhandling om og bruk av eldre kryptografialgoritmer. 
+
+Hvis du ikke konfigurerer denne policyinnstillingen, tillater ikke Net Logon forhandling om og bruk av eldre kryptografialgoritmer.</string>
+      <string id="Netlogon_IgnoreIncomingMailslotMessages">Ikke behandle innkommende mailslot-meldinger som brukes for domenekontrollerplassering basert på NetBIOS-domenenavn</string>
+      <string id="Netlogon_IgnoreIncomingMailslotMessages_Help">Med denne policyinnstillingen kan du kontrollere behandlingen av innkommende mailslot-meldinger med en lokal domenekontroller (DC).
+
+Obs!  Ved søk etter en ekstern domenekontroller basert på NetBIOS-domenenavnet (ettleddsnavn) henter DC-posisjonsindikatoren først listen over domenekontrollere fra en WINS-server som er konfigurert i de lokale klientinnstillingene. Deretter sender DC-posisjonsindikatoren en mailslot-melding til hver eksterne domenekontroller for å få mer informasjon. DC-plasseringen er bare vellykket hvis en ekstern domenekontroller svarer på mailslot-meldingen.
+
+Denne policyinnstillingen anbefales for å redusere angrepsflaten på en domenekontroller, og den kan brukes i et miljø uten WINS, i et rent IPv6-miljø og når DC-plassering basert på et NetBIOS-domenenavn ikke kreves. Denne policyinnstillingen har ingen innvirkning på DC-plassering basert på DNS-navn.
+
+Hvis du aktiverer denne policyinnstillingen, behandler ikke domenekontrolleren innkommende mailslot-meldinger som brukes for DC-plassering basert på NetBIOS-domenenavn.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, behandler domenekontrolleren innkommende mailslot-meldinger. Dette er standardvirkemåten for DC-posisjonsindikatoren.</string>
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery">Ikke bruk NetBIOS-basert søk etter DC-plassering når DNS-basert søk mislykkes</string>
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Med denne policyinnstillingen kan du kontrollere posisjonsalgoritmen for domenekontrolleren (DC). DC-posisjonsalgoritmen foretrekker DNS-basert søk hvis DNS-domenenavnet er kjent. Hvis det DNS-baserte søket mislykkes og NetBIOS-domenenavnet er kjent, bruker algoritmen NetBIOS-basert søk som en tilbakefallsmekanisme.
+
+For NetBIOS-basert søk brukes en WINS-server og mailslot-meldinger, men ikke områdeinformasjon. Det er dermed ikke sikkert at klienter finner den nærmeste domenekontrolleren. NetBIOS-søk tillater også at en hubområdeklient finner en grenområde-DC selv om grenområde-DCen bare registrerer områdespesifikke DNS-oppføringer (som anbefalt). Dette er grunnene til at NetBIOS-basert søk ikke anbefales.
+
+Vær oppmerksom på at denne policyinnstillingen ikke påvirker NetBIOS-basert søk etter DC-plassering hvis bare NetBIOS-domenenavnet er kjent.
+
+Hvis du aktiverer denne policyinnstillingen eller ikke konfigurerer den, bruker ikke DC-posisjonsalgoritmen NetBIOS-basert søk som en tilbakefallsmekanisme når et DNS-basert søk mislykkes. Dette er standardvirkemåten.
+
+Hvis du deaktiverer denne policyinnstillingen, kan DC-posisjonsalgoritmen bruke NetBIOS-basert søk som en tilbakefallsmekanisme når et DNS-basert søk mislykkes.</string>
+
+      <string id="Netlogon_AddressLookupOnPingBehavior">Angi virkemåte for adresseoppslag for ping til DC-posisjonsindikator (Specify address lookup behavior for DC locator ping)</string>
+      <string id="Netlogon_AddressLookupOnPingBehavior_Help">Denne policyinnstillingen konfigurerer hvordan en domenekontroller (DC) virker ved svar til en klient med en IP-adresse som ikke er tilordnet til et konfigurert område.
+
+Domenekontrollere bruker klientens IP-adresse under en ping-forespørsel til en DC-posisjonsindikator for å beregne hvilket Active Directory-området klienten tilhører.   Hvis ingen områdetilordning kan beregnes, kan det hende at domenekontrolleren utfører et adresseoppslag på klientnettverksnavnet for å finne andre IP-adresser, som deretter kan brukes til å beregne et samsvarende område for klienten. 
+
+De tilgjengelige verdiene for denne innstillingen fører til følgende virkemåter:
+
+0 – Domenekontrollere utfører aldri adresseoppslag.
+1 – Domenekontrollere vil utføre et omfattende adresseoppslag for å IP-adresser for flere klienter.
+2 – Domenekontrollere vil utføre et raskt adresseoppslag bare på DNS for å IP-adresser for flere klienter.
+
+Du angir denne virkemåten i DNS SRV-oppføringene for DC-posisjonsindikator ved å klikke Aktivert og deretter angi en verdi. Verdiområdet er fra 0 til 2.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen domenekontrollere, og domenekontrollerne bruker sine lokale konfigurasjoner.</string>
+
+      <string id="Netlogon_PingUrgencyMode">Bruk hastemodus når du pinger domenekontrollere</string>
+      <string id="Netlogon_PingUrgencyMode_Help">Denne policyinnstillingen konfigurerer om den aktuelle datamaskinen skal være mer offensiv når den forsøker å lokalisere en domenekontroller (DC).
+
+Hvis et miljø har et stort antall DCer som kjører både eldre og nye operativsystemer, kan standard virkemåte for DC-posisjonsindikator være utilstrekkelig for å finne DCer som kjører et nyere operativsystem.  Denne policyinnstillingen kan aktiveres til å konfigurere DC-posisjonsindikatoren til å være mer offensiv når den forsøker å lokalisere en DC i et slikt miljø ved å pinge DCer hyppigere.  Aktivering av denne innstillingen kan resultere i ekstra nettverkstrafikk og økt belastning på DCer.  Du bør deaktivere denne innstillingen når alle DCene kjører samme OS-versjon.
+
+1 – Datamaskiner vil pinge DCer med normal hyppighet.
+2 – Datamaskiner vil pinge DCer med høyere hyppighet.
+
+Klikk Aktivert og og tast inn en verdi for å angi denne virkemåten. Verdiområdet er fra 1 til 2.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, brukes den ikke for noen datamaskiner, og datamaskinene bruker sine lokale konfigurasjoner.</string>
+
+      <string id="Netlogon_DnsSrvRecordUseLowerCaseHostNames">Bruk små bokstaver i DNS-vertsnavn ved registrering av SRV-oppføringer for domenekontroller</string>
+      <string id="Netlogon_DnsSrvRecordUseLowerCaseHostNames_Help">Denne policy innstillingen konfigurerer om domene kontrollerne som policy innstillingen gjelder for, skal ha små bokstaver i DNS-vertsnavnet ved registrering av SRV-oppføringer.
+
+Hvis dette er aktivert, vil domene kontrollere små bokstaver i DNS-vertsnavnet ved registrering av SRV-oppføringer for domene kontrollere. Det vil bli gjort et forsøk på å slette eventuelle tidligere registrerte SRV-poster som inneholder DNS-vertsnavn av typen Mixed Case. Hvis du vil ha mer informasjon og potensielle manuelle oppryddings prosedyrer, se koblingen nedenfor.
+
+Hvis dette er deaktivert, vil domene kontrollere bruke det konfigurerte DNS-vertsnavnet som det er ved registrering av SRV-oppføringer for domene kontroller.
+
+Hvis den ikke er konfigurert, vil domene kontrollere som standard bruke sine lokale konfigurasjoner.
+
+Standard lokal konfigurasjon er aktivert.
+
+Det er ikke nødvendig å starte på nytt for at endringer i denne innstillingen skal tre i kraft.
+
+Mer informasjon er tilgjengelig på https://aka.ms/lowercasehostnamesrvrecord
+      </string>
+
+    </stringTable>
+    <presentationTable>
+      <presentation id="Netlogon_BackgroundRetryInitialPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundRetryInitialPeriodLabel" defaultValue="600" spinStep="600">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundRetryMaximumPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundRetryMaximumPeriodLabel" defaultValue="3600" spinStep="3600">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundRetryQuitTime">
+        <decimalTextBox refId="Netlogon_BackgroundRetryQuitTimeLabel" defaultValue="0" spinStep="100">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundSuccessfulRefreshPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundSuccessfulRefreshPeriodLabel" defaultValue="4294967200" spinStep="1000">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DebugFlag">
+        <decimalTextBox refId="Netlogon_DebugFlagLabel" defaultValue="536936447">Nivå:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DnsAvoidRegisterRecords">
+        <textBox refId="Netlogon_DnsAvoidRegisterRecordsLabel">
+          <label>Huskekoder:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_DnsRefreshInterval">
+        <decimalTextBox refId="Netlogon_DnsRefreshIntervalLabel" defaultValue="1800" spinStep="100">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DnsTtl">
+        <decimalTextBox refId="Netlogon_DnsTtlLabel" defaultValue="600" spinStep="100">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_ExpectedDialupDelay">
+        <decimalTextBox refId="Netlogon_ExpectedDialupDelayLabel" defaultValue="0" spinStep="100">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_GcSiteCoverage">
+        <textBox refId="Netlogon_GcSiteCoverageLabel">
+          <label>Områder:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_LdapSrvPriority">
+        <decimalTextBox refId="Netlogon_LdapSrvPriorityLabel" defaultValue="0" spinStep="100">Prioritet:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_LdapSrvWeight">
+        <decimalTextBox refId="Netlogon_LdapSrvWeightLabel" defaultValue="100" spinStep="100">Vekt:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_MaximumLogFileSize">
+        <decimalTextBox refId="Netlogon_MaximumLogFileSizeLabel" defaultValue="536936447">Byte:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_NdncSiteCoverage">
+        <textBox refId="Netlogon_NdncSiteCoverageLabel">
+          <label>Områder:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_NegativeCachePeriod">
+        <decimalTextBox refId="Netlogon_NegativeCachePeriodLabel" defaultValue="45" spinStep="60">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_NonBackgroundSuccessfulRefreshPeriod">
+        <decimalTextBox refId="Netlogon_NonBackgroundSuccessfulRefreshPeriodLabel" defaultValue="1800" spinStep="1000">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_ScavengeInterval">
+        <decimalTextBox refId="Netlogon_ScavengeIntervalLabel" defaultValue="900" spinStep="900">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_SiteCoverage">
+        <textBox refId="Netlogon_SiteCoverageLabel">
+          <label>Områder:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_SiteName">
+        <textBox refId="Netlogon_SiteNameLabel">
+          <label>Område:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_ForceRediscoveryInterval">
+        <decimalTextBox refId="Netlogon_ForceRediscoveryIntervalLabel" defaultValue="43200" spinStep="100">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_AddressLookupOnPingBehavior">
+        <decimalTextBox refId="Netlogon_AddressLookupOnPingBehaviorLabel" defaultValue="2" spinStep="1">Virkemåte for adresseoppslag:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_PingUrgencyMode">
+        <decimalTextBox refId="Netlogon_PingUrgencyModeLabel" defaultValue="2" spinStep="1">Ping hastemodus:</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

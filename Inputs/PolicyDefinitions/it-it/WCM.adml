@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Impostazioni di Criteri di gruppo per Windows Connection Manager</displayName>
+  <description>Impostazioni di Criteri di gruppo per Windows Connection Manager</description>
+  <resources>
+    <stringTable>
+      <string id="WCM_Category">Windows Connection Manager</string>
+      <string id="WCM_BlockNonDomain">Proibisci connessione a reti non di dominio in caso di connessione a una rete di dominio autenticata</string>
+      <string id="WCM_BlockNonDomain_Help">Questa impostazione dei criteri impedisce ai computer di connettersi contemporaneamente a una rete basata su dominio e a una rete non basata su dominio.
+
+Se si abilita questa impostazione dei criteri, il computer risponderà ai tentativi di connessione automatica e manuale di rete in base alle circostanze seguenti:
+
+Tentativi di connessione automatica
+- Quando il computer è già connesso a una rete basata su dominio, tutti i tentativi di connessione automatica a reti non di dominio sono bloccati.
+- Quando il computer è già connesso a una rete non basata su dominio, i tentativi di connessione automatica a reti basate su dominio sono bloccati.
+
+Tentativi di connessione manuale
+- Quando il computer è già connesso a una rete non basata su un dominio o a una rete basata su un dominio su supporti diversi da Ethernet, e un utente tenta di creare una connessione manuale a una rete aggiuntiva in violazione di questa impostazione dei criteri, la rete esistente la connessione è disconnessa e la connessione manuale è consentita.
+- Quando il computer è già connesso a una rete non basata su dominio o a una rete basata su dominio su Ethernet e un utente tenta di creare una connessione manuale a una rete aggiuntiva in violazione di questa impostazione dei criteri, la connessione Ethernet esistente verrà è stata mantenuta e il tentativo di connessione manuale è bloccato.
+
+Se questa impostazione dei criteri non è configurata o è disabilitata, i computer potranno connettersi simultaneamente a reti di dominio e non di dominio.
+      </string>
+      <string id="WCM_DisableRoaming">Proibisci connessione a reti Mobile Broadband di provider di roaming</string>
+      <string id="WCM_DisableRoaming_Help">Questa impostazione dei criteri impedisce ai client di connettersi a reti Mobile Broadband quando il client è registrato su una rete di un provider di roaming.
+
+Se si abilita questa impostazione dei criteri, tutti i tentativi di connessione automatica e manuale a reti di provider di roaming verranno bloccati finché il client non si registra con la rete del provider principale.
+
+Se si disabilita o non si configura questa impostazione dei criteri, ai client verrà consentito di connettersi a reti Mobile Broadband di provider di roaming.
+      </string>
+      <string id="WCM_MinimizeConnections">Riduci al minimo il numero di connessioni simultanee a Internet o a un dominio Windows</string>
+      <string id="WCM_MinimizeConnections_AllowAllConnections">0 = Consenti connessioni simultanee</string>
+      <string id="WCM_MinimizeConnections_MinimizeSimultaneousConnections">1 = Riduci al minimo connessioni simultanee</string>
+      <string id="WCM_MinimizeConnections_AlwaysConnectedToCellular">2 = Rimani connesso alla rete cellulare</string>
+      <string id="WCM_MinimizeConnections_PreventWifiOnEthernet">3 = Impedisci Wi-Fi su Ethernet</string>
+      <string id="WCM_MinimizeConnections_Help">
+        Questa impostazione dei criteri determina se un computer può avere più connessioni a Internet o a un dominio Windows. Se sono consentite più connessioni, determina come il traffico di rete verrà indirizzato.
+
+        Se questa impostazione dei criteri è impostata su 0, un computer può avere connessioni simultanee a Internet, a un dominio Windows o a entrambe. Il traffico Internet può essere indirizzato su qualsiasi connessione, tra cui una connessione cellulare e qualsiasi rete a consumo. Questo corrispondeva in precedenza allo stato Disabilitato per questa impostazione dei criteri. L'opzione era già disponibile in Windows 8.
+
+        Se questa impostazione dei criteri è impostata su 1, qualsiasi nuova connessione automatica a Internet verrà bloccata quando il computer ha almeno una connessione Internet attiva a un tipo di rete preferito. Qui è l'ordine di preferenza (da più preferito al minimo): Ethernet, WLAN, quindi cellulare. Ethernet è sempre preferito quando si è connessi. Gli utenti possono ancora collegarsi manualmente a una rete. Questo corrispondeva in precedenza allo stato Attivato per questa impostazione dei criteri. L'opzione era già disponibile in Windows 8.
+
+        Se questa impostazione dei criteri è impostata su 2, il comportamento è analogo a 1. Tuttavia, se è disponibile una connessione alla rete dati, resterà sempre connesso ai servizi che richiedono una connessione alla rete dati. Quando l'utente è connesso a una connessione WLAN o Ethernet, nessun traffico Internet verrà instradato attraverso la connessione alla rete dati. L'opzione era già disponibile in Windows 10 (versione 1703).
+
+        Se questa impostazione dei criteri è impostata su 3, il comportamento è simile a 2. Tuttavia, se è presente una connessione Ethernet, Windows non consentirà agli utenti di connettersi manualmente a una WLAN. Una rete WLAN può essere connessa (automaticamente o manualmente) solo quando non è disponibile alcuna connessione Ethernet.
+
+        Questa impostazione dei criteri è correlata all'impostazione del criterio "Consenti a Windows di effettuare la disconnessione del software di un computer da una rete".
+      </string>
+      <string id="WCM_DisablePowerManagement">Disabilita risparmio energia in modalità di standby connesso</string>
+      <string id="WCM_DisablePowerManagement_Help">Questa impostazione dei criteri specifica la disabilitazione del risparmio energia quando il computer entra in modalità di standby connesso.
+
+Se si abilita questa impostazione dei criteri, Gestione connessioni Windows non gestirà i radio adattatori per ridurre il consumo energetico quando il computer entrerà in modalità di standby connesso.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il risparmio energia verrà abilitato quando il computer entrerà in modalità di standby connesso.
+      </string>
+      <string id="WCM_EnableSoftDisconnect">Consenti a Windows di effettuare la disconnessione del software di un computer da una rete</string>
+      <string id="WCM_EnableSoftDisconnect_Help">Questa impostazione dei criteri determina se Windows disconnette automaticamente il software di un computer da una rete.
+
+Se questa impostazione dei criteri è abilitata o non configurata, Windows disconnetterà automaticamente un computer da una rete quando determinerà che il computer non dovrà più essere connesso a una rete.
+
+Se questa impostazione dei criteri è disabilitata, Windows disconnetterà immediatamente un computer da una rete quando determinerà che il computer non dovrà più essere connesso a una rete.
+
+Quando la disconnessione del software è abilitata:
+- Quando Windows decide che il computer non deve più essere connesso a una rete, attende che il traffico si stabilizzi su quella rete. La sessione TCP esistente continuerà senza interruzioni.
+- Windows controlla quindi periodicamente il livello del traffico sulla rete. Se il livello di traffico supera una certa soglia, non viene intrapresa alcuna ulteriore azione. Il computer rimane connesso alla rete e continua a utilizzarla. Ad esempio, se la connessione di rete è attualmente in uso per scaricare file da Internet, i file continueranno a essere scaricati utilizzando quella connessione di rete.
+- Quando il traffico di rete scende al di sotto di questa soglia, il computer verrà disconnesso dalla rete. Le app che mantengono attiva una connessione di rete anche quando non la utilizzano attivamente (ad esempio, le app di posta elettronica) potrebbero perdere la connessione. Se ciò accade, queste app dovrebbero ristabilire la connessione su una rete diversa.
+
+Questa impostazione dei criteri dipende da altre impostazioni dei criteri di gruppo. Ad esempio, se l'opzione "Riduci al minimo il numero di connessioni simultanee a Internet o a un dominio Windows" è disabilitata, Windows non si disconnetterà da alcuna rete.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="WCM_MinimizeConnections">
+        <dropdownList refId="WCM_MinimizeConnections_Options" noSort="true" defaultItem="2">Riduci a icona Opzioni criteri</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

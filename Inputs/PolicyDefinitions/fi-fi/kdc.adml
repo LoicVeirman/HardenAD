@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Avaintenjakelukeskuksen asetukset</displayName>
+  <description>Nämä ovat Kerberos-avaintenjakelukeskuksen määritysasetukset.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">Avaintenjakelukeskus</string>
+      <string id="forestsearch">Käytä toimialuepuuryhmän hakujärjestystä</string>
+      <string id="forestsearch_explain">Tämä käytäntöasetus määrittää luettelon luotettavista toimialuepuuryhmistä, joista avaintenjakelukeskus (KDC) hakee, kun se yrittää selvittää kaksiosaisia palvelun päänimiä (SPN-nimiä).
+
+Jos otat tämän käytäntöasetuksen käyttöön, avaintenjakelukeskus yrittää hakea tämän luettelon toimialuepuuryhmistä, jos se ei pysty selvittämään kaksiosaista palvelun päänimeä paikallisessa toimialuepuuryhmässä. Toimialuepuuryhmähaku tehdään yleisen luettelon tai nimen jälkiliitevinkkien avulla. Jos vastaava kohde löytyy, avaintenjakelukeskus palauttaa asiakkaalle asianmukaisen toimialueen viittauslipun.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, avaintenjakelukeskus ei selvitä palvelun päänimeä hakemalla luettelossa olevista toimialuepuuryhmistä. Jos avaintenjakelukeskus ei pysty selvittämään palvelun päänimeä, koska nimeä ei löydy, järjestelmä saattaa käyttää NTLM-todennusta.
+
+Johdonmukaisen toiminnan takaamiseksi tätä käytäntöasetusta on tuettava ja se on määritettävä samalla tavalla kaikissa toimialueen ohjauskoneissa.</string>
+      <string id="emitlili">Tarjoa aiempien kirjautumisten tiedot asiakastietokoneille</string>
+      <string id="emitlili_explain">Tämä käytäntöasetus määrittää, tarjoaako toimialueen ohjauskone aiempien kirjautumisten tiedot asiakastietokoneille.
+
+Jos otat tämän käytäntöasetuksen käyttöön, toimialueen ohjauskone tarjoaa tiedot aiemmista kirjautumisista.
+
+Jotta Windowsin kirjautuminen voi hyödyntää tätä toimintoa, myös Windowsin osien Windowsin kirjautumisvaihtoehdot -solmun alla olevan Näytä käyttäjän kirjautumisen aikana tietoja aiemmista kirjautumisista -käytäntöasetuksen on oltava käytössä.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, toimialueen ohjauskone ei tarjoa aiempien kirjautumisten tietoja, ellei Näytä käyttäjän kirjautumisen aikana tietoja aiemmista kirjautumisista -käytäntöasetus ole käytössä.
+
+Huomautus: aiempien kirjautumisten tiedot tarjotaan vain, jos toimialueen toimintotaso on Windows Server 2008. Jos toimialueen toimintotaso on Windows Server 2003, Windows 2000 (natiivi) tai Windows 2000 (yhdistelmä), toimialueen ohjauskoneet eivät voi tarjota aiempien kirjautumisten tietoja. Tässä tapauksessa tämän käytäntöasetuksen käyttöönotolla ei ole mitään vaikutusta.
+
+</string>
+      <string id="CbacAndArmor">Avaintenjakelukeskus tukee väitteitä, yhdistelmätodennusta ja Kerberos-suojausta</string>
+      <string id="CbacAndArmor_explain">Tällä käytäntöasetuksella voit määrittää toimialueen ohjauskoneen tukemaan väitteitä, dynaamisen käyttöoikeuksien valvonnan yhdistelmätodennusta sekä Kerberos-suojausta Kerberos-todennuksen avulla.
+
+Jos otat tämän käytäntöasetuksen käyttöön, asiakastietokoneet, jotka tukevat väitteitä, dynaamisen käyttöoikeuksien valvonnan yhdistelmätodennusta sekä Kerberos-suojausta, käyttävät tätä toimintoa Kerberos-todennusviesteissä. Tämä käytäntö tulisi ottaa käyttöön kaikissa toimialueen ohjauskoneissa – näin voidaan varmistaa käytännön johdonmukainen käyttö koko toimialueessa. 
+
+Jos käytäntöasetus poistetaan käytöstä tai sitä ei määritetä, toimialueen ohjauskone ei tue väitteitä, yhdistelmätodennusta tai suojausta.
+
+Jos määrität Ei tuettu -asetuksen, toimialueen ohjauskone ei tue väitteitä, yhdistelmätodennusta tai suojausta. Tämä on oletustoiminta toimialueen ohjauskoneille, joissa on Windows Server 2008 R2 tai sitä vanhempi käyttöjärjestelmä.
+
+Huomautus: tämän avaintenjakelukäytännön seuraavat asetukset otetaan käyttöön vain, kun Kerberos-asiakas tukee väitteitä, yhdistelmätodennusta ja Kerberos-suojausta -Kerberos-ryhmäkäytäntö on otettu käyttöön tuetuissa järjestelmissä. Jos tätä Kerberos-käytäntöasetusta ei oteta käyttöön, Kerberos-todentamissanomat eivät käytä näitä ominaisuuksia.  
+
+Jos määrität asetukseksi Tuettu, toimialueen ohjauskone tukee väitteitä, yhdistelmätodennusta ja Kerberos-suojausta. Toimialueen ohjauskone ilmoittaa Kerberos-asiakastietokoneille, että toimialue tukee väitteitä, dynaamisen käyttöoikeuksien valvonnan yhdistelmätodennusta sekä Kerberos-suojausta. 
+
+Toimialueen toimintatason vaatimukset
+Jos toimialueen toimintataso on Windows Server 2008 R2 tai aiempi ja käytössä on Tarjoa väitteet aina- ja Hylkää suojaamattomat todennuspyynnöt -asetukset, toimialueen ohjauskone toimii kuin Tuettu-asetus olisi valittuna. 
+
+Kun toimialueen toimintataso on Windows Server 2012, toimialueen ohjauskone ilmoittaa Kerberos-asiakastietokoneille, että toimialue tukee väitteitä, dynaamisen käyttöoikeuksien valvonnan yhdistelmätodennusta sekä Kerberos-suojausta.
+   - Jos määrität Tarjoa väitteet aina -asetuksen, toimialueen ohjauskoneet palauttavat aina myös väitteet tileille sekä tukevat FAST-todentamisen ilmoittamisen RFC-toimintoja.
+   - Jos määrität Hylkää suojaamattomat todennuspyynnöt -asetuksen, toimialueen ohjauskoneet hylkäävät suojaamattomat Kerberos-viestit.
+
+Varoitus: jos määrität Hylkää suojaamattomat todennuspyynnöt -asetuksen, Kerberos-suojausta tukemattomia asiakastietokoneita ei voida todentaa toimialueen ohjauskoneeksi.
+
+Toiminnon tehokkuus voidaan varmistaa ottamalla käyttöön riittävästi väitteitä, dynaamisen käyttöoikeuksien valvonnan yhdistelmätodennusta sekä Kerberos-suojausta tukevia toimialueen ohjauskoneita, jotta ne voivat käsitellä todennuspyynnöt. Jos tätä käytäntöä tukevia toimialueen ohjauskoneita ei ole tarpeeksi, järjestelmässä esiintyy todennusvirheitä, kun dynaamista käyttöoikeuksien valvontaa tai Kerberos-suojausta vaaditaan (Tuettu-vaihtoehto on otettu käyttöön).
+
+Vaikutus toimialueen ohjauskoneen suorituskykyyn, kun tämä käytäntöasetus on käytössä:
+   - Ylimääräisten viestien lähettäminen edellyttää suojattua Kerberos-toimialueiden toimintojen tunnistamista.
+   - Väitteet ja dynaamisen käyttöoikeuksien valvonnan yhdistelmätodennus kasvattaa viestin kokoa ja tekee siitä monimutkaisemman. Tämä pidentää käsittelyaikaa ja suurentaa Kerberos-palvelulippujen kokoa.
+   - Kerberos-suojaus salaa Kerberos-viestit kokonaan sekä allekirjoittaa Kerberos-virheet. Tämä pidentää käsittelyaikaa, mutta ei muuta palvelulippujen kokoa.
+</string>
+      <string id="NoCbacAndArmor">Ei tuettu</string>
+      <string id="MixModeCbacAndArmor">Tuettu</string>
+      <string id="FullModeCbacAndArmor">Tarjoa väitteet aina</string>
+      <string id="FullModeCbacAndRequireArmor">Hylkää suojaamattomat todennuspyynnöt</string>
+      <string id="TicketSizeThreshold">Varoitus suurista Kerberos-lipuista</string>
+      <string id="TicketSizeThreshold_explain">Tämän käytäntöasetuksen avulla voit määrittää Kerberos-lippujen koon, joka käynnistää varoitustapahtuman Kerberos-todennuksen yhteydessä. Lippujen kokovaroitukset kirjataan järjestelmälokiin.
+
+Jos otat tämän käytäntöasetuksen käyttöön, voit määrittää Kerberos-lippujen raja-arvon, joka käynnistää varoitustapahtumat. Jos raja-arvo on liian suuri, todentamisvirheitä saattaa esiintyä myös silloin, kun varoitustapahtumia ei kirjata lokiin.  Jos raja-arvo on liian pieni, lokiin saatetaan kirjata niin paljon lippuvaroituksia, että niitä ei ole hyödyllistä analysoida. Arvon pitäisi olla sama kuin Kerberos-käytännössä Määritä Kerberoksen SSPI-kontekstitunnuksen puskurin enimmäiskoko tai pienin ympäristössä käytettävä MaxTokenSize, jos järjestelmässä ei käytetä ryhmäkäytäntöä.
+      
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, raja-arvoksi määritetään oletusarvoisesti 12 000 tavua. Tämä on Kerberoksen MaxTokenSize-oletusasetus Windows 7:ssä, Windows Server 2008 R2:ssa ja tätä aiemmissa versioissa.
+
+</string>
+      <string id="RequestCompoundId">Pyydä yhdistelmätodennusta</string>
+      <string id="RequestCompoundId_explain">Tämän käytäntöasetuksen avulla voit määrittää toimialueen ohjauskoneen pyytämään yhdistelmätodennusta.
+
+Huomautus: jotta toimialueen ohjauskone voi pyytää yhdistelmätodennusta, Avaintenjakelukeskus tukee väitteitä, yhdistelmätodennusta ja Kerberos-suojausta -ryhmäkäytännön on oltava määritettynä ja käytössä. 
+
+Jos otat tämän käytäntöasetuksen käyttöön, toimialueen ohjauskoneet pyytävät yhdistelmätodennusta. Palautettu palvelulippu sisältää yhdistelmätodennuksen vain, jos tili on määritetty eksplisiittisesti. Tämä käytäntöasetus on otettava käyttöön kaikissa toimialueen ohjauskoneissa, jotta voidaan varmistaa käytännön johdonmukainen käyttö koko toimialueessa. 
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, toimialueen ohjauskoneet palauttavat palveluliput, jotka sisältävät yhdistelmätodennuksen aina, kun asiakas lähettää yhdistelmätodennuspyynnön tilin kokoonpanosta huolimatta.
+
+</string>
+      <string id="PKINITFreshness">Avaintenjakelukeskuksen PKInit Freshness -laajennuksen tuki</string>
+      <string id="PKINITFreshness_explain">PKInit Freshness -laajennus edellyttää Windows Server 2016 -toimialueen toimintatasoa (DFL). Jos toimialueen ohjauskoneen toimialue ei ole vähintään tasoa Windows Server 2016 DFL, tätä käytäntöä ei sovelleta.
+
+Tämän käytäntöasetuksen avulla voit määrittää toimialueen ohjauskoneen tukemaan PKInit Freshness -laajennusta.
+
+Jos otat tämän käytäntöasetuksen käyttöön, seuraavat asetukset ovat tuettuja:
+
+Tuettu: PKInit Freshness -laajennus on tuettu pyydettäessä. PKInit Freshness -laajennukseen onnistuneesti todennetut Kerberos-asiakkaat saavat julkisen avaimen käyttäjätietojen tuoreen SID-tunnuksen.
+
+Pakollinen: Onnistuneeseen todennukseen tarvitaan PKInit Freshness -laajennus. PKInit Freshness -laajennusta tukemattomat Kerberos-asiakkaat epäonnistuvat todennuksessa aina käyttäessään julkisen avaimen tunnistetietoja.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai jätät sen määrittämättä, toimialueen ohjauskone ei koskaan tarjoa käyttöön PKInit Freshness -laajennusta eikä hyväksy kelvollisia todennuspyyntöjä tarkistamatta tuoreutta. Käyttäjät eivät saa koskaan julkisen avaimen käyttäjätietojen tuoretta SID-tunnusta.
+</string>
+      <string id="NoPKINITFreshness">Poissa käytöstä</string>
+      <string id="SupportPKINITFreshness">Tuettu</string>
+      <string id="RequirePKINITFreshness">Pakollinen</string>
+      <string id="PKINITHashAlgorithmConfiguration">Määritä varmenteen kirjautumisen hajautusalgoritmit</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Tämä käytäntöasetus ohjaa Kerberos-asiakkaan varmenteen todentamisen aikana käyttämiä hajautus- tai tarkistussumma-algoritmeja.
+
+Jos otat tämän käytännön käyttöön, voit määrittää kullekin algoritmille yhden neljästä tilasta:
+
+-Jos valitset Oletus-asetuksen, algoritmi asetetaan suositeltuun tilaan.
+
+-Tuettu-vaihtoehto mahdollistaa algoritmin käytön. Oletusarvoisesti käytöstä poistettujen algoritmien ottaminen käyttöön saattaa heikentää suojausta.
+
+-Tarkastettu-vaihtoehto mahdollistaa algoritmin käytön ja raportoi tapahtuman (ID 309) aina, kun sitä käytetään. Tämä tila on tarkoitettu varmistamaan, että algoritmi ei ole käytössä ja että se voidaan poistaa käytöstä turvallisesti.
+
+-Ei tuettu -vaihtoehto poistaa algoritmin käytön käytöstä. Tämä tila on tarkoitettu algoritmeille, joiden katsotaan olevan epäluotettavia.
+
+Jos poistat tämän käytännön käytöstä tai et määritä sitä, kukin algoritmi käyttää Oletus-tilaa.
+Lisätietoja Windowsin Kerberos-asiakkaan tukemista hajautus- ja tarkistussumma-algoritmeista sekä niiden oletustiloista on osoitteessa https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Tämän asetuksen muodostamat tapahtumat: 309, 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Oletus</string>
+      <string id="PKINITHashAlgorithm_Supported">Tuettu</string>
+      <string id="PKINITHashAlgorithm_Audited">Tarkastetut</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Ei tuettu</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Tila:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Toimialuepuuryhmät, joista etsitään</label>
+        </textBox>
+        <text>Käyttö:</text>
+        <text>Anna luettelo toimialuepuuryhmistä, joista etsitään, kun tämä käytäntö on käytössä.</text>
+        <text>Käytä täydellisen toimialuenimen nimeämiskäytäntöä.</text>
+        <text>Erottele hakumerkinnät puolipisteen (;) avulla.</text>
+        <text>Tiedot:</text>
+        <text>Nykyistä toimialuepuuryhmää ei tarvitse olla luettelossa, koska toimialuepuuryhmän hakujärjestys käyttää ensin yleistä luetteloa ja etsii sitten määritetyssä järjestyksessä.</text>
+        <text>Sinun ei tarvitse luetella toimialuepuuryhmän kaikkia toimialueita erikseen.</text>
+        <text>Jos luettelossa on luotettava toimialuepuuryhmä, etsitään kaikista kyseisen toimialuepuuryhmän toimialueista.</text>
+        <text>Parhaan suorituskyvyn saat, kun asetat toimialuepuuryhmät luetteloon haun onnistumistodennäköisyyden järjestyksessä.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Väitteiden, dynaamisen käyttöoikeuksien valvonnan yhdistelmätodennuksen ja Kerberos-suojauksen asetukset:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Lipun koon raja-arvo</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">PKInit Freshness -laajennuksen asetukset:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

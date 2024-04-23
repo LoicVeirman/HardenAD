@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>表示名をここに入力する</displayName>
+  <description>説明をここに入力する</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">分散 COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">ローカルのアクティベーション セキュリティ チェックの例外を許可する</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">ローカル コンピューターの管理者が [アクティベーション セキュリティ チェックの例外を定義する] の一覧に追加できるよう指定できます。
+
+このポリシー設定を有効にすると、[アクティベーション セキュリティ チェックの例外を定義する] ポリシー (有効な場合) で DCOM サーバー アプリケーション ID (appid) のための明示的なエントリが見つからなかった場合、ローカルで構成された一覧でエントリが検索されます。
+
+このポリシー設定を無効にすると、ローカルで構成された DCOM アクティベーション セキュリティ チェックの例外の一覧は参照されません。
+
+このポリシー設定を未構成にすると、[アクティベーション セキュリティ チェックの例外を定義する] ポリシーが構成されていない場合、ローカルで構成された例外の一覧のみが参照されます。
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">アクティベーション セキュリティ チェックの例外を定義する</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">DCOM アクティベーション セキュリティ チェックから除外される DCOM サーバー アプリケーションの ID (appid) の一覧を表示、変更できます。DCOM では、グループ ポリシーのこのポリシー設定で構成される一覧およびローカル コンピューターの管理者の操作による一覧の 2 つの一覧が使用されます。このポリシー設定が構成されている場合、[ローカルのアクティベーション セキュリティ チェックの例外を許可する] ポリシーが有効な場合を除き、DCOM では 2 つ目の一覧は無視されます。
+
+このポリシーに追加される DCOM サーバーの appid は波かっこの形式で一覧表示される必要があります。例: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}。存在しない appid や形式の正しくない appid を入力した場合でも、エラーの確認はされずに、一覧に追加されます。
+
+このポリシー設定を有効にすると、グループ ポリシーの設定で定義された DCOM アクティベーション セキュリティ チェックの例外の一覧を表示、変更できます。appid をこの一覧に追加し、その値を 1 に設定した場合、その DCOM サーバーに対してアクティベーション セキュリティ チェックは強制されません。appid をこの一覧に追加し、その値を 0 に設定した場合、ローカルの設定にかかわらず、その DCOM サーバーに対して常にアクティベーション セキュリティ チェックが強制されます。
+
+このポリシー設定を無効にすると、グループ ポリシーで定義された appid の例外の一覧は削除され、ローカル コンピューターの管理者が定義した一覧が使用されます。
+
+このポリシー設定を未構成にすると、ローカル コンピューターの管理者が定義した appid の例外の一覧が使用されます。
+
+注: 
+
+DCOM アクティベーション セキュリティ チェックは DCOM サーバー プロセスの開始後、オブジェクト アクティベーション要求がサーバー プロセスにディスパッチされる前に行われます。このアクセス チェックは、DCOM サーバーのカスタムの起動許可のセキュリティ記述子が存在する場合はそれに対して、存在しない場合は構成されている既定値に対して行われます。
+
+DCOM サーバーのカスタムの起動許可に明示的な DENY エントリが含まれている場合、DCOM サーバー プロセスが開始されて実行されていた場合に指定されたユーザーに対して成功したオブジェクト アクティベーションが、現在エラーが発生する可能性があることを意味する可能性があります。この場合、DCOM サーバーのカスタムの起動許可の設定を正しいセキュリティ設定に再構成するのが正しい操作ですが、短期的にはこのポリシー設定をアプリケーション互換性の展開の補助として使用することもできます。
+
+例外の一覧に追加される DCOM サーバーは、カスタムの起動許可にどのユーザーやグループに対しても特定の LocalLaunch、RemoteLaunch、LocalActivate、または RemoteActivateonly の許可または拒否エントリが含まれない場合に限り、例外として扱われます。さらに、この一覧に追加された DCOM サーバー Appid は、サーバーの 32 ビットおよび存在する場合は 64 ビットの両バージョンに適用されることに注意してください。</string>
+      <string id="DCOMAppCompatPolicies">アプリケーションの互換性の設定</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>DCOM サーバー appid と、下に一覧表示されている動作の値の組み合わせを入力してください。</text>
+        <text>appid には、始め波かっこと終わり波かっこが含まれている必要があります。</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">DCOM サーバーを例外の一覧に追加または削除: </listBox>
+        <text> </text>
+        <text>値:</text>
+        <text>0 = 指定された appid はアクティベーション セキュリティ チェックから除外されない</text>
+        <text>1 = 指定された appid はアクティベーション セキュリティ チェックから除外される</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Grupprincipdefinitioner för filklassificeringsinfrastrukturen</displayName>
+  <description></description>
+  <resources>
+    <stringTable>
+      <string id="AdrCat">Hjälp vid nekad åtkomst</string>
+      <string id="FciCat">Filklassificeringsinfrastruktur</string>
+      <string id="EnableManualUXDisplay">Filklassificeringsinfrastruktur: Visa fliken Klassificering i Utforskaren</string>
+      <string id="EnableShellExecuteFileStreamCheck">Aktivera hjälp vid nekad åtkomst på klienten för alla filtyper</string>
+      <string id="EnableShellExecuteFileStreamCheck_Descr">Den här grupprincipinställningen bör anges på alla Windows-klienter för att aktivera hjälp vid nekad åtkomst för alla filtyper</string>
+      <string id="EnableManualUXExplain">Den här principinställningen bestämmer huruvida fliken Klassificering visas i dialogrutan Egenskaper i Utforskaren.
+
+På fliken Klassificering kan användarna manuellt klassificera filer genom att välja egenskaper i en lista. Administratörer kan definiera egenskaper för företaget genom att använda Grupprincip och komplettera dem med egenskaper som har definierats på enskilda filservrar genom att använda Filklassificeringsinfrastruktur, som ingår i rolltjänsten File Server Resource Manager.
+
+Om du aktiverar den här principinställningen visas fliken Klassificering.
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen döljs fliken Klassificering.</string>
+      <string id="CentralClassificationListDisplay">Filklassificeringsinfrastruktur: Ange egenskaper i klassificeringslistan</string>
+      <string id="CentralClassificationListExplain">Den här principinställningen bestämmer vilka egenskaper som är tillgängliga för att klassificera filer på de datorer som påverkas.
+
+Administratörer kan definiera egenskaperna för företaget genom att använda AD DS (Active Directory Domain Services) och sedan gruppera dessa egenskaper i listor. Administratörer kan komplettera dessa egenskaper på enskilda filservrar genom att använda Filklassificeringsinfrastruktur, som ingår i rolltjänsten File Server Resource Manager.
+
+Om du aktiverar den här principinställningen kan du välja vilken lista med egenskaper som är tillgänglig för klassificering på de datorer som påverkas. 
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen hämtas standardegenskaperna från den globala resursegenskapslistan i AD DS.</string>
+      <string id="AccessDeniedConfigurationDisplay">Anpassa meddelande vid fel för nekad åtkomst (Customize message for Access Denied errors)</string>
+      <string id="AccessDeniedConfigurationExplain">Den här principinställningen innehåller meddelandet som användarna ser när de nekas åtkomst till en fil eller mapp. Du kan anpassa meddelandet vid nekad åtkomst och infoga ytterligare text och länkar. Du kan även ge användarna möjlighet att skicka ett e-postmeddelande för att begära åtkomst till filen eller mappen som de inte fick använda.
+
+Om du aktiverar den här principinställningen får användarna ett anpassat meddelande om nekad åtkomst från filservrarna där den här principinställningen tillämpas. 
+
+Om du inaktiverar den här principinställningen får användarna ett standardmeddelande om nekad åtkomst som inte ger tillgång till några av de funktioner som den här principinställningen styr, oavsett konfigurationen på filservern.
+
+Om du inte konfigurerar den här principinställningen får användarna ett standardmeddelande om nekad åtkomst om inte filservern är inställd för att visa ett anpassat meddelande om nekad åtkomst. Som standard får användarna ett standardmeddelande om nekad åtkomst.
+
+</string>
+      <string id="FileNotFoundConfigurationDisplay">Anpassa meddelande vid fel: Fil hittades inte (Customize message for File Not Found errors)</string>
+      <string id="FileNotFoundConfigurationExplain">Den här principinställningen innehåller meddelandet som användarna ser när felet Det gick inte att hitta filen inträffar. Du kan anpassa meddelandet som visas när filer inte hittas och infoga ytterligare text och länkar. Du kan även ge användarna möjlighet att skicka ett e-postmeddelande för att be om hjälp. Då kan en administratör hjälpa till med filer som inte går att hitta som uppkommer på grund av ett användare inte har läsbehörighet till en mapp där åtkomstbaserad uppräkning har aktiverats.
+
+Om du aktiverar den här principinställningen får användarna ett anpassat meddelande om att en fil inte går att hitta från filservrarna där den här principinställningen tillämpas.
+
+Om du inaktiverar den här principinställningen får användarna ett standardmeddelande om att en fil inte går att hitta som inte ger tillgång till några av de funktioner som den här principinställningen styr, oavsett konfigurationen på filservern.
+
+Om du inte konfigurerar den här principinställningen får användarna ett standardmeddelande om att en fil inte går att hitta om inte filservern är inställd för att visa ett anpassat meddelande om att en fil inte går att hitta. Som standard får användarna ett standardmeddelande om att en fil inte går att hitta.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CentralClassificationListPresentation">
+        <textBox refId="CentralClassificationListTextElement">
+          <label>Listan Klassificeringsegenskaper:</label>
+        </textBox>
+      </presentation>
+      <presentation id="AccessDeniedConfigurationPresentation">
+        <text>Följande meddelande visas för användare som nekas åtkomst:</text>
+        <multiTextBox refId="ErrorMessageText"/>
+        <checkBox refId="AllowEmailRequestsCheck" defaultChecked="false">Ge användarna möjlighet att be om hjälp</checkBox>
+        <text>Lägg till följande text i slutet av e-postmeddelandet:</text>
+        <multiTextBox refId="EmailMessageText"/>
+        <text> </text>
+        <text>E-postmottagare:</text>
+        <checkBox refId="PutDataOwnerOnToCheck" defaultChecked="true">Mappägare</checkBox>
+        <checkBox refId="PutAdminOnToCheck" defaultChecked="true">Filserveradministratör</checkBox>
+        <textBox refId="AdditonalEmailToText">
+          <label>Ytterligare mottagare:</label>
+        </textBox>
+        <text> </text>
+        <text>E-postinställningar:</text>
+        <checkBox refId="IncludeDeviceClaimsCheck" defaultChecked="true">Inkludera enhetsförsäkringar</checkBox>
+        <checkBox refId="IncludeUserClaimsCheck" defaultChecked="true">Inkludera användaranspråk</checkBox>
+        <checkBox refId="GenerateLogCheck" defaultChecked="true">Logga e-postmeddelanden i händelseloggen Program och Tjänster</checkBox>
+      </presentation>
+      <presentation id="FileNotFoundConfigurationPresentation">
+        <text>Inställningar för meddelandet Det gick inte att hitta filen</text>
+        <text>Kompletterande text till meddelandet Det gick inte att hitta filen:</text>
+        <multiTextBox refId="ErrorMessageText"/>
+        <checkBox refId="AllowEmailRequestsCheck" defaultChecked="false">Ge användarna möjlighet att be om hjälp</checkBox>
+        <text>Kompletterande text till e-postmeddelandet Det gick inte att hitta filen:</text>
+        <multiTextBox refId="EmailMessageText"/>
+        <text> </text>
+        <text>E-postmottagare</text>
+        <checkBox refId="PutDataOwnerOnToCheck" defaultChecked="true">Mappägare</checkBox>
+        <checkBox refId="PutAdminOnToCheck" defaultChecked="true">Filserveradministratör</checkBox>
+        <textBox refId="AdditonalEmailToText">
+          <label>Ytterligare mottagare:</label>
+        </textBox>
+        <text> </text>
+        <text>E-postinställningar</text>
+        <checkBox refId="IncludeDeviceClaimsCheck" defaultChecked="true">Inkludera enhetsförsäkringar</checkBox>
+        <checkBox refId="IncludeUserClaimsCheck" defaultChecked="true">Inkludera användaranspråk</checkBox>
+        <checkBox refId="GenerateLogCheck" defaultChecked="true">Logga e-postmeddelanden i loggarna Program och Tjänster</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

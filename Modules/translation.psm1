@@ -30,13 +30,7 @@ function Get-GroupNameFromSID {
     catch {
         Write-Host "An error occurred while searching for the group with SID '$GroupSID'."
         $inputValid = $false
-        while (-not $inputValid) {
-            $userInput = Read-Host "Please enter the group name manually:"
-            $confirmation = Read-Host "Confirm that '$userInput' is the group name. (y/n)"
-            if ($confirmation.ToLower() -eq "y") {
-                $inputValid = $true
-            }
-        }
+        $userInput  = $null
         return $userInput
     }
 }
@@ -49,7 +43,7 @@ function Get-GroupNameFromSID {
 ## Version: 01.01.000                                           ##
 ##    Note: added XML formating function                        ##
 ##################################################################
-function Set-Translation {
+function Set-TranslationOld {
     param (
         [Parameter(Mandatory = $true)]
         [string]$TasksSequence,

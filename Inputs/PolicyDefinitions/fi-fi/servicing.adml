@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Windows Servicing -käytännöt</displayName>
+  <description>Windows Servicing -käytännöt</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">Määritä asetukset valinnaisten osien asennukseen ja korjaamiseen</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+Tämä käytäntöasetus määrittää verkkosijainnit, joita käytetään korjaamiseen käyttöjärjestelmän vioittuessa sekä sellaisten valinnaisten ominaisuuksien käyttöönottoon, joiden käsiteltävät tiedostot on poistettu.
+
+Jos otat tämän käytäntöasetuksen käyttöön ja määrität uuden sijainnin, tässä sijainnissa olevia tiedostoja käytetään korjaamiseen käyttöjärjestelmän vioittuessa sekä sellaisten valinnaisten ominaisuuksien käyttöönottoon, joiden käsiteltävät tiedostot on poistettu. Kirjoita uuden sijainnin täydellinen polku Alternate source file path (Vaihtoehtoinen lähdetiedoston polku) -ruutuun. Voit määrittää useita sijainteja, kun polut erotetaan toisistaan puolipisteellä. 
+
+Verkkosijainti voi olla joko kansio tai WIM-tiedosto. Jos kyseessä on WIM-tiedosto, sijaintia on tarkennettava etuliitteellä "wim:" ja siihen tulee sisältyä kuvan indeksi käytettäväksi WIM-tiedostossa. Esimerkki: "wim:\\server\share\install.wim:3".
+
+Jos poistat tämän käytäntöasetuksen käytöstä, et määritä sitä tai vaadittavia tiedostoja ei löydy siinä määritetystä sijainnista, tiedostot ladataan Windows Update -sivustosta, jos se on sallittu tietokoneen käytäntöasetuksissa.
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>Alternate source file path (Vaihtoehtoinen lähdetiedoston polku)</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">Älä koskaan yritä käsiteltävien tiedostojen lataamista Windows Update -sivustosta</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">Lataa korjaussisältö ja valinnaiset ominaisuudet suoraan Windows Updatesta Windows Server Update Servicesin (WSUS) sijaan</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

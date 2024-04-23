@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Nastavení SAM</displayName>
+  <description>Nastavení konfigurace pro Správce zabezpečení účtů (SAM)</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM – připojení</string>
+      <string id="SecurityAccountManager">Správce zabezpečení účtů (SAM)</string>
+      <string id="SamNGCKeyROCAValidation">Konfigurovat ověření WHfB klíčů během ověřování kvůli ohrožení útokem ROCA</string>
+      <string id="SamNGCKeyROCAValidationNone">Při použití ignorovat klíče WHfB ohrožené útokem ROCA</string>
+      <string id="SamNGCKeyROCAValidationAudit">Při použití auditovat klíče WHfB ohrožené útokem ROCA</string>
+      <string id="SamNGCKeyROCAValidationBlock">Při použití blokovat klíče WHfB ohrožené útokem ROCA</string>
+      <string id="SamNGCKeyROCAValidation_explain">Toto nastavení zásad umožňuje konfigurovat, jak řadiče domény zpracovávají klíče Windows Hello pro firmy (WHfB), které jsou chybou zabezpečení "Return of Coppersmith's Attack" (ROCA).
+
+Další informace o chybě zabezpečení ROCA najdete v tématu:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+Jestli toto nastavení povolíte, jsou podporované následující možnosti:
+
+Ignorovat : při ověřování nebude řadič domény Hledat v ROCA chybě zabezpečení žádné WHfB klíče.
+
+Audit: při ověřování bude řadič domény generovat události auditování pro WHfB klíče, které jsou předmětem chyby zabezpečení ROCA (ověřování se bude přesto zdaří).
+
+Blok: při ověřování zablokuje řadič domény použití WHfB klíčů, které jsou uvedené v chybě zabezpečení ROCA (ověřování se nezdaří).
+
+Toto nastavení platí jenom pro řadiče domény.
+
+Pokud není nakonfigurováno, řadiče domény budou mít výchozí nastavení pro použití místní konfigurace. Výchozí místní konfigurace je audit.
+
+Není nutné, aby se změny tohoto nastavení projevily.
+
+Poznámka: abyste předešli neočekávanému výpadku, neměli byste toto nastavení nastavit na Zablokovat, aby se zabránilo příslušným omezením, například k opravě zranitelného čipu TPM.
+
+Další informace jsou k dispozici na adrese https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Možnosti, jak pracovat s klíči WHfB ohroženými útokem ROCA:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

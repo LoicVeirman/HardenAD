@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>buraya görünen adı girin</displayName>
+  <description>buraya açıklamayı girin</description>
+  <resources>
+    <stringTable>
+      <string id="W32TIME_CONFIG_EXPLAIN">Bu ilke ayarı, RODC'ler dahil etki alanı denetleyicileri için Windows Zaman Hizmeti (W32time) için saat disiplinini ve Genel değerleri belirtmenizi sağlar.
+
+Bu ilke ayarı etkin olduğunda hedef makinedeki W32time Hizmeti burada belirtilen ayarları kullanır. Aksi takdirde, yerel makinelerdeki hizmet, yerel olarak yapılandırılmış ayar değerlerini kullanır.
+
+Tek tek parametreler, parametre değerlerinin birleşimi ve bayrakların açıklaması hakkında daha fazla bilgi için https://go.microsoft.com/fwlink/?linkid=847809 adresine gidin.
+
+        FrequencyCorrectRate
+Bu parametre, W32time yerel saat frekansını düzeltme oranını denetler. Daha düşük değerler daha büyük düzeltmelere neden olur, daha büyük değerler ise daha küçük düzeltmelere neden olur. Varsayılan: 4 (sayısal).
+
+        HoldPeriod
+Bu parametre, sonraki zaman örneklerinin potansiyel ani yükselişler olarak değerlendirilmesinden önce kaç adet tutarlı zaman örneğinin istemci bilgisayar tarafından alınması gerektiğini belirtir. Varsayılan: 5
+
+        LargePhaseOffset
+Bu zaman örneği, istemcinin bilgisayarının yerel saatinden LargePhaseOffset kadar farklıysa yerel saati kayda değer ölçüde farklılık gösterdiği veya başka bir deyişle ani yükseliş gösterdiği kabul edilir. Varsayılan: 50.000.000 100 nano saniye birimi (ns) veya 5 saniye.
+
+        MaxAllowedPhaseOffset
+Alınan bir yanıt, bu parametre değerinden daha büyük bir zaman varyasyonuna sahipse W32time istemcinin bilgisayarının yerel saatini anında Ağ Zaman Protokolü (NTP) sunucusu tarafından belirlenen doğru saate ayarlar. Zaman varyasyonu bu değerden düşükse istemci bilgisayarın yerel saati kademeli olarak düzeltilir: Varsayılan: 300 saniye.
+
+        MaxNegPhaseCorrection
+MaxNegPhaseCorrection değerinden daha büyük bir farka sahip olan geçmişteki bir saati belirten bir zaman örneği alınırsa (istemci bilgisayarın yerel saatine kıyasla) zaman örneği atılır. Varsayılan: 172.800 saniye.
+
+       MaxPosPhaseCorrection
+MaxPosPhaseCorrection değerinden daha büyük bir farka sahip olan gelecekteki bir saati belirten bir zaman örneği alınırsa (istemci bilgisayarın yerel saatine kıyasla) zaman örneği atılır. Varsayılan: 172.800 saniye.
+
+        PhaseCorrectRate
+Bu parametre, NTP sunucusundan gelen ve doğru olarak kabul edilen zaman örnekleriyle farkı kapatmak için istemci bilgisayarın yerel saatinin W32time tarafından ne kadar hızlı düzeltileceğini denetler. Daha düşük değerler saatin daha hızlı düzeltilmesine, daha büyük değerler ise saatin daha yavaş düzeltilmesine neden olur. Varsayılan: 7 (sayısal).
+
+        PollAdjustFactor
+Bu parametre, W32time tarafından yoklama aralıklarının ne kadar hızlı değiştirileceğini denetler. Yanıtların doğru olduğu değerlendirildiğinde yoklama aralığı otomatik olarak uzar. Yanıtların hatalı olduğu kabul edildiğinde yoklama aralığı otomatik olarak kısalır. Varsayılan: 5 (sayısal).
+
+        SpikeWatchPeriod
+Bu parametre, bu örneklerin doğru olarak kabul edilmesinden önce kaç adet LargePhaseOffset değerinden daha büyük zaman zaman farklarına sahip olan örneğin alındığını belirtir. SpikeWatchPeriod, HoldPeriod ile birlikte kullanılarak bir eş cihazdan dönen, seyrek ortaya çıkan hatalı zaman örneklerini elemek için kullanılır. Varsayılan: 900 saniye.
+
+        UpdateInterval
+Bu parametre, saat aşamalı olarak düzeltilirken W32time tarafından düzeltmeler arasında beklenecek süreyi belirtir. Aşamalı düzeltme yaptığında, hizmet saati biraz düzeltir, bu kadar süre bekler ve düzeltme tamamlanana kadar daha sonra başka bir düzeltmenin gerekli olup olmadığını denetler. Varsayılan 100 1/100 saniye birimi veya 1 saniye.
+
+        Genel parametreler:
+
+        AnnounceFlags
+Bu parametre, zaman hizmeti kullanılabilirliğinin NetLogon tarafından nasıl tanıtılacağını denetleyen bir bit maskesi değeridir. Varsayılan: 0x0a onaltılık
+
+        EventLogFlags
+Bu parametre, Olay Görüntüleyicisi Sistem Günlüğü'ne kaydedilebilecek özel olayları denetler. Varsayılan: 0x02 onaltılık bit maskesi.
+
+        LocalClockDispersion
+Bu parametre, NTP sunucusu tarafından bir zaman örneği isteyen istemcilere raporlanan maksimum hatayı saniye cinsinden belirtir. (Yalnızca NTP sunucusu yerel CMOS saatini kullandığında uygulanır) Varsayılan: 10 saniye.
+
+        MaxPollInterval
+Bu parametre maksimum yoklama aralığını denetler, bu da bir eş cihazın yoklamaları arasındaki maksimum süreyi belirtir. Varsayılan: 2 logaritmik tabanında 10 veya 1024 saniye (15'ten büyük olarak ayarlanmamalıdır.)
+
+        MinPollInterval
+Bu parametre, bir eş bilgisayarın yoklama aralıkları arasındaki minimum değeri tanımlayan minimum yoklama aralığını denetler. Varsayılan 2 logaritmik  tabanında 6 veya 64 saniye.
+
+       ClockHoldoverPeriod
+Bu parametre, bir sistem saatinin, bir zaman kaynağı ile eşitlemeye gerek duymadan nominal olarak doğruluğunu koruyabildiği maksimum saniyeyi belirtir. Bu zaman aralığı W32time tarafından, girdi sağlayıcılarının herhangi birinden yeni örnekler almadan geçerse W32time zaman kaynaklarının yeniden bulunmasını başlatır. Varsayılan: 7800 saniye.
+
+        RequireSecureTimeSyncRequests
+Bu parametre, DC'nin eski kimlik doğrulama protokollerini kullanan zaman eşitleme taleplerine yanıt verip vermeyeceğini denetler. Etkinleştirilirse (1 olarak ayarlanırsa), DC bu tür protokollerin taleplerine yanıt vermeyecektir. Varsayılan: 0 Boolean.
+
+        UtilizeSslTimeData
+Bu parametre, W32time tarafından yerel saati düzeltmek için makinedeki SSL trafiğinden hesaplanan zamanın kullanılıp kullanılmayacağını belirtir. Varsayılan. 1 (etkin) Boolean.
+
+        ClockAdjustmentAuditLimit
+Bu parametre, hedef makinedeki W32time hizmeti olay günlüğüne girilebilen en küçük yerel saat ayarlamasını belirtir. Varsayılan değer: milyonda 800 parça (PPM).
+
+        RODC parameters:
+
+        ChainEntryTimeout
+Bu parametre, girişin tarihinin geçmiş olduğunun değerlendirilmesinden önce zincirleme tablosunda kalabildiği maksimum süreyi belirtir. Süresi dolmuş girişler bir sonraki talep veya yanıt işlendiğinde kaldırılabilir. Varsayılan: 16 saniye.
+
+        ChainMaxEntries
+Bu parametre, zincirleme tablosunda izin verilen maksimum giriş sayısını denetler. Zincirleme tablosu doluysa ve süresi dolmuş girişlerden hiçbiri kaldırılamıyorsa gelen tüm istekler atılır. Varsayılan: 128 giriş.
+
+        ChainMaxHostEntries
+Bu parametre, belirli bir ana bilgisayar için zincirleme tablosu içinde izin verilen maksimum giriş sayısını denetler. Varsayılan: 4 giriş.
+
+        ChainDisable
+Bu parametre, zincirleme mekanizmasının devre dışı olup olmadığını denetler. Zincirleme devre dışıysa (0 olarak ayarlıysa) RODC herhangi bir etki alanı denetçisiyle eşitleme yapabilir ancak ana bilgisayarların parolaları önbelleğe alınmaz ve RODC, RODC ile eşitleyemez. Varsayılan: 0 Boolean.
+
+        ChainLoggingRate
+Bu parametre, başarılı ve başarısız zincirleme denemelerinin sayısını belirten bir olayın Olay Görüntüleyicisi içindeki Sistem günlüğüne hangi sıklıkta kaydedileceğini denetler. Varsayılan: 30 dakika.
+      </string>
+
+<string id="W32TIME_CONFIGURE_NTPCLIENT_EXPLAIN">Bu ilke ayarını Windows NTP İstemcisi denetleme parametreleri kümesini belirtir.
+
+Bu ilke ayarını etkinleştirirseniz, Windows NTP İstemcisi için aşağıdaki parametreleri belirtebilirsiniz.
+
+Devre dışı bırakır veya bu ilke ayarını yapılandırmazsanız, WIndows NTP İstemcisi her birinin aşağıdaki parametreleri varsayılan ayarları kullanır.
+
+NtpServer
+etki alanı adı sistemi (DNS) adını veya IP adresini bir NTP saat kaynağı. Bu değer """"bayrakları"" Bu ana bilgisayarın bayraklardan birini onaltılık bir bit maskesi nerede dnsName, bayraklar"" şeklinde olur. Daha fazla bilgi için NTP İstemci Grup İlkesi ayarları ile ilişkili Windows Zaman hizmeti Grup İlkesi ayarları Windows zaman bölümüne bakın. Varsayılan değer "", time.windows.com,0x09"". 
+
+Türü
+W32time kullandığı kimlik doğrulaması bu değer denetler. NT5DS varsayılan değerdir.
+
+CrossSiteSyncFlags
+bu değer, bir bit maskesi ifade edilen ne zaman kaynaklarının kendi sitesi dışında W32time seçer denetler. Olası değerler 0, 1 ve 2 arasındadır. Bu değer (yok) 0 olarak ayarlanması, istemcinin kendi sitesi dışında saati eşitlemek için kullanmamanız gerekir süreyi belirtir. Bu değer 1 (PdcOnly) olarak ayarlanması yalnızca bilgisayarlar, işlem yöneticisi rolleri başka etki alanlarındaki istemci kendi sitesi dışında bir ortağıyla zamanı eşitlemek sahipken eşitleme ortağı olarak kullanılabilmesi için birincil etki alanı denetleyicisi (PDC) benzetmesini olarak çalışmasını gösterir. 2 (Tümü) değerini ayarlama tüm eşitleme ortağı kullanılabileceğini gösterir. Bu değer NT5DS değeri ayarlanmamışsa göz ardı edilir. Varsayılan değer olan 2 ondalık (0x0onaltılık 2).
+
+ResolvePeerBackoffMinutes
+önceki deneme başarısız olduğunda bir DNS adı çözümlemesi deneme önce W32time bekleyeceği süreyi dakika olarak ifade edilen bu değer, denetler. Varsayılan değer 15 dakikadır.
+
+ResolvePeerBackoffMaxTimes
+bu değer W32time bulma işlemi yeniden başlatılmadan önce bir DNS adı çözümlemesi denemesi kaç kez denetler. Her zaman DNS ad çözümlemesi başarısız oldu, oturum açma iki kez önceki süre önce beklenecek süre. Varsayılan değer yedi denemesi toplamıdır.
+
+SpecialPollInterval
+bu NTP İstemci değeri saniye olarak, çağrı toplam özel bir yoklama aralığında kullanacak şekilde yapılandırıldığında ne sıklıkta el ile yapılandırılan zaman kaynağı yoklanır denetler. SpecialInterval bayrağı NTPServer ayarı etkinleştirilirse, istemci sık çağrı toplam yoklar nasıl belirlemek için MinPollInterval ve MaxPollInterval değerleri arasında bir değişken aralığı yerine SpecialPollInterval olarak ayarlandığından değeri kullanır. En yakın değer aralığın çekilen aralığında [MinPollInterval, MaxPollInterval], başka SpecialPollInterval olması gerekir. Varsayılan: 1024 saniye sayısı.
+
+EventLogFlags
+Olay Görüntüleyicisi'nde sistem günlüğüne kaydedilebilir olayları denetleyen bir bit maskesi bu bir değerdir. Bu değerin 0x1 olarak ayarlanması W32time zaman atlaması algılandığında bir olay oluşturacak gösterir. Bu değere ayarlamak için 0x2 W32time zaman kaynak değişiklik yapıldığında bir olay oluşturacak gösterir. Bir bit maskesi değeri olduğu için 0x3 ayarlama (0x1 ve 0x2 eklenmesi) her ikisi de atlar saat ve saat kaynağına değişiklikler kaydedilecek gösterir.
+      </string>
+      <string id="W32TIME_ENABLE_NTPCLIENT_EXPLAIN">Bu ilke ayarı, Windows NTP İstemcisi'nin etkin olup olmadığını belirtir.
+
+Windows NTP İstemcisi'ni etkinleştirerek, bilgisayarınızın kendi bilgisayar saatini diğer NTP sunucularıyla eşitleyebilirsiniz. Başka bir zaman sağlayıcısı kullanmaya karar verirseniz, bu hizmeti devre dışı bırakmak isteyebilirsiniz.
+
+Bu ilke ayarını etkinleştirirseniz yerel bilgisayar saatinin zamanı NTP sunucularıyla eşitlemesi için ayarlayabilirsiniz.
+
+Bu ilke ayarını devre dışı bırakırsanız ya da yapılandırmazsanız yerel bilgisayar saati zamanı NTP sunucularıyla eşitlemez.
+      
+      </string>
+      <string id="W32TIME_ENABLE_NTPSERVER_EXPLAIN">Bu ilke ayarı, Windows NTP Sunucusu'nun etkin olup olmadığını belirtmenizi sağlar.
+
+Bu ilke ayarını Windows NTP Sunucusu için etkinleştirirseniz bilgisayarınız  NTP isteklerini başka bilgisayarlardan hizmet verir.
+
+
+Bu ilke ayarını devre dışı bırakırsanız veya yapılandırmazsanız bilgisayarınız NTP isteklerine başka bilgisayarlardan hizmet vermez.
+
+
+
+</string>
+      <string id="W32TIME_POLICY_CONFIG">Genel Yapılandırma Ayarları</string>
+      <string id="W32TIME_POLICY_CONFIGURE_NTPCLIENT">Windows NTP İstemcisi'ni Yapılandır</string>
+      <string id="W32TIME_POLICY_ENABLE_NTPCLIENT">Windows NTP İstemcisi'ni Etkinleştir</string>
+      <string id="W32TIME_POLICY_ENABLE_NTPSERVER">Windows NTP Sunucusu'nu Etkinleştir</string>
+      <string id="W32TIME_ROOT">Windows Zaman Hizmeti</string>
+      <string id="W32TIME_TIMEPROVIDERS">Zaman Sağlayıcıları</string>
+      <string id="W32TIME_Type_AllSync">AllSync</string>
+      <string id="W32TIME_Type_NoSync">NoSync</string>
+      <string id="W32TIME_Type_NT5DS">NT5DS</string>
+      <string id="W32TIME_Type_Ntp">NTP</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="W32TIME_POLICY_CONFIG">
+        <text>Saat Bazlı Parametreler</text>
+        <decimalTextBox refId="W32TIME_FrequencyCorrectRate" defaultValue="4">FrequencyCorrectRate</decimalTextBox>
+        <decimalTextBox refId="W32TIME_HoldPeriod" defaultValue="5">HoldPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_LargePhaseOffset" defaultValue="50000000">LargePhaseOffset</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxAllowedPhaseOffset" defaultValue="300">MaxAllowedPhaseOffset</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxNegPhaseCorrection" defaultValue="172800">MaxNegPhaseCorrection</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxPosPhaseCorrection" defaultValue="172800">MaxPosPhaseCorrection</decimalTextBox>
+        <decimalTextBox refId="W32TIME_PhaseCorrectRate" defaultValue="1">PhaseCorrectRate</decimalTextBox>
+        <decimalTextBox refId="W32TIME_PollAdjustFactor" defaultValue="5">PollAdjustFactor</decimalTextBox>
+        <decimalTextBox refId="W32TIME_SpikeWatchPeriod" defaultValue="900">SpikeWatchPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_UpdateInterval" defaultValue="100">UpdateInterval</decimalTextBox>
+        <text>Genel Parametreler</text>
+        <decimalTextBox refId="W32TIME_AnnounceFlags" defaultValue="10">AnnounceFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_EventLogFlags" defaultValue="2">EventLogFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_LocalClockDispersion" defaultValue="10">LocalClockDispersion</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MaxPollInterval" defaultValue="10">MaxPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_MinPollInterval" defaultValue="6">MinPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ClockHoldoverPeriod" defaultValue="7800">ClockHoldoverPeriod</decimalTextBox>
+        <decimalTextBox refId="W32TIME_RequireSecureTimeSyncRequests" defaultValue="0">RequireSecureTimeSyncRequests</decimalTextBox>
+        <decimalTextBox refId="W32TIME_UtilizeSslTimeData" defaultValue="1">UtilizeSslTimeData</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ClockAdjustmentAuditLimit" defaultValue="800">ClockAdjustmentAuditLimit</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainEntryTimeout" defaultValue="16">ChainEntryTimeout</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainMaxEntries" defaultValue="128">ChainMaxEntries</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainMaxHostEntries" defaultValue="4">ChainMaxHostEntries</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainDisable" defaultValue="0">ChainDisable</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ChainLoggingRate" defaultValue="30">ChainLoggingRate</decimalTextBox>
+      </presentation>
+      <presentation id="W32TIME_POLICY_CONFIGURE_NTPCLIENT">
+        <textBox refId="W32TIME_NtpServer">
+          <label>NtpServer</label>
+          <defaultValue>time.windows.com,0x9</defaultValue>
+        </textBox>
+        <dropdownList refId="W32TIME_Type" noSort="true" defaultItem="2">Type</dropdownList>
+        <decimalTextBox refId="W32TIME_CrossSiteSyncFlags" defaultValue="2">CrossSiteSyncFlags</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ResolvePeerBackoffMinutes" defaultValue="15">ResolvePeerBackoffMinutes</decimalTextBox>
+        <decimalTextBox refId="W32TIME_ResolvePeerBackoffMaxTimes" defaultValue="7">ResolvePeerBackoffMaxTimes</decimalTextBox>
+        <decimalTextBox refId="W32TIME_SpecialPollInterval" defaultValue="1024">SpecialPollInterval</decimalTextBox>
+        <decimalTextBox refId="W32TIME_NtpClientEventLogFlags" defaultValue="0">EventLogFlags</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

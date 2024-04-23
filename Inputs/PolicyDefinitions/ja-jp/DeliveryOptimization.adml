@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0">
+  <displayName>配信の最適化 GP</displayName>
+  <description>このファイルには、配信の最適化 GP 設定が記述されています</description>
+  <resources>
+    <stringTable>
+      <string id="DeliveryOptimizationCat">配信の最適化</string>
+      <string id="DownloadMode">ダウンロード モード</string>
+      <string id="DownloadMode_Help">Windows 更新プログラム、アプリ、アプリ更新プログラムのダウンロード時に配信の最適化に使用できるダウンロード方法を指定します。
+
+サポートされている値は次のとおりです:
+
+0 = HTTP のみ、ピアリングなし。
+
+1 = HTTP と同じ NAT でのピアリングの組み合わせ。
+
+2 = HTTP とプライベート グループでのピアリングの組み合わせ。既定では、ピアリングは同じ Active Directory サイト (存在する場合) または同じドメインにあるデバイスで発生します。このオプションを選択した場合、ピアリングは複数の NAT にまたがって実行されます。カスタム グループを作成するには、グループ ID とモード 2 を組み合わせて使用します。
+
+3 = HTTP とインターネット ピアリングの組み合わせ。
+
+99 = ピアリングなしの簡易ダウンロード モード。配信の最適化によるダウンロードは HTTP のみを使用して行われ、配信の最適化クラウド サービスへのアクセスは行われません。
+
+100 = バイパス モード。Windows 10: 配信の最適化は使用されず、代わりに BITS が使用されます。Windows 11: 非推奨です。代わりに簡易モードを使用してください。</string>
+      <string id="DownloadMode_CdnOnly">HTTP のみ (0)</string>
+      <string id="DownloadMode_Lan">LAN (1)</string>
+      <string id="DownloadMode_Group">グループ (2)</string>
+      <string id="DownloadMode_Internet">インターネット (3)</string>
+      <string id="DownloadMode_Simple">簡易 (99)</string>
+      <string id="DownloadMode_Bypass">バイパス (100)</string>
+      <string id="GroupId">グループ ID</string>
+      <string id="GroupId_Help">グループ ID は、GUID として設定する必要があります。このポリシーでは、デバイスが属している任意のグループ ID を指定します。
+
+異なるドメイン上にある支社や、同じ LAN 上にない支社のローカル ネットワーク ピアリング用に、1 つのグループを作成する必要がある場合、このポリシーを使用します。
+
+注: これはベスト エフォートな最適化です。ID を認証する際は、このポリシーに依存しないでください。</string>
+      <string id="MaxCacheSize">最大キャッシュ サイズ (パーセント)</string>
+      <string id="MaxCacheSize_Help">配信の最適化によって使用される最大キャッシュ サイズを、使用可能なディスクのサイズに対する割合 (1 から 100 まで) として指定します。</string>
+      <string id="AbsoluteMaxCacheSize">絶対最大キャッシュ サイズ (GB)</string>
+      <string id="AbsoluteMaxCacheSize_Help">配信最適化キャッシュの最大サイズを GB 単位で指定します。
+
+このポリシーは、DOMaxCacheSize ポリシーよりも優先されます。
+
+値 0 (ゼロ) は "無制限" のキャッシュを意味します。デバイスのディスク領域が不足している場合、配信の最適化によってキャッシュがクリアされます。</string>
+      <string id="MaxCacheAge">最大キャッシュ時間 (秒)</string>
+      <string id="MaxCacheAge_Help">正常にダウンロードされた各ファイルが配信の最適化キャッシュに保持される最長時間 (秒単位) を指定します。
+
+値 0 (ゼロ) は "無制限" を意味し、配信の最適化によって、キャッシュ サイズを超えない限りファイルをキャッシュに長く保持しておき、それらのファイルを他のデバイスへのアップロードに使用できます。</string>
+      <string id="MonthlyUploadDataCap">月単位のデータ アップロード上限 (GB)</string>
+      <string id="MonthlyUploadDataCap_Help">配信の最適化でカレンダー月ごとにインターネット ピアへのアップロードが許可されている合計バイト数の最大値 (GB) を指定します。
+
+値 0 (ゼロ) は "無制限" を意味し、0 が設定されている場合は、月単位のアップロード上限はありません。</string>
+      <string id="MinBackgroundQos">最小バックグラウンド QoS (KB/秒)</string>
+      <string id="MinBackgroundQos_Help">バックグラウンド ダウンロード (KB/秒) の最小ダウンロード QoS (速度) を指定します。
+
+このポリシーは、ピア ソースと HTTP ソースの混在環境に影響します。指定された最小 QoS 値を実現するために、HTTP ソースからのダウンロードが配信の最適化によって補われます。</string>
+      <string id="ModifyCacheDrive">キャッシュ ドライブの変更</string>
+      <string id="ModifyCacheDrive_Help">配信の最適化によってキャッシュに使用されるドライブを指定します。
+
+既定では、%SystemDrive% を使用してキャッシュを保存します。ドライブの場所は、環境変数、ドライブ文字、または完全なパスを使用して指定できます。</string>
+      <string id="MaxBackgroundDownloadBandwidth">最大バックグラウンド ダウンロード帯域幅 (KB/秒)</string>
+      <string id="MaxBackgroundDownloadBandwidth_Help">配信の最適化を採用したすべての同時ダウンロード操作でデバイスが使用できるバックグラウンド ダウンロード最大帯域幅 (KB/秒) を指定します。
+
+既定値 0 (ゼロ) は、配信の最適化によって、使用可能な帯域幅をダウンロードに使用するように動的に調整されることを意味します。
+      </string>
+      <string id="MaxForegroundDownloadBandwidth">最大フォアグラウンド ダウンロード帯域幅 (KB/秒)</string>
+      <string id="MaxForegroundDownloadBandwidth_Help">配信の最適化を採用したすべての同時ダウンロード操作でデバイスが使用できるフォアグラウンド ダウンロード最大帯域幅 (KB/秒) を指定します。
+
+既定値 0 (ゼロ) は、配信の最適化によって、使用可能な帯域幅をダウンロードに使用するように動的に調整されることを意味します。
+      </string>
+      <string id="PercentageMaxBackgroundBandwidth">最大バックグラウンド ダウンロード帯域幅 (パーセント)</string>
+      <string id="PercentageMaxBackgroundBandwidth_Help">すべての同時ダウンロード操作で配信の最適化によって使用されるバックグラウンド ダウンロード最大帯域幅を、使用可能なダウンロード帯域幅に対する割合として指定します。
+
+既定値 0 (ゼロ) は、配信の最適化によって、使用可能な帯域幅をバックグラウンド ダウンロードに使用するように動的に調整されることを意味します。</string>
+      <string id="PercentageMaxForegroundBandwidth">最大フォアグラウンド ダウンロード帯域幅 (パーセント)</string>
+      <string id="PercentageMaxForegroundBandwidth_Help">すべての同時ダウンロード操作で配信の最適化によって使用されるフォアグラウンド ダウンロード最大帯域幅を、使用可能なダウンロード帯域幅に対する割合として指定します。
+
+既定値 0 (ゼロ) は、配信の最適化によって、使用可能な帯域幅をフォアグラウンド ダウンロードに使用するように動的に調整されることを意味します。</string>
+      <string id="MinFileSizeToCache">最小ピア キャッシュ コンテンツ ファイル サイズ (MB)</string>
+      <string id="MinFileSizeToCache_Help">ピア キャッシュを使用できる最小コンテンツ ファイル サイズを MB 単位で指定します。
+
+推奨値: 1 MB から 100000 MB まで。</string>
+      <string id="AllowVPNPeerCaching">デバイスが VPN で接続しているときはピア キャッシュを有効にする</string>
+      <string id="AllowVPNPeerCaching_Help">VPN 経由でドメイン ネットワークに接続しているときにデバイスがピア キャッシュに参加できるようにするには、"true" を指定します。
+
+つまり、デバイスは、VPN 上または企業ドメイン ネットワーク上の他のドメイン ネットワーク デバイスからダウンロードしたり、デバイスにアップロードしたりできます。</string>
+      <string id="MinRAMAllowedToPeer">ピア キャッシュの使用に必要な最小 RAM 容量 (GB)</string>
+      <string id="MinRAMAllowedToPeer_Help">ピア キャッシュを使用するために必要な最小 RAM サイズを GB で指定します。
+
+たとえば、最小設定が 1 GB の場合、使用可能な RAM が 1 GB 以上あるデバイスは、ピア キャッシュを使用できます。
+
+推奨値: 1 GB から 4 GB まで。</string>
+      <string id="MinDiskSizeAllowedToPeer">ピア キャッシュを使用できる最小ディスク サイズ (GB)</string>
+      <string id="MinDiskSizeAllowedToPeer_Help">デバイスがピア キャッシュを使用するために必要な最小ディスク サイズ (GB 容量) を指定します。クラウド サービスに設定されている既定値が使用されます。
+
+推奨値: 64 GB から 256 GB まで。
+
+注: DOModifyCacheDrive ポリシーが設定されている場合、このポリシーで指定された新しい作業ディレクトリにディスク サイズ チェックが適用されます。</string>
+      <string id="MinBatteryPercentageAllowedToUpload">設定したバッテリ レベル (パーセント) を下回っている場合はデバイスにバッテリ使用時のアップロードを許可します</string>
+      <string id="MinBatteryPercentageAllowedToUpload_Help">デバイスが DC 電源 (バッテリ) の使用時に LAN およびグループ ピアにデータをアップロードできるようにするには、1 から 100 までの値 (パーセンテージ) を指定します。
+
+バッテリ使用時のアップロードを許可する場合、推奨される設定値は 40 (40%) です。このポリシーに関係なく、デバイスはバッテリ使用時にピアからダウンロードできます。
+
+値 0 は "制限なし" を意味し、クラウド サービスに設定されている既定値が使用されます。</string>
+      <string id="CacheHost">キャッシュ サーバーのホスト名</string>
+      <string id="CacheHost_Help">このポリシーを使用すると、クライアントによって使用される 1 つ以上の Microsoft 接続キャッシュ サーバーを設定できます。
+
+1 つ以上の値を完全修飾ドメイン名 (FQDN) または IP アドレスとして追加できます。複数の値を追加するには、各 FQDN または IP アドレスをコンマで区切ります。
+      </string>
+      <string id="CacheHostSource">キャッシュ サーバーのホスト名ソース</string>
+      <string id="CacheHostSource_Help">このポリシーを使用すると、クライアントが Microsoft 接続キャッシュ サーバーを動的に検出する方法を指定できます。
+
+利用可能なオプションは次のとおりです:
+
+0 = DNS-SD を無効にします。
+
+1 = DHCP オプション 235。
+
+2 = DHCP オプション 235 Force
+
+このポリシーが構成されていない場合、クライアントは DNS-SD を使用してキャッシュ サーバーを自動的に検索しようとします。0 に設定すると、クライアントは DNS-SD を使用してキャッシュ サーバーを自動的に検索しません。1 または 2 に設定すると、クライアントは DHCP オプション ID 235 を照会し、返された値をキャッシュ サーバーのホスト名として使用します。オプション 2 は、キャッシュ サーバーのホスト名ポリシー (構成されている場合) をオーバーライドします。</string>
+      <string id="CacheHostSource_DHCP">DHCP オプション 235</string>
+      <string id="CacheHostSource_DHCP_Force">DHCP オプション 235 Force</string>
+      <string id="GroupIdSource">グループ ID のソースを選択します</string>
+      <string id="GroupIdSource_Help">ピアの選択を特定のソースに制限するには、このポリシーを設定します。
+
+使用可能なオプション: 
+
+1 = AD サイト。
+
+2 = 認証済みドメイン SID。
+
+3 = DHCP オプション ID。
+
+4 = DNS サフィックス。
+
+5 = AAD テナント ID。
+
+設定すると、選択したソースからグループ ID が自動的に割り当てられます。Group ID ポリシーも設定されている場合、このポリシーは無視されます。
+
+このポリシーで設定したオプションは、グループ (2) ダウンロード モードにのみ適用されます。グループ (2) がダウンロード モードとして設定されていない場合、このポリシーは無視されます。
+
+オプション 3 の DHCP オプション ID については、クライアントは DHCP オプション ID 234 を照会し、返された GUID 値をグループ ID として使用します。</string>
+      <string id="GroupIdSource_Unset">設定解除 (0)</string>
+      <string id="GroupIdSource_AD">AD サイト (1)</string>
+      <string id="GroupIdSource_SID">認証済みドメイン SID (2)</string>
+      <string id="GroupIdSource_DHCP">DHCP オプション ID (3)</string>
+      <string id="GroupIdSource_DNS">DNS サフィックス (4)</string>
+      <string id="GroupIdSource_AAD">AAD テナント ID (5)</string>
+      <string id="DelayBackgroundDownloadFromHttp">http からのバックグラウンド ダウンロードを延期 (秒) </string>
+      <string id="DelayBackgroundDownloadFromHttp_Help">このポリシーでは、P2P を使用することが許可されているバックグラウンドでのダウンロードで HTTP ソースの使用を遅らせることができます。
+
+最大遅延に達した後、ダウンロードは HTTP を使用して再開され、ペイロード全体がダウンロードされるか、ピアからダウンロードできなかったバイト数が補完されます。
+
+ピア ソースを待機しているダウンロードは、エンド ユーザーには停止しているように見えることに注意してください。
+
+推奨値は 1 時間 (3600) です。</string>
+      <string id="DelayForegroundDownloadFromHttp">http からのフォアグラウンド ダウンロードを延期 (秒) </string>
+      <string id="DelayForegroundDownloadFromHttp_Help">このポリシーでは、P2P を使用することが許可されているフォアグラウンド (対話型) ダウンロードで HTTP ソースの使用を遅らせることができます。
+
+最大遅延に達した後、ダウンロードは HTTP を使用して再開され、ペイロード全体がダウンロードされるか、ピアからダウンロードできなかったバイト数が補完されます。
+
+ピア ソースを待機しているダウンロードは、エンド ユーザーには停止しているように見えることに注意してください。
+
+推奨値は 1 分 (60) です。</string>
+      <string id="DelayCacheServerFallbackBackground">バックグラウンド ダウンロードのキャッシュ サーバー フォールバックを延期 (秒)</string>
+      <string id="DelayCacheServerFallbackBackground_Help">このポリシーを設定すると、バックグラウンドでコンテンツをダウンロードする場合にキャッシュ サーバーから HTTP ソースへのフォールバックが X 秒延期されます。
+
+注: http からのバックグラウンド ダウンロードを延期するようにポリシーを設定した場合は、その延期が最初に適用されます (ピアから最初にダウンロードできるようになります)。</string>
+      <string id="DelayCacheServerFallbackForeground">フォアグラウンド ダウンロードのキャッシュ サーバー フォールバックを延期 (秒)</string>
+      <string id="DelayCacheServerFallbackForeground_Help">このポリシーを設定すると、バックグラウンドでコンテンツをダウンロードする場合にキャッシュ サーバーから HTTP ソースへのフォールバックが X 秒延期されます。
+
+注: http からのフォアグラウンド ダウンロードを延期するようにポリシーを設定した場合は、そのポリシーが最初に適用されます (ピアから最初にダウンロードできるようになります)。</string>
+      <string id="RestrictPeerSelectionBy">ピアの選択を制限する方法を選択します</string>
+      <string id="RestrictPeerSelectionBy_Help">選択したオプションを使用してピアの選択を制限するには、このポリシーを設定します。
+
+使用可能なオプションは次のとおりです。
+0 = NAT。
+1 = サブネットマスク。
+2 = ローカル探索 (DNS-SD)
+
+既定値は 0 (制限なし) から 1 (サブネットに制限) に変更されています。
+
+これらのオプションは、ダウンロードモード LAN (1) とグループ (2) の両方に適用されます。</string>
+      <string id="RestrictPeerSelectionBy_None">NAT</string>
+      <string id="RestrictPeerSelectionBy_Subnet">サブネット</string>
+      <string id="RestrictPeerSelectionBy_LinkLocal">ローカル探索</string>
+      <string id="SetHoursToLimitBackgroundDownloadBandwidth">バックグラウンド ダウンロード帯域幅を制限する営業時間を設定します</string>
+      <string id="SetHoursToLimitBackgroundDownloadBandwidth_Help">すべての同時ダウンロード操作で配信の最適化によって営業時間内および営業時間外に使用されるバックグラウンド ダウンロード最大帯域幅を、使用可能なダウンロード帯域幅に対する割合として指定します。</string>
+      <string id="SetHoursToLimitForegroundDownloadBandwidth">フォアグラウンド ダウンロード帯域幅を制限する営業時間を設定します</string>
+      <string id="SetHoursToLimitForegroundDownloadBandwidth_Help">すべての同時ダウンロード操作で配信の最適化によって営業時間内および営業時間外に使用されるフォアグラウンド ダウンロード最大帯域幅を、使用可能なダウンロード帯域幅に対する割合として指定します。</string>
+      <string id="Time1AM">1 AM</string>
+      <string id="Time1PM">1 PM</string>
+      <string id="Time2AM">2 AM</string>
+      <string id="Time2PM">2 PM</string>
+      <string id="Time3AM">3 AM</string>
+      <string id="Time3PM">3 PM</string>
+      <string id="Time4AM">4 AM</string>
+      <string id="Time4PM">4 PM</string>
+      <string id="Time5AM">5 AM</string>
+      <string id="Time5PM">5 PM</string>
+      <string id="Time6AM">6 AM</string>
+      <string id="Time6PM">6 PM</string>
+      <string id="Time7AM">7 AM</string>
+      <string id="Time7PM">7 PM</string>
+      <string id="Time8AM">8 AM</string>
+      <string id="Time8PM">8 PM</string>
+      <string id="Time9AM">9 AM</string>
+      <string id="Time9PM">9 PM</string>
+      <string id="Time10AM">10 AM</string>
+      <string id="Time10PM">10 PM</string>
+      <string id="Time11AM">11 AM</string>
+      <string id="Time11PM">11 PM</string>
+      <string id="Time12AM">12 AM</string>
+      <string id="Time12PM">12 PM</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DownloadMode">
+        <dropdownList defaultItem="1" noSort="true" refId="DownloadMode">ダウンロード モード:</dropdownList>
+      </presentation>
+      <presentation id="GroupId">
+        <textBox refId="GroupId">
+          <label>グループ ID:</label>
+        </textBox>
+      </presentation>
+      <presentation id="MaxCacheSize">
+        <decimalTextBox defaultValue="20" refId="MaxCacheSize">最大キャッシュ サイズ (パーセント):</decimalTextBox>
+        <text>既定値は 20％ です</text>
+      </presentation>
+      <presentation id="AbsoluteMaxCacheSize">
+        <decimalTextBox defaultValue="10" refId="AbsoluteMaxCacheSize">絶対最大キャッシュ サイズ (GB):</decimalTextBox>
+        <text>既定値は 10 GB です</text>
+      </presentation>
+      <presentation id="MaxCacheAge">
+        <decimalTextBox defaultValue="604800" refId="MaxCacheAge">最大キャッシュ時間 (秒):</decimalTextBox>
+        <text>既定値は 7 日です</text>
+      </presentation>
+      <presentation id="MonthlyUploadDataCap">
+        <decimalTextBox defaultValue="5120" refId="MonthlyUploadDataCap">月単位のデータ アップロード上限 (GB):</decimalTextBox>
+        <text>既定値は 5 TB です</text>
+      </presentation>
+      <presentation id="MinBackgroundQos">
+        <decimalTextBox defaultValue="20480" refId="MinBackgroundQos">最小バックグラウンド QoS (KB/秒):</decimalTextBox>
+        <text>既定値は 20 MB/s です</text>
+      </presentation>
+      <presentation id="ModifyCacheDrive">
+        <textBox refId="ModifyCacheDrive">
+          <label>キャッシュ ドライブの変更:</label>
+        </textBox>
+      </presentation>
+      <presentation id="MaxBackgroundDownloadBandwidth">
+        <decimalTextBox defaultValue="0" refId="MaxBackgroundDownloadBandwidth">最大バックグラウンド ダウンロード帯域幅 (KB/秒):</decimalTextBox>
+        <text>既定値は 0 (無制限) です</text>
+      </presentation>
+      <presentation id="MaxForegroundDownloadBandwidth">
+        <decimalTextBox defaultValue="0" refId="MaxForegroundDownloadBandwidth">最大フォアグラウンド ダウンロード帯域幅 (KB/秒):</decimalTextBox>
+        <text>既定値は 0 (無制限) です</text>
+      </presentation>
+      <presentation id="PercentageMaxBackgroundBandwidth">
+        <decimalTextBox defaultValue="0" refId="PercentageMaxBackgroundBandwidth">最大バックグラウンド ダウンロード帯域幅 (パーセント):</decimalTextBox>
+        <text>既定値は 0 (無制限) です</text>
+      </presentation>
+      <presentation id="PercentageMaxForegroundBandwidth">
+        <decimalTextBox defaultValue="0" refId="PercentageMaxForegroundBandwidth">最大フォアグラウンド ダウンロード帯域幅 (パーセント):</decimalTextBox>
+        <text>既定値は 0 (無制限) です</text>
+      </presentation>
+      <presentation id="MinFileSizeToCache">
+        <decimalTextBox defaultValue="100" refId="MinFileSizeToCache">最小ピア キャッシュ コンテンツ ファイル サイズ (MB):</decimalTextBox>
+        <text>既定値は 100 MB です</text>
+      </presentation>
+      <presentation id="AllowVPNPeerCaching">
+        <checkBox defaultChecked="false" refId="AllowVPNPeerCaching">デバイスが VPN で接続しているときはピア キャッシュを有効にする</checkBox>
+      </presentation>
+      <presentation id="MinRAMAllowedToPeer">
+        <decimalTextBox defaultValue="4" refId="MinRAMAllowedToPeer">ピア キャッシュの使用に必要な最小 RAM 容量 (GB):</decimalTextBox>
+        <text>既定値は 4 GB です</text>
+      </presentation>
+      <presentation id="MinDiskSizeAllowedToPeer">
+        <decimalTextBox defaultValue="32" refId="MinDiskSizeAllowedToPeer">ピア キャッシュを使用できる最小ディスク サイズ (GB):</decimalTextBox>
+        <text>既定値は 32 GB です</text>
+      </presentation>
+      <presentation id="MinBatteryPercentageAllowedToUpload">
+        <decimalTextBox defaultValue="0" refId="MinBatteryPercentageAllowedToUpload">最小バッテリ レベル (パーセント):</decimalTextBox>
+        <text>既定値は 0 (無制限) です</text>
+      </presentation>
+      <presentation id="CacheHost">
+        <textBox refId="CacheHost">
+          <label>キャッシュ サーバー:</label>
+        </textBox>
+      </presentation>
+      <presentation id="CacheHostSource">
+        <dropdownList defaultItem="0" noSort="true" refId="CacheHostSource">キャッシュ サーバーのホスト名ソース:</dropdownList>
+      </presentation>
+      <presentation id="GroupIdSource">
+        <dropdownList defaultItem="0" noSort="true" refId="GroupIdSource">グループ ID のソース:</dropdownList>
+      </presentation>
+      <presentation id="DelayBackgroundDownloadFromHttp">
+        <decimalTextBox defaultValue="0" refId="DelayBackgroundDownloadFromHttp">http からのバックグラウンド ダウンロードを延期 (秒): </decimalTextBox>
+        <text>既定値は 0 (延期なし) です</text>
+      </presentation>
+      <presentation id="DelayForegroundDownloadFromHttp">
+        <decimalTextBox defaultValue="0" refId="DelayForegroundDownloadFromHttp">http からのフォアグラウンド ダウンロードを延期 (秒):</decimalTextBox>
+        <text>既定値は 0 (延期なし) です</text>
+      </presentation>
+      <presentation id="DelayCacheServerFallbackBackground">
+        <decimalTextBox defaultValue="0" refId="DelayCacheServerFallbackBackground">バックグラウンド ダウンロードのキャッシュ サーバー フォールバックを延期 (秒):</decimalTextBox>
+        <text>既定値は 0 (延期なし) です</text>
+      </presentation>
+      <presentation id="DelayCacheServerFallbackForeground">
+        <decimalTextBox defaultValue="0" refId="DelayCacheServerFallbackForeground">フォアグラウンド ダウンロードのキャッシュ サーバー フォールバックを延期 (秒):</decimalTextBox>
+        <text>既定値は 0 (延期なし) です</text>
+      </presentation>
+      <presentation id="RestrictPeerSelectionBy">
+        <dropdownList defaultItem="1" noSort="true" refId="RestrictPeerSelectionBy">ピアの選択を制限する条件:</dropdownList>
+      </presentation>
+      <presentation id="SetHoursToLimitBackgroundDownloadBandwidth">
+        <text/>
+        <text>バックグラウンド ダウンロード帯域幅を制限する営業時間を設定します:</text>
+        <dropdownList defaultItem="8" noSort="true" refId="SetHoursToLimitBackgroundDownloadBandwidthFrom">開始:</dropdownList>
+        <dropdownList defaultItem="17" noSort="true" refId="SetHoursToLimitBackgroundDownloadBandwidthTo">終了:</dropdownList>
+        <text/>
+        <text>営業時間内の最大バックグラウンド ダウンロード帯域幅 (パーセント):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitBackgroundDownloadBandwidthIn"/>
+        <text>既定値は 0 (無制限) です</text>
+        <text/>
+        <text>営業時間外の最大バックグラウンド ダウンロード帯域幅 (パーセント):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitBackgroundDownloadBandwidthOut"/>
+        <text>既定値は 0 (無制限) です</text>
+      </presentation>
+      <presentation id="SetHoursToLimitForegroundDownloadBandwidth">
+        <text/>
+        <text>フォアグラウンド ダウンロード帯域幅を制限する営業時間を設定します:</text>
+        <dropdownList defaultItem="8" noSort="true" refId="SetHoursToLimitForegroundDownloadBandwidthFrom">開始:</dropdownList>
+        <dropdownList defaultItem="17" noSort="true" refId="SetHoursToLimitForegroundDownloadBandwidthTo">終了:</dropdownList>
+        <text/>
+        <text>営業時間内の最大フォアグラウンド ダウンロード帯域幅 (パーセント):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitForegroundDownloadBandwidthIn"/>
+        <text>既定値は 0 (無制限) です</text>
+        <text/>
+        <text>営業時間外の最大フォアグラウンド ダウンロード帯域幅 (パーセント):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitForegroundDownloadBandwidthOut"/>
+        <text>既定値は 0 (無制限) です</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

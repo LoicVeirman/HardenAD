@@ -1,0 +1,157 @@
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Izolace sítě  </displayName>
+  <description>Slouží ke konfiguraci možností izolace sítě pro aplikace.  </description>
+  <resources>
+    <stringTable>
+      	<string id="WF_Isolation">Izolace sítě</string>
+		
+
+<!--Define server addresses that proxy to the Internet -->	
+	<string id="WF_NetIsolation_Domain_Proxies">Internetové proxy servery pro aplikace</string>  
+	<string id="WF_NetIsolation_Domain_Proxies_Help">  Toto nastavení se nevztahuje na aplikace klasické pracovní plochy.
+	
+Středníky oddělený seznam IP adres internetových proxy serverů. Tyto adresy jsou izolací sítě ve Windows považovány za internetové a jsou přístupné pro aplikace, které mají možnosti internetového klienta nebo internetového klienta/serveru.
+
+Pokud toto nastavení zásad povolíte, mohou aplikace v sítích s proxy servery přistupovat na Internet, aniž by se spoléhaly na možnosti privátní sítě. Většinou však izolace sítě ve Windows dokáže proxy servery správně zjistit. Ve výchozím nastavení se případné proxy servery s tímto nastavením sloučí s automaticky zjištěnými proxy servery. Aby se z této konfigurace zásad stal jediný seznam povolených proxy serverů, povolte nastavení Definice proxy serverů jsou autoritativní.
+
+Jestliže toto nastavení zásad zakážete nebo nenakonfigurujete, budou aplikace používat internetové proxy servery automaticky zjištěné izolací sítě ve Windows.
+
+Příklad: [3efe:3022::1000];18.0.0.1;18.0.0.2 
+
+Další informace naleznete na adrese: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string> 
+
+
+<!--Define server addresses that proxy to a private network (intranet) -->	
+	<string id="WF_NetIsolation_Intranet_Proxies">Intranetové proxy servery pro aplikace</string>
+	<string id="WF_NetIsolation_Intranet_Proxies_Help">  Toto nastavení se nevztahuje na aplikace klasické pracovní plochy.
+	
+Středníky oddělený seznam IP adres intranetových proxy serverů. Tyto adresy jsou izolací sítě ve Windows považovány za privátní a jsou přístupné pro aplikace, které mají možnosti připojení k domácí nebo pracovní síti.
+
+Pokud toto nastavení zásad povolíte, může správce nakonfigurovat sadu proxy serverů, které poskytují přístup k intranetovým zdrojům.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, izolace sítě ve Windows se pokusí zjistit proxy servery a nakonfiguruje je jako internetové uzly.
+  
+Toto nastavení by se NEMĚLO používat ke konfiguraci internetových proxy serverů.
+
+Příklad: [3efe:3022::1000]; 18.0.0.1; 18.0.0.2
+
+Další informace naleznete na adrese: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Define subnet addresses-->	
+	<string id="WF_NetIsolation_PrivateSubnet">Rozsahy adres privátní sítě pro aplikace</string>
+	<string id="WF_NetIsolation_PrivateSubnet_Help"> Toto nastavení se nevztahuje na aplikace klasické pracovní plochy.
+				
+Čárkami oddělený seznam rozsahů IP adres ve vaší podnikové síti.
+
+Pokud toto nastavení zásad povolíte, aplikace s možnostmi připojení k domácí nebo pracovní síti budou mít odpovídající přístup k vaší podnikové síti. Tyto adresy jsou přístupné pro aplikace výhradně jen tehdy, pokud aplikace deklarovala svou schopnost připojení k domácí nebo pracovní síti.
+
+Izolace sítě ve Windows se pokusí automaticky zjišťovat hostitele privátních sítí. Ve výchozím nastavení se adresy nakonfigurované s tímto nastavením zásad sloučí s hostiteli, jež jsou pomocí automatického zjišťování deklarovány jako soukromé.
+
+Aby bylo zajištěno, že jsou tyto adresy jedinými adresami považovanými za privátní, povolte nastavení zásad Definice podsítí jsou autoritativní.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, bude se izolace sítě ve Windows pokoušet automaticky zjišťovat hostitele privátních sítí.
+
+Příklad: 3efe:1092::/96,18.1.1.1/10 
+
+Další informace naleznete na adrese: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Proxy definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Proxy">Definice proxy serverů jsou autoritativní</string>
+	<string id="WF_NetIsolation_Authoritative_Proxy_Help"> Toto nastavení se nevztahuje na aplikace klasické pracovní plochy.
+				
+Tato možnost slouží k vypnutí automatického zjišťování proxy serverů izolace sítě ve Windows v podnikovém doménovém prostředí.
+
+Pokud toto nastavení zásad povolíte, automatické zjišťování proxy serverů izolace sítě ve Windows v podnikovém doménovém prostředí se vypne. Autoritativní jsou pouze proxy servery nakonfigurované pomocí zásad skupiny. To platí jak pro internetové, tak pro intranetové proxy servery.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, bude se izolace sítě ve Windows pokoušet automaticky zjišťovat adresy vašich proxy serverů.  
+
+Další informace najdete na adrese: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+<!--Subnet definitions are authoritative-->	
+	<string id="WF_NetIsolation_Authoritative_Subnet">Definice podsítí jsou autoritativní</string>
+	<string id="WF_NetIsolation_Authoritative_Subnet_Help"> Toto nastavení se nevztahuje na aplikace klasické pracovní plochy.
+				
+Tato možnost slouží k vypnutí automatického zjišťování hostitelů privátních sítí v podnikovém doménovém prostředí izolace sítě ve Windows.
+
+Pokud toto nastavení zásad povolíte, automatické zjišťování hostitelů privátních sítí v podnikovém doménovém prostředí izolace sítě ve Windows se vypne. Za privátní budou považováni pouze hostitelé v rámci rozsahů adres nakonfigurovaných pomocí zásad skupiny.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, bude se izolace sítě ve Windows pokoušet automaticky zjišťovat hostitele privátních sítí v podnikovém doménovém prostředí. 
+				
+Další informace najdete na adrese: http://go.microsoft.com/fwlink/p/?LinkId=234043 </string>
+
+
+
+<!--Define cloud resources-->
+  <string id="WF_NetIsolation_EnterpriseCloudResources">Domény prostředků organizace hostované v cloudu</string>
+  <string id="WF_NetIsolation_EnterpriseCloudResources_Help"> Toto nastavení neplatí pro desktopové aplikace.
+
+Svislou čárou oddělený seznam cloudových prostředků domény. Každý cloudový prostředek může být volitelně spárovaný s interním proxy serverem pomocí koncové čárky následované adresou proxy serveru.
+
+Obsahuje seznam domén prostředků organizace hostovaných v cloudu. Připojení k těmto prostředkům se považují za připojení k sítím organizace.
+
+Pokud je proxy server spárovaný s cloudovým prostředkem, budou se přenosy na tento cloudový prostředek směrovat skrze síť organizace přes označený proxy server (na portu 80). Proxy server použitý pro tento účel musí být rovněž nakonfigurovaný pomocí zásad intranetových proxy serverů pro aplikace.
+
+Příklad: [cloudový prostředek]|[cloudový prostředek]|[cloudový prostředek],[proxy server]|[cloudový prostředek]|[cloudový prostředek],[proxy server]|
+
+Další informace najdete zde: http://go.microsoft.com/fwlink/p/?LinkId=234043. </string>
+
+
+<!--Define neutral resources-->
+    <string id="WF_NetIsolation_NeutralResources">Domény kategorizované jako pracovní i osobní</string>
+    <string id="WF_NetIsolation_NeutralResources_Help"> Toto nastavení neplatí pro desktopové aplikace.
+
+Čárkou oddělený seznam názvů domén, které se dají použít jako pracovní i osobní prostředek.
+
+Další informace najdete zde: http://go.microsoft.com/fwlink/p/?LinkId=234043. </string>
+
+
+    </stringTable>
+ 
+ <!--Start of Presentation Table-->	
+ 
+ <presentationTable>
+
+	<presentation id="WF_NetIsolation_Domain_Proxies">
+        <textBox refId="WF_NetIsolation_Domain_ProxiesBox">
+          <label>Proxy servery domény  </label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_Intranet_Proxies">
+        <textBox refId="WF_NetIsolation_Intranet_ProxiesBox">
+          <label>Zadat IP adresu proxy serveru pro intranet</label>
+        </textBox>
+      </presentation>
+
+	<presentation id="WF_NetIsolation_PrivateSubnet">
+        <textBox refId="WF_NetIsolation_PrivateSubnetBox">
+          <label>Privátní podsítě  </label>
+        </textBox>
+      </presentation>
+
+  <presentation id="WF_NetIsolation_Authoritative_Proxies">
+      </presentation>
+	
+	<presentation id="WF_NetIsolation_Authoritative_Subnets">
+      </presentation>
+
+   <presentation id="WF_NetIsolation_EnterpriseCloudResources">
+     <textBox refId="WF_NetIsolation_EnterpriseCloudResourcesBox">
+       <label>Cloudové prostředky organizace </label>
+     </textBox>
+   </presentation>
+
+   <presentation id="WF_NetIsolation_NeutralResources">
+     <textBox refId="WF_NetIsolation_NeutralResourcesBox">
+       <label>Neutrální prostředky </label>
+     </textBox>
+   </presentation>
+
+ </presentationTable>
+
+  </resources>
+</policyDefinitionResources>

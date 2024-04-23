@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Políticas de Manutenção do Windows</displayName>
+  <description>Políticas de Manutenção do Windows</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">Especificar definições para instalação de componentes opcionais e reparação de componentes</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+Esta definição de política especifica as localizações de rede que serão utilizadas para a reparação de danos no sistema operativo e para ativação de funcionalidades opcionais cujos ficheiros de payload foram removidos.
+
+Se ativar esta definição de política e especificar uma nova localização, os ficheiros nessa localização são utilizados para reparar danos no sistema operativo e para ativar funcionalidades opcionais cujos ficheiros de payload tenham sido removidos. Tem de introduzir o caminho completamente qualificado para a nova localização na caixa de texto "Caminho de ficheiro de origem alternativo". É possível especificar várias localizações se cada caminho for separado por ponto e vírgula. 
+
+A localização de rede pode ser uma pasta ou um ficheiro WIM. Se for um ficheiro WIM, a localização deve ser especificada acrescentando o prefixo “wim:” ao caminho e incluindo o índice da imagem a utilizar no ficheiro WIM. Por exemplo, “wim:\\servidor\partilha\install.wim:3”.
+
+Se desativar ou não configurar esta definição de política, ou se os ficheiros necessários não forem encontrados nas localizações especificadas nesta definição de política, os ficheiros são transferidos a partir do Windows Update, se tal for permitido pelas definições de política do computador.
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>Caminho de ficheiro de origem alternativo</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">Nunca tentar transferir payload a partir do Windows Update</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">Transferir conteúdo de reparação e funcionalidades opcionais diretamente do Windows Update em vez do Windows Server Update Services (WSUS)</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

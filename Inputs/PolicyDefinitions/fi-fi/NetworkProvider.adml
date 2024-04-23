@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (c) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Verkkopalvelu</displayName>
+  <description>Multiple UNC Provider -käytäntömääritykset</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_NetworkProvider">Verkkopalvelu</string>
+      <string id="Pol_HardenedPaths">Rajoitetut UNC-polut</string>
+      <string id="Pol_HardenedPaths_Explain">Tämä käytäntöasetus määrittää UNC-polkujen turvallisen käytön.
+
+Jos otat tämän käytännön käyttöön, Windows sallii vain määritettyjen UNC-polkujen käytön sen jälkeen, kun lisäsuojausvaatimukset on täytetty.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_HardenedPaths">
+        <text>Määritä rajoitetut verkkopolut.
+Kirjoita nimikenttään kunkin verkkoresurssin täydellinen UNC-polku.
+Jos haluat suojata tiettyä nimeä käyttävän jaetun resurssin kaiken käytön (palvelimen nimestä riippumatta), määritä palvelimen nimeksi * (tähti). Esimerkki: \\*\NETLOGON.
+Jos haluat suojata palvelimessa isännöityjen kaikkien jaettujen resurssien käytön, UNC-polun jakonimiosa voidaan jättää pois. Esimerkki: \\PALVELIN.
+
+Määritä arvokenttään yksi tai useampi seuraavista vaihtoehdoista eroteltuina pilkuilla:
+    RequireMutualAuthentication=1: molemminpuolinen todennus asiakkaan ja palvelimen välillä on pakollinen, jotta voidaan varmistaa, että asiakas muodostaa yhteyden oikeaan palvelimeen.
+    RequireIntegrity=1: tietoliikenteen asiakkaan ja palvelimen välillä täytyy käyttää eheysmekanismia, jotta tietojen peukalointi estetään.
+    RequirePrivacy=1: tietoliikenne asiakkaan ja palvelimen välillä täytyy salata, jotta kolmansia osapuolia estetään näkemästä arkaluontoisia tietoja.</text>
+        <listBox refId="Pol_HardenedPaths">Rajoitetut UNC-polut:</listBox>
+        <text> </text>
+        <text>Sinun tulisi määrittää pakolliseksi sekä eheys että molemminpuolinen todennus kaikille UNC-poluille, jotka isännöivät suoritettavia ohjelmia, komentosarjatiedostoja tai tiedostoja, jotka hallitsevat suojauskäytäntöjä.
+
+Tiedostot, jotka eivät vaadi eheyttä tai tietosuojaa, kannattaa isännöidä eri jaetuissa resurssissa kuin ne, jotka ehdottomasti tarvitsevat kyseisen suojauksen, jotta suorituskyky on paras mahdollinen.
+
+Tietoja Windows-tietokoneiden määrittämisestä edellyttämään lisäsuojausta tiettyjä UNC-polkuja käytettäessä on osoitteessa http://support.microsoft.com/kb/3000483.</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

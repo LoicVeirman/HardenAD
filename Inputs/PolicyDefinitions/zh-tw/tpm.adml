@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>在此輸入顯示名稱</displayName>
+  <description>在此輸入描述</description>
+  <resources>
+    <stringTable>
+      <string id="BlockedCommandsList_Help">此原則設定讓您可以管理被 Windows 封鎖的信賴平台模組 (TPM) 命令的群組原則清單。
+
+若啟用此原則設定，Windows 將會封鎖指定的命令，使其不會被傳送到電腦上的 TPM。TPM 命令是以命令號碼來參照。例如，命令號碼 129 為 TPM_OwnerReadInternalPub，命令號碼 170 為 TPM_FieldUpgrade。若要尋找與每個 TPM 命令有關的命令號碼 (使用 TPM 1.2 時)，請執行 "tpm.msc"，然後瀏覽到 [命令管理] 區段。
+
+若停用或未設定此原則設定，Windows 只能封鎖透過預設清單或本機清單指定的 TPM 命令。Windows 會預先設定封鎖之 TPM 命令的預設清單。您可以透過執行 "tpm.msc"、瀏覽到 [命令管理] 區段，然後顯示 [在預設封鎖清單上] 欄位，來檢視預設清單。封鎖之 TPM 命令的本機清單是透過執行 "tpm.msc" 或透過 Win32_Tpm 介面以指令碼處理方式在群組原則之外設定。請參閱相關的原則設定，以強制執行或忽略封鎖之 TPM 命令的預設清單與本機清單。</string>
+      <string id="BlockedCommandsList_Name">設定封鎖 TPM 命令的清單</string>
+      <string id="IgnoreDefaultList_Help">此原則設定可讓您強制執行或忽略電腦的封鎖信賴平台模組 (TPM) 命令的預設清單。
+
+若啟用此原則設定，Windows 會忽略電腦的封鎖 TPM 命令的預設清單，而且只封鎖群組原則或本機清單所指定的那些 TPM 命令。
+
+Windows 會預先設定封鎖之 TPM 命令的預設清單。您可以透過執行 "tpm.msc"、瀏覽到 [命令管理] 區段，然後顯示 [在預設封鎖清單上] 欄位，來檢視預設清單。封鎖之 TPM 命令的本機清單是透過執行 "tpm.msc" 或透過 Win32_Tpm 介面以指令碼處理方式在群組原則之外設定。請參閱相關的原則設定，以設定封鎖之 TPM 命令的群組原則清單。
+
+若停用或未設定此原則設定，Windows 除了會將封鎖之 TPM 命令的群組原則與本機清單中的命令封鎖之外，也會封鎖預設清單中的 TPM 命令。 </string>
+      <string id="IgnoreDefaultList_Name">忽略封鎖 TPM 命令的預設清單</string>
+      <string id="IgnoreLocalList_Help">此原則設定可讓您強制執行或忽略電腦的封鎖信賴平台模組 (TPM) 命令的本機清單。
+
+若啟用此原則設定，Windows 將會忽略電腦的封鎖之 TPM 命令的本機清單，而且只會封鎖「群組原則」或其他預設清單所指定的那些 TPM 命令。
+
+封鎖 TPM 命令的本機清單是透過執行 "tpm.msc" 或透過 Win32_Tpm 介面以指令碼處理方式在群組原則之外設定。Windows 會預先設定封鎖之 TPM 命令的預設清單。請參閱相關的原則設定，以設定封鎖之 TPM 命令的群組原則清單。
+
+若停用或未設定此原則設定，Windows 除了會封鎖群組原則清單與預設清單中的 TPM 命令外，也會封鎖本機清單中的 TPM 命令。</string>
+      <string id="IgnoreLocalList_Name">忽略封鎖 TPM 命令的本機清單</string>
+      <string id="TPMCategory">可信賴平台模組服務</string>
+      <string id="OSManagedAuth_Name">設定作業系統可用的 TPM 擁有者授權資訊的層級</string>
+      <string id="OSManagedAuth_Help">此原則設定會設定有多少 TPM 擁有者授權資訊，儲存在本機電腦的登錄中。視本機儲存的 TPM 擁有者授權資訊數量之不同，在無須使用者輸入 TPM 擁有者密碼的情況下，作業系統與 TPM 應用程式可執行需要 TPM 擁有者授權的特定 TPM 動作。
+
+您可以選擇讓作業系統儲存完整的 TPM 擁有者授權值、TPM 系統管理委派 Blob 加上 TPM 使用者委派 Blob，或者都不儲存。
+
+若啟用此原則設定，Windows 將會依據您選擇的作業系統管理之 TPM 驗證設定，在本機電腦的登錄中，儲存 TPM 擁有者授權。
+
+選擇作業系統管理的 TPM 驗證設定為「完整」，表示在本機登錄中儲存完整的 TPM 擁有者授權、TPM 系統管理委派 Blob 與 TPM 使用者委派 Blob。此設定可以在不需要遠端或外部儲存體 TPM 擁有者授權值，即可使用 TPM。此設定的適用情況為，無須仰賴避免重設 TPM Anti-Hammering 邏輯或變更 TPM 擁有者授權值的情況。可能會需要變更此項設定，某些 TPM 應用程式才可使用仰賴 TPM Anti-Hammering 邏輯的功能。
+
+選擇作業系統管理的 TPM 驗證設定「委派」，只會在本機登錄中儲存 TPM 系統管理委派 Blob 以及 TPM 使用者委派 Blob。此設定適用於搭配仰賴 TPM Anti-Hammering 邏輯的 TPM 應用程式使用。
+
+若要與舊版作業系統及應用程式相容，或是要在要求不可在本機儲存 TPM 擁有者授權的情況下使用，請為作業系統管理的 TPM 驗證設定選擇「無」。使用此設定對於某些 TPM 應用程式來說，可能會造成問題。
+
+注意: 若作業系統管理的 TPM 驗證設定，從「完整」變更為「委派」，將會重新產生完整的 TPM 擁有者授權值，且任何原始 TPM 擁有者授權值的複本都將失效。
+</string>
+      <string id="OSManagedAuth-TpmAuthFull">完整</string>
+      <string id="OSManagedAuth-TpmAuthAdminPlusUser">委派</string>
+      <string id="OSManagedAuth-TpmAuthNone">無</string>
+      <string id="StandardUserAuthorizationFailureDuration_Name">標準使用者鎖定期間</string>
+      <string id="StandardUserAuthorizationFailureDuration_Name_Help">此原則設定可讓您管理計算需要授權之信賴平台模組 (TPM) 命令的標準使用者授權失敗期間 (分鐘)。如果在這個期間內授權失敗的 TPM 命令數目等於閾值，則會防止標準使用者傳送要求授權的命令到 TPM。
+
+此設定可以協助系統管理員防止 TPM 硬體進入鎖定模式，因為它會讓標準使用者傳送要求授權的命令到 TPM 的速度變慢。
+
+標準使用者每次傳送命令到 TPM，卻收到指出發生授權失敗的錯誤回應時，就會發生授權失敗。比這個期間還舊的授權失敗會被忽略。
+
+每個標準使用者適用二種閾值。超過任一種閾值都會禁止標準使用者傳送命令到 TPM 要求授權。
+
+標準使用者鎖定個別閾值是在不允許使用者傳送要求授權的命令到 TPM 之前，允許每個標準使用者授權失敗的次數上限。
+
+標準使用者鎖定總閾值是在不允許所有使用者傳送要求授權的命令到 TPM 之前，允許所有標準使用者授權失敗的總數上限。
+
+TPM 的設計是透過收到太多具有不正確授權值的命令時進入硬體鎖定模式的方式，來保護本身免於遭受密碼破解攻擊。當 TPM 進入鎖定模式時，對所有使用者 (包含系統管理者) 與 Windows 功能 (例如 BitLocker 磁碟機加密) 而言都是全域的。TPM 允許的授權失敗次數與維持鎖定的時間長度，依 TPM 製造商而有所不同。有些 TPM 可能進入鎖定模式會持續較長的時間，而視過去的失敗而定，授權失敗次數較少。有些 TPM 可能要求重新啟動系統才能結束鎖定模式。其他 TPM 可能要求系統維持開啟，在 TPM 結束鎖定模式之前才有足夠的時脈週期。
+
+擁有 TPM 擁有者密碼的系統管理員可以使用 TPM 管理主控台 (tpm.msc) 完整重設 TPM 的硬體鎖定邏輯。每次系統管理員重設 TPM 的硬體鎖定邏輯時，先前所有標準使用者的 TPM 授權失敗都會被忽略; 而允許標準使用者可再度立即正常使用 TPM。
+
+若未設定此值，則會使用預設值 480 分鐘 (8 小時)。
+      </string>
+      <string id="StandardUserAuthorizationFailureIndividualThreshold_Name">標準使用者個別鎖定閾值</string>
+      <string id="StandardUserAuthorizationFailureIndividualThreshold_Name_Help">此原則設定可讓您管理每個標準使用者對信賴平台模組 (TPM) 的授權失敗次數上限。如果在標準使用者鎖定期間內使用者授權失敗的次數等於這個值，則會禁止標準使用者傳送命令給要求授權的信賴平台模組 (TPM)。
+
+此設定可以協助系統管理員防止 TPM 硬體進入鎖定模式，因為它會讓標準使用者傳送要求授權的命令到 TPM 的速度變慢。
+
+標準使用者每次傳送命令到 TPM，卻收到指出發生授權失敗的錯誤回應時，就會發生授權失敗。比這個期間還舊的授權失敗會被忽略。
+
+每個標準使用者適用二種閾值。超過任一種閾值都會禁止標準使用者傳送命令到 TPM 要求授權。
+
+這個值是在不允許使用者傳送要求授權的命令到 TPM 之前，允許每個標準使用者授權失敗的次數上限。
+
+標準使用者鎖定總閾值是在不允許所有使用者傳送要求授權的命令到 TPM 之前，允許所有標準使用者授權失敗的總數上限。
+
+TPM 的設計是透過收到太多具有不正確授權值的命令時進入硬體鎖定模式的方式，來保護本身免於遭受密碼破解攻擊。當 TPM 進入鎖定模式時，對所有使用者 (包含系統管理者) 與 Windows 功能 (例如 BitLocker 磁碟機加密) 而言都是全域的。TPM 允許的授權失敗次數與維持鎖定的時間長度，依 TPM 製造商而有所不同。有些 TPM 可能進入鎖定模式會持續較長的時間，而視過去的失敗而定，授權失敗次數較少。有些 TPM 可能要求重新啟動系統才能結束鎖定模式。其他 TPM 可能要求系統維持開啟，在 TPM 結束鎖定模式之前才有足夠的時脈週期。
+
+擁有 TPM 擁有者密碼的系統管理員可以使用 TPM 管理主控台 (tpm.msc) 完整重設 TPM 的硬體鎖定邏輯。每次系統管理員重設 TPM 的硬體鎖定邏輯時，先前所有標準使用者的 TPM 授權失敗都會被忽略; 而允許標準使用者可再度立即正常使用 TPM。
+
+若未設定此值，則使用預設值 4。
+
+零值表示 OS 將不允許標準使用者傳送命令到可能造成授權失敗的 TPM。
+      </string>
+
+      <string id="StandardUserAuthorizationFailureTotalThreshold_Name">標準使用者鎖定總閾值</string>
+      <string id="StandardUserAuthorizationFailureTotalThreshold_Name_Help">此原則設定可以讓您管理所有標準使用者對信賴平台模組 (TPM) 的授權失敗次數上限。如果在標準使用者鎖定期間內所有使用者授權失敗總數等於這個值，則會禁止所有標準使用者傳送命令給要求授權的信賴平台模組 (TPM)。
+
+此設定可以協助系統管理員防止 TPM 硬體進入鎖定模式，因為它會讓標準使用者傳送要求授權的命令到 TPM 的速度變慢。
+
+標準使用者每次傳送命令到 TPM，卻收到指出發生授權失敗的錯誤回應時，就會發生授權失敗。比這個期間還舊的授權失敗會被忽略。
+
+每個標準使用者適用二種閾值。超過任一種閾值都會禁止標準使用者傳送命令到 TPM 要求授權。
+
+標準使用者個別鎖定值是在不允許使用者傳送要求授權的命令到 TPM 之前，允許每個標準使用者授權失敗的次數上限。
+
+這個值是在不允許所有使用者傳送要求授權的命令到 TPM 之前，允許所有標準使用者授權失敗的總數上限。
+
+TPM 的設計是透過收到太多具有不正確授權值的命令時進入硬體鎖定模式的方式，來保護本身免於遭受密碼破解攻擊。當 TPM 進入鎖定模式時，對所有使用者 (包含系統管理者) 與 Windows 功能 (例如 BitLocker 磁碟機加密) 而言都是全域的。TPM 允許的授權失敗次數與維持鎖定的時間長度，依 TPM 製造商而有所不同。有些 TPM 可能進入鎖定模式會持續較長的時間，而視過去的失敗而定，授權失敗次數較少。有些 TPM 可能要求重新啟動系統才能結束鎖定模式。其他 TPM 可能要求系統維持開啟，在 TPM 結束鎖定模式之前才有足夠的時脈週期。
+
+擁有 TPM 擁有者密碼的系統管理員可以使用 TPM 管理主控台 (tpm.msc) 完整重設 TPM 的硬體鎖定邏輯。每次系統管理員重設 TPM 的硬體鎖定邏輯時，先前所有標準使用者的 TPM 授權失敗都會被忽略; 而允許標準使用者可再度立即正常使用 TPM。
+
+若未設定此值，則會使用預設值 9。
+
+零值表示 OS 將不允許標準使用者傳送命令到可能造成授權失敗的 TPM。
+
+      </string>
+      <string id="UseLegacyDAP_Name">設定系統以為 TPM 2.0 使用舊版字典攻擊防護參數設定。</string>
+      <string id="UseLegacyDAP_Help">此原則設定會將 TPM 設定為使用字典攻擊防護參數 (鎖定閾值與復原時間)，且其值為用於 Windows 10 (版本 1607 與更舊版本) 的值。設定此原則之後，只有在下列情況時才會生效: a) TPM 原先使用 Windows 10 (版本 1607) 之後的 Windows 所準備，且 b) 系統有 TPM 2.0。請注意，啟用此原則的效果只有在執行 TPM 維護工作之後 (通常是重新啟動系統之後) 才會生效。只要在系統上啟用了此原則且已生效 (重新啟動系統之後) 之後，將它停用將不會有任何影響，且系統的 TPM 的設定將會維持使用舊版字典攻擊防護參數 (不論此群組原則的值為何)。在已啟用此原則的系統上，要讓停用設定生效的唯一方式是: a) 從群組原則加以停用，並 b) 清除系統上的 TPM。</string>
+      <string id="DSHACategory">裝置健康情況證明服務</string>
+      <string id="OptIntoDSHA_Name">啟用裝置健康情況證明監視和報告</string>
+      <string id="OptIntoDSHA_Help">此群組原則會在支援的裝置上啟用裝置健康情況證明報告 (DHA-report)。它能讓支援的裝置在每次裝置啟動時，將裝置健康情況證明相關資訊 (裝置開機記錄、PCR 值、TPM 憑證等) 傳送到裝置健康情況證明服務 (DHA-Service)。裝置健康情況證明服務會驗證裝置的安全性狀態和健康情況，並且透過雲端式的報告入口網站供企業系統管理員存取發現結果。此原則與裝置管理性解決方案 (如 MDM 或 SCCM) 所起始的 DHA 報告無關，而且不會干擾其工作流程。</string>
+      <string id="ClearTPMIfNotReady_Name">設定系統在 TPM 非處於就緒狀態時予以清除。</string>
+      <string id="ClearTPMIfNotReady_Help">此原則設定可設定系統在偵測到 TPM 處於 [就緒] 以外的任何狀態時提示使用者清除 TPM。此原則只有在系統的 TPM 非處於 [就緒] 狀態下才會生效，包括 TPM 狀態為 [已可使用 (提供精簡功能)]。待下次重新開機後使用者登入時，若登入的使用者是系統 Administrators 群組的成員，清除 TPM 的提示才會出現。提示出現時可予關閉，但每次重新開機登入後都將再次出現，直到停用此原則或 TPM 處於 [就緒] 狀態為止。</string>
+        
+    </stringTable>
+    <presentationTable>
+      <presentation id="BlockedCommandsList_Name">
+        <text>藉由將命令編號新增到清單，以指定要封鎖的命令。</text>
+        <listBox refId="BlockedCommandsList_Ordinals2">封鎖 TPM 命令的清單:</listBox>
+        <text>例如，若要封鎖 TPM_OwnerReadInternalPub</text>
+        <text>命令和 TPM_FieldUpgrade 命令，將項目 129 和 170 新增到清單。</text>
+      </presentation>
+      <presentation id="OSManagedAuth_Name">
+        <dropdownList refId="SelectOSManagedAuthLevel" noSort="true" defaultItem="1">作業系統管理 TPM 授權層級:</dropdownList>
+      </presentation>
+      <presentation id="StandardUserAuthorizationFailureDuration_Name">
+        <decimalTextBox refId="DXT_StandardUserAuthorizationFailureDuration_Name" defaultValue="480">計算 TPM 授權失敗的期間 (分鐘):</decimalTextBox>
+      </presentation>
+      <presentation id="StandardUserAuthorizationFailureIndividualThreshold_Name">
+        <decimalTextBox refId="DXT_StandardUserAuthorizationFailureIndividualThreshold_Name" defaultValue="4">每一期間授權失敗次數上限:</decimalTextBox>
+      </presentation>
+      <presentation id="StandardUserAuthorizationFailureTotalThreshold_Name">
+        <decimalTextBox refId="DXT_StandardUserAuthorizationFailureTotalThreshold_Name" defaultValue="9">每一期間授權失敗次數上限:</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

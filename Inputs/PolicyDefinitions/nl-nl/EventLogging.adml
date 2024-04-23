@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Logboekregistratie</displayName>
+    <description>Dit bestand bevat de configuratieopties voor Windows-logboekregistratie</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Logboekregistratie</string>
+            <string id="EnableProtectedEventLogging">Beveiligde logboekregistratie inschakelen</string>
+            <string id="EnableProtectedEventLogging_Explain">
+Met deze beleidsinstelling kunt u Beveiligde logboekregistratie configureren.
+
+Als u deze beleidsinstelling inschakelt, gebruiken de componenten die deze instelling ondersteunen het certificaat dat u hebt opgegeven voor het versleutelen van potentieel gevoelige gegevens voordat deze naar het gebeurtenislogboek worden geschreven. Gegevens worden versleuteld met behulp van de CMS (Cryptographic Message Syntax)-standaard en de openbare sleutel die u hebt verschaft. U kunt deze versleutelde berichten ontsleutelen met de PowerShell-cmdlet Unprotect-CmsMessage, vooropgesteld dat u toegang hebt tot de persoonlijke sleutel die hoort bij de openbare sleutel waarmee ze zijn versleuteld.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, worden gebeurtenislogboekberichten niet gecodeerd door componenten voordat ze naar het gebeurtenislogboek worden geschreven.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+Hiermee wordt een versleutelingscertificaat verschaft dat moet worden gebruikt voor logboekregistratie. U kunt eventueel het volgende opgeven:
+
+    - De inhoud van een X.509-certificaat met Base 64-codering
+    - De vingerafdruk van een certificaat dat zich in het certificaatarchief op de lokale computer bevindt (meestal geïmplementeerd via de PKI-infrastructuur)
+    - Het volledige pad naar een certificaat (lokaal of op een externe share)
+    - Het pad naar een map met een of meer certificaten (lokaal of op een externe share)
+    - De onderwerpnaam van een certificaat dat zich in het certificaatarchief op de lokale computer bevindt (meestal geïmplementeerd via de PKI-infrastructuur)
+
+Het uitgebreide-sleutelgebruik moet Documentversleuteling zijn voor het resulterende certificaat (1.3.6.1.4.1.311.80.1) en tevens moet het uitgebreide-sleutelgebruik Gegevenscodering of Sleutelcodering zijn ingeschakeld.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

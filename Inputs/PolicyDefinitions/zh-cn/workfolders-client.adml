@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2012 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>请在此处输入显示名称</displayName>
+  <description>请在此处输入描述</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_WorkFolders">工作文件夹</string>
+      <string id="Pol_MachineEnableWorkFolders">强制为所有用户自动设置</string>
+      <string id="Pol_MachineEnableWorkFolders_Help">此策略设置指定是否应为受影响计算机的所有用户自动设置工作文件夹。
+      
+如果启用此策略设置，将为受影响计算机的所有用户自动设置工作文件夹。这可以防止用户选择不使用计算机上的工作文件夹；还可以防止他们手动指定工作文件夹在其中存储文件的本地文件夹。工作文件夹将使用“用户配置\管理模板\Windows 组件\WorkFolders”中的“指定工作文件夹设置”策略设置中指定的设置。如果“指定工作文件夹设置”策略设置未应用于用户，则不会自动设置工作文件夹。
+      
+如果禁用或未配置此策略设置，则工作文件夹将使用“指定工作文件夹设置”策略设置的“强制自动设置”选项来确定是否为给定用户自动设置工作文件夹。
+      
+      </string>
+      <string id="Pol_UserEnableWorkFolders">指定工作文件夹设置</string>
+      <string id="Pol_UserEnableWorkFolders_Help">此策略设置为受影响用户指定工作文件夹服务器，并指定在加入域的计算机上设置工作文件夹时，是否允许用户更改设置。
+
+如果启用此策略设置，受影响用户在登录到加入域的电脑时将收到工作文件夹设置。如果禁用或未配置此策略设置，不会为受影响用户指定任何工作文件夹设置，但是用户可以使用“工作文件夹控制面板”项手动设置工作文件夹。
+
+“工作文件夹 URL”可以指定组织用于发现工作文件夹的 URL，也可以指定存储受影响用户数据的文件服务器的特定 URL。
+
+“工作文件夹本地路径”指定在客户端计算机上用于同步文件的本地文件夹。此路径可能包含环境变量。注意: 若要使此配置生效，还必须指定有效的“工作文件夹 URL”。
+  
+“按需文件访问首选项”选项控制是否启用按需文件访问。启用后，用户可控制工作文件夹中的哪些文件可在指定电脑上脱机可用。工作文件夹中的其余文件始终可见，并且不占用任何电脑空间，但用户必须连接到 Internet 才能访问它们。
+
+如果启用此策略设置，按需文件访问也将启用。
+如果禁用此策略设置，按需文件访问也将禁用，并且用户的每台电脑都要有足够的存储空间以存储他们的所有文件。
+如果指定“用户选择”或未配置此策略设置，用户将决定是否启用按需文件访问。但是，如果启用“强制自动设置”策略设置，将自动设置工作文件夹，并启用按需文件访问。
+
+“强制自动设置”选项指定工作文件夹应在不提示用户的情况下自动设置。这可防止用户选择不在计算机上使用工作文件夹；它还可阻止用户手动指定工作文件夹用于存储文件的本地文件夹。默认情况下，工作文件夹存储在 "%USERPROFILE%\Work Folders" 文件夹中。如果未指定此选项，用户必须在计算机上使用“工作文件夹控制面板”项才能设置工作文件夹。
+      </string>
+      <string id="Pol_UserEnableTokenBroker">允许使用令牌代理进行 AD FS 身份验证</string>
+      <string id="Pol_UserEnableTokenBroker_Help">此策略指定工作文件夹应使用令牌代理进行交互式 AD FS 身份验证，还是像以前的版本那样，使用它自己的 OAuth2 令牌流程。</string>
+      <string id="Pol_GhostingPreference_Enabled">启用(推荐)</string>
+      <string id="Pol_GhostingPreference_Disabled">禁用</string>
+      <string id="Pol_GhostingPreference_UserDefined">用户选择</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_EnableWorkFolders">
+        <textBox refId="Lbl_ServerURL_Edit">
+          <label>工作文件夹 URL:  </label>
+        </textBox>
+        <text> </text>
+        <textBox refId="Lbl_LocalFolderPath_Edit">
+          <label>工作文件夹本地路径: </label>
+        </textBox>
+        <text> </text>
+        <dropdownList refId="Lbl_GhostingPreference_Enum" noSort="true" defaultItem="0">按需文件访问首选项:</dropdownList>        
+        <text> </text>
+        <checkBox refId="Lbl_AutoProvision_Chk" defaultChecked="false">强制自动设置</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

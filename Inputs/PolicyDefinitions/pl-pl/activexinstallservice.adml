@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Usługa Instalator kontrolek ActiveX</displayName>
+  <description>Służy do instalowania kontrolek ActiveX z zatwierdzonych witryn instalacyjnych.</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">Usługa Instalator kontrolek ActiveX</string>
+      <string id="AxISURLZonePolicies">Ustanów zasady instalacji kontrolek ActiveX dla witryn w strefach zaufanych</string>        
+      <string id="AxISURLZonePolicies_explain">To ustawienie zasad steruje instalacją kontrolek ActiveX z witryn znajdujących się w strefie zaufanej. 
+
+Jeśli to ustawienie zasad zostanie włączone, kontrolki ActiveX będą instalowanie zgodnie z ustawieniami zdefiniowanymi przez to ustawienie zasad. 
+      
+Jeśli to ustawienie zasad zostanie wyłączone lub pozostanie nieskonfigurowane, przed zainstalowaniem kontrolki ActiveX użytkownikowi będzie wyświetlany monit. 
+
+Jeśli w zaufanej witrynie jest używany protokół HTTPS, to ustawienie zasad może też określać sposób, w jaki usługa Instalator kontrolek ActiveX będzie reagować na błędy certyfikatów. Domyślnie wszystkie połączenia HTTPS muszą dostarczać certyfikat serwera, który spełnia wszystkie kryteria weryfikacji. Jeśli wiesz, że w zaufanej witrynie występuje błąd certyfikatu, ale mimo to uważasz ją za zaufaną, możesz wybrać błędy certyfikatów, które mają być ignorowane. 
+    
+Uwaga: to ustawienie zasad dotyczy wszystkich witryn w strefach zaufanych.
+
+</string>
+      <string id="TrustedZoneDisabled">Nie instaluj</string>
+      <string id="TrustedZonePrompt">Monituj użytkownika</string>
+      <string id="TrustedZoneSilentInstall">Zainstaluj w trybie dyskretnym</string>
+      <string id="ApprovedActiveXInstallSites">Zatwierdzone witryny instalacyjne kontrolek ActiveX</string>
+      <string id="ApprovedActiveXInstallSites_explain">To ustawienie zasad określa, z których witryn instalacyjnych kontrolek ActiveX użytkownicy standardowi w organizacji mogą instalować kontrolki ActiveX na swoich komputerach. Jeśli to ustawienie jest włączone, administrator może utworzyć listę zatwierdzonych witryn instalacyjnych kontrolek ActiveX, określając adresy URL odpowiednich hostów. 
+
+Jeśli to ustawienie zostanie włączone, administrator może utworzyć listę zatwierdzonych witryn instalacyjnych kontrolek ActiveX, określając adresy URL odpowiednich hostów. 
+      
+Jeśli to ustawienie zasad zostanie wyłączone lub pozostanie nieskonfigurowane, kontrolki ActiveX przed zainstalowaniem będą wyświetlać użytkownikowi monit o poświadczenia administracyjne. 
+
+Uwaga: określając adresy URL hostów, nie można używać symboli wieloznacznych.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Zasady instalacji kontrolki ActiveX podpisanej przez zaufanego wydawcę</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Zasady instalacji podpisanej kontrolki ActiveX</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Zasady instalacji niepodpisanej kontrolki ActiveX</dropdownList>
+        <text>Zezwalaj na połączenie z zaufanymi witrynami, w których występują następujące błędy certyfikatów serwera.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Nieznany urząd certyfikacji (CA)</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Nieprawidłowa nazwa certyfikatu (CN)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Data ważności certyfikatu wygasła</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Nieprawidłowe użycie certyfikatu</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">Adresy URL hostów</listBox>
+        <text>Zawiera zasady dotyczące adresu URL hosta.</text>
+        <text>Na przykład  </text>
+        <text>Nazwa hosta: http://activex.microsoft.com</text>
+        <text>Wartość: 2,1,0,0</text>
+        <text>Wartość określona dla każdego adresu URL hosta stanowi sumę czterech ustawień w formacie CSV.</text>
+        <text>Ustawienia te odpowiadają parametrom „TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy”.</text>
+        <text>Trzy pierwsze wartości, licząc od lewej strony, decydują o ewentualnym instalowaniu kontrolek ActiveX — zależnie od ich podpisu.</text>
+        <text>Każde z tych ustawień może przybierać następujące wartości.</text>
+        <text>0: kontrola ActiveX nie będzie instalowana.</text>
+        <text>1: użytkownik otrzyma monit o instalację kontrolki ActiveX.</text>
+        <text>2: kontrolka ActiveX będzie instalowana w trybie dyskretnym.</text>
+        <text>Kontrolki podpisane z użyciem certyfikatów z magazynu zaufanych wydawców będą instalowane w trybie dyskretnym  </text>
+        <text>Kontrolki niepodpisane nie mogą być instalowane w trybie dyskretnym.</text>
+        <text></text>
+        <text>Wartość umieszczona po prawej stronie zasady to flaga maski bitowej.</text>
+        <text>Flagi pozwalają na ignorowanie błędów certyfikatów obiektów próbujących uzyskać dostęp przez protokół HTTPS.</text>
+        <text>Wartością domyślną jest 0.</text>
+        <text>Oznacza ona, że obiekty łączące się za pośrednictwem protokołu HTTPS muszą przejść wszystkie kontrole zabezpieczeń.</text>
+        <text></text>
+        <text>Aby błędy nieprawidłowych certyfikatów były ignorowane,</text>
+        <text>należy użyć kombinacji następujących wartości</text>
+        <text>0x00000100  Ignorowanie nieznanych urzędów certyfikacji</text>
+        <text>0x00001000  Ignorowanie nieprawidłowych nazw pospolitych</text>
+        <text>0x00002000  Ignorowanie nieprawidłowych dat certyfikatów</text>
+        <text>0x00000200  Ignorowanie nieprawidłowego użycia certyfikatów</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

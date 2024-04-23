@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (c) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>NetworkProvider</displayName>
+  <description>Definições de Política para o Provedor de UNC Múltiplo</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_NetworkProvider">Provedor de Rede</string>
+      <string id="Pol_HardenedPaths">Caminhos UNC Protegidos</string>
+      <string id="Pol_HardenedPaths_Explain">Esta configuração de política configura o acesso seguro a caminhos UNC.
+
+Se você habilitar essa política, o Windows permitirá acesso somente aos caminhos UNC especificados após o cumprimento de requisitos de segurança adicionais.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_HardenedPaths">
+        <text>Especifique caminhos de rede protegidos.
+No campo de nome, digite um caminho UNC totalmente qualificado para cada recurso de rede.
+Para proteger todo o acesso a um compartilhamento com um nome em particular, independentemente do nome do servidor, especifique um nome de servidor '*' (asterisco). Por exemplo, "\\*\NETLOGON".
+Para proteger todo o acesso a todos os compartilhamentos hospedados em um servidor, a parte do nome do compartilhamento do caminho UNC poderá ser omitida. Por exemplo, "\\SERVER".
+
+No campo de valor, especifique uma ou mais das opções a seguir, separadas por vírgulas:
+    'RequireMutualAuthentication=1': A autenticação mútua entre o cliente e o servidor é necessária para garantir que o cliente se conecte ao servidor correto.
+    'RequireIntegrity=1': A comunicação entre o cliente e o servidor deve empregar um mecanismo de integridade para evitar a violação de dados.
+    'RequirePrivacy=1': A comunicação entre o cliente e o servidor deve ser criptografada para impedir que terceiros observem dados confidenciais.</text>
+        <listBox refId="Pol_HardenedPaths">Caminhos UNC Protegidos:</listBox>
+        <text> </text>
+        <text>Você deve exigir Integridade e Autenticação Mútua para qualquer caminho UNC que hospede programas executáveis, arquivos de script ou arquivos que controlem políticas de segurança.
+
+Considere hospedar arquivos que não requeiram Integridade ou Privacidade em compartilhamentos separados daqueles que absolutamente precisam de tal segurança para o desempenho ideal.
+
+Para obter detalhes sobre a configuração de computadores Windows para exigir segurança adicional ao acessar caminhos UNC específicos, visite http://support.microsoft.com/kb/3000483.</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

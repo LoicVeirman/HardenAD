@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>请在此处输入显示名称</displayName>
+  <description>请在此处输入描述</description>
+  <resources>
+    <stringTable>
+      <string id="Rpc">远程过程调用</string>
+      <string id="RpcEEInfoOff">关闭</string>
+      <string id="RpcEEInfoOffWithExc">例外关闭</string>
+      <string id="RpcEEInfoOn">启用</string>
+      <string id="RpcEEInfoOnWithExc">例外启用</string>
+      <string id="RpcEnableAuthEpResolution">启用 RPC 终点映射程序客户端验证</string>
+      <string id="RpcEnableAuthEpResolution_Help">此策略设置控制进行的调用中包含验证信息时 RPC 客户端是否使用终点映射程序服务进行验证。  在这种方式下，运行 Windows NT4 (针对所有 Service Pack)的计算机上的终点映射程序服务无法处理提供的验证信息。
+
+如果禁用此策略设置，则 RPC 客户端不会对终点映射程序服务进行验证，但可以与 Windows NT4 服务器上的终点映射程序服务进行通信。
+
+如果启用此策略设置，则 RPC 将针对包含验证信息的调用对终点映射程序服务进行验证。 进行此类调用的客户端将无法与 Windows NT4 服务器终点映射程序服务进行通信。
+
+如果未配置此策略设置，则会禁用该策略设置。 RPC 客户端不会对终点映射程序服务进行验证，但可以与 Windows NT4 服务器终点映射程序服务进行通信。
+
+注意: 只有在重新启动系统后才可以应用此策略。</string>
+      <string id="RpcExtendedErrorInformation">传播扩展错误信息</string>
+      <string id="RpcExtendedErrorInformation_Help">此策略设置控制 RPC 运行时在发生错误时是否生成扩展错误信息。
+
+扩展错误信息包括发生错误时的本地时间、RPC 版本以及发生错误或传播错误的计算机的名称。程序可以通过使用标准的 Windows 应用程序编程接口(API)检索扩展错误信息。
+
+如果禁用此策略设置，则 RPC 运行时仅生成表明错误状况的状态代码。
+
+如果未配置此策略设置，则会禁用该策略设置。 这会导致仅生成表明错误状况的状态代码。
+
+如果启用此策略设置，则 RPC 运行时将生成扩展错误信息。 必须在下拉框中选择错误响应类型。
+
+--“关闭”可对所有进程禁用所有扩展错误信息。RPC 仅生成错误代码。
+
+--“例外启用”可启用扩展错误信息，但允许对选定进程禁用该设置。若要在此策略设置有效期间对某个进程禁用扩展错误信息，则启动该进程的命令必须以“扩展错误信息例外”字段中的其中一个字符串开始。
+
+--“例外关闭”可禁用扩展错误信息，但允许对选定的进程启用该设置。若要在此策略设置有效期间对某个进程启用扩展错误信息，则启动此进程的命令必须以“扩展错误信息例外”字段中的其中一个字符串开始。
+
+--“启用”可为所有进程启用扩展错误信息。
+
+注意: 有关“扩展错误信息例外”字段的信息，请参阅 Windows 软件开发工具包(SDK)。
+
+注意: 扩展错误信息可格式化为可兼容其他操作系统以及较早的 Microsoft 操作系统，但只有较新的 Microsoft 操作系统可读取和响应该信息。
+
+注意: 默认策略设置“关闭”设计用于扩展错误信息被视为敏感而不应被远程使用的系统。
+
+注意: 只有在重新启动系统后才可以应用此策略设置。</string>
+      <string id="RpcIDFOff">关闭</string>
+      <string id="RpcIDFOn">启用</string>
+      <string id="RpcIgnoreDelegationFailure">忽略委派失败</string>
+      <string id="RpcIgnoreDelegationFailure_Help">此策略设置控制在请求委派时 RPC 运行时是否忽略委派失败。
+
+当客户端连接到服务器时，在 Windows Server 2003 中引入的约束委派模型不报告在安全上下文中启用了委派。鼓励 RPC 和 COM 的调用方使用 RPC_C_QOS_CAPABILITIES_IGNORE_DELEGATE_FAILURE 标志，但是为 Windows Server 2003 之前的传统委派模型编写的某些应用程序可能不使用此标志，并在连接到使用约束委派的服务器时会遇到 RPC_S_SEC_PKG_ERROR。
+
+如果禁用此策略设置，则对于请求委派并使用约束委派连接到服务器的应用程序，RPC 运行时将生成 RPC_S_SEC_PKG_ERROR 错误。
+
+如果未配置此策略设置，则对于请求委派并使用约束委派连接到服务器的应用程序，RPC 运行时将生成 RPC_S_SEC_PKG_ERROR 错误。
+
+如果启用此策略设置，则:
+
+--  如果客户端请求委派，但是已创建的安全上下文不支持委派，则“关闭”指示 RPC 运行时生成 RPC_S_SEC_PKG_ERROR。
+
+--  即使已请求委派，“启用”也会指示 RPC 运行时接受不支持委派的安全上下文。
+
+注意: 只有在重新启动系统后才可以应用此策略设置。</string>
+      <string id="RpcMinimumHttpConnectionTimeout">设置 RPC/HTTP 连接的最小空闲连接超时</string>
+      <string id="RpcMinimumHttpConnectionTimeout_Help">此策略设置控制 RPC/HTTP 连接的最小空闲连接超时。 
+
+在网络代理(如 HTTP 代理或路由器)使用比运行 RPC/HTTP 代理的 IIS 服务器更低的空闲连接超时的情况下，此策略设置非常有用。在这类情况下，RPC/HTTP 客户端可能会遇到错误，因为连接超时将比预期的情况要快。使用此策略设置，可以强制 RPC 运行时和 RPC/HTTP 代理使用较低的连接超时。
+
+仅当 RPC 客户端、RPC 服务器和 RPC HTTP 代理均在运行 Windows Server 2003 系列/Windows XP SP1 或更高版本时，此策略设置才适用。如果 RPC 客户端、RPC 服务器或 RPC HTTP 代理运行在 Windows 的早期版本上，则忽略此策略设置。
+
+此策略设置的最小允许值为 90 秒。最大值为 7200 秒(2 小时)。
+
+如果禁用此策略设置，则使用运行 RPC HTTP 代理的 IIS 服务器上的空闲连接超时。
+
+如果未配置此策略设置，则会禁用该策略设置。 使用运行 RPC HTTP 代理的 IIS 服务器上的空闲连接超时。
+
+如果启用此策略设置，并将运行 RPC HTTP 代理的 IIS 服务器配置为具有较低的空闲连接超，则使用 IIS 服务器上的超时。否则，使用提供的超时值。 提供的超时时间以秒为单位。
+
+注意: 只有在重新启动系统后才可以应用此策略设置。</string>
+      <string id="RpcRestrictRemoteClients">限制未验证的 RPC 客户端</string>
+      <string id="RpcRestrictRemoteClients_Help">此策略设置控制 RPC 服务器如何处理连接到 RPC 服务器的未验证 RPC 客户端。
+
+此策略设置影响所有 RPC 应用程序。 在域环境下，应小心使用此策略设置，因为其可能会影响很多功能(包括组策略处理本身)。 恢复对此策略设置的更改可能会要求手动干预每个受影响的计算机。 永远不应将此策略设置应用于域控制器。
+
+如果禁用此策略设置，则 RPC 服务器运行时将在 Windows 客户端上使用“已验证”值，而在支持此策略设置的 Windows Server 版本上使用值“无”。
+
+如果未配置此策略设置，则会禁用该策略设置。 RPC 服务器的行为就如同启用了此策略设置一样，将“已验证”值用于 Windows 客户端，而将“无”值用于支持此策略设置的服务器 SKU。
+
+如果启用此策略设置，则它指导 RPC 服务器运行时限制未经验证的 RPC 客户端连接到计算机上运行的 RPC 服务器。如果客户端使用命名管道与服务器通信或使用 RPC 安全，则该客户端将被认为是未经验证的客户端。特别请求可以被未经验证的客户端访问的 RPC 接口可能在此限制之外，这取决于为该策略设置选取的值。
+
+--“无”允许所有 RPC 客户端连接到应用该策略设置的计算机上运行的 RPC 服务器。
+
+--“已验证”仅允许经过验证的 RPC 客户端(依据上述定义)连接到应用该策略设置的计算机上运行的 RPC 服务器。对请求例外的接口授予例外。
+
+--“已验证并且无例外”仅允许经过验证的 RPC 客户端(依据上述定义)连接到应用该策略的计算机上运行的 RPC 服务器。 不允许例外。
+
+注意: 只有在重新启动系统后才可以应用此策略设置。</string>
+      <string id="RpcRestrictRemoteClientsAuth">已验证</string>
+      <string id="RpcRestrictRemoteClientsHigh">已验证并且无例外</string>
+      <string id="RpcRestrictRemoteClientsNone">无</string>
+      <string id="RpcStateInfoAuto1">Auto1</string>
+      <string id="RpcStateInfoAuto2">Auto2</string>
+      <string id="RpcStateInfoBoth">完全</string>
+      <string id="RpcStateInfoNone">无</string>
+      <string id="RpcStateInformation">维护 RPC 疑难解答状态信息</string>
+      <string id="RpcStateInformation_Help">此策略设置确定 RPC 运行时是否维护系统的 RPC 状态信息以及可维护的信息量。仅包含最常用状态数据的基本状态信息是对 RPC 问题进行疑难解答所必需的。
+
+如果禁用此策略设置，则 RPC 运行时默认为“Auto2”级别。
+
+如果未配置此策略设置，则 PRC 默认为“Auto2”级别。
+
+如果启用此策略设置，则可以使用下拉框来确定哪些系统维护 RPC 状态信息。
+
+--“无”表示系统不维护任何 RPC 状态信息。注意: 由于疑难解答必需的基本状态信息对性能的影响可以忽略，并仅使用大约 4K 内存，因此对于多数安装，建议不要使用此设置。
+
+--“Auto1”指导 RPC 只有在计算机至少具有 64 MB 内存时，才维护基本状态信息。
+
+--“Auto2”指导 RPC 只有在计算机至少具有 128 MB 内存并运行 Windows 2000 Server、Windows 2000 Advanced Server 或 Windows 2000 Datacenter Server 时，才维护基本状态信息。
+
+--“服务器”指导 RPC 维护计算机上的基本状态信息，而不管其容量如何。
+
+--“完全”指导 RPC 维护系统上的全部 RPC 状态信息，而不管其容量如何。由于此级别会降低性能，因此建议只在调查 RPC 问题期间使用。
+
+注意: 若要从维护基本状态信息的系统检索 RPC 状态信息，则必须使用调试工具。
+
+注意: 只有在重新启动系统后才可以应用此策略设置。</string>
+      <string id="RpcStateInfoServer">服务器</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="RpcExtendedErrorInformation">
+        <dropdownList refId="RpcExtendedErrorInformationList" defaultItem="0">传播扩展错误信息: </dropdownList>
+        <textBox refId="RpcExtErrorExceptions">
+          <label>扩展错误信息例外: </label>
+        </textBox>
+      </presentation>
+      <presentation id="RpcIgnoreDelegationFailure">
+        <dropdownList refId="RpcIgnoreDelegationFailureList" defaultItem="0">忽略委派失败: </dropdownList>
+      </presentation>
+      <presentation id="RpcMinimumHttpConnectionTimeout">
+        <decimalTextBox refId="RpcMinimumHttpConnectionTimeoutValue" defaultValue="900" spinStep="10">最小空闲连接超时(以秒为单位): </decimalTextBox>
+      </presentation>
+      <presentation id="RpcRestrictRemoteClients">
+        <dropdownList refId="RpcRestrictRemoteClientsList" defaultItem="1">要应用的 RPC 运行时未验证的客户端限制: </dropdownList>
+      </presentation>
+      <presentation id="RpcStateInformation">
+        <dropdownList refId="RpcStateInformationList" defaultItem="2">要维护的 RPC 运行时状态信息: </dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

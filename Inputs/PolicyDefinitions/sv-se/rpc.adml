@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ange visningsnamn här</displayName>
+  <description>ange beskrivning här</description>
+  <resources>
+    <stringTable>
+      <string id="Rpc">RPC (Remote Procedure Call)</string>
+      <string id="RpcEEInfoOff">Av</string>
+      <string id="RpcEEInfoOffWithExc">Av med undantag</string>
+      <string id="RpcEEInfoOn">På</string>
+      <string id="RpcEEInfoOnWithExc">På med undantag</string>
+      <string id="RpcEnableAuthEpResolution">Aktivera Autentisering av klienter vid RPC-slutpunktsmappning</string>
+      <string id="RpcEnableAuthEpResolution_Help">Den här principinställningen styr om RPC-klienter autentiseras med slutpunktsmapparen när deras anrop innehåller autentiseringsinformation.   Slutpunktsmapparen på datorer med Windows NT4 (alla Service Pack) kan inte bearbeta autentiseringsinformation som anges på det här sättet. 
+
+Om du inaktiverar den här principinställningen autentiserar RPC-klienter inte till slutpunktsmapparen, men de kan kommunicera med slutpunktsmapparen i Windows NT4 Server.
+
+Om du aktiverar den här principinställningen autentiserar RPC-klienter till slutpunktsmapparen för anrop som innehåller autentiseringsinformation.  Klienter som gör sådana anrop kan inte kommunicera med slutpunktsmapparen på Windows NT4 Server.
+
+Om du inte konfigurerar den här principinställningen fortsätter den att vara inaktiverad.  RPC-klienter autentiserar inte till slutpunktsmapparen, men de kan kommunicera med slutpunktsmapparen i Windows NT4 Server.
+
+Obs! Den här principen tillämpas först när systemet har startats om.</string>
+      <string id="RpcExtendedErrorInformation">Sprid utökad felinformation (Propagate extended error information)</string>
+      <string id="RpcExtendedErrorInformation_Help">Den här principinställningen styr om RPC-körningsmiljön genererar utökad felinformation när ett fel inträffar.
+
+I den utökade felinformationen ingår lokal tid då felet inträffade, RPC-versionen och namnet på datorn som felet inträffade på eller spreds från. Program kan läsa utökad felinformation genom att använda standard-API:n i Windows.
+
+Om du inaktiverar den här principinställningen genererar RPC-körningsmiljön endast en statuskod om ett feltillstånd uppstår.
+
+Om du inte konfigurerar den här principinställningen fortsätter den att vara inaktiverad. RPC genererar endast en statuskod om ett feltillstånd uppstår.
+
+Om du aktiverar den här principinställningen genererar RPC-körningsmiljön utökad felinformation. Du måste välja en felsvarstyp i listrutan.
+
+-- "Av" inaktiverar all utökad felinformation för alla processer. RPC skapar endast en felkod.
+
+-- På med undantag aktiverar utökad felinformation, men låter dig inaktivera det för enskilda processer. Om du vill inaktivera utökad felinformation för en process när den här inställningen tillämpas måste det kommando som startar processen börja med en av de strängar som anges i fältet Undantag för utökad felinformation.
+
+-- Av med undantag inaktiverar utökad felinformation, men låter dig aktivera det för enskilda processer Om du vill aktivera utökad felinformation för en process när den här inställningen tillämpas måste det kommando som startar processen börja med en av de strängar som anges i fältet Undantag för utökad felinformation.
+
+-- "På" aktiverar utökad felinformation för alla processer.
+
+Obs! Mer information om fältet Undantag för utökad felinformation finns i Windows Software Development Kit (SDK).
+
+Obs! Utökad felinformation formateras för att vara kompatibel med andra operativsystem och äldre Microsoft-operativsystem, men endast nyare Microsoft-operativsystem kan läsa och reagera på informationen.
+
+Obs! Standardinställningen (Av) är avsedd för system där utökad felinformation anses vara känslig information som inte ska göras tillgänglig för fjärrdatorer.
+
+Obs! Den här principinställningen tillämpas först när systemet har startats om.</string>
+      <string id="RpcIDFOff">Av</string>
+      <string id="RpcIDFOn">På</string>
+      <string id="RpcIgnoreDelegationFailure">Ignorera delegeringsfel</string>
+      <string id="RpcIgnoreDelegationFailure_Help">Den här principinställningen bestämmer om RPC-körningsmiljön ska ignorera delegeringsfel när delegering har begärts.
+
+Den begränsade delegeringsmodellen, som introducerades i Windows Server 2003, rapporterar inte att delegering var aktiverat för en säkerhetskontext när en klient ansluter till en server. Anropare som använder RPC och COM bör använda flaggan RPC_C_QOS_CAPABILITIES_IGNORE_DELEGATE_FAILURE, men vissa program som skrivits för den äldre delegeringsmodellen (före Windows Server 2003) kanske inte använder den här flaggan och råkar då ut för felet RPC_S_SEC_PKG_ERROR om de ansluter till en server som använder begränsad delegering.
+
+Om den här principinställningen inaktiveras genererar RPC-körningsmiljön fel av typen RPC_S_SEC_PKG_ERROR när program begär delegering och ansluter till servrar med begränsad delegering. 
+
+Om den här principinställningen inte konfigureras genererar RPC-körningsmiljön fel av typen SEC_S_PKG_PKG_ERROR när program begär delegering och ansluter till servrar med begränsad delegering. 
+
+Om du aktiverar den här principinställningen:
+
+--  Anger Av att RPC-körningsmiljön ska orsaka RPC_S_SEC_PKG_ERROR om klienten begär delegering men den säkerhetskontext som skapats inte stöder delegering.
+
+-- Anger På att RPC-körningsmiljön ska acceptera säkerhetskontexter som inte stöder delegering även om delegering begärdes.
+
+Obs! Den här principinställningen tillämpas först när systemet har startats om.</string>
+      <string id="RpcMinimumHttpConnectionTimeout">Ange lägsta timeout för inaktiva anslutningar vid RPC/HTTP-kommunikation</string>
+      <string id="RpcMinimumHttpConnectionTimeout_Help">Den här principinställningen bestämmer timeoutvärdet för inaktiva anslutningar vid RPC/HTTP-kommunikation.  
+
+Den här principinställningen är användbar om en nätverksagent, t ex en HTTP-proxy eller en router, använder ett lägre timeoutvärde för inaktivera anslutningar än IIS-servern som kör RPC/HTTP-proxyn. I sådana fall kan klienter som använder RPC/HTTP råka ut för fel eftersom anslutningar orsakar timeout snabbare än väntat. Du kan använda den här principinställningen för att tvinga RPC-körningsmiljön och RPC/HTTP-proxyn att använda ett lägre timeoutvärde.
+
+Den här principinställningen gäller endast när RPC-klienten, RPC-servern och RPC HTTP-proxyn körs på Windows Server 2003, Windows XP SP1 eller nyare versioner. Om antingen RPC-klienten, RPC-servern eller RPC HTTP-proxyn använder körs på en äldre Windows-version, ignoreras den här principinställningen.
+
+Det lägsta tillåtna värdet för den här principinställningen är 90 sekunder. Det högsta tillåtna värdet är 7 200 sekunder (två timmar).
+
+Om den här principinställningen inaktiveras eller inte konfigureras används det timeoutvärde för inaktiva anslutningar som angetts på den IIS-server där RPC HTTP-proxyn körs.
+
+Om du inte konfigurerar den här principinställningen fortsätter den att vara inaktiverad.  Det timeoutvärde för inaktiva anslutningar som har angetts på den IIS-server där RPC HTTP-proxyn körs används.
+
+Om du aktiverar den här principinställningen och IIS-servern som kör RPC HTTP-proxyn har konfigurerats med ett lägre timeoutvärde för inaktiva anslutningar, används det värde som konfigurerats på IIS-servern. I annat fall används det angivna timeoutvärdet.  Timeoutvärdet anges i antal sekunder.
+
+Obs! Den här principinställningen tillämpas först när systemet har startats om.</string>
+      <string id="RpcRestrictRemoteClients">Begränsa för oautentiserade RPC-klienter</string>
+      <string id="RpcRestrictRemoteClients_Help">Den här principinställningen styr hur RPC-servermiljön hanterar oautentiserade RPC-klienter som försöker ansluta till RPC-servrar.
+
+Den här principinställningen påverkar alla RPC-program.  Var försiktig när du använder den här principinställningen i en domänmiljö eftersom den kan påverka många olika funktioner, inklusive själva grupprincipbearbetningen.  Om du behöver återställa en ändring av den här principinställningen kan du behöva göra det manuellt på varje dator som påverkas.  Tillämpa aldrig den här principinställningen på en domänkontrollant.
+
+Om du inaktiverar den här principinställningen använder RPC-servermiljön värdet Autentiserad på Windows-klienter och värdet Ingen på de Windows Server-versioner som stöder den här inställningen. 
+
+Om du inte konfigurerar den här principinställningen fortsätter den att vara inaktiverad.  RPC-servermiljön använder samma värden som om principinställningen var aktiverad, d.v.s. värdet Autentiserad på Windows-klienter och värdet Ingen på de Windows Server-versioner som stöder den här inställningen. 
+
+Om du aktiverar den här principinställningen kommer RPC-servermiljön att begränsa oautentiserade RPC-klienter som försöker ansluta till RPC-servrar på en dator. En klient anses vara oautentiserad om den använder en namngiven pipe för att kommunicera med servern eller om den använder RPC-säkerhet. RPC-gränssnitt som uttryckligen begär att kunna nås av oautentiserade klienter kan undantas från denna begränsning, beroende på vilken inställning som görs här.
+
+--  Ingen tillåter att alla RPC-klienter ansluter till RPC-servrar på den dator som principinställningen tillämpas på.
+
+--  Autentiserad tillåter endast att autentiserade RPC-klienter (enligt definitionen ovan) ansluter till RPC-servrar på den dator som principinställningen tillämpas på. Gränssnitt som begär undantag beviljas det.
+
+--  Autentiserad utan undantag tillåter endast att autentiserade RPC-klienter (enligt definitionen ovan) ansluter till RPC-servrar på den dator som principinställningen tillämpas på.  Inga undantag tillåts.
+
+Obs! Den här principinställningen tillämpas först när systemet har startats om.</string>
+      <string id="RpcRestrictRemoteClientsAuth">Autentiserad</string>
+      <string id="RpcRestrictRemoteClientsHigh">Autentiserad utan undantag</string>
+      <string id="RpcRestrictRemoteClientsNone">Ingen</string>
+      <string id="RpcStateInfoAuto1">Auto1</string>
+      <string id="RpcStateInfoAuto2">Auto2</string>
+      <string id="RpcStateInfoBoth">Fullständig</string>
+      <string id="RpcStateInfoNone">Ingen</string>
+      <string id="RpcStateInformation">Spara tillståndsinformation för felsökning av RPC</string>
+      <string id="RpcStateInformation_Help">Den här principinställningen bestämmer om RPC-körningsmiljön kvarhåller RPC-tillståndsinformation för systemet och hur mycket information som kvarhålls. Grundläggande tillståndsinformation består av den vanligaste tillståndsinformationen och krävs för felsökning av RPC-problem.
+
+Om du inaktiverar den här principinställningen ändras nivån till standardvärdet Auto2.
+
+Om du inte konfigurerar den här principinställningen ändras nivån till standardvärdet Auto2. 
+
+Om du aktiverar den här principinställningen kan du använda listrutan för att bestämma vilka system som kvarhåller RPC-tillståndsinformation.
+
+--  Ingen innebär att ingen RPC-tillståndsinformation sparas. Obs! Eftersom den grundläggande tillståndsinformation som krävs för felsökning påverkar prestanda minimalt och endast kräver ungefär 4 kB minne rekommenderas inte den här inställningen för de flesta installationer.
+
+--  Auto1 innebär att grundläggande tillståndsinformation kvarhålls endast om datorn har minst 64 MB minne.
+
+--  Auto2 innebär att grundläggande tillståndsinformation kvarhålls endast om datorn har minst 128 MB minne och körs med operativsystemet Windows 2000 Server, Windows 2000 Advanced Server eller Windows 2000 Datacenter Server. 
+
+--  Server innebär att grundläggande tillståndsinformation kvarhålls på datorn oavsett dess prestanda.
+
+--  Fullständig innebär att fullständig tillståndsinformation kvarhålls på datorn oavsett datorns kapacitet. Eftersom den här nivån kan påverka prestanda negativt bör den endast användas om du undersöker ett RPC-problem.
+
+Obs! Du måste använda ett felsökningsverktyg om du vill läsa information om RPC-tillstånd på en dator där detta kvarhålls.
+
+Obs! Den här principinställningen tillämpas först när systemet har startats om.</string>
+      <string id="RpcStateInfoServer">Server</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="RpcExtendedErrorInformation">
+        <dropdownList refId="RpcExtendedErrorInformationList" defaultItem="0">Spridning av utökad felinformation:</dropdownList>
+        <textBox refId="RpcExtErrorExceptions">
+          <label>Undantag för utökad felinformation:</label>
+        </textBox>
+      </presentation>
+      <presentation id="RpcIgnoreDelegationFailure">
+        <dropdownList refId="RpcIgnoreDelegationFailureList" defaultItem="0">Ignorera delegeringsfel:</dropdownList>
+      </presentation>
+      <presentation id="RpcMinimumHttpConnectionTimeout">
+        <decimalTextBox refId="RpcMinimumHttpConnectionTimeoutValue" defaultValue="900" spinStep="10">Lägsta timeout för inaktiva sessioner (i sekunder):</decimalTextBox>
+      </presentation>
+      <presentation id="RpcRestrictRemoteClients">
+        <dropdownList refId="RpcRestrictRemoteClientsList" defaultItem="1">Begränsning för oautentiserade klienter som ansluter till RPC-tjänster:</dropdownList>
+      </presentation>
+      <presentation id="RpcStateInformation">
+        <dropdownList refId="RpcStateInformationList" defaultItem="2">Information om RPC-tillstånd som ska kvarhållas:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ActiveX 安装程序服务</displayName>
+  <description>从批准的安装站点安装 ActiveX 控件</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">ActiveX 安装程序服务</string>
+      <string id="AxISURLZonePolicies">为受信任区域中的站点构建 ActiveX 安装策略</string>        
+      <string id="AxISURLZonePolicies_explain">此策略设置控制受信任区域中站点的 ActiveX 控件的安装。
+
+如果启用此策略设置，则 ActiveX 控件会根据此策略设置定义的设置进行安装。
+      
+如果禁用或未配置此策略设置，则系统不会在安装 ActiveX 控件前提示用户。
+
+如果受信任站点使用 HTTPS 协议，则此策略设置还可以控制 ActiveX 安装程序服务对证书错误的响应方式。默认情况下，所有 HTTPS 连接都必须提供通过所有验证条件的服务器证书。如果知道某个受信任站点有证书错误，但仍希望信任该站点，则可以选择要忽略的证书错误。
+    
+注意: 此策略设置适用于受信任区域中的所有站点。
+
+</string>
+      <string id="TrustedZoneDisabled">不安装</string>
+      <string id="TrustedZonePrompt">提示用户</string>
+      <string id="TrustedZoneSilentInstall">无提示安装</string>
+      <string id="ApprovedActiveXInstallSites">ActiveX 控件的批准安装站点</string>
+      <string id="ApprovedActiveXInstallSites_explain">此策略设置确定组织中的标准用户可在其计算机上使用哪些 ActiveX 安装站点来安装 ActiveX 控件。启用此设置后，管理员可以创建由主机 URL 指定的批准 Activex 安装站点列表。
+
+如果启用此设置，则管理员可创建由主机 URL 指定的批准 Activex 安装站点列表。
+      
+如果禁用或未配置此策略设置，则系统不会在安装 ActiveX 控件前提示用户提供管理凭据。
+
+注意: 指定主机 URL 时，不能使用通配符。
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">由受信任的发布者进行签名的 ActiveX 控件的安装策略</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">已签名 ActiveX 控件的安装策略</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">未签名 ActiveX 控件的安装策略</dropdownList>
+        <text>允许连接到具有以下服务器证书错误的受信任站点。</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">未知证书颁发机构(CA)</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">无效证书名称(CN)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">证书验证日期已过期</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">错误的证书用法</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">主机 URL</listBox>
+        <text>包含主机 URL 的策略。</text>
+        <text>例如  </text>
+        <text>主机名称: http://activex.microsoft.com</text>
+        <text>值: 2,1,0,0</text>
+        <text>每个主机 URL 的值是 CSV 格式的四种设置。</text>
+        <text>代表“TPSSignedControl、SignedControl、UnsignedControl、ServerCertificatePolicy”</text>
+        <text>策略中最左边的三个值基于其签名控制 ActiveX 控件的安装。</text>
+        <text>它们可以是下列值之一。</text>
+        <text>0: 不安装 ActiveX 控件</text>
+        <text>1: 提示用户安装 ActiveX 控件</text>
+        <text>2: 将无提示安装 ActiveX 控件</text>
+        <text>由受信任发布者存储区中的证书签名的控件将不经提示即进行安装  </text>
+        <text>不支持无提示安装未签名的控件</text>
+        <text></text>
+        <text>策略中最右边的值是位掩码标志</text>
+        <text>这些标志用于忽略 https 证书错误。</text>
+        <text>默认值为 0。</text>
+        <text>这意味着 https 连接必须通过所有安全检查</text>
+        <text></text>
+        <text>使用以下值的组合</text>
+        <text>可以忽略无效的证书错误</text>
+        <text>0x00000100 忽略未知的 CA</text>
+        <text>0x00001000 忽略无效的 CN</text>
+        <text>0x00002000 忽略无效的证书日期</text>
+        <text>0x00000200 忽略错误的证书用法</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

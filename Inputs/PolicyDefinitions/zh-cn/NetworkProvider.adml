@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (c) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>网络提供程序</displayName>
+  <description>多 UNC 提供程序的策略定义</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_NetworkProvider">网络提供程序</string>
+      <string id="Pol_HardenedPaths">强化的 UNC 路径</string>
+      <string id="Pol_HardenedPaths_Explain">此策略设置用于配置对 UNC 路径的安全访问。
+
+如果启用此策略，则 Windows 仅会允许在满足附加安全性要求后访问指定的 UNC 路径。
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_HardenedPaths">
+        <text>指定强化的网络路径。
+在名称字段中，键入每个网络资源的完全限定 UNC 路径。
+若要保护对具有特定名称的共享的所有访问，而无论服务器的名称，请将服务器名称指定为“*”(星号)。例如，“\\*\NETLOGON”。
+若要保护对服务器上托管的所有共享的所有访问，可忽略 UNC 路径的共享名称部分。例如，“\\SERVER”。
+
+在值字段中，指定一个或多个以下选项，用逗号分隔:
+    “RequireMutualAuthentication=1”: 要求在客户端和服务器之间进行相互身份验证，以确保客户端连接到正确的服务器。
+    “RequireIntegrity=1”: 客户端与服务器之间的通信必须采用完整性机制，以防止数据篡改。
+    “RequirePrivacy=1”: 必须对客户端与服务器之间的通信加密，以防止第三方查看敏感数据。</text>
+        <listBox refId="Pol_HardenedPaths">强化的 UNC 路径:</listBox>
+        <text> </text>
+        <text>对于托管可执行程序、脚本文件或控制安全策略的文件的任意 UNC 路径，应要求完整性和相互身份验证。
+
+请考虑将不要求完整性或隐私的文件托管在单独的共享上，使其与绝对需要此类安全性的文件分开，以实现最优的性能。
+
+有关配置 Windows 计算机以在访问特定 UNC 路径时要求附加安全性的详细信息，请访问 http://support.microsoft.com/kb/3000483。</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Hendelseslogging</displayName>
+    <description>Denne filen inneholder konfigurasjonsalternativene for Windows-hendelseslogging</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Hendelseslogging</string>
+            <string id="EnableProtectedEventLogging">Aktiver beskyttet hendelseslogging</string>
+            <string id="EnableProtectedEventLogging_Explain">
+Ved hjelp av denne policyen kan du konfigurere Beskyttet hendelseslogging.
+
+Hvis du aktiverer denne policyinnstillingen, bruker komponenter som støtter innstillingen, sertifikatet du oppgir, til å kryptere potensielt sensitive hendelsesloggdata før de skrives til hendelsesloggen. Dataene blir kryptert ved hjelp av CMS-standarden (Cryptographic Message Syntax) og fellesnøkkelen du oppgir. Du kan bruke PowerShell-cmdleten Unprotect-CmsMessage til å dekryptere disse krypterte meldingene, såfremt du har tilgang til den private nøkkelen som tilsvarer fellesnøkkelen som meldingene ble kryptert med.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, krypterer ikke komponenter hendelsesloggmeldinger før de skrives til hendelsesloggen.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+Oppgi et krypteringssertifikat som skal brukes av Beskyttet hendelseslogging. Du kan oppgi følgende:
+
+    – Innholdet i et Base 64-kodet X.509-sertifikat
+    – Avtrykket til et sertifikat i sertifikatlageret på den lokale maskinen (vanligvis distribuert av PKI-infrastrukturen)
+    – Den fullstendige banen til et sertifikat (kan være en lokal maskin eller en delt ressurs)
+    – Banen til en mappe som inneholder et sertifikat eller sertifikater (kan være en lokal maskin eller en delt ressurs)
+    – Emnenavnet til et sertifikat i sertifikatlageret på den lokale maskinen (vanligvis distribuert av PKI-infrastrukturen)
+
+Det endelige sertifikatet må ha Dokumentkryptering aktivert som utvidet nøkkelbruk (1.3.6.1.4.1.311.80.1), og i tillegg nøkkelbrukinnstillingen Datachiffrering eller Nøkkelchiffrering aktivert.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

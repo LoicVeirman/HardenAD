@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Definições de Política de Grupo do Gerenciador de Conexões do Windows</displayName>
+  <description>Definições de Política de Grupo do Gerenciador de Conexões do Windows</description>
+  <resources>
+    <stringTable>
+      <string id="WCM_Category">Gerenciador de Conexões do Windows</string>
+      <string id="WCM_BlockNonDomain">Proibir conexão com redes que não pertencem a domínios quando conectado a uma rede de domínio autenticada</string>
+      <string id="WCM_BlockNonDomain_Help">Esta configuração de política evita que os computadores se conectem simultaneamente a uma rede baseada em domínio e a outra rede não baseada em domínio.
+
+Se esta configuração de política for habilitada, o computador responderá a tentativas de conexão automática e manual com base nas seguintes circunstâncias:
+
+Tentativas de conexão automática
+- Quando o computador já se encontra conectado a uma rede baseada em domínio, todas as tentativas de conexão automática a redes que não pertencem a um domínio são bloqueadas.
+- Quando o computador já se encontra conectado a uma rede não baseada em domínio, as tentativas de conexão automática com redes baseadas em domínio são bloqueadas.
+
+Tentativas de conexão manual
+- Quando o computador já se encontra conectado a uma rede não baseada em domínio ou a uma rede baseada em domínio por meio de outra mídia que não seja Ethernet e um usuário tenta criar uma conexão manual com uma rede adicional em violação a esta configuração de política, a conexão existente com a rede é desfeita e a conexão manual é permitida.
+- Quando o computador já se encontra conectado a uma rede não baseada em domínio ou a uma rede baseada em domínio pela Ethernet e um usuário tenta criar uma conexão manual com uma rede adicional em violação a esta configuração de política, a conexão existente com a Ethernet é mantida e a tentativa de conexão manual é bloqueada.
+
+Se esta configuração de política não for definida ou estiver desabilitada, será permitido que os computadores se conectem simultaneamente a redes que pertençam ou não a um domínio.
+      </string>
+      <string id="WCM_DisableRoaming">Proibir conexão com redes de Banda Larga Móvel em roaming</string>
+      <string id="WCM_DisableRoaming_Help">Esta configuração de política impede que os clientes se conectem a redes de banda larga móvel quando o cliente está registrado em uma rede de provedor de roaming.
+
+Se esta configuração de política for habilitada, todas as tentativas de conexão automática e manual com redes de provedores de roaming serão bloqueadas até que o cliente se registre na rede do provedor doméstico.
+
+Se esta configuração de política não for definida ou estiver desabilitada, os clientes terão permissão para se conectar a redes de banda larga móvel de provedor de roaming.
+      </string>
+      <string id="WCM_MinimizeConnections">Minimizar o número de conexões simultâneas com a Internet ou com um Domínio do Windows</string>
+      <string id="WCM_MinimizeConnections_AllowAllConnections">0 = Permitir conexões simultâneas</string>
+      <string id="WCM_MinimizeConnections_MinimizeSimultaneousConnections">1 = Minimizar conexões simultâneas</string>
+      <string id="WCM_MinimizeConnections_AlwaysConnectedToCellular">2 = Permanecer conectado à rede celular</string>
+      <string id="WCM_MinimizeConnections_PreventWifiOnEthernet">3 = Impedir Wi-Fi quando estiver em Ethernet</string>
+      <string id="WCM_MinimizeConnections_Help">
+        Esta configuração de política determina se um computador pode ter várias conexões com a internet ou com um domínio do Windows. Se várias conexões forem permitidas, isso determinará como o tráfego de rede será roteado.
+
+        Se esta configuração de política for definida para 0, um computador pode ter conexões simultâneas com a internet ou com um domínio do Windows, ou com ambos. O tráfego da internet pode ser roteado por qualquer conexão - incluindo uma conexão de rede celular e qualquer rede limitada. Isso era anteriormente o estado Desabilitado para esta configuração de política. Essa opção foi disponibilizada pela primeira vez no Windows 8.
+
+        Se esta configuração de política for definida para 1, qualquer nova conexão de internet automática será bloqueada quando o computador tiver pelo menos uma conexão de internet ativa com um tipo de rede preferencial. Esta é a ordem de preferência (da mais preferida para a menos preferida): Ethernet, WLAN, rede celular. Ethernet é sempre preferencial quando conectada. Os usuários ainda podem se conectar manualmente a qualquer rede. Esse era anteriormente o estado Habilitado para esta configuração de política. Essa opção foi disponibilizada pela primeira vez no Windows 8.
+
+        Se esta configuração de política for definida para 2, o comportamento será similar a 1. No entanto, se uma conexão de rede de dados celular estiver disponível, ela permanecerá conectada para serviços que exigem uma conexão de rede celular. Quando o usuário estiver conectado a uma rede WLAN ou Ethernet, nenhum tráfego da internet será roteado pela conexão de rede celular. Essa opção foi disponibilizada pela primeira vez no Windows 10 (Versão 1703).
+
+        Se esta configuração de política for definida para 3, o comportamento será similar a 2. No entanto, se houver uma conexão de Ethernet, o Windows não permitirá que os usuários se conectem a uma rede WLAN manualmente. Uma WLAN pode ser conectada (manual ou automaticamente) apenas quando não há conexão de Ethernet.
+
+        Esta configuração de política está relacionada à configuração "Habilitar o Windows a desconectar temporariamente um computador de uma rede".
+      </string>
+      <string id="WCM_DisablePowerManagement">Desabilitar o gerenciamento de energia no modo em espera conectado</string>
+      <string id="WCM_DisablePowerManagement_Help">Esta configuração de política especifica que o gerenciamento de energia será desabilitado quando o computador entrar no modo de espera conectado.
+
+Se esta configuração de política for habilitada, o Gerenciador de Conexões do Windows não gerenciará os rádios do adaptador para reduzir o consumo de energia quando o computador entrar no modo de espera conectado.
+
+Se esta configuração de política não for definida ou estiver desabilitada, o gerenciamento de energia será habilitado quando o computador entrar no modo de espera conectado.
+      </string>
+      <string id="WCM_EnableSoftDisconnect">Habilitar o Windows a desconectar temporariamente um computador de uma rede</string>
+      <string id="WCM_EnableSoftDisconnect_Help">Esta configuração de política determina se o Windows desconectará um computador de uma rede.
+
+Se esta configuração de política for habilitada ou não for configurada, o Windows desconectará um computador de uma rede quando ele determinar que o computador não deve mais ser conectado a uma rede.
+
+Se esta configuração de política for desabilitada, o Windows desconectará um computador de uma rede imediatamente quando determinar que o computador não deve mais ser conectado a uma rede.
+
+Quando a desconexão flexível está habilitada:
+-Quando o Windows decide que o computador não deve mais ser conectado a uma rede, ele espera que o tráfego se estabeleça nessa rede. A sessão TCP existente continuará ininterrupta.
+-O Windows, em seguida, verifica o nível de tráfego na rede periodicamente. Se o nível de tráfego estiver acima de um determinado limite, nenhuma outra ação será executada. O computador permanece conectado à rede e continua a usá-lo. Por exemplo, se a conexão de rede estiver sendo usada no momento para baixar arquivos da Internet, os arquivos continuarão sendo baixados usando essa conexão de rede.
+-Quando o tráfego de rede cair abaixo deste limite, o computador será desconectado da rede. Os apps que mantêm uma conexão de rede ativa mesmo quando não estão sendo usados ativamente (por exemplo, apps de email) podem perder a conexão. Se isso acontecer, esses apps devem restabelecer sua conexão em uma rede diferente.
+
+Essa configuração de política depende de outras configurações de política de grupo. Por exemplo, se "Minimizar o número de conexões simultâneas com a Internet ou um Domínio do Windows" estiver desabilitado, o Windows não se desconectará de nenhuma rede.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="WCM_MinimizeConnections">
+        <dropdownList refId="WCM_MinimizeConnections_Options" noSort="true" defaultItem="2">Minimizar Opções de Política</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

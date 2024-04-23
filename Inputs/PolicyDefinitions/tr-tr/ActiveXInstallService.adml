@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ActiveX Yükleyici Hizmeti</displayName>
+  <description>Onaylanan yükleme sitelerinden ActiveX denetimlerini yükler</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">ActiveX Yükleyici Hizmeti</string>
+      <string id="AxISURLZonePolicies">Güvenilir bölgelerdeki siteler için ActiveX yükleme ilkesi oluştur</string>        
+      <string id="AxISURLZonePolicies_explain">Bu ilke ayarı Güvenilir bölgedeki siteler için ActiveX denetimlerinin yüklenmesini denetler. 
+
+Bu ilke ayarını etkinleştirirseniz ActiveX denetimleri bu ilke ayarı tarafından tanımlanan ayarlara göre yüklenir. 
+      
+Bu ilke ayarını devre dışı bırakır veya yapılandırmazsanız ActiveX denetimleri yüklenmeden önce kullanıcıya sorar. 
+
+Güvenilen site HTTPS protokolünü kullanıyorsa, bu ilke ayarı ActiveX Yükleyici Hizmeti'nin sertifika hatalarına nasıl tepki vereceğini de denetler. Varsayılan olarak, tüm HTTPS bağlantılarının tüm doğrulama ölçütlerini sağlayan bir sunucu sertifikası sağlaması gerekir. Bir güvenilen sitede sertifika hatası olduğunun farkındaysanız ancak yine de siteye güvenmek istiyorsanız, yoksaymak istediğiniz sertifika hatalarını seçebilirsiniz. 
+    
+Not: Bu ilke ayarı Güvenilir bölgelerdeki tüm siteler için geçerlidir.
+
+</string>
+      <string id="TrustedZoneDisabled">Yükleme</string>
+      <string id="TrustedZonePrompt">Kullanıcıya sor</string>
+      <string id="TrustedZoneSilentInstall">Sessiz yükle</string>
+      <string id="ApprovedActiveXInstallSites">ActiveX Denetimleri İçin Onaylı Yükleme Siteleri</string>
+      <string id="ApprovedActiveXInstallSites_explain">Bu ilke ayarı kuruluşunuzdaki standart kullanıcıların bilgisayarlarına ActiveX denetimleri yüklemek için hangi ActiveX yükleme sitelerini kullanabileceğini belirler. Bu ayar etkinleştirildiğinde, yönetici ana bilgisayar URL'siyle belirtilen, onaylanmış Activex Yükleme sitelerinin listesini oluşturabilir. 
+
+Bu ayarı etkinleştirirseniz yönetici ana bilgisayar URL'siyle belirtilen, onaylanmış ActiveX Yükleme sitelerinin listesini oluşturabilir. 
+      
+Bu ilke ayarını devre dışı bırakır veya yapılandırmazsanız ActiveX denetimleri yüklemeden önce kullanıcıya yönetim kimlik bilgilerini sorar. 
+
+Not: Ana bilgisayar URL'leri belirtilirken joker karakterler kullanılamaz.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Güvenilen yayımcı tarafından imzalanmış ActiveX denetimi için Yükleme İlkesi</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">İmzalı ActiveX denetimi için Yükleme İlkesi</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">İmzasız ActiveX denetimi için Yükleme İlkesi</dropdownList>
+        <text>Aşağıdaki sunucu sertifikası hatası bulunan güvenilen sitelere bağlanmaya izin ver.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Bilinmeyen sertifika yetkilisi (CA)</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Geçersiz sertifika adı (CN)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Süresi dolmuş sertifika doğrulama tarihi</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Yanlış sertifika kullanımı</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">Ana Bilgisayar URL'leri</listBox>
+        <text>Ana bilgisayar URL'sinin ilkesini içerir.</text>
+        <text>Örnek  </text>
+        <text>AnaBilgisayarAdı: http://activex.microsoft.com</text>
+        <text>Değer: 2,1,0,0</text>
+        <text>Ana Bilgisayar URL'lerinin değeri, CSV biçiminde dört ayardır.</text>
+        <text>Bunlar "TPSİmzalıDenetim,İmzalıDenetim,İmzasızDenetim,SunucuSertifikasıİlkesi öğelerini temsil eder</text>
+        <text>İlkedeki en soldaki üç değer, ActiveX denetimlerinin yüklenmesini imzalarına göre denetler.</text>
+        <text>Bunlar aşağıdakilerden biri olabilir</text>
+        <text>0: ActiveX denetimi yüklenmez</text>
+        <text>1: Kullanıcıdan ActiveX denetimini yüklemesini iste</text>
+        <text>2: ActiveX denetimi sessizce yüklenir</text>
+        <text>Güvenilen yayımcı deposundaki sertifikalar tarafından imzalanmış denetimler sessizce yüklenir  </text>
+        <text>İmzasız denetimlerin sessiz yüklemesi desteklenmez</text>
+        <text></text>
+        <text>İlkedeki en sağdaki değer bit maskeli bayraktır</text>
+        <text>Bayraklar, https sertifika hatalarını yok saymak için kullanılır.</text>
+        <text>Varsayılan değer 0'dür.</text>
+        <text>Https bağlantılarının tüm güvenlik denetimlerinden geçmeleri gerektiği anlamına gelir</text>
+        <text></text>
+        <text>Geçersiz sertifika hatalarını yok saymak için</text>
+        <text>aşağıdaki değerlerin birleşimini kullanın</text>
+        <text>0x00000100  Bilinmeyen CA'yı yoksay</text>
+        <text>0x00001000  Geçersiz CN'yi yoksay</text>
+        <text>0x00002000  Geçersiz sertifika tarihini yoksay</text>
+        <text>0x00000200  Yanlış sertifika kullanımını yoksay</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

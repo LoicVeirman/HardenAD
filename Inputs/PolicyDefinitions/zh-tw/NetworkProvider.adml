@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (c) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>網路提供者</displayName>
+  <description>多重 UNC 提供者的原則定義</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_NetworkProvider">網路提供者</string>
+      <string id="Pol_HardenedPaths">已強化的 UNC 路徑</string>
+      <string id="Pol_HardenedPaths_Explain">此原則設定可設定 UNC 路徑的安全存取。
+
+若啟用此原則，在滿足額外的安全性需求之後，Windows 只會允許對所指定 UNC 路徑的存取。
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_HardenedPaths">
+        <text>指定已強化的網路路徑。
+在 [名稱] 欄位中，輸入每個網路資源的完整 UNC 路徑。
+若要保護對具有特定名稱之共用的存取 (不論伺服器名稱為何)，請以 '*' (星號) 指定伺服器名稱。例如，"\\*\NETLOGON"。
+若要保護對伺服器上裝載之所有共用的存取，可以省略 UNC 路徑的共用名稱部分。例如，"\\SERVER"。
+
+在 [值] 欄位中，指定下列一或多個選項 (在選項之間以逗號分隔):
+    'RequireMutualAuthentication=1': 必須在用戶端與伺服器之間使用相互驗證，以確保用戶端可連線到正確的伺服器。
+    'RequireIntegrity=1': 必須在用戶端與伺服器之間採用完整性機制，以防止資料遭到竄改。
+    'RequirePrivacy=1': 必須加密用戶端與伺服器之間的通訊，以防止機密資料被第三方看到。</text>
+        <listBox refId="Pol_HardenedPaths">已強化的 UNC 路徑:</listBox>
+        <text> </text>
+        <text>您應該要求為裝載程式、指令檔或負責控制安全性原則檔案的 UNC 路徑使用完整性與相互驗證。
+
+若要獲得最佳效能，請考慮將不需要完整性或隱私權的檔案裝載在與上述 UNC 路徑不同的共用上。
+
+如需有關設定 Windows 電腦以在存取特定 UNC 路徑時要求額外安全性的詳細資訊，請瀏覽 http://support.microsoft.com/kb/3000483。</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

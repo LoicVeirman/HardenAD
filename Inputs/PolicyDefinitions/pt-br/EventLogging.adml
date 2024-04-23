@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Registro de Eventos</displayName>
+    <description>Este arquivo contém as opções de configuração para o log de eventos do Windows</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Registro de Eventos</string>
+            <string id="EnableProtectedEventLogging">Habilitar o Registro de Eventos Protegidos</string>
+            <string id="EnableProtectedEventLogging_Explain">
+Essa configuração de política permite configurar o registro de eventos protegidos.
+
+Se você habilitar essa configuração de política, componentes que oferecem suporte a ela usarão o certificado que você fornecer para criptografar os dados do log de eventos potencialmente confidenciais antes de gravá-los no log de eventos. Dados serão criptografados usando o padrão de sintaxe de mensagens criptográficas (CMS) e a chave pública que você fornecer. Você pode usar o cmdlet do PowerShell Unprotect-CmsMessage para descriptografar essas mensagens criptografadas, desde que você tenha acesso à chave privada correspondente à chave pública com que eles foram criptografados.
+
+Se você desabilitar ou não definir essa configuração de política, componentes não criptografarão mensagens de log de eventos antes de gravá-las no log de eventos.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+Forneça um certificado de criptografia a ser usado pelo registro de eventos protegidos. Você pode fornecer:
+
+    - O conteúdo de um certificado X.509 codificado de base 64
+    - A impressão digital de um certificado que pode ser encontrado no repositório de certificados do computador Local (geralmente é implantado pela infraestrutura PKI)
+    - O caminho completo para um certificado (pode ser um compartilhamento remoto ou local)
+    - O caminho para um diretório que contém um certificado ou certificados (pode ser um compartilhamento remoto ou local)
+    - O nome de requerente de um certificado que pode ser localizado no repositório de certificados do computador Local (geralmente é implantado pela infraestrutura PKI)
+
+O certificado resultante deve ter "Criptografia do documento" como um uso avançado de chave (1.3.6.1.4.1.311.80.1), bem como os usos de chave Criptografia de dados ou Criptografia de chaves habilitados.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

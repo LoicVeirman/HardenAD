@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>在此輸入顯示名稱</displayName>
+  <description>在此輸入描述</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">Lanman 工作站</string>
+      <string id="Pol_CipherSuiteOrder_Name">加密套件順序</string>
+      <string id="Pol_CipherSuiteOrder_Help">這個原則設定決定 SMB 用戶端所使用的加密套件。
+
+如果您啟用這個原則設定，指定的順序會是加密套件的優先順序。
+
+如果您啟用這個原則設定，且沒有指定至少一個支援的加密套件，或者您停用或不設定此原則設定，則會使用預設的加密套件順序。
+
+SMB 3.11 加密套件:
+
+AES_128_GCM
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+SMB 3.0 和 3.02 加密套件:
+
+AES_128_CCM
+
+如何修改此設定:
+
+在編輯方塊中安排所需加密套件的順序，每行一個加密套件，最偏好的在最上方，接著是較不偏好的依序排列。刪除任何您不想使用的加密套件。
+
+注意: 在設定此安全性設定時，直到您重新啟動 Windows 變更才會生效。</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">啟用不安全的來賓登入</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">此原則設定可決定 SMB 用戶端是否允許以不安全的來賓身分登入 SMB 伺服器。
+
+若啟用此原則設定或未設定此原則設定，SMB 用戶端將允許不安全的來賓登入。
+
+若停用此原則設定，SMB 用戶端將拒絕不安全的來賓登入。
+
+檔案伺服器使用不安全的來賓登入來允許共用資料夾的未經驗證存取。雖然在企業環境中不常見，做為檔案伺服器的消費性「網路連接儲存裝置」(NAS) 設備經常使用不安全的來賓登入。Windows 檔案伺服器需要驗證，而且預設不會使用不安全的來賓登入。因為不安全的來賓登入未經驗證，重要安全性功能 (例如「SMB 簽署」與「SMB 加密」) 會被停用。因此，允許不安全的來賓登入的用戶端容易遭受各種攔截式攻擊，進而導致資料遺失、資料損毀與暴露於惡意程式碼。此外，使用不安全的來賓登入方式寫入到檔案伺服器的所有資料可能可供網路上的任何人存取。Microsoft 建議您停用不安全的來賓登入，並將檔案伺服器設定為要求驗證的存取。"
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">持續可用性共用上的離線檔案可用性</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        此原則設定決定連線到 SMB 共用 (其中「持續可用性」(CA) 旗標已啟用) 之用戶端上的「離線檔案」行為。
+
+        若啟用此原則設定，當您在 Windows 電腦上連線到已啟用 CA 的共用時，[永遠可以離線瀏覽] 選項將出現在「檔案總管」的功能表中。此外，使用者也可以釘選已啟用 CA 之共用上的檔案 (使用用戶端快取功能)。
+
+        若停用或未設定此原則設定，Windows 將會防止搭配已啟用 CA 的共用來使用「離線檔案」。
+
+        注意: Microsoft 建議您不要啟用此群組原則。搭配 CA 使用「離線檔案」將導致線上與離線狀態之間有很長的轉換時間。
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">持續可用性共用上的控制代碼快取功能</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        此原則設定決定連線到 SMB 共用 (其中「持續可用性」(CA) 旗標已啟用) 之用戶端的 SMB 控制代碼快取功能的行為。
+
+        若啟用此原則設定，SMB 用戶端將允許 CA 共用上之檔案的已快取控制代碼。當重複存取在 Microsoft Azure Files 中執行之 CA 共用上的大量非結構化資料檔案時，這樣可獲得較佳的效能。
+
+        若停用或未設定此原則設定，Windows 將會防止使用透過 CA 共用開啟之檔案的已快取控制代碼。
+
+        注意: 連線到由 Windows Server 提供的「向外延展檔案伺服器」共用時，此原則沒有任何效果。若用戶端會定期連線到具有「一般用途的檔案伺服器」角色之「Windows 容錯移轉叢集」上裝載的檔案，Microsoft 建議您不要為該用戶端啟用此原則，因為這樣可能會導致容錯移轉時間變長以及記憶體與 CPU 使用量變高。
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">至少需要 Windows Server 2022、Windows 11</string>
+      <string id="Pol_EnableCompressedTraffic_Name">預設使用 SMB 壓縮</string>
+      <string id="Pol_EnableCompressedTraffic_Help">此原則控制 SMB 用戶端是否預設使用流量壓縮。
+
+如果啟用此原則設定，則在啟用 SMB 壓縮時，SMB 用戶端將預設嘗試壓縮流量。
+
+如果停用或未設定此原則設定，SMB 用戶端不會預設嘗試壓縮流量。但是，可以透過其他方式要求流量壓縮。請參閲以下附註。
+
+注意: 此原則與每個共用和每個檔案控制代碼屬性合併，透過這些屬性可以要求流量壓縮。此外，SMB 伺服器必須支援並啟用壓縮。例如，若停用 (或未設定) 此原則，如果 SMB 伺服器共用要求壓縮，SMB 用戶端仍可能執行壓縮。如果這是不需要的，並且希望完全停用壓縮，請改為設定隨附的「停用 SMB 壓縮」原則。
+      </string>
+      <string id="Pol_DisableCompression_Name">停用 SMB 壓縮</string>
+      <string id="Pol_DisableCompression_Help">此原則控制 SMB 用戶端是否停用 (完全防止) 流量壓縮。
+
+如果您啟用此原則設定，無論其他原則 (例如「預設使用 SMB 壓縮」原則或每個共用屬性) 如何，SMB 用戶端都不會壓縮資料。
+
+如果停用或未設定此原則設定，SMB 用戶端可能會壓縮流量 (取決於其他原則和條件的組合)。
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>加密套件:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

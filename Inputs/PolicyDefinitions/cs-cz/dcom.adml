@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Zde zadejte zobrazovaný název.</displayName>
+  <description>Zde zadejte popis.</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">Model Distributed COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Povolit místní výjimky kontroly aktivace zabezpečení</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Umožňuje určit, aby místní správci mohli dodatečný seznam určení výjimek kontroly aktivace zabezpečení.
+
+Pokud toto nastavení povolíte a v seznamu určení výjimek kontroly aktivace zabezpečení (pokud je tato zásada povolena) nebude nalezena explicitní položka pro dané ID serverové aplikace DCOM v seznamu určení výjimek kontroly aktivace zabezpečení, bude prohledán také místně nakonfigurovaný seznam.
+
+Pokud toto nastavení zakážete, nebude místně nakonfigurovaný seznam prohledáván.
+
+Pokud toto nastavení nenakonfigurujete, bude místně nakonfigurovaný seznam prohledáván pouze v případě, že není nastavena zásada Určit výjimky kontroly aktivace zabezpečení.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Určit výjimky kontroly aktivace zabezpečení</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Umožňuje zobrazit a měnit seznam ID serverových aplikací DCOM, které budou vyňaty z kontroly aktivace zabezpečení. Model DCOM používá dva takové seznamy. Jeden je udržován pomocí zásad skupiny prostřednictvím tohoto nastavení a druhý prostřednictvím akce správců místního počítače. Pokud je tato zásada nakonfigurována, je druhý seznam ignorován kromě případu, že je povolena zásada Povolit místní výjimky kontroly aktivace zabezpečení.
+
+ID serverových aplikací DCOM přidané k této zásadě musí být v tomto seznamu uvedeny ve formátu se složenými závorkami. Příklad: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}. Neexistující nebo nesprávně zapsané položky budou přidány na seznam bez kontroly chyb.
+
+Pokud tuto zásadu povolíte, můžete zobrazit a změnit seznam výjimek kontroly aktivace zabezpečení modelu DCOM určený pomocí nastavení zásad skupiny. Po přidání ID aplikace na seznam a nastavení hodnoty na 1 nebude pro daný server DCOM vynucena kontrola aktivace zabezpečení. Po přidání ID aplikace na seznam a nastavení hodnoty na 0 bude pro daný server DCOM vždy vynucena kontrola aktivace zabezpečení nezávisle na místním nastavení.
+
+Pokud toto nastavení zakážete, seznam výjimek ID aplikací určený pomocí zásad skupiny bude odstraněn a použije se seznam definovaný místním správcem počítače.
+
+Pokud toto nastavení nenakonfigurujete, použije se seznam výjimek ID aplikací určený místním správcem.
+
+Poznámky:
+
+Kontrola aktivace zabezpečení modelu DCOM je spuštěna po spuštění procesu daného serveru DCOM, ale před odesláním požadavku aktivace objektu danému procesu serveru. Pokud existuje vlastní seznam deskriptorů zabezpečení spouštění serveru DCOM, je pro tuto kontrolu použit. Jinak se provede kontrola vůči výchozímu nastavení.
+
+Pokud tento vlastní seznam serveru DCOM explicitně obsahuje položky DENY, může to znamenat, že aktivace objektu, které by dříve pro dané uživatele proběhly úspěšně, se nyní nezdaří. V tomto případě je doporučeno změnit nastavení vlastního seznamu zabezpečení spouštění serveru DCOM na správné hodnoty zabezpečení, ale toto nastavení lze použít jako dočasné řešení pro kontrolu kompatibility při nasazení aplikace.
+
+Servery DCOM v seznamu výjimek jsou vyňaty pouze v případě, že jejich vlastní seznam zabezpečení spouštění neobsahuje určité položky LocalLaunch, RemoteLaunch, LocalActivate nebo nastavení Grant či Deny položky RemoteActivate pro žádné uživatele ani skupiny. Povšimněte si rovněž, že výjimky pro ID aplikace serveru DCOM uvedené na tomto seznamu platí pro 32bitové i 64bitové verze serveru (pokud jsou k dispozici).</string>
+      <string id="DCOMAppCompatPolicies">Nastavení kompatibility aplikací</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Zadejte ID aplikace serveru DCOM společně s hodnotou akce v seznamu.</text>
+        <text>ID aplikace musí obsahovat obě složené závorky.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Přidat servery DCOM do seznamu výjimek nebo je z něj odebrat: </listBox>
+        <text> </text>
+        <text>Hodnoty:</text>
+        <text>0 = Určené ID aplikace není vyňato z kontroly aktivace zabezpečení</text>
+        <text>1 = Určené ID aplikace je vyňato z kontroly aktivace zabezpečení</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

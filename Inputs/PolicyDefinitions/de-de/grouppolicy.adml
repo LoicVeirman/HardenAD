@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Anzeigenamen hier eingeben</displayName>
+  <description>Beschreibung hier eingeben</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Ausgleichsoptionen</string>
+      <string id="Font_List">Blockieren nicht vertrauenswürdiger Schriftarten</string>
+      <string id="Font_List_Help">Dieses Sicherheitsfeature bietet eine globale Einstellung, die Programme am Laden nicht vertrauenswürdiger Schriftarten hindert. Nicht vertrauenswürdige Schriftarten sind alle Schriftarten, die außerhalb des Verzeichnisses "%windir%\Fonts" installiert sind. Für dieses Feature können die folgenden drei Modi konfiguriert werden: "Ein", "Aus" und "Überwachung". Die Standardeinstellung ist "Aus", wobei keine Schriftarten blockiert sind. Wenn Ihre Organisation noch nicht bereit für die Bereitstellung dieses Features ist, können Sie es im Überwachungsmodus ausführen, um zu testen, ob die Blockierung nicht vertrauenswürdiger Schriftarten Probleme bei der Nutzung oder Kompatibilität verursacht.</string>
+      <string id="FontMitigation_On">Nicht vertrauenswürdige Schriftarten blockieren und Ereignisse protokollieren</string>
+      <string id="FontMitigation_Off">Keine vertrauenswürdigen Schriftarten blockieren</string>
+      <string id="FontMitigation_Audit">Ereignisse ohne Blockierung nicht vertrauenswürdiger Schriftarten protokollieren</string>
+
+	  <string id="ProcessMitigationOptions_List">Optionen für den Prozessausgleich</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Dieses Sicherheitsfeature bietet eine Möglichkeit, die MitigationOptions-Einstellungen einzelner Prozesse zu überschreiben. Auf diese Weise können eine Reihe von Sicherheitsrichtlinien für Anwendungen erzwungen werden. Der Anwendungsname wird als Wertname einschließlich Erweiterung angegeben. Der Wert wird als Bitfeld mit einer Reihe von Kennzeichen an bestimmten Positionen angegeben. Bits können auf 0 (Deaktivierung der Einstellung erzwungen), 1 (Aktivierung der Einstellung erzwungen) oder ? (Einstellung behält den aktuellen Wert vor der GPO-Auswertung) festgelegt werden. Die erkannten Bit-Speicherorte sind:
+
+PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        Aktiviert die Datenausführungsverhinderung (DEP) für den untergeordneten Prozess.
+
+PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        Aktiviert die Emulation von DEP-ATL-Thunks für den untergeordneten Prozess. Die Emulation von DEP-ATL-Thunks führt dazu, dass das System NX-Fehler von der Active Template Library (ATL)-Thunkebene abfängt.
+
+PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        Aktiviert SEHOP (Structured Exception Handler Overwrite Protection) für den untergeordneten Prozess. SEHOP blockiert Exploits, die das SEH (Structured Exception Handler)-Überschreibungsverfahren verwenden.
+
+PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        Die Richtlinie zum Erzwingen von ASLR (Address Space Layout Randomization) erzwingt die Neubasierung von Images, die nicht DynamicBase-kompatibel sind. Dabei verhalten sie sich so, als ob zur Ladezeit ein Imagebasiskonflikt aufgetreten wäre. Wenn eine Neupositionierung erforderlich ist, werden Images, die über keinen Abschnitt für die Basisneupositionierung verfügen, nicht geladen.
+
+PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        Die Richtlinie für die zufällige Anordnung von unten nach oben, die Optionen für die zufällige Stapelanordnung enthält, führt dazu, dass eine zufällige Position als niedrigste Benutzeradresse verwendet wird.
+
+Um beispielsweise PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE und PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON zu aktivieren, deaktivieren Sie PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF, und um die Standardwerte aller anderen Optionen beizubehalten, geben Sie den folgenden Wert an:
+        ??????????????? 0??????? 1??????? 1
+
+Das Festlegen von Kennzeichen, die hier nicht angegeben sind, auf einen anderen Wert als ?, führt zu einem undefinierten Verhalten.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">Synchronisierung der AD/DFS-Domänencontroller während der Richtlinienaktualisierung aktivieren</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">Wenn Sie diese Richtlinieneinstellung aktivieren, wird vom Gruppenrichtlinienclient eine Verbindung mit demselben Domänencontroller für DFS-Freigaben hergestellt, der für Active Directory verwendet wird.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">AOAC-Optimierung des Gruppenrichtlinienclient-Diensts deaktivieren</string>
+      <string id="DisableAOACProcessing_Help">Diese Richtlinieneinstellung verhindert, dass der Gruppenrichtlinienclient-Dienst im Leerlauf beendet wird.
+
+
+
+</string>
+      <string id="EnableCDP">Auf der Oberfläche dieses Geräts weiterarbeiten</string>
+      <string id="EnableCDP_Help">
+Diese Richtlinieneinstellung bestimmt, ob das Windows-Gerät Oberflächen geräteübergreifend nutzen (auf der Oberfläche weiterarbeiten) darf.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, ist das Windows-Gerät für andere Windows-Geräte desselben Benutzers auffindbar und kann Oberflächen geräteübergreifend nutzen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, ist das Windows-Gerät für andere Geräte nicht auffindbar und kann Oberflächen nicht geräteübergreifend nutzen.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, richtet sich das Standardverhalten nach der Windows-Edition. Änderungen an dieser Richtlinie werden beim Neustart wirksam.
+      </string>
+      <string id="EnableMMX">Telefon-PC-Verbindung auf diesem Gerät</string>
+      <string id="EnableMMX_Help">
+Diese Richtlinie ermöglicht es IT-Administratoren, die Möglichkeit zum Verbinden eines Telefons mit einem PC zu deaktivieren, um weiterhin lesen, E-Mails versenden und andere Aufgaben ausführen zu können, die eine Verbindung zwischen dem Telefon und dem PC erfordern.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, kann das Windows-Gerät sich für die Verbindungfunktion zwischen Telefon und PC anmelden und an "Weiter auf dem PC“-Funktionen teilnehmen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, darf das Windows-Gerät keine Verbindungen mit Telefonen herstellen, wird von der Geräteliste verknüpfter Telefone entfernt und kann nicht an "Weiter auf dem PC“-Funktionen teilnehmen.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, hängt das Standardverhalten von der Windows-Edition ab. Änderungen an der Richtlinie werden beim Neustart wirksam.
+      </string>
+      <string id="EnableAppUriHandlers">Web-zu-App-Verknüpfung mit App-URI-Handlern konfigurieren</string>
+      <string id="EnableAppUriHandlers_Help">
+Durch die Richtlinieneinstellung wird festgelegt, ob Windows die Web-zu-App-Verknüpfung mithilfe von App-URI-Handlern unterstützt.
+
+Wenn Sie die Richtlinieneinstellung aktivieren, wird die Web-zu-App-Verknüpfung aktiviert, sodass die Apps mit einem HTTP(S)-URI gestartet werden können.
+
+Wenn Sie die Richtlinie deaktivieren, wird die Web-zu-App-Verknüpfung deaktiviert, und HTTP(S)-URIs werden im Standardbrowser geöffnet, anstatt die zugehörige App zu starten.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, richtet sich das Standardverhalten nach der Windows-Edition. Änderungen an dieser Richtlinie werden beim Neustart wirksam.
+      </string>
+      <string id="Fonts">Schriftarten</string>
+      <string id="EnableFontProviders">Schriftartenanbieter aktivieren</string>
+      <string id="EnableFontProviders_Help">
+        Mit dieser Richtlinieneinstellung wird festgelegt, ob Windows Schriftarten und Schriftartenkatalogdaten von einem Onlineschriftartenanbieter herunterladen darf. 
+
+        Wenn Sie die Richtlinieneinstellung aktivieren, sendet Windows regelmäßig Abfragen an einen Onlineschriftartenanbieter, um zu ermitteln, ob ein neuer Schriftartenkatalog verfügbar ist. Windows kann auch Schriftartdaten herunterladen, die zum Formatieren oder Rendern von Text benötigt werden.
+
+        Wenn Sie die Richtlinieneinstellung deaktivieren, stellt Windows keine Verbindung mit einem Onlineschriftartenanbieter her und zählt nur lokal installierte Schriftarten auf.
+
+        Wenn Sie die Richtlinieneinstellung nicht konfigurieren, richtet sich das Standardverhalten nach der Windows-Edition. Änderungen an dieser Richtlinie werden beim Neustart wirksam.
+      </string>
+      <string id="EnableLogonOptimization">Zwischenspeichern von Gruppenrichtlinien konfigurieren</string>
+      <string id="EnableLogonOptimization_Help">
+        Mit dieser Richtlinieneinstellung können Sie das Zwischenspeichern von Gruppenrichtlinien konfigurieren.
+
+        Wenn Sie diese Richtlinieneinstellung aktivieren oder nicht konfigurieren, werden Richtlinieninformationen von der Gruppenrichtlinie nach jeder Hintergrundverarbeitungssitzung zwischengespeichert. In diesem Cache werden anwendbare Gruppenrichtlinienobjekte (GPOs) und die darin enthaltenen Einstellungen gespeichert. Wenn die Gruppenrichtlinie im synchronen Vordergrundmodus ausgeführt wird, wird auf diesen Cache verwiesen, um eine schnellere Ausführung zu ermöglichen. Beim Lesen des Caches wird von der Gruppenrichtlinie versucht, eine Verbindung mit einem Domänencontroller für die Anmeldung herzustellen, um die Verknüpfungsgeschwindigkeit zu ermitteln. Wenn die Gruppenrichtlinie im Hintergrundmodus oder im asynchronen Vordergrundmodus ausgeführt wird, wird das Herunterladen der aktuellen Version der Richtlinieninformationen fortgesetzt, und eine Bandbreitenschätzung wird verwendet, um die Schwellenwerte für langsame Verbindungen zu ermitteln. (Informationen zum Konfigurieren des asynchronen Vordergrundverhaltens finden Sie unter der Richtlinieneinstellung "Gruppenrichtlinien zur Erkennung von langsamen Verbindungen konfigurieren".)
+
+        Anhand des in dieser Richtlinieneinstellung festgelegten Werts für langsame Verbindungen wird bestimmt, wie lange von einer Gruppenrichtlinie auf eine Antwort vom Domänencontroller gewartet wird, bevor die Geschwindigkeit der Verbindung als langsam gemeldet wird. Die Standardeinstellung lautet 500 Millisekunden.
+
+        Anhand des in dieser Richtlinieneinstellung festgelegten Zeitüberschreitungswerts wird bestimmt, wie lange von einer Gruppenrichtlinie auf eine Antwort vom Domänencontroller gewartet wird, bevor die Netzwerkverbindung als nicht vorhanden erkannt wird. Die aktuelle Gruppenrichtlinienverarbeitung wird dadurch angehalten. Die Gruppenrichtlinie wird im Hintergrund ausgeführt, wenn das nächste Mal eine Verbindung zu einem Domänencontroller hergestellt wird. Wenn Sie diesen Wert zu hoch festlegen, führt dies möglicherweise dazu, dass für Benutzer beim Starten oder Anmelden längere Wartezeiten entstehen. Die Standardeinstellung lautet 5.000 Millisekunden.
+
+        Wenn Sie diese Richtlinieneinstellung deaktivieren, werden vom Gruppenrichtlinienclient keine anwendbaren Gruppenrichtlinienobjekte (GPOs) oder darin enthaltene Einstellungen zwischengespeichert. Wenn die Gruppenrichtlinie synchron ausgeführt wird, wird die aktuelle Version der Richtlinie aus dem Netzwerk heruntergeladen, und es werden Bandbreitenschätzungen verwendet, um die Schwellenwerte für langsame Verbindungen zu ermitteln. (Informationen zum Konfigurieren des asynchronen Vordergrundverhaltens finden Sie unter der Richtlinieneinstellung "Gruppenrichtlinien zur Erkennung von langsamen Verbindungen konfigurieren".)
+
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">Aktivieren der Zwischenspeicherung von Gruppenrichtlinien für Server</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        Mit dieser Richtlinieneinstellung können Sie das Zwischenspeichern von Gruppenrichtlinien auf Windows Server-Computern konfigurieren.
+        Wenn Sie diese Richtlinieneinstellung aktivieren, werden Richtlinieninformationen von der Gruppenrichtlinie nach jeder Hintergrundverarbeitungssitzung zwischengespeichert. In diesem Cache werden anwendbare Gruppenrichtlinienobjekte (GPOs) und die darin enthaltenen Einstellungen gespeichert. Wenn die Gruppenrichtlinie im synchronen Vordergrundmodus ausgeführt wird, wird auf diesen Cache verwiesen, um eine schnellere Ausführung zu ermöglichen. Beim Lesen des Caches wird von der Gruppenrichtlinie versucht, eine Verbindung mit einem Domänencontroller für die Anmeldung herzustellen, um die Übertragungsrate zu ermitteln. Wenn die Gruppenrichtlinie im Hintergrundmodus oder im asynchronen Vordergrundmodus ausgeführt wird, wird das Herunterladen der aktuellen Version der Richtlinieninformationen fortgesetzt und eine Bandbreitenschätzung verwendet, um die Schwellenwerte für langsame Verbindungen zu ermitteln. (Informationen zum Konfigurieren des asynchronen Vordergrundverhaltens finden Sie unter der Richtlinieneinstellung "Gruppenrichtlinien zur Erkennung von langsamen Verbindungen konfigurieren".)
+        Anhand des in dieser Richtlinieneinstellung festgelegten Werts für langsame Verbindungen wird bestimmt, wie lange von einer Gruppenrichtlinie auf eine Antwort vom Domänencontroller gewartet wird, bevor die Geschwindigkeit der Verbindung als langsam gemeldet wird. Die Standardeinstellung lautet 500 Millisekunden.
+        Anhand des in dieser Richtlinieneinstellung festgelegten Zeitüberschreitungswerts wird bestimmt, wie lange von einer Gruppenrichtlinie auf eine Antwort vom Domänencontroller gewartet wird, bevor die Netzwerkverbindung als nicht vorhanden erkannt wird. Die aktuelle Gruppenrichtlinienverarbeitung wird dadurch gestoppt. Die Gruppenrichtlinie wird im Hintergrund ausgeführt, wenn das nächste Mal eine Verbindung zu einem Domänencontroller hergestellt wird. Wenn Sie diesen Wert zu hoch festlegen, führt dies möglicherweise dazu, dass für Benutzer beim Starten oder Anmelden längere Wartezeiten entstehen. Die Standardeinstellung lautet 5.000 Millisekunden.
+        Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden vom Gruppenrichtlinienclient keine anwendbaren Gruppenrichtlinienobjekte (GPOs) oder darin enthaltene Einstellungen zwischengespeichert. Wenn die Gruppenrichtlinie synchron ausgeführt wird, wird die aktuelle Version der Richtlinie aus dem Netzwerk heruntergeladen, und es werden Bandbreitenschätzungen verwendet, um die Schwellenwerte für langsame Verbindungen zu ermitteln. (Informationen zum Konfigurieren des asynchronen Vordergrundverhaltens finden Sie unter der Richtlinieneinstellung "Gruppenrichtlinien zur Erkennung von langsamen Verbindungen konfigurieren".)
+      
+      </string>
+
+      <string id="LogonScriptDelay">Anmeldeskriptverzögerung konfigurieren</string>
+      <string id="LogonScriptDelay_Help">
+        Geben Sie "0" ein, um die Anmeldeskriptverzögerung zu deaktivieren.
+
+        Mit dieser Richtlinieneinstellung können Sie konfigurieren, wie lange vom Gruppenrichtlinienclient nach der Anmeldung gewartet wird, bevor Skripts ausgeführt werden.
+
+        Standardmäßig wird vom Gruppenrichtlinienclient fünf Minuten gewartet, bevor Anmeldeskripts ausgeführt werden. Dies führt zu einer höheren Reaktionsfähigkeit der Desktopumgebung, indem eine Datenträgerauslastung verhindert wird.
+
+        Wenn Sie diese Richtlinieneinstellung aktivieren, wird von der Gruppenrichtlinie vor dem Ausführen von Anmeldeskripts so lange gewartet, bis der angegebene Zeitraum verstrichen ist.
+
+        Wenn Sie diese Richtlinieneinstellung deaktivieren, werden Skripts von der Gruppenrichtlinie sofort nach der Anmeldung ausgeführt.
+
+        Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, wird von der Gruppenrichtlinie vor dem Ausführen von Anmeldeskripts fünf Minuten gewartet.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">DirectAccess-Verbindung als schnelle Netzwerkverbindung konfigurieren</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">Mit dieser Richtlinieneinstellung kann ein Administrator beim Anwenden und Aktualisieren der Gruppenrichtlinie die DirectAccess-Verbindung als schnelle Netzwerkverbindung definieren.
+
+Beim Versuch der Gruppenrichtlinie, die Bandbreitengeschwindigkeit einer DirectAccess-Verbindung zu erkennen, kann es vorkommen, dass keine Informationen zur Bandbreitengeschwindigkeit bereitgestellt werden. Die Gruppenrichtlinie folgt beim Erkennen der Bandbreitengeschwindigkeit den normalen Regeln und wertet aus, ob es sich bei der DirectAccess-Verbindung um eine schnelle oder eine langsame Netzwerkverbindung handelt. Wenn keine Bandbreitengeschwindigkeit erkannt wird, geht die Gruppenrichtlinie standardmäßig von einer langsamen Netzwerkverbindung aus. Diese Richtlinieneinstellung ermöglicht es dem Administrator, die Standardeinstellung der langsamen Netzwerkverbindung außer Kraft zu setzen und anstelle dessen standardmäßig eine schnelle Netzwerkverbindung zu verwenden, sofern keine Bandbreitengeschwindigkeit erkannt wird.
+
+Hinweis: Wird eine langsame Netzwerkverbindung von der Gruppenrichtlinie erkannt, werden nur die clientseitigen Erweiterungen verarbeitet, die für eine langsame Verbindung (langsame Netzwerkverbindung) konfiguriert sind.
+
+Wenn Sie diese Richtlinie aktivieren, wird die Netzwerkverbindung von der Gruppenrichtlinie als schnelle Verbindung ausgewertet, und alle clientseitigen Erweiterungen werden verarbeitet, wenn die Bandbreitengeschwindigkeit der DirectAccess-Verbindung nicht von der Gruppenrichtlinie erkannt werden kann.
+
+Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, wird die Netzwerkverbindung von der Gruppenrichtlinie als langsame Verbindung ausgewertet. Es werden dann nur die clientseitigen Erweiterungen verarbeitet, die für eine langsame Verbindung konfiguriert wurden.
+
+
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">Asynchrone Verarbeitung der Gruppenrichtlinie bei langsamen Netzwerkverbindungen.</string>
+      <string id="SlowlinkDefaultToAsync_Help">Mit dieser Richtlinieneinstellung werden bei der Verarbeitung der Gruppenrichtlinie alle clientseitigen Erweiterungen übersprungen, die eine synchrone Verarbeitung (der Computer wartet während des Startens und der Benutzeranmeldung auf die vollständige Initialisierung des Netzwerks) erfordern, wenn eine langsame Netzwerkverbindung erkannt wird.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, wird die Gruppenrichtlinienverarbeitung immer asynchron ausgeführt, wenn eine langsame Netzwerkverbindung erkannt wird.
+Clientcomputer warten beim Starten und bei der Benutzeranmeldung nicht auf die vollständige Initialisierung des Netzwerks. Vorhandene Benutzer werden mithilfe zwischengespeicherter Anmeldeinformationen angemeldet,
+was zu kürzeren Anmeldezeiten führt. Sobald das Netzwerk verfügbar ist, wird die Gruppenrichtlinie im Hintergrund angewendet.
+Da es sich hierbei um eine Hintergrundaktualisierung handelt, werden Erweiterungen nicht angewendet, die eine synchrone Verarbeitung erfordern, wie die Softwareinstallation, Ordnerumleitung
+und die Einstellungserweiterung "Laufwerkzuordnungen".
+
+Hinweis: Es gibt zwei Bedingungen, die dazu führen, dass die Gruppenrichtlinie synchron verarbeitet wird, selbst wenn diese Richtlinieneinstellung aktiviert ist:
+1 – Beim erstmaligen Starten des Computers nach Hinzufügen des Clientcomputers zur Domäne.
+2 – Wenn die Richtlinieneinstellung "Beim Neustart des Computers und bei der Anmeldung immer auf das Netzwerk warten" aktiviert ist.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, hat die Erkennung einer langsamen Netzwerkverbindung keine Auswirkungen darauf, ob die Gruppenrichtlinie synchron oder asynchron verarbeitet wird.
+
+
+      </string>
+      <string id="DisableLGPOProcessing">Verarbeitung lokaler Gruppenrichtlinienobjekte deaktivieren</string>
+      <string id="DisableLGPOProcessing_Help">Diese Richtlinieneinstellung verhindert, dass lokale Gruppenrichtlinienobjekte angewendet werden.
+
+Standardmäßig werden die Richtlinieneinstellungen in lokalen Gruppenrichtlinienobjekten vor Richtlinieneinstellungen domänenbasierter Gruppenrichtlinienobjekte angewendet. Diese Richtlinieneinstellungen können sowohl auf Benutzer als auch auf den lokalen Computer angewendet werden. Sie können die Verarbeitung und Anwendung aller lokalen Gruppenrichtlinienobjekte deaktivieren, um sicherzustellen, dass nur domänenbasierte Gruppenrichtlinienobjekte angewendet werden.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, verarbeitet das System keine lokalen Gruppenrichtlinienobjekte und wendet sie auch nicht an.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden lokale Gruppenrichtlinienobjekte weiterhin angewendet.
+
+Hinweis: Für Computer, die einer Domäne angehören, wird dringend empfohlen, diese Richtlinieneinstellung nur in domänenbasierten Gruppenrichtlinienobjekten zu konfigurieren. Auf Computern, die einer Arbeitsgruppe angehören, wird diese Richtlinieneinstellung ignoriert.
+
+</string>
+      <string id="SyncWaitTime">Wartezeit für Richtlinienverarbeitung beim Systemstart angeben</string>
+      <string id="SyncWaitTime_Help">Diese Richtlinieneinstellung gibt an, wie lange die Gruppenrichtlinie während der Richtlinienverarbeitung beim Start auf Benachrichtigungen zur Netzwerkverfügbarkeit warten soll. Wenn die Richtlinienverarbeitung beim Start synchron erfolgt, wird der Computer blockiert, bis das Netzwerk zur Verfügung steht oder die Standardwartezeit abgelaufen ist. Wenn die Richtlinienverarbeitung beim Start asynchron ist, wird der Computer nicht blockiert, und die Richtlinienverarbeitung erfolgt im Hintergrund. In jedem Fall werden durch diese Richtlinieneinstellung alle vom System berechneten Wartezeiten außer Kraft gesetzt.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, verwendet die Gruppenrichtlinie die vom Administrator konfigurierte maximale Wartezeit und setzt die standardmäßige oder vom System berechnete Wartezeit außer Kraft.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet die Gruppenrichtlinie die Standardwartezeit von 30 Sekunden auf Computern mit dem Betriebssystem Windows Vista. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Gesamtstrukturübergreifende Benutzerrichtlinien und servergespeicherte Benutzerprofile zulassen</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">Diese Richtlinieneinstellung lässt die Verarbeitung von Benutzerrichtlinien, servergespeicherte Benutzerprofile und Anmeldeskripts für Benutzerobjekte zur gesamtstrukturübergreifenden interaktiven Anmeldung zu.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Benutzerkonten aus, die sich interaktiv auf einem Computer in einer anderen Gesamtstruktur anmelden, wenn eine gesamtstrukturübergreifende Vertrauensstellung oder eine bidirektionale Vertrauensstellung zwischen den Gesamtstrukturen besteht.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, geschieht Folgendes:
+- Es werden keine benutzerspezifischen Richtlinieneinstellungen aus der Gesamtstruktur des Benutzers angewendet.
+- Benutzer erhalten auf dem Computer nicht ihre servergespeicherten Profile, sondern ein lokales Profil aus der lokalen Gesamtstruktur. Dem Benutzer wird eine Warnmeldung angezeigt, und eine Ereignisprotokollmeldung (1529) wird ausgegeben.
+- Die Loopbackverarbeitung von Gruppenrichtlinien wird durchgeführt, wobei die Gruppenrichtlinienobjekte verwendet werden, deren Gültigkeitsbereich der Computer ist.
+- Eine Ereignisprotokollnachricht (1109) wird ausgegeben. In ihr wird angegeben, dass die Loopbackverarbeitung im Ersetzungsmodus aufgerufen wurde.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, tritt genau dasselbe Verhalten wie in Windows 2000 auf: Die Benutzerrichtlinie wird angewendet, und das servergespeicherte Benutzerprofil aus der vertrauenswürdigen Gesamtstruktur wird zugelassen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, tritt dasselbe Verhalten auf wie bei nicht konfigurierter Richtlinieneinstellung.</string>
+      <string id="CSE_AppMgmt">Softwareinstallations-Richtlinienverarbeitung konfigurieren</string>
+      <string id="CSE_AppMgmt_Help">Diese Richtlinieneinstellung legt fest, wann die Softwareinstallationsrichtlinien aktualisiert werden.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinieneinstellungen aus, die die Softwareinstallationskomponente der Gruppenrichtlinie verwenden, z. B. die Richtlinieneinstellungen in "Softwareeinstellungen\Softwareinstallation". Sie können Softwareinstallationsrichtlinien nur für Gruppenrichtlinienobjekte festlegen, die in Active Directory gespeichert sind, nicht für Gruppenrichtlinienobjekte auf dem lokalen Computer.
+
+Diese Richtlinieneinstellung setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das die Softwareinstallationsrichtlinie implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern. Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Bei der Option "Verarbeitung über eine langsame Verbindung zulassen" werden die Richtlinien auch dann aktualisiert, wenn die Aktualisierung über eine langsame Netzwerkverbindung wie ein Telefonkabel übertragen wird. Aktualisierungen über langsame Verbindungen können zu deutlichen Verzögerungen führen.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinieneinstellungsimplementierungen geben an, dass sie nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinieneinstellungen trotzdem aktualisieren, um sicherzustellen, dass eine bevorzugte Richtlinieneinstellungen wieder angewendet wird, wenn ein Benutzer sie verändert hat.</string>
+      <string id="CSE_DiskQuota">Verarbeitung der Datenträgerkontingentrichtlinie konfigurieren</string>
+      <string id="CSE_DiskQuota_Help">Diese Richtlinieneinstellung legt fest, wann die Datenträgerkontingentrichtlinien aktualisiert werden.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinien aus, die die Datenträgerkontingentkomponente der Gruppenrichtlinie verwenden, etwa die in "Computerkonfiguration\Administrative Vorlagen\System\Datenträgerkontingente".
+
+Diese Richtlinieneinstellung setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das die Datenträgerkontingentrichtlinie implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern. Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Bei der Option "Verarbeitung über eine langsame Verbindung zulassen" werden die Richtlinien auch dann aktualisiert, wenn die Aktualisierung über eine langsame Netzwerkverbindung wie ein Telefonkabel übertragen wird. Aktualisierungen über langsame Verbindungen können zu deutlichen Verzögerungen führen.
+
+Durch die Option "Während regelmäßiger Hintergrundverarbeitung nicht übernehmen" wird verhindert, dass betroffene Richtlinien im Hintergrund aktualisiert werden, während der Computer verwendet wird. Wenn die Aktualisierung im Hintergrund deaktiviert ist, treten Änderungen an Richtlinien erst dann in Kraft, wenn sich der nächste Benutzer anmeldet oder das System neu gestartet wird.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinienimplementierungen geben an, dass Richtlinien nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinien trotzdem aktualisieren, um sicherzustellen, dass eine bevorzugte Einstellung wieder angewendet wird, wenn ein Benutzer sie verändert hat.</string>
+      <string id="CSE_EFSRecovery">Verarbeitung der Richtlinien für die EFS-Wiederherstellung konfigurieren</string>
+      <string id="CSE_EFSRecovery_Help">Diese Richtlinieneinstellung legt fest, wann die Verschlüsselungsrichtlinien aktualisiert werden.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinien aus, die die Verschlüsselungskomponente der Gruppenrichtlinie verwenden, z. B. die Richtlinien in "Windows-Einstellungen\Sicherheitseinstellungen".
+
+Diese Richtlinie setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das die Verschlüsselungsrichtlinie implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern. Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Bei der Option "Verarbeitung über eine langsame Verbindung zulassen" werden die Richtlinien auch dann aktualisiert, wenn die Aktualisierung über eine langsame Netzwerkverbindung wie ein Telefonkabel übertragen wird. Aktualisierungen über langsame Verbindungen können zu deutlichen Verzögerungen führen.
+
+Durch die Option "Während regelmäßiger Hintergrundverarbeitung nicht übernehmen" wird verhindert, dass betroffene Richtlinien im Hintergrund aktualisiert werden, während der Computer verwendet wird. Wenn die Aktualisierung im Hintergrund deaktiviert ist, treten Änderungen an Richtlinien erst dann in Kraft, wenn sich der nächste Benutzer anmeldet oder das System neu gestartet wird.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinienimplementierungen geben an, dass Richtlinien nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinien trotzdem aktualisieren, um sicherzustellen, dass eine bevorzugte Einstellung wieder angewendet wird, wenn ein Benutzer sie verändert hat.</string>
+      <string id="CSE_FolderRedirection">Verarbeitung der Ordnerumleitungsrichtlinien konfigurieren</string>
+      <string id="CSE_FolderRedirection_Help">Diese Richtlinieneinstellung legt fest, wann die Ordnerumleitungsrichtlinien aktualisiert werden.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinien aus, die die Ordnerumleitungskomponente der Gruppenrichtlinie verwenden, z. B. die Richtlinien in "Windows-Einstellungen\Ordnerumleitung". Sie können Ordnerumleitungsrichtlinien nur für Gruppenrichtlinienobjekte festlegen, die in Active Directory gespeichert sind, nicht für Gruppenrichtlinienobjekte auf dem lokalen Computer.
+
+Diese Richtlinieneinstellung setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das die Ordnerumleitungs-Richtlinieneinstellung implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern. Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Bei der Option "Verarbeitung über eine langsame Verbindung zulassen" werden die Richtlinien auch dann aktualisiert, wenn die Aktualisierung über eine langsame Netzwerkverbindung wie ein Telefonkabel übertragen wird. Aktualisierungen über langsame Verbindungen können zu deutlichen Verzögerungen führen.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinienimplementierungen geben an, dass Richtlinien nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinien trotzdem aktualisieren, um sicherzustellen, dass eine bevorzugte Einstellung wieder angewendet wird, wenn ein Benutzer sie verändert hat.</string>
+      <string id="CSE_IEM">Verarbeitung der Richtlinie für die Internet Explorer-Wartung konfigurieren</string>
+      <string id="CSE_IEM_Help">Diese Richtlinieneinstellung legt fest, wann die Richtlinien für die Internet Explorer-Wartung aktualisiert werden.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinien aus, die die Internet Explorer-Wartungskomponente der Gruppenrichtlinie verwenden, z. B. die Richtlinien in "Windows-Einstellungen\Internet Explorer-Wartung".
+
+Diese Richtlinieneinstellung setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das die Richtlinie für die Internet Explorer-Wartung implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern. Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Bei der Option "Verarbeitung über eine langsame Verbindung zulassen" werden die Richtlinien auch dann aktualisiert, wenn die Aktualisierung über eine langsame Netzwerkverbindung wie ein Telefonkabel übertragen wird. Aktualisierungen über langsame Verbindungen können zu deutlichen Verzögerungen führen.
+
+Durch die Option "Während regelmäßiger Hintergrundverarbeitung nicht übernehmen" wird verhindert, dass betroffene Richtlinien im Hintergrund aktualisiert werden, während der Computer verwendet wird. Wenn die Aktualisierung im Hintergrund deaktiviert ist, treten Änderungen an Richtlinien erst dann in Kraft, wenn sich der nächste Benutzer anmeldet oder das System neu gestartet wird.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinienimplementierungen geben an, dass Richtlinien nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinien aktualisieren, um sicherzustellen, dass eine bevorzugte Richtlinieneinstellung wieder angewendet wird, wenn ein Benutzer sie verändert hat.</string>
+      <string id="CSE_IPSecurity">Verarbeitung der IP-Sicherheitsrichtlinie konfigurieren</string>
+      <string id="CSE_IPSecurity_Help">Diese Richtlinieneinstellung legt fest, wann die IP-Sicherheitsrichtlinien aktualisiert werden.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinien aus, die die IP-Sicherheitskomponente der Gruppenrichtlinie verwenden, etwa die in "Computerkonfiguration\Windows-Einstellungen\Sicherheitseinstellungen\IP-Sicherheitseinstellungen auf lokaler Computer".
+
+Diese Richtlinieneinstellung setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das die IP-Sicherheitsrichtlinie implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern. Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Bei der Option "Verarbeitung über eine langsame Verbindung zulassen" werden die Richtlinien auch dann aktualisiert, wenn die Aktualisierung über eine langsame Netzwerkverbindung wie ein Telefonkabel übertragen wird. Aktualisierungen über langsame Verbindungen können zu deutlichen Verzögerungen führen.
+
+Durch die Option "Während regelmäßiger Hintergrundverarbeitung nicht übernehmen" wird verhindert, dass betroffene Richtlinien im Hintergrund aktualisiert werden, während der Computer verwendet wird. Wenn die Aktualisierung im Hintergrund deaktiviert ist, treten Änderungen an Richtlinien erst dann in Kraft, wenn sich der nächste Benutzer anmeldet oder das System neu gestartet wird.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinienimplementierungen geben an, dass Richtlinien nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinien aktualisieren, sodass beispielsweise eine bevorzugte Richtlinieneinstellung wieder angewendet wird, wenn sie von einem Benutzer geändert wurde.</string>
+      <string id="CSE_Registry">Registrierungsrichtlinienverarbeitung konfigurieren</string>
+      <string id="CSE_Registry_Help">Diese Richtlinieneinstellung legt fest, wann die Registrierungsrichtlinien aktualisiert werden.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinien im Ordner "Administrative Vorlagen" und alle anderen Richtlinien aus, die Werte in der Registrierung speichern. Diese Richtlinie setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das die Registrierungsrichtlinie implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern. Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Durch die Option "Während regelmäßiger Hintergrundverarbeitung nicht übernehmen" wird verhindert, dass betroffene Richtlinien im Hintergrund aktualisiert werden, während der Computer verwendet wird. Wenn die Aktualisierung im Hintergrund deaktiviert ist, treten Änderungen an Richtlinien erst dann in Kraft, wenn sich der nächste Benutzer anmeldet oder das System neu gestartet wird.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinienimplementierungen geben an, dass Richtlinien nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinien aktualisieren, um sicherzustellen, dass eine bevorzugte Richtlinieneinstellung wieder angewendet wird, wenn ein Benutzer sie verändert hat.</string>
+      <string id="CSE_Scripts">Skriptrichtlinienverarbeitung konfigurieren</string>
+      <string id="CSE_Scripts_Help">Diese Richtlinieneinstellung legt fest, wann die Richtlinien aktualisiert werden, die freigegebene Skripts zuweisen.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinien aus, die die Skriptkomponente der Gruppenrichtlinie verwenden, z. B. die Richtlinien in "Windows-Einstellungen\Skripts". Diese Richtlinie setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das die Skriptrichtlinie implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern. Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Bei der Option "Verarbeitung über eine langsame Verbindung zulassen" werden die Richtlinien auch dann aktualisiert, wenn die Aktualisierung über eine langsame Netzwerkverbindung wie ein Telefonkabel übertragen wird. Aktualisierungen über langsame Verbindungen können zu deutlichen Verzögerungen führen.
+
+Durch die Option "Während regelmäßiger Hintergrundverarbeitung nicht übernehmen" wird verhindert, dass betroffene Richtlinien im Hintergrund aktualisiert werden, während der Computer verwendet wird. Wenn die Aktualisierung im Hintergrund deaktiviert ist, treten Änderungen an Richtlinien erst dann in Kraft, wenn sich der nächste Benutzer anmeldet oder das System neu gestartet wird.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinienimplementierungen geben an, dass Richtlinien nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinien aktualisieren, um sicherzustellen, dass eine bevorzugte Richtlinieneinstellung wieder angewendet wird, wenn ein Benutzer sie verändert hat.</string>
+      <string id="CSE_Security">Sicherheitsrichtlinienverarbeitung konfigurieren</string>
+      <string id="CSE_Security_Help">Diese Richtlinieneinstellung legt fest, wann die Sicherheitsrichtlinien aktualisiert werden.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinien aus, die die Sicherheitskomponente der Gruppenrichtlinie verwenden, z. B. die Richtlinien in "Windows-Einstellungen\Sicherheitseinstellungen".
+
+Diese Richtlinieneinstellung setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das die Sicherheitsrichtlinie implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern. Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Durch die Option "Während regelmäßiger Hintergrundverarbeitung nicht übernehmen" wird verhindert, dass betroffene Richtlinien im Hintergrund aktualisiert werden, während der Computer verwendet wird. Wenn die Aktualisierung im Hintergrund deaktiviert ist, treten Änderungen an Richtlinien erst dann in Kraft, wenn sich der nächste Benutzer anmeldet oder das System neu gestartet wird.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinienimplementierungen geben an, dass Richtlinien nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinien aktualisieren, um sicherzustellen, dass eine bevorzugte Richtlinieneinstellung wieder angewendet wird, wenn ein Benutzer sie verändert hat.</string>
+      <string id="CSE_Wireless">Verarbeitung der Richtlinien für Funknetzwerke konfigurieren</string>
+      <string id="CSE_Wireless_Help">Diese Richtlinieneinstellung legt fest, wann die Richtlinien aktualisiert werden, die Einstellungen für Funknetzwerke zuweisen.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinien aus, die die Komponente der Gruppenrichtlinie für Funknetzwerke verwenden, z. B. die Richtlinien in "Windows-Einstellungen\Funknetzwerke".
+
+Diese Richtlinie setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das das Funknetzwerk implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinie aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern.
+
+Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Bei der Option "Verarbeitung über eine langsame Verbindung zulassen" werden die Richtlinien auch dann aktualisiert, wenn die Aktualisierung über eine langsame Netzwerkverbindung wie ein Telefonkabel übertragen wird. Aktualisierungen über langsame Verbindungen können zu deutlichen Verzögerungen führen.
+
+Durch die Option "Während regelmäßiger Hintergrundverarbeitung nicht übernehmen" wird verhindert, dass betroffene Richtlinien im Hintergrund aktualisiert werden, während der Computer verwendet wird. Wenn die Aktualisierung im Hintergrund deaktiviert ist, treten Änderungen an Richtlinien erst dann in Kraft, wenn sich der nächste Benutzer anmeldet oder das System neu gestartet wird.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinienimplementierungen geben an, dass Richtlinien nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinien aktualisieren, um sicherzustellen, dass eine bevorzugte Einstellung wieder angewendet wird, wenn ein Benutzer sie verändert hat.</string>
+      <string id="CSE_Wired">Richtlinienverarbeitung für verkabelte Netzwerke konfigurieren</string>
+      <string id="CSE_Wired_Help">Diese Richtlinieneinstellung legt fest, wann die Richtlinien aktualisiert werden, die Einstellungen für verkabelte Netzwerke zuweisen.
+
+Diese Richtlinieneinstellung wirkt sich auf alle Richtlinien aus, die die Komponente der Gruppenrichtlinie für verkabelte Netzwerke verwenden, z. B. die Richtlinien in "Windows-Einstellungen\Verkabelte Netzwerke".
+
+Diese Richtlinie setzt benutzerdefinierte Einstellungen außer Kraft, die das Programm, das das verkabelte Netzwerk implementiert, bei seiner Installation festgelegt hat.
+
+Wenn Sie diese Richtlinie aktivieren, können Sie die bereitgestellten Kontrollkästchen verwenden, um die Optionen zu ändern.
+
+Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, wirkt sie sich nicht auf das System aus.
+
+Bei der Option "Verarbeitung über eine langsame Verbindung zulassen" werden die Richtlinien auch dann aktualisiert, wenn die Aktualisierung über eine langsame Netzwerkverbindung wie ein Telefonkabel übertragen wird. Aktualisierungen über langsame Verbindungen können zu deutlichen Verzögerungen führen.
+
+Durch die Option "Während regelmäßiger Hintergrundverarbeitung nicht übernehmen" wird verhindert, dass betroffene Richtlinien im Hintergrund aktualisiert werden, während der Computer verwendet wird. Wenn die Aktualisierung im Hintergrund deaktiviert ist, treten Änderungen an Richtlinien erst dann in Kraft, wenn sich der nächste Benutzer anmeldet oder das System neu gestartet wird.
+
+Bei der Option "Gruppenrichtlinienobjekte auch ohne Änderungen bearbeiten" werden die Richtlinien auch dann aktualisiert und neu angewendet, wenn sie nicht geändert wurden. Viele Richtlinienimplementierungen geben an, dass Richtlinien nur bei Änderungen aktualisiert werden sollen. Allerdings sollten Sie unveränderte Richtlinien aktualisieren, um sicherzustellen, dass eine bevorzugte Einstellung wieder angewendet wird, wenn ein Benutzer sie verändert hat.</string>
+
+      <string id="DenyRsopToInteractiveUser">Festlegen, ob interaktive Benutzer Richtlinienergebnissatzdaten generieren können</string>
+      <string id="DenyRsopToInteractiveUser_Help">Diese Richtlinieneinstellung steuert, ob Benutzer die Richtlinienergebnissatzdatenanzeigen können.
+
+Standardmäßig können interaktiv angemeldete Benutzer die Richtlinienergebnissatzdaten anzeigen.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können interaktive Benutzer keine Richtlinienergebnissatzdaten generieren.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, können interaktive Benutzer Richtlinienergebnissatzdaten generieren.
+
+Hinweis: Diese Richtlinieneinstellung hat keine Auswirkung auf Administratoren. Wenn Sie diese Richtlinieneinstellung aktivieren oder deaktivieren, können Administratoren standardmäßig Richtlinienergebnissatzdaten anzeigen.
+
+Hinweis: Um Richtlinienergebnissatzdaten auf einem Clientcomputer anzuzeigen, verwenden Sie das Richtlinienergebnissatz-Snap-In für die Microsoft Management Console. Sie können das Richtlinienergebnissatz-Snap-In über die Befehlszeile starten, indem Sie "RSOP.msc" eingeben.
+
+Hinweis: Diese Einstellung ist sowohl unter "Benutzerkonfiguration" als auch unter "Computerkonfiguration" vorhanden.
+
+Weitere Informationen finden Sie unter der Richtlinieneinstellung "Protokollierung des Richtlinienergebnissatzes deaktivieren" unter "Computerkonfiguration\Administrative Vorlagen\System\Gruppenrichtlinie".</string>
+      <string id="DisableAutoADMUpdate">Automatische Aktualisierung von ADM-Dateien deaktivieren</string>
+      <string id="DisableAutoADMUpdate_Help">Verhindert, dass die Quelldateien der administrativen Vorlagen beim Starten des Gruppenrichtlinienobjekt-Editors automatisch aktualisiert werden.  Administratoren können diese Einstellung verwenden, wenn sie befürchten, dass auf dem Systemdatenträger eines Domänencontrollers zu viel Platz verwendet wird.
+
+Standardmäßig wird beim Start des Gruppenrichtlinien-Editors ein Zeitstempelvergleich zwischen den Quelldateien im lokalen Verzeichnis "%SYSTEMROOT%\inf" und den Quelldateien im Gruppenrichtlinienobjekt durchgeführt.  Wenn die lokalen Dateien jünger sind, werden sie in das Gruppenrichtlinienobjekt kopiert.
+
+Wenn Sie diese Einstellung aktivieren, werden keine Quelldateien in das Gruppenrichtlinienobjekt kopiert.
+
+Wenn Sie diese Einstellung deaktivieren, wird das Standardverhalten erzwungen.  Dateien mit einem neueren Zeitstempel werden dann immer in das Gruppenrichtlinienobjekt kopiert.
+
+HINWEIS: Diese Einstellung wird ignoriert und als aktiviert behandelt, falls die Richtlinieneinstellung "Immer lokale ADM-Dateien für den Gruppenrichtlinien-Editor verwenden" unter "Computerkonfiguration" aktiviert ist.</string>
+      <string id="DisableBackgroundPolicy">Hintergrundaktualisierung der Gruppenrichtlinie deaktivieren</string>
+      <string id="DisableBackgroundPolicy_Help">Diese Richtlinieneinstellung verhindert die Aktualisierung von Gruppenrichtlinien, solange der Computer verwendet wird. Diese Richtlinieneinstellung wirkt sich auf Gruppenrichtlinien für Computer, Benutzer und Domänencontroller aus.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, wird mit der Aktualisierung von Computer- und Benutzereinstellungen gewartet, bis sich der aktuelle Benutzer vom System abmeldet.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, können die Aktualisierungen durchgeführt werden, während die Benutzer am Computer arbeiten. Die Häufigkeit der Aktualisierung können Sie mit den Richtlinieneinstellungen "Gruppenrichtlinien-Aktualisierungsintervall für Computer festlegen" und "Gruppenrichtlinien-Aktualisierungsintervall für Benutzer festlegen" angeben.
+
+Hinweis: Damit Änderungen an dieser Richtlinieneinstellung wirksam werden, müssen Sie den Computer neu starten.</string>
+      <string id="DisableUsersFromMachGP">Aktualisierung der Computerrichtlinie durch Benutzer verhindern</string>
+      <string id="DisableUsersFromMachGP_Help">Mit dieser Richtlinieneinstellung können Sie steuern, ob ein Benutzer eine Aktualisierung der Computerrichtlinie veranlassen kann.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Benutzer keine Aktualisierung der Computerrichtlinie veranlassen. Die Computerrichtlinie wird beim Start oder bei einer offiziellen Richtlinienaktualisierung aktualisiert.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wird das Standardverhalten angewendet. Standardmäßig wird die Computerrichtlinie beim Starten des Computers angewendet. Sie wird außerdem in festgelegten Aktualisierungsintervallen oder bei manuellem Aufruf durch den Benutzer angewendet.
+
+Hinweis: Diese Richtlinieneinstellung betrifft nur Benutzer ohne Administratorrechte. Administratoren können nach wie vor zu jeder Zeit eine Aktualisierung der Computerrichtlinie veranlassen, unabhängig davon, wie diese Richtlinieneinstellung konfiguriert ist.
+
+Weitere Informationen zum Ändern des Richtlinienaktivierungsintervalls finden Sie unter der Richtlinieneinstellung "Gruppenrichtlinien-Aktualisierungsintervall für Computer festlegen".
+
+Hinweis: Damit Änderungen an dieser Richtlinieneinstellung wirksam werden, müssen Sie den Computer neu starten.</string>
+      <string id="EnforcePoliciesOnly">"Nur Richtlinien anzeigen" erzwingen</string>
+      <string id="EnforcePoliciesOnly_Help">Diese Richtlinieneinstellung verhindert, dass Administratoren bevorzugte Gruppenrichtlinieneinstellungen anzeigen oder verwenden.
+
+Eine Gruppenrichtlinienverwaltungsdatei (ADM-Datei) kann sowohl echte als auch bevorzugte Einstellungen enthalten. Echte Einstellungen, die von der Gruppenrichtlinie vollständig unterstützt werden, müssen Registrierungseinträge in den Registrierungsunterschlüsseln "Software\Policies" oder "Software\Microsoft\Windows\CurrentVersion\Policies" verwenden. Bevorzugte Einstellungen, die nicht vollständig unterstützt werden, verwenden Registrierungseinträge in anderen Unterschlüsseln.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, wird der Befehl "Nur Richtlinien anzeigen" aktiviert, der von Administratoren nicht deaktiviert werden kann. Dadurch werden nur echte Einstellungen im Gruppenrichtlinien-Editor angezeigt, aber keine bevorzugten Einstellungen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wird der Befehl "Nur Richtlinien anzeigen" standardmäßig aktiviert. Administratoren können die bevorzugten Einstellungen jedoch einsehen, indem sie diesen Befehl deaktivieren.
+
+Hinweis: Um den Befehl "Nur Richtlinien anzeigen" zu finden, klicken Sie im Gruppenrichtlinien-Editor auf den Ordner "Administrative Vorlagen" (einen der beiden Ordner), klicken mit der rechten Maustaste auf denselben Ordner und zeigen dann auf "Anzeigen".
+
+Im Gruppenrichtlinien-Editor werden bevorzugte Einstellungen durch ein rotes Symbol gekennzeichnet, um sie von den echten Einstellungen mit dem blauen Symbol zu unterscheiden.</string>
+      <string id="GPDCOptionAny">Verfügbare Domänencontroller verwenden</string>
+      <string id="GPDCOptionInherit">Von Active Directory-Snap-Ins erben</string>
+      <string id="GPDCOptionPDC">Den primären Domänencontroller verwenden</string>
+      <string id="GPDCOptions">Auswahl der Gruppenrichtlinien-Domänencontroller konfigurieren</string>
+      <string id="GPDCOptions_Help">Diese Richtlinieneinstellung legt fest, welchen Domänencontroller das Snap-In "Gruppenrichtlinien-Editor" verwendet.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie mit diesen Optionen festlegen, welcher Domänencontroller verwendet wird:
+
+"Den primären Domänencontroller verwenden" gibt vor, dass das Snap-In "Gruppenrichtlinienobjekt-Editor" zum Lesen oder Schreiben von Änderungen den Domänencontroller verwendet, der als PDC-Betriebsmaster für die Domäne bestimmt wurde.
+
+"Von Active Directory-Snap-Ins erben" gibt vor, dass das Snap-In "Gruppenrichtlinienobjekt-Editor" zum Lesen oder Schreiben von Änderungen den Domänencontroller verwendet, der von den Snap-Ins "Active Directory-Benutzer und -Computer" und "Active Directory-Standorte und -Dienste" "verwendet wird.
+
+"Verfügbare Domänencontroller verwenden" gibt vor, dass das Snap-In "Gruppenrichtlinienobjekt-Editor" zum Lesen oder Schreiben von Änderungen alle verfügbaren Domänencontroller verwenden darf.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet das Snap-In "Gruppenrichtlinienobjekt-Editor" zum Lesen oder Schreiben von Änderungen den Domänencontroller, der als PDC-Betriebsmaster für die Domäne bestimmt wurde.
+
+Hinweis: Um den PDC-Betriebsmaster für eine Domäne zu ändern, klicken Sie mit der rechten Maustaste auf eine Domäne in "Active Directory-Benutzer und -Computer", und klicken Sie dann auf "Betriebsmaster".</string>
+      <string id="GPTransferRate">Gruppenrichtlinien zur Erkennung von langsamen Verbindungen konfigurieren</string>
+      <string id="GPTransferRate_Help">Diese Richtlinieneinstellung definiert, was eine langsame Verbindung ist, wenn Gruppenrichtlinien angewendet und aktualisiert werden.
+
+Wenn die Datenübertragungsrate vom Domänencontroller, der den Computern in dieser Gruppe Richtlinienaktualisierungen bereitstellt, geringer ist als die in dieser Einstellung festgelegte Rate, wird die Verbindung als langsam bezeichnet.
+
+Die Vorgehensweise des Systems bei langsamen Verbindungen unterscheidet sich von Richtlinieneinstellung zu Richtlinieneinstellung. Das Programm, das die Richtlinieneinstellung anwendet, kann die Vorgehensweise bei einer langsamen Verbindung bestimmen. Mit den Einstellungen zur Verarbeitung von Richtlinien in diesem Ordner können Sie darüber hinaus die angegebene Vorgehensweise des Programms bei langsamen Verbindungen außer Kraft setzen.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, geben Sie im Feld "Verbindungsgeschwindigkeit" eine Dezimalzahl zwischen 0 und 4.294.967.200 ein. Diese Zahl stellt eine Übertragungsrate in Kilobits pro Sekunde dar. Alle Verbindungen, die langsamer als dieser Wert sind, werden als langsame Verbindungen bezeichnet. Wenn Sie den Wert 0 eingeben, werden alle Verbindungen als schnell angesehen.
+
+Wenn Sie diese Einstellungen deaktivieren oder nicht konfigurieren, wird der Standardwert 500 KBit/s verwendet.
+
+Diese Einstellung wird in den Ordnern "Computerkonfiguration" und "Benutzerkonfiguration" angezeigt. Die Einstellung unter "Computerkonfiguration" bestimmt, was eine langsame Verbindung für die Richtlinien im Ordner "Computerkonfiguration" ist. Die Einstellung unter "Benutzerkonfiguration" bestimmt, was eine langsame Verbindung für die Richtlinien im Ordner "Benutzerkonfiguration" ist.
+
+Weitere Informationen finden Sie unter der Richtlinieneinstellung "Langsame Netzwerkverbindungen nicht erkennen" und unter den verwandten Richtlinieneinstellungen unter "Computerkonfiguration\Administrative Vorlagen\System\Benutzerprofil". Hinweis: Wenn der Profilserver über IP-Konnektivität verfügt, wird die Einstellung der Übertragungsrate verwendet. Verfügt der Profilserver nicht über IP-Konnektivität, wird die SMB-Zeitsteuerung verwendet.</string>
+      <string id="GroupPolicyRefreshRate">Gruppenrichtlinien-Aktualisierungsintervall für Computer festlegen</string>
+      <string id="GroupPolicyRefreshRate_Help">Diese Richtlinieneinstellung legt fest, wie oft Gruppenrichtlinien für Computer (im Hintergrund) aktualisiert werden, wenn der Computer verwendet wird. Diese Richtlinieneinstellung gibt die Hintergrundaktualisierungsrate nur für Gruppenrichtlinien im Ordner "Computerkonfiguration" an.
+
+Zusätzlich zu den Hintergrundaktualisierungen wird die Gruppenrichtlinie für den Computer bei jedem Systemstart aktualisiert.
+
+Standardmäßig werden Computergruppenrichtlinien alle 90 Minuten im Hintergrund (mit einem zufälligen Versatz von 0 bis 30 Minuten) aktualisiert.
+
+Wenn Sie diese Einstellung aktivieren, können Sie eine Aktualisierungsrate von 0 bis 64.800 Minuten (45 Tage) angeben. Wenn Sie 0 Minuten angeben, wird eine Aktualisierung alle 7 Sekunden angestrebt. Da Aktualisierungen jedoch die Benutzer beim Arbeiten beeinträchtigen und zur einer Erhöhung des Netzwerkdatenverkehrs führen können, sind sehr kurze Aktualisierungsintervalle für die meisten Installationen nicht geeignet.
+
+Wenn Sie diese Einstellung deaktivieren, werden Gruppenrichtlinien alle 90 Minuten (dies ist der Standardwert) aktualisiert. Verwenden Sie die Richtlinie "Hintergrundaktualisierung der Gruppenrichtlinien deaktivieren", wenn die Gruppenrichtlinien nie aktualisiert werden sollen, während der Computer verwendet wird.
+
+Mit der Richtlinieneinstellung "Gruppenrichtlinien-Aktualisierungsintervall für Computer festlegen" können Sie außerdem angeben, inwieweit das tatsächliche Aktualisierungsintervall variiert. Das Aktualisierungsintervall unterscheidet sich von Client zu Client um eine zufällige Anzahl von Minuten, damit Clients mit demselben Aktualisierungsintervall nicht gleichzeitig Aktualisierungen anfordern. Mithilfe der von Ihnen im Feld für die Zufallszeit eingegebene Zahl wird die Obergrenze für den Schwankungsbereich festgelegt. Wenn Sie beispielsweise 30 Minuten eingeben, wird vom System eine Schwankung von 0 bis 30 Minuten ausgewählt. Wenn Sie einen hohen Wert eingeben, wird eine hohe Schwankungsbreite verwendet, sodass es unwahrscheinlich ist, dass sich Clientanforderungen überschneiden. Allerdings können Aktualisierungen dadurch erheblich verzögert werden.
+
+Diese Einstellung bestimmt eine Aktualisierungsrate für die Computergruppenrichtlinien. Verwenden Sie die Einstellung "Gruppenrichtlinien-Aktualisierungsintervall für Benutzer festlegen" (unter "Benutzerkonfiguration\Administrative Vorlagen\System\Gruppenrichtlinien"), wenn Sie eine Aktualisierungsrate für Benutzerrichtlinien festlegen möchten.
+
+Diese Einstellung wird nur angewendet, wenn die Richtlinieneinstellung "Hintergrundaktualisierung der Gruppenrichtlinien deaktivieren" nicht aktiviert ist.
+
+Hinweis: Sie sollten Benutzer darüber benachrichtigen, dass ihre Gruppenrichtlinien regelmäßig aktualisiert werden, damit sie eine Gruppenrichtlinienaktualisierung als solche erkennen. Beim Aktualisieren der Gruppenrichtlinie wird der Windows-Desktop aktualisiert. Dabei flackert er kurz, und offene Menüs werden geschlossen. Außerdem wirken sich Gruppenrichtlinieneinschränkungen, etwa Einschränkungen von Programmen, die Benutzer ausführen dürfen, möglicherweise störend auf aktuelle Vorgänge aus.</string>
+      <string id="GroupPolicyRefreshRateDC">Gruppenrichtlinien-Aktualisierungsintervall für Domänencontroller festlegen</string>
+      <string id="GroupPolicyRefreshRateDC_Help">Diese Richtlinieneinstellung legt fest, wie oft Gruppenrichtlinien auf Domänencontrollern (im Hintergrund) aktualisiert werden, während diese ausgeführt werden. Die in dieser Richtlinieneinstellung angegebenen Aktualisierungen werden zusätzlich zu den Aktualisierungen beim Systemstart ausgeführt
+
+Standardmäßig werden Gruppenrichtlinien auf Domänencontrollern alle fünf Minuten aktualisiert.
+
+Wenn Sie diese Einstellung aktivieren, können Sie eine Aktualisierungsrate von 0 bis 64.800 Minuten (45 Tage) angeben. Wenn Sie 0 Minuten angeben, wird eine Aktualisierung alle 7 Sekunden angestrebt. Da Aktualisierungen jedoch die Benutzer beim Arbeiten beeinträchtigen und zur einer Erhöhung des Netzwerkdatenverkehrs führen können, sind sehr kurze Aktualisierungsintervalle für die meisten Installationen nicht geeignet.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden Gruppenrichtlinien auf dem Domänencontroller alle 5 Minuten (dies ist der Standardwert) aktualisiert. Verwenden Sie die Richtlinie "Hintergrundaktualisierung der Gruppenrichtlinien deaktivieren", wenn die Gruppenrichtlinien für Benutzer nie aktualisiert werden sollen, während der Computer verwendet wird.
+
+Mithilfe dieser Einstellung können Sie auch angeben, inwieweit das tatsächliche Aktualisierungsintervall variiert. Das Aktualisierungsintervall unterscheidet sich von Controller zu Controller um eine zufällige Anzahl von Minuten, damit Domänencontroller mit demselben Aktualisierungsintervall nicht gleichzeitig Aktualisierungen anfordern. Mithilfe der von Ihnen im Feld für die Zufallszeit eingegebene Zahl wird die Obergrenze für den Schwankungsbereich festgelegt. Wenn Sie beispielsweise 30 Minuten eingeben, wird vom System eine Schwankung von 0 bis 30 Minuten ausgewählt. Wenn Sie einen hohen Wert eingeben, wird eine höhere Schwankungsbreite verwendet, sodass es unwahrscheinlich ist, dass sich Aktualisierungsanforderungen überschneiden. Allerdings können Aktualisierungen dadurch erheblich verzögert werden.
+
+Hinweis: Diese Einstellung wird nur verwendet, wenn Sie Richtlinien für eine Domäne, einen Standort, eine Organisationseinheit oder eine benutzerdefinierte Gruppe einrichten. Wenn Sie die Richtlinie nur für den lokalen Computer einrichten, wird sie ignoriert.</string>
+      <string id="GroupPolicyRefreshRateUser">Gruppenrichtlinien-Aktualisierungsintervall für Benutzer festlegen</string>
+      <string id="GroupPolicyRefreshRateUser_Help">Diese Richtlinieneinstellung legt fest, wie oft Gruppenrichtlinien für Benutzer (im Hintergrund) aktualisiert werden, wenn der Computer verwendet wird. Diese Einstellung gibt die Hintergrundaktualisierungsrate nur für Gruppenrichtlinien im Ordner "Benutzerkonfiguration" an.
+
+Zusätzlich zu den Hintergrundaktualisierungen wird die Gruppenrichtlinie für Benutzer bei jeder Benutzeranmeldung aktualisiert.
+
+Standardmäßig werden Benutzergruppenrichtlinien alle 90 Minuten im Hintergrund (mit einem zufälligen Versatz von 0 bis 30 Minuten) aktualisiert.
+
+Wenn Sie diese Einstellung aktivieren, können Sie eine Aktualisierungsrate von 0 bis 64.800 Minuten (45 Tage) angeben. Wenn Sie 0 Minuten angeben, wird eine Aktualisierung alle 7 Sekunden angestrebt. Da Aktualisierungen jedoch die Benutzer beim Arbeiten beeinträchtigen und zur einer Erhöhung des Netzwerkdatenverkehrs führen können, sind sehr kurze Aktualisierungsintervalle für die meisten Installationen nicht geeignet.
+
+Wenn Sie diese Einstellung deaktivieren, werden Benutzergruppenrichtlinien alle 90 Minuten (dies ist der Standardwert) aktualisiert. Verwenden Sie die Richtlinie "Hintergrundaktualisierung der Gruppenrichtlinien deaktivieren", wenn die Gruppenrichtlinien für Benutzer nie aktualisiert werden sollen, während der Computer verwendet wird.
+
+Mithilfe dieser Einstellung können Sie auch angeben, inwieweit das tatsächliche Aktualisierungsintervall variiert. Das Aktualisierungsintervall unterscheidet sich von Client zu Client um eine zufällige Anzahl von Minuten, damit Clients mit demselben Aktualisierungsintervall nicht gleichzeitig Aktualisierungen anfordern. Mithilfe der von Ihnen im Feld für die Zufallszeit eingegebene Zahl wird die Obergrenze für den Schwankungsbereich festgelegt. Wenn Sie beispielsweise 30 Minuten eingeben, wird vom System eine Schwankung von 0 bis 30 Minuten ausgewählt. Wenn Sie einen hohen Wert eingeben, wird eine hohe Schwankungsbreite verwendet, sodass es unwahrscheinlich ist, dass sich Clientanforderungen überschneiden. Allerdings können Aktualisierungen dadurch erheblich verzögert werden.
+
+Wichtig: Wenn die Einstellung "Hintergrundaktualisierung der Gruppenrichtlinien deaktivieren" aktiviert ist, wird diese Einstellung ignoriert.
+
+Hinweis: Diese Einstellung bestimmt eine Aktualisierungsrate für die Benutzergruppenrichtlinien. Verwenden Sie die Einstellung "Gruppenrichtlinien-Aktualisierungsintervall für Computer" (unter "Computerkonfiguration\Administrative Vorlagen\System\Gruppenrichtlinien"), wenn Sie eine Aktualisierungsrate für Computergruppenrichtlinien festlegen möchten.
+
+Tipp: Sie sollten Benutzer darüber benachrichtigen, dass ihre Gruppenrichtlinien regelmäßig aktualisiert werden, damit sie eine Gruppenrichtlinienaktualisierung als solche erkennen. Beim Aktualisieren der Gruppenrichtlinie wird der Windows-Desktop aktualisiert. Dabei flackert er kurz, und offene Menüs werden geschlossen. Außerdem wirken sich Gruppenrichtlinieneinschränkungen, etwa Einschränkungen von Programmen, die ein Benutzer ausführen darf, möglicherweise störend auf aktuelle Vorgänge aus.</string>
+      <string id="NewGPODisplayName">Standardname für neue Gruppenrichtlinienobjekte festlegen</string>
+      <string id="NewGPODisplayName_Help">Mit dieser Richtlinieneinstellung können Sie den Standardanzeigenamen für neue Gruppenrichtlinienobjekte festlegen.
+
+Mit dieser Einstellung können Sie den Standardnamen für neue Gruppenrichtlinienobjekte angeben, die mit richtlinienkonformen Gruppenrichtlinienverwaltungstools erstellt werden, etwa mit der Registerkarte "Gruppenrichtlinien" in Active Directory-Tools oder mit dem Gruppenrichtlinienobjekt-Browser.
+
+Der Anzeigename kann Umgebungsvariablen enthalten und bis zu 255 Zeichen lang sein.
+
+Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert ist, wird der Standardanzeigename für neue Gruppenrichtlinienobjekte verwendet.</string>
+      <string id="NewGPOLinksDisabled">Verknüpfungen für neues Gruppenrichtlinienobjekt standardmäßig deaktiviert erstellen</string>
+      <string id="NewGPOLinksDisabled_Help">Mit dieser Richtlinieneinstellung können Sie neue Verknüpfungen für Gruppenrichtlinienobjekte in deaktiviertem Zustand erstellen.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie standardmäßig alle Verknüpfungen für neue Gruppenrichtlinienobjekte in deaktiviertem Zustand erstellt. Nachdem Sie die Verknüpfungen für das neue Objekt mit einem richtlinienkonformen Gruppenrichtlinienverwaltungstool wie "Active Directory-Benutzer und -Computer" oder "Active Directory-Standorte und -Dienste" konfiguriert und getestet haben, können Sie die Objektverknüpfungen zur Verwendung auf dem System aktivieren.
+
+Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, werden Verknüpfungen zu neuen Gruppenrichtlinienobjekten im aktivierten Zustand erstellt. Wenn Sie nicht wünschen, dass sie in Kraft treten, bevor Sie sie konfiguriert und getestet haben, müssen Sie die Objektverknüpfungen deaktivieren.</string>
+      <string id="OnlyUseLocalAdminFiles">Immer lokale ADM-Dateien für den Gruppenrichtlinien-Editor verwenden</string>
+      <string id="OnlyUseLocalAdminFiles_Help">Diese Richtlinieneinstellung ermöglicht, dass immer lokale ADM-Dateien für das Snap-In "Gruppenrichtlinien-Editor" verwendet werden.
+
+Wenn Sie ein Gruppenrichtlinienobjekt mit dem Snap-In "Gruppenrichtlinien-Editor" bearbeiten, werden standardmäßig die ADM-Dateien aus dem Gruppenrichtlinienobjekt in den Gruppenrichtlinien-Editor geladen. Dadurch können Sie beim Bearbeiten eines Gruppenrichtlinienobjekts dieselbe Version der ADM-Dateien verwenden, die bei seiner Erstellung eingesetzt wurden.
+
+Dies führt zu folgendem Verhalten:
+
+- Wenn Sie das Gruppenrichtlinienobjekt ursprünglich z. B. auf einem englischen System erstellt haben, enthält es englische ADM-Dateien.
+
+- Wenn Sie das Gruppenrichtlinienobjekt danach auf einem System mit einer anderen Sprache bearbeiten, erhalten Sie die englischen ADM-Dateien so, wie sie im Gruppenrichtlinienobjekt waren.
+
+Mit dieser Einstellung wird dieses Verhalten außer Kraft gesetzt.
+
+Wenn Sie diese Einstellung aktivieren, verwendet das Snap-In "Gruppenrichtlinien-Editor" bei der Bearbeitung von Gruppenrichtlinienobjekten immer lokale ADM-Dateien aus dem Verzeichnis "%windir%\inf".
+
+Dies führt zu folgendem Verhalten:
+
+- Wenn Sie das Gruppenrichtlinienobjekt ursprünglich auf einem englischen System erstellt haben und es dann auf einem japanischen System bearbeiten, verwendet das Snap-In "Gruppenrichtlinien-Editor" lokale japanische ADM-Dateien, und Sie sehen den Text unter "Administrative Vorlagen" auf Japanisch.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, lädt das Snap-In "Gruppenrichtlinien-Editor" stets alle ADM-Dateien von dem eigentlichen Gruppenrichtlinienobjekt.
+
+Hinweis: Wenn nicht alle benötigten ADM-Dateien lokal im Verzeichnis "%windir%\inf" verfügbar sind, können Sie möglicherweise nicht alle Einstellungen sehen, die in dem zu bearbeitenden Gruppenrichtlinienobjekt konfiguriert sind.</string>
+      <string id="PolicyPolicies">Gruppenrichtlinie</string>
+      <string id="RSoPLogging">Protokollierung des Richtlinienergebnissatzes deaktivieren</string>
+      <string id="RSoPLogging_Help">Mit dieser Einstellung können Sie die Protokollierung von Richtlinienergebnissätzen auf einem Clientcomputer aktivieren oder deaktivieren.
+
+Hierbei werden Informationen über Gruppenrichtlinieneinstellungen protokolliert, die auf den Client angewendet wurden. Diese Informationen enthalten Einzelheiten, wie z. B. welche Gruppenrichtlinienobjekte angewendet wurden, woher sie stammen und welche clientseitigen Erweiterungseinstellungen aufgenommen wurden.
+
+Wenn Sie diese Einstellung aktivieren, wird die Richtlinienergebnissatz-Protokollierung ausgeschaltet.
+
+Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, wird die Richtlinienergebnissatz-Protokollierung eingeschaltet. Standardmäßig ist die Richtlinienergebnissatz-Protokollierung immer eingeschaltet.
+
+Hinweis: Um die auf einem Clientcomputer protokollierten Richtlinienergebnissatzinformationen anzuzeigen, können Sie das Richtlinienergebnissatz-Snap-In in Microsoft Management Console (MMC) verwenden.</string>
+      <string id="UserPolicyMode">Loopbackverarbeitungsmodus für Benutzergruppenrichtlinie konfigurieren</string>
+      <string id="UserPolicyMode_Help">Durch diese Richtlinieneinstellung wird der Satz von Gruppenrichtlinienobjekten für diesen Computer für jeden Benutzer angewendet, der sich an einem Computer anmeldet, für den diese Einstellung gilt. Diese Einstellung ist für Computer mit besonderem Zweck gedacht, z. B. für Computer in der Öffentlichkeit, in Labors oder Klassenzimmern, wo die Benutzereinstellungen je nach Computer geändert werden müssen.
+
+Standardmäßig wird durch die Gruppenrichtlinienobjekte des Benutzers festgelegt, welche Benutzereinstellungen angewendet werden. Wenn Sie diese Richtlinieneinstellung aktivieren, bestimmen jedoch die Gruppenrichtlinienobjekte des Computers bei der Benutzeranmeldung, welcher Satz von Gruppenrichtlinienobjekten angewendet wird.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie einen der folgenden Modi aus dem Feld "Modus" auswählen:
+
+"Ersetzen" gibt an, dass die in den Gruppenrichtlinienobjekten für diesen Computer festgelegten Benutzereinstellungen die Benutzereinstellungen ersetzen, die normalerweise auf den Benutzer angewendet werden.
+
+"Zusammenführen" gibt an, dass die in den Gruppenrichtlinienobjekten für diesen Computer festgelegten Benutzereinstellungen und die normalerweise angewendeten Benutzereinstellungen kombiniert werden. Falls die Einstellungen in Konflikt stehen, setzen die Benutzereinstellungen in den Gruppenrichtlinien des Computers die normalen Einstellungen des Benutzers außer Kraft.
+
+Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, bestimmen die Gruppenrichtlinienobjekte des Benutzers, welche Benutzereinstellungen angewendet werden.
+
+Hinweis: Diese Einstellung gilt nur, wenn sich sowohl das Computer- als auch das Benutzerkonto in Domänen mit mindestens Windows 2000 befinden.</string>
+      <string id="UserPolicyMode_Merge">Zusammenführen</string>
+      <string id="UserPolicyMode_Replace">Ersetzen</string>
+      <string id="CorpConnSyncWaitTime">Wartezeit der Arbeitsbereichskonnektivität für Richtlinienverarbeitung angeben</string>
+      <string id="CorpConnSyncWaitTime_Help">Diese Richtlinieneinstellung gibt an, wie lange die Gruppenrichtlinie während der Richtlinienverarbeitung beim Start auf Benachrichtigungen zur Arbeitsbereichskonnektivität warten soll. Wenn die Richtlinienverarbeitung beim Start synchron erfolgt, wird der Computer blockiert, bis die Arbeitsbereichskonnektivität zur Verfügung steht oder die Wartezeit abgelaufen ist. Wenn die Richtlinienverarbeitung beim Start asynchron ist, wird der Computer nicht blockiert, und die Richtlinienverarbeitung erfolgt im Hintergrund. In jedem Fall werden durch diese Richtlinieneinstellung alle vom System berechneten Wartezeiten außer Kraft gesetzt.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, verwendet die Gruppenrichtlinie die vom Administrator konfigurierte maximale Wartezeit für die Arbeitsbereichskonnektivität und setzt die standardmäßige oder vom System berechnete Wartezeit außer Kraft.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet die Gruppenrichtlinie die Standardwartezeit von 60 Sekunden auf Computern mit Windows-Betriebssystemen höher als Windows 7, die für die Arbeitsbereichskonnektivität konfiguriert sind.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Ausgleichsoptionen</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">Optionen für den Prozessausgleich</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">Der Windows-Dienst für den Schriftartencache soll Schriftarten und Schriftartenkatalogdaten von Onlineschriftartenanbietern herunterladen dürfen.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">Wert für langsame Verbindung: [Zahlenfeld] Millisekunden</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Zeitüberschreitungswert: [Zahlenfeld] Millisekunden</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">Minute:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Wartezeit (in Sekunden):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Verarbeitung über eine langsame Netzwerkverbindung zulassen</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Verarbeitung über eine langsame Netzwerkverbindung zulassen</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Während regelmäßiger Hintergrundverarbeitung nicht übernehmen</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Verarbeitung über eine langsame Netzwerkverbindung zulassen</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Während regelmäßiger Hintergrundverarbeitung nicht übernehmen</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Verarbeitung über eine langsame Netzwerkverbindung zulassen</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Verarbeitung über eine langsame Netzwerkverbindung zulassen</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Während regelmäßiger Hintergrundverarbeitung nicht übernehmen</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Verarbeitung über eine langsame Netzwerkverbindung zulassen</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Während regelmäßiger Hintergrundverarbeitung nicht übernehmen</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Während regelmäßiger Hintergrundverarbeitung nicht übernehmen</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Verarbeitung über eine langsame Netzwerkverbindung zulassen</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Während regelmäßiger Hintergrundverarbeitung nicht übernehmen</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Während regelmäßiger Hintergrundverarbeitung nicht übernehmen</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Verarbeitung über eine langsame Netzwerkverbindung zulassen</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Während regelmäßiger Hintergrundverarbeitung nicht übernehmen</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Verarbeitung über eine langsame Netzwerkverbindung zulassen</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Während regelmäßiger Hintergrundverarbeitung nicht übernehmen</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Gruppenrichtlinienobjekte auch ohne Änderungen verarbeiten</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Wenn Gruppenrichtlinienobjekt-Editor einen Domänencontroller auswählt, soll dieser:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Verbindungsgeschwindigkeit (KBit/s):</decimalTextBox>
+        <text> </text>
+        <text>Geben Sie 0 ein, um die Erkennung einer langsamen Verbindung zu deaktivieren.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Verbindungsgeschwindigkeit (KBit/s):</decimalTextBox>
+        <text> </text>
+        <text>Geben Sie 0 ein, um die Erkennung einer langsamen Verbindung zu deaktivieren.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">WWAN-Verbindungen immer als langsame Verbindung behandeln</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>Diese Einstellung ermöglicht es Ihnen, festzulegen, wie oft die Gruppenrichtlinie</text>
+        <text>auf Computer angewendet wird. Der Bereich lautet 0 bis 44.640 Minuten (31 Tage).</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Minuten:</decimalTextBox>
+        <text> </text>
+        <text>Dies ist eine zufällige Verzögerung des Aktualisierungsintervalls, um zu verhindern, dass alle Clients</text>
+        <text>die Gruppenrichtlinien zur gleichen Zeit anfordern.</text>
+        <text>Der Bereich liegt zwischen 0 und 1440 Minuten (24 Stunden).</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Minuten:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>Diese Einstellung ermöglicht es Ihnen, festzulegen, wie oft die Gruppenrichtlinie</text>
+        <text>auf Domänencontroller angewendet wird. Der Bereich lautet 0 bis 44.640 Minuten (31 Tage).</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Minuten:</decimalTextBox>
+        <text> </text>
+        <text>Dies ist eine zufällige Verzögerung des Aktualisierungsintervalls, um zu verhindern, dass alle Clients</text>
+        <text>die Gruppenrichtlinien zur gleichen Zeit anfordern.</text>
+        <text>Der Bereich liegt zwischen 0 und 1440 Minuten (24 Stunden).</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Minuten:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>Diese Einstellung ermöglicht es Ihnen, festzulegen, wie oft die Gruppenrichtlinie</text>
+        <text>auf Benutzer angewendet wird. Der Bereich lautet 0 bis 44.640 Minuten (31 Tage).</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Minuten:</decimalTextBox>
+        <text> </text>
+        <text>Dies ist eine zufällige Verzögerung des Aktualisierungsintervalls, um zu verhindern, dass alle Clients</text>
+        <text>die Gruppenrichtlinien zur gleichen Zeit anfordern.</text>
+        <text>Der Bereich liegt zwischen 0 und 1440 Minuten (24 Stunden).</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Minuten:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>Gruppenrichtlinienobjektname:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Modus:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Wartezeit (in Sekunden):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ange visningsnamn här</displayName>
+  <description>ange beskrivning här</description>
+  <resources>
+    <stringTable>
+      <string id="Netlogon">Net Logon</string>
+      <string id="Netlogon_AllowSingleLabelDnsDomain">Använd DNS-namnmatchning med enkla domännamn utan toppdomän i stället för NetBIOS-namnmatchning för att lokalisera rätt domänkontrollant</string>
+      <string id="Netlogon_AllowSingleLabelDnsDomain_Help">Den här principinställningen anger om de datorer på vilka principen tillämpas försöker utföra DNS-namnmatchning för enkla domännamn utan toppdomän.
+
+Som standard används det beteende som anges i AllowDnsSuffixSearch. Om principen AllowDnsSuffixSearch har inaktiverats används enbart NetBIOS-namnmatchning för att hitta en domänkontrollant som är värd för en Active Directory-domän som anges med ett enkelt domännamn utan toppdomän.
+
+Om du aktiverar den här principinställningen kommer de datorer på vilka principen tillämpas att försöka hitta en domänkontrollant som är värd för en Active Directory-domän som anges med enkelt domännamn utan toppdomän genom att använda DNS-namnmatchning.
+
+Om du inaktiverar den här principinställningen kommer datorer som inställningen tillämpas på att använda principen AllowDnsSuffixSearch, om den inte har inaktiverats eller utför i annat fall NetBIOS-namnmatchning, för att försöka hitta en domänkontrollant med en Active Directory-domän som anges med enkelt domännamn utan toppdomän. DNS-namnmatchning kommer inte att användas såvida inte datorn letar efter en domän med ett DNS-namn med enkelt domännamn utan toppdomän i den Active Directory-skog som datorn är ansluten till.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon dator. Datorerna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_AllowDnsSuffixSearch">Använd DNS-namnmatchning när ett enkelt domännamn utan toppdomän används genom att lägga till olika registrerade DNS-suffix, om inställningen AllowSingleLabelDnsDomain inte har aktiverats.</string>
+      <string id="Netlogon_AllowDnsSuffixSearch_Help">Den här principinställningen anger om datorerna som inställningen används på försöker utföra DNS-namnmatchning för enkla domännamn utan toppdomän genom att lägga till olika registrerade DNS-suffix, och endast använder NetBIOS-namnmatchning om DNS-namnmatchningen misslyckas. Den här principen, inklusive det angivna standardbeteendet, används inte om principinställningen AllowSingleLabelDnsDomain har aktiverats.
+
+När ingen inställning har angetts för den principen är beteendet som standard detsamma som att uttryckligen aktivera principen, såvida inte principinställningen AllowSingleLabelDnsDomain har aktiverats.
+
+Om du aktiverar den här principinställningen, och principen AllowSingleLabelDnsDomain inte har aktiverats, söker datorer som den här principen tillämpas på upp en domänkontrollant i en Active Directory-domän som anges med enkelt domännamn utan toppdomän. Det gör datorerna genom att lägga till olika registrerade DNS-suffix för att göra en DNS-namnmatchning. Enkelt domännamn utan toppdomän används inte utan tillägg av DNS-suffix såvida inte datorn är ansluten till en domän som har ett DNS-namn angivet som enkelt domännamn utan toppdomän i Active Directory-skogen. NetBIOS-namnmatchning utförs endast på enkla domännamn utan toppdomän om DNS-matchningen misslyckas.
+
+Om du inaktiverar den här principinställningen, när principen AllowSingleLabelDnsDomain inte har aktiverats, kommer de klientdatorer som den här principen tillämpas på att endast använda NetBIOS-namnmatchning för att försöka hitta en domänkontrollant med en Active Directory-domän som anges med enkelt domännamn utan toppdomän. DNS-namnmatchning kommer inte att användas såvida inte datorn letar efter en domän med ett DNS-namn med enkelt domännamn utan toppdomän i den i Active Directory-skog som datorn är ansluten till.
+
+</string>
+      <string id="Netlogon_AutoSiteCoverage">Använd automatiserad täckning av DNS SRV-poster för lokalisering av domänkontrollant</string>
+      <string id="Netlogon_AutoSiteCoverage_Help">Den här principinställningen avgör huruvida domänkontrollanter registrerar platsspecifika SRV-poster för lokalisering av domänkontrollanter dynamiskt för de mest närliggande platserna där det inte finns någon domänkontrollant för samma domän (eller där det inte finns någon global katalog för samma skog). De här DNS-posterna registreras dynamiskt av tjänsten Net Logon och används för att lokalisera domänkontrollanten.
+
+Om du aktiverar den här principinställningen registrerar de domänkontrollanter som inställningen gäller dynamiskt platsspecifika DNS SRV-poster för lokalisering av domänkontrollanter för de mest närliggande platserna där det inte finns någon domänkontrollant för samma domän eller där det inte finns någon global katalog för samma skog.
+
+Om du inaktiverar den här principinställningen registrerar domänkontrollanterna inte platsspecifika DNS SRV-resursposter för domänkontrollanter för några andra platser än sina egna.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon domänkontrollant. Domänkontrollanterna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_AvoidPdcOnWan">Kontakta den primära domänkontrollanten om det inte går att logga in</string>
+      <string id="Netlogon_AvoidPdcOnWan_Help">Den här principinställningen anger om en domänkontrollant ska försöka verifiera lösenordet från klienten med emulatorn för den primära domänkontrollanten om domänkontrollanten inte kunde validera lösenordet.
+
+Det kan vara bra att kontakta emulatorn för den primära domänkontrollanten om klientens lösenord nyligen har ändrats och inte har propagerats till domänkontrollanten ännu. Användare kan vilja inaktivera den här funktionen om emulatorn för den primära domänkontrollanten kan nås via en långsam WAN-anslutning.
+
+Om du aktiverar den här principinställningen kommer de domänkontrollanter som inställningen tillämpas på att försöka verifiera lösenordet med emulatorn för den primära domänkontrollanten om domänkontrollanten inte kunde validera lösenordet.
+
+Om du inaktiverar den här principinställningen kommer domänkontrollanterna inte att försöka verifiera lösenord med emulatorn för den primära domänkontrollanten. 
+
+Om du inte konfigurerar den här principinställningen tillämpas den inte på några domänkontrollanter.</string>
+      <string id="Netlogon_BackgroundRetryInitialPeriod">Använd inställningen för första försök att hitta domänkontrollant för bakgrundsanropare</string>
+      <string id="Netlogon_BackgroundRetryInitialPeriod_Help">Den här principinställningen anger hur lång tid (i sekunder) som passerar innan första återförsöket utförs av program som regelbundet söker efter domänkontrollanter, när ingen domänkontrollant hittas.
+
+Standardvärdet för den här inställningen är 10 minuter (10*60). Det högsta värdet för den här inställningen är 49 dagar (0x49*24*60*60=4233600). Det lägsta värdet för den här inställningen är 0.
+
+Den här inställningen är endast relevant för de som anropar DsGetDcName och som har angett flaggan DS_BACKGROUND_ONLY.
+
+Om värdet i inställningen är lägre än det värde som angetts i undernyckeln NegativeCachePeriod används värdet i undernyckeln NegativeCachePeriod.
+
+Varning! Om värdet för den här inställningen är för stort kommer klienter inte att försöka hitta domänkontrollanter som från början var otillgängliga. Om värdet för den här egenskapen är för lågt och domänkontrollanten inte är tillgänglig kan en stor mängd onödig nätverkstrafik uppstå.</string>
+      <string id="Netlogon_BackgroundRetryMaximumPeriod">Använd det längsta intervallet för försök till upptäckt av domänkontrollanter för bakgrundsanropare</string>
+      <string id="Netlogon_BackgroundRetryMaximumPeriod_Help">Den här principinställningen anger det längsta tillåtna återförsöksintervallet när program som regelbundet söker efter domänkontrollanter inte kan hitta en domänkontrollant.
+
+Intervallet mellan försök kan till exempel vara inställt på 10 minuter, sedan 20 minuter och sedan 40 minuter, men när intervallet uppnår värdet i den här inställningen blir det värdet intervallet för alla kommande försök tills värdet som anges i inställningen för sista försök till upptäckning av domänkontrollant uppnås.
+
+Standardvärdet för inställningen är 60 minuter (60*60). Det högsta värdet för den här inställningen är 49 dagar (0x49*24*60*60=4233600). Det lägsta värdet för den här inställningen är 0.
+
+Om värdet för den här inställningen är lägre än det värde som anges för första försök till upptäckt av domänkontrollant, används värdet för första försök till upptäckt av domänkontrollant.
+
+Varning! Om värdet för den här inställningen är för högt kan det ta väldigt lång tid för en klient att hitta en domänkontrollant.
+
+Om värdet för den här inställningen är för lågt och domänkontrollanten inte är tillgänglig kan en stor mängd onödig nätverkstrafik uppstå på grund av antalet försök.</string>
+      <string id="Netlogon_BackgroundRetryQuitTime">Använd inställningen för sista försök att hitta domänkontrollant för bakgrundsanropare</string>
+      <string id="Netlogon_BackgroundRetryQuitTime_Help">Den här principinställningen anger när det inte längre är tillåtet att göra återförsök för program som regelbundet söker efter domänkontrollanter när ingen domänkontrollant hittas. Till exempel kan du ange att nya försök ska ske enligt inställningen för längsta intervall för upptäckt av domänkontrollant, men om det värde som anges i den här inställningen nås görs inga fler försök. Om värdet för den här inställningen är lägre än det värde som anges för längsta intervall för försök till upptäckt av domänkontrollant, används värdet för längsta intervall för försök till upptäckt av domänkontrollant.
+
+Standardvärdet för den här inställningen är att alltid fortsätta försöka (0). Det högsta värdet för den här inställningen är 49 dagar (0x49*24*60*60=4233600). Det lägsta värdet för den här inställningen är 0.
+
+Varning! Om värdet för den här inställningen är för litet kommer klienten sluta att försöka hitta en domänkontrollant för snabbt.</string>
+      <string id="Netlogon_BackgroundSuccessfulRefreshPeriod">Använd positiv regelbunden uppdatering av domänkontrollantcache för bakgrundsanropare</string>
+      <string id="Netlogon_BackgroundSuccessfulRefreshPeriod_Help">Den här principinställningen anger när en lyckad cachepost för en domänkontrollant uppdateras. Den här principinställningen tillämpas för anropande program som regelbundet försöker hitta domänkontrollanter och tillämpas innan information om domänkontrollanten returneras till det anropande programmet. Standardvärdet för den här inställningen är oändligt (4294967200). Det högsta tillåtna värdet för den här inställningen är (4294967200) och det högsta värde som inte tolkas som oändligt är 49 dagar (49*24*60*60=4233600). Alla större värden tolkas som oändliga. Lägsta tillåtna värdet för den här inställningen är att uppdatering alltid sker (0).</string>
+      <string id="Netlogon_DC_Locator_DNS_Records">DNS-resursposter för lokalisering av domänkontrollant</string>
+      <string id="Netlogon_DebugFlag">Specificera loggningsnivå för felsökningsloggen</string>
+      <string id="Netlogon_DebugFlag_Help">Den här principinställningen anger nivån på felsökningsloggen för tjänsten Net Logon.
+
+Tjänsten Net Logon skriver felsökningsinformation till loggfilen netlogon.log i katalogen %windir%\debug. Som standard skrivs ingen felsökningsinformation.
+
+Om du aktiverar den här principinställningen och anger ett värde som är större än noll skrivs felsökningsinformationen till filen.  Högre värden innebär mer utförlig loggning:värdet 536936447 används ofta som ett idealt värde.
+
+Om du anger noll för den här principinställningen sker det som beskrivs som standard ovan.
+
+Om du inaktiverar den här principinställningen eller låter bli att konfigurera den sker det som beskrivs ovan som standard.</string>
+      <string id="Netlogon_DnsAvoidRegisterRecords">Ange DNS-poster för lokalisering av domänkontrollant som inte registreras av domänkontrollanterna</string>
+      <string id="Netlogon_DnsAvoidRegisterRecords_Help">Den här principinställningen anger vilka DNS-poster för lokalisering av domänkontrollant som inte registreras av tjänsten Net Logon.
+
+Om du aktiverar den här principinställningen ska du markera Aktiverad och skapa en blankstegsavgränsad lista över instruktioner för de DNS-poster för lokalisering av domänkontrollanter som inte ska registreras av domänkontrollanterna som den här inställningen tillämpas på.
+
+Välj instruktionerna i följande lista:
+
+Instruktion         Typ  DNS-post
+
+LdapIpAddress    A     &lt;DnsDomainName&gt;
+Ldap             SRV   _ldap._tcp.&lt;DnsDomainName&gt;
+LdapAtSite       SRV   _ldap._tcp.&lt;SiteName&gt;._sites.&lt;DnsDomainName&gt;
+Pdc              SRV   _ldap._tcp.pdc._msdcs.&lt;DnsDomainName&gt;
+Gc               SRV   _ldap._tcp.gc._msdcs.&lt;DnsForestName&gt;
+GcAtSite         SRV   _ldap._tcp.&lt;SiteName&gt;._sites.gc._msdcs.&lt;DnsForestName&gt;
+DcByGuid         SRV   _ldap._tcp.&lt;DomainGuid&gt;.domains._msdcs.&lt;DnsForestName&gt;
+GcIpAddress      A     gc._msdcs.&lt;DnsForestName&gt;
+DsaCname         CNAME &lt;DsaGuid&gt;._msdcs.&lt;DnsForestName&gt;
+Kdc              SRV   _kerberos._tcp.dc._msdcs.&lt;DnsDomainName&gt;
+KdcAtSite        SRV   _kerberos._tcp.&lt;SiteName&gt;._sites.dc._msdcs.&lt;DnsDomainName&gt;
+Dc               SRV   _ldap._tcp.dc._msdcs.&lt;DnsDomainName&gt;
+DcAtSite         SRV   _ldap._tcp.&lt;SiteName&gt;._sites.dc._msdcs.&lt;DnsDomainName&gt;
+Rfc1510Kdc       SRV   _kerberos._tcp.&lt;DnsDomainName&gt;
+Rfc1510KdcAtSite SRV   _kerberos._tcp.&lt;SiteName&gt;._sites.&lt;DnsDomainName&gt;
+GenericGc        SRV   _gc._tcp.&lt;DnsForestName&gt;
+GenericGcAtSite  SRV   _gc._tcp.&lt;SiteName&gt;._sites.&lt;DnsForestName&gt;
+Rfc1510UdpKdc    SRV   _kerberos._udp.&lt;DnsDomainName&gt;
+Rfc1510Kpwd      SRV   _kpasswd._tcp.&lt;DnsDomainName&gt;
+Rfc1510UdpKpwd   SRV   _kpasswd._udp.&lt;DnsDomainName&gt;
+
+Om du inaktiverar den här inställningen registrerar domänkontrollanter som konfigurerats för att utföra dynamisk registrering av DNS-poster för lokalisering av domänkontrollanter alla DNS-poster för lokalisering av domänkontrollanter.
+
+Om du inte konfigurerar den här principinställningen tillämpar domänkontrollanterna de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_DnsRefreshInterval">Ange uppdateringsintervall för DNS-poster för lokalisering av domänkontrollanter</string>
+      <string id="Netlogon_DnsRefreshInterval_Help">Den här principinställningen anger uppdateringsintervallet för DNS-postregistret för lokalisering av domänkontrollanter för domänkontrollanter som den här inställningen tillämpas på. De här DNS-posterna registreras dynamiskt av tjänsten Net Logon och används av domänkontrollantens lokaliseringsalgoritm för att lokalisera domänkontrollanten. Den här inställningen kan endast tillämpas på domänkontrollanter som använder dynamisk uppdatering.
+
+Domänkontrollanter som har konfigurerats för dynamisk registrering av DNS-resursposter för lokalisering av domänkontrollant registrerar regelbundet om posterna på DNS-servrarna, även om data i registren inte har ändrats. Om auktoritära DNS-servrar har konfigurerats för att rensa ut föråldrade poster måste omregistrering ske för att de DNS-servrar som konfigurerats för att automatiskt ta bort (rensa) föråldrade poster ska få information om att posterna är aktuella och ska finnas kvar i databasen.
+
+Varning! Om DNS-resursposterna registreras i zoner där rensning är aktiverat får värdet för den här inställningen inte vara längre än det uppdateringsintervall som konfigurerats för de här zonerna. Om uppdateringsintervallet för DNS-posterna för lokalisering av domänkontrollant är längre än uppdateringsintervallet för DNS-zonerna kan DNS-resursposter tas bort oavsiktligt.
+
+Du kan ange uppdateringsintervall för de här DNS-resursposterna genom att välja Aktivera och ange ett värde som är större än 1800. Det här värdet representerar uppdateringsintervall för posterna i sekunder (till exempel motsvarar värdet "3600" 60 minuter).
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon domänkontrollant. Domänkontrollanterna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_DnsTtl">Ange TTL-värde i DNS-posterna för lokalisering av domänkontrollanter</string>
+      <string id="Netlogon_DnsTtl_Help">Den här principinställningen anger värdet för fältet TTL (Time-To-Live) i SRV-resursposter som registreras av tjänsten Net Logon. De här DNS-posterna registreras dynamiskt och används för att lokalisera domänkontrollanten.
+
+Du kan ange TTL-värdet för DNS-poster genom att klicka på "Aktiverad" och sedan ange ett värde i sekunder (till exempel motsvarar värdet "900" 15 minuter).
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon domänkontrollant. Domänkontrollanterna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_ExpectedDialupDelay">Ange förväntad anslutningsfördröjning vid inloggning</string>
+      <string id="Netlogon_ExpectedDialupDelay_Help">Den här principinställningen anger den ytterligare tid som datorn väntar på svar från domänkontrollanten vid inloggning i nätverket.
+
+Du kan ange värdet för förväntad anslutningsfördröjning vid inloggning genom att klicka på Aktiverad och sedan ange ett värde i sekunder (t.ex. motsvarar värdet "60" 1 minut).
+
+Om du inte konfigurerar den här principinställningen tillämpas den inte på någon dator. Datorerna använder då deras lokala konfiguration.</string>
+      <string id="Netlogon_GcSiteCoverage">Ange platser som täcks av DNS SRV-poster för lokalisering av global katalog</string>
+      <string id="Netlogon_GcSiteCoverage_Help">Den här principinställningen anger för vilka platser som de globala katalogerna ska registrera platsspecifika DNS SRV-resursposter för lokalisering av global katalog. Dessa poster registreras utöver de platsspecifika SRV-poster som registreras för den plats där den globala katalogen finns och poster som registreras av en global katalog som konfigurerats för att registrera DNS SRV-resursposter för lokalisering av global katalog för de platser som ligger närmast och som inte har någon global katalog. 
+
+DNS-resursposter för lokalisering av global katalog och platsspecifika SRV-poster registreras dynamiskt av tjänsten Net Logon och används för att lokalisera den globala katalogen. En Active Directory-plats är en eller fler välanslutna TCP/IP-undernät som låter administratörer konfigurera åtkomst till och replikering av Active Directory. En global katalog är en domänkontrollant som innehåller en partiell replikering av alla domäner i Active Directory.
+
+Du kan ange vilka platser som omfattas av DNS SRV-poster för lokalisering av global katalog genom att klicka på "Aktiverad" och ange platsernas namn i ett blankstegsavgränsat format.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon global katalog. De globala katalogerna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_LdapSrvPriority">Ange prioritet i DNS SRV-posterna för lokalisering av domänkontrollanter</string>
+      <string id="Netlogon_LdapSrvPriority_Help">Den här principinställningen anger prioritetsfältet i SRV-resursposter som har registrerats av de domänkontrollanter som inställningen tillämpas på. De här DNS-posterna registreras dynamiskt av tjänsten Net Logon och används för att lokalisera domänkontrollanten.
+
+Prioritetsfältet i SRV-posten anger prioritet för målvärdar (som anges av målfältet i SRV-posten). DNS-klienter som efterfrågar SRV-resursposter försöker att kontakta första tillgängliga värd med lägst prioritetsnummer.
+
+Du kan ange prioritet i SRV-resursposterna genom att klicka på "Aktiverad" och sedan ange ett värde. Intervallet för värdena är 0 till 65535.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon domänkontrollant. Domänkontrollanterna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_LdapSrvWeight">Ange vikten i DNS SRV-posterna för lokalisering av domänkontrollanter</string>
+      <string id="Netlogon_LdapSrvWeight_Help">Den här principinställningen anger viktfältet i SRV-resursposter som har registrerats av de domänkontrollanter som inställningen tillämpas på. De här DNS-posterna registreras dynamiskt av tjänsten Net Logon och används för att lokalisera domänkontrollanten.
+
+Viktfältet i SRV-posten kan användas utöver prioritetsvärde för att ge belastningsutjämning om flera servrar anges i SRV-posternas målfält och alla servrar har samma prioritet. Sannolikheten för att DNS-klienten ska välja en viss målvärd beror på SRV-postens viktfält.
+
+Du kan ange vikt i DNS SRV-resursposterna för lokalisering av domänkontrollant genom att klicka på "Aktiverad" och sedan ange ett värde. Intervallet för värdena är 0 till 65535.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon domänkontrollant. Domänkontrollanterna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_MaximumLogFileSize">Ange maximal loggfilsstorlek</string>
+      <string id="Netlogon_MaximumLogFileSize_Help">Den här principinställningen anger den maximala storleken i byte för loggfilen netlogon.log i mappen %windir%\debug när loggning är aktiverat.
+
+Som standard kan loggfilen bli högst 20 MB. Om du aktiverar den här principinställningen gäller det värde som anges som största tillåtna storlek.  När storleken nås sparas filen till netlogon.bak och filen netlogon.log trunkeras. Du bör ange ett rimligt värde utifrån hur mycket diskutrymme som är tillgängligt.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen används det standardförfarande som anges ovan.</string>
+      <string id="Netlogon_NdncSiteCoverage">Ange platser som täcks av programkatalogpartitionsspecifika DNS SRV-poster för lokalisering av domänkontrollanter</string>
+      <string id="Netlogon_NdncSiteCoverage_Help">Den här principinställningen anger de platser där domänkontrollanterna som har programkatalogpartitionen ska registreras med platsspecifika, programkatalogpartitionsspecifika DNS SRV-resursposter. Dessa poster registreras utöver de platsspecifika SRV-poster som registreras för den plats där domänkontrollanten finns och poster som registreras av en domänkontrollant som konfigurerats för att registrera DNS SRV-poster för lokalisering av domänkontrollant för de platser som ligger närmast och som inte har någon domänkontrollant. 
+
+DNS-posterna för lokalisering av programkatalogpartition och de platsspecifika SRV-posterna registreras dynamiskt av tjänsten Net Logon och används för att lokalisera den programkatalogpartitionsspecifika domänkontrollanten. En Active Directory-plats är en eller fler välanslutna TCP/IP-undernät som låter administratörer konfigurera åtkomst till och replikering av Active Directory.
+
+Du kan ange vilka platser som omfattas av SRV-poster för lokalisering av programkatalogpartition genom att klicka på "Aktiverad" och ange platsernas namn i ett blankstegsavgränsat format.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon domänkontrollant. Domänkontrollanterna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_NegativeCachePeriod">Ange negativ cache för upptäckt av domänkontrollant</string>
+      <string id="Netlogon_NegativeCachePeriod_Help">Den här principinställningen anger hur länge (i sekunder) lokaliseraren av domänkontrollanter kommer ihåg att en viss domänkontrollant inte kunde hittas i en domän. När efterföljande försök att hitta en domänkontrollant görs inom den tid som anges i den här inställningen kommer upptäckning av domänkontrollant automatiskt att misslyckas utan att försök att hitta domänkontrollanten görs.
+
+Standardvärdet för den här inställningen är 45 sekunder. Högsta tillåtna värde för den här inställningen är 7 dagar (7*24*60*60). Det lägsta värdet för den här inställningen är 0.
+
+Varning! Om värdet för den här inställningen är för stort kommer klienter inte att försöka hitta domänkontrollanter som från början var otillgängliga. Om värdet för den här inställningen är för litet kommer klienter att försöka hitta domänkontrollanter även om ingen är tillgänglig.</string>
+      <string id="Netlogon_NetlogonShareCompatibilityMode">Ange delningskompatibilitet för Netlogon</string>
+      <string id="Netlogon_NetlogonShareCompatibilityMode_Help">Den här principinställningen anger om den Netlogon-resurs som skapas av tjänsten Net Logon på en domänkontrollant ska stöda kompatibilitet i fildelningssemantiken med tidigare program.
+
+Om du aktiverar den här principinställningen stöder Netlogon-resursen fildelningssemantik som accepterar anrop om exklusiva läsbehörigheter till filer på resursen även om anroparen endast har läsbehörigheter.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen beviljar Netlogon-resursen delad läsbehörighet till filer på resursen när exklusiv åtkomst begärs och anroparen endast har läsbehörighet.
+
+Som standard beviljar Netlogon-resursen delad läsbehörighet till filer på resursen när exklusiv åtkomst begärs.
+
+Obs! Resursen Netlogon är en resurs som skapas av tjänsten Net Logon och används av klienter i domänen. Standardförfarandet för resursen Netlogon ser till att inget program som bara har läsbehörighet till filer på resursen kan låsa filerna genom att begära exklusiv läsbehörighet, vilket skulle kunna förhindra att grupprincipinställningar uppdateras på klienter i domänen. När den här inställningen aktiveras kan ett program som har möjligheten att låsa filer på Netlogon-resursen med endast läsbehörighet neka grupprincipklienter att läsa filerna och tillgängligheten för Netlogon-resursen i domänen minskar vanligtvis.
+
+Om du aktiverar den här principinställningen ska domänadministratörerna se till att de enda program som använder möjligheten med exklusiv läsbehörighet i domänen är sådana som godkänts av administratören.</string>
+      <string id="Netlogon_NonBackgroundSuccessfulRefreshPeriod">Ange positiv regelbunden uppdatering av domänkontrollantcache för icke-bakgrundsanropare</string>
+      <string id="Netlogon_NonBackgroundSuccessfulRefreshPeriod_Help">Den här principinställningen anger när en lyckad cachepost för en domänkontrollant uppdateras. Den här principinställningen tillämpas för anropande program som inte regelbundet försöker hitta domänkontrollanter och tillämpas innan informationen om domänkontrollanten returneras till det anropande programmet. Den här principinställningen är endast relevant för dem som anropar DsGetDcName och som inte har angett flaggan DS_BACKGROUND_ONLY.
+
+Standardvärdet för den här inställningen är 30 minuter (1800). Det högsta tillåtna värdet för den här inställningen är (4294967200) och det högsta värde som inte tolkas som oändligt är 49 dagar (49*24*60*60=4233600). Alla högre värden tolkas som oändliga. Lägsta tillåtna värdet för den här inställningen är att uppdatering alltid sker (0).</string>
+      <string id="Netlogon_ScavengeInterval">Ange rensningsintervall</string>
+      <string id="Netlogon_ScavengeInterval_Help">Den här principinställningen anger med vilket intervall Net Logon utför följande rensningsåtgärder:
+
+- Kontrollerar om ett lösenord i en säker kanal behöver ändras och ändrar det vid behov.
+
+- Upptäcker en domänkontrollant som inte upptäckts tidigare bland domänkontrollanterna.
+
+- På den primära domänkontrollanten görs försök att lägga till NetBIOS-namnet &lt;Domännamn&gt;[1B] om detta inte redan har lagts till.
+
+Ingen av dessa aktiviteter är nödvändiga. 15 minuter räcker i så gott som alla fall. Om till exempel en domänkontrollant ansluter till en betrodd domän via en dyr länk (till exempel ISDN) kan värdet för den här parametern ökas för att undvika onödig trafik.
+
+Du kan aktivera den här inställningen genom att klicka på "Aktivera" och ange intervall i sekunder.</string>
+      <string id="Netlogon_SiteCoverage">Ange platser som täcks av DNS SRV-posterna för lokalisering av domänkontrollant</string>
+      <string id="Netlogon_SiteCoverage_Help">Den här principinställningen anger för vilka platser som domänkontrollanterna ska registrera platsspecifika DNS SRV-resursposter för domänkontrollanter. Dessa poster registreras utöver de platsspecifika SRV-poster som registreras för den plats där domänkontrollanten finns och poster som registreras av en domänkontrollant som konfigurerats för att registrera DNS SRV-poster för lokalisering av domänkontrollant för de platser som ligger närmast och som inte har någon domänkontrollant. 
+
+DNS-poster för lokalisering av domänkontrollant registreras dynamiskt av tjänsten Net Logon och används för att lokalisera domänkontrollanten. En Active Directory-plats är en eller fler välanslutna TCP/IP-undernät som låter administratörer konfigurera åtkomst till och replikering av Active Directory.
+
+Du kan ange vilka platser som omfattas av SRV-poster för lokalisering av domänkontrollant genom att klicka på "Aktiverad" och ange platsernas namn i ett blankstegsavgränsat format.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon domänkontrollant. Domänkontrollanterna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_SiteName">Ange platsnamn</string>
+      <string id="Netlogon_SiteName_Help">Den här principinställningen anger den Active Directory-plats som datorer tillhör.
+
+En Active Directory-plats är en eller fler välanslutna TCP/IP-undernät som låter administratörer konfigurera åtkomst till och replikering av Active Directory.
+
+Du kan platsnamnet för den här inställningen genom att klicka på "Aktiverad" och sedan ange platsens namn. När en plats som datorn tillhör inte har angetts identifieras platsen för datorn automatiskt från Active Directory.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon dator. Datorerna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_SysvolShareCompatibilityMode">Ange kompatibilitet för resursen SYSVOL</string>
+      <string id="Netlogon_SysvolShareCompatibilityMode_Help">Den här principinställningen anger om den SYSVOL-resurs som skapas av tjänsten Net Logon på en domänkontrollant ska stöda kompatibilitet i fildelningssemantiken med tidigare program.
+
+Om du aktiverar den här inställningen stöder SYSVOL-resursen fildelningssemantik som accepterar anrop om exklusiva läsbehörigheter till filer på resursen även om anroparen endast har läsbehörigheter.
+
+Om den här inställningen är inaktiverad eller inte konfigurerad beviljar SYSVOL-resursen delad läsbehörighet till filer på resursen när exklusiv åtkomst begärs och anroparen endast har läsbehörighet.
+
+Som standard beviljar SYSVOL-resursen delad läsbehörighet till filer på resursen när exklusiv åtkomst begärs.
+
+Obs! Resursen SYSVOL är en resurs som skapas av tjänsten Net Logon och används av grupprincipklienter i domänen. Standardförfarandet för resursen SYSVOL ser till att inget program som bara har läsbehörighet till filer på SYSVOL-resursen kan låsa filerna genom att begära exklusiv läsbehörighet, vilket skulle kunna förhindra att grupprincipinställningar uppdateras på klienter i domänen. När inställningen är aktiverad kan ett program som har möjlighet att låsa filer på SYSVOL-resursen med endast läsbehörighet neka grupprincipklienter att läsa filerna och tillgängligheten för SYSVOL-resursen i domänen minskar vanligtvis.
+
+Om du aktiverar den här principinställningen ska domänadministratörerna se till att de enda program som använder möjligheten med exklusiv läsbehörighet i domänen är sådana som godkänts av administratören.</string>
+      <string id="Netlogon_UseDynamicDns">Ange dynamisk registrering av DNS-poster för lokalisering av domänkontrollanter</string>
+      <string id="Netlogon_UseDynamicDns_Help">Den här principinställningen anger om dynamisk registrering av DNS-resursposter för lokalisering av domänkontrollanter är aktiverat. De här DNS-posterna registreras dynamiskt av tjänsten Net Logon och används av lokaliseringsalgoritmen för att lokalisera domänkontrollanten.
+
+Om du aktiverar den här principinställningen kommer domänkontrollanter som den här inställningen tillämpas på att dynamiskt registrera DNS-resursposter för lokalisering av domänkontrollanter genom nätverksanslutningar med dynamisk DNS-uppdatering.
+
+Om du inaktiverar den här principinställningen registrerar domänkontrollanter inte DNS-resursposter för lokalisering av domänkontrollanter.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon domänkontrollant. Domänkontrollanterna kommer att använda de lokalt konfigurerade inställningarna.</string>
+      <string id="Netlogon_TryNextClosestSite">Försök med nästa närmaste plats</string>
+      <string id="Netlogon_TryNextClosestSite_Help">Den här principinställningen gör det möjligt för lokaliseringstjänsten att försöka lokalisera en domänkontrollant på den närmaste platsen utifrån platslänkkostnaden om en domänkontrollant på samma plats inte hittas. I scenarier med flera platser, blir nätverkstrafiken mer effektiv om man går över till att försöka med nästa närmaste plats under lokaliseringen av domänkontrollant.
+
+Tjänsten för lokalisering av domänkontrollanter används av klienter för att söka efter domänkontrollanter för deras Active Directory-domän. Standardbeteendet för lokalisering av domänkontrollant är att söka efter en domänkontrollant på samma plats. Om ingen domänkontrollant hittas på samma plats, kan tjänsten för lokalisering av domänkontrollant returnera en domänkontrollant från en annan plats, som kan ligga flera steg bort. Avståndet mellan platserna bestäms av den totala platslänkkostnaden mellan dem. En webbplats är närmare om den har en lägre platslänkkostnad än en annan plats med en högre platslänkkostnad. 
+
+Om du aktiverar den här principinställningen används Försök med nästa närmaste plats för lokalisering av domänkontrollant på datorn.
+
+Om du inaktiverar den här principinställningen används Försök med nästa närmaste plats för lokalisering av domänkontrollant inte som standard på datorn. Om ett anrop för lokalisering av domänkontrollant görs explicit med flaggan DS_TRY_NEXTCLOSEST_SITE, följs dock beteendet Försök med nästa närmaste plats.
+
+Om du låter bli att konfigurera den här principinställningen används Försök med nästa närmaste plats för lokalisering av domänkontrollant inte som standard på datorn. Om flaggan DS_TRY_NEXTCLOSEST_SITE används explicit, används beteendet Nästa närmaste plats.</string>
+      <string id="Netlogon_ForceRediscoveryInterval">Tvinga intervall för ny identifiering</string>
+      <string id="Netlogon_ForceRediscoveryInterval_Help">Den här principinställningen anger intervallet för när Tvinga ny identifiering utförs av domänkontrollantlokaliseraren.
+
+Tjänsten för lokalisering av domänkontrollant används av klienter för att söka efter domänkontrollanter för deras Active Directory-domän. När en domänkontrollantlokaliserare hittar en domänkontrollant, cachelagras domänkontrollanten för att öka effektiviteten i platsalgoritmen. Så länge den cachelagrade domänkontrollanten uppfyller kraven och körs, återkommer domänkontrollantlokaliseraren till den. Om en ny domänkontrollant introduceras, identifieras den av befintliga klienter först när domänkontrollantlokaliseraren genomför en tvingad ny identifiering. För att anpassa sig till förändringar i nätverket utför domänkontrollantlokaliseraren en tvingad ny identifiering enligt ett särskilt tidsintervall och bibehåller effektiv belastningsutjämning för klienter över alla tillgängliga domänkontrollanter i alla domäner eller skogar. Standardintervallet för tvingad ny identifiering av domänkontrollantlokaliserare är 12 timmar. Tvingad ny identifiering kan också startas om ett anrop till en domänkontrollantlokaliserare använder flaggan DS_FORCE_REDISCOVERY. Vid ny identifiering återställs timern för de cachelagrade domänkontrollantposterna.
+
+Om du aktiverar den här principinställningen, genomför domänkontrollantlokaliseraren i datorn en tvingad ny identifiering med jämna mellanrum i enlighet med det inställda tidsintervallet. Det kortaste tidsintervallet är 3 600 sekunder (1 timme) för att undvika onödig nätverkstrafik vid ny identifiering. Det längsta tillåtna tidsintervallet är 4 294 967 200 sekunder, eftersom värden större än 4 294 967 200 sekunder (~49 dagar) räknas som oändliga.
+
+Om du inaktiverar den här principinställningen, används tvingad ny identifiering som standard på datorn med 12-timmarsintervall.
+
+Om du låter bli att konfigurera den här principinställningen, används tvingad ny identifiering som standard på datorn med 12-timmarsintervall, om inte den lokala datorinställningen i registret har ett annat värde.</string>
+      <string id="Netlogon_AddressTypeReturned">Returnera domänkontrollantens adresstyp</string>
+      <string id="Netlogon_AddressTypeReturned_Help">Den här principinställningen anger vilken typ av IP-adress som returneras för en domänkontrollant. Domänkontrollantlokaliserarens API:er returnerar domänkontrollantens IP-adress med den övriga informationen. Innan det fanns stöd för IPv6, returnerades IP-adressen IPv4 för domänkontrollanten. Men nu när det finns stöd för IPv6, kan domänkontrollantlokaliserarens API:er returnera en IPv6-adress. De returnerade IPv6-adresserna för domänkontrollant hanteras eventuellt inte korrekt av vissa befintliga program. Därför tillhandahålls den här principen för att stödja sådana scenarier.
+
+Som standard kan domänkontrollantlokaliserarens API:er returnera IPv4/IPv6-adresser. Men om det blir fel i vissa program på grund av den returnerade domänkontrollantens IPv6-adress, kan den här principen användas för att inaktivera standardbeteendet och kräva att endast domänkontrollantens IPv4-adress returneras. När programmen är fasta, kan den här principen användas för att aktivera standardbeteendet.
+
+Om du aktiverar den här principinställningen, kan domänkontrollantlokaliserarens API:er returnera IPv4/IPv6-adresser. Detta är standardbeteendet för domänkontrollantlokaliseraren.
+
+Om du inaktiverar den här principinställningen returnerar domänkontrollantens API:er endast eventuella IPv4-adresser. Om domänkontrollanten har stöd för både IPv4- och IPv6-adresser, returnerar domänkontrollantlokaliserarens API:er IPv4-adresser. Om domänkontrollanten bara stödjer IPv6-adresser, kommer domänkontrollantlokaliserarens API:er att misslyckas.
+
+Om du inte konfigurerar den här principinställningen, kan domänkontrollantlokaliserarens API:er returnera IPv4/IPv6-adresser. Detta är standardbeteendet för domänkontrollantlokaliseraren.</string>
+      <string id="Netlogon_AllowNT4Crypto">Tillåt kryptografialgoritmer som är kompatibla med Windows NT 4.0</string>
+      <string id="Netlogon_AllowNT4Crypto_Help">Den här principinställningen anger om tjänsten Net Logon ska tillåta användning av äldre kryptografialgoritmer som används i Windows NT 4.0. Kryptografialgoritmerna som används i Windows NT 4.0 och tidigare versioner är inte lika säkra som de nyare algoritmerna som används i Windows 2000 eller senare och i den här Windows-versionen.
+
+Som standard tillåter inte Net Logon att äldre kryptografialgoritmer används och de kommer inte att inkluderas i förhandlingen med kryptografialgoritmer. På grund av detta kan inte datorer som kör Windows NT 4.0 upprätta en anslutning till den här domänkontrollanten.
+ 
+Om du aktiverar den här principinställningen tillåter Net Logon förhandling och användning av äldre kryptografialgoritmer som är kompatibla med Windows NT 4.0. Att använda de äldre algoritmerna innebär dock en potentiell säkerhetsrisk.
+
+Om du inaktiverar den här principinställningen tillåter Net Logon inte förhandling och användning av äldre kryptografialgoritmer. 
+
+Om du inte konfigurerar den här principinställningen tillåter Net Logon inte förhandling och användning av äldre kryptografialgoritmer.</string>
+      <string id="Netlogon_IgnoreIncomingMailslotMessages">Behandla inte inkommande mailslot-meddelanden som används för domänkontrollantlokalisering baserat på NetBIOS-domännamn</string>
+      <string id="Netlogon_IgnoreIncomingMailslotMessages_Help">Med den här principinställningen kan du styra behandlingen av inkommande mailslot-meddelanden med en lokal domänkontrollant.
+
+Obs! För att kunna lokalisera en fjärrdomänkontrollant utifrån dess NetBIOS-domännamn (med en del) hämtar domänkontrollantlokaliseraren först listan med domänkontrollanter från en WINS-server som är konfigurerad i de lokala klientinställningarna. Domänkontrollantlokaliseraren skickar sedan ett mailslot-meddelande till varje fjärrdomänkontrollant för att få tillgång till mer information. Domänkontrollantlokaliseraren lyckas bara om en fjärrdomänkontrollant besvarar mailslot-meddelandet.
+
+Den här principinställningen rekommenderas för att minska riskerna för domänkontrollanter. Den kan tillämpas i alla miljöer utan WINS, i miljöer med enbart IPv6 och när det inte krävs domänkontrollantlokalisering som baseras på NetBIOS-domännamn. Den här principinställningen påverkar inte domänkontrollantlokalisering som baseras på DNS-namn.
+
+Om du aktiverar den här principinställningen kommer den här domänkontrollanten inte att behandla inkommande mailslot-meddelanden som används för domänkontrollantlokalisering baserat på NetBIOS-domännamn.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen kommer den här domänkontrollanten att behandla inkommande mailslot-meddelanden. Detta är standardbeteendet för domänkontrollantlokaliseraren.</string>
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery">Använd inte NetBIOS-baserad domänkontrollantlokalisering när DNS-baserad lokalisering inte lyckas</string>
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Med den här principinställningen kan du bestämma lokaliseringsalgoritmen för domänkontrollanter. Lokaliseringsalgoritmen för domänkontrollanter föredrar som standard DNS-baserad lokalisering om DNS-domännamnet är känt. Om den DNS-baserade lokaliseringen inte lyckas och NetBIOS-domännamnet inte är känt används NetBIOS-baserad lokalisering som nödlösning.
+
+NetBIOS-baserad identifiering använder en WINS-server och mailslot-meddelanden, men inte platsinformation. Därför är det inte säkert att klienterna hittar den närmaste domänkontrollanten. Den använder även en navplatsklient för att hitta en kontorsspecifik domänkontrollant även om den kontorsspecifika domänkontrollanten bara registrerar platsspecifika DNS-poster (enligt rekommendationerna). Därför rekommenderas inte NetBIOS-baserad lokalisering.
+
+Observera att den här principinställningen inte påverkar NetBIOS-baserad domänkontrollantlokalisering om bara NetBIOS-domännamnet är känt.
+
+Om du aktiverar eller låter bli att konfigurera den här principinställningen använder lokaliseringsalgoritmen för domänkontrollanter inte NetBIOS-baserad lokalisering som nödlösning när den DNS-baserade lokaliseringen inte lyckas. Detta är standardfunktionen.
+
+Om du inaktiverar den här principinställningen kan lokaliseringsalgoritmen för domänkontrollanter använda NetBIOS-baserad lokalisering som nödlösning när den DNS-baserade lokaliseringen inte lyckas.</string>
+
+      <string id="Netlogon_AddressLookupOnPingBehavior">Ange adressuppslagsbeteendet för ping-kommandot för lokaliseraren av domänkontrollanter</string>
+      <string id="Netlogon_AddressLookupOnPingBehavior_Help">Den här principinställningen anger hur en domänkontrollant beter sig när den svarar en klient vars IP-adress inte mappas till någon konfigurerad plats.
+
+Domänkontrollanter använder klientens IP-adress vid en ping-lokaliseringsbegäran för att beräkna till vilken Active Directory-plats klienten hör.   Om det inte går att beräkna någon platsmappning kan domänkontrollanten slå upp adressen via klientens nätverksnamn för att hitta andra IP-adresser, som används för att beräkna klientens plats. 
+
+De tillåtna värdena på den här inställningen ger följande beteenden:
+
+0 – Domänkontrollanter slår aldrig upp adresser.
+1 – Domänkontrollanter letar noga efter ytterligare IP-adresser till klienten.
+2 – Domänkontrollanter letar snabbt efter ytterligare IP-adresser till klienten enbart via DNS.
+
+Du kan ange det här beteendet i DNS SRV-resursposterna för lokalisering av domänkontrollanter genom att klicka på Aktiverad och sedan ange ett värde. Intervallet för värdena är 0 till 2.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon domänkontrollant. Domänkontrollanterna kommer att använda de lokalt konfigurerade inställningarna.</string>
+
+      <string id="Netlogon_PingUrgencyMode">Använd brådskande läge när domänkontrollanter pingas</string>
+      <string id="Netlogon_PingUrgencyMode_Help">Den här principinställningen avgör huruvida datorer som den här inställningen gäller är mer aggressiva när de försöker hitta en domänkontrollant.
+
+När det finns ett stort antal domänkontrollanter i en miljö där både nya och gamla operativsystem körs, kan standardmetoden för att identifiera domänkontrollanter vara otillräcklig för att hitta domänkontrollanter som kör ett nyare operativsystem.  Den här principinställningen kan aktiveras så att rutinen som letar reda på domänkontrollanter blir mer aggressiv när den försöker hitta en domänkontrollant i en sådan miljö. Det sker genom att domänkontrollanterna pingas oftare.  Den här inställningen kan ge mer nätverkstrafik och högre belastning på domänkontrollanterna om den aktiveras.  Du bör inaktivera den här inställningen när alla domänkontrollanter kör samma operativsystemversion.
+
+De tillåtna värdena på den här inställningen ger följande beteenden:
+
+1 – Datorerna pingar domänkontrollanterna normalt ofta.
+2 – Datorerna pingar domänkontrollanterna oftare.
+
+Klicka på Aktiverad och ange ett värde om du vill ange det här beteendet. Intervallet för värdena är 1 till 2.
+
+Om du inte konfigurerar den här principinställningen kommer den inte att tillämpas på någon dator. Datorerna kommer att använda de lokalt konfigurerade inställningarna.</string>
+
+      <string id="Netlogon_DnsSrvRecordUseLowerCaseHostNames">Använd gemener i DNS-värdnamn vid registrering av SRV-poster för domänkontrollanter</string>
+      <string id="Netlogon_DnsSrvRecordUseLowerCaseHostNames_Help">Den här principinställningen anger om de domänkontrollanter som inställningen tillämpas för ska använda gemener i sina DNS-värdnamn vid registrering av SRV-poster.
+
+Om den är aktiverad använder domänkontrollanter gemener i sina DNS-värdnamn vid registrering av SRV-poster. Ett bästa försök görs för att radera alla tidigare registrerade SRV-poster som innehåller DNS-värdnamn med både versaler och gemener. Klicka på nedanstående länk om du vill läsa mer och få anvisningar för manuell rensning.
+
+Om den är inaktiverad använder domänkontrollanter det konfigurerade DNS-värdnamnet som det är vid registrering av SRV-poster.
+
+Om den inte konfigureras använder domänkontrollanter deras lokala konfiguration. Den lokala standardkonfigurationen aktiveras då.
+
+Ingen omstart krävs för att verkställa ändringar av den här inställningen.
+
+Mer information finns på https://aka.ms/lowercasehostnamesrvrecord
+      </string>
+
+    </stringTable>
+    <presentationTable>
+      <presentation id="Netlogon_BackgroundRetryInitialPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundRetryInitialPeriodLabel" defaultValue="600" spinStep="600">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundRetryMaximumPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundRetryMaximumPeriodLabel" defaultValue="3600" spinStep="3600">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundRetryQuitTime">
+        <decimalTextBox refId="Netlogon_BackgroundRetryQuitTimeLabel" defaultValue="0" spinStep="100">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundSuccessfulRefreshPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundSuccessfulRefreshPeriodLabel" defaultValue="4294967200" spinStep="1000">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DebugFlag">
+        <decimalTextBox refId="Netlogon_DebugFlagLabel" defaultValue="536936447">Nivå:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DnsAvoidRegisterRecords">
+        <textBox refId="Netlogon_DnsAvoidRegisterRecordsLabel">
+          <label>Instruktioner:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_DnsRefreshInterval">
+        <decimalTextBox refId="Netlogon_DnsRefreshIntervalLabel" defaultValue="1800" spinStep="100">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DnsTtl">
+        <decimalTextBox refId="Netlogon_DnsTtlLabel" defaultValue="600" spinStep="100">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_ExpectedDialupDelay">
+        <decimalTextBox refId="Netlogon_ExpectedDialupDelayLabel" defaultValue="0" spinStep="100">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_GcSiteCoverage">
+        <textBox refId="Netlogon_GcSiteCoverageLabel">
+          <label>Platser:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_LdapSrvPriority">
+        <decimalTextBox refId="Netlogon_LdapSrvPriorityLabel" defaultValue="0" spinStep="100">Prioritet:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_LdapSrvWeight">
+        <decimalTextBox refId="Netlogon_LdapSrvWeightLabel" defaultValue="100" spinStep="100">Vikt:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_MaximumLogFileSize">
+        <decimalTextBox refId="Netlogon_MaximumLogFileSizeLabel" defaultValue="536936447">Byte:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_NdncSiteCoverage">
+        <textBox refId="Netlogon_NdncSiteCoverageLabel">
+          <label>Platser:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_NegativeCachePeriod">
+        <decimalTextBox refId="Netlogon_NegativeCachePeriodLabel" defaultValue="45" spinStep="60">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_NonBackgroundSuccessfulRefreshPeriod">
+        <decimalTextBox refId="Netlogon_NonBackgroundSuccessfulRefreshPeriodLabel" defaultValue="1800" spinStep="1000">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_ScavengeInterval">
+        <decimalTextBox refId="Netlogon_ScavengeIntervalLabel" defaultValue="900" spinStep="900">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_SiteCoverage">
+        <textBox refId="Netlogon_SiteCoverageLabel">
+          <label>Platser:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_SiteName">
+        <textBox refId="Netlogon_SiteNameLabel">
+          <label>Plats:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_ForceRediscoveryInterval">
+        <decimalTextBox refId="Netlogon_ForceRediscoveryIntervalLabel" defaultValue="43200" spinStep="100">Sekunder:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_AddressLookupOnPingBehavior">
+        <decimalTextBox refId="Netlogon_AddressLookupOnPingBehaviorLabel" defaultValue="2" spinStep="1">Beteende vid adressökning:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_PingUrgencyMode">
+        <decimalTextBox refId="Netlogon_PingUrgencyModeLabel" defaultValue="2" spinStep="1">Brådskande pingläge:</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>itt adja meg a megjelenítendő nevet</displayName>
+  <description>itt adja meg a leírást</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Beavatkozási beállítások</string>
+      <string id="Font_List">Nem megbízható betűkészletek blokkolása</string>
+      <string id="Font_List_Help">Ez a biztonsági funkció olyan globális beállítást biztosít, amellyel megakadályozható, hogy a programok nem megbízható betűkészleteket töltsenek be. Nem megbízható minden olyan betűkészlet, amely a %windir%\Fonts könyvtáron kívül van telepítve. Ez a funkció 3 módban konfigurálható: Bekapcsolva, Kikapcsolva és Naplózás. Alapértelmezés szerint ki van kapcsolva, és nem blokkolja a betűkészleteket. Ha még nem áll teljesen készen arra, hogy telepítse ezt a funkciót a szervezetnél, akkor futtathatja Naplózás módban, és megvizsgálhatja, hogy okoz-e bármilyen használhatósági vagy kompatibilitási problémát a nem megbízható betűkészletek blokkolása.</string>
+      <string id="FontMitigation_On">Nem megbízható betűkészletek blokkolása és az események naplózása</string>
+      <string id="FontMitigation_Off">Ne blokkolja a nem megbízható betűkészleteket</string>
+      <string id="FontMitigation_Audit">Naplózza az eseményeket és ne blokkolja a nem megbízható betűkészleteket</string>
+
+	  <string id="ProcessMitigationOptions_List">Kockázatcsökkentési folyamatbeállítások</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Ezzel a biztonsági funkcióval felülbírálhatók a folyamatok kockázatcsökkentési beállításai (MitigationOptions), így biztosítható egyes alkalmazásspecifikus biztonsági házirendek betartatása. Az alkalmazásnevet maga az érték neve jelöli a kiterjesztéssel együtt. Az érték megadása bitmezőként történik úgy, hogy jelzősorozatok állnak bizonyos helyeken. A bitek értéke lehet 0 (beállítás kikapcsolva), 1 (beállítás bekapcsolva) vagy ? (megmarad a beállítás GPO-értékelés előtti értéke). Az érvényes bithelyek az alábbiak:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        Engedélyezi a gyermekfolyamathoz az adatvégrehajtás megakadályozását (DEP).
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        Engedélyezi a gyermekfolyamathoz a DEP-ATL típusú tönkemulálást, amelynek hatására a rendszer elfogja az Active Template Library (ATL) tönkrétegből érkező NX-hibákat. 
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        Engedélyezi a gyermekfolyamathoz a strukturált kivételkezelő felülírása elleni védelmet (SEHOP), amely blokkolja a strukturált kivételkezelő (SEH) felülírási módját kihasználó biztonsági réseket.
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        A véletlenszerű címtérelrendezés (ASLR) megkövetelése házirend kényszerűen új alapot ad meg a dinamikus alappal inkompatibilis kódoknak, mivel úgy tesz, mintha betöltéskor kódalapcím-ütközés lépett volna fel. Ha áthelyezés szükséges, az alapáthelyezési szakasz nélküli kódok nem töltődnek be.
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        A véletlenszerűséget kiváltó, felfelé irányuló házirend (benne a vermek véletlenszerűségét okozó beállítások) hatására egy véletlenszerű hely lesz a legalsóbb szintű felhasználói cím.
+
+        Ha engedélyezni szeretné például a PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE és a PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON bithelyet, le szeretné tiltani a PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF bithelyet, a többi beállítást pedig az alapértelmezett értékükkel kívánja használni, adja meg az alábbi értéket:
+        ???????????????0???????1???????1
+
+        Ha az itt nem említett jelzők értéke nem ?, nem várt módon fog működni a funkció.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">AD/DFS tartományvezérlők szinkronizálásának engedélyezése a házirendfrissítés során</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">A beállítás engedélyezése esetén a Csoportházirend-ügyfél ugyanahhoz a tartományvezérlőhöz csatlakozik a DFS-megosztások esetében, mint amit az Active Directory esetében használ.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">Csoportházirend-ügyfél szolgáltatás AOAC optimalizálásának kikapcsolása</string>
+      <string id="DisableAOACProcessing_Help">Ez a házirend-beállítás megakadályozza, hogy a Csoportházirend-ügyfél szolgáltatás leálljon az üresjárati időben.
+
+
+
+</string>
+      <string id="EnableCDP">Megkezdett tevékenység folytatása ezen az eszközön</string>
+      <string id="EnableCDP_Help">
+Ezzel a házirend-beállítással adhatja meg, hogy a windowsos eszköz részt vehet-e többeszközös környezetben (megkezdett tevékenység másik eszközön való folytatásában).
+
+Ha engedélyezi ezt a házirend-beállítást, a windowsos eszközt észlelheti a felhasználó többi windowsos eszköze, és részt vehet többeszközös környezetekben.
+
+Ha letiltja ezt a házirend-beállítást, a windowsos eszközt nem észlelheti a felhasználó többi windowsos eszköze, és nem vehet részt többeszközös környezetekben.
+
+Ha nem konfigurálja ezt a házirend-beállítást, az alapértelmezett működés a Windows adott kiadásától függ. A házirend módosítása az eszköz újraindításakor lép életbe.
+      </string>
+      <string id="EnableMMX">Telefon-számítógép összekapcsolás ezen az eszközön</string>
+      <string id="EnableMMX_Help">
+Ez a házirend lehetővé teszi a rendszergazdák számára, hogy kikapcsolják a telefon számítógéppel történő összekapcsolásának lehetőségét. Ezzel megszűnik az olvasás, az e-mailezés és az olyan egyéb feladatok folytatásának lehetősége, melyek a telefon és a számítógép összekapcsolását igénylik.
+
+Ha engedélyezi ezt a házirend-beállítást, a windowsos eszköz képes lesz regisztrálni a telefon-számítógép összekapcsolási funkcionalitásba, és részt venni a Folytatás PC-n funkciót használó élményekben.
+
+Ha letiltja ezt a házirend-beállítást, a windowsos eszköz számára nem lesz engedélyezve a telefonokkal való összekapcsolódás, és nem vehet részt a Folytatás PC-n funkciót használó élményekben.
+
+Ha nem konfigurálja ezt a házirend-beállítást, az alapértelmezett működés a Windows adott kiadásától függ. A házirend módosítása az eszköz újraindításakor lép életbe.
+      </string>
+      <string id="EnableAppUriHandlers">A web és az alkalmazások közötti hivatkozások konfigurálása az alkalmazások URI-kezelőivel</string>
+      <string id="EnableAppUriHandlers_Help">
+Ez a házirend-beállítás meghatározza, hogy a Windows támogatja-e a web és az alkalmazások között hivatkozásokat az alkalmazások URI-kezelőivel.
+
+A házirend-beállítás engedélyezésével engedélyezi a web és az alkalmazások közötti hivatkozásokat, így az alkalmazásokat el lehet indítani egy http(s) URI-címmel.
+
+A házirend-beállítás letiltásával letiltja a web és az alkalmazások közötti hivatkozásokat, és a http(s) URI-címek az alapértelmezett böngészőben nyílnak meg a társított alkalmazás elindítása helyett.
+
+Ha nem konfigurálja a házirend-beállítást, az alapértelmezett működés a Windows-kiadástól függ. A házirend módosítása a rendszer újraindítása után lép életbe.
+      </string>
+      <string id="Fonts">Betűkészletek</string>
+      <string id="EnableFontProviders">Betűkészlet-szolgáltatók engedélyezése</string>
+      <string id="EnableFontProviders_Help">
+        Ezzel a házirend-beállítással adható meg, hogy a Windows letölthet-e betűkészleteket és betűkészletkatalógus-adatokat online betűkészlet-szolgáltatóktól.
+
+        Ha engedélyezi ezt a házirend-beállítást, a Windows rendszeres időközönként lekérdezést küld egy online betűkészlet-szolgáltató felé, és megállapítja, hogy rendelkezésre áll-e új betűkészlet-katalógus. A Windows emellett betűkészletadatokat tölthet le, amennyiben erre szükség van szöveg formázásához vagy megjelenítéshez.
+
+        Ha letiltja ezt a házirend-beállítást, a Windows nem csatlakozik online betűkészlet-szolgáltatóhoz, és csak a helyileg telepített betűkészleteket veszi számba.
+
+        Ha nem konfigurálja ezt a házirend-beállítást, az alapértelmezett működés a Windows adott kiadásától függ. A házirend módosítása az eszköz újraindításakor lép életbe.
+      </string>
+      <string id="EnableLogonOptimization">Csoportházirend gyorsítótárazásának konfigurálása</string>
+      <string id="EnableLogonOptimization_Help">
+        Ezzel a házirend-beállítással a csoportházirend gyorsítótárazásának működését állíthatja be.
+
+        Ha engedélyezi vagy nem konfigurálja ezt a házirend-beállítást, akkor a csoportházirend minden háttérben végzett feldolgozási folyamat után gyorsítótárazza a házirendadatokat. A rendszer ebbe a gyorsítótárba menti az alkalmazható csoportházirend-objektumokat (GPO) és az azokban lévő beállításokat. A csoportházirend előtérbeli szinkron üzemmódban történő futtatásakor a rendszer ezt a gyorsítótárat használja, ami gyorsabb futtatást tesz lehetővé. A gyorsítótár olvasásakor a csoportházirend a kapcsolat sebességének meghatározásához megpróbál kapcsolatot létesíteni egy bejelentkezési tartományvezérlővel. Ha a csoportházirend a háttérben vagy előtérbeli aszinkron üzemmódban fut, folyamatosan letölti a legújabb házirendadatokat, és sávszélességbecsléssel próbálja meghatározni a lassú kapcsolat küszöbértékét. (Az előtérbeli aszinkron üzemmód konfigurálásáról a „Lassú csoportházirend-kapcsolatok észlelésének beállítása” házirend-beállításnál olvashat.)
+
+        A lassú kapcsolat házirend-beállításban definiált értéke azt határozza meg, hogy a csoportházirend meddig vár a tartományvezérlő válaszára a kapcsolati sebesség lassúként történő jelentése előtt. Az alapértelmezett beállítás 500 ezredmásodperc.
+
+        Az időkorlát házirend-beállításban definiált értéke azt határozza meg, hogy a csoportházirend meddig vár a tartományvezérlő válaszára, mielőtt megállapítja a hálózati kapcsolat hiányát. Ez leállítja az aktuális csoportházirend-feldolgozást. Amikor legközelebb kapcsolat létesül egy tartományvezérlővel, a csoportházirend a háttérben fut. Ha túl magas értéket ad meg, akkor előfordulhat, hogy a felhasználónak hosszabb ideig kell várakoznia rendszerindításkor vagy bejelentkezéskor. Az alapértelmezett beállítás 5000 ezredmásodperc.
+
+        Ha letiltja ezt a házirend-beállítást, a csoportházirend ügyfele nem gyorsítótárazza az alkalmazható GPO-kat és az azokban található beállításokat. Ha a csoportházirend szinkron üzemmódban fut, letölti a hálózatról a házirend legújabb verzióját, és sávszélességbecsléssel határozza meg a lassú kapcsolat küszöbértékét. (Az előtérbeli aszinkron üzemmód konfigurálásáról a „Lassú csoportházirend-kapcsolatok észlelésének beállítása” házirend-beállításnál olvashat.)
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">A csoportházirend kiszolgálókon való gyorsítótárazásának engedélyezése</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        Ezzel a házirend-beállítással a csoportházirend Windows Server-alapú számítógépeken való gyorsítótárazását konfigurálhatja.
+        Ha engedélyezi ezt a házirend-beállítást, a csoportházirend minden háttérben végzett feldolgozási munkamenet után gyorsítótárazza a házirendadatokat. A rendszer ebbe a gyorsítótárba menti az alkalmazható csoportházirend-objektumokat (GPO) és az azokban lévő beállításokat. A csoportházirend előtérbeli szinkron üzemmódban történő futtatásakor ez a gyorsítótár teszi lehetővé a gyorsabb futtatást. A gyorsítótár olvasásakor a csoportházirend a kapcsolat sebességének meghatározásához megpróbál kapcsolatot létesíteni egy bejelentkezési tartományvezérlővel. Ha a csoportházirend a háttérben vagy előtérbeli aszinkron üzemmódban fut, folyamatosan letölti a legújabb házirendadatokat, és sávszélesség-becsléssel próbálja meghatározni a lassú kapcsolat küszöbértékét. (Az előtérbeli aszinkron üzemmód konfigurálásáról a „Lassú csoportházirend-kapcsolatok észlelésének beállítása” házirend-beállításnál olvashat.)
+        A lassú kapcsolat házirend-beállításban definiált értéke azt határozza meg, hogy a csoportházirend meddig vár a tartományvezérlő válaszára a kapcsolati sebesség lassúként történő jelentése előtt. Az alapértelmezett beállítás 500 ezredmásodperc.
+        Az időkorlát házirend-beállításban definiált értéke azt határozza meg, hogy a csoportházirend meddig vár a tartományvezérlő válaszára, mielőtt megállapítja a hálózati kapcsolat hiányát. Ez leállítja az aktuális csoportházirend-feldolgozást. Amikor legközelebb kapcsolat létesül egy tartományvezérlővel, a csoportházirend a háttérben fut. Ha túl magas értéket ad meg, akkor előfordulhat, hogy a felhasználónak hosszabb ideig kell várakoznia rendszerindításkor vagy bejelentkezéskor. Az alapértelmezett beállítás 5000 ezredmásodperc.
+        Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, a csoportházirend ügyfele nem gyorsítótárazza az alkalmazható GPO-kat és az azokban található beállításokat. Ha a csoportházirend szinkron üzemmódban fut, letölti a hálózatról a házirend legújabb verzióját, és sávszélesség-becsléssel határozza meg a lassú kapcsolat küszöbértékét. (Az előtérbeli aszinkron üzemmód konfigurálásáról a „Lassú csoportházirend-kapcsolatok észlelésének beállítása” házirend-beállításnál olvashat.)
+      
+      </string>
+
+      <string id="LogonScriptDelay">Bejelentkezési parancsfájl késleltetésének meghatározása</string>
+      <string id="LogonScriptDelay_Help">
+        A bejelentkezési parancsfájl késleltetésének letiltásához a „0” értéket adja meg.
+
+        Ezzel a házirend-beállítással konfigurálhatja, hogy a csoportházirend ügyfele meddig várjon a bejelentkezés után a parancsfájlok futtatásával.
+
+        A csoportházirend ügyfele alapértelmezés szerint öt percet vár a bejelentkezési parancsfájlok futtatása előtt. Ezzel elkerülhető a lemezerőforrásokért folytatott versengés, így könnyebben hozható létre válaszképes asztali környezet.
+
+        Ha engedélyezi ezt a házirend-beállítást, a csoportházirend a megadott ideig vár a bejelentkezési parancsfájlok futtatása előtt.
+
+        Ha letiltja ezt a házirend-beállítást, a csoportházirend közvetlenül a bejelentkezés után futtatja a parancsfájlokat.
+
+        Ha nem konfigurálja ezt a házirend-beállítást, a csoportházirend öt perc elteltével futtatja a bejelentkezési parancsfájlokat.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">DirectAccess-kapcsolatok konfigurálása gyors hálózati kapcsolatként</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">Ez a házirend-beállítás lehetővé teszi a rendszergazda számára, hogy a közvetlen hozzáférésű kapcsolatot a csoportházirend alkalmazása és frissítése szempontjából gyorsként számon tartott hálózati kapcsolatként definiálja.
+
+A csoportházirend észleli a közvetlen hozzáférésű kapcsolatok adatátviteli sebességét, azonban előfordulhat, hogy nem minden esetben sikeres az adatátviteli sebességgel kapcsolatos információk megállapítása az észlelés során. Sikeres észlelés esetén a csoportházirend az általános kiértékelési szabályok alkalmazásával határozza meg, hogy a közvetlen hozzáférésű kapcsolat gyors vagy lassú hálózati kapcsolat-e. Ha nem sikerül észlelnie az adatátviteli sebességet, a csoportházirend alapértelmezés szerint lassú hálózati kapcsolatként definiálja a közvetlen hozzáférésű kapcsolatot. Ez a házirend-beállítás lehetővé teszi a rendszergazda számára, hogy az alapértelmezett lassú hálózati kapcsolatot felülbírálva gyors hálózati kapcsolatot állítson be alapértelmezettként, ha a csoportházirend nem tudja meghatározni a hálózat adatátviteli sebességét.
+
+Megjegyzés: Ha a csoportházirend lassú hálózati kapcsolatot észlel, csak azokat az ügyféloldali kiterjesztéseket dolgozza fel, amelyek lassú hálózati kapcsolaton keresztüli feldolgozásra vannak konfigurálva.
+
+Ha engedélyezi ezt a házirendet, a csoportházirend a közvetlen hozzáférésű kapcsolatok adatátviteli sebességének sikertelen észlelése esetén a hálózati kapcsolatot gyors kapcsolatként kezeli, és az összes ügyféloldali kiterjesztést feldolgozza.
+
+Ha letiltja vagy nem konfigurálja ezt a beállítást, a csoportházirend a hálózati kapcsolatot lassú kapcsolatként kezeli, és csak a lassú hálózati kapcsolaton keresztüli feldolgozásra konfigurált kiterjesztéseket dolgozza fel.
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">A csoportházirend-feldolgozás aszinkron futtatása lassú hálózati kapcsolat észlelésekor.</string>
+      <string id="SlowlinkDefaultToAsync_Help">Ez a házirend arra utasítja a csoportházirend-feldolgozást, hogy lassú hálózati kapcsolat észlelése esetén hagyja ki a szinkron feldolgozást igénylő ügyféloldali kiterjesztések feldolgozását. (A szinkron feldolgozás azt jelenti, hogy a számítógépek a rendszerindítás és a felhasználói bejelentkezés során megvárják, amíg a hálózat teljes mértékben inicializálódik.) 
+
+Ha engedélyezi ezt a házirend-beállítást, a csoportházirend lassú kapcsolat észlelésekor mindig aszinkron módon dolgozza fel a kiterjesztéseket.
+Az ügyfélszámítógépek nem várják meg a hálózat teljes inicializálását a rendszerindítás és a bejelentkezés során. A meglévő felhasználók bejelentkezése
+a gyorsítótárban lévő hitelesítő adatokkal történik, ami lerövidíti a bejelentkezési időt. Amikor a hálózat elérhetővé válik, a rendszer a háttérben
+alkalmazza a csoportházirendet.
+Mivel a frissítés a háttérben történik, a rendszer a szinkron feldolgozást igénylő kiterjesztéseket, például a Szoftvertelepítés, a Mappa átirányítása
+és a Meghajtócsatlakoztatások beállításbővítmény alkalmazása nem történik meg.
+
+Megjegyzés: A rendszer két esetben akkor is szinkron módon dolgozza fel a csoportházirendet, ha ez a csoportházirend-beállítás engedélyezve van:
+1. Az ügyfélszámítógép tartományhoz csatlakoztatása utáni első rendszerindításkor.
+2. Ha „A számítógép indításkor és bejelentkezéskor mindig várjon a hálózatra” házirend-beállítás engedélyezve van.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, a lassú hálózat észlelése nem lesz hatással arra, hogy a rendszer szinkron vagy aszinkron módon dolgozza-e fel a csoportházirendet.
+
+      </string>
+      <string id="DisableLGPOProcessing">Helyi csoportházirend-objektum feldolgozásának kikapcsolása</string>
+      <string id="DisableLGPOProcessing_Help">Ez a házirend-beállítás megakadályozza a helyi csoportházirend-objektumok alkalmazását.
+
+Alapértelmezés szerint a Helyi csoportházirend-objektumok házirend-beállításai hamarabb lesznek alkalmazva, mint bármely tartományalapú házirend-beállítás. Ezek a házirend-beállítások vonatkozhatnak a felhasználókra és a helyi számítógépre is. A helyi csoportházirend-objektumok feldolgozása és alkalmazása letiltható, hogy csak a tartományalapú csoportházirend-objektumok legyenek alkalmazva.
+
+Ha engedélyezi ezt a házirend-beállítást, a rendszer nem dolgoz fel és nem alkalmaz semmilyen helyi csoportházirend-objektumot.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, a helyi csoportházirend-objektumok alkalmazása folytatódik.
+
+Megjegyzés: A tartományhoz csatlakozó számítógépek esetén ajánlott, hogy a tartományalapú helyi csoportházirend-objektumokban csak ezt a házirend-beállítást konfigurálja. A házirend-beállítás figyelmen kívül lesz hagyva a munkacsoporthoz csatlakozott számítógépek esetén.
+
+</string>
+      <string id="SyncWaitTime">Indítási házirend-feldolgozás várakozási idejének megadása</string>
+      <string id="SyncWaitTime_Help">Ez a házirend-beállítás meghatározza, mennyi ideig várakozzon a csoportházirend a hálózati elérhetőségről szóló értesítésekre az indítási házirend feldolgozása alatt. Ha az indítási házirend feldolgozása szinkron módon történik, a számítógép a hálózat elérhetőségéig vagy az alapértelmezett idő eléréséig zárolva van. Ha az indítási házirend feldolgozása aszinkron, a számítógép nincs zárolva, és a házirend feldolgozása a háttérben történik. Mindkét esetben ezen házirend-beállítás konfigurálása felülbírálja a rendszer által számított várakozási időt.
+
+Ha engedélyezi ezt a házirend-beállítást, a csoportházirend ezt a felügyeleti módon konfigurált maximális várakozási időt fogja használni, és az alapértelmezett vagy rendszer által számított várakozási időt felülbírálja.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, a csoportházirend a Windows Vista operációs rendszert futtató számítógépeken a 30 másodperces alapértelmezett várakozási időt fogja használni. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Több erdőre kiterjedő felhasználói házirend és központi felhasználói profilok engedélyezése</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">Ez a házirend-beállítás engedélyezi a felhasználó-alapú házirend-feldolgozást, a központi felhasználói profilokat és a felhasználó-objektumhoz tartozó bejelentkezési parancsfájlokat több erdőre kiterjedő interaktív bejelentkezéskor.
+
+Ez a házirend-beállítás befolyásolja az összes felhasználói fiókot, amelyek interaktívan jelentkeznek be egy számítógépre egy másik erdőben, ha az erdők közötti bizalmi kapcsolat vagy egy kétirányú erdei bizalmi kapcsolat áll fenn.
+
+Ha nem konfigurálja ezt a házirend-beállítást:
+-  A felhasználó erdőjéből egy felhasználóalapú házirend-beállítást sem alkalmaz a rendszer.
+- A felhasználók nem kapják meg a központi profiljukat, egy helyi profilt kapnak a helyi erdőből származó számítógépről. A felhasználónak megjelenik egy figyelmeztető üzenet, és a rendszer egy eseménynapló-üzenetet (1529) is küld.
+- Visszacsatolt csoportházirend-feldolgozás lesz érvényben a számítógépre vonatkozó csoportházirend-objektumok használatával.
+- A rendszer egy eseménynapló-üzenetet (1109) küld, amelyben az áll, hogy a visszacsatolást lecserélési üzemmódban hajtották végre.
+
+Ha engedélyezi ezt a házirend-beállítást, a viselkedés teljesen megegyezik a Windows 2000 rendszer esetén tapasztalttal: a felhasználói házirend lesz alkalmazva, és a központi felhasználói profil a megbízható erdőből engedélyezett.
+
+Ha letiltja ezt a házirend-beállítást, a tapasztalt viselkedés ugyanolyan, mintha nem lenne konfigurálva.</string>
+      <string id="CSE_AppMgmt">A szoftvertelepítési házirend feldolgozásának beállítása</string>
+      <string id="CSE_AppMgmt_Help">Ez a házirend-beállítás meghatározza, mikor történjen a szoftvertelepítési házirendek frissítése.
+
+Ez a házirend-beállítás hatással van a csoportházirend szoftvertelepítési összetevőjét használó összes házirend-beállításra, például a Szoftverbeállítások\Szoftvertelepítés elemben lévő házirend-beállításokra. A szoftvertelepítési házirendet csak az Active Directoryban tárolt csoportházirend-objektumok esetén állíthatja be, a helyi számítógépen lévő csoportházirend-objektumok esetén nem.
+
+A házirend-beállítás felülbírálja a testreszabott beállításokat, amelyeket a szoftvertelepítési házirendet megvalósító program állított be, amikor telepítették.
+
+Ha engedélyezi ezt a házirend-beállítást, a beállítások módosításához a jelölőnégyzeteket használhatja. Ha letiltja vagy nem konfigurálja a házirend-beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Frissítés engedélyezése lassú hálózati kapcsolaton keresztül” beállítás akkor is frissíti a házirendeket, ha a frissítés egy lassú hálózati kapcsolaton, például telefonvonalon keresztül történik. A lassú kapcsolatokon keresztüli frissítések jelentős késéseket okozhatnak.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Számos házirend-beállítás megvalósítása olyan, hogy csak akkor frissül, ha módosult. Szükség lehet azonban a nem módosított házirend-beállítások frissítésére is, például olyan esetben, ha vissza kívánja állítani a felhasználó által módosított házirendeket.</string>
+      <string id="CSE_DiskQuota">A lemezkvóta-házirend feldolgozásának beállítása</string>
+      <string id="CSE_DiskQuota_Help">Ez a házirend-beállítás meghatározza, mikor történjen a lemezkvóta-házirendek frissítése.
+
+Ez a házirend-beállítás hatással van az összes olyan házirendre, amely a Csoportházirend lemezkvóta összetevőjét használja, például a Számítógép konfigurációja\Felügyeleti sablonok\Rendszer\Lemezkvóták helyen lévő házirendekre.
+
+Ez a házirend-beállítás felülbírálja a testreszabott beállításokat, amelyeket a lemezkvóta-házirendet megvalósító program állított be, amikor telepítették.
+
+Ha engedélyezi ezt a házirend-beállítást, a beállítások módosításához a jelölőnégyzeteket használhatja. Ha letiltja vagy nem konfigurálja a házirend-beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Frissítés engedélyezése lassú hálózati kapcsolaton keresztül” beállítás akkor is frissíti a házirendeket, ha a frissítés egy lassú hálózati kapcsolaton, például telefonvonalon keresztül történik. A lassú kapcsolatokon keresztüli frissítések jelentős késéseket okozhatnak.
+
+A „Ne alkalmazza háttérben történő rendszeres feldolgozás közben” beállítás hatására a rendszer nem frissíti a háttérben az érintett házirendeket, ha a számítógép használatban van. Ha a háttérben történő frissítés le van tiltva, a házirend módosításai csak a következő felhasználói bejelentkezés vagy rendszerindítás után lépnek életbe.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Számos házirend megvalósítása olyan, hogy csak akkor frissül, ha módosult. Szükség lehet azonban a nem módosított házirendek frissítésére is, például olyan esetben, ha vissza kíván állítani egy felhasználó által módosított beállítást.</string>
+      <string id="CSE_EFSRecovery">Az EFS-helyreállító házirend feldolgozásának beállítása</string>
+      <string id="CSE_EFSRecovery_Help">Ez a házirend-beállítás meghatározza, mikor történjen a titkosítási házirendek frissítése.
+
+Ez a házirend-beállítás hatással van a Csoportházirend titkosítási összetevőjét használó összes házirendre, például a Windows beállításai\Biztonsági beállítások helyen található titkosításra vonatkozó házirendekre.
+
+A házirend felülbírálja a testreszabott beállításokat, amelyeket a titkosítási házirendet megvalósító program állított be, amikor telepítették.
+
+Ha engedélyezi ezt a házirend-beállítást, a beállítások módosításához a jelölőnégyzeteket használhatja. Ha letiltja vagy nem konfigurálja a házirend-beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Frissítés engedélyezése lassú hálózati kapcsolaton keresztül” beállítás akkor is frissíti a házirendeket, ha a frissítés egy lassú hálózati kapcsolaton, például telefonvonalon keresztül történik. A lassú kapcsolatokon keresztüli frissítések jelentős késéseket okozhatnak.
+
+A „Ne alkalmazza háttérben történő rendszeres feldolgozás közben” beállítás hatására a rendszer nem frissíti a háttérben az érintett házirendeket, ha a számítógép használatban van. Ha a háttérben történő frissítés le van tiltva, a házirend módosításai csak a következő felhasználói bejelentkezés vagy rendszerindítás után lépnek életbe.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Számos házirend megvalósítása olyan, hogy csak akkor frissül, ha módosult. Szükség lehet azonban a nem módosított házirendek frissítésére is, például olyan esetben, ha vissza kíván állítani egy felhasználó által módosított beállítást.</string>
+      <string id="CSE_FolderRedirection">A mappaátirányítási házirend feldolgozásának beállítása</string>
+      <string id="CSE_FolderRedirection_Help">Ez a házirend-beállítás meghatározza, mikor történjen a mappaátirányítási házirendek frissítése.
+
+Ez a házirend-beállítás hatással van a Csoportházirend mappaátirányítási összetevőjét használó összes házirendre, például A Windows beállításai\Mappa átirányítása összetevőire. A mappaátirányítási házirendet csak az Active Directoryban tárolt csoportházirend-objektumok esetén állíthatja be, a helyi számítógépen lévő csoportházirend-objektumok esetén nem.
+
+Ez a házirend-beállítás felülbírálja a testreszabott beállításokat, amelyeket a mappaátirányítási házirend-beállítást megvalósító program állított be, amikor telepítették.
+
+Ha engedélyezi ezt a házirend-beállítást, a beállítások módosításához a jelölőnégyzeteket használhatja. Ha letiltja vagy nem konfigurálja a házirend-beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Frissítés engedélyezése lassú hálózati kapcsolaton keresztül” beállítás akkor is frissíti a házirendeket, ha a frissítés egy lassú hálózati kapcsolaton, például telefonvonalon keresztül történik. A lassú kapcsolatokon keresztüli frissítések jelentős késéseket okozhatnak.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Számos házirend megvalósítása olyan, hogy csak akkor frissül, ha módosult. Szükség lehet azonban a nem módosított házirendek frissítésére is, például olyan esetben, ha vissza kíván állítani egy felhasználó által módosított beállítást.</string>
+      <string id="CSE_IEM">Az Internet Explorer-karbantartása házirend feldolgozásának beállítása</string>
+      <string id="CSE_IEM_Help">Ez a házirend-beállítás meghatározza, mikor történjen Az Internet Explorer karbantartása házirend frissítése.
+
+Ez a házirend-beállítás hatással van a Csoportházirend Az Internet Explorer karbantartása összetevőjét használó összes házirendre, például A Windows beállításai\Az Internet Explorer karbantartása helyen található házirendekre.
+
+Ez a házirend-beállítás felülbírálja a testreszabott beállításokat, amelyeket Az Internet Explorer karbantartása házirendet megvalósító program állított be, amikor telepítették.
+
+Ha engedélyezi ezt a házirend-beállítást, a beállítások módosításához a jelölőnégyzeteket használhatja. Ha letiltja vagy nem konfigurálja a házirend-beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Frissítés engedélyezése lassú hálózati kapcsolaton keresztül” beállítás akkor is frissíti a házirendeket, ha a frissítés egy lassú hálózati kapcsolaton, például telefonvonalon keresztül történik. A lassú kapcsolatokon keresztüli frissítések jelentős késéseket okozhatnak.
+
+A „Ne alkalmazza háttérben történő rendszeres feldolgozás közben” beállítás hatására a rendszer nem frissíti a háttérben az érintett házirendeket, ha a számítógép használatban van. Ha a háttérben történő frissítés le van tiltva, a házirend módosításai csak a következő felhasználói bejelentkezés vagy rendszerindítás után lépnek életbe.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Számos házirend megvalósítása olyan, hogy csak akkor frissül, ha módosult. Szükség lehet azonban a nem módosított házirendek frissítésére is, például olyan esetben, ha vissza kíván állítani egy felhasználó által módosított házirend-beállítást.</string>
+      <string id="CSE_IPSecurity">Az IP-biztonsági házirend feldolgozásának beállítása</string>
+      <string id="CSE_IPSecurity_Help">Ez a házirend-beállítás meghatározza, mikor történjen az IP-biztonsági házirendek frissítése.
+
+Ez a házirend-beállítás hatással van a Csoportházirend IP-biztonsági összetevőjét használó összes házirendre, például a Számítógép konfigurációja\A Windows beállításai\Biztonsági beállítások\IP-biztonsági házirendek a helyi számítógépen helyen lévő házirendekre.
+
+Ez a házirend-beállítás felülbírálja a testreszabott beállításokat, amelyeket az IP-biztonsági házirendet megvalósító program állított be, amikor telepítették.
+
+Ha engedélyezi ezt a házirend-beállítást, a beállítások módosításához a jelölőnégyzeteket használhatja. Ha letiltja vagy nem konfigurálja a házirend-beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Frissítés engedélyezése lassú hálózati kapcsolaton keresztül” beállítás akkor is frissíti a házirendeket, ha a frissítés egy lassú hálózati kapcsolaton, például telefonvonalon keresztül történik. A lassú kapcsolatokon keresztüli frissítések jelentős késéseket okozhatnak.
+
+A „Ne alkalmazza háttérben történő rendszeres feldolgozás közben” beállítás hatására a rendszer nem frissíti a háttérben az érintett házirendeket, ha a számítógép használatban van. Ha a háttérben történő frissítés le van tiltva, a házirend módosításai csak a következő felhasználói bejelentkezés vagy rendszerindítás után lépnek életbe.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Számos házirend megvalósítása olyan, hogy csak akkor frissül, ha módosult. Szükség lehet azonban a nem módosított házirendek frissítésére is, például olyan esetben, ha vissza kíván állítani egy felhasználó által módosított házirend-beállítást.</string>
+      <string id="CSE_Registry">A Beállításjegyzék házirend feldolgozásának beállítása</string>
+      <string id="CSE_Registry_Help">Ez a házirend-beállítás meghatározza, hogy mikor történjen a beállításjegyzék-házirendek frissítése.
+
+Ez a házirend-beállítás hatással van a Felügyeleti sablonok mappában található összes házirendre, és az összes, a beállításjegyzékben bármilyen értéket tároló házirendre is. Felülbírálja a testreszabott beállításokat, amelyeket a beállításjegyzék házirendet megvalósító program állított be, a telepítés során.
+
+Ha engedélyezi ezt a házirend-beállítást, a beállítások módosításához a jelölőnégyzeteket használhatja. Ha letiltja vagy nem konfigurálja a házirend-beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Ne alkalmazza háttérben történő rendszeres feldolgozás közben” beállítás hatására a rendszer nem frissíti a háttérben az érintett házirendeket, ha a számítógép használatban van. Ha a háttérben történő frissítés le van tiltva, a házirend módosításai csak a következő felhasználói bejelentkezés vagy rendszerindítás után lépnek életbe.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Számos házirend megvalósítása olyan, hogy csak akkor frissül, ha módosult. Szükség lehet azonban a nem módosított házirendek frissítésére is, például olyan esetben, ha vissza kíván állítani egy felhasználó által módosított házirend-beállítást.</string>
+      <string id="CSE_Scripts">A Parancsfájlok házirend feldolgozásának beállítása</string>
+      <string id="CSE_Scripts_Help">Ez a házirend-beállítás meghatározza, hogy mikor történjen a megosztott parancsfájlokat társító házirendek frissítése.
+
+Ez a házirend-beállítás hatással van a Csoportházirend parancsfájl összetevőjét használó összes házirendre, például A Windows beállításai\Parancsfájlok összetevőire. Felülbírálja a testreszabott beállításokat, amelyeket a parancsfájlok házirendet megvalósító program állított be, amikor telepítették.
+
+Ha engedélyezi ezt a házirend-beállítást, a beállítások módosításához a jelölőnégyzeteket használhatja. Ha letiltja vagy nem konfigurálja ezt a beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Frissítés engedélyezése lassú hálózati kapcsolaton keresztül” beállítás akkor is frissíti a házirendeket, ha a frissítés egy lassú hálózati kapcsolaton, például telefonvonalon keresztül történik. A lassú kapcsolatokon keresztüli frissítések jelentős késéseket okozhatnak.
+
+A „Ne alkalmazza háttérben történő rendszeres feldolgozás közben” beállítás hatására a rendszer nem frissíti a háttérben az érintett házirendeket, ha a számítógép használatban van. Ha a háttérben történő frissítés le van tiltva, a házirend módosításai csak a következő felhasználói bejelentkezés vagy rendszerindítás után lépnek életbe.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Számos házirend megvalósítása olyan, hogy csak akkor frissül, ha módosult. Szükség lehet azonban a nem módosított házirendek frissítésére is, például olyan esetben, ha vissza kíván állítani egy felhasználó által módosított házirend-beállítást.</string>
+      <string id="CSE_Security">Biztonsági házirend feldolgozásának beállítása</string>
+      <string id="CSE_Security_Help">Ez a házirend-beállítás meghatározza, mikor történjen a biztonsági házirendek frissítése.
+
+Ez a házirend-beállítás hatással van a Csoportházirend biztonsági összetevőjét használó összes házirendre, például A Windows beállításai\Biztonsági beállítások összetevőire.
+
+Ez a házirend-beállítás felülbírálja a testreszabott beállításokat, amelyeket a biztonsági házirendet megvalósító program állított be, amikor telepítették.
+
+Ha engedélyezi ezt a házirend-beállítást, a beállítások módosításához a jelölőnégyzeteket használhatja. Ha letiltja vagy nem konfigurálja a házirend-beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Ne alkalmazza háttérben történő rendszeres feldolgozás közben” beállítás hatására a rendszer nem frissíti a háttérben az érintett házirendeket, ha a számítógép használatban van. Ha a háttérben történő frissítés le van tiltva, a házirend módosításai csak a következő felhasználói bejelentkezés vagy rendszerindítás után lépnek életbe.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Sok házirend megvalósítása olyan, hogy csak akkor kerül frissítésre, ha módosult. Szükség lehet azonban a nem módosított házirendek frissítésére is, például olyan esetben, ha vissza kíván állítani egy felhasználó által módosított házirend-beállítást.</string>
+      <string id="CSE_Wireless">Vezeték nélküli hálózat házirend feldolgozásának beállítása</string>
+      <string id="CSE_Wireless_Help">Ez a házirend-beállítás meghatározza, hogy mikor történjen a vezeték nélküli hálózati beállításokat társító házirendek frissítése.
+
+Ez a házirend-beállítás hatással van a Csoportházirend vezeték nélküli hálózati összetevőjét használó összes házirendre, például A Windows beállításai\Vezeték nélküli hálózat házirendjei összetevőire.
+
+Felülbírálja a testreszabott beállításokat, amelyeket a vezeték nélküli hálózat házirendjeit megvalósító program állított be, amikor telepítették.
+
+Ha engedélyezi ezt a házirendet, a beállítások módosításához a jelölőnégyzeteket használhatja.
+
+Ha letiltja vagy nem konfigurálja a beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Frissítés engedélyezése lassú hálózati kapcsolaton keresztül” beállítás akkor is frissíti a házirendeket, ha a frissítés egy lassú hálózati kapcsolaton, például telefonvonalon keresztül történik. A lassú kapcsolatokon keresztüli frissítések jelentős késéseket okozhatnak.
+
+A „Ne alkalmazza háttérben történő rendszeres feldolgozás közben” beállítás hatására a rendszer nem frissíti a háttérben az érintett házirendeket, ha a számítógép használatban van. Ha a háttérben történő frissítés le van tiltva, a házirend módosításai csak a következő felhasználói bejelentkezés vagy rendszerindítás után lépnek életbe.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Számos házirend megvalósítása olyan, hogy csak akkor frissül, ha módosult. Szükség lehet azonban a nem módosított házirendek frissítésére is, például olyan esetben, ha vissza kíván állítani egy felhasználó által módosított beállítást.</string>
+      <string id="CSE_Wired">Vezetékes hálózati házirend feldolgozásának beállítása</string>
+      <string id="CSE_Wired_Help">Ez a házirend-beállítás meghatározza, hogy mikor történjen a vezetékes hálózati beállításokat hozzárendelő házirendek frissítése.
+
+Ez a házirend-beállítás hatással van a csoportházirend vezetékes hálózati összetevőjét használó összes házirendre, például A Windows beállításai\Vezetékes hálózati házirendek összetevőire.
+
+A beállítás felülbírálja a vezetékes hálózat telepítését implementáló program által megadott testreszabott beállításokat.
+
+Ha engedélyezi ezt a házirendet, a beállítások módosításához a jelölőnégyzeteket használhatja.
+
+Ha letiltja vagy nem konfigurálja a beállítást, a beállításnak semmilyen hatása nem lesz a rendszerre.
+
+A „Frissítés engedélyezése lassú hálózati kapcsolaton keresztül” beállítás akkor is frissíti a házirendeket, ha a frissítés egy lassú hálózati kapcsolaton, például telefonvonalon keresztül történik. A lassú kapcsolatokon keresztüli frissítések jelentős késéseket okozhatnak.
+
+A „Ne alkalmazza háttérben történő rendszeres feldolgozás közben” beállítás hatására a rendszer nem frissíti a háttérben az érintett házirendeket, ha a számítógép használatban van. Ha a háttérben történő frissítés le van tiltva, a házirend módosításai csak a következő felhasználói bejelentkezés vagy rendszerindítás után lépnek életbe.
+
+A „Frissítés változatlan csoportházirend-objektumok esetén is” beállítás akkor is frissíti és újra alkalmazza a házirendeket, ha azok nem változtak. Számos házirend megvalósítása olyan, hogy csak akkor frissül, ha módosult. Szükség lehet azonban a nem módosított házirendek frissítésére is, például olyan esetben, ha vissza kíván állítani egy felhasználó által módosított beállítást.</string>
+
+      <string id="DenyRsopToInteractiveUser">Meghatározza, hogy az interaktív felhasználók létrehozhatnak-e eredőházirend-adatokat</string>
+      <string id="DenyRsopToInteractiveUser_Help">Ez a házirend-beállítás vezérli a felhasználók lehetőségeit az eredő házirend (RSoP) adatainak megtekintésére.
+
+Alapértelmezett beállítás szerint, az interaktívan bejelentkezett felhasználók megtekinthetik saját eredőházirend-adataikat.
+
+Ha engedélyezi ezt a házirend-beállítást, az interaktív felhasználók nem hozhatnak létre eredőházirend-adatokat.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, akkor az interaktív felhasználók létrehozhatnak eredő házirendeket.
+
+Megjegyzés: Ez a házirend-beállítás nem érinti a rendszergazdákat. Függetlenül attól, hogy engedélyezi-e vagy letiltja ezt a házirend-beállítást, a rendszergazdák alapértelmezés szerint megtekinthetik az eredő házirend adatait.
+
+Megjegyzés: Az eredő házirend adatainak megtekintéséhez az ügyfélszámítógépen használja a Microsoft Management Console Eredő házirend beépülő modulját. Az RsoP beépülő modul a parancssorból az RSOP.msc paranccsal indítható.
+
+Megjegyzés: Ez a házirend-beállítás a Felhasználó konfigurációja és a Számítógép konfigurációja beállításaként is létezik.
+
+További információt az „Eredő házirend naplózásának kikapcsolása” házirend-beállításban a Számítógép konfigurációja\Felügyeleti sablonok\Rendszer\Csoportházirend helyen talál.</string>
+      <string id="DisableAutoADMUpdate">ADM-fájlok automatikus frissítésének kikapcsolása</string>
+      <string id="DisableAutoADMUpdate_Help">A Csoportházirendobjektum-szerkesztő megnyitásakor a rendszer nem frissíti automatikusan a felügyeleti sablonok forrásfájljait.  A rendszergazdák ezt akkor használhatják, ha aggódnak a tartományvezérlő rendszerkötetén felhasznált terület miatt.
+
+Alapértelmezett beállítás szerint a Csoportházirendobjektum-szerkesztő indításakor a program egy időbélyegző-összehasonlítást végez a helyi %SYSTEMROOT%\inf könyvtárban és a csoportházirend-objektumban tárolt forrásfájlokon.  Ha a helyi fájlok frissebbek, a program a csoportházirend-objektumba másolja őket.
+
+Ha a beállítás állapotát engedélyezettre változtatja, a forrásfájlokat nem másolja a program a csoportházirend-objektumba.
+
+Ha letiltja ezt a beállítást, az alapértelmezett viselkedés lép életbe.  A fájlokat a rendszer mindig a csoportházirend-objektumba másolja, ha azok későbbi időbélyegzővel rendelkeznek.
+
+MEGJEGYZÉS: Ha a Számítógép konfigurációja házirend „Mindig a helyi ADM-fájlok használata a Csoportházirendobjektum-szerkesztőben” beállítása engedélyezett, ezen beállítás állapotát a rendszer figyelmen kívül hagyja, és mindig engedélyezettként kezeli.</string>
+      <string id="DisableBackgroundPolicy">Csoportházirend háttérbeli frissítésének kikapcsolása</string>
+      <string id="DisableBackgroundPolicy_Help">Ez a házirend-beállítás megakadályozza a csoportházirend frissítését, amíg a számítógép használatban van. Ez a házirend-beállítás a számítógépek, felhasználók és tartományvezérlők csoportházirendjére vonatkozik.
+
+Ha engedélyezi ezt a házirend-beállítást, a rendszer addig nem frissíti a számítógép és a felhasználó beállításait, amíg a jelenlegi felhasználó ki nem lép a rendszerből.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, a frissítések addig alkalmazhatók, amíg a felhasználók a rendszerben dolgoznak. A frissítések gyakoriságát a „Számítógépek csoportházirend-frissítési időközének beállítása” és a „Felhasználók csoportházirend-frissítési időközének beállítása” házirend-beállítások határozzák meg.
+
+Megjegyzés: Ha módosítja ezt a házirend-beállítást, a változás életbe léptetéséhez újra kell indítania a számítógépet.</string>
+      <string id="DisableUsersFromMachGP">A számítógép-házirend frissítési lehetőségének letiltása a felhasználók számára</string>
+      <string id="DisableUsersFromMachGP_Help">Ez a házirend-beállítás lehetővé teszi annak vezérlését, hogy a felhasználónak lehetősége van-e a számítógép-házirend frissítésére.
+
+Ha engedélyezi ezt a házirend-beállítást, a felhasználók nem tudják végrehajtani a számítógép-házirend frissítését. A számítógép-házirend az indításkor vagy a hivatalos frissítés során lesz alkalmazva.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, az alapértelmezett beállítás lép életbe. Alapértelmezés szerint a számítógép-házirend alkalmazása a számítógép indításakor történik meg. Megadott frissítési időközönként, illetve a felhasználó manuális indítására is megtörténhet.
+
+Megjegyzés: Ez a házirend-beállítás csak rendszergazdai jogokkal nem rendelkező felhasználókra vonatkozik. A rendszergazdák továbbra is bármikor elvégezhetik a számítógép-házirend frissítését, tekintet nélkül a házirend-beállítás konfigurálásának módjára.
+
+További információt a frissítési időközök módosításáról a „Számítógépek csoportházirend-frissítési időközének beállítása” házirend-beállítás témakörében talál.
+
+Megjegyzés: Ha módosítja ezt a házirend-beállítást, a változás életbe léptetéséhez újra kell indítania a számítógépet.</string>
+      <string id="EnforcePoliciesOnly">A házirendek kizárólagos megjelenítésének kényszerítése</string>
+      <string id="EnforcePoliciesOnly_Help">Ezen házirend-beállítás értelmében a rendszergazdák nem tekinthetik meg és nem használhatják a csoportházirend-beállításokat.
+
+A Csoportházirend-felügyeleti (.adm) fájl tényleges beállításokat és beállításokat is tartalmazhat. A tényleges beállításoknak, amelyeket a Csoportházirend teljes mértékben támogat, a beállításjegyzék Software\Policies vagy a Software\Microsoft\Windows\CurrentVersion\Policies alkulcsaiban lévő értékeket kell használniuk. A nem teljes mértékben támogatott beállítások más alkulcsokban található bejegyzéseket használnak.
+
+A házirend-beállítás engedélyezésével a rendszer bekapcsolja a „Csak a házirendek megjelenítése” parancsot, és ezt a rendszergazdák sem kapcsolhatják ki. Ennek eredményeképp a Csoportházirendobjektum-szerkesztő csak tényleges beállításokat jelenít meg, a beállítások nem jelennek meg.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, a „Csak a házirendek megjelenítése” parancs alapértelmezés szerint be lesz kapcsolva, de a rendszergazdák megtekinthetik a beállításokat a „Csak a házirendek megjelenítése” parancs kikapcsolásával.
+
+Megjegyzés: A „Csak a házirendek megjelenítése” parancs megtalálásához a Csoportházirendobjektum-szerkesztőben kattintson a Felügyeleti sablonok mappára (bármelyikre), kattintson a jobb gombbal ugyanerre a mappára, végül mutasson a „Megjelenítés” parancsra.
+
+A Csoportházirendobjektum-szerkesztőben a beállításokat piros színű ikon jelöli, így megkülönböztethetőek a tényleges beállításoktól, amelyeket kék ikon jelez.</string>
+      <string id="GPDCOptionAny">Bármelyik elérhető tartományvezérlő használata</string>
+      <string id="GPDCOptionInherit">Öröklés az Active Directory beépülő moduljaiból</string>
+      <string id="GPDCOptionPDC">Elsődleges tartományvezérlő használata</string>
+      <string id="GPDCOptions">Csoportházirend tartományvezérlője kijelölésének beállítása</string>
+      <string id="GPDCOptions_Help">Ez a házirend-beállítás meghatározza, hogy melyik tartományvezérlőt használja a Csoportházirendobjektum-szerkesztő beépülő modul.
+
+Ha engedélyezi ezt a beállítást, a következő beállításokkal szabályozhatja, hogy mely tartományvezérlőt kívánja használni:
+
+Az „Elsődleges tartományvezérlő használata” azt jelöli, hogy a Csoportházirendobjektum-szerkesztő beépülő modul a tartományhoz tartozó elsődleges tartományvezérlő - műveleti főkiszolgálóról olvassa és oda írja a változásokat.
+
+Az „Öröklés az Active Directory beépülő moduljaiból” azt jelenti, hogy a Csoportházirendobjektum-szerkesztő beépülő modul arról a tartományvezérlőről olvassa és oda írja a változásokat, amelyet az Active Directory - felhasználók és számítógépek vagy az Active Directory - helyek és szolgáltatások beépülő modul használ.
+
+A „Bármely elérhető tartományvezérlő” azt jelöli, hogy a Csoportházirendobjektum-szerkesztő beépülő modul olvasni és írni tudja a változásokat bármely elérhető tartományvezérlőre.
+
+Ha letiltja vagy nem konfigurálja a beállítást, a Csoportházirendobjektum-szerkesztő beépülő modul a tartományhoz tartozó elsődleges tartományvezérlő - műveleti főkiszolgálóként meghatározott tartományvezérlőt fogja használni.
+
+Megjegyzés: A tartomány elsődleges tartományvezérlő - műveleti főkiszolgálójaként megjelölt számítógép módosításához az Active Directory - felhasználók és számítógépek beépülő modulban kattintson a jobb gombbal egy tartományra, majd kattintson a „Műveleti főkiszolgáló” parancsra.</string>
+      <string id="GPTransferRate">Lassú csoportházirend-kapcsolatok észlelésének beállítása</string>
+      <string id="GPTransferRate_Help">Ez a házirend-beállítás definiálja a lassú kapcsolatot a csoportházirend alkalmazása és frissítése esetére.
+
+Ha a csoportba tartozó számítógépek számára a házirendfrissítést biztosító tartományvezérlőről az adatátvitel sebessége a beállításban megadottnál lassabb, a rendszer a kapcsolatot lassúnak tekinti.
+
+A rendszer válasza a lassú házirendkapcsolatra a házirendtől függ. A házirendet megvalósító program meghatározhatja, hogy mi történjen, ha lassú a kapcsolat. Továbbá a mappában lévő házirendfeldolgozási beállítások lehetővé teszik, hogy felülbírálja a lassú hivatkozásokra a program által adott válaszokat.
+
+Ha engedélyezi ezt a beállítást, a „Kapcsolatsebesség” mezőbe beírhat egy 0 és 4 294 967 200 közötti tízes számrendszerbeli számot, amely az átviteli sebességet jelenti kilobit/másodpercben megadva. A rendszer minden ennél lassabb kapcsolatot lassúnak tekint. Ha a 0 értéket írta be, a rendszer az összes kapcsolatot gyorsan tekinti.
+
+Ha letiltja vagy nem konfigurálja a beállítást, a rendszer az 500 Kbit/másodperces alapértelmezett értéket fogja használni.
+
+Ez a beállítás megjelenik a Számítógép konfigurációja és a Felhasználó konfigurációja mappákban. A Számítógép konfigurációja helyen található beállítás a Számítógép konfigurációja mappában található házirendek számára meghatározza, hogy mi minősül lassú kapcsolatnak. A Felhasználó konfigurációja helyen található beállítás a Felhasználó konfigurációja mappában található beállítások számára meghatározza a lassú kapcsolatot.
+
+Továbbá tekintse meg a „Ne érzékelje a lassú hálózati kapcsolatokat” beállítást és a vonatkozó házirendeket a Számítógép konfigurációja\Felügyeleti sablonok\Rendszer\Felhasználói profil helyen. Megjegyzés: Ha a profilkiszolgáló IP-kapcsolattal rendelkezik, a kapcsolatsebesség beállítást használja a rendszer. Ha a profilkiszolgáló nem rendelkezik IP-kapcsolattal, a rendszer az SMB-időzítést használja.</string>
+      <string id="GroupPolicyRefreshRate">Számítógépek csoportházirend-frissítési időközének beállítása</string>
+      <string id="GroupPolicyRefreshRate_Help">Ez a házirend-beállítás meghatározza, milyen gyakran történjen a számítógépek csoportházirendjének frissítése, ha a számítógép használatban van (a háttérben). A beállítás csak a Számítógép konfigurációja mappában lévő csoportházirendek számára határozza meg a háttérben történő frissítést.
+
+A háttérben futó frissítésen felül a számítógép csoportházirendje mindig frissül, ha a rendszer elindul.
+
+Alapértelmezésként a számítógép csoportházirendje a háttérben 90 percenként frissül, véletlen, 0-30 perces eltolással.
+
+A beállítás engedélyezésével a frissítési időköz megadható 0-tól 64 800 percig (45 nap). Ha a 0 percet választja, a számítógép 7 másodpercenként próbálja frissíteni a csoportházirendet. Mivel azonban a frissítés akadályozhatja a felhasználók munkáját és növelheti a hálózat forgalmát, a nagyon rövid frissítési időközök nem megfelelőek a legtöbb telepítés esetén.
+
+A beállítás letiltásával a csoportházirend 90 percenként frissül (alapértelmezett beállítás szerint). Ahhoz, hogy meghatározza, hogy a csoportházirend sose frissüljön, ha a számítógép használatban van, jelölje ki a „Csoportházirend háttérbeli frissítésének kikapcsolása” házirendet.
+
+A Számítógépek csoportházirendje frissítési időközének beállítása házirendben azt is meghatározhatja, milyen mértékben térhet el a frissítési időköz. Annak megakadályozza érdekében, hogy az azonos frissítési időközt beállító ügyfelek egyszerre kérjenek frissítéseket, a rendszer minden ügyfél esetén megváltoztatja a frissítési időközt véletlenszerűen kijelölt perc alapú időközzel. A véletlen idő mezőbe beírt szám meghatározza az eltérés felső határát. Ha például 30 percet ír be, a rendszer 0-tól 30 percig terjedő eltérést választ ki. Egy nagy szám beírása széles tartományt eredményez, és így kevésbé valószínű, hogy az ügyfelek kérései átfedik egymást. Azonban a frissítések jelentősen késhetnek.
+
+Ez a beállítás meghatározza a számítógép csoportházirendjének frissítési gyakoriságát. A felhasználói házirendek frissítési időközének beállításához használja a „Felhasználók csoportházirend-frissítési időközének beállítása” beállítást (a Felhasználó konfigurációja\Felügyeleti sablonok\Rendszer\Csoportházirend helyen).
+
+Ezt a beállítást csak akkor használja, ha a „Csoportházirend háttérbeli frissítésének kikapcsolása” beállítás nem engedélyezett.
+
+Megjegyzés: Értesítse a felhasználókat arról, hogy a házirendjük időszakosan frissül, így felismerhetik a házirend frissítésének jeleit. A csoportházirend frissítésekor a Windows asztal frissül, röviden villog, és bezárja a megnyitott menüket. Továbbá a csoportházirendek által bevezetett korlátozások, például a felhasználók által futtatható programokat szabályozók, zavarhatják a folyamatban lévő feladatokat.</string>
+      <string id="GroupPolicyRefreshRateDC">Tartományvezérlők csoportházirend-frissítési időközének beállítása</string>
+      <string id="GroupPolicyRefreshRateDC_Help">Ez a házirend-beállítás meghatározza, milyen gyakran történjen a tartományvezérlők csoportházirendjének frissítése, mialatt azok futnak (a háttérben). A beállításban megadott frissítések a rendszerindításkor elvégzett frissítéseken felül történnek.
+
+Alapértelmezett beállítás szerint a tartományvezérlők csoportházirendjének frissítése öt percenként történik.
+
+A beállítás engedélyezésével a frissítési időköz megadható 0-tól 64 800 percig (45 nap). Ha a 0 percet választja, a tartományvezérlő 7 másodpercenként próbálja frissíteni a csoportházirendet. Mivel azonban a frissítés akadályozhatja a felhasználók munkáját és növelheti a hálózat forgalmát, a nagyon rövid frissítési időközök nem megfelelőek a legtöbb telepítés esetén.
+
+Ha letiltja vagy nem konfigurálja ezt a beállítást, a tartományvezérlő 5 percenként frissíti a csoportházirendet (alapértelmezett beállítás szerint). Ahhoz, hogy meghatározza, hogy a felhasználói csoportházirendek sosem frissüljenek, ha a számítógép használatban van, jelölje ki a „Csoportházirend háttérbeli frissítésének kikapcsolása” házirendet.
+
+Ez a beállítás továbbá lehetővé teszi annak meghatározását, hogy mennyivel változhat a tényleges frissítési időköz. Annak megakadályozza érdekében, hogy az azonos frissítési időközt beállító tartományvezérlők egyszerre kérjenek frissítéseket, a rendszer minden tartományvezérlő esetén megváltoztatja a frissítési időközt véletlenszerűen kijelölt perc alapú időközzel. A véletlen idő mezőbe beírt szám meghatározza az eltérés felső határát. Ha például 30 percet ír be, a rendszer 0-tól 30 percig terjedő eltérést választ ki. Egy nagy szám beírása széles tartományt eredményez, és így kevésbé valószínű, hogy a frissítési kérések átfedik egymást. Azonban a frissítések jelentősen késhetnek.
+
+Megjegyzés: Ezt a beállítást csak akkor használja, ha egy tartomány, telephely, szervezeti egység vagy testreszabott csoport számára hoz létre házirendet. Ha csak egy helyi számítógép részére hoz létre házirendet, a rendszer figyelmen kívül hagyja ezt a beállítást.</string>
+      <string id="GroupPolicyRefreshRateUser">Felhasználók csoportházirend-frissítési időközének beállítása</string>
+      <string id="GroupPolicyRefreshRateUser_Help">Ez a házirend-beállítás meghatározza, milyen gyakran történjen a felhasználók csoportházirendjének frissítése, ha a számítógép használatban van (a háttérben). A beállítás csak a Felhasználó konfigurációja mappában lévő csoportházirendek számára határozza meg a háttérben történő frissítést.
+
+A háttérben futó frissítésen felül a felhasználó csoportházirendje mindig frissül, ha a felhasználó bejelentkezik.
+
+Alapértelmezésként a felhasználói csoportházirend a háttérben 90 percenként frissül, véletlen, 0-30 perces eltolással.
+
+A beállítás engedélyezésével a frissítési időköz megadható 0-tól 64 800 percig (45 nap). Ha a 0 percet választja, a számítógép 7 másodpercenként próbálja frissíteni a felhasználói csoportházirendet. Mivel azonban a frissítés akadályozhatja a felhasználók munkáját és növelheti a hálózat forgalmát, a nagyon rövid frissítési időközök nem megfelelőek a legtöbb telepítés esetén.
+
+A beállítás letiltásával a felhasználói csoportházirend 90 percenként frissül (alapértelmezett beállítás szerint). Ahhoz, hogy meghatározza, hogy a felhasználói csoportházirend sose frissüljön, ha a számítógép használatban van, jelölje ki a „Csoportházirend háttérbeli frissítésének kikapcsolása” házirendet.
+
+Ez a beállítás továbbá lehetővé teszi annak meghatározását, hogy mennyivel változhat a tényleges frissítési időköz. Annak megakadályozza érdekében, hogy az azonos frissítési időközt beállító ügyfelek egyszerre kérjenek frissítéseket, a rendszer minden ügyfél esetén megváltoztatja a frissítési időközt véletlenszerűen kijelölt perc alapú időközzel. A véletlen idő mezőbe beírt szám meghatározza az eltérés felső határát. Ha például 30 percet ír be, a rendszer 0-tól 30 percig terjedő eltérést választ ki. Egy nagy szám beírása széles tartományt eredményez, és így kevésbé valószínű, hogy az ügyfelek kérései átfedik egymást. Azonban a frissítések jelentősen késhetnek.
+
+Fontos: Ha a „Csoportházirend háttérbeli frissítésének kikapcsolása” beállítás engedélyezett, a beállítás figyelmen kívül lesz hagyva.
+
+Megjegyzés: Ez a beállítás meghatározza a felhasználó csoportházirendjeinek frissítési időközét. A számítógép csoportházirendje frissítési időközének beállításához használja a „Számítógépek csoportházirendjének frissítési időköze” beállítást (a Számítógép konfigurációja\Felügyeleti sablonok\Rendszer\Csoportházirend helyen).
+
+Tipp: Értesítse a felhasználókat arról, hogy a házirendjük időszakosan frissül, így felismerhetik a házirend frissítésének jeleit. A csoportházirend frissítésekor a Windows asztal frissül, röviden villog, és bezárja a megnyitott menüket. Továbbá a csoportházirendek által bevezetett korlátozások, például a felhasználók által futtatható programokat szabályozók, zavarhatják a folyamatban lévő feladatokat.</string>
+      <string id="NewGPODisplayName">Új csoportházirend-objektumok alapértelmezett nevének beállítása</string>
+      <string id="NewGPODisplayName_Help">Ezzel a házirend-beállítással az új csoportházirend-objektumok alapértelmezetten megjelenítendő nevét állíthatja be.
+
+Ez a beállítás lehetővé teszi a házirenddel kompatibilis csoportházirend-kezelési eszközökkel, például az Active Directory-eszközökben lévő Csoportházirend lappal és a csoportházirend-objektumok böngészőjével létrehozott új csoportházirend-objektumok alapértelmezett nevének meghatározását.
+
+A megjelenítendő név környezeti változókat is tartalmazhat, és legfeljebb 255 karakter hosszú lehet.
+
+Ha a beállítás le van tiltva vagy nem konfigurált, a rendszer az Új csoportházirend-objektum alapértelmezett megjelenítendő nevét használja.</string>
+      <string id="NewGPOLinksDisabled">Csoportházirend-objektumok alapértelmezés szerint letiltott új hivatkozásainak létrehozása</string>
+      <string id="NewGPOLinksDisabled_Help">Ezzel a házirend-beállítással új csoportházirend-objektum hivatkozásokat hozhat létre letiltott állapotban.
+
+A beállítás engedélyezésével alapértelmezés szerint az összes új csoportházirend-objektum hivatkozását letiltott állapotban hozhatja létre. Miután a házirenddel kompatibilis csoportházirend-kezelő eszközzel, például az Active Directory - felhasználók és számítógépek vagy az Active Directory - helyek és szolgáltatások eszközzel konfigurálta és tesztelte az új objektumhivatkozásokat, engedélyezheti az objektumok hivatkozásait a rendszerben való használatra.
+
+Ha letiltja ezt a beállítást, vagy nem konfigurálja, a rendszer az új Csoportházirend-objektum hivatkozásokat engedélyezett állapotban hozza létre. Ha nem szeretné a konfigurálás és tesztelés előtt életbe léptetni a beállításokat, le kell tiltania az objektumok hivatkozását.</string>
+      <string id="OnlyUseLocalAdminFiles">Mindig a helyi ADM-fájlok használata a Csoportházirendobjektum-szerkesztőben</string>
+      <string id="OnlyUseLocalAdminFiles_Help">Ez a házirend-beállítás lehetővé teszi, hogy mindig a helyi ADM-fájlokat használja a Csoportházirend beépülő modulban.
+
+Alapértelmezett beállítás szerint, ha egy Csoportházirend-objektumot szerkeszt a Csoportházirendobjektum-szerkesztő beépülő modullal, az ADM-fájlok betöltődnek a Csoportházirend-objektumból a Csoportházirendobjektum-szerkesztő beépülő modulba. Ez lehetővé teszi, hogy az ADM-fájloknak azon verzióit használja, amelyeket a Csoportházirend-objektum szerkesztésekor a Csoportházirend-objektum létrehozásához használt.
+
+Ez a következő viselkedéshez vezet:
+
+- Ha például a csoportházirend-objektumot eredetileg egy angol nyelvű rendszeren hozta létre, akkor az angol ADM fájlokat tartalmaz.
+
+- Ha később más nyelvű rendszeren szerkeszti a GPO-t, akkor az angol nyelvű ADM-fájlokat használhatja a GPO-ból.
+
+Ezt a viselkedést ezzel a beállítással módosíthatja.
+
+Ha engedélyezi a beállítást, akkor a Csoportházirend objektumszerkesztője modul mindig a %windir%\inf könyvtárban lévő ADM-fájlokat használja a GPO-k szerkesztéséhez.
+
+Ez a következő viselkedéshez vezet:
+
+- Ha például a csoportházirend-objektumot eredetileg egy angol nyelvű rendszeren hozta létre, majd egy japán nyelvű rendszeren szerkeszti, akkor a Csoportházirend-objektumszerkesztő a helyi japán ADM-fájlokat fogja használni, és a Felügyeleti sablonok szövege japánul jelenik meg.
+
+Ha letiltja a beállítást vagy nem konfigurálja azt, akkor a Csoportházirend objektumszerkesztője az ADM-fájlokat mindig a kérdéses GPO-ból tölti be.
+
+Megjegyzés: Ha a szükséges ADM-fájlok nem mind elérhetőek a helyi %windir%\inf könyvtárban, akkor elképzelhető, hogy a szerkesztett GPO egyes beállításai nem jelennek meg.</string>
+      <string id="PolicyPolicies">Csoportházirend</string>
+      <string id="RSoPLogging">Az eredő házirend naplózásának kikapcsolása</string>
+      <string id="RSoPLogging_Help">Ez a beállítás lehetővé teszi az eredő házirend (RSoP) naplózásának engedélyezését vagy letiltását az ügyfélszámítógépen.
+
+Az eredő házirend az ügyfelekre alkalmazott csoportházirend-beállításokról szóló információkat naplózza. Ez az információ részleteket tartalmaz többek között a Csoportházirend-objektumok alkalmazásáról, azok származási helyéről, és hogy milyen ügyféloldali bővítménybeállításokat tartalmaztak.
+
+Ha engedélyezi ezt a beállítást, az eredő házirend naplózása ki van kapcsolva.
+
+Ha letiltja a beállítást vagy nem konfigurálja, az eredő házirend naplózása be van kapcsolva. Alapértelmezés szerint az eredő házirend naplózása mindig be van kapcsolva.
+
+Megjegyzés: Az ügyfélgépre naplózott eredő házirend-információk megtekintéséhez használhatja a Microsoft Management Console (MMC) Eredő házirend beépülő modulját.</string>
+      <string id="UserPolicyMode">Felhasználói csoportházirend visszacsatolásos frissítési módjának beállítása</string>
+      <string id="UserPolicyMode_Help">Ez a házirend-beállítás azt közli a rendszerrel, hogy alkalmazza a számítógépre a csoportházirend-objektumok készletét minden olyan felhasználó esetén, aki olyan számítógépre jelentkezik be, amelyre ez a beállítás hatással van. Ez olyan speciális felhasználású (nyilvános helyek, laboratóriumok és osztálytermek) számítógépekhez való, ahol a felhasználói beállítást az éppen használt számítógép alapján kell módosítani.
+
+Alapértelmezés szerint a felhasználó csoportházirend-objektumai határozzák meg, mely felhasználói beállítás érvényesüljön. Ha engedélyezi ezt a beállítást, akkor, amikor egy felhasználó bejelentkezik erre a számítógépre, a számítógép csoportházirend-objektumai határozzák meg azt, hogy a csoportházirend-objektumok mely készlete alkalmazandó.
+
+Ha engedélyezi ezt a beállítást, a Mód mezőben kiválaszthatja a következő módok valamelyikét:
+
+A „Csere” azt jelzi, hogy a számítógép csoportházirend-objektumaiban megadott felhasználói beállítások lecserélik a felhasználóval általában társított felhasználói beállításokat.
+
+Az „Összefésülés” azt jelzi, hogy a számítógép csoportházirend-objektumaiban megadott felhasználói beállítások és a felhasználóval általában társított felhasználói beállítások összefésülődnek. A beállítások ütközése esetén a számítógép csoportházirend-objektumaiban megadott felhasználói beállítások érvényesülnek a felhasználó normál beállításaival szemben.
+
+Ha letiltja vagy nem konfigurálja ezt a beállítást, a felhasználó csoportházirend-objektumai határozzák meg, mely felhasználói beállítás érvényesüljön.
+
+Megjegyzés: Ez a beállítás csak akkor hatásos, ha mind a számítógépfiók, mind a felhasználói fiók Windows 2000 vagy újabb tartományban van.</string>
+      <string id="UserPolicyMode_Merge">Összefésülés</string>
+      <string id="UserPolicyMode_Replace">Csere</string>
+      <string id="CorpConnSyncWaitTime">Munkacsoport-kapcsolat várakozási idejének megadása házirendek feldolgozásakor</string>
+      <string id="CorpConnSyncWaitTime_Help">Ez a házirend-beállítás meghatározza, mennyi ideig várakozzon a csoportházirend a munkacsoport-kapcsolatról szóló értesítésekre az indítási házirend feldolgozása alatt. Ha az indítási házirend feldolgozása szinkron módon történik, a számítógép a munkacsoport-kapcsolat elérhetőségéig vagy a várakozási idő eléréséig zárolva van. Ha az indítási házirend feldolgozása aszinkron, a számítógép nincs zárolva, és a házirend feldolgozása a háttérben történik. Mindkét esetben ezen házirend-beállítás konfigurálása felülbírálja a rendszer által számított várakozási időt.
+
+Ha engedélyezi ezt a házirend-beállítást, a csoportházirend ezt a felügyeleti módon konfigurált maximális várakozási időt fogja használni a munkacsoport-kapcsolathoz, és az alapértelmezett vagy rendszer által számított várakozási időt felülbírálja.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, a csoportházirend a Windows 7 rendszernél újabb Windows operációs rendszert futtató számítógépeken a 60 másodperces alapértelmezett várakozási időt fogja használni a munkacsoport-kapcsolathoz.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Beavatkozási beállítások</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">Kockázatcsökkentési folyamatbeállítások</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">Engedélyezze, hogy a Windows Betűkészlet-gyorsítótárazás szolgáltatás betűkészleteket és hozzájuk tartozó katalógusadatokat töltsön le online betűkészlet-szolgáltatóktól.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">Lassú kapcsolat értéke:[számmező] ezredmásodperc</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Időkorlát értéke: [számmező] ezredmásodperc</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">perc:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Várakozás időtartama (másodpercben):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Feldolgozás engedélyezése lassú hálózati kapcsolaton keresztül</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Feldolgozás engedélyezése lassú hálózati kapcsolaton keresztül</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Ne alkalmazza háttérben történő rendszeres feldolgozás közben</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Feldolgozás engedélyezése lassú hálózati kapcsolaton keresztül</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Ne alkalmazza háttérben történő rendszeres feldolgozás közben</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Feldolgozás engedélyezése lassú hálózati kapcsolaton keresztül</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Feldolgozás engedélyezése lassú hálózati kapcsolaton keresztül</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Ne alkalmazza háttérben történő rendszeres feldolgozás közben</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Feldolgozás engedélyezése lassú hálózati kapcsolaton keresztül</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Ne alkalmazza háttérben történő rendszeres feldolgozás közben</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Ne alkalmazza háttérben történő rendszeres feldolgozás közben</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Feldolgozás engedélyezése lassú hálózati kapcsolaton keresztül</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Ne alkalmazza háttérben történő rendszeres feldolgozás közben</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Ne alkalmazza háttérben történő rendszeres feldolgozás közben</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Feldolgozás engedélyezése lassú hálózati kapcsolaton keresztül</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Ne alkalmazza háttérben történő rendszeres feldolgozás közben</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Feldolgozás engedélyezése lassú hálózati kapcsolaton keresztül</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Ne alkalmazza háttérben történő rendszeres feldolgozás közben</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Feldolgozás változatlan csoportházirend-objektumok esetén is</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Amikor a Csoportházirendobjektum-szerkesztő tartományvezérlőt jelöl ki használatra, a következőket kell végrehajtania:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Kapcsolat sebessége (Kbit/s):</decimalTextBox>
+        <text> </text>
+        <text>A lassú kapcsolat észlelésének letiltásához írjon be 0-t.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Kapcsolat sebessége (Kbit/s):</decimalTextBox>
+        <text> </text>
+        <text>A lassú kapcsolat észlelésének letiltásához írjon be 0-t.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">Mindig lassú kapcsolatként kezeli a WWAN kapcsolatokat</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>A beállítással saját igényei szerint állíthatja be a csoportházirend alkalmazásának gyakoriságát</text>
+        <text>a számítógépekre vonatkozóan. A gyakoriság 0 és 44 640 perc (31 nap) között állítható be.</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Percek száma:</decimalTextBox>
+        <text> </text>
+        <text>Ez egy véletlen, a frissítési időhöz hozzáadott idő, annak megakadályozására, hogy</text>
+        <text>az összes ügyfél egyszerre kérelmezze a csoportházirendet.</text>
+        <text>Az érték 0 és 1440 perc (24 óra) között változhat</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Percek száma:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>A beállítással saját igényei szerint állíthatja be a csoportházirend alkalmazásának gyakoriságát</text>
+        <text>a tartományvezérlőkre vonatkozóan. A gyakoriság 0 és 44 640 perc (31 nap) között állítható be.</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Percek száma:</decimalTextBox>
+        <text> </text>
+        <text>Ez egy véletlen, a frissítési időhöz hozzáadott idő, annak megakadályozására, hogy</text>
+        <text>az összes ügyfél egyszerre kérelmezze a csoportházirendet.</text>
+        <text>Az érték 0 és 1440 perc (24 óra) között változhat</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Percek száma:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>A beállítással saját igényei szerint állíthatja be a csoportházirend alkalmazásának gyakoriságát</text>
+        <text>a felhasználókra vonatkozóan. A gyakoriság 0 és 44 640 perc (31 nap) között állítható be.</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Percek száma:</decimalTextBox>
+        <text> </text>
+        <text>Ez egy véletlen, a frissítési időhöz hozzáadott idő, annak megakadályozására, hogy</text>
+        <text>az összes ügyfél egyszerre kérelmezze a csoportházirendet.</text>
+        <text>Az érték 0 és 1440 perc (24 óra) között változhat</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Percek száma:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>Csoportházirend-objektum neve:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Mód:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Várakozás időtartama (másodpercben):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

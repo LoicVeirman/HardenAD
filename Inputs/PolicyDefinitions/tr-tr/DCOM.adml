@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>buraya görünen adı girin</displayName>
+  <description>buraya tanımı girin</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">Dağıtılmış COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Yerel etkinleştirme güvenlik denetimi muafiyetine izin ver</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Yerel bilgisayar yöneticilerinin "Etkinleştirme Güvenlik Denetimi Muafiyetini Tanımla" listesine ekleme yapabileceğini belirtmenizi sağlar.
+
+Bu ilke ayarını etkinleştirirseniz ve DCOM "Etkinleştirme Güvenlik Denetimi muafiyetini tanımla" ilkesinde (etkinleştirilmişse) bir DCOM sunucu uygulaması kimliği (appid) için açık bir giriş bulamazsa, DCOM yerel olarak yapılandırılmış listede bir giriş arar.
+
+Bu ilke ayarını devre dışı bırakırsanız, DCOM yerel olarak yapılandırılmış DCOM etkinleştirme güvenlik denetimi muafiyet listesine bakmaz.
+
+Bu ilke ayarını yapılandırmazsanız, DCOM, "Etkinleştirme Güvenlik Denetimi Muafiyetini Tanımla" ilkesi yapılandırılmamışsa yalnızca yerel olarak yapılandırılmış muafiyet listesine bakar.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Etkinleştirme Güvenlik Denetimi muafiyetini tanımla</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">DCOM Etkinleştirme güvenlik denetiminin dışında tutulan DCOM sunucu uygulaması kimliği (appid) listesini görüntülemenize ve değiştirmenize izin verir. DCOM bu amaçla iki liste kullanır, birisi bu ilke ayarı üzerinden Grup İlkesi ile yapılandırılır, diğeri ise yerel bilgisayar yöneticilerinin eylemleri tarafından yapılandırılır. Bu ilke ayarı yapılandırıldığında "Yerel etkinleştirme güvenlik denetimi muafiyetine izin ver" ilke ayarı etkinleştirilmedikçe, DCOM ikinci listeyi yoksayar.
+
+Bu ilkeye eklenen DCOM sunucusu uygulama kimliği, büyük ayraçlar içinde listelenmelidir. Örneğin: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}. Var olmayan veya düzgün olarak biçimlendirilmeyen uygulama kimliği girerseniz, DCOM hataları denetlemeden bunları listeye ekler.
+
+Bu ilke ayarını etkinleştirirseniz, Grup İlkesi ayarları tarafından tanımlanan DCOM etkinleştirme güvenlik denetimi muafiyeti listesini görüntüleyebilir ve değiştirebilirsiniz. Bu listeye bir uygulama kimliği ekler ve değerini 1 olarak ayarlarsanız, DCOM tarafından DCOM sunucusu için Etkinleştirme güvenlik denetimi uygulanmaz. Bu listeye bir uygulama kimliği ekler ve değerini 0 olarak ayarlarsanız, DCOM tarafından yerel ayarlara bakmaksızın DCOM sunucusu için Etkinleştirme güvenlik denetimi uygulanır.
+
+Bu ilke ayarını devre dışı bırakırsanız, Grup İlkesi tarafından tanımlanan uygulama kimliği muafiyet listesi silinir ve yerel bilgisayar yöneticisi tarafından tanımlanan liste kullanılır.
+
+Bu ilke ayarını yapılandırmazsanız, yerel bilgisayar yöneticisi tarafından tanımlanan uygulama kimliği muafiyet listesi kullanılır.
+
+Notlar:
+
+DCOM Etkinleştirme güvenlik denetimi, DCOM sunucusu işlemi başladıktan sonra, nesne etkinleştirme isteği sunucu işlemine dağıtılmadan önce yapılır. Bu erişim denetimi, varsa DCOM sunucusunun özel başlatma izni güvenlik tanımlayıcısı için yapılır, aksi takdirde yapılandırılmış varsayılanlar için yapılır.
+
+DCOM sunucusunun özel başlatma izni, açık İZİN VERME girdileri içeriyorsa bu, DCOM sunucusu işlemi çalışır durumdayken daha önceden belirtilen kullanıcılar için başarılı olan nesne etkinleştirmelerinin şimdi tam tersine başarısız olabileceği anlamına gelebilir. Bu durumda uygun eylem, DCOM sunucusu özel başlatma izni ayarlarını doğru güvenlik ayarlarına getirmek için yeniden yapılandırmaktır; fakat bu ilke ayarı kısa dönemde uygulama uyumluluğu dağıtım yardımı olarak kullanılabilir.
+
+Bu muafiyet listesine eklenen DCOM sunucuları, yalnızca özel başlatma izinleri herhangi bir kullanıcı veya grup için belirli Yerel Başlatma, Uzaktan Başlatma, Yerel Etkinleştirme veya Uzaktan Etkinleştirme izin verme veya engelleme girdileri içermiyorsa denetimin dışında tutulur. DCOM Sunucusu Uygulama Kimlikleri için listeye eklenen muafiyetler, varsa hem 32-bit hem de 64-bit sunucu sürümlerine uygulanır.</string>
+      <string id="DCOMAppCompatPolicies">Uygulama Uyumluluğu Ayarları</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>DCOM sunucusu uygulama kimliğini aşağıda listelenen eylem değeri ile birlikte girin.</text>
+        <text>Uygulama kimliği, açılış ve kapanış büyük ayraçlarını içermelidir.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Muafiyet listesine DCOM sunucularını ekle/kaldır: </listBox>
+        <text> </text>
+        <text>Değerler:</text>
+        <text>0 = Belirtilen uygulama kimliği, Etkinleştirme güvenlik denetiminin dışında tutulmayacak</text>
+        <text>1 = Belirtilen uygulama kimliği, Etkinleştirme güvenlik denetiminin dışında tutulacak</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

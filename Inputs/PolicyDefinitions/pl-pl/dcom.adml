@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>tutaj wprowadź wyświetlaną nazwę</displayName>
+  <description>tutaj wprowadź opis</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">Model obiektów rozproszonych COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Zezwalaj na wykluczenia lokalnego sprawdzania zabezpieczeń aktywacji</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Umożliwia określenie, że administratorzy komputera lokalnego mogą uzupełniać listę Definiuj wykluczenia sprawdzania zabezpieczeń aktywacji.
+
+Jeżeli to ustawienie zasad zostanie włączone, a model DCOM nie znajdzie jawnego wpisu dotyczącego identyfikatora aplikacji serwera DCOM (appid) w zasadzie Definiuj wykluczenia sprawdzania zabezpieczeń aktywacji (jeśli została włączona), zacznie szukać wpisu na liście konfigurowanej lokalnie.
+
+Jeżeli to ustawienie zasad zostanie wyłączone, model DCOM nie będzie przeprowadzać wyszukiwania na konfigurowanej lokalnie liście wykluczeń sprawdzania zabezpieczeń aktywacji modelu DCOM.
+
+Jeżeli to ustawienie zasad nie zostanie skonfigurowane, model DCOM przeprowadzi wyszukiwanie na konfigurowanej lokalnie liście wykluczeń tylko wtedy, gdy zasada Definiuj wykluczenia sprawdzania zabezpieczeń aktywacji nie zostanie skonfigurowana.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Definiuj wykluczenia sprawdzania zabezpieczeń aktywacji</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Umożliwia wyświetlanie i zmianę listy identyfikatorów aplikacji serwera DCOM (appid) wykluczonych ze sprawdzania zabezpieczeń aktywacji DCOM.  Model DCOM używa dwóch takich list — jednej skonfigurowanej przez zasady grupy za pomocą tego ustawienia zasad oraz drugiej skonfigurowanej przez administratorów komputera lokalnego.  Gdy to ustawienie zasad zostało skonfigurowane, model DCOM ignoruje drugą listę, jeśli nie została włączona zasada „Zezwalaj na wykluczenia lokalnego sprawdzania zabezpieczeń aktywacji”.
+
+Identyfikatory serwera DCOM dodawane do tej zasady muszą być podane w formacie nawiasów klamrowych.  Na przykład: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}.  Jeśli zostanie wprowadzony nieistniejący lub niewłaściwie sformatowany identyfikator appid, model DCOM doda go do listy bez sprawdzania błędów.
+
+Jeśli to ustawienie zasad zostanie włączone, będzie można wyświetlać i zmieniać listę wykluczeń sprawdzania zabezpieczeń aktywacji zdefiniowaną w ustawieniach zasad grupy. Jeśli do tej listy zostanie dodany identyfikator appid, a jego wartość zostanie ustawiona na 1, model DCOM nie będzie wymuszał sprawdzania zabezpieczeń aktywacji dla tego serwera DCOM.   Jeśli do tej listy zostanie dodany identyfikator appid, a jego wartość zostanie ustawiona na 0, model DCOM będzie zawsze wymuszał sprawdzanie zabezpieczeń aktywacji dla tego serwera DCOM, bez względu na ustawienia lokalne.
+
+Jeśli to ustawienie zasad zostanie wyłączone, lista wykluczeń identyfikatorów appid zdefiniowana w zasadach grupy zostanie usunięta i użyta zostanie lista zdefiniowana przez administratorów komputera lokalnego.
+
+Jeśli to ustawienie zasad nie zostanie skonfigurowane, będzie używana lista wykluczeń identyfikatorów appid zdefiniowana przez administratorów komputera lokalnego.
+
+Uwagi:
+
+Sprawdzanie zabezpieczeń aktywacji DCOM jest przeprowadzane po uruchomieniu procesu serwera DCOM, ale przed wysłaniem żądania aktywacji obiektu do procesu serwera.   To sprawdzenie dostępu jest przeprowadzane na podstawie deskryptora zabezpieczeń dotyczącego niestandardowego uprawnienia uruchamiania serwera DCOM (jeśli taki deskryptor istnieje) lub na podstawie skonfigurowanych ustawień domyślnych.
+
+Jeśli niestandardowe uprawnienie uruchamiania serwera DCOM zawiera konkretne wpisy dotyczące odmowy (DENY), może to oznaczać, że aktywacje obiektów, które wcześniej, gdy działanie procesu serwera DCOM było poprawne, zakończyłyby się pomyślnie dla tak określonych użytkowników, mogą obecnie zakończyć się niepowodzeniem.   Odpowiednim działaniem w tej sytuacji jest ponowne skonfigurowanie ustawień niestandardowego uprawnienia uruchamiania serwera DCOM pod kątem poprawnych ustawień zabezpieczeń, ale to ustawienie zasad może być używane przez krótki czas jako pomoc przy wdrożeniach dotyczących zgodności aplikacji.
+
+Serwery DCOM dodane do tej listy wykluczeń są wykluczane tylko wtedy, gdy w ich niestandardowych uprawnieniach uruchamiania nie ma określonych wpisów dotyczących przyznawania lub odmawiania uprawnień do uruchamiania lokalnego (LocalLaunch), uruchamiania zdalnego (RemoteLaunch), aktywacji lokalnej (LocalActivate) lub aktywacji zdalnej (RemoteActivate) dla dowolnych użytkowników lub grup.  Należy także zauważyć, że wykluczenia dla identyfikatorów appid serwera DCOM dodane do tej listy będą stosowane dla 32-bitowych i 64-bitowych istniejących wersji serwera.</string>
+      <string id="DCOMAppCompatPolicies">Ustawienia zgodności aplikacji</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Wprowadź identyfikatory serwerów DCOM wraz z wartościami akcji wyświetlonymi poniżej.</text>
+        <text>Identyfikator appid powinien zawierać otwierający i zamykający nawias klamrowy.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Dodaj\Usuń serwery DCOM z listy wykluczeń: </listBox>
+        <text> </text>
+        <text>Wartości:</text>
+        <text>0 = podany identyfikator aplikacji nie jest zwolniony ze sprawdzania zabezpieczeń aktywacji</text>
+        <text>1 = podany identyfikator aplikacji jest zwolniony ze sprawdzania zabezpieczeń aktywacji</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

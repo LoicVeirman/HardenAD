@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Configurações de SAM</displayName>
+  <description>Definições de configuração para o Gerenciador de Contas de Segurança</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">Gerenciador de Contas de Segurança</string>
+      <string id="SamNGCKeyROCAValidation">Configurar a validação das chaves WHfB com vulnerabilidade ROCA durante a autenticação</string>
+      <string id="SamNGCKeyROCAValidationNone">Ignorar chaves WHfB com vulnerabilidade ROCA</string>
+      <string id="SamNGCKeyROCAValidationAudit">Auditar chaves WHfB com vulnerabilidade ROCA no uso</string>
+      <string id="SamNGCKeyROCAValidationBlock">Bloquear chaves WHfB com vulnerabilidade ROCA no uso</string>
+      <string id="SamNGCKeyROCAValidation_explain">Essa configuração de política permite que você configure como os controladores de domínio controlam as chaves do Windows Hello para Empresas (WHfB) que estão vulneráveis ao "retorno do ataque de Coppersmith" (ROCA).
+
+Para obter mais informações sobre a vulnerabilidade ROCA, confira:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+Se você habilitar essa configuração de política, as opções a seguir têm suporte:
+
+Ignorar: durante a autenticação, o controlador de domínio não verificará se há vulnerabilidade ROCA em nenhuma chave WHfB.
+
+Auditar: durante a autenticação, o controlador de domínio emitirá eventos de auditoria para chaves WHfB que estejam sujeitas à vulnerabilidade ROCA (as autenticações ainda terão êxito).
+
+Bloquear: durante a autenticação, o controlador de domínio bloqueará o uso de chaves WHfB que estejam sujeitas à vulnerabilidade ROCA (as autenticações falharão).
+
+Essa configuração só tem efeito sobre controladores de domínio.
+
+Se não configurados, os controladores de domínio usarão o padrão de configuração local. A configuração padrão local é Auditar.
+
+Não é necessário reinicializar para que as alterações feitas nessa configuração sejam efetivadas.
+
+Observação: para evitar interrupções inesperadas, essa configuração não deve ser definida como Bloquear até que as mitigações adequadas tenham sido realizadas, como por exemplo a correção de TPMs vulneráveis.
+
+Para obter mais informações, acesse https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Opções para lidar com chaves WHfB com vulnerabilidade ROCA:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

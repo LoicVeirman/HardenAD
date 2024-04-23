@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Настройки SAM</displayName>
+  <description>Параметры настройки диспетчера учетных записей безопасности</description>
+  <resources>
+    <stringTable>
+      <string id="SAM">SAM</string>
+      <string id="SecurityAccountManager">Диспетчер учетных записей безопасности</string>
+      <string id="SamNGCKeyROCAValidation">Настроить проверку ROCA-уязвимых ключей WHfB во время аутентификации</string>
+      <string id="SamNGCKeyROCAValidationNone">Игнорировать ROCA-уязвимые WHfB ключи</string>
+      <string id="SamNGCKeyROCAValidationAudit">Аудит ROCA-уязвимых ключей WHfB при использовании</string>
+      <string id="SamNGCKeyROCAValidationBlock">Блокировать ROCA-уязвимые WHfB ключи при использовании</string>
+      <string id="SamNGCKeyROCAValidation_explain">Этот параметр политики позволяет вам настроить, как контроллеры домена обрабатывают ключи Windows Hello for Business (WHfB), которые уязвимы к уязвимости «Возвращение Копперсмита» (ROCA). 
+
+Дополнительную информацию об уязвимости ROCA см. По адресу: :
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15361
+
+https://en.wikipedia.org/wiki/ROCA_vulnerability
+
+ если вы включаете этот параметр политики, поддерживаются следующие параметры: 
+
+Игнорировать: во время аутентификации контроллер домена не будет проверять какие-либо ключи WHfB на предмет уязвимости ROCA. 
+
+Аудит: во время аутентификации контроллер домена будет генерировать события аудита для ключей WHfB, которые подвержены уязвимости ROCA (аутентификации все равно будут успешными). 
+
+Блокировать: во время аутентификации контроллер домена будет блокировать использование ключей WHfB, которые подвержены уязвимости ROCA (аутентификации не удастся). .
+
+Этот параметр действует только на контроллерах домена. 
+
+Если не настроено, контроллеры домена по умолчанию будут использовать свою локальную конфигурацию. Локальная конфигурация по умолчанию - Аудит. 
+
+Перезагрузка не требуется, чтобы изменения этого параметра вступили в силу. 
+
+Примечание. Во избежание непредвиденных сбоев этот параметр не следует устанавливать на «Блокировать» до тех пор, пока не будут выполнены соответствующие меры, например исправления уязвимых доверенных платформенных модулей. 
+
+Дополнительная информация доступна по адресу https://go.microsoft.com/fwlink/?linkid=2116430.
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="SamNGCKeyROCAValidation">
+        <dropdownList refId="SamNGCKeyROCAValidation_Settings" noSort="true" defaultItem="2">Варианты обработки ROCA-уязвимых ключей WHfB:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

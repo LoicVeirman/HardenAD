@@ -1,0 +1,132 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>DirectAccess クライアント エクスペリエンスの設定のグループ ポリシー テンプレート</displayName>
+  <description>この admx ファイルは、DirectAccess クライアント NCA コンポーネントのポリシー テンプレートを記述します</description>
+  <resources>
+    <stringTable>
+      <string id="NCA">DirectAccess クライアント エクスペリエンスの設定</string>
+      <string id="NCA_Help">これは、DirectAccess クライアント エクスペリエンスの設定のグループ ポリシー テンプレートです。詳細については、DirectAccess 展開ガイドを参照してください。</string>
+      <string id="SupportEmail">サポート電子メール アドレス</string>
+      <string id="SupportEmail_Help">NCA によって生成されたログ ファイルをネットワーク管理者に送信するときに使用する電子メール アドレスを指定します。
+
+ユーザーが管理者にログ ファイルを送信すると、NCA では既定の電子メール クライアントを使用して新しいメッセージを開き、メッセージの宛先フィールドにサポート電子メール アドレスを設定した後、生成されたログ ファイルを .html ファイルとして添付します。ユーザーはこのメッセージを確認し、必要に応じて情報を追加してから送信できます。
+
+</string>
+      <string id="FriendlyName">フレンドリ名</string>
+      <string id="FriendlyName_Help">ユーザーが通知領域のネットワーク アイコンをクリックしたときに表示される、DirectAccess の接続用の文字列を指定します。たとえば、Contoso Corporation の DirectAccess クライアントに対しては、"Contoso Intranet Access" などと指定できます。
+
+この設定を構成しなかった場合は、DirectAccess の接続用に表示される文字列は "Corporate Connection" となります。
+
+</string>
+      <string id="ShowUI">ユーザー インターフェイス</string>
+      <string id="ShowUI_Help">ユーザーが通知領域のネットワーク アイコンをクリックしたときに、DirectAccess の接続用のエントリを表示するかどうかを指定します。
+
+イントラネットから DirectAccess クライアント コンピューターをリモートで管理するためにだけ DirectAccess を使用していて、シームレスなイントラネット アクセスは提供していない場合は、この表示を無効にすることで、ユーザーの混乱を避けることができます。
+
+この設定を構成しなかった場合は、DirectAccess の接続用のエントリが表示されます。
+
+</string>
+      <string id="PassiveMode">DirectAccess パッシブ モード</string>
+      <string id="PassiveMode_Help">NCA サービスをパッシブ モードで実行するかどうかを指定します。
+
+これを無効に設定すると、NCA では常時アクティブにプローブを実行し続けます。この設定を構成しなかった場合は、NCA のプローブが既定でアクティブ モードになります。
+
+</string>
+      <string id="LocalNamesOn">ローカル名の優先を許可</string>
+      <string id="LocalNamesOn_Help">ユーザーが通知領域のネットワーク アイコンをクリックしたときに、DirectAccess エントリに対して接続および切断のオプションが表示されるかどうかを指定します。
+
+ユーザーが切断オプションをクリックすると、NCA では名前解決ポリシー テーブル (NRPT) から DirectAccess の規則を削除します。DirectAccess クライアント コンピューターは、現在のネットワーク構成内のクライアント コンピューターが使用できる通常の名前解決を使用します。これには、ローカル イントラネットまたはインターネット DNS サーバーに対するすべての DNS クエリの送信も含まれます。NCA では既存の IPsec トンネルを削除しないため、ユーザーは名前の代わりに IPv6 アドレスを指定することで、DirectAccess サーバー全体にわたって引き続きイントラネット リソースにアクセスできます。
+
+この切断の機能を使用することで、ユーザーは、異なるイントラネットに接続している際に、ローカル リソースに対して単一ラベルの非修飾名 ("PRINTSVR" など) を指定できます。また、ネットワークの場所の検出機能で、DirectAccess クライアント コンピューターが固有のイントラネットに接続していることが正確に確認されていない場合に、イントラネット リソースへの一時的なアクセスに利用できます。
+
+NRPT に DirectAccess の規則を復元し、通常の DirectAccess 機能を再度有効にするには、[接続] をクリックします。
+
+注意
+DirectAccess クライアント コンピューターがイントラネット上にあり、ネットワークの場所が正しく決定されている場合は、DirectAccess の規則が NRPT から既に削除されているため、切断オプションは無効です。
+
+この設定を構成しなかった場合は、接続および切断のオプションが表示されません。
+
+</string>
+      <string id="DTEs">IPsec トンネル エンドポイント</string>
+      <string id="DTEs_Help">DirectAccess を有効にするインターネット プロトコル セキュリティ (IPsec) トンネルのエンドポイントの IPv6 アドレスを指定します。NCA では、これらの構成されたトンネル エンドポイントをとおして、"企業リソース" 設定で指定されたリソースへのアクセスを試みます。
+
+既定では、DirectAccess クライアント コンピューターの接続で使用しているのと同じ DirectAccess サーバーが使用されます。DirectAccess の既定の構成では、一般に 2 つの IPsec トンネル エンドポイントがあります。1 つはインフラストラクチャ トンネル用、もう 1 つはイントラネット トンネル用です。トンネルごとに 1 つのエンドポイントを構成する必要があります。
+	  
+各エントリでは、文字列 "PING:" の後に IPsec トンネル エンドポイントの IPv6 アドレスを指定します。例: PING:2002:836b:1::836b:1
+
+NCA の機能を完全に利用するには、この設定を構成する必要があります。
+
+</string>
+      <string id="CorporateResources">企業リソース</string>
+      <string id="CorporateResources_Help">DirectAccess クライアントから正常にアクセスできるイントラネット上のリソースを指定します。各エントリは、リソースの種類とリソースの場所を識別する文字列です。
+
+各文字列には、次のいずれかを使用できます。
+	 
+- NCA で ping を行う DNS 名または IPv6 アドレス。構文は、"PING:" に続けて、IPv6 アドレスに解決される完全修飾ドメイン名 (FQDN)、または IPv6 アドレスを指定します。例: PING:myserver.corp.contoso.com または PING:2002:836b:1::1
+ 
+注意 
+
+可能な限り、IPv6 アドレスの代わりに FQDN を使用することをお勧めします。
+
+重要 
+
+少なくとも 1 つのエントリを PING: リソースとする必要があります。
+
+-	NCA で Hypertext Transfer Protocol (HTTP) 要求によるクエリを行う Uniform Resource Locator (URL)。Web ページの内容は自由です。構文は、"HTTP:" に続いて URL を指定します。URL のホスト部分は、Web サーバーの IPv6 アドレスに解決されるか、または IPv6 アドレスを含んでいる必要があります。例: HTTP:http://myserver.corp.contoso.com/ または HTTP:http://2002:836b:1::1/
+
+-	NCA で存在を確認するファイルの汎用名前付け規則 (UNC) パス。ファイルの内容は自由です。構文は、"FILE:" に続いて UNC パスを指定します。UNC パスの ComputerName 部分は、IPv6 アドレスに解決されるか、または IPv6 アドレスを含んでいる必要があります。例: FILE:\\myserver\myshare\test.txt または FILE:\\2002:836b:1::1\myshare\test.txt
+
+NCA の機能を完全に利用するには、この設定を構成する必要があります。
+
+</string>
+
+      <string id="CustomCommands">カスタム コマンド</string>
+      <string id="CustomCommands_Help">カスタム ログ用に管理者によって構成されるコマンドを指定します。これらのコマンドは、既定のログ コマンドに追加して実行されます。</string>
+
+    </stringTable>
+    
+    <presentationTable>
+      <presentation id="POL_08EF8AE6_3960_4852_93B5_3E068D6C2E6B">
+        <textBox refId="TXT_60660913_5491_4D50_AF96_770639FF243D">
+          <label>トラブルシューティング ポータル</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="SupportEmail">
+        <textBox refId="SupportEmail_Control">
+          <label>サポート電子メール</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="FriendlyName">
+        <textBox refId="FriendlyName_Control">
+          <label>フレンドリ名</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="LocalNamesOn"/>
+      <presentation id="ShowUI"/>
+      <presentation id="CorporateResources">
+        <listBox refId="CorporateResources_Control">企業リソース</listBox>
+      </presentation>
+      <presentation id="PortalName">
+        <textBox refId="PortalName_Control">
+          <label>ポータル名</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="DTEs">
+        <listBox refId="DTEs_Control">DTE</listBox>
+      </presentation>
+      <presentation id="PassiveMode"/>
+      <presentation id="CoporatePortalSite">
+        <textBox refId="CoporatePortalSite_Control">
+          <label>企業ポータル サイト - URL</label>
+          <defaultValue></defaultValue>
+        </textBox>
+      </presentation>
+      <presentation id="CustomCommands">
+        <listBox refId="CustomCommands_Control">CustomCommands</listBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

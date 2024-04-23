@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Anzeigename hier eingeben</displayName>
+  <description>Beschreibung hier eingeben</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_LanmanWorkstation">LanMan-Arbeitsstation</string>
+      <string id="Pol_CipherSuiteOrder_Name">Reihenfolge der Verschlüsselungssammlungen</string>
+      <string id="Pol_CipherSuiteOrder_Help">Diese Richtlinieneinstellung legt die vom SMB-Client verwendeten Verschlüsselungssammlungen fest.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, werden die Verschlüsselungssammlungen in der angegebenen Reihenfolge priorisiert.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren und nicht mindestens eine unterstützte Verschlüsselungssammlung angeben, oder wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wird die Standardreihenfolge der Verschlüsselungssammlungen verwendet.
+
+Verschlüsselungssammlungen von SMB 3.11:
+
+AES_128_GCM
+AES_128_CCM
+AES_256_GCM
+AES_256_CCM
+
+Verschlüsselungssammlungen von SMB 3.0 und 3.02:
+
+AES_128_CCM
+
+Ändern der Einstellung:
+
+Ordnen Sie die gewünschten Verschlüsselungssammlungen im Bearbeitungsfeld zeilenweise von der am meisten bis zu der am wenigsten bevorzugten Sammlung an. Die am meisten bevorzugte Verschlüsselungssammlung steht ganz oben. Entfernen Sie alle nicht verwendeten Verschlüsselungssammlungen.
+
+Hinweis: Wenn Sie diese Sicherheitseinstellung konfigurieren, werden die Änderungen erst beim Neustart von Windows wirksam.</string>
+      <string id="Pol_EnableInsecureGuestLogons_Name">Unsichere Gastanmeldungen aktivieren</string>
+      <string id="Pol_EnableInsecureGuestLogons_Help">Diese Richtlinieneinstellung bestimmt, ob der SMB-Client unsichere Gastanmeldungen auf einem SMB-Server zulässt.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren oder nicht konfigurieren, lässt der SMB-Client unsichere Gastanmeldungen zu.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, lehnt der SMB-Client unsichere Gastanmeldungen ab.
+
+Unsichere Gastanmeldungen werden von Dateiservern verwendet, um den nicht authentifizierten Zugriff auf freigegebene Ordner zuzulassen. Während unsichere Gastanmeldungen in einer Unternehmensumgebung unüblich sind, werden sie häufig von Consumer-NAS (Network Attached Storage)-Appliances verwendet, die als Dateiserver fungieren. Windows-Dateiserver erfordern eine Authentifizierung und verwenden standardmäßig keine unsicheren Gastanmeldungen. Da unsichere Gastanmeldungen nicht authentifiziert werden, sind wichtige Sicherheitsfeatures wie SMB-Signatur und SMB-Verschlüsselung deaktiviert. Folglich haben Clients, die unsichere Gastanmeldungen zulassen, ein erhöhtes Risiko für eine Vielzahl von Man-in-the-Middle-Angriffen, die zu Datenverlust, Datenbeschädigung und Problemen durch Schadsoftware führen können. Zusätzlich kann jede Person im Netzwerk auf Daten zugreifen, die über eine unsichere Gastanmeldung auf einen Dateiserver geschrieben werden. Microsoft empfiehlt, unsichere Gastanmeldungen zu deaktivieren und Dateiserver so zu konfigurieren, dass sie den authentifizierten Zugriff erfordern.
+      </string>
+
+      <string id="Pol_EnableCSCforCAShares_Name">Verfügbarkeit von Offlinedateien auf CA (Continuous Availability)-Freigaben</string>
+      <string id="Pol_EnableCSCforCAShares_Help">
+        Diese Richtlinieneinstellung bestimmt das Verhalten von Offlinedateien für Clients, die eine Verbindung mit einer SMB-Freigabe herstellen, für die das CA (Continuous Availability)-Kennzeichen aktiviert ist.
+
+        Wenn Sie die Richtlinieneinstellung aktivieren, wird die Option "Immer offline verfügbar" im Datei-Explorer-Menü eines Windows-Computers angezeigt, wenn eine Verbindung mit einer CA-fähigen Freigabe hergestellt wird. Zudem können Dateien mithilfe des clientseitigen Cachings an CA-fähige Freigaben angeheftet werden.
+
+        Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verhindert Windows die Verwendung von Offlinedateien mit CA-fähigen Freigaben.
+
+        Hinweis: Microsoft rät davon ab, diese Gruppenrichtlinie zu aktivieren. Die Verwendung von CA mit Offlinedateien führt zu langen Übergangszeiten zwischen Online- und Offlinezustand.
+      </string>
+
+      <string id="Pol_EnableHandleCachingForCAFiles_Name">Caching von Handles auf CA (Continuous Availability)-Freigaben</string>
+      <string id="Pol_EnableHandleCachingForCAFiles_Help">
+        Diese Richtlinieneinstellung bestimmt das Verhalten beim Caching von SMB-Handles für Clients, die eine Verbindung mit einer SMB-Freigabe herstellen, für die das CA (Continuous Availability)-Kennzeichen aktiviert ist.
+
+        Wenn Sie diese Richtlinieneinstellung aktivieren, lässt der SMB-Client zwischengespeicherte Handles zu Dateien auf CA-Freigaben zu. Dies kann die Leistung verbessern, wenn wiederholt auf eine große Anzahl unstrukturierter Datendateien auf CA-Freigaben zugegriffen wird, die in Microsoft Azure Files ausgeführt werden.
+
+        Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verhindert Windows die Verwendung zwischengespeicherter Handles zu Dateien, die über CA-Freigaben geöffnet werden.
+
+        Hinweis: Diese Richtlinie hat keine Auswirkung, wenn eine Verbindung mit Freigaben des Dateiservers mit horizontaler Skalierung hergestellt wird, die von einem Windows Server bereitgestellt werden. Microsoft rät davon ab, diese Richtlinie für Clients zu aktivieren, die regelmäßig eine Verbindung mit Dateien herstellen, die auf einem Windows-Failovercluster mit der Rolle "Dateiserver zur allgemeinen Verwendung" gehostet sind, da dies zu ungünstigen Failoverzeiten sowie höherer Speicher- und CPU-Auslastung führen kann.
+      </string>
+      <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Mindestens Windows Server 2022, Windows 11</string>
+      <string id="Pol_EnableCompressedTraffic_Name">Standardmäßig SMB-Komprimierung verwenden</string>
+      <string id="Pol_EnableCompressedTraffic_Help">Diese Richtlinie steuert, ob der SMB Client standardmäßig die Datenverkehrskomprimierung verwendet.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, versucht der SMB Client, den Datenverkehr standardmäßig zu komprimieren, wenn die SMB Komprimierung aktiviert ist.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, versucht der SMB Client standardmäßig nicht, den Datenverkehr zu komprimieren. Die Verkehrskomprimierung kann jedoch auch auf andere Weise angefordert werden. Siehe Anmerkungen unten.
+
+Hinweis: Diese Richtlinie wird mit Handle Eigenschaften pro Freigabe und pro Datei kombiniert, über die eine Datenverkehrskomprimierung angefordert werden kann. Außerdem muss der SMB Server die Komprimierung unterstützen und aktivieren. Sollte diese Richtlinie beispielsweise deaktiviert (oder nicht konfiguriert) sein, kann der SMB Client weiterhin eine Komprimierung durchführen, wenn eine SMB Serverfreigabe eine Komprimierung angefordert hat. Wenn dies unerwünscht ist und Sie die Komprimierung vollständig deaktivieren möchten, konfigurieren Sie stattdessen die begleitende Richtlinie SMB-Komprimierung deaktivieren.
+      </string>
+      <string id="Pol_DisableCompression_Name">Deaktivieren der SMB-Komprimierung</string>
+      <string id="Pol_DisableCompression_Help">Diese Richtlinie steuert, ob der SMB Client die Verkehrskomprimierung deaktiviert (vollständig verhindert).
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, komprimiert der SMB Client niemals Daten, unabhängig von anderen Richtlinien (z. B. der Richtlinie SMB Komprimierung standardmäßig verwenden oder der Eigenschaft pro Freigabe).
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, kann der SMB Client den Datenverkehr komprimieren (abhängig von einer Kombination anderer Richtlinien und Bedingungen).
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_CipherSuiteOrder">
+        <text>Verschlüsselungssammlungen:</text>
+        <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

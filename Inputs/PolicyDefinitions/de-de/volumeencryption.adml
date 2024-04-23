@@ -1,0 +1,1088 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Anzeigenamen hier eingeben</displayName>
+  <description>Beschreibung hier eingeben</description>
+  <resources>
+    <stringTable>
+      <string id="ActiveDirectoryBackup_Help">Diese Richtlinieneinstellung ermöglicht das Verwalten der Active Directory-Domänendienste-Sicherung (AD DS, Active Directory Domain Services) von Wiederherstellungsinformationen zur BitLocker-Laufwerkverschlüsselung. Hierbei handelt es sich um ein administratives Verfahren für die Wiederherstellung der von BitLocker verschlüsselten Daten, mit dem Datenverluste aufgrund fehlender Schlüsselinformationen vermieden werden. Diese Richtlinieneinstellung gilt nur für Computer, auf denen Windows Server 2008 oder Windows Vista ausgeführt wird.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, werden bei aktivierter BitLocker-Laufwerkverschlüsselung für einen Computer automatisch BitLocker-Wiederherstellungsinformationen im Hintergrund in AD DS gesichert. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Hinweis: Möglicherweise müssen Sie zuerst geeignete Schemaerweiterungen und Zugriffssteuerungseinstellungen in der Domäne einrichten, damit die AD DS-Sicherung erfolgreich ausgeführt werden kann. Weitere Informationen zum Einrichten der AD DS-Sicherung für BitLocker finden Sie in Microsoft TechNet.
+
+Die BitLocker-Wiederherstellungsinformationen enthalten das Wiederherstellungskennwort und einige eindeutige ID-Daten. Sie können auch ein Paket einfügen, das einen Verschlüsselungsschlüssel für ein mit BitLocker geschütztes Laufwerk enthält. Dieses Schlüsselpaket wird durch mindestens ein Wiederherstellungskennwort gesichert und kann dazu dienen, bei einer Datenträgerbeschädigung eine spezialisierte Wiederherstellung durchzuführen.
+
+Wenn Sie die Option "BitLocker-Sicherung in AD DS erforderlich" auswählen, kann BitLocker nur dann aktiviert werden, wenn der Computer mit der Domäne verbunden ist und die BitLocker-Wiederherstellungsinformationen erfolgreich in AD DS gesichert wurden. Diese Option ist standardmäßig aktiviert, um sicherzustellen, dass eine BitLocker-Wiederherstellung möglich ist. Wenn diese Option nicht aktiviert ist, wird zwar versucht, eine AD DS-Sicherung auszuführen, das BitLocker-Setup wird jedoch durch Netzwerk- oder andere Sicherungsfehler nicht verhindert. Die Sicherung wird nicht automatisch wiederholt, und das Wiederherstellungskennwort wurde beim BitLocker-Setup möglicherweise nicht gespeichert.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden keine BitLocker-Wiederherstellungsinformationen in AD DS gesichert.
+
+Hinweis: Beim BitLocker-Setup erfolgt ggf. eine TPM-Initialisierung (Trusted Platform Module). Aktivieren Sie die Richtlinieneinstellung "TPM-Sicherung in Active Directory-Domänendienste aktivieren" in "System\Trusted Platform Module-Dienste", um sicherzustellen, dass die TPM-Informationen ebenfalls gesichert werden.
+      
+      </string>
+      <string id="ActiveDirectoryBackup_Name">BitLocker-Wiederherstellungsinformationen in Active Directory-Domänendiensten speichern (Windows Server 2008 und Windows Vista)</string>
+      <string id="ActiveDirectoryBackupDropDown_1">Wiederherstellungskennwörter und Schlüsselpakete</string>
+      <string id="ActiveDirectoryBackupDropDown_2">Nur Wiederherstellungskennwörter</string>
+
+      <string id="ConfigureStartupUsage_Help">Mithilfe dieser Richtlinieneinstellung können Sie steuern, ob der Setup-Assistent der BitLocker-Laufwerkverschlüsselung eine zusätzliche Authentifizierungsmethode einrichten kann, die bei jedem Start des Computers erforderlich ist. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Hinweis: Diese Richtlinie gilt nur für Computer, auf denen Windows Server 2008 oder Windows Vista ausgeführt wird.
+
+Auf einem Computer mit einem kompatiblen TPM (Trusted Platform Module) können beim Start zwei Authentifizierungsmethoden verwendet werden, um zusätzlichen Schutz für verschlüsselte Daten bereitzustellen. Beim Start des Computers können Benutzer aufgefordert werden, ein USB-Flashlaufwerk anzuschließen, das einen Systemstartschlüssel enthält. Es ist auch möglich, dass Benutzer zur Eingabe einer 4- bis 20-stelligen Systemstart-PIN (Personal Identification Number) aufgefordert werden.
+
+Für Computer ohne kompatibles TPM ist ein USB-Flashlaufwerk mit einem Systemstartschlüssel erforderlich. Ohne ein TPM werden die BitLocker-verschlüsselten Daten nur durch das auf diesem USB-Flashlaufwerk gespeicherte Schlüsselmaterial geschützt.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, zeigt der Assistent die Seite an, auf der der Benutzer erweiterte Startoptionen für BitLocker konfigurieren kann. Sie können Optionen für Computer mit oder ohne TPM weiter konfigurieren.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, zeigt der BitLocker-Setup-Assistent grundlegende Schritte an, die es dem Benutzer ermöglichen, BitLocker auf Computern mit einem TPM zu aktivieren. In diesem grundlegenden Assistenten können keine zusätzlichen Systemstartschlüssel und Systemstart-PINs konfiguriert werden.
+
+</string>
+
+      <string id="ConfigureStartupUsage_Name">Zusätzliche Authentifizierung beim Start erforderlich (Windows Server 2008 und Windows Vista)</string>
+      <string id="ConfigureAdvancedStartup_Name">Zusätzliche Authentifizierung beim Start anfordern</string>
+
+      <string id="ConfigureAdvancedStartup_Help">Mit dieser Richtlinieneinstellung können Sie konfigurieren, ob BitLocker bei jedem Computerstart eine zusätzliche Authentifizierung erfordert und ob Sie BitLocker mit oder ohne TPM (Trusted Platform Module) verwenden. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Hinweis: Beim Start kann nur eine der zusätzlichen Authentifizierungsoptionen erforderlich sein, da andernfalls ein Richtlinienfehler auftritt.
+
+Falls Sie BitLocker auf einem Computer ohne TPM verwenden möchten, aktivieren Sie das Kontrollkästchen "BitLocker ohne kompatibles TPM zulassen". In diesem Modus ist für den Start entweder ein Kennwort oder ein USB-Laufwerk erforderlich. Bei Verwendung eines Systemstartschlüssels werden die Schlüsselinformationen, die zum Verschlüsseln des Laufwerks verwendet werden, auf dem USB-Laufwerk gespeichert, wodurch ein USB-Stick entsteht. Wenn der USB-Stick eingesteckt wird, wird der Zugriff auf das Laufwerk authentifiziert, und es kann auf das Laufwerk zugegriffen werden. Wenn der USB-Stick verloren geht, nicht verfügbar ist oder Sie das Kennwort vergessen haben, verwenden Sie eine der BitLocker-Wiederherstellungsoptionen, um auf das Laufwerk zuzugreifen.
+
+Auf einem Computer mit einem kompatiblen TPM können beim Start vier Authentifizierungsmethoden verwendet werden, um zusätzlichen Schutz für verschlüsselte Daten zu bieten. Beim Start des Computers kann entweder nur das TPM für die Authentifizierung verwendet werden, oder es muss zusätzlich ein USB-Speicherstick mit einem Systemstartschlüssel eingesteckt werden und/oder eine 6- bis 20-stellige PIN (Personal Identification Number) eingegeben werden.
+
+Wenn Sie die Richtlinieneinstellung aktivieren, können Benutzer erweiterte Startoptionen im BitLocker-Setup-Assistenten konfigurieren.
+
+Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, können Benutzer auf Computern mit einem TPM nur grundlegende Optionen konfigurieren.
+
+Hinweis: Wenn Sie die Verwendung einer Systemstart-PIN und eines USB-Speichersticks erzwingen möchten, müssen Sie die BitLocker-Einstellungen mithilfe des Befehlszeilentools "manage-bde" und nicht über den Setup-Assistenten der BitLocker-Laufwerkverschlüsselung konfigurieren.
+
+</string>
+      <string id="AllowNetworkUnlockAtStartup_Name">Netzwerkentsperrung beim Start zulassen</string>
+      <string id="AllowNetworkUnlockAtStartup_Help">Mithilfe dieser Richtlinieneinstellung wird gesteuert, ob von einem BitLocker-geschützten Computer, der mit einem vertrauenswürdigen verkabelten lokalen Netzwerk (Local Area Network, LAN) verbunden ist und zu einer Domäne gehört, Netzwerkschlüssel-Schutzvorrichtungen auf TPM-fähigen Computern erstellt und verwendet werden können, um das Betriebssystemlaufwerk beim Starten des Computers automatisch zu entsperren.
+
+Wenn Sie diese Richtlinie aktivieren, können Netzwerkschlüssel-Schutzvorrichtungen von mit einem Bitlocker-Netzwerkentsperrungszertifikat konfigurierten Clients erstellt und verwendet werden.
+
+Wenn Sie zum Entsperren des Computers eine Netzwerkschlüssel-Schutzvorrichtung verwenden möchten, müssen der Computer und der Server, auf dem die Netzwerkentsperrung der Bitlocker-Laufwerkverschlüsselung erfolgt, mit einem Netzwerkentsperrungszertifikat bereitgestellt werden. Mithilfe des Netzwerkentsperrungszertifikats werden Netzwerkschlüssel-Schutzvorrichtungen erstellt und die mit dem Server zum Entsperren des Computers ausgetauschten Informationen geschützt. Zum Verteilen dieses Zertifikats auf Computer in Ihrer Organisation können Sie die Gruppenrichtlinieneinstellung "Computerkonfiguration\Windows-Einstellungen\Sicherheitseinstellungen\Richtlinien für öffentliche Schlüssel\Netzwerkentsperrungszertifikat für BitLocker-Laufwerkverschlüsselung" auf dem Domänencontroller verwenden. Bei dieser Entsperrungsmethode wird das TPM auf dem Computer verwendet, sodass von Computern ohne TPM keine Netzwerkschlüssel-Schutzvorrichtungen zum automatischen Entsperren mit der Netzwerkentsperrung verwendet werden können.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, können von BitLocker-Clients keine Netzwerkschlüssel-Schutzvorrichtungen erstellt und verwendet werden.
+
+Hinweis: Aus Zuverlässigkeits- und Sicherheitsgründen sollten Computer auch über eine TPM-Systemstart-PIN verfügen, die verwendet werden kann, wenn der Computer beim Start vom verkabelten Netzwerk oder vom Server getrennt wird.
+
+
+
+</string>
+
+      <string id="ConfigureTPMPINKeyUsageDropDown_Optional">Systemstartschlüssel und PIN bei TPM zulassen</string>
+      <string id="ConfigureTPMPINKeyUsageDropDown_Require">Systemstartschlüssel und PIN bei TPM erforderlich</string>
+      <string id="ConfigureTPMPINKeyUsageDropDown_Disallow">Systemstartschlüssel und PIN bei TPM nicht zulassen</string>
+
+      <string id="ConfigureTPMUsageDropDown_Optional">TPM zulassen</string>
+      <string id="ConfigureTPMUsageDropDown_Require">TPM erforderlich</string>
+      <string id="ConfigureTPMUsageDropDown_Disallow">TPM nicht zulassen</string>
+
+      <string id="ConfigurePINUsageDropDown_Optional">Systemstart-PIN bei TPM zulassen</string>
+      <string id="ConfigurePINUsageDropDown_Require">Start-PIN bei TPM erforderlich</string>
+      <string id="ConfigurePINUsageDropDown_Disallow">Systemstart-PIN bei TPM nicht zulassen</string>
+
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Optional">Systemstartschlüssel bei TPM zulassen</string>
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Require">Startschlüssel bei TPM erforderlich</string>
+      <string id="ConfigureTPMStartupKeyUsageDropDown_Disallow">Systemstartschlüssel bei TPM nicht zulassen</string>
+
+
+      <string id="ConfigureRecoveryUsage_Help">Mit dieser Richtlinieneinstellung können Sie steuern, ob der Setup-Assistent der BitLocker-Laufwerkverschlüsselung BitLocker-Wiederherstellungsoptionen anzeigen und festlegen kann. Diese Richtlinie gilt nur für Computer, auf denen Windows Server 2008 oder Windows Vista ausgeführt wird. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Falls der erforderliche Systemstartschlüssel nicht verfügbar ist, kann die Sperre für den Zugriff auf die BitLocker-verschlüsselten Daten mit zwei Wiederherstellungsoptionen aufgehoben werden. Der Benutzer kann entweder ein 48-stelliges numerisches Wiederherstellungskennwort eingeben oder ein USB-Flashlaufwerk anschließen, das einen 256-Bit-Wiederherstellungsschlüssel enthält.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie konfigurieren, welche Optionen im Setup-Assistenten zur Wiederherstellung von BitLocker-verschlüsselten Daten für Benutzer angezeigt werden. Beim Speichern auf einem USB-Flashlaufwerk wird das 48-stellige Wiederherstellungskennwort als Textdatei und der 256-Bit-Wiederherstellungsschlüssel als versteckte Datei gespeichert. Beim Speichern in einem Ordner wird das 48-stellige Wiederherstellungskennwort als Textdatei gespeichert. Beim Drucken wird das 48-stellige Wiederherstellungskennwort an den Standarddrucker gesendet. Wenn Sie beispielsweise das 48-stellige Wiederherstellungskennwort nicht zulassen, können Benutzer Wiederherstellungsinformationen nicht drucken oder in einem Ordner speichern.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, stellt der BitLocker-Setup-Assistent den Benutzern Möglichkeiten zum Speichern von Wiederherstellungsoptionen bereit.
+
+Hinweis: Wenn beim BitLocker-Setup eine TPM-Initialisierung (Trusted Platform Module) erforderlich ist, werden die TPM-Besitzerinformationen mit den BitLocker-Wiederherstellungsinformationen gespeichert oder ausgedruckt.
+
+Hinweis: Das 48-stellige Wiederherstellungskennwort ist nicht im FIPS-Kompatibilitätsmodus verfügbar.
+
+Wichtig: Diese Richtlinieneinstellung bietet ein administratives Verfahren für die Wiederherstellung der von BitLocker verschlüsselten Daten, mit dem Datenverluste aufgrund fehlender Schlüsselinformationen vermieden werden. Wenn Sie verhindern möchten, dass Benutzer auf die beiden Wiederherstellungsoptionen zugreifen, müssen Sie die Richtlinieneinstellung "BitLocker-Wiederherstellungsinformationen in Active Directory-Domänendiensten speichern (Windows Server 2008 und Windows Vista)" aktivieren, da andernfalls ein Richtlinienfehler auftritt.
+
+      
+
+      </string>
+
+      <string id="ConfigureRecoveryUsage_Name">Wiederherstellungsoptionen für BitLocker-geschützte Laufwerke für Benutzer auswählen (Windows Server 2008 und Windows Vista)</string>
+      <string id="ConfigureRecoveryPasswordUsageDropDown_Require">Wiederherstellungskennwort anfordern (Standardeinstellung)</string>
+      <string id="ConfigureRecoveryPasswordUsageDropDown_Disallow">Wiederherstellungskennwort nicht zulassen</string>
+
+      <string id="ConfigureRecoveryKeyUsageDropDown_Require">Wiederherstellungsschlüssel anfordern (Standardeinstellung)</string>
+      <string id="ConfigureRecoveryKeyUsageDropDown_Disallow">Wiederherstellungsschlüssel nicht zulassen</string>
+
+
+      <string id="OSRecoveryUsage_Name">Festlegen, wie BitLocker-geschützte Betriebssystemlaufwerke wiederhergestellt werden können</string>
+
+      <string id="OSRecoveryUsage_Help">Mit dieser Richtlinieneinstellung können Sie steuern, wie BitLocker-geschützte Betriebssystemlaufwerke wiederhergestellt werden, falls keine Informationen zum erforderlichen Systemstartschlüssel verfügbar sind. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Über das Kontrollkästchen "Zertifikatbasierte Wiederherstellungs-Agents zulassen" geben Sie an, ob für BitLocker-geschützte Betriebssystemlaufwerke ein Datenwiederherstellungs-Agent verwendet werden kann. Bevor ein Datenwiederherstellungs-Agent verwendet werden kann, muss er aus dem Element "Richtlinien öffentlicher Schlüssel" entweder in der Gruppenrichtlinien-Verwaltungskonsole oder im Editor für lokale Gruppenrichtlinien hinzugefügt werden. Weitere Informationen zum Hinzufügen von Datenwiederherstellungs-Agents finden Sie im Bereitstellungshandbuch für die BitLocker-Laufwerkverschlüsselung (auf Englisch) in Microsoft TechNet.
+
+Wählen Sie unter "Speicherung von BitLocker-Wiederherstellungsinformationen durch Benutzer konfigurieren" aus, ob Benutzer ein 48-stelliges Wiederherstellungskennwort oder einen 256-Bit-Wiederherstellungsschlüssel generieren dürfen, müssen oder nicht dürfen.
+
+Wählen Sie "Wiederherstellungsoptionen aus BitLocker-Setup-Assistent unterdrücken", um zu verhindern, dass Benutzer Wiederherstellungsoptionen angeben, wenn sie BitLocker für ein Laufwerk aktivieren. In diesem Fall können Sie beim Einschalten von BitLocker nicht angeben, welche Wiederherstellungsoption verwendet werden soll, da die BitLocker-Wiederherstellungsoptionen für das Laufwerk stattdessen durch die Richtlinieneinstellung bestimmt werden.
+
+Wählen Sie unter "BitLocker-Wiederherstellungsinformationen in Active Directory-Domänendiensten speichern" aus, welche BitLocker-Wiederherstellungsinformationen für Betriebssystemlaufwerke in AD DS gespeichert werden sollen. Bei Auswahl von "Wiederherstellungskennwort und Schlüsselpaket sichern" werden sowohl das BitLocker-Wiederherstellungskennwort als auch das Schlüsselpaket in AD DS gespeichert. Durch die Speicherung des Schlüsselpakets können Daten von einem physikalisch beschädigten Laufwerk wiederhergestellt werden. Bei Auswahl von "Nur Wiederherstellungskennwort sichern" wird ausschließlich das Wiederherstellungskennwort in AD DS gespeichert.
+
+Aktivieren Sie das Kontrollkästchen "BitLocker erst aktivieren, nachdem Wiederherstellungsinformationen für Betriebssystemlaufwerke in AD DS gespeichert wurden", wenn Sie verhindern möchten, dass Benutzer BitLocker aktivieren, bevor der Computer mit der Domäne verbunden und BitLocker-Wiederherstellungsinformationen erfolgreich in AD DS gesichert wurden.
+
+Hinweis: Wenn das Kontrollkästchen "BitLocker erst aktivieren, nachdem Wiederherstellungsinformationen für Betriebssystemlaufwerke in AD DS gespeichert wurden" aktiviert ist, wird automatisch ein Wiederherstellungskennwort generiert.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie steuern, welche Möglichkeiten Benutzern zum Wiederherstellen von Daten auf BitLocker-geschützten Betriebssystemlaufwerken zur Verfügung stehen.
+
+Wenn diese Richtlinieneinstellung deaktiviert oder nicht konfiguriert wird, werden die standardmäßigen Wiederherstellungsoptionen für die BitLocker-Wiederherstellung unterstützt. Ein DRA ist standardmäßig zulässig, die Wiederherstellungsoptionen, einschließlich Wiederherstellungskennwort und Wiederherstellungsschlüssel, können vom Benutzer festgelegt werden, und Wiederherstellungsinformationen werden nicht in AD DS gesichert.
+
+
+
+</string>
+
+      <string id="OSRecoveryPasswordUsageDropDown_Require">48-stelliges Wiederherstellungskennwort erforderlich</string>
+      <string id="OSRecoveryPasswordUsageDropDown_Allow">48-stelliges Wiederherstellungskennwort zulassen</string>
+      <string id="OSRecoveryPasswordUsageDropDown_Disallow">48-stelliges Wiederherstellungskennwort nicht zulassen</string>
+
+      <string id="OSRecoveryKeyUsageDropDown_Require">256-Bit-Wiederherstellungsschlüssel erforderlich</string>
+      <string id="OSRecoveryKeyUsageDropDown_Disallow">256-Bit-Wiederherstellungsschlüssel nicht zulassen</string>
+      <string id="OSRecoveryKeyUsageDropDown_Allow">256-Bit-Wiederherstellungsschlüssel zulassen</string>
+
+      <string id="FDVRecoveryUsage_Name">Festlegen, wie BitLocker-geschützte Festplattenlaufwerke wiederhergestellt werden können</string>
+      <string id="FDVRecoveryUsage_Help">Mit dieser Richtlinieneinstellung können Sie steuern, wie BitLocker-geschützte Festplattenlaufwerke wiederhergestellt werden, falls die erforderlichen Anmeldeinformationen nicht verfügbar sind. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Über das Kontrollkästchen "Datenwiederherstellungs-Agents zulassen" geben Sie an, ob für BitLocker-geschützte Festplattenlaufwerke ein Datenwiederherstellungs-Agent verwendet werden kann. Bevor ein Datenwiederherstellungs-Agent verwendet werden kann, muss er aus dem Element "Richtlinien öffentlicher Schlüssel" entweder in der Gruppenrichtlinien-Verwaltungskonsole oder im Editor für lokale Gruppenrichtlinien hinzugefügt werden. Weitere Informationen zum Hinzufügen von Datenwiederherstellungs-Agents finden Sie im Bereitstellungshandbuch für die BitLocker-Laufwerkverschlüsselung (auf Englisch) in Microsoft TechNet.
+
+Wählen Sie unter "Speicherung von BitLocker-Wiederherstellungsinformationen durch Benutzer konfigurieren" aus, ob Benutzer ein 48-stelliges Wiederherstellungskennwort oder einen 256-Bit-Wiederherstellungsschlüssel generieren dürfen, müssen oder nicht dürfen.
+
+Wählen Sie "Wiederherstellungsoptionen aus BitLocker-Setup-Assistent unterdrücken", um zu verhindern, dass Benutzer Wiederherstellungsoptionen angeben, wenn sie BitLocker für ein Laufwerk aktivieren. In diesem Fall können Sie beim Einschalten von BitLocker nicht angeben, welche Wiederherstellungsoption verwendet werden soll, da die BitLocker-Wiederherstellungsoptionen für das Laufwerk stattdessen durch die Richtlinieneinstellung bestimmt werden.
+
+Wählen Sie unter "BitLocker-Wiederherstellungsinformationen in Active Directory-Domänendiensten speichern" aus, welche BitLocker-Wiederherstellungsinformationen für Festplattenlaufwerke in AD DS gespeichert werden sollen. Bei Auswahl von "Wiederherstellungskennwort und Schlüsselpaket sichern" werden sowohl das BitLocker-Wiederherstellungskennwort als auch das Schlüsselpaket in AD DS gespeichert. Durch die Speicherung des Schlüsselpakets können Daten von einem physikalisch beschädigten Laufwerk wiederhergestellt werden. Bei Auswahl von "Nur Wiederherstellungskennwort sichern" wird ausschließlich das Wiederherstellungskennwort in AD DS gespeichert.
+
+Aktivieren Sie das Kontrollkästchen "BitLocker erst aktivieren, nachdem Wiederherstellungsinformationen für Festplattenlaufwerke in AD DS gespeichert wurden", wenn Sie verhindern möchten, dass Benutzer BitLocker aktivieren, bevor der Computer mit der Domäne verbunden wurde und BitLocker-Wiederherstellungsinformationen erfolgreich in AD DS gesichert wurden.
+
+Hinweis: Wenn das Kontrollkästchen "BitLocker erst aktivieren, nachdem Wiederherstellungsinformationen für Festplattenlaufwerke in AD DS gespeichert wurden" aktiviert ist, wird automatisch ein Wiederherstellungskennwort generiert.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie steuern, welche Möglichkeiten Benutzern zum Wiederherstellen von Daten auf BitLocker-geschützten Festplattenlaufwerken zur Verfügung stehen.
+
+Wenn diese Richtlinieneinstellung nicht konfiguriert oder deaktiviert wird, werden die standardmäßigen Wiederherstellungsoptionen für die BitLocker-Wiederherstellung unterstützt. Ein DRA ist standardmäßig zulässig, die Wiederherstellungsoptionen, einschließlich Wiederherstellungskennwort und Wiederherstellungsschlüssel, können vom Benutzer festgelegt werden, und Wiederherstellungsinformationen werden nicht in AD DS gesichert.
+
+
+
+</string>
+
+      <string id="FDVRecoveryPasswordUsageDropDown_Require">48-stelliges Wiederherstellungskennwort erforderlich</string>
+      <string id="FDVRecoveryPasswordUsageDropDown_Allow">48-stelliges Wiederherstellungskennwort zulassen</string>
+      <string id="FDVRecoveryPasswordUsageDropDown_Disallow">48-stelliges Wiederherstellungskennwort nicht zulassen</string>
+
+      <string id="FDVRecoveryKeyUsageDropDown_Require">256-Bit-Wiederherstellungsschlüssel erforderlich</string>
+      <string id="FDVRecoveryKeyUsageDropDown_Disallow">256-Bit-Wiederherstellungsschlüssel nicht zulassen</string>
+      <string id="FDVRecoveryKeyUsageDropDown_Allow">256-Bit-Wiederherstellungsschlüssel zulassen</string>
+
+      <string id="RDVRecoveryUsage_Name">Festlegen, wie BitLocker-geschützte Wechseldatenträger wiederhergestellt werden können</string>
+
+      <string id="RDVRecoveryUsage_Help">Mit dieser Richtlinieneinstellung können Sie steuern, wie BitLocker-geschützte Wechseldatenträger wiederhergestellt werden, falls die erforderlichen Anmeldeinformationen nicht verfügbar sind. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Über das Kontrollkästchen "Datenwiederherstellungs-Agents zulassen" geben Sie an, ob für BitLocker-geschützte Wechseldatenträger ein Datenwiederherstellungs-Agent verwendet werden kann. Bevor ein Datenwiederherstellungs-Agent verwendet werden kann, muss er aus dem Element "Richtlinien öffentlicher Schlüssel" entweder in der Gruppenrichtlinien-Verwaltungskonsole oder im Editor für lokale Gruppenrichtlinien hinzugefügt werden. Weitere Informationen zum Hinzufügen von Datenwiederherstellungs-Agents finden Sie im Bereitstellungshandbuch für die BitLocker-Laufwerkverschlüsselung (auf Englisch) in Microsoft TechNet.
+
+Wählen Sie unter "Speicherung von BitLocker-Wiederherstellungsinformationen durch Benutzer konfigurieren" aus, ob Benutzer ein 48-stelliges Wiederherstellungskennwort oder einen 256-Bit-Wiederherstellungsschlüssel generieren dürfen, müssen oder nicht dürfen.
+
+Wählen Sie "Wiederherstellungsoptionen aus BitLocker-Setup-Assistent unterdrücken", um zu verhindern, dass Benutzer Wiederherstellungsoptionen angeben, wenn sie BitLocker für ein Laufwerk aktivieren. In diesem Fall können Sie beim Einschalten von BitLocker nicht angeben, welche Wiederherstellungsoption verwendet werden soll, da die BitLocker-Wiederherstellungsoptionen für das Laufwerk stattdessen durch die Richtlinieneinstellung bestimmt werden.
+
+Wählen Sie unter "BitLocker-Wiederherstellungsinformationen in Active Directory-Domänendiensten speichern" aus, welche BitLocker-Wiederherstellungsinformationen für Wechseldatenträger in AD DS gespeichert werden sollen. Bei Auswahl von "Wiederherstellungskennwort und Schlüsselpaket sichern" werden sowohl das BitLocker-Wiederherstellungskennwort als auch das Schlüsselpaket in AD DS gespeichert. Bei Auswahl von "Nur Wiederherstellungskennwort sichern" wird ausschließlich das Wiederherstellungskennwort in AD DS gespeichert.
+
+Aktivieren Sie das Kontrollkästchen "BitLocker erst aktivieren, nachdem Wiederherstellungsinformationen für Wechseldatenträger in AD DS gespeichert wurden", wenn Sie verhindern möchten, dass Benutzer BitLocker aktivieren, bevor der Computer mit der Domäne verbunden wurde und BitLocker-Wiederherstellungsinformationen erfolgreich in AD DS gesichert wurden.
+
+Hinweis: Wenn das Kontrollkästchen "BitLocker erst aktivieren, nachdem Wiederherstellungsinformationen für Festplattenlaufwerke in AD DS gespeichert wurden" aktiviert ist, wird automatisch ein Wiederherstellungskennwort generiert.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie steuern, welche Möglichkeiten Benutzern zum Wiederherstellen von Daten auf BitLocker-geschützten Wechseldatenträgern zur Verfügung stehen.
+
+Wenn diese Richtlinieneinstellung nicht konfiguriert oder deaktiviert wird, werden die standardmäßigen Wiederherstellungsoptionen für die BitLocker-Wiederherstellung unterstützt. Ein DRA ist standardmäßig zulässig, die Wiederherstellungsoptionen, einschließlich Wiederherstellungskennwort und Wiederherstellungsschlüssel, können vom Benutzer festgelegt werden, und Wiederherstellungsinformationen werden nicht in AD DS gesichert.
+      
+      </string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Require">48-stelliges Wiederherstellungskennwort erforderlich</string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Allow">48-stelliges Wiederherstellungskennwort zulassen</string>
+      <string id="RDVRecoveryPasswordUsageDropDown_Disallow">48-stelliges Wiederherstellungskennwort nicht zulassen</string>
+
+      <string id="RDVRecoveryKeyUsageDropDown_Require">256-Bit-Wiederherstellungsschlüssel erforderlich</string>
+      <string id="RDVRecoveryKeyUsageDropDown_Disallow">256-Bit-Wiederherstellungsschlüssel nicht zulassen</string>
+      <string id="RDVRecoveryKeyUsageDropDown_Allow">256-Bit-Wiederherstellungsschlüssel zulassen</string>
+
+
+      <string id="ConfigureRecoveryFolder_Help">Diese Richtlinieneinstellung ermöglicht die Angabe des Standardpfads, der angezeigt wird, wenn der Setup-Assistent der BitLocker-Laufwerkverschlüsselung den Benutzer zur Eingabe des Speicherorts eines Ordners auffordert, in dem das Wiederherstellungskennwort gespeichert wird. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie den als Standardordner-Speicherort verwendeten Pfad angeben, wenn der Benutzer die Option zum Speichern des Wiederherstellungskennworts in einem Ordner auswählt. Sie können einen vollqualifizierten Pfad angeben oder die Umgebungsvariablen des Zielcomputers in den Pfad einschließen. Wenn der Pfad ungültig ist, zeigt der BitLocker-Setup-Assistent die Ordneransicht der obersten Ebene des Computers an.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, zeigt der BitLocker-Setup-Assistent die Ordneransicht der obersten Ebene des Computers an, wenn der Benutzer die Option zum Speichern des Wiederherstellungskennworts in einem Ordner auswählt.
+
+Hinweis: Diese Richtlinieneinstellung hindert den Benutzer nicht daran, das Wiederherstellungskennwort in einem anderen Ordner zu speichern.
+
+
+
+</string>
+
+      <string id="ConfigureRecoveryFolder_Name">Standardordner für Wiederherstellungskennwort auswählen</string>
+
+      <string id="EncryptionMethod_Help">Mit dieser Richtlinieneinstellung können Sie den von der BitLocker-Laufwerkverschlüsselung verwendeten Algorithmus und die Verschlüsselungsstärke konfigurieren. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet. Wenn das Laufwerk bereits verschlüsselt ist oder die Verschlüsselung gerade stattfindet, ist das Ändern der Verschlüsselungsmethode wirkungslos. Weitere Informationen zu den verfügbaren Verschlüsselungsmethoden finden Sie im Bereitstellungshandbuch für die BitLocker-Laufwerkverschlüsselung (auf Englisch) in Microsoft TechNet. Diese Richtlinie gilt nur für Computer, auf denen Windows Server 2008, Windows Vista, Windows Server 2008 R2 oder Windows 7 ausgeführt wird.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie einen Verschlüsselungsalgorithmus und eine Verschlüsselungsstärke für Schlüssel auswählen, die BitLocker bei der Verschlüsselung von Laufwerken verwendet.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet BitLocker die Standardverschlüsselungsmethode "AES-128-Bit mit Diffuser" oder die im Setupskript angegebene Verschlüsselungsmethode.
+
+      
+
+      </string>
+      <string id="EncryptionMethodNoDiffuser_Help">Mit dieser Richtlinieneinstellung können Sie den von der BitLocker-Laufwerkverschlüsselung verwendeten Algorithmus und die Verschlüsselungsstärke konfigurieren. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet. Wenn das Laufwerk bereits verschlüsselt ist oder die Verschlüsselung gerade stattfindet, ist das Ändern der Verschlüsselungsmethode wirkungslos. Weitere Informationen zu den verfügbaren Verschlüsselungsmethoden finden Sie im Bereitstellungshandbuch für die BitLocker-Laufwerkverschlüsselung in Microsoft TechNet. Diese Richtlinie gilt nur für Computer, auf denen Windows 8 und höher ausgeführt wird.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie einen Verschlüsselungsalgorithmus und eine Verschlüsselungsstärke für Schlüssel auswählen, die BitLocker bei der Verschlüsselung von Laufwerken verwendet.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet BitLocker AES mit derselben Bitstärke (128-Bit oder 256-Bit) wie die Richtlinieneinstellung "Verschlüsselungsmethode und Verschlüsselungsstärke für Laufwerk auswählen (Windows Vista, Windows Server 2008, Windows 7)", sofern sie festgelegt wurde. Falls keine Gruppenrichtlinie festgelegt ist, verwendet BitLocker die Standardverschlüsselungsmethode "AES-128-Bit" oder die im Setupskript festgelegte Verschlüsselungsmethode.
+
+      </string>
+      <string id="EncryptionMethodWithXts_Help">Mit dieser Richtlinieneinstellung können Sie den von der BitLocker-Laufwerkverschlüsselung verwendeten Algorithmus und die Verschlüsselungsstärke konfigurieren. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet. Das Ändern der Verschlüsselungsmethode hat keine Auswirkung, wenn das Laufwerk bereits verschlüsselt ist oder die Verschlüsselung gerade stattfindet.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie einen Verschlüsselungsalgorithmus und eine Verschlüsselungsstärke für Schlüssel auswählen, die individuell für Festplatten-, Betriebssystem- und Wechsellaufwerke verwendet werden. Für Festplatten- und Betriebssystemlaufwerke empfehlen wir die Verwendung des XTS-AES-Algorithmus, und für Wechsellaufwerke sollten Sie AES-CBC 128-Bit oder AES-CBC 256-Bit verwenden, wenn das Laufwerk mit anderen Geräten ohne Windows 10 (Version 1511) eingesetzt wird.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet BitLocker AES mit derselben Bitstärke (128-Bit oder 256-Bit) wie die Richtlinieneinstellungen "Verschlüsselungsmethode und Verschlüsselungsstärke für Laufwerk auswählen (Windows Vista, Windows Server 2008, Windows 7)" und "Verschlüsselungsmethode und Verschlüsselungsstärke für Laufwerk auswählen" (in dieser Reihenfolge), sofern sie festgelegt wurden. Falls keine der Richtlinien festgelegt wurde, verwendet BitLocker die Standardverschlüsselungsmethode "XTS-AES 128-Bit" oder die im Setupskript festgelegte Verschlüsselungsmethode.
+
+      </string>
+      <string id="EncryptionMethod_Name">Verschlüsselungsmethode und Verschlüsselungsstärke für Laufwerk auswählen (Windows Vista, Windows Server 2008, Windows 7, Windows Server 2008 R2)</string>
+      <string id="EncryptionMethodNoDiffuser_Name">Verschlüsselungsmethode und Verschlüsselungsstärke für Laufwerk auswählen (Windows 8, Windows Server 2012, Windows 8.1, Windows Server 2012 R2, Windows 10 [Version 1507])</string>
+      <string id="EncryptionMethodWithXts_Name">Verschlüsselungsmethode und Verschlüsselungsstärke für Laufwerk auswählen (Windows 10 [Version 1511] und höher)</string>
+      <string id="EncryptionMethodDropDown_AES128Diffuser_Name">AES-128-Bit mit Diffuser</string>
+      <string id="EncryptionMethodDropDown_AES256Diffuser_Name">AES-256-Bit mit Diffuser</string>
+      <string id="EncryptionMethodDropDown_AES128_Name">AES-128-Bit (Standardeinstellung)</string>
+      <string id="EncryptionMethodDropDown_AES128_Name2">AES-CBC 128-Bit</string>
+      <string id="EncryptionMethodDropDown_AES128_Name3">AES-CBC 128-Bit (Standardeinstellung)</string>
+      <string id="EncryptionMethodDropDown_AES256_Name">AES-256-Bit</string>
+      <string id="EncryptionMethodDropDown_AES256_Name2">AES-CBC 256-Bit</string>
+      <string id="EncryptionMethodDropDown_XTS_AES128_Name">XTS-AES 128-Bit (Standardeinstellung)</string>
+      <string id="EncryptionMethodDropDown_XTS_AES128_Name2">XTS-AES 128-Bit</string>
+      <string id="EncryptionMethodDropDown_XTS_AES256_Name">XTS-AES 256-Bit</string>
+
+      <string id="FVECategory">BitLocker-Laufwerkverschlüsselung</string>
+      <string id="PlatformValidation_Deprecated_Help">Mit dieser Richtlinieneinstellung können Sie konfigurieren, wie die TPM-Sicherheitshardware (Trusted Platform Module) des Computers den BitLocker-Verschlüsselungsschlüssel sichert. Diese Richtlinieneinstellung gilt nicht, wenn der Computer nicht über ein kompatibles TPM verfügt oder wenn BitLocker bereits mit TPM-Schutz eingeschaltet ist.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, bevor Sie BitLocker einschalten, können Sie die Startkomponenten konfigurieren, die das TPM überprüft, bevor der Zugriff auf das BitLocker-verschlüsselte Betriebssystemlaufwerk entsperrt wird. Ändert sich eine dieser Komponenten, während der BitLocker-Schutz aktiviert ist, gibt das TPM den Verschlüsselungsschlüssel nicht zum Entsperren des Laufwerks frei. Stattdessen wird die BitLocker-Wiederherstellungskonsole angezeigt und es muss entweder das Wiederherstellungskennwort oder der Wiederherstellungsschlüssel angegeben werden, um das Laufwerk freizugeben.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet das TPM das Standard-Plattformvalidierungsprofil oder das Plattformvalidierungsprofil, das im Setupskript angegeben wurde. Ein Plattformvalidierungsprofil besteht aus einer Gruppe von Plattformkonfigurationsregister-Indizes (Platform Configuration Register, PCR) im Bereich von 0 bis 23. Das Standard-Plattformvalidierungsprofil schützt den Verschlüsselungsschlüssel vor Änderungen an CRTM (Core Root of Trust of Measurement), BIOS und Plattformerweiterungen (PCR 0), Options-ROM-Code (PCR 2), MBR-Code (Master Boot Record, PCR 4), NTFS-Startsektor (PCR 8), NTFS-Startblock (PCR 9), Start-Manager (PCR 10) sowie BitLocker-Zugriffssteuerung (PCR 11). Die Beschreibungen der PCR-Einstellungen für Computer, die EFI (Extensible Firmware Interface) verwenden, unterscheiden sich von den PCR-Einstellungen für Computer, die ein Standard-BIOS nutzen.
+
+Warnung: Wenn Sie ein anderes Profil als das Standard-Plattformvalidierungsprofil verwenden, wirkt sich dies auf die Sicherheit und Verwaltbarkeit des Computers aus. Die Empfindlichkeit von BitLocker gegenüber Plattformmodifikationen (böswillig oder autorisiert) nimmt zu oder ab. Dies hängt davon an, ob PCRs eingefügt oder ausgeschlossen werden.
+      
+      </string>
+
+      <string id="PlatformValidation_Deprecated_Name">TPM-Plattformvalidierungsprofil konfigurieren (Windows Vista, Windows Server 2008, Windows 7, Windows Server 2008 R2)</string>
+
+      <string id="PlatformValidation_BIOS_Help">Mit dieser Richtlinieneinstellung können Sie konfigurieren, wie die TPM-Sicherheitshardware (Trusted Platform Module) des Computers den BitLocker-Verschlüsselungsschlüssel sichert. Diese Richtlinieneinstellung gilt nicht, wenn der Computer nicht über ein kompatibles TPM verfügt oder wenn BitLocker bereits mit TPM-Schutz eingeschaltet ist.
+
+Wichtig: Diese Gruppenrichtlinie gilt nur für Computer mit BIOS-Konfigurationen oder für Computer mit UEFI-Firmware, für die ein Kompatibilitätsdienstmodul (Compatibility Service Module, CSM) aktiviert wurde.  Computer, für die eine systemeigene UEFI-Firmwarekonfiguration verwendet wird, speichern unterschiedliche Werte in den Plattformkonfigurationsregistern (Platform Configuration Register, PCR).  Verwenden Sie die Gruppenrichtlinieneinstellung "TPM-Plattformvalidierungsprofil für systemeigene UEFI-Firmwarekonfigurationen konfigurieren", um das TPM PCR-Profil für Computer zu konfigurieren, für die systemeigene UEFI-Firmware verwendet wird.
+
+Wenn Sie diese Richtlinieneinstellung vor der Aktivierung von BitLocker aktivieren, können Sie die Startkomponenten konfigurieren, die das TPM überprüft, bevor der Zugriff auf das BitLocker-verschlüsselte Betriebssystemlaufwerk entsperrt wird. Ändert sich eine dieser Komponenten, während der BitLocker-Schutz aktiviert ist, gibt das TPM den Verschlüsselungsschlüssel nicht zum Entsperren des Laufwerks frei. Stattdessen wird die BitLocker-Wiederherstellungskonsole angezeigt und es muss entweder das Wiederherstellungskennwort oder der Wiederherstellungsschlüssel angegeben werden, um das Laufwerk freizugeben.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet BitLocker das Standard-Plattformvalidierungsprofil oder das Plattformvalidierungsprofil, das im Setupskript angegeben wurde. Ein Plattformvalidierungsprofil besteht aus einer Reihe von Plattformkonfigurationsregister-Indizes (Platform Configuration Register, PCR) in einem Bereich von 0 bis 23. Das Standard-Plattformvalidierungsprofil schützt den Verschlüsselungsschlüssel vor Änderungen an: CRTM (Core Root of Trust of Measurement), BIOS und Plattformerweiterungen (PCR 0), Options-ROM-Code (PCR 2), MBR-Code (Master Boot Record, PCR 4), NTFS-Startsektor (PCR 8), NTFS-Startblock (PCR 9), Start-Manager (PCR 10) sowie BitLocker-Zugriffssteuerung (PCR 11).
+
+Warnung: Wenn Sie ein anderes Profil als das Standard-Plattformvalidierungsprofil verwenden, wirkt sich dies auf die Sicherheit und Verwaltbarkeit des Computers aus. Die Empfindlichkeit von BitLocker gegenüber Plattformmodifikationen (böswillig oder autorisiert) nimmt zu oder ab. Dies hängt davon an, ob PCRs eingefügt oder ausgeschlossen werden.
+      
+      </string>
+
+      <string id="PlatformValidation_BIOS_Name">TPM-Plattformvalidierungsprofil für BIOS-basierte Firmwarekonfigurationen konfigurieren</string>
+
+      <string id="PlatformValidation_UEFI_Help">Mit dieser Richtlinieneinstellung können Sie konfigurieren, wie die TPM-Sicherheitshardware (Trusted Platform Module) des Computers den BitLocker-Verschlüsselungsschlüssel sichert. Diese Richtlinieneinstellung gilt nicht, wenn der Computer nicht über ein kompatibles TPM verfügt oder wenn BitLocker bereits mit TPM-Schutz eingeschaltet ist.
+
+Wichtig: Diese Gruppenrichtlinie gilt nur für Computer mit systemeigener UEFI-Firmwarekonfiguration. Computer mit BIOS- oder UEFI-Firmware, für die ein Kompatibilitätsdienstmodul (Compatibility Service Module, CSM) aktiviert ist, speichern unterschiedliche Werte in den Plattformkonfigurationsregistern (Platform Configuration Register, PCR). Verwenden Sie die Gruppenrichtlinieneinstellung "TPM-Plattformvalidierungsprofil für BIOS-basierte Firmwarekonfigurationen konfigurieren", um das TPM PCR-Profil für Computer mit BIOS-Konfigurationen oder für Computer mit UEFI-Firmware und aktiviertem CSM zu konfigurieren.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, bevor Sie BitLocker einschalten, können Sie die Startkomponenten konfigurieren, die das TPM überprüft, bevor der Zugriff auf das BitLocker-verschlüsselte Betriebssystemlaufwerk entsperrt wird. Ändert sich eine dieser Komponenten, während der BitLocker-Schutz aktiviert ist, gibt das TPM den Verschlüsselungsschlüssel nicht zum Entsperren des Laufwerks frei. Stattdessen wird die BitLocker-Wiederherstellungskonsole angezeigt und es muss entweder das Wiederherstellungskennwort oder der Wiederherstellungsschlüssel angegeben werden, um das Laufwerk zu entsperren.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verwendet BitLocker das Standard-Plattformvalidierungsprofil für die verfügbare Hardware oder das Plattformvalidierungsprofil, das im Setupskript angegeben wurde. Ein Plattformvalidierungsprofil besteht aus einer Gruppe von Plattformkonfigurationsregister-Indizes (Platform Configuration Register, PCR) im Bereich von 0 bis 23. 
+
+Auf PCs ohne Unterstützung für den sicheren Startzustand (PCR 7) schützt das Standard-Plattformvalidierungsprofil den Verschlüsselungsschlüssel vor Änderungen am ausführbaren Code der Kernsystemfirmware (PCR 0), am erweiterten oder austauschbaren ausführbaren Code (PCR 2), am Start-Manager (PCR 4) und an der BitLocker-Zugriffssteuerung (PCR 11).
+
+Wenn Unterstützung für den sicheren Startzustand (PCR7) verfügbar ist, schützt das Standard-Plattformvalidierungsprofil den Verschlüsselungsschlüssel mithilfe des sicheren Startzustands (PCR 7) und der BitLocker-Zugriffssteuerung (PCR 11). 
+
+Warnung: Wenn Sie ein anderes Profil als das Standard-Plattformvalidierungsprofil verwenden, wirkt sich dies auf die Sicherheit und Verwaltbarkeit des Computers aus. Die Empfindlichkeit von BitLocker gegenüber Plattformmodifikationen (böswillig oder autorisiert) nimmt zu bzw. ab. Dies hängt jeweils davon an, ob PCRs eingefügt bzw. ausgeschlossen werden. Genauer gesagt: Wenn Sie diese Richtlinie ohne PCR 7 festlegen, wird die Gruppenrichtlinie "Sicheren Start für Integritätsüberprüfung zulassen" außer Kraft gesetzt. Dadurch wird verhindert, dass BitLocker den sicheren Start für die Integritätsüberprüfung der Plattform oder der Startkonfigurationsdaten (Boot Configuration Data, BCD) verwendet. Wenn diese Richtlinie festgelegt ist, wird beim Firmwareupdate u.U. eine BitLocker-Wiederherstellung durchgeführt. Wenn Sie diese Richtlinie so festlegen, dass PCR 0 einbezogen wird, sollten Sie BitLocker vor dem Installieren von Firmwareupdates anhalten.
+
+Es wird empfohlen, diese Richtlinie nicht zu konfigurieren, damit Windows das PCR-Profil ausgehend von der auf den einzelnen PCs verfügbaren Hardware auswählt, um eine optimale Sicherheit und Benutzerfreundlichkeit zu erreichen.
+      </string>
+
+      <string id="PlatformValidation_UEFI_Name">TPM-Plattformvalidierungsprofil für systemeigene UEFI-Firmwarekonfigurationen konfigurieren</string>
+
+      <string id="MorBehavior_Help">Mit dieser Richtlinieneinstellung können Sie die Leistung beim Neustart des Computers steuern, wobei jedoch die Gefahr besteht, dass BitLocker-Schlüssel verfügbar gemacht werden. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet. BitLocker-Schlüssel enthalten Schlüsselmaterial, das zum Verschlüsseln von Daten verwendet wird. Diese Richtlinieneinstellung wird nur angewendet, wenn der BitLocker-Schutz aktiviert ist.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, wird der Arbeitsspeicher beim Computerneustart nicht überschrieben. Durch die Verhinderung der Arbeitsspeicherüberschreibung kann die Leistung beim Neustart zwar verbessert werden, gleichzeitig erhöht sich aber auch das Risiko, dass BitLocker-Schlüssel verfügbar gemacht werden.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden BitLocker-Schlüssel beim Neustart des Computers aus dem Arbeitsspeicher entfernt.
+
+      
+
+      </string>
+      <string id="MorBehavior_Name">Überschreiben des Arbeitsspeichers beim Neustart verhindern</string>
+
+      <string id="DisableExternalDMAUnderLock_Help">Mit dieser Richtlinieneinstellung können Sie den direkten Speicherzugriff (Direct Memory Access, DMA) für alle Hot-Plug-PCI-Downstream-Anschlüsse blockieren, bis sich ein Benutzer bei Windows anmeldet. Sobald sich ein Benutzer anmeldet, werden die mit den Hot-Plug-PCI-Anschlüssen verbundenen PCI-Geräte von Windows aufgezählt. Jedes Mal, wenn der Benutzer den Computer sperrt, wird DMA an Hot-Plug-PCI-Anschlüssen ohne untergeordnete Geräte blockiert, bis sich der Benutzer erneut anmeldet. Geräte, die vor dem Entsperren des Computers bereits aufgezählt wurden, sind weiterhin funktionsfähig, bis sie entfernt werden oder das System neu gestartet oder in den Ruhezustand versetzt wird. Die Richtlinieneinstellung wird nur erzwungen, wenn BitLocker oder die Geräteverschlüsselung aktiviert ist.
+
+Hinweis: Einige PCs sind möglicherweise nicht mit dieser Richtlinie kompatibel, wenn die Systemfirmware DMA für neu angeschlossene Thunderbolt-Geräte aktiviert, bevor die neuen Geräte für Windows verfügbar gemacht werden.
+
+      </string>
+      <string id="DisableExternalDMAUnderLock_Name">Neue DMA-Geräte deaktivieren, wenn dieser Computer gesperrt wird</string>
+
+      <string id="FVEOSCategory">Betriebssystemlaufwerke</string>
+      <string id="FVEFDVCategory">Festplattenlaufwerke</string>
+      <string id="FVERDVCategory">Wechseldatenträger</string>
+
+      <string id="IdentificationField_Name">Eindeutige IDs für Ihre Organisation angeben</string>
+      <string id="IdentificationField_Help">Mit dieser Richtlinieneinstellung können Sie einem neuen, mit BitLocker aktivierten Laufwerk eindeutige organisatorische IDs zuordnen. Diese IDs werden als ID-Feld und Feld für zulässige IDs gespeichert. Über das ID-Feld können Sie BitLocker-geschützten Laufwerken eine eindeutige organisatorische ID zuordnen. Diese ID wird neuen BitLocker-geschützten Laufwerken automatisch hinzugefügt und kann mit dem Manage-BDE-Befehlszeilentool auf vorhandenen BitLocker-geschützten Laufwerken aktualisiert werden. Ein ID-Feld ist für die Verwaltung zertifikatbasierter Datenwiederherstellungs-Agents auf BitLocker-geschützten Laufwerken und für mögliche Updates des BitLocker To Go-Lesetools erforderlich. Datenwiederherstellungs-Agents werden von BitLocker nur dann verwaltet und aktualisiert, wenn das ID-Feld auf dem Laufwerk mit dem im ID-Feld konfigurierten Wert übereinstimmt. Genauso wird das BitLocker To Go-Lesetool nur von BitLocker aktualisiert, wenn das ID-Feld auf dem Laufwerk mit dem für das ID-Feld konfigurierten Wert übereinstimmt.
+
+Das Feld für zulässige IDs wird in Kombination mit der Richtlinieneinstellung "Schreibzugriff auf Wechseldatenträger verweigern, die nicht durch BitLocker geschützt sind" verwendet, um die Verwendung von Wechseldatenträgern in Ihrer Organisation besser kontrollieren zu können. Hierbei handelt es sich um eine durch Kommas getrennte Liste von ID-Feldern Ihrer Organisation oder von anderen externen Organisationen.
+
+Sie können die ID-Felder auf vorhandenen Laufwerken mithilfe von "manage-BDE.exe" konfigurieren.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie das ID-Feld auf dem BitLocker-geschützten Laufwerk und alle von Ihrer Organisation verwendeten Felder für zulässige IDs konfigurieren.
+
+Beim Bereitstellen eines BitLocker-geschütztens Laufwerks auf einem anderen Computer mit BitLocker-Unterstützung wird anhand des ID-Felds und des Felds für zulässige IDs ermittelt, ob das Laufwerk von einer externen Organisation stammt.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, ist kein ID-Feld erforderlich.
+
+Hinweis: ID-Felder sind für die Verwaltung zertifikatbasierter Datenwiederherstellungs-Agents auf BitLocker-geschützten Laufwerken erforderlich. Zertifikatbasierte Datenwiederherstellungs-Agents werden von BitLocker nur verwaltet und aktualisiert, wenn das ID-Feld auf einem Laufwerk vorhanden und mit dem auf dem Computer konfigurierten Wert identisch ist. Das ID-Feld kann einen beliebigen Wert mit einer Länge bis zu 260 Zeichen enthalten.
+
+      
+
+      </string>
+
+
+      <string id="UserCertificateOID_Name">Einhaltung der Regel zur Smartcard-Zertifikatverwendung überprüfen</string>
+     <string id="UserCertificateOID_Help">Mit dieser Richtlinieneinstellung können Sie einem BitLocker-geschützten Laufwerk eine Objekt-ID von einem Smartcard-Zertifikat zuordnen. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Die Objekt-ID ist in der erweiterten Schlüsselverwendung (Enhanced Key Usage, EKU) eines Zertifikats angegeben.  BitLocker kann feststellen, welche Zertifikate zur Authentifizierung eines Benutzerzertifikats für ein BitLocker-geschütztes Laufwerk verwendet werden können, indem er die Objekt-ID im Zertifikat mit der durch diese Richtlinieneinstellung definierten Objekt-ID abgleicht.
+
+Die Standardobjekt-ID lautet 1.3.6.1.4.1.311.67.1.1
+
+Hinweis: Zertifikate müssen für die Verwendung von BitLocker nicht zwingend über ein EKU-Attribut verfügen, ist jedoch eines für das Zertifikat konfiguriert, muss es auf eine Objekt-ID (OID) festgelegt sein, die mit der für BitLocker konfigurierten OID übereinstimmt.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, muss die im Feld "Objekt-ID" angegebene Objekt-ID mit der Objekt-ID im Smartcard-Zertifikat übereinstimmen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wird eine Standardobjekt-ID verwendet.
+
+     
+
+     </string>
+
+      <string id="UseEnhancedBcdProfile_Name">Erweitertes Validierungsprofil für Startkonfigurationsdaten verwenden</string>
+      <string id="UseEnhancedBcdProfile_Help">Diese Richtlinieneinstellung ermöglicht Ihnen die Auswahl spezieller Einstellungen für die Startkonfigurationsdaten (Boot Configuration Data, BCD), die während der Plattformvalidierung überprüft werden.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie zusätzliche Einstellungen hinzufügen und/oder die Standardeinstellungen entfernen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, stellt der Computer ein BCD-Profil wieder her, das dem von Windows 7 verwendeten BCD-Standardprofil ähnelt.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, überprüft der Computer die BCD-Standardeinstellungen von Windows. 
+
+Hinweis: Wenn BitLocker den sicheren Start für die Integritätsüberprüfung der Plattform und der Startkonfigurationsdaten (Boot Configuration Data, BCD) verwendet (gemäß Definition durch die Gruppenrichtlinie "Sicheren Start für Integritätsüberprüfung zulassen"), wird die Gruppenrichtlinie "Erweitertes Validierungsprofil für Startkonfigurationsdaten verwenden" ignoriert.
+
+Die Einstellung zum Steuern des Startdebuggers (0x16000010) wird immer überprüft, und sie hat keine Auswirkungen, wenn sie in den bereitgestellten Feldern enthalten ist.
+      
+      </string>
+
+      <string id="OSActiveDirectoryBackupDropDown_1">Wiederherstellungskennwörter und Schlüsselpakete speichern</string>
+      <string id="OSActiveDirectoryBackupDropDown_2">Nur Wiederherstellungskennwörter speichern</string>
+
+
+      <string id="MinimumPINLength_Name">Minimale PIN-Länge für Systemstart konfigurieren</string>
+      <string id="MinimumPINLength_Help">
+          Mit dieser Richtlinieneinstellung können Sie eine Mindestlänge für eine TPM-Start-PIN (Trusted Platform Module) konfigurieren. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet. Die Start-PIN muss mindestens 4 und darf höchstens 20 Ziffern aufweisen.
+
+          Wenn Sie die Richtlinieneinstellung aktivieren, können Sie eine Mindestanzahl von Ziffern für das Festlegen der Start-PIN vorgeben.
+
+          Wenn Sie die Richtlinieneinstellung deaktivieren oder nicht konfigurieren, können Benutzer eine Start-PIN mit einer beliebigen Länge von 6 bis 20 Ziffern konfigurieren.
+
+          HINWEIS: Wenn die Mindestlänge der PIN unter 6 Ziffern festgelegt ist und eine PIN geändert wird, versucht Windows, die TPM 2.0-Sperrperiode auf einen Wert über dem Standardwert zu aktualisieren. Falls erfolgreich, setzt Windows die TPM-Sperrperiode nur auf den Standardwert zurück, wenn das TPM zurückgesetzt wird.
+
+      </string>
+
+      <string id="OSAllowDRA_Name">Zertifikatbasierte Wiederherstellungs-Agents zulassen</string>
+
+      <string id="FDVDenyWriteAccess_Name">Schreibzugriff auf Festplattenlaufwerke verweigern, die nicht durch BitLocker geschützt sind</string>
+      <string id="FDVDenyWriteAccess_Help">Diese Richtlinieneinstellung legt fest, ob BitLocker-Schutz erforderlich ist, damit Festplattenlaufwerke in einem Computer beschreibbar sind.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, werden alle Festplattenlaufwerke, die nicht mit BitLocker geschützt sind, mit Schreibschutz bereitgestellt. Wenn das Laufwerk BitLocker-geschützt ist, wird es mit Lese- und Schreibzugriff bereitgestellt.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden alle Festplattenlaufwerke des Computers mit Lese- und Schreibzugriff bereitgestellt.
+
+      </string>
+
+      <string id="FDVPassphrase_Name">Kennwortverwendung für Festplattenlaufwerke konfigurieren</string>
+      <string id="FDVPassphrase_Help">Diese Richtlinieneinstellung gibt an, ob zum Entsperren Bitlocker-geschützter Festplattenlaufwerke ein Kennwort erforderlich ist. Wenn Sie die Kennwortverwendung zulassen, können Sie verlangen, dass ein Kennwort angegeben wird, Komplexitätsvoraussetzungen für das Kennwort erzwingen und eine Mindestlänge für das Kennwort konfigurieren. Damit die Einstellung für die Komplexitätsvoraussetzungen wirksam wird, muss zusätzlich die Gruppenrichtlinieneinstellung "Kennwort muss Komplexitätsvoraussetzungen entsprechen" unter "Computerkonfiguration\Windows-Einstellungen\Sicherheitseinstellungen\Kontorichtlinien\Kennwortrichtlinie\" aktiviert werden.
+
+Hinweis: Diese Einstellungen werden beim Einschalten von BitLocker erzwungen, nicht beim Entsperren eines Datenträgers. BitLocker unterstützt das Entsperren eines Laufwerks mit allen auf dem Laufwerk verfügbaren Schutzvorrichtungen.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Benutzer ein Kennwort konfigurieren, das die von Ihnen definierten Voraussetzungen erfüllt. Um die Verwendung eines Kennworts zu verlangen, wählen Sie die Option "Kennwort für Festplattenlaufwerk anfordern" aus. Um Komplexitätsvoraussetzungen für das Kennwort durchzusetzen, wählen Sie die Option "Kennwortkomplexität anfordern" aus.
+
+Bei der Einstellung "Kennwortkomplexität anfordern" ist eine Verbindung mit einem Domänencontroller erforderlich, wenn die Komplexität des Kennworts von BitLocker überprüft werden soll. Bei der Einstellung "Kennwortkomplexität zulassen" wird versucht, eine Verbindung mit einem Domänencontroller herzustellen, um zu überprüfen, ob die Komplexität den durch die Richtlinie vorgegebenen Regeln entspricht. Wenn jedoch keine Domänencontroller gefunden werden, wird das Kennwort unabhängig von der tatsächlichen Kennwortkomplexität trotzdem akzeptiert und das Laufwerk unter Verwendung dieses Kennworts als Schutzvorrichtung verschlüsselt. Bei "Kennwortkomplexität nicht zulassen" wird die Kennwortkomplexität nicht überprüft.
+
+Kennwörter müssen mindestens acht Zeichen lang sein. Um eine größere Mindestlänge für das Kennwort zu konfigurieren, geben Sie die gewünschte Anzahl von Zeichen in das Feld "Minimale Kennwortlänge" ein.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, darf der Benutzer kein Kennwort verwenden.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, werden Kennwörter mit den Standardeinstellungen unterstützt, die keine Anforderungen an die Kennwortkomplexität beinhalten und eine Mindestlänge von acht Zeichen vorgeben.
+
+Hinweis: Bei aktivierter FIPS-Kompatibilität können keine Kennwörter verwendet werden. Die Richtlinieneinstellung "Systemkryptografie: FIPS-konformen Algorithmus für Verschlüsselung, Hashing und Signatur verwenden" unter "Computerkonfiguration\Windows-Einstellungen\Sicherheitseinstellungen\Lokale Richtlinien\Sicherheitsoptionen" gibt an, ob die FIPS-Kompatibilität aktiviert ist.
+
+
+
+</string>
+
+      <string id="OSPassphrase_Name">Verwendung von Kennwörtern für Betriebssystemlaufwerke konfigurieren</string>
+      <string id="OSPassphrase_Help">Diese Richtlinieneinstellung gibt die Einschränkungen für Kennwörter an, die zum Entsperren BitLocker-geschützter Betriebssystemlaufwerke verwendet werden. Wenn für Betriebssystemlaufwerke Nicht-TPM-Schutzvorrichtungen zulässig sind, können Sie ein Kennwort bereitstellen, Komplexitätsvoraussetzungen für das Kennwort erzwingen und eine Mindestlänge für das Kennwort konfigurieren. Damit die Einstellung für die Komplexitätsvoraussetzungen wirksam wird, muss zusätzlich die Gruppenrichtlinieneinstellung "Kennwort muss Komplexitätsvoraussetzungen entsprechen" unter "Computerkonfiguration\Windows-Einstellungen\Sicherheitseinstellungen\Kontorichtlinien\Kennwortrichtlinie\" aktiviert werden.
+
+Hinweis: Diese Einstellungen werden beim Einschalten von BitLocker erzwungen, nicht beim Entsperren eines Datenträgers. BitLocker unterstützt das Entsperren eines Laufwerks mit allen auf dem Laufwerk verfügbaren Schutzvorrichtungen.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Benutzer ein Kennwort konfigurieren, das die von Ihnen definierten Voraussetzungen erfüllt. Um Komplexitätsvoraussetzungen für das Kennwort durchzusetzen, wählen Sie "Kennwortkomplexität anfordern“.
+
+Bei der Einstellung "Kennwortkomplexität anfordern" ist eine Verbindung mit einem Domänencontroller erforderlich, wenn die Komplexität des Kennworts von BitLocker überprüft werden soll. Bei der Einstellung "Kennwortkomplexität zulassen" wird versucht, eine Verbindung mit einem Domänencontroller herzustellen, um zu überprüfen, ob die Komplexität den durch die Richtlinie vorgegebenen Regeln entspricht. Wenn jedoch keine Domänencontroller gefunden werden, wird das Kennwort unabhängig von der tatsächlichen Kennwortkomplexität trotzdem akzeptiert und das Laufwerk unter Verwendung dieses Kennworts als Schutzvorrichtung verschlüsselt. Bei "Kennwortkomplexität nicht zulassen" wird die Kennwortkomplexität nicht überprüft.
+
+Kennwörter müssen mindestens acht Zeichen lang sein. Um eine größere Mindestlänge für das Kennwort zu konfigurieren, geben Sie die gewünschte Anzahl von Zeichen in das Feld "Minimale Kennwortlänge" ein.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, gilt die Standardlängenbeschränkung von 8 Zeichen für Kennwörter für Betriebssystemlaufwerke, und es erfolgen keine Komplexitätsprüfungen.
+
+Hinweis: Bei aktivierter FIPS-Kompatibilität können keine Kennwörter verwendet werden. Die Richtlinieneinstellung "Systemkryptografie: FIPS-konformen Algorithmus für Verschlüsselung, Hashing und Signatur verwenden" unter "Computerkonfiguration\Windows-Einstellungen\Sicherheitseinstellungen\Lokale Richtlinien\Sicherheitsoptionen" gibt an, ob die FIPS-Kompatibilität aktiviert ist.
+
+
+
+</string>
+
+
+      <string id="PassphraseComplexityDropDown_2">Kennwortkomplexität zulassen</string>
+      <string id="PassphraseComplexityDropDown_0">Kennwortkomplexität nicht zulassen</string>
+      <string id="PassphraseComplexityDropDown_1">Kennwortkomplexität anfordern</string>
+
+      <string id="FDVActiveDirectoryBackupDropDown_1">Wiederherstellungskennwörter und Schlüsselpakete sichern</string>
+      <string id="FDVActiveDirectoryBackupDropDown_2">Nur Wiederherstellungskennwörter sichern</string>
+
+
+      <string id="FDVHybrid_Name">Zugriff auf BitLocker-geschützte Festplattenlaufwerke von früheren Windows-Versionen zulassen</string>
+      <string id="FDVHybrid_Help">Mit dieser Richtlinieneinstellung wird konfiguriert, ob mit dem FAT-Dateisystem formatierte Festplattenlaufwerke auf Computern mit den Betriebssystemen Windows Server 2008, Windows Vista, Windows XP mit Service Pack 3 (SP3) oder Windows XP mit Service Pack 2 (SP2) entsperrt und angezeigt werden können.
+
+Wenn diese Richtlinieneinstellung aktiviert oder nicht konfiguriert wird, können mit dem FAT-Dateisystem formatierte Festplattenlaufwerke auf Computern, die unter Windows Server 2008, Windows Vista, Windows XP mit SP3 oder Windows XP mit SP2 ausgeführt werden, entsperrt und deren Inhalt angezeigt werden. Diese Betriebssysteme haben schreibgeschützten Zugriff auf BitLocker-geschützte Laufwerke.
+
+Wenn diese Richtlinieneinstellung aktiviert ist, aktivieren Sie das Kontrollkästchen "BitLocker To Go-Lesetool nicht auf FAT-Festplattenlaufwerken installieren", um zu verhindern, dass Benutzer das BitLocker To Go-Lesetool auf ihren Festplattenlaufwerken ausführen. Wenn das BitLocker To Go-Lesetool ("bitlockertogo.exe") auf einem Laufwerk installiert ist, für das kein ID-Feld angegeben wurde, oder falls das Laufwerk das gleiche ID-Feld aufweist, wie in der Richtlinieneinstellung "Eindeutige IDs für Ihre Organisation angeben" angegeben, wird der Benutzer aufgefordert, BitLocker zu aktualisieren, und das BitLocker To Go-Lesetool wird vom Laufwerk gelöscht. Damit das Festplattenlaufwerk in einem solchen Fall auf Computern unter Windows Server 2008, Windows Vista, Windows XP mit SP3 oder Windows XP mit SP2 entsperrt werden kann, muss das BitLocker To Go-Lesetool auf dem Computer installiert werden. Falls das Kontrollkästchen nicht aktiviert ist, wird das BitLocker To Go-Lesetool auf dem Festplattenlaufwerk installiert, damit Benutzer das Laufwerk auf Computern unter Windows Server 2008, Windows Vista, Windows XP mit SP3 oder Windows XP mit SP2 entsperren können, auf denen das BitLocker To Go-Lesetool nicht installiert ist.
+
+Wenn diese Richtlinieneinstellung deaktiviert ist, können Festplattenlaufwerke, die mit dem FAT-Dateisystem formatiert und BitLocker-geschützt sind, auf Computern unter Windows Server 2008, Windows Vista, Windows XP mit SP3 oder Windows XP mit SP2 nicht entsperrt werden. "Bitlockertogo.exe" wird nicht installiert.
+
+Hinweis: Diese Richtlinieneinstellung hat keine Auswirkungen auf Laufwerke, die mit dem NTFS-Dateisystem formatiert sind.
+
+      
+
+      </string>
+
+
+      <string id="FDVAllowDRA_Name">Zertifikatbasierte Wiederherstellungs-Agents zulassen</string>
+
+      <string id="FDVConfigureSmartCard_Name">Smartcard-Verwendung für Festplattenlaufwerke konfigurieren</string>
+      <string id="FDVConfigureSmartCard_Help">Mit dieser Richtlinieneinstellung können Sie festlegen, ob der Benutzerzugriff auf BitLocker-geschützte Festplattenlaufwerke eines Computers mithilfe von Smartcards authentifiziert werden kann.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Smartcards verwendet werden, um den Benutzerzugriff auf das Laufwerk zu authentifizieren. Um festzulegen, dass eine Smartcardauthentifizierung erforderlich ist, können Sie das Kontrollkästchen "Smartcard-Verwendung für Festplattenlaufwerke anfordern" aktivieren.
+
+Hinweis: Diese Einstellungen werden beim Aktivieren von BitLocker erzwungen, nicht beim Entsperren eines Laufwerks. BitLocker unterstützt das Entsperren eines Laufwerks mit allen auf dem Laufwerk verfügbaren Schutzvorrichtungen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, sind Benutzer nicht berechtigt, den Zugriff auf BitLocker-geschützte Festplattenlaufwerke mit einer Smartcard zu authentifizieren.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, ist die Verwendung von Smartcards für die Authentifizierung des Benutzerzugriffs auf ein BitLocker-geschütztes Laufwerk zulässig.
+
+      
+
+      </string>
+
+      <string id="RDVPassphrase_Name">Kennwortverwendung für Wechseldatenträger konfigurieren</string>
+      <string id="RDVPassphrase_Help">Diese Richtlinieneinstellung gibt an, ob zum Entsperren Bitlocker-geschützter Wechseldatenträger ein Kennwort erforderlich ist. Wenn Sie die Kennwortverwendung zulassen möchten, können Sie verlangen, dass ein Kennwort verwendet wird, und Sie können Komplexitätsvoraussetzungen erzwingen und eine Mindestlänge konfigurieren. Damit die Einstellung für die Komplexitätsvoraussetzungen wirksam wird, muss zusätzlich die Gruppenrichtlinieneinstellung "Kennwort muss Komplexitätsvoraussetzungen entsprechen" unter "Computerkonfiguration\Windows-Einstellungen\Sicherheitseinstellungen\Kontorichtlinien\Kennwortrichtlinie\" aktiviert werden.
+
+Hinweis: Diese Einstellungen werden beim Einschalten von BitLocker erzwungen, nicht beim Entsperren eines Datenträgers. BitLocker unterstützt das Entsperren eines Laufwerks mit allen auf dem Laufwerk verfügbaren Schutzvorrichtungen.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Benutzer ein Kennwort konfigurieren, das die von Ihnen definierten Voraussetzungen erfüllt. Um die Verwendung eines Kennworts zu verlangen, wählen Sie die Option "Kennwort für Wechseldatenträger anfordern" aus. Um Komplexitätsvoraussetzungen für das Kennwort durchzusetzen, wählen Sie die Option "Kennwortkomplexität anfordern" aus.
+
+Bei der Einstellung "Kennwortkomplexität anfordern" ist eine Verbindung mit einem Domänencontroller erforderlich, wenn die Komplexität des Kennworts von BitLocker überprüft werden soll. Bei der Einstellung "Kennwortkomplexität zulassen" wird versucht, eine Verbindung mit einem Domänencontroller herzustellen, um zu überprüfen, ob die Komplexität den durch die Richtlinie vorgegebenen Regeln entspricht. Wenn jedoch keine Domänencontroller gefunden werden, wird das Kennwort unabhängig von der tatsächlichen Kennwortkomplexität trotzdem akzeptiert und das Laufwerk unter Verwendung dieses Kennworts als Schutzvorrichtung verschlüsselt. Bei "Kennwortkomplexität nicht zulassen" wird die Kennwortkomplexität nicht überprüft.
+
+Kennwörter müssen mindestens acht Zeichen lang sein. Um eine größere Mindestlänge für das Kennwort zu konfigurieren, geben Sie die gewünschte Anzahl von Zeichen in das Feld "Minimale Kennwortlänge" ein.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, darf der Benutzer kein Kennwort verwenden.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, werden Kennwörter mit den Standardeinstellungen unterstützt, die keine Anforderungen an die Kennwortkomplexität beinhalten und eine Mindestlänge von acht Zeichen vorgeben.
+
+Hinweis: Bei aktivierter FIPS-Kompatibilität können keine Kennwörter verwendet werden. Die Richtlinieneinstellung "Systemkryptografie: FIPS-konformen Algorithmus für Verschlüsselung, Hashing und Signatur verwenden" unter "Computerkonfiguration\Windows-Einstellungen\Sicherheitseinstellungen\Lokale Richtlinien\Sicherheitsoptionen" gibt an, ob die FIPS-Kompatibilität aktiviert ist.
+
+      
+
+      </string>
+
+      <string id="RDVDenyWriteAccess_Name">Schreibzugriff auf Wechseldatenträger verweigern, die nicht durch BitLocker geschützt sind</string>
+      <string id="RDVDenyWriteAccess_Help">Mit dieser Richtlinieneinstellung wird konfiguriert, ob BitLocker-Schutz erforderlich ist, damit ein Computer Daten auf einen Wechseldatenträger schreiben kann.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, werden alle Wechseldatenträger, die nicht mit BitLocker geschützt sind, mit Schreibschutz bereitgestellt. Wenn das Laufwerk BitLocker-geschützt ist, wird es mit Lese- und Schreibzugriff bereitgestellt.
+
+Bei Auswahl der Option "Schreibzugriff auf Geräte verweigern, die in einer anderen Organisation konfiguriert wurden" wird nur Laufwerken Schreibzugriff gewährt, deren ID-Felder mit den ID-Feldern des Computers übereinstimmen. Beim Zugriff auf einen Wechseldatenträger wird überprüft, ob er über ein gültiges ID-Feld sowie über Felder für zulässige IDs verfügt. Diese Felder werden durch die Richtlinieneinstellung "Eindeutige IDs für Ihre Organisation angeben" definiert.
+
+Wenn Sie diese Richtlinie deaktivieren oder nicht konfigurieren, werden alle Wechseldatenträger des Computers mit Lese- und Schreibzugriff bereitgestellt.
+
+Hinweis: Diese Richtlinieneinstellung kann durch die Richtlinieneinstellungen unter "Benutzerkonfiguration\Administrative Vorlagen\System\Wechselmedienzugriff" außer Kraft gesetzt werden. Wenn die Richtlinieneinstellung "Wechseldatenträger: Schreibzugriff verweigern" aktiviert ist, wird diese Richtlinieneinstellung ignoriert.
+
+      
+
+      </string>
+
+      <string id="RDVConfigureBDE_Name">Verwendung von BitLocker auf Wechseldatenträgern steuern</string>
+      <string id="RDVConfigureBDE_Help">Mit dieser Richtlinieneinstellung wird die Verwendung von BitLocker auf Wechseldatenträgern gesteuert. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Wenn diese Richtlinieneinstellung aktiviert wird, können Sie Eigenschafteneinstellungen auswählen, die steuern, wie BitLocker von Benutzern konfiguriert werden kann. Wählen Sie die Option "Benutzer können BitLocker-Schutz auf Wechseldatenträger anwenden" aus, um dem Benutzer die Ausführung des BitLocker-Setup-Assistenten auf einem Wechseldatenträger zu ermöglichen. Wählen Sie die Option "Benutzer dürfen BitLocker auf Wechseldatenträgern anhalten und entschlüsseln" aus, um dem Benutzer die Möglichkeit zu bieten, die BitLocker-Laufwerkverschlüsselung vom Laufwerk zu entfernen oder die Verschlüsselung während der Ausführung von Wartungsaufgaben anzuhalten. Weitere Informationen dazu, wie Sie den BitLocker-Schutz anhalten, finden Sie im Bereitstellungshandbuch für die BitLocker-Laufwerkverschlüsselung (auf Englisch) in Microsoft TechNet.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, können Benutzer BitLocker auf Wechseldatenträgern verwenden.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, können Benutzer BitLocker nicht auf Wechseldatenträgern verwenden.
+
+      
+
+      </string>
+
+
+      <string id="RDVActiveDirectoryBackupDropDown_1">Wiederherstellungskennwörter und Schlüsselpakete sichern</string>
+      <string id="RDVActiveDirectoryBackupDropDown_2">Nur Wiederherstellungskennwörter sichern</string>
+
+      <string id="RDVHybrid_Name">Zugriff auf BitLocker-geschützte Wechseldatenträger von früheren Windows-Versionen zulassen</string>
+      <string id="RDVHybrid_Help">Mit dieser Richtlinieneinstellung wird konfiguriert, ob mit dem FAT-Dateisystem formatierte Wechseldatenträger auf Computern mit den Betriebssystemen Windows Server 2008, Windows Vista, Windows XP mit Service Pack 3 (SP3) oder Windows XP mit Service Pack 2 (SP2) entsperrt und angezeigt werden können.
+
+Wenn diese Richtlinieneinstellung aktiviert oder nicht konfiguriert wird, können mit dem FAT-Dateisystem formatierte Wechseldatenträger auf Computern, die unter Windows Server 2008, Windows Vista, Windows XP mit SP3 oder Windows XP mit SP2 ausgeführt werden, entsperrt und deren Inhalt angezeigt werden. Diese Betriebssysteme haben schreibgeschützten Zugriff auf BitLocker-geschützte Laufwerke.
+
+Wenn diese Richtlinieneinstellung aktiviert ist, aktivieren Sie das Kontrollkästchen "BitLocker To Go-Lesetool nicht auf FAT-Wechseldatenträgern installieren", um zu verhindern, dass Benutzer das BitLocker To Go-Lesetool auf ihren Wechseldatenträgern ausführen. Wenn das BitLocker To Go-Lesetool ("bitlockertogo.exe") auf einem Laufwerk installiert ist, für das kein ID-Feld angegeben wurde, oder falls das Laufwerk das gleiche ID-Feld aufweist, wie in der Richtlinieneinstellung "Eindeutige IDs für Ihre Organisation angeben" angegeben, wird der Benutzer aufgefordert, BitLocker zu aktualisieren, und das BitLocker To Go-Lesetool wird vom Laufwerk gelöscht. Damit der Wechseldatenträger in einem solchen Fall auf Computern unter Windows Server 2008, Windows Vista, Windows XP mit SP3 oder Windows XP mit SP2 entsperrt werden kann, muss das BitLocker To Go-Lesetool auf dem Computer installiert werden. Falls das Kontrollkästchen nicht aktiviert ist, wird das BitLocker To Go-Lesetool auf dem Wechseldatenträger installiert, damit Benutzer das Laufwerk auf Computern unter Windows Server 2008, Windows Vista, Windows XP mit SP3 oder Windows XP mit SP2 entsperren können, auf denen das BitLocker To Go-Lesetool nicht installiert ist.
+
+Wenn diese Richtlinieneinstellung deaktiviert ist, können Wechseldatenträger, die mit dem FAT-Dateisystem formatiert und BitLocker-geschützt sind, auf Computern unter Windows Server 2008, Windows Vista, Windows XP mit SP3 oder Windows XP mit SP2 nicht entsperrt werden. "Bitlockertogo.exe" wird nicht installiert.
+
+Hinweis: Diese Richtlinieneinstellung hat keine Auswirkungen auf Laufwerke, die mit dem NTFS-Dateisystem formatiert sind.
+
+      
+
+      </string>
+
+      <string id="RDVAllowDRA_Name">Zertifikatbasierte Wiederherstellungs-Agents zulassen</string>
+
+      <string id="RDVConfigureSmartCard_Name">Smartcard-Verwendung für Wechseldatenträger konfigurieren</string>
+      <string id="RDVConfigureSmartCard_Help">Mit dieser Richtlinieneinstellung können Sie festlegen, ob der Benutzerzugriff auf BitLocker-geschützte Wechseldatenträger eines Computers mithilfe von Smartcards authentifiziert werden kann.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Smartcards verwendet werden, um den Benutzerzugriff auf das Laufwerk zu authentifizieren. Um festzulegen, dass eine Smartcardauthentifizierung erforderlich ist, können Sie das Kontrollkästchen "Smartcard-Verwendung für Wechseldatenträger anfordern" aktivieren.
+
+Hinweis: Diese Einstellungen werden beim Aktivieren von BitLocker erzwungen, nicht beim Entsperren eines Laufwerks. BitLocker unterstützt das Entsperren eines Laufwerks mit allen auf dem Laufwerk verfügbaren Schutzvorrichtungen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, sind Benutzer nicht berechtigt, den Zugriff auf BitLocker-geschützte Wechseldatenträger mit einer Smartcard zu authentifizieren.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, ist die Verwendung von Smartcards für die Authentifizierung des Benutzerzugriffs auf einen BitLocker-geschützten Wechseldatenträger zulässig.
+
+      
+
+      </string>
+
+      <string id="EnhancedPIN_Name">Erweiterte PINs für Systemstart zulassen</string>
+      <string id="EnhancedPIN_Help">Mit dieser Richtlinieneinstellung können Sie konfigurieren, ob erweiterte Systemstart-PINs mit BitLocker verwendet werden.
+
+Erweiterte Systemstart-PINs ermöglichen die Verwendung verschiedener Zeichen, einschließlich Groß- und Kleinbuchstaben, Symbolen, Zahlen und Leerzeichen. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, handelt es sich bei allen neu festgelegten BitLocker-Systemstart-PINs um erweiterte PINs.
+
+Hinweis: Möglicherweise unterstützen nicht alle Computer erweiterte PINs in der PXE (Pre-Boot eXecution Environment). Benutzern wird dringend empfohlen, während des BitLocker-Setups eine Systemüberprüfung durchzuführen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden keine erweiterten PINs verwendet.
+
+      
+
+      </string>
+
+      <string id="TPMAutoReseal_Name">Plattformvalidierungsdaten nach BitLocker-Wiederherstellung zurücksetzen</string>
+      <string id="TPMAutoReseal_Help">Mit dieser Richtlinieneinstellung können Sie steuern, ob die Plattformvalidierungsdaten beim Starten von Windows nach einer BitLocker-Wiederherstellung aktualisiert werden oder nicht.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, werden die Plattformvalidierungsdaten beim Starten von Windows nach einer BitLocker-Wiederherstellung aktualisiert.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, werden die Plattformvalidierungsdaten beim Starten von Windows nach einer BitLocker-Wiederherstellung nicht aktualisiert.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, werden die Plattformvalidierungsdaten beim Starten von Windows nach einer BitLocker-Wiederherstellung aktualisiert.
+
+      
+
+      </string>
+
+      <string id="OSEncryptionType_Name">Laufwerkverschlüsselungstyp auf Betriebssystemlaufwerken erzwingen</string>
+
+      <string id="FDVEncryptionType_Name">Laufwerkverschlüsselungstyp auf Festplattenlaufwerken erzwingen</string>
+
+      <string id="RDVEncryptionType_Name">Laufwerkverschlüsselungstyp auf Wechseldatenträgern erzwingen</string>
+
+      <string id="EncryptionType_Help">Mit dieser Richtlinieneinstellung können Sie den von der BitLocker-Laufwerkverschlüsselung verwendeten Verschlüsselungstyp konfigurieren. Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet. Wenn das Laufwerk bereits verschlüsselt ist oder die Verschlüsselung gerade stattfindet, ist das Ändern des Verschlüsselungstyps wirkungslos. Wählen Sie die vollständige Verschlüsselung aus, damit bei der Aktivierung von BitLocker das gesamte Laufwerk verschlüsselt wird. Wählen Sie die auf den belegten Speicherplatz beschränkte Verschlüsselung aus, damit bei der Aktivierung von BitLocker nur der zum Speichern von Daten verwendete Teil des Laufwerks verschlüsselt wird.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, wird der von BitLocker zum Verschlüsseln von Laufwerken verwendete Verschlüsselungstyp durch diese Richtlinie definiert, und die Option für den Verschlüsselungstyp wird nicht im BitLocker-Setup-Assistenten angezeigt.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, fordert der BitLocker-Setup-Assistent den Benutzer vor der Aktivierung von BitLocker zum Auswählen des Verschlüsselungstyps auf.
+
+      
+
+      </string>
+
+      <string id="EncryptionTypeDropDown_UserChooses_Name">Benutzerauswahl zulassen (Standardeinstellung)</string>
+      <string id="EncryptionTypeDropDown_FullEncryption_Name">Vollständige Verschlüsselung</string>
+      <string id="EncryptionTypeDropDown_DataOnlyEncryption_Name">Auf belegten Speicherplatz beschränkte Verschlüsselung</string>
+
+      <string id="DisallowStandardUsersCanChangePIN_Name">PIN- oder Kennwortänderung durch Standardbenutzer nicht zulassen</string>
+      <string id="DisallowStandardUsersCanChangePIN_Help">Mit dieser Richtlinieneinstellung können Sie konfigurieren, ob Standardbenutzer die PINs von BitLocker-Volumes ändern dürfen. Dies setzt voraus, dass sie die vorhandene PIN zunächst angeben können.
+
+Diese Richtlinieneinstellung wird bei Aktivierung von BitLocker angewendet.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, dürfen Standardbenutzer keine BitLocker-PINs oder -Kennwörter ändern.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, dürfen Standardbenutzer BitLocker-PINs und -Kennwörter ändern.
+
+      
+
+      </string>
+
+      <string id="OSEDrive_Name">Verwendung der hardwarebasierten Verschlüsselung für Betriebssystemlaufwerke konfigurieren</string>
+
+      <string id="FDVEDrive_Name">Verwendung der hardwarebasierten Verschlüsselung für Festplattenlaufwerke konfigurieren</string>
+
+      <string id="RDVEDrive_Name">Verwendung der hardwarebasierten Verschlüsselung für Wechseldatenträger konfigurieren</string>
+
+      <string id="OSEDrive_Help">Mit dieser Richtlinieneinstellung können Sie die Verwendung der hardwarebasierten Verschlüsselung durch BitLocker auf Betriebssystemlaufwerken verwalten und angeben, welche Verschlüsselungsalgorithmen für die hardwarebasierte Verschlüsselung verwendet werden können. Die Verwendung der hardwarebasierten Verschlüsselung kann die Laufwerksleistung beim Lesen oder Schreiben von Daten auf einem Laufwerk verbessern.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie zusätzliche Optionen angeben, die steuern, ob auf Computern, die eine hardwarebasierte Verschlüsselung nicht unterstützen, stattdessen die softwarebasierte Verschlüsselung von BitLocker verwendet wird. Außerdem können Sie angeben, ob die bei der hardwarebasierten Verschlüsselung verwendeten Verschlüsselungsalgorithmen und Verschlüsselungssammlungen eingeschränkt werden sollen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, kann BitLocker für Betriebssystemlaufwerke keine hardwarebasierte Verschlüsselung verwenden. Stattdessen wird bei der Verschlüsselung von Laufwerken standardmäßig die softwarebasierte Verschlüsselung von BitLocker verwendet.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, verwendet BitLocker die softwarebasierte Verschlüsselung. Dies geschieht unabhängig von der Verfügbarkeit der hardwarebasierten Verschlüsselung.
+
+Hinweis: Die Richtlinieneinstellung "Verschlüsselungsmethode und Verschlüsselungsstärke für Laufwerk auswählen" gilt nicht für die hardwarebasierte Verschlüsselung. Der für die hardwarebasierte Verschlüsselung verwendete Verschlüsselungsalgorithmus wird beim Partitionieren des Laufwerks festgelegt. Standardmäßig verwendet BitLocker beim Verschlüsseln eines Laufwerks den für das Laufwerk konfigurierten Algorithmus. Mit der Option "Zulässige Verschlüsselungsalgorithmen und Verschlüsselungssammlungen für die hardwarebasierte Verschlüsselung einschränken" können Sie die Verschlüsselungsalgorithmen einschränken, die BitLocker für die Hardwareverschlüsselung zur Verfügung stehen. Ist der für das Laufwerk festgelegte Algorithmus nicht verfügbar, wird die hardwarebasierte Verschlüsselung von BitLocker deaktiviert.
+Verschlüsselungsalgorithmen werden durch Objekt-IDs (OID) angegeben. Beispiel:
+- AES 128 im CBC-Modus OID: 2.16.840.1.101.3.4.1.2
+- AES 256 im CBC-Modus OID: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="FDVEDrive_Help">Mit dieser Richtlinieneinstellung können Sie die Verwendung der hardwarebasierten Verschlüsselung durch BitLocker auf Festplattenlaufwerken verwalten und angeben, welche Verschlüsselungsalgorithmen für die hardwarebasierte Verschlüsselung verwendet werden können. Die Verwendung der hardwarebasierten Verschlüsselung kann die Laufwerksleistung beim Lesen oder Schreiben von Daten auf einem Laufwerk verbessern.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie zusätzliche Optionen angeben, die steuern, ob auf Computern, die eine hardwarebasierte Verschlüsselung nicht unterstützen, stattdessen die softwarebasierte Verschlüsselung von BitLocker verwendet wird. Außerdem können Sie angeben, ob die bei der hardwarebasierten Verschlüsselung verwendeten Verschlüsselungsalgorithmen und Verschlüsselungssammlungen eingeschränkt werden sollen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, kann BitLocker für Betriebssystemlaufwerke keine hardwarebasierte Verschlüsselung verwenden. Stattdessen wird bei der Verschlüsselung von Laufwerken standardmäßig die softwarebasierte Verschlüsselung von BitLocker verwendet.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, verwendet BitLocker die softwarebasierte Verschlüsselung. Dies geschieht unabhängig von der Verfügbarkeit der hardwarebasierten Verschlüsselung.
+
+Hinweis: Die Richtlinieneinstellung "Verschlüsselungsmethode und Verschlüsselungsstärke für Laufwerk auswählen" gilt nicht für die hardwarebasierte Verschlüsselung. Der für die hardwarebasierte Verschlüsselung verwendete Verschlüsselungsalgorithmus wird beim Partitionieren des Laufwerks festgelegt. Standardmäßig verwendet BitLocker beim Verschlüsseln eines Laufwerks den für das Laufwerk konfigurierten Algorithmus. Mit der Option "Zulässige Verschlüsselungsalgorithmen und Verschlüsselungssammlungen für die hardwarebasierte Verschlüsselung einschränken" können Sie die Verschlüsselungsalgorithmen einschränken, die BitLocker für die Hardwareverschlüsselung zur Verfügung stehen. Ist der für das Laufwerk festgelegte Algorithmus nicht verfügbar, wird die hardwarebasierte Verschlüsselung von BitLocker deaktiviert.
+Verschlüsselungsalgorithmen werden durch Objekt-IDs (OID) angegeben. Beispiel:
+- AES 128 im CBC-Modus OID: 2.16.840.1.101.3.4.1.2
+- AES 256 im CBC-Modus OID: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="RDVEDrive_Help">Mit dieser Richtlinieneinstellung können Sie die Verwendung der hardwarebasierten Verschlüsselung durch BitLocker auf Wechseldatenträgern verwalten und angeben, welche Verschlüsselungsalgorithmen für die hardwarebasierte Verschlüsselung verwendet werden können. Die Verwendung der hardwarebasierten Verschlüsselung kann die Laufwerksleistung beim Lesen oder Schreiben von Daten auf einem Laufwerk verbessern.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, können Sie zusätzliche Optionen angeben, die steuern, ob auf Computern, die eine hardwarebasierte Verschlüsselung nicht unterstützen, stattdessen die softwarebasierte Verschlüsselung von BitLocker verwendet wird. Außerdem können Sie angeben, ob die bei der hardwarebasierten Verschlüsselung verwendeten Verschlüsselungsalgorithmen und Verschlüsselungssammlungen eingeschränkt werden sollen.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, kann BitLocker für Betriebssystemlaufwerke keine hardwarebasierte Verschlüsselung verwenden. Stattdessen wird bei der Verschlüsselung von Laufwerken standardmäßig die softwarebasierte Verschlüsselung von BitLocker verwendet.
+
+Wenn Sie diese Richtlinieneinstellung nicht konfigurieren, verwendet BitLocker die softwarebasierte Verschlüsselung. Dies geschieht unabhängig von der Verfügbarkeit der hardwarebasierten Verschlüsselung.
+
+Hinweis: Die Richtlinieneinstellung "Verschlüsselungsmethode und Verschlüsselungsstärke für Laufwerk auswählen" gilt nicht für die hardwarebasierte Verschlüsselung. Der für die hardwarebasierte Verschlüsselung verwendete Verschlüsselungsalgorithmus wird beim Partitionieren des Laufwerks festgelegt. Standardmäßig verwendet BitLocker beim Verschlüsseln eines Laufwerks den für das Laufwerk konfigurierten Algorithmus. Mit der Option "Zulässige Verschlüsselungsalgorithmen und Verschlüsselungssammlungen für die hardwarebasierte Verschlüsselung einschränken" können Sie die Verschlüsselungsalgorithmen einschränken, die BitLocker für die Hardwareverschlüsselung zur Verfügung stehen. Ist der für das Laufwerk festgelegte Algorithmus nicht verfügbar, wird die hardwarebasierte Verschlüsselung von BitLocker deaktiviert.
+Verschlüsselungsalgorithmen werden durch Objekt-IDs (OID) angegeben. Beispiel:
+- AES 128 im CBC-Modus OID: 2.16.840.1.101.3.4.1.2
+- AES 256 im CBC-Modus OID: 2.16.840.1.101.3.4.1.42
+      </string>
+
+      <string id="EnablePrebootInputProtectorsOnSlates_Name">Verwendung der BitLocker-Authentifizierung mit erforderlicher Tastatureingabe vor dem Starten auf Slates aktivieren</string>
+      <string id="EnablePrebootInputProtectorsOnSlates_Help">Mit dieser Richtlinieneinstellung können Benutzer Authentifizierungsoptionen aktivieren, für die eine Benutzereingabe in der PXE (Pre-Boot eXecution Environment) erforderlich ist, auch wenn die Plattform keine Pre-Boot-Eingabefunktion bietet.
+
+Die Windows-Bildschirmtastatur (wie sie beispielsweise von Tablets verwendet wird) ist in der PXE, in der für BitLocker zusätzliche Informationen wie eine PIN oder ein Kennwort erforderlich sind, nicht verfügbar.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren, muss bei Geräten eine andere Eingabemethode vor dem Start verfügbar sein (z. B. eine angeschlossene USB-Tastatur).
+
+Wenn diese Richtlinieneinstellung nicht aktiviert ist, muss auf Tablets die Windows-Wiederherstellungsumgebung aktiviert sein, damit die Eingabe des BitLocker-Wiederherstellungskennworts unterstützt wird. Wenn die Windows-Wiederherstellungsumgebung und diese Richtlinie nicht aktiviert sind, kann BitLocker auf einem Gerät mit der Windows-Bildschirmtastatur nicht aktiviert werden.
+
+Hinweis: Wenn Sie diese Richtlinieneinstellung nicht aktivieren, sind die Optionen unter der Richtlinie "Zusätzliche Authentifizierung beim Start anfordern" auf diesen Geräten möglicherweise nicht verfügbar. Zu diesen Optionen zählen Folgende:
+- TPM-Systemstart-PIN konfigurieren: Erforderlich/Zulässig
+- TPM-Systemstartschlüssel und -PIN konfigurieren: Erforderlich/Zulässig
+- Verwendung von Kennwörtern für Betriebssystemlaufwerke konfigurieren.
+      
+      </string>
+
+      <string id="EnablePreBootPinExceptionOnDECapableDevice_Name">InstantGo- oder HSTI-kompatible Geräte benötigen keine PIN vor dem Start</string>
+      <string id="EnablePreBootPinExceptionOnDECapableDevice_Help">Bei dieser Richtlinieneinstellung benötigen Benutzer auf Geräten, die mit InstantGo oder Microsoft HSTI (Hardware Security Test Interface) kompatibel sind, für die Authentifizierung vor dem Start keine PIN. Hierdurch werden die Option "Start-PIN bei TPM erforderlich" und "Systemstartschlüssel und PIN bei TPM erforderlich" der Richtlinie "Zusätzliche Authentifizierung beim Start anfordern" auf kompatibler Hardware außer Kraft gesetzt.
+
+Wenn Sie die Richtlinieneinstellung aktivieren, haben Benutzer InstantGo- und HSTI-kompatibler Geräte die Möglichkeit, BitLocker ohne Authentifizierung vor dem Start zu aktivieren.
+
+Wenn die Richtlinie nicht aktiviert ist, gelten die Optionen der Richtlinie "Zusätzliche Authentifizierung beim Start anfordern".
+      </string>
+
+      <string id="AllowSecureBootForIntegrity_Name">Sicheren Start für Integritätsüberprüfung zulassen</string>
+      <string id="AllowSecureBootForIntegrity_Help">Mit dieser Richtlinieneinstellung können Sie konfigurieren, ob der sichere Start als Plattformintegritätsanbieter für BitLocker-Betriebssystemlaufwerke zulässig sein soll.
+
+Mit dem sicheren Start wird gewährleistet, dass in der PC-Umgebung vor dem Start nur Firmware geladen wird, die von autorisierten Softwareherausgebern digital signiert wurde. Der sichere Start bietet zudem mehr Flexibilität bei der Verwaltung von Konfigurationen vor dem Start als die BitLocker-Integritätsprüfungen in Vorgängerversionen.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren oder nicht konfigurieren, wird von BitLocker der sichere Start für die Plattformintegrität verwendet, sofern die Plattform die auf dem sicheren Start basierende Integritätsüberprüfung unterstützt.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, wird von BitLocker die Plattformintegritätsüberprüfung einer Vorgängerversion verwendet. Dies ist auch bei Systemen der Fall, die die auf dem sicheren Start basierende Integritätsüberprüfung unterstützen.
+
+Wenn Sie diese Richtlinie aktivieren und die Hardware für die Verwendung des sicheren Starts in BitLocker-Szenarien geeignet ist, wird die Gruppenrichtlinieneinstellung "Erweitertes Validierungsprofil für Startkonfigurationsdaten verwenden" ignoriert, und die BCD-Einstellungen werden vom sicheren Start gemäß der separat von BitLocker konfigurierten Richtlinieneinstellung für den sicheren Start überprüft.
+
+Hinweis: Wenn die Gruppenrichtlinieneinstellung "TPM-Plattformvalidierungsprofil für systemeigene UEFI-Firmwarekonfigurationen konfigurieren" ohne PCR 7 aktiviert wurde, wird verhindert, dass der sichere Start von BitLocker für die Überprüfung der Integrität der Plattform oder der Startkonfigurationsdaten (Boot Configuration Data, BCD) verwendet wird.
+
+Warnung: Wenn diese Richtlinie deaktiviert ist, wird beim Firmwareupdate u. U. eine BitLocker-Wiederherstellung durchgeführt. Wenn Sie diese Richtlinie deaktivieren, sollten Sie BitLocker vor dem Installieren von Firmwareupdates anhalten.
+    
+      </string>
+      <string id="SUPPORTED_Windows8NoARM">Mindestens Windows Server 2012 oder Windows 8</string>  
+      <string id="SUPPORTED_Windows_6_3ToVista">Windows Server 2012 R2, Windows 8.1, Windows Server 2012, Windows 8, Windows Server 2008, Windows 7 und Windows Vista</string>
+      <string id="PrebootRecoveryInfo_Name">Meldung und URL für die Pre-Boot-Wiederherstellung konfigurieren</string>
+      <string id="PrebootRecoveryInfoEmpty"></string>
+      <string id="PrebootRecoveryInfoUseDefault">Standard-Wiederherstellungsmeldung und -URL verwenden</string>
+      <string id="PrebootRecoveryInfoUseMessage">Benutzerdefinierte Wiederherstellungsmeldung verwenden</string>
+      <string id="PrebootRecoveryInfoUseUrl">Benutzerdefinierte Wiederherstellungs-URL verwenden</string>
+      <string id="PrebootRecoveryInfo_Help">Mit dieser Richtlinieneinstellung können Sie die gesamte Wiederherstellungsmeldung konfigurieren oder die vorhandene URL ersetzen, die bei gesperrtem Betriebssystemlaufwerk auf dem Bildschirm für die Pre-Boot-Schlüsselwiederherstellung angezeigt werden.
+
+Wenn Sie die Option "Standard-Wiederherstellungsmeldung und -URL verwenden" auswählen, werden die Standard-Wiederherstellungsmeldung und -URL von BitLocker auf dem Bildschirm für die Pre-Boot-Schlüsselwiederherstellung angezeigt. Wenn Sie zuvor eine benutzerdefinierte Wiederherstellungsmeldung oder -URL konfiguriert haben und zur Standardmeldung zurückkehren möchten, müssen Sie die Richtlinie aktiviert lassen und die Option "Standard-Wiederherstellungsmeldung und -URL verwenden" auswählen.
+
+Wenn Sie die Option "Benutzerdefinierte Wiederherstellungsmeldung verwenden" auswählen, wird die in das Textfeld "Option für benutzerdefinierte Wiederherstellungsmeldung" eingegebene Meldung auf dem Bildschirm für die Pre-Boot-Schlüsselwiederherstellung angezeigt. Wenn eine Wiederherstellungs-URL verfügbar ist, fügen Sie sie in die Meldung ein.
+
+Wenn Sie die Option "Benutzerdefinierte Wiederherstellungs-URL verwenden" auswählen, wird die Standard-URL in der Standardwiederherstellungsmeldung, die auf dem Bildschirm zur Pre-Boot-Schlüsselwiederherstellung angezeigt wird, durch die URL ersetzt, die Sie in das Textfeld "Option für benutzerdefinierte Wiederherstellungs-URL" eingeben.
+
+Hinweis: Nicht alle Zeichen und Sprachen werden im Pre-Boot-Modus unterstützt. Es wird dringend empfohlen, die für die benutzerdefinierte Meldung oder URL verwendeten Zeichen zu testen, damit sie auf dem Bildschirm für die Pre-Boot-Wiederherstellung ordnungsgemäß angezeigt werden.
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="ActiveDirectoryBackup_Name">
+        <checkBox refId="RequireActiveDirectoryBackup_Name" defaultChecked="true">BitLocker-Sicherung in AD DS erforderlich</checkBox>
+        <text>Wenn diese Option aktiviert ist, kann BitLocker bei einem Sicherungsfehler nicht aktiviert werden (empfohlene Standardeinstellung).  </text>
+        <text>Wenn diese Option deaktiviert ist, kann BitLocker selbst bei einem Sicherungsfehler aktiviert werden. Die Sicherung wird nicht automatisch wiederholt.</text>
+        <dropdownList refId="ActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">Wählen Sie die zu speichernden BitLocker-Wiederherstellungsinformationen aus:</dropdownList>
+        <text/>
+        <text>Ein Wiederherstellungskennwort ist eine 48-stellige Nummer, die den Zugriff auf ein BitLocker-geschütztes Laufwerk entsperrt.</text>
+        <text>Ein Schlüsselpaket enthält den durch mindestens ein Wiederherstellungskennwort gesicherten BitLocker-Verschlüsselungsschlüssel eines Laufwerks.</text>
+            <text>Schlüsselpakete können Sie beim Ausführen einer spezialisierten Wiederherstellung unterstützen, wenn der Datenträger beschädigt ist.  </text>
+      </presentation>
+
+      <presentation id="ConfigureStartupUsage_Name">
+        <checkBox refId="ConfigureNonTPMStartupKeyUsage_Name" defaultChecked="true">BitLocker ohne kompatibles TPM zulassen (hierfür ist ein Kennwort oder ein USB-Flashlaufwerk mit Systemstartschlüssel erforderlich)</checkBox>
+        <text>Einstellungen für Computer mit einem TPM:</text>
+        <dropdownList refId="ConfigureTPMStartupKeyUsageDropDown_Name" noSort="true" defaultItem="0">TPM-Systemstartschlüssel konfigurieren:</dropdownList>
+        <dropdownList refId="ConfigurePINUsageDropDown_Name" noSort="true" defaultItem="0">TPM-Systemstart-PIN konfigurieren:</dropdownList>
+        <text>Wichtig: Wenn der Systemstartschlüssel verlangt wird, darf keine Systemstart-PIN zulässig sein.  </text>
+        <text>Wenn die Systemstart-PIN verlangt wird, darf kein Systemstartschlüssel zulässig sein. Andernfalls tritt ein Richtlinienfehler auf.</text>
+        <text>Hinweis: Sie sollten nicht zulassen, dass die Seite "Erweitert" auf einem Computer mit einem TPM sowohl für die Systemstart-PIN und als auch für den Systemstartschlüssel ausgeblendet wird.</text>
+      </presentation>
+
+      <presentation id="ConfigureAdvancedStartup_Name">
+        <checkBox refId="ConfigureNonTPMStartupKeyUsage_Name" defaultChecked="true">BitLocker ohne kompatibles TPM zulassen (hierfür ist ein Kennwort oder ein USB-Flashlaufwerk mit Systemstartschlüssel erforderlich)</checkBox>
+        <text>Einstellungen für Computer mit einem TPM:</text>
+        <dropdownList refId="ConfigureTPMUsageDropDown_Name" noSort="true" defaultItem="0">TPM-Start konfigurieren:</dropdownList>
+        <dropdownList refId="ConfigurePINUsageDropDown_Name" noSort="true" defaultItem="0">TPM-Systemstart-PIN konfigurieren:</dropdownList>
+        <dropdownList refId="ConfigureTPMStartupKeyUsageDropDown_Name" noSort="true" defaultItem="0">TPM-Systemstartschlüssel konfigurieren:</dropdownList>
+        <dropdownList refId="ConfigureTPMPINKeyUsageDropDown_Name" noSort="true" defaultItem="0">TPM-Systemstartschlüssel und -PIN konfigurieren:</dropdownList>
+        <text/>
+      </presentation>
+
+      <presentation id="ConfigureRecoveryUsage_Name">
+        <text>Wichtig: Um Datenverluste zu vermeiden, müssen BitLocker-Verschlüsselungsschlüssel wiederhergestellt werden können. Wenn Sie die beiden unten angegebenen Wiederherstellungsoptionen nicht zulassen, müssen Sie die Sicherung von BitLocker-Wiederherstellungsinformationen in AD DS aktivieren. Andernfalls tritt ein Richtlinienfehler auf.</text>
+        <dropdownList refId="ConfigureRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0">48-stelliges Wiederherstellungskennwort konfigurieren:</dropdownList>
+        <dropdownList refId="ConfigureRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0">256-Bit-Wiederherstellungsschlüssel konfigurieren:</dropdownList>
+        <text>Hinweis: Wenn Sie die Verwendung des Wiederherstellungskennworts nicht zulassen und der Wiederherstellungsschlüssel erforderlich ist, können Benutzer BitLocker ohne Speichern auf dem USB-Laufwerk nicht aktivieren.</text>
+        <text/>
+      </presentation>
+
+      <presentation id="OSRecoveryUsage_Name">
+        <checkBox refId="OSAllowDRA_Name" defaultChecked="true">Datenwiederherstellungs-Agents zulassen</checkBox>
+        <text>Speichern von BitLocker-Wiederherstellungsinformationen durch Benutzer konfigurieren:</text>
+        <dropdownList refId="OSRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="OSRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="OSHideRecoveryPage_Name" defaultChecked="false">Wiederherstellungsoptionen aus BitLocker-Setup-Assistenten unterdrücken</checkBox>
+        <checkBox refId="OSActiveDirectoryBackup_Name" defaultChecked="true">BitLocker-Wiederherstellungsinformationen für Betriebssystemlaufwerke in AD DS speichern</checkBox>
+        <dropdownList refId="OSActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">Speicherung von BitLocker-Wiederherstellungsinformationen in AD DS konfigurieren:</dropdownList>
+        <checkBox refId="OSRequireActiveDirectoryBackup_Name">BitLocker erst aktivieren, nachdem Wiederherstellungsinformationen für Betriebssystemlaufwerke in AD DS gespeichert wurden</checkBox>
+       </presentation>
+
+      <presentation id="FDVRecoveryUsage_Name">
+        <checkBox refId="FDVAllowDRA_Name" defaultChecked="true">Datenwiederherstellungs-Agents zulassen</checkBox>
+        <text>Speichern von BitLocker-Wiederherstellungsinformationen durch Benutzer konfigurieren:</text>
+        <dropdownList refId="FDVRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="FDVRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="FDVHideRecoveryPage_Name" defaultChecked="false">Wiederherstellungsoptionen aus BitLocker-Setup-Assistenten unterdrücken</checkBox>
+        <checkBox refId="FDVActiveDirectoryBackup_Name" defaultChecked="true">BitLocker-Wiederherstellungsinformationen für Festplattenlaufwerke in AD DS speichern</checkBox>
+        <dropdownList refId="FDVActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">Speicherung von BitLocker-Wiederherstellungsinformationen in AD DS konfigurieren:</dropdownList>
+        <checkBox refId="FDVRequireActiveDirectoryBackup_Name">BitLocker erst aktivieren, nachdem Wiederherstellungsinformationen für Festplattenlaufwerke in AD DS gespeichert wurden</checkBox>
+      </presentation>
+
+      <presentation id="RDVRecoveryUsage_Name">
+        <checkBox refId="RDVAllowDRA_Name" defaultChecked="true">Datenwiederherstellungs-Agents zulassen</checkBox>
+        <text>Speichern von BitLocker-Wiederherstellungsinformationen durch Benutzer konfigurieren:</text>
+        <dropdownList refId="RDVRecoveryPasswordUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+        <dropdownList refId="RDVRecoveryKeyUsageDropDown_Name" noSort="true" defaultItem="0"></dropdownList>
+       <checkBox refId="RDVHideRecoveryPage_Name" defaultChecked="false">Wiederherstellungsoptionen aus BitLocker-Setup-Assistenten unterdrücken</checkBox>
+        <checkBox refId="RDVActiveDirectoryBackup_Name" defaultChecked="true">BitLocker-Wiederherstellungsinformationen für Wechseldatenträger in AD DS speichern</checkBox>
+        <dropdownList refId="RDVActiveDirectoryBackupDropDown_Name" noSort="true" defaultItem="0">Speicherung von BitLocker-Wiederherstellungsinformationen in AD DS konfigurieren:</dropdownList>
+        <checkBox refId="RDVRequireActiveDirectoryBackup_Name">BitLocker erst aktivieren, nachdem Wiederherstellungsinformationen für Wechseldatenträger in AD DS gespeichert wurden</checkBox>
+      </presentation>
+
+      <presentation id="ConfigureRecoveryFolder_Name">
+        <textBox refId="ConfigureRecoveryFolderPath_Input">
+          <label>Standardordnerpfad konfigurieren:</label>
+          <defaultValue/>
+        </textBox>
+        <text>Geben Sie einen vollqualifizierten Pfad an, oder schließen Sie die Umgebungsvariablen des Computers in den Pfad ein.  </text>
+        <text>Geben Sie beispielsweise "\\Server\Sicherungsordner" oder "%UmgebungsvariableDesSicherenLaufwerks%\Sicherungsordner" ein.</text>
+        <text>Hinweis: In allen Fällen kann der Benutzer andere Ordner zum Speichern des Wiederherstellungskennworts auswählen.</text>
+        <text/>
+      </presentation>
+
+      <presentation id="EncryptionMethod_Name">
+        <dropdownList refId="EncryptionMethodDropDown_Name" noSort="true" defaultItem="2">Verschlüsselungsmethode auswählen:</dropdownList>
+      </presentation>
+
+      <presentation id="EncryptionMethodNoDiffuser_Name">
+        <dropdownList refId="EncryptionMethodNoDiffDropDown_Name" noSort="true" defaultItem="0">Verschlüsselungsmethode auswählen:</dropdownList>
+      </presentation>
+
+      <presentation id="EncryptionMethodWithXts_Name">
+        <dropdownList refId="EncryptionMethodWithXtsOsDropDown_Name" noSort="true" defaultItem="2">Verschlüsselungsmethode für Betriebssystemlaufwerke auswählen:</dropdownList>
+        <dropdownList refId="EncryptionMethodWithXtsFdvDropDown_Name" noSort="true" defaultItem="2">Verschlüsselungsmethode für Festplattenlaufwerke auswählen:</dropdownList>
+        <dropdownList refId="EncryptionMethodWithXtsRdvDropDown_Name" noSort="true" defaultItem="0">Verschlüsselungsmethode für Wechsellaufwerke auswählen:</dropdownList>
+      </presentation>
+
+      <presentation id="OSEncryptionType">
+        <dropdownList refId="OSEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">Verschlüsselungstyp auswählen:</dropdownList>
+      </presentation>
+
+      <presentation id="FDVEncryptionType">
+        <dropdownList refId="FDVEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">Verschlüsselungstyp auswählen:</dropdownList>
+      </presentation>
+
+      <presentation id="RDVEncryptionType">
+        <dropdownList refId="RDVEncryptionTypeDropDown_Name" noSort="true" defaultItem="0">Verschlüsselungstyp auswählen:</dropdownList>
+      </presentation>
+
+      <presentation id="PlatformValidation_Deprecated_Name">
+        <text>Ein Plattformvalidierungsprofil besteht aus einer Reihe von Plattformkonfigurationsregister-Indizes (Platform Configuration Register, PCR). Jeder PCR-Index ist mit Komponenten verknüpft, die beim Start von Windows ausgeführt werden.</text>
+        <text>Wählen Sie die in das Profil einzuschließenden PCR-Indizes mithilfe der Kontrollkästchen unten aus.</text>
+        <text>Gehen Sie beim Ändern dieser Einstellung vorsichtig vor.</text>
+        <text>Wir empfehlen ein Standardprofil der PCRs 0, 2, 4, 8, 9, 10 und 11.</text>
+        <text>Damit der BitLocker-Schutz wirksam wird, müssen Sie PCR 11 einschließen.</text>
+
+        <text>Weitere Informationen zu den Vorteilen und Risiken, die Änderungen am standardmäßigen TPM-Plattformvalidierungsprofil verursachen können, finden Sie in der Onlinedokumentation.</text>
+
+        <checkBox refId="PlatformValidation_Deprecated_Setting0" defaultChecked="true">PCR 0: CRTM (Core Root of Trust of Measurement), BIOS und Plattformerweiterungen</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting1">PCR 1: Plattform- und Hauptplatinenkonfiguration und -daten</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting2" defaultChecked="true">PCR 2: Options-ROM-Code</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting3">PCR 3: Options-ROM-Konfiguration und -Daten</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting4" defaultChecked="true">PCR 4: MBR-Code (Master Boot Record)</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting5">PCR 5: MBR-Partitionstabelle (Master Boot Record)</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting6">PCR 6: Statusübergangs- und Reaktivierungsereignisse</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting7">PCR 7: Computerherstellerspezifisch</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting8" defaultChecked="true">PCR 8: NTFS-Startsektor</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting9" defaultChecked="true">PCR 9: NTFS-Startblock</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting10" defaultChecked="true">PCR 10: Start-Manager</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting11" defaultChecked="true">PCR 11: BitLocker-Zugriffssteuerung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting12">PCR 12: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting13">PCR 13: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting14">PCR 14: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting15">PCR 15: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting16">PCR 16: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting17">PCR 17: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting18">PCR 18: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting19">PCR 19: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting20">PCR 20: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting21">PCR 21: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting22">PCR 22: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_Deprecated_Setting23">PCR 23: Reserviert für zukünftige Verwendung</checkBox>
+      </presentation>
+
+      <presentation id="PlatformValidation_BIOS_Name">
+        <text>Ein Plattformvalidierungsprofil besteht aus einer Reihe von Plattformkonfigurationsregister-Indizes (Platform Configuration Register, PCR). Jeder PCR-Index ist mit Komponenten verknüpft, die beim Start von Windows ausgeführt werden.</text>
+        <text>Wählen Sie die in das Profil einzuschließenden PCR-Indizes mithilfe der Kontrollkästchen unten aus.</text>
+        <text>Gehen Sie beim Ändern dieser Einstellung vorsichtig vor.</text>
+        <text>Wir empfehlen ein Standardprofil der PCRs 0, 2, 4, 8, 9, 10 und 11.</text>
+        <text>Damit der BitLocker-Schutz wirksam wird, müssen Sie PCR 11 einschließen.</text>
+
+        <text>Weitere Informationen zu den Vorteilen und Risiken, die Änderungen am standardmäßigen TPM-Plattformvalidierungsprofil verursachen können, finden Sie in der Onlinedokumentation.</text>
+
+        <checkBox refId="PlatformValidation_BIOS_Setting0" defaultChecked="true">PCR 0: CRTM (Core Root of Trust of Measurement), BIOS und Plattformerweiterungen</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting1">PCR 1: Plattform- und Hauptplatinenkonfiguration und -daten</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting2" defaultChecked="true">PCR 2: Options-ROM-Code</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting3">PCR 3: Options-ROM-Konfiguration und -Daten</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting4" defaultChecked="true">PCR 4: MBR-Code (Master Boot Record)</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting5">PCR 5: MBR-Partitionstabelle (Master Boot Record)</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting6">PCR 6: Statusübergangs- und Reaktivierungsereignisse</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting7">PCR 7: Computerherstellerspezifisch</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting8" defaultChecked="true">PCR 8: NTFS-Startsektor</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting9" defaultChecked="true">PCR 9: NTFS-Startblock</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting10" defaultChecked="true">PCR 10: Start-Manager</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting11" defaultChecked="true">PCR 11: BitLocker-Zugriffssteuerung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting12">PCR 12: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting13">PCR 13: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting14">PCR 14: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting15">PCR 15: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting16">PCR 16: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting17">PCR 17: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting18">PCR 18: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting19">PCR 19: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting20">PCR 20: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting21">PCR 21: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting22">PCR 22: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_BIOS_Setting23">PCR 23: Reserviert für zukünftige Verwendung</checkBox>
+      </presentation>
+
+      <presentation id="PlatformValidation_UEFI_Name">
+        <text>Ein Plattformvalidierungsprofil besteht aus einer Reihe von Plattformkonfigurationsregister-Indizes (Platform Configuration Register, PCR). Jeder PCR-Index ist mit Komponenten verknüpft, die beim Start von Windows ausgeführt werden.</text>
+        <text>Wählen Sie die in das Profil einzuschließenden PCR-Indizes mithilfe der Kontrollkästchen unten aus.</text>
+        <text>Gehen Sie beim Ändern dieser Einstellung vorsichtig vor.</text>
+        <text>Wir empfehlen ein Standardprofil der PCRs 0, 2, 4 und 11.</text>
+        <text>Damit der BitLocker-Schutz wirksam wird, müssen Sie PCR 11 einschließen.</text>
+
+        <text>Weitere Informationen zu den Vorteilen und Risiken, die Änderungen am standardmäßigen TPM-Plattformvalidierungsprofil verursachen können, finden Sie in der Onlinedokumentation.</text>
+
+        <checkBox refId="PlatformValidation_UEFI_Setting0" defaultChecked="true">PCR 0: Ausführbarer Code für Kernsystemfirmware</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting1">PCR 1: Daten für Kernsystemfirmware</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting2" defaultChecked="true">PCR 2: Erweiterter oder austauschbarer ausführbarer Code</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting3">PCR 3: Erweiterte oder austauschbare Firmwaredaten</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting4" defaultChecked="true">PCR 4: Start-Manager</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting5">PCR 5: GPT/Partitionstabelle</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting6">PCR 6: Wiederaufnahme aus Energiestatusereignissen S4 und S5</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting7">PCR 7: Zustand des sicheren Starts</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting8">PCR 8: Initialisiert auf 0 ohne Erweiterungen (reserviert für zukünftige Verwendung)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting9">PCR 9: Initialisiert auf 0 ohne Erweiterungen (reserviert für zukünftige Verwendung)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting10">PCR 10: Initialisiert auf 0 ohne Erweiterungen (reserviert für zukünftige Verwendung)</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting11" defaultChecked="true">PCR 11: BitLocker-Zugriffssteuerung</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting12">PCR 12: Datenereignisse und stark veränderliche Ereignisse</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting13">PCR 13: Startmoduldetails</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting14">PCR 14: Startbefugnisse</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting15">PCR 15: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting16">PCR 16: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting17">PCR 17: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting18">PCR 18: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting19">PCR 19: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting20">PCR 20: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting21">PCR 21: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting22">PCR 22: Reserviert für zukünftige Verwendung</checkBox>
+        <checkBox refId="PlatformValidation_UEFI_Setting23">PCR 23: Reserviert für zukünftige Verwendung</checkBox>
+      </presentation>
+
+      <presentation id="MorBehavior_Name">
+
+      </presentation>
+
+      <presentation id="IdentificationField">
+        <textBox refId="IdentificationField">
+          <label>BitLocker-ID-Feld:</label>
+        </textBox>
+        <textBox refId="SecIdentificationField">
+          <label>BitLocker-Feld für zulässige IDs:</label>
+        </textBox>
+      </presentation>
+
+      <presentation id="UserCertificateOID">
+        <textBox refId="UserCertificateOID">
+          <label>Objekt-ID:</label>
+          <defaultValue>1.3.6.1.4.1.311.67.1.1</defaultValue>
+        </textBox>
+        </presentation>
+
+      <presentation id="UseEnhancedBcdProfile">
+        <text>Die folgenden zusätzlichen BCD-Einstellungen überprüfen:</text>
+        <multiTextBox refId="EnhancedBcdProfile_AdditionalSecurityCriticalSettings"/>
+        <text>Die folgenden zusätzlichen BCD-Einstellungen ausschließen:</text>
+        <multiTextBox refId="EnhancedBcdProfile_AdditionalExcludedSettings"/>
+      </presentation>
+
+     <presentation id="MinimumPINLength">
+        <decimalTextBox refId="MinPINLength" defaultValue="6">Mindestanzahl von Zeichen:</decimalTextBox>
+      </presentation>
+
+     <presentation id="FDVPassphrase_Name">
+        <checkBox refId="FDVRequirePassphrase">Kennwort für Festplattenlaufwerk anfordern</checkBox>
+        <dropdownList refId="FDVPassphraseComplexity" noSort="true" defaultItem="0">Kennwortkomplexität für Festplattenlaufwerke konfigurieren:</dropdownList>
+        <decimalTextBox refId="FDVMinPassphraseLength" defaultValue="8">Minimale Kennwortlänge für Festplattenlaufwerk:</decimalTextBox>
+       <text>Hinweis: Sie müssen die Richtlinieneinstellung "Kennwort muss Komplexitätsvoraussetzungen entsprechen" aktivieren, damit die Einstellung für die Kennwortkomplexität wirksam wird.</text>
+      </presentation>
+
+     <presentation id="OSPassphrase_Name">
+       <dropdownList refId="OSPassphraseComplexity_Name" noSort="true" defaultItem="0">Kennwortkomplexität für Betriebssystemlaufwerke konfigurieren:</dropdownList>
+       <decimalTextBox refId="OSPassphraseLength_Name" defaultValue="8">Minimale Kennwortlänge für Betriebssystemlaufwerk:</decimalTextBox>
+       <text>Hinweis: Sie müssen die Richtlinieneinstellung "Kennwort muss Komplexitätsvoraussetzungen entsprechen" aktivieren, damit die Einstellung für die Kennwortkomplexität wirksam wird.</text>
+       <checkBox refId="OSPassphraseASCIIOnly_Name">Nur ASCII-Kennwörter für Betriebssystem-Wechseldatenträger anfordern</checkBox>
+     </presentation>
+
+     <presentation id="FDVConfigureSmartCard">
+       <checkBox refId="FDVRequireSmartCard_Name">Smartcard-Verwendung für Festplattenlaufwerke anfordern</checkBox>
+     </presentation>
+
+     <presentation id="RDVPassphrase_Name">
+        <checkBox refId="RDVRequirePassphrase">Kennwort für Wechseldatenträger anfordern</checkBox>
+       <dropdownList refId="RDVPassphraseComplexity" noSort="true" defaultItem="0">Kennwortkomplexität für Wechseldatenträger konfigurieren:</dropdownList>
+        <decimalTextBox refId="RDVMinPassphraseLength" defaultValue="8">Minimale Kennwortlänge für Wechseldatenträger:</decimalTextBox>
+<text>Hinweis: Sie müssen die Richtlinieneinstellung "Kennwort muss Komplexitätsvoraussetzungen entsprechen" aktivieren, damit die Einstellung für die Kennwortkomplexität wirksam wird.</text>
+      </presentation>
+
+      <presentation id="RDVConfigureBDE">
+        <checkBox refId="RDVAllowBDE_Name" noSort="true" defaultChecked="true">Benutzer können BitLocker-Schutz auf Wechseldatenträger anwenden</checkBox>
+        <checkBox refId="RDVDisableBDE_Name" noSort="true" defaultChecked="true">Benutzer können BitLocker-Schutz auf Wechseldatenträgern anhalten und entschlüsseln</checkBox>
+      </presentation>
+
+      <presentation id="RDVDenyWriteAccess">
+        <checkBox refId="RDVCrossOrg" noSort="true" defaultChecked="false">Keinen Schreibzugriff auf Geräte zulassen, die in anderen Organisationen konfiguriert wurden</checkBox>
+      </presentation>
+
+
+      <presentation id="RDVConfigureSmartCard">
+        <checkBox refId="RDVRequireSmartCard_Name" noSort="true" defaultItem="0">Smartcard-Verwendung für Wechseldatenträger anfordern</checkBox>
+        </presentation>
+
+      <presentation id="EnhancedPIN">
+
+      </presentation>
+
+      <presentation id="TPMAutoReseal">
+
+      </presentation>
+
+      <presentation id="DisallowStandardUsersCanChangePIN">
+
+      </presentation>
+
+      <presentation id="FDVDiscoveryVolumeType">
+        <checkBox refId="FDVNoBitLockerToGoReader_Name" noSort="true" defaultChecked="false">BitLocker To Go-Lesetool nicht auf FAT-Festplattenlaufwerken installieren</checkBox>
+      </presentation>
+
+      <presentation id="RDVDiscoveryVolumeType">
+        <checkBox refId="RDVNoBitLockerToGoReader_Name" noSort="true" defaultChecked="false">BitLocker To Go-Lesetool nicht auf FAT-Wechseldatenträgern installieren</checkBox>
+      </presentation>
+
+      <presentation id="OSEDrive_Name">
+        <checkBox refId="OSUseSW" noSort="true" defaultChecked="true">Softwarebasierte Verschlüsselung von BitLocker verwenden, wenn keine hardwarebasierte Verschlüsselung verfügbar ist</checkBox>
+        <checkBox refId="OSRestrictAlgos" noSort="true" defaultChecked="false">Zulässige Verschlüsselungsalgorithmen und Verschlüsselungssammlungen für die hardwarebasierte Verschlüsselung einschränken</checkBox>
+        <textBox refId="OSAllowedAlgos">
+          <label>Verschlüsselungsalgorithmen oder Verschlüsselungssammlungen wie folgt einschränken:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="FDVEDrive_Name">
+        <checkBox refId="FDVUseSW" noSort="true" defaultChecked="true">Softwarebasierte Verschlüsselung von BitLocker verwenden, wenn keine hardwarebasierte Verschlüsselung verfügbar ist</checkBox>
+        <checkBox refId="FDVRestrictAlgos" noSort="true" defaultChecked="false">Zulässige Verschlüsselungsalgorithmen und Verschlüsselungssammlungen für die hardwarebasierte Verschlüsselung einschränken</checkBox>
+        <textBox refId="FDVAllowedAlgos">
+          <label>Verschlüsselungsalgorithmen oder Verschlüsselungssammlungen wie folgt einschränken:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="RDVEDrive_Name">
+        <checkBox refId="RDVUseSW" noSort="true" defaultChecked="true">Softwarebasierte Verschlüsselung von BitLocker verwenden, wenn keine hardwarebasierte Verschlüsselung verfügbar ist</checkBox>
+        <checkBox refId="RDVRestrictAlgos" noSort="true" defaultChecked="false">Zulässige Verschlüsselungsalgorithmen und Verschlüsselungssammlungen für die hardwarebasierte Verschlüsselung einschränken</checkBox>
+        <textBox refId="RDVAllowedAlgos">
+          <label>Verschlüsselungsalgorithmen oder Verschlüsselungssammlungen wie folgt einschränken:</label>
+          <defaultValue>2.16.840.1.101.3.4.1.2;2.16.840.1.101.3.4.1.42</defaultValue>
+        </textBox>
+      </presentation>
+
+      <presentation id="PrebootRecoveryInfo">
+        <dropdownList refId="PrebootRecoveryInfoDropDown_Name" noSort="true" defaultItem="0">Wählen Sie eine Option für die Pre-Boot-Wiederherstellungsmeldung:</dropdownList>
+        <textBox refId="RecoveryMessage_Input">
+          <label>Option für benutzerdefinierte Wiederherstellungsmeldung:</label>
+          <defaultValue/>
+        </textBox>
+        <textBox refId="RecoveryUrl_Input">
+          <label>Option für benutzerdefinierte Wiederherstellungs-URL:</label>
+          <defaultValue/>
+        </textBox>
+      </presentation>
+
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

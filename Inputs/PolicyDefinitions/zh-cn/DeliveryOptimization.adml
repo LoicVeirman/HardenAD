@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0">
+  <displayName>传递优化 GP</displayName>
+  <description>此文件描述“传递优化 GP”设置</description>
+  <resources>
+    <stringTable>
+      <string id="DeliveryOptimizationCat">传递优化</string>
+      <string id="DownloadMode">下载模式</string>
+      <string id="DownloadMode_Help">指定在下载 Windows 更新、应用和应用更新时传递优化可以使用的下载方法。
+
+以下列表显示了支持的值:
+
+0=仅限 HTTP，无对等互连。
+
+1=与相同 NAT 后面的对等互连混合的 HTTP。
+
+2=与跨专用组的对等互连混合的 HTTP。默认情况下，在同一 Active Directory 站点(如果存在)或同一域中的设备上进行对等互连。选择此选项时，对等互连将跨越 NAT。若要创建自定义组，请将组 ID 与模式 2 结合使用。
+
+3=与 Internet 对等互连混合的 HTTP。
+
+99=简单下载模式，无对等互连。传递优化将仅使用 HTTP 进行下载，而不会尝试联系传递优化云服务。
+
+100 = 绕过模式。 Windows 10: 不使用传递优化，而改用 BITS。Windows 11: 已废弃，使用简单模式代替。</string>
+      <string id="DownloadMode_CdnOnly">仅限 HTTP (0)</string>
+      <string id="DownloadMode_Lan">LAN (1)</string>
+      <string id="DownloadMode_Group">组(2)</string>
+      <string id="DownloadMode_Internet">Internet (3)</string>
+      <string id="DownloadMode_Simple">简单(99)</string>
+      <string id="DownloadMode_Bypass">旁路(100)</string>
+      <string id="GroupId">组 ID</string>
+      <string id="GroupId_Help">组 ID 必须设置为 GUID。此策略指定设备所属的任意组 ID。
+
+如果你有以下需要，请使用此策略: 为位于不同域或者不在同一 LAN 中的分支机构创建用于本地网络对等互连的单个组。
+
+注意: 这是一种尽力而为的优化方案，不应依赖它进行身份验证。</string>
+      <string id="MaxCacheSize">最大缓存大小(%)</string>
+      <string id="MaxCacheSize_Help">指定传递优化可以使用的最大缓存大小，以可用磁盘大小百分比表示(1-100)。</string>
+      <string id="AbsoluteMaxCacheSize">绝对最大缓存大小(以 GB 为单位)</string>
+      <string id="AbsoluteMaxCacheSize_Help">指定传递优化缓存的最大大小(以 GB 为单位)。
+
+此策略将替代 DOMaxCacheSize 策略。
+
+值 0 (零)表示“无限制”缓存；当设备的磁盘空间不足时，传递优化将清除缓存。</string>
+      <string id="MaxCacheAge">最大缓存保留时间(以秒为单位)</string>
+      <string id="MaxCacheAge_Help">指定成功下载后，每个文件在传递优化缓存中保留的最大时间(以秒为单位)。
+
+值 0 (零)表示“无限制”；传递优化会在缓存中将文件保留更长时间，而且只要未超出缓存大小，便会让文件可以上传到其他设备。</string>
+      <string id="MonthlyUploadDataCap">每月上载数据上限(以 GB 为单位)</string>
+      <string id="MonthlyUploadDataCap_Help">指定在每个日历月允许传递优化上传到 Internet 对等的最大总字节数(以 GB 为单位)。
+
+值 0 (零)表示“无限制”；如果设置了 0，则不应用每月上传限制。</string>
+      <string id="MinBackgroundQos">最低后台 QoS (以 KB/s 为单位)</string>
+      <string id="MinBackgroundQos_Help">指定后台下载的最低下载 QoS (服务质量或速度) (以 KB/秒为单位)。
+
+此策略影响对等和 HTTP 源的混合。传递优化补充从 HTTP 源的下载以达到指定的最低 QoS 值。</string>
+      <string id="ModifyCacheDrive">修改缓存驱动器</string>
+      <string id="ModifyCacheDrive_Help">指定可供传递优化用于存储其缓存的驱动器。
+
+默认情况下，将使用 %SystemDrive% 存储缓存。可以使用环境变量、驱动器号或完整路径来指定驱动器位置。</string>
+      <string id="MaxBackgroundDownloadBandwidth">最大后台下载带宽(以 KB/s 为单位)</string>
+      <string id="MaxBackgroundDownloadBandwidth_Help">使用传递优化指定设备可以跨所有并发下载活动使用的最大后台下载带宽(以 KB/秒为单位)。
+
+默认值 0 (零)表示传递优化会动态调整以使用可用的带宽进行下载。
+      </string>
+      <string id="MaxForegroundDownloadBandwidth">最大前台下载带宽(以 KB/s 为单位)</string>
+      <string id="MaxForegroundDownloadBandwidth_Help">使用传递优化指定设备可以跨所有并发下载活动使用的最大前台下载带宽(以 KB/秒为单位)。
+
+默认值 0 (零)表示传递优化会动态调整以使用可用的带宽进行下载。
+      </string>
+      <string id="PercentageMaxBackgroundBandwidth">最大后台下载带宽(百分比)</string>
+      <string id="PercentageMaxBackgroundBandwidth_Help">以可用下载带宽的百分比形式指定传递优化在所有并发下载活动中使用的最大后台下载带宽。
+
+默认值 0 (零)表示传递优化动态调整以使用可用带宽进行后台下载。</string>
+      <string id="PercentageMaxForegroundBandwidth">最大前台下载带宽(百分比)</string>
+      <string id="PercentageMaxForegroundBandwidth_Help">以可用下载带宽的百分比形式指定传递优化在所有并发下载活动中可以使用的最大前台下载带宽。
+
+默认值为 0 (零)表示传递优化可进行动态调整以使用可用带宽进行前台下载。</string>
+      <string id="MinFileSizeToCache">最小对等缓存内容文件大小(以 MB 为单位)</string>
+      <string id="MinFileSizeToCache_Help">指定为使用对等缓存启用的最小内容文件大小(以 MB 为单位)。
+
+建议值: 1 MB 到 100000 MB。</string>
+      <string id="AllowVPNPeerCaching">当设备通过 VPN 连接时启用对等缓存</string>
+      <string id="AllowVPNPeerCaching_Help">指定 "true" 以允许设备在通过 VPN 连接到域网络时参与对等缓存。
+
+这意味着设备可以从 VPN 或企业域网络上下载或上传到其他域网络设备。</string>
+      <string id="MinRAMAllowedToPeer">启用对等缓存所需的最小 RAM 容量(含，以 GB 为单位):</string>
+      <string id="MinRAMAllowedToPeer_Help">指定使用对等缓存所需的最小 RAM 大小(以 GB 为单位)。
+
+例如，如果最小设置为 1 GB，则可用 RAM 为 1 GB 或更高的设备可以使用对等缓存。
+
+建议值: 1 GB 到 4 GB。</string>
+      <string id="MinDiskSizeAllowedToPeer">使用对等缓存时允许的最小磁盘大小(以 GB 为单位)</string>
+      <string id="MinDiskSizeAllowedToPeer_Help">指定设备使用对等缓存所需的最小磁盘大小(以 GB 为单位容量)。将使用云服务集默认值。
+
+建议值: 64 GB 到 256 GB。
+
+注意: 如果设置了 DOModifyCacheDrive 策略，则磁盘大小检查将应用于此策略指定的新工作目录。</string>
+      <string id="MinBatteryPercentageAllowedToUpload">设备在由电池供电，且电池剩余电量高于设定的百分比时允许上传</string>
+      <string id="MinBatteryPercentageAllowedToUpload_Help">指定介于 1 和 100 之间的任何值(以百分比表示)，以允许设备在接通直流电源(电池)时将数据上传到 LAN 和组对等。
+
+如果允许在电池达到 40 (40%)时上传，设备将建议设置值。无论此策略如何设置，设备在由电池供电时都可从对等端下载数据。
+
+如果此值设为 0 则意味着“无限制”；将使用云服务集默认值。</string>
+      <string id="CacheHost">缓存服务器主机名</string>
+      <string id="CacheHost_Help">使用此策略，可以设置客户端()将使用的一个或多个 Microsoft 联网缓存服务器。
+
+可以将一个或多个值添加为 FQDN)或 IP 地址(完全限定的域名。若要添加多个值，请用逗号分隔每个 FQDN 或 IP 地址。
+      </string>
+      <string id="CacheHostSource">缓存服务器主机名源</string>
+      <string id="CacheHostSource_Help">使用此策略，可以指定客户端如何动态发现 Microsoft 联网缓存服务器。
+
+可用的选项为:
+
+0 = 禁用 DNS-SD。
+
+1 = DHCP 选项 235。
+
+2 = DHCP 选项 235 Force。
+
+如果未配置此策略，则客户端将尝试使用 DNS-SD 自动查找缓存服务器。如果设置为 0，客户端将不会使用 DNS-SD 自动查找缓存服务器。如果设置为 1 或 2，则客户端将查询 DHCP 选项 ID 235，并使用返回的值作为缓存服务器主机名。选项 2 将替代缓存服务器主机名策略(如果已配置)。</string>
+      <string id="CacheHostSource_DHCP">DHCP 选项 235</string>
+      <string id="CacheHostSource_DHCP_Force">DHCP 选项 235 强制</string>
+      <string id="GroupIdSource">选择组 ID 的源</string>
+      <string id="GroupIdSource_Help">设置此策略以将节点选择限制为特定源。
+
+可用选项包括:
+
+1 = AD 站点。
+
+2 = 经过身份验证的域 SID。
+
+3 = DHCP 选项 ID。
+
+4 = DNS 后缀。
+
+5 = AAD 租户 ID。
+
+设置时，将从所选源自动分配组 ID。如果还设置了 GroupID 策略，则忽略此策略。
+
+此策略中设置的选项仅适用于组 (2) 下载模式。如果组 (2) 未设置为下载模式，则将忽略此策略。
+
+对于选项 3 - DHCP 选项 ID，客户端将查询 DHCP 选项 ID 234，并使用返回的 GUID 值作为组 ID。</string>
+      <string id="GroupIdSource_Unset">取消设置(0)</string>
+      <string id="GroupIdSource_AD">AD 站点(1)</string>
+      <string id="GroupIdSource_SID">经过身份验证的域 SID (2)</string>
+      <string id="GroupIdSource_DHCP">DHCP 选项 ID (3)</string>
+      <string id="GroupIdSource_DNS">DNS 后缀(4)</string>
+      <string id="GroupIdSource_AAD">AAD 租户 ID (5)</string>
+      <string id="DelayBackgroundDownloadFromHttp">延迟 http 的后台下载(以秒为单位)</string>
+      <string id="DelayBackgroundDownloadFromHttp_Help">通过此策略，你可以在允许使用 P2P 的后台下载中延迟使用 HTTP 源。
+
+达到最大延迟后，将会恢复使用 HTTP 下载，下载整个有效负载或者从对等方补充无法下载的字节。
+
+请注意，正在等待对等来源的下载将对最终用户显示为处于卡顿状态。
+
+建议的值为 1 小时(3600)。</string>
+      <string id="DelayForegroundDownloadFromHttp">延迟 http 的前台下载(以秒为单位)</string>
+      <string id="DelayForegroundDownloadFromHttp_Help">通过此策略，你可以在允许使用 P2P 的前台(交互)下载中延迟使用 HTTP 源。
+
+达到最大延迟后，下载将恢复使用 HTTP，此时会下载整个有效负载或者补充无法从对等方下载的字节。
+
+请注意，正在等待对等来源的下载将对最终用户显示为处于卡顿状态。
+
+建议的值为 1 分钟(60)。</string>
+      <string id="DelayCacheServerFallbackBackground">延迟后台下载缓存服务器回退(以秒为单位)</string>
+      <string id="DelayCacheServerFallbackBackground_Help">设置此策略可将从缓存服务器回退到 HTTP 源以进行后台内容下载这一操作延迟 X 秒。
+
+注意: 如果将此策略设置为延迟从 http 的后台下载，则将先应用该策略(以允许先从对等端下载)。</string>
+      <string id="DelayCacheServerFallbackForeground">延迟前台下载缓存服务器回退(以秒为单位)</string>
+      <string id="DelayCacheServerFallbackForeground_Help">设置此策略可将从缓存服务器回退到 HTTP 源以进行前台内容下载这一操作延迟 X 秒。
+
+注意: 如果将此策略设置为延迟从 http 的前台下载，则将先应用该策略(以允许先从对等端下载)。</string>
+      <string id="RestrictPeerSelectionBy">选择一种方法来限制对等方选择</string>
+      <string id="RestrictPeerSelectionBy_Help">将此策略设置为通过选定选项限制对等选择。
+
+可用选项包括：
+0 = NAT。
+1 = 子网掩码。
+2 = 本地发现（DNS-SD）。
+
+默认值已从0（无限制）更改为1（限制为子网）。
+
+这些选项适用于下载模式 LAN （1）和组（2）。</string>
+      <string id="RestrictPeerSelectionBy_None">NAT</string>
+      <string id="RestrictPeerSelectionBy_Subnet">子网</string>
+      <string id="RestrictPeerSelectionBy_LinkLocal">本地发现</string>
+      <string id="SetHoursToLimitBackgroundDownloadBandwidth">设置工作时间以限制后台下载带宽</string>
+      <string id="SetHoursToLimitBackgroundDownloadBandwidth_Help">以可用下载带宽百分比形式指定传递优化在工作时间内外跨所有并发下载活动使用的最大后台下载带宽。</string>
+      <string id="SetHoursToLimitForegroundDownloadBandwidth">设置工作时间以限制前台下载带宽</string>
+      <string id="SetHoursToLimitForegroundDownloadBandwidth_Help">以可用下载带宽百分比形式指定传递优化在工作时间内外跨所有并发下载活动使用的最大前台下载带宽。</string>
+      <string id="Time1AM">上午 1 点</string>
+      <string id="Time1PM">下午 1 点</string>
+      <string id="Time2AM">上午 2 点</string>
+      <string id="Time2PM">下午 2 点</string>
+      <string id="Time3AM">上午 3 点</string>
+      <string id="Time3PM">下午 3 点</string>
+      <string id="Time4AM">上午 4 点</string>
+      <string id="Time4PM">下午 4 点</string>
+      <string id="Time5AM">上午 5 点</string>
+      <string id="Time5PM">下午 5 点</string>
+      <string id="Time6AM">上午 6 点</string>
+      <string id="Time6PM">下午 6 点</string>
+      <string id="Time7AM">上午 7 点</string>
+      <string id="Time7PM">下午 7 点</string>
+      <string id="Time8AM">上午 8 点</string>
+      <string id="Time8PM">下午 8 点</string>
+      <string id="Time9AM">上午 9 点</string>
+      <string id="Time9PM">下午 9 点</string>
+      <string id="Time10AM">上午 10 点</string>
+      <string id="Time10PM">下午 10 点</string>
+      <string id="Time11AM">上午 11 点</string>
+      <string id="Time11PM">下午 11 点</string>
+      <string id="Time12AM">上午 12 点</string>
+      <string id="Time12PM">下午 12 点</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DownloadMode">
+        <dropdownList defaultItem="1" noSort="true" refId="DownloadMode">下载模式:</dropdownList>
+      </presentation>
+      <presentation id="GroupId">
+        <textBox refId="GroupId">
+          <label>组 ID:</label>
+        </textBox>
+      </presentation>
+      <presentation id="MaxCacheSize">
+        <decimalTextBox defaultValue="20" refId="MaxCacheSize">最大缓存大小(%):</decimalTextBox>
+        <text>默认值为 20%</text>
+      </presentation>
+      <presentation id="AbsoluteMaxCacheSize">
+        <decimalTextBox defaultValue="10" refId="AbsoluteMaxCacheSize">绝对最大缓存大小(以 GB 为单位):</decimalTextBox>
+        <text>默认值为 10GB</text>
+      </presentation>
+      <presentation id="MaxCacheAge">
+        <decimalTextBox defaultValue="604800" refId="MaxCacheAge">最大缓存保留时间(以秒为单位):</decimalTextBox>
+        <text>默认值为 7 天</text>
+      </presentation>
+      <presentation id="MonthlyUploadDataCap">
+        <decimalTextBox defaultValue="5120" refId="MonthlyUploadDataCap">每月上载数据上限(以 GB 为单位):</decimalTextBox>
+        <text>默认值为 5 TB</text>
+      </presentation>
+      <presentation id="MinBackgroundQos">
+        <decimalTextBox defaultValue="20480" refId="MinBackgroundQos">最低后台 QoS (以 KB/s 为单位):</decimalTextBox>
+        <text>默认值为 20 MB/秒</text>
+      </presentation>
+      <presentation id="ModifyCacheDrive">
+        <textBox refId="ModifyCacheDrive">
+          <label>修改缓存驱动器:</label>
+        </textBox>
+      </presentation>
+      <presentation id="MaxBackgroundDownloadBandwidth">
+        <decimalTextBox defaultValue="0" refId="MaxBackgroundDownloadBandwidth">最大后台下载带宽(以 KB/s 为单位):</decimalTextBox>
+        <text>默认值为 0 (无限制)</text>
+      </presentation>
+      <presentation id="MaxForegroundDownloadBandwidth">
+        <decimalTextBox defaultValue="0" refId="MaxForegroundDownloadBandwidth">最大前台下载带宽(以 KB/s 为单位):</decimalTextBox>
+        <text>默认值为 0 (无限制)</text>
+      </presentation>
+      <presentation id="PercentageMaxBackgroundBandwidth">
+        <decimalTextBox defaultValue="0" refId="PercentageMaxBackgroundBandwidth">最大后台下载带宽(百分比):</decimalTextBox>
+        <text>默认值为 0 (无限制)</text>
+      </presentation>
+      <presentation id="PercentageMaxForegroundBandwidth">
+        <decimalTextBox defaultValue="0" refId="PercentageMaxForegroundBandwidth">最大前台下载带宽(百分比):</decimalTextBox>
+        <text>默认值为 0 (无限制)</text>
+      </presentation>
+      <presentation id="MinFileSizeToCache">
+        <decimalTextBox defaultValue="100" refId="MinFileSizeToCache">最小对等缓存内容文件大小(以 MB 为单位):</decimalTextBox>
+        <text>默认值为 100MB</text>
+      </presentation>
+      <presentation id="AllowVPNPeerCaching">
+        <checkBox defaultChecked="false" refId="AllowVPNPeerCaching">当设备通过 VPN 连接时启用对等缓存</checkBox>
+      </presentation>
+      <presentation id="MinRAMAllowedToPeer">
+        <decimalTextBox defaultValue="4" refId="MinRAMAllowedToPeer">启用对等缓存所需的最小 RAM 容量(含，以 GB 为单位):</decimalTextBox>
+        <text>默认值为 4GB</text>
+      </presentation>
+      <presentation id="MinDiskSizeAllowedToPeer">
+        <decimalTextBox defaultValue="32" refId="MinDiskSizeAllowedToPeer">使用对等缓存时允许的最小磁盘大小(以 GB 为单位):</decimalTextBox>
+        <text>默认值为 32GB</text>
+      </presentation>
+      <presentation id="MinBatteryPercentageAllowedToUpload">
+        <decimalTextBox defaultValue="0" refId="MinBatteryPercentageAllowedToUpload">最低电池剩余电量(%):</decimalTextBox>
+        <text>默认值为 0 (无限制)</text>
+      </presentation>
+      <presentation id="CacheHost">
+        <textBox refId="CacheHost">
+          <label>缓存服务器:</label>
+        </textBox>
+      </presentation>
+      <presentation id="CacheHostSource">
+        <dropdownList defaultItem="0" noSort="true" refId="CacheHostSource">缓存服务器主机名源:</dropdownList>
+      </presentation>
+      <presentation id="GroupIdSource">
+        <dropdownList defaultItem="0" noSort="true" refId="GroupIdSource">组 ID 的源:</dropdownList>
+      </presentation>
+      <presentation id="DelayBackgroundDownloadFromHttp">
+        <decimalTextBox defaultValue="0" refId="DelayBackgroundDownloadFromHttp">延迟 http 的后台下载(以秒为单位):</decimalTextBox>
+        <text>默认值为 0 (无延迟)</text>
+      </presentation>
+      <presentation id="DelayForegroundDownloadFromHttp">
+        <decimalTextBox defaultValue="0" refId="DelayForegroundDownloadFromHttp">延迟 http 的前台下载(以秒为单位):</decimalTextBox>
+        <text>默认值为 0 (无延迟)</text>
+      </presentation>
+      <presentation id="DelayCacheServerFallbackBackground">
+        <decimalTextBox defaultValue="0" refId="DelayCacheServerFallbackBackground">延迟后台下载缓存服务器回退(以秒为单位):</decimalTextBox>
+        <text>默认值为 0 (无延迟)</text>
+      </presentation>
+      <presentation id="DelayCacheServerFallbackForeground">
+        <decimalTextBox defaultValue="0" refId="DelayCacheServerFallbackForeground">延迟前台下载缓存服务器回退(以秒为单位):</decimalTextBox>
+        <text>默认值为 0 (无延迟)</text>
+      </presentation>
+      <presentation id="RestrictPeerSelectionBy">
+        <dropdownList defaultItem="1" noSort="true" refId="RestrictPeerSelectionBy">通过以下方式限制对等方选择:</dropdownList>
+      </presentation>
+      <presentation id="SetHoursToLimitBackgroundDownloadBandwidth">
+        <text/>
+        <text>设置工作时间以限制后台下载带宽:</text>
+        <dropdownList defaultItem="8" noSort="true" refId="SetHoursToLimitBackgroundDownloadBandwidthFrom">从:</dropdownList>
+        <dropdownList defaultItem="17" noSort="true" refId="SetHoursToLimitBackgroundDownloadBandwidthTo">到:</dropdownList>
+        <text/>
+        <text>工作时间内的最大后台下载带宽(百分比):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitBackgroundDownloadBandwidthIn"/>
+        <text>默认值为 0 (无限制)</text>
+        <text/>
+        <text>工作时间之外的最大后台下载带宽(百分比):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitBackgroundDownloadBandwidthOut"/>
+        <text>默认值为 0 (无限制)</text>
+      </presentation>
+      <presentation id="SetHoursToLimitForegroundDownloadBandwidth">
+        <text/>
+        <text>设置工作时间以限制前台下载带宽:</text>
+        <dropdownList defaultItem="8" noSort="true" refId="SetHoursToLimitForegroundDownloadBandwidthFrom">从:</dropdownList>
+        <dropdownList defaultItem="17" noSort="true" refId="SetHoursToLimitForegroundDownloadBandwidthTo">到:</dropdownList>
+        <text/>
+        <text>工作时间内的最大前台下载带宽(百分比):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitForegroundDownloadBandwidthIn"/>
+        <text>默认值为 0 (无限制)</text>
+        <text/>
+        <text>工作时间之外的最大前台下载带宽(百分比):</text>
+        <decimalTextBox defaultValue="0" refId="SetHoursToLimitForegroundDownloadBandwidthOut"/>
+        <text>默认值为 0 (无限制)</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

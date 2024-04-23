@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policyDefinitionResources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" revision="1.0" schemaVersion="1.0" xmlns="http://www.microsoft.com/GroupPolicy/PolicyDefinitions">
+    <displayName>Protokolování událostí</displayName>
+    <description>Tento soubor obsahuje možnosti konfigurace pro protokolování událostí systému Windows.</description>
+    <resources>
+        <stringTable>
+            <string id="EventLogging">Protokolování událostí</string>
+            <string id="EnableProtectedEventLogging">Povolit chráněné protokolování událostí</string>
+            <string id="EnableProtectedEventLogging_Explain">
+Nastavení této zásady umožňuje nakonfigurovat chráněné protokolování událostí.
+
+Pokud nastavení této zásady povolíte, součásti, které ho podporují, budou potenciálně citlivé události protokolu před zápisem do protokolu událostí šifrovat pomocí certifikátu, který zadáte. Data se budou šifrovat pomocí standardu CMS (Cryptographic Message Syntax) a pomocí veřejného klíče, který zadáte. Tyto zašifrované zprávy je možné dešifrovat pomocí rutiny Unprotect-CmsMessage prostředí PowerShell. Podmínkou je přístup k privátnímu klíči odpovídajícímu veřejnému klíči, pomocí kterého se zašifrovaly.
+
+Pokud nastavení této zásady zakážete nebo nenakonfigurujete, součásti nebudou zprávy protokolu událostí před zápisem do protokolu událostí šifrovat.
+            </string>
+        </stringTable>
+        <presentationTable>
+            <presentation id="EnableProtectedEventLogging">
+                <text>
+Zadejte šifrovací certifikát, který se má používat pro chráněné protokolování událostí. Můžete zadat:
+
+    – Obsah certifikátu X.509 s kódováním base-64
+    – Kryptografický otisk certifikátu, který je v úložišti certifikátů místního počítače (obvykle nasazený prostřednictvím infrastruktury PKI)
+    – Úplnou cestu k certifikátu (může to být místní nebo vzdálená sdílená složka)
+    – Cestu k adresáři, který obsahuje certifikát nebo certifikáty (může to být místní nebo vzdálená sdílená složka)
+    – Název subjektu certifikátu, který je v úložišti certifikátů místního počítače (obvykle nasazený prostřednictvím infrastruktury PKI)
+
+Výsledný certifikát musí jako rozšířené použití klíče používat nastavení Šifrování dokumentů (1.3.6.1.4.1.311.80.1) a taky musí mít povolené použití klíče Šifrování dat nebo Šifrování klíče.
+                </text>
+                <multiTextBox refId="EncryptionCertificate"></multiTextBox>
+            </presentation>
+        </presentationTable>    
+    </resources>
+</policyDefinitionResources>

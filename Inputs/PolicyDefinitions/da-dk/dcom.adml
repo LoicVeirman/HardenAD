@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>indtast det viste navn her</displayName>
+  <description>indtast beskrivelsen her</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">Distribueret COM</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Tillad lokale undtagelser for sikkerhedkontrol af aktivering</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Tillader dig at angive, at lokale computeradministratorer kan supplere listen "Definer undtagelser for sikkerhedskontrol af aktivering".
+
+Hvis du aktiverer denne politikindstilling og DCOM ikke finder en entydig post for et DCOM-serverprogram-id (appid) i politikken "Definer undtagelser for sikkerhedskontrol af aktivering" (hvis aktiveret), vil DCOM søge efter en post i den lokalt konfigurerede liste.
+
+Hvis du deaktiverer denne politikindstilling, vil DCOM ikke søge i den lokalt konfigurerede DCOM-liste over undtagelser for sikkerhedskontrol af aktivering.
+
+Hvis du ikke konfigurer denne politikindstilling, søger DCOM kun i den lokalt konfigurerede liste, hvis politikken Definer undtagelser for sikkerhedskontrol af aktivering ikke er konfigureret.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Definer undtagelser for sikkerhedskontrol af aktivering</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Tillader dig at vise og ændre en liste af DCOM-serverprogram-id’er (appids), som er undtaget fra DCOM-sikkerhedskontrollen af aktivering.   DCOM bruger to sådanne liste, en konfigureres via gruppepolitikken gennem denne politikindstilling og den anden via lokale computeradministratorers handlinger.  DCOM ignorerer den anden liste, når denne politikindstilling er konfigureret, medmindre politikken "Tillad lokale undtagelser for sikkerhedskontrol af aktivering" er aktiveret.
+
+DCOM-serverprogram-id’er, der føjes til denne politik skal skrive i klammeparenteser.  Eksempel: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}.  Hvis du antiver et program-id, der ikke findes eller som ikke er formateret korrekt, føjer DCOM program-id’et til listen uden at kontrollere for fejl.
+
+Hvis du aktiverer denne politikindstilling, kan du se og ændre DCOM-listen over undtagelser for sikkerhedskontrol af aktivering, der er defineret i indstillingerne for gruppepolitikken. Hvis du tilføjer et program-id til denne liste og angiver værdien til 1, vil DCOM ikke påtvinge sikkerhedskontrollen af aktivering for den DCOM-server.     Hvis du tilføjer et program-id til denne liste og angiver værdien til 0, vil DCOM altid påtvinge sikkerhedskontrollen af aktivering for den DCOM-server unset lokale indstillinger.
+
+Hvis du deaktiverer denne politikindstilling, slettes listen over program-id-undtagelser, der er defineret af gruppepolitikken og listen, der er defineret af lokale computeradministratorer bruges i stedet.
+
+Hvis du ikke konfigurerer denne politikindstilling, bruges listen over program-id-undtagelser, der er defineret af lokale computeradministratorer.
+
+Bemærkninger:
+
+DCOM-sikkerhedskontrol af aktivering udføres efter en DCOM-serverproces er startet, men før en objektaktiveringsanmodning sendes til serverprocessen.    Denne adgangskontrol udføres mod DCOM-serverens brugerdefinerede sikkerhedsbeskrivelse for kørselstilladelse, hvis den findes og eller mod de konfigurerede standardindstillinger.
+
+Hvis DCOM-serverens brugerdefinerede kørselstilladelse indeholder entydige DENY-poster, betyder dette muligvis at objektaktiveringer, som førhen lykkedes for angivne brugere, nu vil resultere i en fejl, mens DCOM-serverprocessen kørte.   Den korrekte handling i denne situation er at omkonfigurere indstillingerne for DCOM-serverens brugerdefinerede kørselstilladelse for at opnå de korrekte sikkerhedsindstillinger, men denne politikindstilling kan bruges i en kort periode som en hjælp til installationslancering af programkompatilitet.
+
+DCOM-servere, der er føjet til listen over undtagelser, undtages kun, hvis deres brugerdefinerede kørselstilladelse ikke indeholder nogen ’grant’ eller ’deny’-poster for LocalLaunch, RemoteLaunch, LocalActivate eller RemoteActivate for nogen brugere eller grupper.   Bemærk også, at undtagelser fra DCOM-serverens program-id’er, der føjes til denne liste vil gælde for både 32-bit- og 64-bit-versionerne af serveren.</string>
+      <string id="DCOMAppCompatPolicies">Indstillinger for programkompatibilitet</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Angiv DCOM-serverprogram-id’er sammen med en af nedenstående handlingsværdier.</text>
+        <text>Program-id’et skal inkludere både start- og slut-klammeparentes.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Tilføj\fjern DCOM-servere til/fra listen over undtagelser: </listBox>
+        <text> </text>
+        <text>Værdier:</text>
+        <text>0 = Det angivne program-id er ikke undtaget fra sikkerhedskontrollen for aktivering</text>
+        <text>1 = Det angivne program-id er undtaget fra sikkerhedskontrollen for aktivering</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

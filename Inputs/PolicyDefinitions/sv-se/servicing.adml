@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2011 Microsoft Corporation  -->
+<policyDefinitionResources revision="1.0" schemaVersion="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>Windows Servicing-principer</displayName>
+  <description>Windows Servicing-principer</description>
+  <resources>
+    <stringTable>
+      <string id="CloudFulfillmentGPO">Ange inställningar för installation av valfria komponenter och komponentreparationer</string>
+      <string id="CloudFulfillmentGPOExplanation">
+
+Den här principinställningen anger de nätverksplatser som ska användas för reparation av skador i operativsystemet och för att möjliggöra aktivering av valfria funktioner vars nyttolastfiler har tagits bort.
+
+Om du aktiverar den här principinställningen och anger den nya platsen används filerna på den platsen för att reparera skador i operativsystemet och för att möjliggöra aktivering av valfria funktioner vars nyttolastfiler har tagits bort. Du måste ange den fullständiga sökvägen till den nya platsen i textrutan Sökväg till alternativ källfil (Alternate source file path). Du kan ange flera platser genom att avgränsa varje sökväg med semikolon. 
+
+Nätverksplatsen kan vara antingen en mapp eller en WIM-fil. Om platsen är en WIM-fil måste den anges med prefixet wim: i sökvägen och innehålla indexet för avbildningen som ska användas i WIM-filen. Till exempel “wim:\\server\share\install.wim:3”.
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen, eller om de filer som krävs inte kan hittas på de platser som har angetts i principinställningen, hämtas filerna från Windows Update, förutsatt att datorns principinställningar tillåter det.
+      
+      </string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="CloudFulfillmentGPO">
+        <textBox refId="LocalSourcePath_TextBox">
+          <label>Sökväg till alternativ källfil (Alternate source file path)</label>
+        </textBox>
+        <checkBox refId="CheckBox_NeverUseWU">Försök aldrig hämta nyttolast från Windows Update</checkBox>
+        <checkBox refId="CheckBox_SidestepWSUS">Ladda ned reparationsinnehåll och valfria funktioner direkt från Windows Update i stället för Windows Server Update Services (WSUS)</checkBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

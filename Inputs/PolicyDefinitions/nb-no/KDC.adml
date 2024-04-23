@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>KDC-innstillinger</displayName>
+  <description>Konfigurasjonsinnstillinger for Kerberos Key Distribution Center.</description>
+  <resources>
+    <stringTable>
+      <string id="KDC">KDC</string>
+      <string id="forestsearch">Bruk søkerekkefølge i skoger</string>
+      <string id="forestsearch_explain">Denne policyinnstillingen definerer listen over klarerte skoger som Key Distribution Center (KDC) søker i under forsøk på å løse todelte SPNer (Service Principal Name – hovednavn for tjeneste).
+
+Hvis du aktiverer denne policyinnstillingen, søker KDC i skogene i denne listen hvis et todelt SPN i den lokale skogen ikke kan løses. Søket i skogene utføres ved hjelp av en global katalog eller navnesuffikstips. Ved treff returnerer KDC en henvisningsbillett til klienten for det aktuelle domenet.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, søker ikke KDC i de oppførte skogene for å løse SPNet. Hvis KDC ikke kan løse SPNet fordi navnet ikke blir funnet kan NTLM-godkjenning brukes.
+
+For at funksjonaliteten skal være konsekvent, må denne policyinnstillingen støttes og være angitt likt for alle domenekontrollere i domenet.</string>
+      <string id="emitlili">Gi informasjon om tidligere pålogginger til klientdatamaskiner</string>
+      <string id="emitlili_explain">Denne policyinnstillingen angir om domenekontrolleren gir informasjon om tidligere pålogginger til klientdatamaskiner.
+
+Hvis du aktiverer denne policyinnstillingen, gir domenekontrolleren en informasjonsmelding om tidligere pålogginger.
+
+For at denne funksjonen skal kunne brukes ved Windows-pålogging, må du også aktivere policyinnstillingen Vis informasjon om tidligere pålogginger under pålogging i noden Alternativer for Windows-pålogging under Windows-komponenter.
+
+Hvis du deaktiverer denne policyinnstillingen eller ikke konfigurerer den, gir ikke domenekontrolleren informasjon om tidligere pålogginger, med mindre policyinnstillingen Vis informasjon om tidligere pålogginger under pålogging er aktivert.
+
+Obs!  Informasjon om tidligere pålogginger gis bare hvis domenefunksjonsnivået er Windows Server 2008. I domener der domenefunksjonsnivået er Windows Server 2003, enhetlig Windows 2000 eller blandet Windows 2000, kan ikke domenekontrollere gi informasjon om tidligere pålogginger, og ingenting skjer når du aktiverer denne policyinnstillingen.
+
+</string>
+      <string id="CbacAndArmor">KDC-støtte for krav, sammensatt godkjenning og Kerberos-forsterkning</string>
+      <string id="CbacAndArmor_explain">Denne policyinnstillingen lar deg konfigurere en domenekontroller for å støtte krav og sammensatt godkjenning for dynamisk tilgangskontroll og Kerberos-forsterkning ved hjelp av Kerberos-godkjenning.
+
+Hvis du aktiverer denne policyinnstillingen, vil klientdatamaskiner som støtter krav og sammensatt godkjenning for dynamisk tilgangskontroll og er aktivert for Kerberos-forsterkning bruke denne funksjonen for Kerberos-godkjenningsmeldinger. Denne policyen bør brukes for alle domenekontrollere for å sikre konsekvent policybruk i domenet.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, støtter ikke domenekontrolleren krav, sammensatt godkjenning eller forsterkning.
+
+Hvis du konfigurerer alternativet «Støttes ikke», støtter ikke domenekontrolleren krav, sammensatt godkjenning eller forsterkning, noe som er standard virkemåte for domenekontrollere som kjører Windows Server 2008 R2 eller tidligere operativsystemer.
+
+Merk: For at de følgende alternativene for denne KDC-policyen skal tre i kraft, må Kerberos-gruppepolicyen «Kerberos-klientstøtte for krav, sammensatt godkjenning og Kerberos-forsterkning» være aktivert på støttede systemer. Hvis Kerberos-policyinnstillingen ikke er aktivert, vil ikke Kerberos-godkjenningsmeldinger bruke disse funksjonene.
+
+Hvis du konfigurerer «Støttes», støtter domenekontrolleren krav, sammensatt godkjenning og Kerberos-forsterkning. Domenekontrolleren varsler Kerberos-klientdatamaskiner at domenet støtter krav og sammensatt godkjenning for dynamisk tilgangskontroll og Kerberos-forsterkning.
+
+Krav på domenefunksjonsnivå
+For alternativene «Angi alltid om  krav støttes» og «Avvis godkjenningsforespørsler uten forsterkning», når domenefunksjonsnivået er satt til Windows Server 2008 R2 eller tidligere, vil domenekontrollerne opptre som om alternativet «Støttet» er valgt.
+
+Når domenefunksjonsnivået er satt til Windows Server 2012, vil domenekontrolleren varsle Kerberos-klientdatamaskiner om at domenet støtter krav og sammensatt godkjenning for dynamisk tilgangskontroll og Kerberos-forsterkning, og:
+   - Hvis du angir alternativet «Angi alltid om krav støttes», vil krav alltid returneres for kontoer og støtte RFC-adferden for å varsle om sikker tunneling av fleksibel godkjenning (FAST).
+   - Hvis du angir alternativet «Avvis godkjenningsforespørsler uten forsterkning», vil Kerberos-meldinger uten forsterkning avvises.
+
+Advarsel: Når «Avvis godkjenningsforespørsler uten forsterkning» er angitt, vil ikke klientdatamaskiner som ikke støtter Kerberos-forsterkning kunne godkjennes hos domenekontrolleren.
+
+For å sikre at denne funksjonen er effektiv, må du distribuere et tilstrekkelig antall domenekontrollere som støtter krav og sammensatt godkjenning for dynamisk tilgangskontroll og Kerberos-forsterkning for å kunne håndtere godkjenningsforespørslene. Et utilstrekkelig antall domenekontrollere som støtter denne policyen fører til godkjenningsfeil når dynamisk tilgangskontroll eller Kerberos-forsterkning kreves (det vil si at alternativet «Støttes» er aktivert).
+
+Påvirkning på domenekontrollerens ytelse når denne policyinnstillingen er aktivert:
+   - Sikker gjenkjenning av Kerberos-domenefunksjonalitet kreves, noe som fører til ekstra meldingsutveksling.
+   - Krav og sammensatt godkjenning for dynamisk tilgangskontroll  øker størrelsen og kompleksiteten for dataene i meldingen, som fører til lengre behandlingstid og større Kerberos-tjenestebilletter.
+   - Kerberos-forsterkning krypterer Kerberos-meldinger fullstendig, og signerer Kerberos-feil, noe som fører til lengre behandlingstid, men ikke endrer størrelsen på tjenestebillettene.
+</string>
+      <string id="NoCbacAndArmor">Støttes ikke</string>
+      <string id="MixModeCbacAndArmor">Støttes</string>
+      <string id="FullModeCbacAndArmor">Angi alltid om krav støttes</string>
+      <string id="FullModeCbacAndRequireArmor">Avvis godkjenningsforespørsler uten forsterkning</string>
+      <string id="TicketSizeThreshold">Advarsel for store Kerberos-billetter</string>
+      <string id="TicketSizeThreshold_explain">Med denne policyinnstillingen kan du konfigurere hvilken størrelse på Kerberos-billetter som vil utløse advarselen som utstedes under Kerberos-godkjenning. Advarsler om billettstørrelse logges i systemloggen.
+
+Hvis du aktiverer denne policyinnstillingen, kan du angi terskelen for Kerberos-billetter som utløser advarsler. Hvis terskelverdien er for høy, kan det hende at godkjenningsfeil forekommer selv om advarsler ikke logges.  Hvis verdien er for lav, vil det være for mange billettadvarsler i loggen til at den er praktisk for analyseformål. Denne verdien bør settes til den samme verdien som Kerberos-policyen Angi maksimal bufferstørrelse for Kerberos SSPI-konteksttoken eller den minste MaxTokenSize-verdien som brukes i miljøet, hvis du ikke konfigurerer ved hjelp av gruppepolicy.
+      
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, settes terskelverdien som standard til 12 000 byte, som er standard Kerberos MaxTokenSize-verdi for Windows 7, Windows Server 2008 R2 og tidligere versjoner.
+
+</string>
+      <string id="RequestCompoundId">Be om sammensatt godkjenning</string>
+      <string id="RequestCompoundId_explain">Med denne policyinnstillingen kan du konfigurere en domenekontroller slik at den ber om sammensatt godkjenning.
+
+Obs!  For at en domenekontroller skal kunne be om sammensatt godkjenning, må policyen "KDC-støtte for krav, sammensatt godkjenning og Kerberos-forsterkning" konfigureres og aktiveres. 
+
+Hvis du aktiverer denne policyinnstillingen, ber domenekontrollere om sammensatt godkjenning. Den returnerte tjenestebilletten inneholder bare sammensatt godkjenning når kontoen er konfigurert eksplisitt. Policyinnstillingen bør brukes for alle domenekontrollere for å sikre konsekvent policybruk i domenet. 
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, returnerer domenekontrollere tjenestebilletter som inneholder sammensatt godkjenning hver gang klienten sender en forespørsel om sammensatt godkjenning, uavhengig av kontokonfigurasjonen.
+
+</string>
+      <string id="PKINITFreshness">KDC-støtte for PKInit Freshness-utvidelse</string>
+      <string id="PKINITFreshness_explain">Støtte for PKInit Freshness-filtypen krever Windows Server 2016-domenefunksjonsnivået (DFL). Denne policyen vil ikke brukes hvis domenekontrollerens domene ikke er på Windows Server 2016 DFL eller høyere.
+
+Ved hjelp av denne policyinnstillingen kan du konfigurere en domenekontroller (DC) for å støtte PKInit Freshness-utvidelsen.
+
+Hvis du aktiverer denne policyinnstillingen, støttes følgende alternativer:
+
+Støttet: PKInit Freshness-filtypen støttes etter anmodning. Kerberos-klienter som blir godkjent med PKInit Freshness-utvidelsen, mottar den nye offentlige nøkkelidentiteten SID.
+
+Obligatorisk: PKInit Freshness-utvidelsen kreves for vellykket godkjenning. Kerberos-klienter som ikke støtter PKInit Freshness-utvidelsen, vil alltid mislykkes ved bruk av legitimasjon for offentlig nøkkel.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, vil domenekontrolleren aldri tilby PKInit Freshness-utvidelsen og godta gyldige godkjenningsforespørsler uten å se etter oppdateringer. Brukere vil aldri kunne motta den nye offentlig nøkkelidentiteten SID.
+</string>
+      <string id="NoPKINITFreshness">Deaktivert</string>
+      <string id="SupportPKINITFreshness">Støttes</string>
+      <string id="RequirePKINITFreshness">Obligatorisk</string>
+      <string id="PKINITHashAlgorithmConfiguration">Konfigurer hash-algoritmer for sertifikatpålogging</string>
+      <string id="PKINITHashAlgorithmConfiguration_explain">Denne policyinnstillingen kontrollerer hash- eller kontrollsumalgoritmer som brukes av Kerberos-klienten når sertifikatgodkjenning utføres.
+
+Hvis du aktiverer denne policyen, kan du konfigurere én av fire tilstander for hver algoritme:
+
+ – «Standard» angir algoritmen til den anbefalte tilstanden.
+
+ – «Støttes» aktiverer bruk av algoritmen. Aktivering av algoritmer, som er deaktivert som standard, kan redusere sikkerheten.
+
+ – «Overvåket» aktiverer bruk av algoritmen og rapporterer en hendelse (ID 309) hver gang den brukes. Denne tilstanden er ment å kontrollere at algoritmen ikke brukes og trygt kan deaktiveres.
+
+ – «Støttes ikke» deaktiverer bruk av algoritmen. Denne tilstanden er ment for algoritmer som anses å være usikre.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyen, vil hver algoritme anta Standard-tilstanden.
+Du kan finne mer informasjon om hash- og kontrollsumalgoritmene som støttes av Windows Kerberos-klienten, og standardtilstandene på https://go.microsoft.com/fwlink/?linkid=2169037.
+
+Hendelser som genereres av denne konfigurasjonen: 309 og 310.
+</string>
+      <string id="PKINITHashAlgorithm_Default">Standard</string>
+      <string id="PKINITHashAlgorithm_Supported">Støttes</string>
+      <string id="PKINITHashAlgorithm_Audited">Revidert</string>
+      <string id="PKINITHashAlgorithm_NotSupported">Støttes ikke</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="emitlili">
+        <dropdownList refId="emitliliOp" oSort="true" defaultItem="0">Modus:</dropdownList>
+      </presentation>
+      <presentation id="ForestSearch">
+        <textBox refId="ForestSearchList">
+          <label>Skoger det skal søkes i</label>
+        </textBox>
+        <text>Syntaks:</text>
+        <text>Angi listen over skoger det skal søkes i når denne policyinnstillingen er aktivert.</text>
+        <text>Bruk FQDN-navneformatet (Fully Qualified Domain Name – fullstendig domenenavn).</text>
+        <text>Bruk semikolon (;) som skilletegn mellom søkeoppføringer.</text>
+        <text>Detaljer:</text>
+        <text>Det er ikke nødvendig å føre opp gjeldende skog fordi policyinnstillingen Bruk søkerekkefølge i skoger først bruker den globale katalogen og deretter søker i den oppførte rekkefølgen.</text>
+        <text>Du trenger ikke å føre opp alle domenene i skogen hver for seg.</text>
+        <text>Hvis en klarert skog er oppført, søkes det i alle domenene i denne skogen.</text>
+        <text>Du får best ytelse ved å føre opp skogene etter sannsynligheten for vellykket søk.</text>
+      </presentation>
+      <presentation id="CbacAndArmor">
+        <dropdownList refId="CbacAndArmor_Levels" noSort="true" defaultItem="1">Alternativer for krav, sammensatt godkjenning for dynamisk tilgangskontroll og Kerberos-forsterkning:</dropdownList>
+      </presentation>
+      <presentation id="TicketSizeThreshold">
+              <decimalTextBox refId="TicketSizeThreshold" defaultValue="12000" spinStep="1000">Terskel for billettstørrelse</decimalTextBox>
+      </presentation>
+      <presentation id="PKINITFreshness">
+        <dropdownList refId="PKINITFreshness_Levels" noSort="true" defaultItem="1">Alternativer for PKInit Freshness-utvidelse:</dropdownList>
+      </presentation>
+      <presentation id="PKINITHashAlgorithmConfiguration">
+        <dropdownList refId="PKINITHashAlgorithmSHA1" noSort="true" defaultItem="0">SHA-1    </dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
+        <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

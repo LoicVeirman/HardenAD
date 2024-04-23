@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ActiveX Installer-tjeneste</displayName>
+  <description>Installerer ActiveX-kontroller fra godkjente installasjonsområder</description>
+  <resources>
+    <stringTable>
+      <string id="AxInstSv">ActiveX Installer-tjeneste</string>
+      <string id="AxISURLZonePolicies">Opprett ActiveX-installasjonspolicy for områder i klarerte soner</string>        
+      <string id="AxISURLZonePolicies_explain">Denne policyinnstillingen styrer installasjonen av ActiveX-kontroller for områder i en klarert sone. 
+
+Hvis du aktiverer denne policyinnstillingen, installeres ActiveX-kontroller i samsvar med innstillingene som er definert av denne policyinnstillingen. 
+      
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, ber ActiveX-kontroller brukeren om bekreftelse før installasjon. 
+
+Hvis HTTPS-protokollen brukes på det klarerte området, kan denne policyinnstillingen også styre hvordan ActiveX Installer-tjenesten reagerer på sertifikatfeil. Alle HTTPS-tilkoblinger må som standard oppgi et serversertifikat som oppfyller alle valideringsvilkårene. Hvis du vet at et klarert område har en sertifikatfeil, men vil klarere det likevel, kan du velge hvilke sertifikatfeil du vil ignorere. 
+    
+Obs! Denne policyinnstillingen gjelder alle områder i klarerte soner.
+
+</string>
+      <string id="TrustedZoneDisabled">Ikke installer</string>
+      <string id="TrustedZonePrompt">Spør brukeren</string>
+      <string id="TrustedZoneSilentInstall">Installer i bakgrunnen</string>
+      <string id="ApprovedActiveXInstallSites">Godkjente installasjonsområder for ActiveX-kontroller</string>
+      <string id="ApprovedActiveXInstallSites_explain">Denne policyinnstillingen fastsetter hvilke ActiveX-installasjonsområder vanlige brukere i organisasjonen kan bruke til å installere ActiveX-kontroller på datamaskinene. Når denne policyinnstillingen er aktivert, kan administratoren opprette en liste over godkjente ActiveX-installasjonsområder som angis med verts-URL-adressen. 
+
+Hvis du aktiverer denne policyinnstillingen, kan administratoren opprette en liste over godkjente ActiveX-installasjonsområder som angis med verts-URL-adressen. 
+      
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, ber ActiveX-kontroller brukeren om administrativ legitimasjon før installasjon. 
+
+Obs!  Du kan ikke bruke jokertegn når du angir verts-URL-adressene.
+
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="AxISURLZonePolicies">
+        <dropdownList refId="InstallTrustedOCX" noSort="true" defaultItem="2">Installasjonspolicy for ActiveX-kontroll signert av klarert utgiver</dropdownList>
+        <dropdownList refId="InstallSignedOCX" noSort="true" defaultItem="1">Installasjonspolicy for signert ActiveX-kontroll</dropdownList>
+        <dropdownList refId="InstallUnSignedOCX" noSort="true" defaultItem="0">Installasjonspolicy for usignert ActiveX-kontroll</dropdownList>
+        <text>Tillat tilkobling til klarerte områder med følgende serversertifikatfeil.</text>
+        <checkBox refId="IgnoreUnknownCA" defaultChecked="false">Ukjent sertifiseringsinstans (CA)</checkBox>
+        <checkBox refId="IgnoreInvalidCN" defaultChecked="false">Ugyldig sertifikatnavn (CN)</checkBox>
+        <checkBox refId="IgnoreInvalidCertDate" defaultChecked="false">Utløpt dato for sertifikatvalidering</checkBox>
+        <checkBox refId="IgnoreWrongCertUsage" defaultChecked="false">Feil bruk av sertifikat</checkBox>
+      </presentation>
+
+      <presentation id="ApprovedActiveXInstallSites">
+        <listBox refId="ApprovedActiveXInstallSiteslist">Verts-URL-adresser</listBox>
+        <text>Inneholder policyer for verts-URL-adressen.</text>
+        <text>Eksempel  </text>
+        <text>Vertsnavn: http://activex.microsoft.com</text>
+        <text>Verdi: 2,1,0,0</text>
+        <text>Verdien for hver verts-URL-adresse er fire innstillinger i CSV-format.</text>
+        <text>Disse representerer "TPSSignedControl,SignedControl,UnsignedControl,ServerCertificatePolicy</text>
+        <text>De tre verdiene lengst til venstre i policyen, kontrollerer installasjonen av ActiveX-kontroller basert på deres signatur.</text>
+        <text>De kan ha følgende verdier.</text>
+        <text>0: ActiveX-kontroll vil ikke bli installert</text>
+        <text>1: Be brukeren installere ActiveX-kontroll</text>
+        <text>2: ActiveX-kontroll installeres i bakgrunnen</text>
+        <text>Kontroller signert av sertifikater i lager for klarerte utgivere installeres i bakgrunnen  </text>
+        <text>Bakgrunnsinstallasjon for usignerte kontroller støttes ikke</text>
+        <text></text>
+        <text>Verdien lengst til høyre i policyen er et bitmasket flagg</text>
+        <text>Flaggene brukes til å ignorere https-sertifikatfeil.</text>
+        <text>Standardverdien er 0.</text>
+        <text>Det betyr at https-tilkoblingen må passere alle sikkerhetskontroller</text>
+        <text></text>
+        <text>Bruk kombinasjonen av følgende verdier</text>
+        <text>for å ignorere ugyldig sertifikat-feil</text>
+        <text>0x00000 100 Ignorer ukjent sertifiseringsinstans (CA)</text>
+        <text>0x00001000  Ignorer ugyldig CN (Common Name - vanlig navn)</text>
+        <text>0x00002000  Ignorer ugyldig sertifikatdato</text>
+        <text>0x00000200  Ignorer feil sertifikatbruk</text>
+        <text></text>
+        
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

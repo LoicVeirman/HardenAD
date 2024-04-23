@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>immettere qui il nome visualizzato</displayName>
+  <description>immettere qui la descrizione</description>
+  <resources>
+    <stringTable>
+      <string id="MitigationOptions">Opzioni di prevenzione</string>
+      <string id="Font_List">Blocca tipi di carattere non attendibili</string>
+      <string id="Font_List_Help">Questa funzionalità di sicurezza offre un'impostazione globale per impedire ai programmi di caricare tipi di carattere non attendibili. È considerato non attendibile qualsiasi tipo di carattere installato in una directory diversa da %windir%\Fonts. È possibile configurare 3 modalità per questa funzionalità: Attivata, Disattiva e Controllo. Per impostazione predefinita, l'impostazione è Disattivata e nessun tipo di carattere viene bloccato. Se non si è ancora pronti a distribuire questa funzionalità nell'organizzazione, è possibile eseguirla in modalità Controllo per verificare se il blocco dei tipi di carattere non attendibili causa eventuali problemi di usabilità o compatibilità.</string>
+      <string id="FontMitigation_On">Blocca i tipi di carattere non attendibili e registra gli eventi</string>
+      <string id="FontMitigation_Off">Non bloccare i tipi di carattere non attendibili</string>
+      <string id="FontMitigation_Audit">Registra gli eventi senza bloccare i tipi di carattere non attendibili</string>
+
+	  <string id="ProcessMitigationOptions_List">Opzioni di mitigazione processo</string>
+      <string id="ProcessMitigationOptions_List_Help">
+        Questa funzionalità di sicurezza offre un sistema per sostituire le singole impostazioni MitigationOptions dei processi. Può essere usata per applicare numerosi criteri di sicurezza specifici alle applicazioni. Il nome dell'applicazione è specificato come nome del valore, inclusa l'estensione. Il valore è specificato come un campo bit con una serie di contrassegni in posizioni particolari. I bit possono essere impostati su 0 (l'impostazione è forzata come disattivata), 1 (l'impostazione è forzata come attivata) o ? (l'impostazione mantiene il proprio valore esistente prima della valutazione del GPO). Le posizioni dei bit riconosciute sono:
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE (0x00000001)
+        Abilita la Protezione esecuzione programmi (DEP) per il processo figlio
+
+        PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE (0x00000002)
+        Abilita l'emulazione thunk DEP-ATL per il processo figlio. L'emulazione thunk DEP-ATL consente al sistema di intercettare gli errori NX originati dal livello thunk ATL (Active Template Library).
+
+        PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE (0x00000004)
+        Abilita SEHOP (Structured Exception Handler Overwrite Protection) per il processo figlio. SEHOP blocca gli exploit che usano la tecnica di sovrascrittura SEH (Structured Exception Handler).
+
+        PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON (0x00000100)
+        Il criterio ASLR (Address Space Layout Randomization) riassegna forzatamente le immagini che non sono compatibili con le basi dinamiche operando come se fosse avvenuta una collisione delle basi delle immagini in fase di caricamento. Se sono richieste rilocazioni, le immagini che non hanno una sezione di rilocazione della base non verranno caricate.
+
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON (0x00010000)
+        PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF (0x00020000)
+        Il criterio di assegnazione casuale bottom-up, che include opzioni di assegnazione casuale dello stack, determina l'uso di una posizione casuale come indirizzo utente più basso.
+
+        Ad esempio, per abilitare PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE e PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON, disabilita PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF e per mantenere i valori predefiniti di tutte le altre opzioni specifica un valore:
+        ???????????????0???????1???????1
+
+        L'impostazione dei contrassegni non specificati qui su qualsiasi valore diverso da ? determina un comportamento indefinito.
+</string>
+
+      <string id="ResetDfsClientInfoDuringRefreshPolicy">Abilita sincronizzazione controller di dominio AD/DFS durante l'aggiornamento dei criteri</string>
+      <string id="ResetDfsClientInfoDuringRefreshPolicy_Help">Se si abilita questa impostazione dei criteri, per le condivisioni DFS il client di Criteri di gruppo si connetterà allo stesso controller di dominio utilizzato per Active Directory.
+
+
+
+</string>
+      <string id="DisableAOACProcessing">Disattiva ottimizzazione AOAC servizio client Criteri di gruppo</string>
+      <string id="DisableAOACProcessing_Help">Questa impostazione dei criteri impedisce l'arresto del servizio client Criteri di gruppo quando è inattivo.
+
+
+
+</string>
+      <string id="EnableCDP">Continua esperienze in questo dispositivo</string>
+      <string id="EnableCDP_Help">
+Questa impostazione dei criteri determina se il dispositivo Windows può partecipare a esperienze tra i dispositivi (continuare le esperienze).
+
+Se abiliti questa impostazione, il dispositivo Windows è individuabile da altri dispositivi Windows che appartengono allo stesso utente e può partecipare a esperienze tra i dispositivi.
+
+Se disabiliti l'impostazione, il dispositivo Windows non è individuabile da altri dispositivi e non può partecipare a esperienze tra i dispositivi.
+
+Se non configuri questa impostazione, il comportamento predefinito dipende dall'edizione di Windows. Le modifiche apportate a questi criteri hanno effetto al riavvio.
+      </string>
+      <string id="EnableMMX">Collegamento telefono-PC su questo dispositivo</string>
+      <string id="EnableMMX_Help">
+Questi criteri consentono agli amministratori IT di disattivare la possibilità di collegare un telefono cellulare a un PC per continuare a leggere, inviare tramite e-mail e altre attività che richiedono il collegamento tra telefono e PC.
+
+Se abiliti questa impostazione dei criteri, il dispositivo Windows potrà essere registrato per la funzionalità di collegamento telefono-PC e di partecipare alle esperienze Continua su PC.
+
+Se disabiliti questa impostazione dei criteri, il dispositivo Windows non può essere collegato ai telefoni, verrà rimosso dall'elenco dei dispositivi di qualsiasi telefono collegato e non potrà partecipare alle esperienze Continua su PC.
+
+Se questa impostazione dei criteri non viene configurata, il comportamento predefinito dipende dall'edizione di Windows. Le modifiche apportate a questi criteri diventano effettive dopo il riavvio.
+      </string>
+      <string id="EnableAppUriHandlers">Configura il collegamento da Web ad app con gestori URI app</string>
+      <string id="EnableAppUriHandlers_Help">
+Questa impostazione dei criteri determina se Windows supporta il collegamento da Web ad app con gestori URI app.
+
+L'attivazione di questa impostazione dei criteri abilita il collegamento da Web ad app in modo da poter avviare le app con URI http(s).
+
+La disattivazione di questo criterio disabilita il collegamento da Web ad app e gli URI http(s) saranno aperti nel browser predefinito anziché avviare l'app associata.
+
+Se non configuri questa impostazione dei criteri, il comportamento predefinito dipenderà dall'edizione di Windows. Le modifiche apportate a questi criteri hanno effetto al riavvio.
+      </string>
+      <string id="Fonts">Tipi di carattere</string>
+      <string id="EnableFontProviders">Abilita provider di tipi di carattere</string>
+      <string id="EnableFontProviders_Help">
+        Questa impostazione dei criteri determina se Windows può scaricare i tipi di carattere e i dati del catalogo dei tipi di carattere da un provider di tipi di carattere online.
+
+        Se abiliti questa impostazione dei criteri, Windows interroga periodicamente un provider di tipi di carattere online per determinare se è disponibile un nuovo catalogo di tipi di carattere. Windows può anche scaricare dati sui tipi di carattere se necessario per la formattazione o il rendering del testo.
+
+        Se disabiliti questa impostazione dei criteri, Windows non si connette a un provider di tipi di carattere online ed enumera solo i tipi di carattere installati in locale.
+
+        Se questa impostazione dei criteri non viene configurata, il comportamento predefinito dipende dall'edizione di Windows. Le modifiche apportate a questi criteri diventano effettive dopo il riavvio.
+      </string>
+      <string id="EnableLogonOptimization">Configura memorizzazione nella cache per Criteri di gruppo</string>
+      <string id="EnableLogonOptimization_Help">
+        Questa impostazione dei criteri consente di configurare la funzionalità di memorizzazione nella cache per Criteri di gruppo.
+
+        Se abiliti o non configuri questa impostazione dei criteri, Criteri di gruppo memorizza nella cache le informazioni sui criteri dopo ogni sessione di elaborazione in background. In questa cache vengono salvati gli oggetti Criteri di gruppo applicabili e le impostazioni in essi contenute. Quando Criteri di gruppo viene eseguito in modalità in primo piano sincrona, fa riferimento a questa cache e ciò consente un'esecuzione più rapida. Quando la cache viene letta, Criteri di gruppo tenta di contattare un controller di dominio di accesso per stabilire la velocità del collegamento. Quando Criteri di gruppo viene eseguito in modalità in background o in modalità in primo piano asincrona, continua a scaricare la versione più aggiornata delle informazioni sui criteri e utilizza un valore stimato della larghezza di banda per stabilire le soglie per i collegamenti lenti (vedi l'impostazione dei criteri "Configura rilevamento collegamento lento Criteri di gruppo" per configurare il funzionamento in primo piano asincrono).
+
+        Il valore di collegamento lento specificato in questa impostazione dei criteri determina l'intervallo di tempo di attesa di una risposta dal controller di dominio prima che la velocità del collegamento venga segnalata come lenta. Il valore predefinito è 500 millisecondi.
+
+        Il valore di timeout specificato in questa impostazione dei criteri determina l'intervallo di tempo di attesa di una risposta dal controller di dominio prima che venga stabilita l'assenza di connettività di rete. L'elaborazione in corso di Criteri di gruppo viene arrestata. L'esecuzione di Criteri di gruppo avverrà in background in occasione della successiva attivazione di una connessione a un controller di dominio. L'impostazione di un valore troppo alto potrebbe comportare attese più lunghe per l'utente in fase di avvio o di accesso. Il valore predefinito è 5000 millisecondi.
+
+        Se disabiliti questa impostazione dei criteri, il client Criteri di gruppo non memorizzerà nella cache gli oggetti Criteri di gruppo applicabili o le impostazioni contenute negli oggetti Criteri di gruppo. Quando Criteri di gruppo viene eseguito in modalità sincrona, scarica la versione più recente dei criteri dalla rete e utilizza valori stimati di larghezza di banda per stabilire le soglie per i collegamenti lenti (vedi l'impostazione dei criteri "Configura rilevamento collegamento lento Criteri di gruppo" per configurare il funzionamento in primo piano asincrono).
+      </string>
+
+      <string id="EnableLogonOptimizationOnServerSKU">Abilita memorizzazione nella cache di Criteri di gruppo per i server</string>
+      <string id="EnableLogonOptimizationOnServerSKU_Help">
+        
+        Questa impostazione dei criteri consente di configurare il comportamento di memorizzazione nella cache per Criteri di gruppo nei computer Windows Server.
+        Se si abilita questa impostazione dei criteri, Criteri di gruppo memorizza nella cache le informazioni sui criteri dopo ogni sessione di elaborazione in background. In questa cache vengono salvati gli oggetti Criteri di gruppo applicabili e le impostazioni in essi contenute. Quando Criteri di gruppo viene eseguito in modalità in primo piano sincrona, fa riferimento a questa cache e ciò consente un'esecuzione più rapida. Quando la cache viene letta, Criteri di gruppo tenta di contattare un controller di dominio di accesso per stabilire la velocità del collegamento. Quando Criteri di gruppo viene eseguito in modalità in background o in modalità in primo piano asincrona, continua a scaricare la versione più aggiornata delle informazioni sui criteri e utilizza un valore stimato della larghezza di banda per stabilire le soglie per i collegamenti lenti. (Vedere l'impostazione dei criteri "Configura rilevamento collegamento lento Criteri di gruppo" per configurare il funzionamento in primo piano asincrono.)
+        Il valore di collegamento lento specificato in questa impostazione dei criteri determina l'intervallo di tempo di attesa di una risposta dal controller di dominio prima che la velocità del collegamento venga segnalata come lenta. Il valore predefinito è 500 millisecondi.
+        Il valore di timeout specificato in questa impostazione dei criteri determina l'intervallo di tempo di attesa di una risposta dal controller di dominio prima che venga stabilita l'assenza di connettività di rete. L'elaborazione in corso di Criteri di gruppo viene interrotta. L'esecuzione di Criteri di gruppo avverrà in background in occasione della successiva attivazione di una connessione a un controller di dominio. L'impostazione di un valore troppo alto potrebbe comportare attese più lunghe per l'utente in fase di avvio o di accesso. Il valore predefinito è 5000 millisecondi.
+        Se si disabilita o non si configura questa impostazione dei criteri, il client di Criteri di gruppo non memorizzerà nella cache gli oggetti Criteri di gruppo applicabili o le impostazioni contenute in tali oggetti. Quando Criteri di gruppo viene eseguito in modalità sincrona, scarica la versione più recente del criterio dalla rete e utilizza valori stimati di larghezza di banda per stabilire le soglie per i collegamenti lenti. (Vedere l'impostazione dei criteri "Configura rilevamento collegamento lento Criteri di gruppo" per configurare il funzionamento in primo piano asincrono.)
+      
+      </string>
+
+      <string id="LogonScriptDelay">Configura ritardo script di accesso</string>
+      <string id="LogonScriptDelay_Help">
+        Immetti "0" per disabilitare il ritardo per gli script di accesso.
+
+        Questa impostazione dei criteri consente di configurare l'attesa del client Criteri di gruppo dopo l'accesso, prima dell'esecuzione degli script.
+
+        Per impostazione predefinita, il client Criteri di gruppo attende cinque minuti prima di eseguire gli script di accesso. In questo modo è possibile creare un ambiente desktop con tempi di risposta adeguati evitando conflitti per il disco.
+
+        Se abiliti questa impostazione dei criteri, Criteri di gruppo aspetterà il periodo di tempo specificato prima di eseguire gli script di accesso.
+
+        Se disabiliti questa impostazione dei criteri, gli script verranno eseguiti immediatamente da Criteri di gruppo dopo l'accesso.
+
+        Se non configuri questa impostazione dei criteri, Criteri di gruppo attenderà cinque minuti prima di eseguire gli script di accesso.
+      </string>
+
+     <string id="SlowLinkDefaultForDirectAccess">Configura connessioni Direct Access come connessione di rete veloce</string>
+      <string id="SlowLinkDefaultForDirectAccess_Help">Questa impostazione dei criteri consente a un amministratore di definire la connessione Direct Access in modo che venga considerata una connessione di rete veloce per l'applicazione e l'aggiornamento di Criteri di gruppo.
+
+Quando in Criteri di gruppo viene rilevata la velocità della larghezza di banda di una connessione Direct Access, è possibile che il rilevamento non restituisca tali informazioni. Se in Criteri di gruppo viene rilevata una velocità della larghezza di banda, verranno seguite le regole normali per valutare se la connessione Direct Access è una connessione di rete veloce o lenta. Se non viene rilevata la velocità della larghezza di banda, per impostazione in Criteri di gruppo verrà utilizzata una connessione di rete lenta. Questa impostazione dei criteri consente all'amministratore di scegliere se ignorare l'impostazione predefinita con connessione di rete lenta e di utilizzare una connessione di rete veloce nel caso in cui non venga determinata la velocità della larghezza di banda della rete.
+
+Nota: quando in Criteri di gruppo viene rilevata una connessione di rete lenta, verranno elaborate solo quelle estensioni del lato client configurate per l'elaborazione tramite un collegamento lento (connessione di rete lenta).
+
+Se abiliti questo criterio, quando in Criteri di gruppo non è possibile determinare la velocità della larghezza di banda tramite Direct Access, la connessione di rete verrà considerata come collegamento veloce e tutte le estensioni del lato client verranno elaborate.
+
+Se disabiliti o non configuri questa impostazione, la connessione di rete verrà considerata come collegamento lento e verranno elaborate solo quelle estensioni del lato client configurate per l'elaborazione tramite un collegamento lento.
+
+      </string>
+     <string id="SlowlinkDefaultToAsync">Modifica l'elaborazione di Criteri di gruppo attivandone l'esecuzione in modo asincrono quando viene rilevata una connessione di rete lenta</string>
+      <string id="SlowlinkDefaultToAsync_Help">Questo criterio indica a Criteri di gruppo di ignorare l'elaborazione di eventuali estensioni del lato client che richiedono l'elaborazione sincrona (ovvero, se i computer attendono la completa inizializzazione della rete durante l'avvio del computer e l'accesso utente) quando viene rilevata una connessione di rete lenta.
+
+Se abiliti questa impostazione dei criteri, quando viene rilevata una connessione di rete lenta, Criteri di gruppo verrà eseguito sempre in modo asincrono.
+I computer client non attenderanno il completamento dell'inizializzazione della rete all'avvio e all'accesso. Gli utenti esistenti si connetteranno utilizzando le credenziali memorizzate nella cache,
+con tempi di accesso più brevi. Criteri di gruppo verrà applicato in background quando la rete risulterà disponibile.
+Poiché si tratta di un aggiornamento in background, le estensioni che richiedono l'elaborazione sincrona, quali l'estensione della preferenza Installazione software, Reindirizzamento cartelle
+e Mapping unità non verrà applicata.
+
+Nota: anche se questa impostazione dei criteri è abilitata, Criteri di gruppo verrà elaborato in modo sincrono nelle due condizioni seguenti:
+1 - Al primo riavvio del computer client dopo l'accesso al dominio.
+2 - Se è abilitata l'impostazione dei criteri "Attendi sempre disponibilità rete all'avvio e all'accesso".
+
+Se disabiliti o non configuri questa impostazione dei criteri, il rilevamento di una connessione di rete lenta non influirà sulla modalità di elaborazione sincrona o asincrona di Criteri di rete.
+
+      </string>
+      <string id="DisableLGPOProcessing">Disattiva elaborazione oggetti Criteri di gruppo locali</string>
+      <string id="DisableLGPOProcessing_Help">Questa impostazione dei criteri impedisce l'applicazione degli oggetti Criteri di gruppo locali.
+
+Per impostazione predefinita, le impostazioni dei criteri contenute negli oggetti Criteri di gruppo locali vengono applicate prima di qualsiasi impostazione dei criteri contenuta negli oggetti Criteri di gruppo basati sul dominio. Queste impostazioni dei criteri possono essere applicate sia agli utenti sia al computer locale. È possibile disabilitare l'elaborazione e l'applicazione di tutti gli oggetti Criteri di gruppo locali per garantire che vengano applicati solo gli oggetti Criteri di gruppo basati sul dominio.
+
+Se si abilita questa impostazione dei criteri, gli oggetti Criteri di gruppo locali non verranno elaborati né applicati.
+
+Se si disabilita o non si configura questa impostazione dei criteri, gli oggetti Criteri di gruppo locali continueranno a essere applicati.
+
+Nota: per i computer aggiunti a un dominio, è consigliabile configurare questa impostazione dei criteri solo negli oggetti Criteri di gruppo basati sul dominio. Questa impostazione dei criteri verrà ignorata nei computer aggiunti a un gruppo di lavoro.
+
+</string>
+      <string id="SyncWaitTime">Specifica tempo di attesa elaborazione criteri di avvio</string>
+      <string id="SyncWaitTime_Help">Questa impostazione dei criteri specifica il tempo di attesa delle notifiche della disponibilità di rete da parte di Criteri di gruppo durante l'elaborazione dei criteri di avvio. Se l'elaborazione dei criteri di avvio è sincrona, il computer verrà bloccato fino a quando la rete non sarà disponibile o fino al raggiungimento del tempo di attesa predefinito. Se l'elaborazione dei criteri di avvio è asincrona, il computer non verrà bloccato e l'elaborazione dei criteri sarà eseguita in background. In entrambi i casi, la configurazione di questa impostazione dei criteri sostituisce tutti i tempi di attesa calcolati dal sistema.
+
+Se si abilita questa impostazione dei criteri, verrà utilizzato il tempo di attesa massimo configurato dall'amministratore che sostituirà qualsiasi tempo di attesa predefinito o calcolato dal computer.
+
+Se si disabilita o non si configura questa impostazione dei criteri, nei computer che eseguono il sistema operativo Windows Vista verrà utilizzato il tempo di attesa predefinito di 30 secondi. 
+
+</string>
+
+      <string id="AllowX-ForestPolicy-and-RUP">Consenti profili utente mobili e criterio utente tra foreste</string>
+      <string id="AllowX-ForestPolicy-and-RUP_Help">Questa impostazione dei criteri consente l'elaborazione di criteri basati sugli utenti, profili utente mobili e script di accesso agli oggetti utente per accessi interattivi tra foreste.
+
+Questa impostazione dei criteri si applica a tutti gli account utente che accedono in modo interattivo a un computer in una foresta diversa in presenza di un trust tra foreste o di un trust tra foreste bidirezionale.
+
+Se non si configura questa impostazione dei criteri:
+-  Non verrà applicata alcuna impostazione dei criteri basata sull'utente dalla foresta dell'utente.
+-  Gli utenti non riceveranno i rispettivi profili mobili, ma riceveranno un profilo locale nel computer dalla foresta locale. Verrà visualizzato un messaggio di avviso all'utente e verrà inviato un messaggio del registro eventi (1529).
+-  Verrà applicata la modalità di elaborazione loopback di Criteri di gruppo, utilizzando gli oggetti Criteri di gruppo con ambito nel computer.
+-  Verrà inviato un messaggio del registro eventi (1109), che indica che la modalità loopback è stata richiamata in modalità sostituzione.
+
+Se si abilita questa impostazione dei criteri, il comportamento sarà esattamente lo stesso valido in Windows 2000, ovvero verrà applicato il criterio utente e verrà consentito un profilo utente comune dalla foresta trusted.
+
+Se si disabilita questa impostazione dei criteri, il comportamento sarà lo stesso esistente quando l'impostazione non viene configurata.</string>
+      <string id="CSE_AppMgmt">Configura elaborazione criteri di installazione software</string>
+      <string id="CSE_AppMgmt_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri di installazione software.
+
+Questa impostazione dei criteri si applica a tutte le impostazioni dei criteri che utilizzano il componente installazione software di Criteri di gruppo, ad esempio quelle in Impostazioni software\Installazione software. È possibile impostare criteri di installazione software solo per gli oggetti Criteri di gruppo archiviati in Active Directory e non per gli oggetti nel computer locale.
+
+Questa impostazione dei criteri sostituisce le impostazioni personalizzate definite al momento dell'installazione dal programma che implementa i criteri di installazione software.
+
+Se si abilita questa impostazione dei criteri, è possibile utilizzare le caselle di controllo disponibili per modificare le opzioni. Se si disabilita o non si configura questa impostazione dei criteri, essa non avrà alcun effetto sul sistema.
+
+L'opzione "Consenti elaborazione attraverso una connessione di rete lenta" consente di aggiornare i criteri anche quando l'aggiornamento viene trasmesso tramite una connessione di rete lenta, ad esempio una linea telefonica. L'esecuzione di aggiornamenti tramite connessioni lente può causare ritardi significativi.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni di impostazioni dei criteri specificano che gli aggiornamenti vengano eseguiti solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare anche impostazioni dei criteri non modificate, ad esempio per riapplicare criteri specifici qualora siano stati modificati da un utente.</string>
+      <string id="CSE_DiskQuota">Configura elaborazione criteri di quota disco</string>
+      <string id="CSE_DiskQuota_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri di quota disco.
+
+Questa impostazione dei criteri si applica a tutti i criteri che utilizzano il componente quota disco di Criteri di gruppo, ad esempio quelli in Configurazione computer\Modelli amministrativi\Sistema\Quote disco.
+
+Questa impostazione dei criteri sostituisce le impostazioni personalizzate definite al momento dell'installazione dal programma che implementa i criteri di quota disco.
+
+Se si abilita questa impostazione dei criteri, è possibile utilizzare le caselle di controllo disponibili per modificare le opzioni. Se si disabilita o non si configura questa impostazione dei criteri, essa non avrà alcun effetto sul sistema.
+
+L'opzione "Consenti elaborazione attraverso una connessione di rete lenta" consente di aggiornare i criteri anche quando l'aggiornamento viene trasmesso tramite una connessione di rete lenta, ad esempio una linea telefonica. L'esecuzione di aggiornamenti tramite connessioni lente può causare ritardi significativi.
+
+L'opzione "Non applicare durante l'elaborazione periodica in background" impedisce l'aggiornamento in background dei criteri interessati mentre il computer è in uso. Se gli aggiornamenti in background sono disabilitati, le modifiche apportate ai criteri diventeranno effettive solo al successivo accesso dell'utente o al riavvio del sistema.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni dei criteri specificano che gli aggiornamenti vengano eseguiti solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare anche criteri non modificati, ad esempio applicando nuovamente un'impostazione desiderata qualora sia stata modificata da un utente.</string>
+      <string id="CSE_EFSRecovery">Configura elaborazione criteri di ripristino EFS</string>
+      <string id="CSE_EFSRecovery_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri di crittografia.
+
+Questa impostazione dei criteri si applica a tutti i criteri che utilizzano il componente crittografia di Criteri di gruppo, ad esempio i criteri relativi alla crittografia in Impostazioni di Windows\Impostazioni sicurezza.
+
+Sostituisce le impostazioni personalizzate definite al momento dell'installazione dal programma che implementa i criteri di crittografia.
+
+Se si abilita questa impostazione dei criteri, è possibile utilizzare le caselle di controllo disponibili per modificare le opzioni. Se disabiliti o non configuri questa impostazione dei criteri, essa non avrà alcun effetto sul sistema.
+
+L'opzione "Consenti elaborazione attraverso una connessione di rete lenta" consente di aggiornare i criteri anche quando l'aggiornamento viene trasmesso tramite una connessione di rete lenta, ad esempio una linea telefonica. L'esecuzione di aggiornamenti tramite connessioni lente può causare ritardi significativi.
+
+L'opzione "Non applicare durante l'elaborazione periodica in background" impedisce l'aggiornamento in background dei criteri interessati mentre il computer è in uso. Se gli aggiornamenti in background sono disabilitati, le modifiche apportate ai criteri diventeranno effettive solo al successivo accesso dell'utente o al riavvio del sistema.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni dei criteri specificano che gli aggiornamenti vengano eseguiti solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare anche criteri non modificati, ad esempio applicando nuovamente un'impostazione desiderata qualora sia stata modificata da un utente.</string>
+      <string id="CSE_FolderRedirection">Configura elaborazione criteri di reindirizzamento cartelle</string>
+      <string id="CSE_FolderRedirection_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri di reindirizzamento cartelle.
+
+Questa impostazione dei criteri si applica a tutti i criteri che utilizzano il componente di reindirizzamento cartelle di Criteri di gruppo, ad esempio quelli in Impostazioni di Windows\Reindirizzamento cartelle. È possibile impostare i criteri di reindirizzamento cartelle solo per gli oggetti Criteri di gruppo archiviati in Active Directory e non per gli oggetti Criteri di gruppo nel computer locale.
+
+Questa impostazione dei criteri sostituisce le impostazioni personalizzate definite al momento dell'installazione dal programma che implementa le impostazioni dei criteri di reindirizzamento cartelle.
+
+Se si abilita questa impostazione dei criteri, è possibile utilizzare le caselle di controllo disponibili per modificare le opzioni. Se si disabilita o non si configura questa impostazione dei criteri, essa non avrà alcun effetto sul sistema.
+
+L'opzione "Consenti elaborazione attraverso una connessione di rete lenta" consente di aggiornare i criteri anche quando l'aggiornamento viene trasmesso tramite una connessione di rete lenta, ad esempio una linea telefonica. L'esecuzione di aggiornamenti tramite connessioni lente può causare ritardi significativi.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni dei criteri specificano che gli aggiornamenti vengano eseguiti solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare anche criteri non modificati, ad esempio applicando nuovamente un'impostazione desiderata qualora sia stata modificata da un utente.</string>
+      <string id="CSE_IEM">Configura elaborazione criteri di manutenzione di Internet Explorer</string>
+      <string id="CSE_IEM_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri di manutenzione di Internet Explorer.
+
+Questa impostazione si applica a tutti i criteri che utilizzano il componente Manutenzione di Internet Explorer di Criteri di gruppo, ad esempio quelli in Impostazioni di Windows\Manutenzione di Internet Explorer.
+
+Questa impostazione dei criteri sostituisce le impostazioni personalizzate definite al momento dell'installazione dal programma che implementa i criteri di manutenzione di Internet Explorer.
+
+Se si abilita questa impostazione dei criteri, è possibile utilizzare le caselle di controllo disponibili per modificare le opzioni. Se disabiliti o non configuri questa impostazione dei criteri, essa non avrà alcun effetto sul sistema.
+
+L'opzione "Consenti elaborazione attraverso una connessione di rete lenta" consente di aggiornare i criteri anche quando l'aggiornamento viene trasmesso tramite una connessione di rete lenta, ad esempio una linea telefonica. L'esecuzione di aggiornamenti tramite connessioni lente può causare ritardi significativi.
+
+L'opzione "Non applicare durante l'elaborazione periodica in background" impedisce l'aggiornamento in background dei criteri interessati mentre il computer è in uso. Se gli aggiornamenti in background sono disabilitati, le modifiche apportate ai criteri diventeranno effettive solo al successivo accesso dell'utente o al riavvio del sistema.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni dei criteri specificano che gli aggiornamenti vengano eseguiti solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare i criteri non modificati, ad esempio applicando nuovamente un'impostazione dei criteri desiderata qualora sia stata modificata da un utente.</string>
+      <string id="CSE_IPSecurity">Configura elaborazione criteri di sicurezza IP</string>
+      <string id="CSE_IPSecurity_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri di sicurezza IP.
+
+Questa impostazione dei criteri si applica a tutti i criteri che utilizzano il componente di sicurezza IP di Criteri di gruppo, ad esempio quelli in Configurazione computer\Impostazioni di Windows\Impostazioni sicurezza\Criteri di sicurezza IP su computer locale.
+
+Questa impostazione dei criteri sostituisce le impostazioni personalizzate definite al momento dell'installazione dal programma che implementa i criteri di sicurezza IP.
+
+Se si abilita questa impostazione dei criteri, è possibile utilizzare le caselle di controllo disponibili per modificare le opzioni. Se si disabilita o non si configura questa impostazione dei criteri, essa non avrà alcun effetto sul sistema.
+
+L'opzione "Consenti elaborazione attraverso una connessione di rete lenta" consente di aggiornare i criteri anche quando l'aggiornamento viene trasmesso tramite una connessione di rete lenta, ad esempio una linea telefonica. L'esecuzione di aggiornamenti tramite connessioni lente può causare ritardi significativi.
+
+L'opzione "Non applicare durante l'elaborazione periodica in background" impedisce l'aggiornamento in background dei criteri interessati mentre il computer è in uso. Se gli aggiornamenti in background sono disabilitati, le modifiche apportate ai criteri diventeranno effettive solo al successivo accesso dell'utente o al riavvio del sistema.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni dei criteri specificano che gli aggiornamenti vengano eseguiti solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare i criteri non modificati, ad esempio applicando nuovamente un'impostazione dei criteri desiderata qualora sia stata modificata da un utente.</string>
+      <string id="CSE_Registry">Configura elaborazione criteri Registro di sistema</string>
+      <string id="CSE_Registry_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri del Registro di sistema.
+
+Questa impostazione dei criteri si applica a tutti i criteri della cartella Modelli amministrativi e a qualsiasi altro criterio che consenta di archiviare valori nel Registro di sistema. Sostituisce le impostazioni personalizzate definite al momento dell'installazione dal programma che implementa un criterio del Registro di sistema.
+
+Se si abilita questa impostazione dei criteri, è possibile utilizzare le caselle di controllo disponibili per modificare le opzioni. Se si disabilita o non si configura questa impostazione dei criteri, essa non avrà alcun effetto sul sistema.
+
+L'opzione "Non applicare durante l'elaborazione periodica in background" impedisce l'aggiornamento in background dei criteri interessati mentre il computer è in uso. Se gli aggiornamenti in background sono disabilitati, le modifiche apportate ai criteri diventeranno effettive solo al successivo accesso dell'utente o al riavvio del sistema.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni dei criteri specificano che gli aggiornamenti vengano eseguiti solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare i criteri non modificati, ad esempio applicando nuovamente un'impostazione dei criteri desiderata qualora sia stata modificata da un utente.</string>
+      <string id="CSE_Scripts">Configura elaborazione criteri script</string>
+      <string id="CSE_Scripts_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri che assegnano script condivisi.
+
+Questa impostazione dei criteri si applica a tutti i criteri che utilizzano il componente script di Criteri di gruppo, ad esempio quelli in Impostazioni di Windows\Script. Sostituisce le impostazioni personalizzate definite al momento dell'installazione dal programma che implementa i criteri di script.
+
+Se si abilita questa impostazione dei criteri, è possibile utilizzare le caselle di controllo disponibili per modificare le opzioni. Se si disabilita o non si configura questa impostazione, essa non avrà alcun effetto sul sistema.
+
+L'opzione "Consenti elaborazione attraverso una connessione di rete lenta" consente di aggiornare i criteri anche quando l'aggiornamento viene trasmesso tramite una connessione di rete lenta, ad esempio una linea telefonica. L'esecuzione di aggiornamenti tramite connessioni lente può causare ritardi significativi.
+
+L'opzione "Non applicare durante l'elaborazione periodica in background" impedisce l'aggiornamento in background dei criteri interessati mentre il computer è in uso. Se gli aggiornamenti in background sono disabilitati, le modifiche apportate ai criteri diventeranno effettive solo al successivo accesso dell'utente o al riavvio del sistema.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni dei criteri specificano che gli aggiornamenti vengano eseguiti solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare i criteri non modificati, ad esempio applicando nuovamente un'impostazione dei criteri desiderata qualora sia stata modificata da un utente.</string>
+      <string id="CSE_Security">Configura elaborazione criteri di sicurezza</string>
+      <string id="CSE_Security_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri di sicurezza.
+
+Questa impostazione dei criteri si applica a tutti i criteri che utilizzano il componente sicurezza di Criteri di gruppo, ad esempio quelli in Impostazioni di Windows\Impostazioni sicurezza.
+
+Questa impostazione dei criteri sostituisce le impostazioni personalizzate definite al momento dell'installazione dal programma che implementa i criteri di sicurezza.
+
+Se si abilita questa impostazione dei criteri, è possibile utilizzare le caselle di controllo disponibili per modificare le opzioni. Se si disabilita o non si configura questa impostazione dei criteri, essa non avrà alcun effetto sul sistema.
+
+L'opzione "Non applicare durante l'elaborazione periodica in background" impedisce l'aggiornamento in background dei criteri interessati mentre il computer è in uso. Se gli aggiornamenti in background sono disabilitati, le modifiche apportate ai criteri diventeranno effettive solo al successivo accesso dell'utente o al riavvio del sistema.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni dei criteri specificano che gli aggiornamenti siano effettuati solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare i criteri non modificati, ad esempio applicando nuovamente un'impostazione dei criteri desiderata qualora sia stata modificata da un utente.</string>
+      <string id="CSE_Wireless">Configura elaborazione criteri reti wireless</string>
+      <string id="CSE_Wireless_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri che assegnano le impostazioni per le reti wireless.
+
+Questa impostazione dei criteri si applica a tutti i criteri che utilizzano il componente rete wireless di Criteri di gruppo, ad esempio quelli in Impostazioni di Windows\Criteri reti wireless.
+
+Sostituisce le impostazioni personalizzate definite al momento dell'installazione dal programma che implementa la rete wireless.
+
+Se si abilita questo criterio, sarà possibile utilizzare le caselle di controllo fornite per modificare le opzioni.
+
+Se si disabilita o non si configura questa impostazione, essa non avrà effetto sul sistema.
+
+L'opzione "Consenti elaborazione attraverso una connessione di rete lenta" consente di aggiornare i criteri anche quando l'aggiornamento viene trasmesso tramite una connessione di rete lenta, ad esempio una linea telefonica. L'esecuzione di aggiornamenti tramite connessioni lente può causare ritardi significativi.
+
+L'opzione "Non applicare durante l'elaborazione periodica in background" impedisce l'aggiornamento in background dei criteri interessati mentre il computer è in uso. Se gli aggiornamenti in background sono disabilitati, le modifiche apportate ai criteri diventeranno effettive solo al successivo accesso dell'utente o al riavvio del sistema.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni dei criteri specificano che gli aggiornamenti vengano eseguiti solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare anche criteri non modificati, ad esempio applicando nuovamente un'impostazione desiderata qualora sia stata modificata da un utente.</string>
+      <string id="CSE_Wired">Configura elaborazione criteri reti cablate</string>
+      <string id="CSE_Wired_Help">Questa impostazione dei criteri determina quando vengono aggiornati i criteri che assegnano le impostazioni per le reti cablate.
+
+Questa impostazione dei criteri influisce su tutti i criteri che utilizzano il componente di rete cablata di Criteri di gruppo, ad esempio quelli presenti in Impostazioni di Windows\Criteri per reti cablate.
+
+Tale impostazione sostituisce quelle personalizzate definite dal programma che implementa la rete cablata al momento dell'installazione.
+
+Se si abilita questo criterio, sarà possibile utilizzare le caselle di controllo fornite per modificare le opzioni.
+
+Se si disabilita o non si configura questa impostazione, essa non avrà effetto sul sistema.
+
+L'opzione "Consenti elaborazione attraverso una connessione di rete lenta" consente di aggiornare i criteri anche quando l'aggiornamento viene trasmesso tramite una connessione di rete lenta, ad esempio una linea telefonica. L'esecuzione di aggiornamenti tramite connessioni lente può causare ritardi significativi.
+
+L'opzione "Non applicare durante l'elaborazione periodica in background" impedisce l'aggiornamento in background dei criteri interessati mentre il computer è in uso. Se gli aggiornamenti in background sono disabilitati, le modifiche apportate ai criteri diventeranno effettive solo al successivo accesso dell'utente o al riavvio del sistema.
+
+L'opzione "Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati" consente di aggiornare e riapplicare i criteri anche in assenza di modifiche. Molte implementazioni dei criteri specificano che gli aggiornamenti vengano eseguiti solo in presenza di modifiche. Potrebbe tuttavia essere utile aggiornare anche criteri non modificati, ad esempio applicando nuovamente un'impostazione desiderata qualora sia stata modificata da un utente.</string>
+
+      <string id="DenyRsopToInteractiveUser">Determina se gli utenti interattivi possono generare dati di Gruppo di criteri risultante</string>
+      <string id="DenyRsopToInteractiveUser_Help">Questa impostazione dei criteri controlla la capacità degli utenti di visualizzare i dati di Gruppo di criteri risultante.
+
+Per impostazione predefinita, gli utenti connessi interattivamente possono visualizzare i dati di Gruppo di criteri risultante.
+
+Se si abilita questa impostazione dei criteri, gli utenti interattivi non potranno generare dati di Gruppo di criteri risultante.
+
+Se si disabilita o non si configura questa impostazione dei criteri, gli utenti interattivi potranno generare dati di Gruppo di criteri risultante.
+
+Nota: questa impostazione dei criteri non viene applicata agli amministratori. Se si abilita o di disabilita questa impostazione dei criteri, gli amministratori potranno visualizzare i dati di Gruppo di criteri risultante per impostazione predefinita.
+
+Nota: per visualizzare i dati di Gruppo di criteri risultante in un computer client, utilizzare lo snap-in Gruppo di criteri risultante per Microsoft Management Console. È possibile avviare lo snap-in Gruppo di criteri risultante dalla riga di comando digitando RSOP.msc
+
+Nota: questa impostazione dei criteri è disponibile sia in Configurazione utente che in Configurazione computer.
+
+Vedere anche l'impostazione dei criteri "Disattiva registrazione Gruppo di criteri risultante" in Configurazione computer\Modelli amministrativi\Sistema\Criteri di gruppo.</string>
+      <string id="DisableAutoADMUpdate">Disattiva aggiornamento automatico dei file ADM</string>
+      <string id="DisableAutoADMUpdate_Help">Impedisce l'aggiornamento automatico dei file di origine di Modelli amministrativi quando si apre Editor oggetti Criteri di gruppo.  L'impostazione potrebbe essere utile agli amministratori che desiderino limitare l'utilizzo dello spazio nel volume di sistema di un controller di dominio.
+
+Per impostazione predefinita, quando si avvia l'Editor oggetti Criteri di gruppo, viene eseguito un confronto dei timestamp tra i file di origine presenti nella directory %SYSTEMROOT%\inf locale e i file di origine archiviati nell'oggetto Criteri di gruppo.  Se i file locali sono più recenti, verranno copiati nell'oggetto Criteri di gruppo.
+
+Se si abilita questa impostazione, verrà impedita la copia dei file di origine nell'oggetto Criteri di gruppo.
+
+Se si disabilita questa impostazione, verrà imposto il comportamento predefinito.  I file verranno sempre copiati nell'oggetto Criteri di gruppo se presentano un timestamp più recente.
+
+NOTA: se l'impostazione "Utilizza sempre file ADM locali per Editor oggetti Criteri di gruppo" in Configurazione computer è abilitata, lo stato dell'impostazione verrà ignorato e sarà sempre considerata abilitata.</string>
+      <string id="DisableBackgroundPolicy">Disattiva aggiornamento in background dei Criteri di gruppo</string>
+      <string id="DisableBackgroundPolicy_Help">Questa impostazione dei criteri impedisce l'aggiornamento di Criteri di gruppo quando il computer è in uso. Questa impostazione dei criteri si applica a Criteri di gruppo per computer, utenti e controller di dominio.
+
+Se si abilita questa impostazione dei criteri, l'aggiornamento del computer e delle impostazioni utente verrà effettuato solo dopo la disconnessione dell'utente.
+
+Se si disabilita o non si configura questa impostazione dei criteri, gli aggiornamenti potranno essere applicati mentre gli utenti lavorano. La frequenza degli aggiornamenti dipende dalle impostazioni dei criteri "Imposta intervallo di aggiornamento dei Criteri di gruppo per computer" e "Imposta intervallo di aggiornamento dei Criteri di gruppo per utenti".
+
+Nota: se vengono apportate modifiche a questa impostazione dei criteri, è necessario riavviare il computer per renderle effettive.</string>
+      <string id="DisableUsersFromMachGP">Annulla capacità utente di richiamare aggiornamento criteri computer</string>
+      <string id="DisableUsersFromMachGP_Help">Questa impostazione dei criteri consente di controllare la capacità di un utente di richiamare l'aggiornamento dei criteri del computer.
+
+Se si abilita questa impostazione dei criteri, gli utenti non potranno richiamare un aggiornamento dei criteri del computer. I criteri del computer continueranno a essere applicati all'avvio o in seguito a un aggiornamento ufficiale dei criteri.
+
+Se si disabilita o non si configura questa impostazione dei criteri, verrà applicato il comportamento predefinito. Per impostazione predefinita, i criteri del computer vengono applicati all'avvio. Vengono inoltre applicati a intervalli di aggiornamento specificati o quando sono richiamati manualmente dall'utente.
+
+Nota: questa impostazione dei criteri si applica solo agli utenti non amministratori. Gli amministratori possono comunque richiamare un aggiornamento dei criteri del computer in qualsiasi momento, indipendentemente dalla configurazione di questa impostazione dei criteri.
+
+Vedere anche l'impostazione dei criteri "Imposta intervallo di aggiornamento dei Criteri di gruppo per computer" per modificare l'intervallo di aggiornamento dei criteri.
+
+Nota: se vengono apportate modifiche a questa impostazione dei criteri, è necessario riavviare il computer per renderle effettive.</string>
+      <string id="EnforcePoliciesOnly">Applica Mostra solo criteri</string>
+      <string id="EnforcePoliciesOnly_Help">Questa impostazione dei criteri impedisce agli amministratori di visualizzare o utilizzare le preferenze di Criteri di gruppo.
+
+Un file di amministrazione di Criteri di gruppo, con estensione adm, può contenere sia impostazioni che preferenze. Le impostazioni, completamente supportate da Criteri di gruppo, devono utilizzare le voci del Registro di sistema presenti nelle sottochiavi del Registro di sistema Software\Policies o Software\Microsoft\Windows\CurrentVersion\Policies. Le preferenze, che non sono completamente supportate, utilizzano le voci del Registro di sistema presenti in altre sottochiavi.
+
+Se si abilita questa impostazione dei criteri, il comando "Mostra solo criteri" verrà attivato e gli amministratori non potranno disattivarlo. Di conseguenza, nell'Editor oggetti Criteri di gruppo verranno visualizzate le impostazioni, ma non le preferenze.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il comando "Mostra solo criteri" verrà attivato per impostazione predefinita, ma gli amministratori potranno visualizzare le preferenze disattivando il comando "Mostra solo criteri".
+
+Nota: per trovare il comando "Mostra solo criteri", in Editor oggetti Criteri di gruppo fare clic sulla cartella Modelli amministrativi (una delle due), fare clic con il pulsante destro del mouse sulla stessa cartella e quindi posizionare il puntatore del mouse su "Visualizza".
+
+In Editor oggetti Criteri di gruppo le preferenze sono contraddistinte da un'icona rossa e le impostazioni da un'icona blu.</string>
+      <string id="GPDCOptionAny">Usa qualsiasi controller di dominio disponibile</string>
+      <string id="GPDCOptionInherit">Eredita dagli snap-in Active Directory</string>
+      <string id="GPDCOptionPDC">Usa il controller di dominio primario</string>
+      <string id="GPDCOptions">Configura selezione controller di dominio di Criteri di gruppo</string>
+      <string id="GPDCOptions_Help">Questa impostazione dei criteri determina il controller di dominio utilizzato dallo snap-in Editor oggetti Criteri di gruppo.
+
+Se si abilita questa impostazione dei criteri, sarà possibile selezionare il controller di dominio da utilizzare tramite queste opzioni:
+
+"Usa il controller di dominio primario" indica che lo snap-in Editor oggetti Criteri di gruppo leggerà e scriverà le modifiche apportate al controller di dominio indicato come master operazioni del controller di dominio primario per il dominio.
+
+"Eredita dagli snap-in Active Directory" indica che l'Editor oggetti Criteri di gruppo leggerà e scriverà le modifiche apportate al controller di dominio che viene utilizzato dagli snap-in Utenti e computer di Active Directory e Siti e servizi di Active Directory.
+
+"Usa qualsiasi controller di dominio disponibile" indica che lo snap-in Editor oggetti Criteri di gruppo potrà leggere e scrivere le modifiche apportate a qualsiasi controller di dominio disponibile.
+
+Se si disabilita o non si configura questa impostazione, lo snap-in Editor oggetti Criteri di gruppo utilizzerà il controller di dominio indicato come master operazioni del controller di dominio primario per il dominio.
+
+Nota: per cambiare il master operazioni del controller di dominio primario per un dominio, in Utenti e computer di Active Directory, fare clic con il pulsante destro del mouse su un dominio e quindi scegliere "Master operazioni".</string>
+      <string id="GPTransferRate">Configura rilevamento collegamento lento Criteri di gruppo</string>
+      <string id="GPTransferRate_Help">Questa impostazione dei criteri definisce una connessione lenta in relazione all'applicazione e all'aggiornamento di Criteri di gruppo.
+
+Se la velocità di trasferimento dei dati dal controller di dominio che fornisce l'aggiornamento dei criteri ai computer del gruppo è inferiore alla velocità specificata dall'impostazione, la connessione verrà considerata lenta.
+
+La risposta del sistema a una connessione lenta per i criteri, varia in base al criterio. Il programma che implementa il criterio può specificare la risposta a un collegamento lento. Le impostazioni di elaborazione dei criteri presenti in questa cartella consentono inoltre di sostituire le risposte ai collegamenti lenti specificate dei programmi.
+
+Se si abilita questa impostazione, è possibile digitare nella casella "Velocità di connessione" un numero decimale compreso tra 0 e 4.294.967.200 che indica una velocità di trasferimento in kilobit al secondo. Le connessioni al di sotto del limite specificato verranno considerate lente. Se si digita 0, tutte le connessioni verranno considerate veloci.
+
+Se si disabilita o non si configura questa impostazione, verrà utilizzato il valore predefinito di 500 kilobit al secondo.
+
+Questa impostazione è disponibile nelle cartelle Configurazione computer e Configurazione utente. L'impostazione in Configurazione computer definisce un collegamento lento per i criteri nella cartella Configurazione computer. L'impostazione in Configurazione utente definisce un collegamento lento per le impostazioni nella cartella Configurazione utente.
+
+Vedere anche "Non rilevare connessioni di rete lente" e i criteri correlati in Configurazione computer\Modelli amministrativi\Sistema\Profilo utente. Nota: se il server dei profili dispone di connettività IP, verrà utilizzata l'impostazione relativa alla velocità di connessione. In assenza di connettività IP, verrà utilizzata la temporizzazione SMB.</string>
+      <string id="GroupPolicyRefreshRate">Imposta intervallo di aggiornamento dei Criteri di gruppo per computer</string>
+      <string id="GroupPolicyRefreshRate_Help">Questa impostazione dei criteri specifica la frequenza di aggiornamento di Criteri di gruppo per computer mentre il computer è in uso (in background). Questa impostazione specifica la velocità di aggiornamento in background solo per Criteri di gruppo nella cartella Configurazione computer.
+
+Oltre agli aggiornamenti in background, Criteri di gruppo per il computer viene sempre aggiornato all'avvio del sistema.
+
+Per impostazione predefinita, Criteri di gruppo per computer viene aggiornato in background ogni 90 minuti, con una variazione causale compresa tra 0 e 30 minuti.
+
+Se si abilita questa impostazione, è possibile specificare una frequenza di aggiornamento compresa tra 0 e 64.800 minuti (45 giorni). Se si seleziona 0 minuti, il tentativo di aggiornare Criteri di gruppo verrà effettuato ogni 7 secondi. Poiché tuttavia gli aggiornamenti potrebbero interferire con il lavoro degli utenti e incrementare il traffico di rete, per la maggior parte delle installazioni non è consigliabile impostare intervalli di aggiornamento molto brevi.
+
+Se si disabilita questa impostazione, Criteri di gruppo verrà aggiornato ogni 90 minuti (impostazione predefinita). Per specificare di non eseguire mai l'aggiornamento di Criteri di gruppo mentre il computer è in uso, selezionare il criterio "Disattiva aggiornamento in background dei Criteri di gruppo".
+
+Il criterio Imposta intervallo di aggiornamento di Criteri di gruppo per computer consente inoltre di specificare la variazione effettiva dell'intervallo di aggiornamento. Per impedire che i client con lo stesso intervallo di aggiornamento richiedano gli aggiornamenti simultaneamente, l'intervallo di aggiornamento di ogni client viene variato di un numero casuale di minuti. Il numero digitato nell'apposita casella imposta il limite superiore dell'intervallo di variazione. Se ad esempio si digita 30 minuti, verrà selezionata una variazione compresa tra 0 e 30 minuti. Se si digita un numero superiore, verrà definito un intervallo ampio che rende più improbabile la sovrapposizione delle richieste dei client. È tuttavia possibile che gli aggiornamenti subiscano ritardi significativi.
+
+Questa impostazione definisce la velocità di aggiornamento per Criteri di gruppo del computer. Per impostare una velocità di aggiornamento per i criteri dell'utente, utilizzare l'impostazione "Imposta intervallo di aggiornamento dei Criteri di gruppo per utenti" (disponibile in Configurazione utente\Modelli amministrativi\Sistema\Criteri di gruppo).
+
+Questa impostazione viene utilizzata solo quando l'impostazione "Disattiva aggiornamento in background dei Criteri di gruppo" non è abilitata.
+
+Nota: è consigliabile informare gli utenti che il criterio viene aggiornato periodicamente per far sì che possano riconoscere questa operazione. Durante l'aggiornamento di Criteri di gruppo, il desktop di Windows viene aggiornato e si verificano uno sfarfallio di qualche secondo e la chiusura dei menu aperti. È inoltre possibile che le restrizioni imposte da Criteri di gruppo, ad esempio la limitazione del numero di programmi eseguibili da un utente, interferiscano con le attività in corso.</string>
+      <string id="GroupPolicyRefreshRateDC">Imposta intervallo di aggiornamento dei Criteri di gruppo per controller di dominio</string>
+      <string id="GroupPolicyRefreshRateDC_Help">Questa impostazione dei criteri specifica la frequenza di aggiornamento di Criteri di gruppo nei controller di dominio mentre sono in esecuzione (in background). Gli aggiornamenti specificati da questa impostazione si verificano in aggiunta agli aggiornamenti eseguiti all'avvio del sistema.
+
+Per impostazione predefinita, Criteri di gruppo nei controller di dominio viene aggiornato ogni cinque minuti.
+
+Se si abilita questa impostazione, è possibile specificare una frequenza di aggiornamento compresa tra 0 e 64.800 minuti (45 giorni). Se si seleziona 0 minuti, il controller di dominio tenterà di aggiornare Criteri di gruppo ogni 7 secondi. Poiché tuttavia gli aggiornamenti potrebbero interferire con il lavoro degli utenti e incrementare il traffico di rete, per la maggior parte delle installazioni non è consigliabile impostare intervalli di aggiornamento molto brevi.
+
+Se si disabilita o non si configura questa impostazione, il controller di dominio aggiornerà Criteri di gruppo ogni 5 minuti (l'impostazione predefinita). Per specificare di non aggiornare mai Criteri di gruppo per utenti mentre il computer è in uso, selezionare l'impostazione "Disattiva aggiornamento in background dei Criteri di gruppo".
+
+Questa impostazione consente inoltre di specificare la variazione effettiva dell'intervallo di aggiornamento. Per impedire che i controller di dominio con lo stesso intervallo di aggiornamento richiedano gli aggiornamenti simultaneamente, l'intervallo di aggiornamento di ogni controller viene variato di un numero casuale di minuti. Il numero digitato nell'apposita casella imposta il limite superiore dell'intervallo di variazione. Se ad esempio si digita 30 minuti, verrà selezionata una variazione compresa tra 0 e 30 minuti. Se si digita un numero superiore viene definito un intervallo ampio che rende più improbabile la sovrapposizione delle richieste di aggiornamento. È tuttavia possibile che gli aggiornamenti subiscano ritardi significativi.
+
+Nota: questa impostazione viene utilizzata solo quando si definisce un criterio per un dominio, un sito, un'unità organizzativa o un gruppo personalizzato. Se si definisce un criterio solo per un computer locale, l'impostazione verrà ignorata.</string>
+      <string id="GroupPolicyRefreshRateUser">Imposta intervallo di aggiornamento dei Criteri di gruppo per utenti</string>
+      <string id="GroupPolicyRefreshRateUser_Help">Questa impostazione dei criteri specifica la frequenza di aggiornamento di Criteri di gruppo per utenti mentre il computer è in uso (in background). Questa impostazione specifica la velocità di aggiornamento in background solo per Criteri di gruppo nella cartella Configurazione utente.
+
+Oltre agli aggiornamenti in background, Criteri di gruppo per utenti viene sempre aggiornato quando gli utenti accedono.
+
+Per impostazione predefinita, Criteri di gruppo dell'utente viene aggiornato in background ogni 90 minuti, con una variazione causale compresa tra 0 e 30 minuti.
+
+Se si abilita questa impostazione, è possibile specificare una frequenza di aggiornamento compresa tra 0 e 64.800 minuti (45 giorni). Se si seleziona 0 minuti, il tentativo di aggiornare Criteri di gruppo dell'utente verrà effettuato ogni 7 secondi. Poiché tuttavia gli aggiornamenti potrebbero interferire con il lavoro degli utenti e incrementare il traffico di rete, per la maggior parte delle installazioni non è consigliabile impostare intervalli di aggiornamento molto brevi.
+
+Se si disabilita questa impostazione, Criteri di gruppo dell'utente verrà aggiornato ogni 90 minuti (impostazione predefinita). Per specificare di non aggiornare mai Criteri di gruppo per utenti mentre il computer è in uso, selezionare l'impostazione "Disattiva aggiornamento in background dei Criteri di gruppo".
+
+Questa impostazione consente inoltre di specificare la variazione effettiva dell'intervallo di aggiornamento. Per impedire che i client con lo stesso intervallo di aggiornamento richiedano gli aggiornamenti simultaneamente, l'intervallo di aggiornamento di ogni client viene variato di un numero casuale di minuti. Il numero digitato nell'apposita casella imposta il limite superiore dell'intervallo di variazione. Se ad esempio si digita 30 minuti, verrà selezionata una variazione compresa tra 0 e 30 minuti. Se si digita un numero superiore, verrà definito un intervallo ampio che rende più improbabile la sovrapposizione delle richieste dei client. È tuttavia possibile che gli aggiornamenti subiscano ritardi significativi.
+
+Importante: se l'impostazione "Disattiva aggiornamento in background dei Criteri di gruppo" è abilitata, questa impostazione verrà ignorata.
+
+Nota: questa impostazione definisce la velocità di aggiornamento per Criteri di gruppo dell'utente. Per impostare una velocità di aggiornamento per Criteri di gruppo del computer, utilizzare l'impostazione "Intervallo di aggiornamento dei Criteri di gruppo per computer" (disponibile in Configurazione computer\Modelli amministrativi\Sistema\Criteri di gruppo).
+
+Suggerimento: è consigliabile informare gli utenti che il criterio viene aggiornato periodicamente per far sì che possano riconoscere questa operazione. Durante l'aggiornamento di Criteri di gruppo, il desktop di Windows viene aggiornato e si verificano uno sfarfallio di qualche secondo e la chiusura dei menu aperti. Le restrizioni imposte da Criteri di gruppo, ad esempio la limitazione del numero di programmi eseguibili da un utente, potrebbero inoltre interferire con le attività in corso.</string>
+      <string id="NewGPODisplayName">Imposta nome predefinito per i nuovi oggetti Criteri di gruppo</string>
+      <string id="NewGPODisplayName_Help">Questa impostazione dei criteri consente di impostare il nome visualizzato predefinito per i nuovi oggetti Criteri di gruppo.
+
+Questa impostazione consente di specificare il nome predefinito per i nuovi oggetti Criteri di gruppo creati dagli strumenti di gestione di Criteri di gruppo compatibili come la scheda Criteri di gruppo negli strumenti di Active Directory e il browser degli oggetti Criteri di gruppo.
+
+Il nome visualizzato può contenere variabili di ambiente e può avere una lunghezza massima di 255 caratteri.
+
+Se questa impostazione è disabilitata o non configurata, verrà utilizzato il nome visualizzato predefinito del nuovo oggetto Criteri di gruppo.</string>
+      <string id="NewGPOLinksDisabled">Crea collegamenti per nuovi oggetti Criteri di gruppo disabilitati per impostazione predefinita</string>
+      <string id="NewGPOLinksDisabled_Help">Questa impostazione dei criteri consente di creare i collegamenti per nuovi oggetti Criteri di gruppo con stato disabilitato.
+
+Se si abilita questa impostazione, sarà possibile creare tutti i collegamenti per nuovi oggetti Criteri di gruppo nello stato disabilitato per impostazione predefinita. Dopo aver configurato e testato i collegamenti per i nuovi oggetti mediante uno strumento di gestione di Criteri di gruppo compatibile con i criteri come Utenti e computer di Active Directory o Siti e servizi di Active Directory, sarà possibile abilitare i collegamenti da utilizzare nel sistema.
+
+Se si disabilita o non si configura questa impostazione, i collegamenti per i nuovi oggetti Criteri di gruppo verranno creati nello stato abilitato. Se non si desidera che diventino effettivi prima che vengano configurati e verificati, disabilitare i collegamenti per gli oggetti.</string>
+      <string id="OnlyUseLocalAdminFiles">Utilizza sempre file ADM locali per Editor oggetti Criteri di gruppo</string>
+      <string id="OnlyUseLocalAdminFiles_Help">Questa impostazione dei criteri consente di utilizzare sempre file ADM locali per lo snap-in Criteri di gruppo.
+
+Per impostazione predefinita, quando si modifica un oggetto Criteri di gruppo mediante lo snap-in Editor oggetti Criteri di gruppo, i file ADM vengono caricati dall'oggetto Criteri di gruppo nello snap-in Editor oggetti Criteri di gruppo. Ciò consente di utilizzare la stessa versione dei file ADM utilizzati per creare l'oggetto Criteri di gruppo durante la modifica dell'oggetto stesso.
+
+Ne deriva il comportamento seguente:
+
+-  Se l'oggetto Criteri di gruppo è stato creato originariamente in un sistema inglese, ad esempio, conterrà file ADM inglesi.
+
+-  Se l'oggetto Criteri di gruppo viene modificato in un secondo momento da un sistema in un'altra lingua, i file ADM inglesi saranno uguali a quelli presenti nell'oggetto Criteri di gruppo.
+
+È possibile modificare questo comportamento utilizzando questa impostazione.
+
+Se si abilita questa impostazione, lo snap-in Editor oggetti Criteri di gruppo utilizzerà sempre i file ADM locali nella directory %windir%\inf durante la modifica degli oggetti Criteri di gruppo.
+
+Ne deriva il comportamento seguente:
+
+-  Se l'oggetto Criteri di gruppo è stato originariamente creato con un sistema inglese e viene quindi modificato con un sistema giapponese, lo snap-in Editor oggetti Criteri di gruppo utilizzerà i file ADM giapponesi locali e in Modelli amministrativi il testo sarà in giapponese.
+
+Se si disabilita o non si configura questa impostazione, lo snap-in Editor oggetti Criteri di gruppo caricherà sempre tutti i file ADM dall'oggetto Criteri di gruppo vero e proprio.
+
+Nota: se i file ADM necessari non sono tutti disponibili localmente nella directory %windir%\inf, è possibile che non vengano visualizzate alcune delle impostazioni configurate nell'oggetto Criteri di gruppo che si sta modificando.</string>
+      <string id="PolicyPolicies">Criteri di gruppo</string>
+      <string id="RSoPLogging">Disattiva registrazione Gruppo di criteri risultante</string>
+      <string id="RSoPLogging_Help">Questa impostazione consente di abilitare o disabilitare la registrazione di Gruppo di criteri risultante in un computer client.
+
+Gruppo di criteri risultante registra informazioni sulle impostazioni di Criteri di gruppo applicate al client. Tali informazioni includono dettagli come gli oggetti Criteri di gruppo applicati, la provenienza e le impostazioni dell'estensione lato client incluse.
+
+Se si abilita questa impostazione, la registrazione di Gruppo di criteri risultante verrà disattivata.
+
+Se si disabilita o non si configura questa impostazione, la registrazione di Gruppo di criteri risultante verrà attivata. Per impostazione predefinita, la registrazione Gruppo di criteri risultante è sempre attivata.
+
+Nota: per visualizzare le informazioni su Gruppo di criteri risultante in un computer client, è possibile utilizzare lo snap-in RSoP in Microsoft Management Console (MMC).</string>
+      <string id="UserPolicyMode">Configura modalità di elaborazione loopback dei Criteri di gruppo utente</string>
+      <string id="UserPolicyMode_Help">Questa impostazione dei criteri specifica che l'insieme di oggetti Criteri di gruppo per il computer deve essere applicato a qualsiasi utente che accede a un computer interessato dall'impostazione. L'impostazione è destinata a computer con impieghi speciali, ad esempio quelli utilizzati in luoghi pubblici, laboratori o aule scolastiche in cui è necessario modificare le impostazioni utente in base al computer utilizzato.
+
+Per impostazione predefinita, gli oggetti Criteri di gruppo dell'utente determinano le impostazioni utente valide. Se si abilita questa impostazione, quindi, quando un utente accede a questo computer, gli oggetti Criteri di gruppo determineranno il set di oggetti Criteri di gruppo applicabile.
+
+Se si abilita questa impostazione, è possibile selezionare una delle modalità seguenti nella casella Modalità:
+
+"Sostituisci" indica che le impostazioni utente definite negli oggetti Criteri di gruppo del computer sostituiscono le impostazioni utente generalmente applicate all'utente.
+
+"Unisci" indica che le impostazioni utente definite negli oggetti Criteri di gruppo del computer e le impostazioni utente normalmente applicate all'utente vengono combinate. In caso di conflitto, le impostazioni utente degli oggetti Criteri di gruppo del computer avranno la precedenza sulle impostazioni normali dell'utente.
+
+Se si disabilita o non si configura questa impostazione, gli oggetti Criteri di gruppo dell'utente determineranno le impostazioni utente valide.
+
+Nota: l'impostazione è valida a condizione che l'account computer e l'account utente risiedano in domini almeno Windows 2000.</string>
+      <string id="UserPolicyMode_Merge">Unisci</string>
+      <string id="UserPolicyMode_Replace">Sostituisci</string>
+      <string id="CorpConnSyncWaitTime">Specifica tempo di attesa connessione area di lavoro per elaborazione criteri</string>
+      <string id="CorpConnSyncWaitTime_Help">Questa impostazione dei criteri specifica il tempo di attesa delle notifiche della disponibilità della connessione all'area di lavoro da parte di Criteri di gruppo durante l'elaborazione dei criteri di avvio. Se l'elaborazione dei criteri di avvio è sincrona, il computer verrà bloccato fino a quando la connessione all'area di lavoro non sarà disponibile o fino allo scadere del tempo di attesa. Se l'elaborazione dei criteri di avvio è asincrona, il computer non verrà bloccato e l'elaborazione dei criteri sarà eseguita in background. In entrambi i casi, la configurazione di questa impostazione dei criteri sostituisce tutti i tempi di attesa calcolati dal sistema.
+
+Se si abilita questa impostazione dei criteri, verrà utilizzato il tempo di attesa massimo configurato dall'amministratore per la connessione all'area di lavoro, che sostituirà qualsiasi tempo di attesa predefinito o calcolato dal sistema.
+
+Se si disabilita o non si configura questa impostazione dei criteri, nei computer che eseguono i sistemi operativi Windows successivi a Windows 7 configurati per la connessione all'area di lavoro verrà utilizzato il tempo di attesa predefinito di 60 secondi.</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Font_List">
+        <dropdownList refId="FontMitigation_DL" defaultItem="0" noSort="true">Opzioni di prevenzione</dropdownList>
+      </presentation>
+      <presentation id="ProcessMitigationOptions_List">
+        <listBox refId="ProcessMitigationOptionsList">Opzioni di mitigazione processo</listBox>
+      </presentation>
+      <presentation id="FontProvidersPolicy">
+        <dropdownList refId="FontProvidersOption" noSort="true" defaultItem="0">Per il Servizio cache tipi di carattere di Windows deve essere consentito il download dei tipi di carattere e dei dati del catalogo dei tipi di carattere dai provider di tipi di carattere online.</dropdownList>
+      </presentation>
+      <presentation id="SyncModeThreshold">
+        <decimalTextBox refId="SyncModeSlowLinkThreshold1" defaultValue="500">Valore collegamento lento: [campo numero] millisecondi</decimalTextBox>
+        <decimalTextBox refId="SyncModeNoDCThreshold1" defaultValue="5000">Valore timeout: [campo numero] millisecondi</decimalTextBox>
+      </presentation>
+      <presentation id="LogonScriptDelay">
+        <decimalTextBox refId="AsyncScriptDelay1" defaultValue="5">minuto:</decimalTextBox>
+      </presentation>
+      <presentation id="SyncWaitTime">
+        <decimalTextBox refId="SyncWaitTime_Minutes" defaultValue="120">Tempo di attesa (in secondi):</decimalTextBox>
+      </presentation>
+      <presentation id="CSE_AppMgmt">
+        <checkBox refId="CSE_SLOWLINK1">Consenti elaborazione attraverso una connessione di rete lenta</checkBox>
+        <checkBox refId="CSE_NOCHANGES1">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="CSE_DiskQuota">
+        <checkBox refId="CSE_SLOWLINK2">Consenti elaborazione attraverso una connessione di rete lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND2">Non applicare durante l'elaborazione periodica in background</checkBox>
+        <checkBox refId="CSE_NOCHANGES2">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="CSE_EFSRecovery">
+        <checkBox refId="CSE_SLOWLINK3">Consenti elaborazione attraverso una connessione di rete lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND3">Non applicare durante l'elaborazione periodica in background</checkBox>
+        <checkBox refId="CSE_NOCHANGES3">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="CSE_FolderRedirection">
+        <checkBox refId="CSE_SLOWLINK4">Consenti elaborazione attraverso una connessione di rete lenta</checkBox>
+        <checkBox refId="CSE_NOCHANGES4">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="CSE_IEM">
+        <checkBox refId="CSE_SLOWLINK5">Consenti elaborazione attraverso una connessione di rete lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND5">Non applicare durante l'elaborazione periodica in background</checkBox>
+        <checkBox refId="CSE_NOCHANGES5">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="CSE_IPSecurity">
+        <checkBox refId="CSE_SLOWLINK6">Consenti elaborazione attraverso una connessione di rete lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND6">Non applicare durante l'elaborazione periodica in background</checkBox>
+        <checkBox refId="CSE_NOCHANGES6">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="CSE_Registry">
+        <checkBox refId="CSE_NOBACKGROUND10">Non applicare durante l'elaborazione periodica in background</checkBox>
+        <checkBox refId="CSE_NOCHANGES10">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="CSE_Scripts">
+        <checkBox refId="CSE_SLOWLINK7">Consenti elaborazione attraverso una connessione di rete lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND7">Non applicare durante l'elaborazione periodica in background</checkBox>
+        <checkBox refId="CSE_NOCHANGES7">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="CSE_Security">
+        <checkBox refId="CSE_NOBACKGROUND11">Non applicare durante l'elaborazione periodica in background</checkBox>
+        <checkBox refId="CSE_NOCHANGES11">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="CSE_Wired">
+        <checkBox refId="CSE_SLOWLINK8">Consenti elaborazione attraverso una connessione di rete lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND8">Non applicare durante l'elaborazione periodica in background</checkBox>
+        <checkBox refId="CSE_NOCHANGES8">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="CSE_Wireless">
+        <checkBox refId="CSE_SLOWLINK9">Consenti elaborazione attraverso una connessione di rete lenta</checkBox>
+        <checkBox refId="CSE_NOBACKGROUND9">Non applicare durante l'elaborazione periodica in background</checkBox>
+        <checkBox refId="CSE_NOCHANGES9">Elabora anche se gli oggetti Criteri di gruppo non sono stati modificati</checkBox>
+      </presentation>
+      <presentation id="GPDCOptions">
+        <dropdownList refId="GPDCOptionsDesc" noSort="true" defaultItem="0">Se Editor oggetti Criteri di gruppo sta selezionando un controller di dominio da utilizzare, è necessario che vengano eseguite le operazioni seguenti:</dropdownList>
+      </presentation>
+      <presentation id="GPTransferRate_1">
+        <decimalTextBox refId="TransferRateOp1" defaultValue="500" spinStep="100">Velocità di connessione (Kbps):</decimalTextBox>
+        <text> </text>
+        <text>Immettere 0 per disabilitare il rilevamento dei collegamenti lenti.</text>
+      </presentation>
+      <presentation id="GPTransferRate_2">
+        <decimalTextBox refId="TransferRateOp2" defaultValue="500" spinStep="100">Velocità di connessione (Kbps):</decimalTextBox>
+        <text> </text>
+        <text>Immettere 0 per disabilitare il rilevamento dei collegamenti lenti.</text>
+        <checkBox refId="CSE_3G_DEFAULT_TO_SLOWLINK_COMPUTER">Considera sempre connessioni WWAN come collegamenti lenti</checkBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRate">
+        <text>Questa impostazione consente di personalizzare la frequenza con cui i Criteri di gruppo vengono applicati</text>
+        <text>ai computer. L'intervallo è compreso tra 0 e 44640 minuti (31 giorni).</text>
+        <decimalTextBox refId="GPRefreshRate1" defaultValue="90">Minuti:</decimalTextBox>
+        <text> </text>
+        <text>Questo è un periodo di tempo casuale aggiunto all'intervallo di aggiornamento per evitare che</text>
+        <text>tutti i client richiedano i Criteri di gruppo contemporaneamente.</text>
+        <text>L'intervallo è compreso tra 0 e 1.440 minuti (24 ore)</text>
+        <decimalTextBox refId="GPRefreshRateOffset1" defaultValue="30">Minuti:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateDC">
+        <text>Questa impostazione consente di personalizzare la frequenza con cui i Criteri di gruppo vengono applicati</text>
+        <text>ai controller di dominio. L'intervallo è compreso tra 0 e 44640 minuti (31 giorni).</text>
+        <decimalTextBox refId="GPRefreshRate2" defaultValue="5">Minuti:</decimalTextBox>
+        <text> </text>
+        <text>Questo è un periodo di tempo casuale aggiunto all'intervallo di aggiornamento per evitare che</text>
+        <text>tutti i client richiedano i Criteri di gruppo contemporaneamente.</text>
+        <text>L'intervallo è compreso tra 0 e 1.440 minuti (24 ore)</text>
+        <decimalTextBox refId="GPRefreshRateOffset2" defaultValue="0">Minuti:</decimalTextBox>
+      </presentation>
+      <presentation id="GroupPolicyRefreshRateUser">
+        <text>Questa impostazione consente di personalizzare la frequenza con cui i Criteri di gruppo vengono applicati</text>
+        <text>agli utenti. L'intervallo è compreso tra 0 e 44640 minuti (31 giorni).</text>
+        <decimalTextBox refId="GPRefreshRate3" defaultValue="90">Minuti:</decimalTextBox>
+        <text> </text>
+        <text>Questo è un periodo di tempo casuale aggiunto all'intervallo di aggiornamento per evitare che</text>
+        <text>tutti i client richiedano i Criteri di gruppo contemporaneamente.</text>
+        <text>L'intervallo è compreso tra 0 e 1.440 minuti (24 ore)</text>
+        <decimalTextBox refId="GPRefreshRateOffset3" defaultValue="30">Minuti:</decimalTextBox>
+      </presentation>
+      <presentation id="NewGPODisplayName">
+        <textBox refId="NewGPODisplayNameHeading">
+          <label>Nome oggetto Criteri di gruppo:</label>
+        </textBox>
+      </presentation>
+      <presentation id="UserPolicyMode">
+        <dropdownList refId="UserPolicyModeOp" noSort="true" defaultItem="1">Modalità:</dropdownList>
+      </presentation>
+      <presentation id="CorpConnSyncWaitTime">
+        <decimalTextBox refId="CorpConnSyncWaitTime_Seconds" defaultValue="60">Tempo di attesa (in secondi):</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

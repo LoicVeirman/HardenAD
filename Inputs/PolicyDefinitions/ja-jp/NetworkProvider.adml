@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (c) Microsoft Corporation. All rights reserved. -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>ネットワーク プロバイダー</displayName>
+  <description>Multiple UNC Provider のポリシー定義</description>
+  <resources>
+    <stringTable>
+      <string id="Cat_NetworkProvider">ネットワーク プロバイダー</string>
+      <string id="Pol_HardenedPaths">強化された UNC パス</string>
+      <string id="Pol_HardenedPaths_Explain">このポリシー設定は、UNC パスへのセキュリティで保護されたアクセスを構成します。
+
+このポリシーを有効にすると、追加のセキュリティ要件を満たした場合に、指定した UNC パスへのアクセスのみが許可されます。
+</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="Pol_HardenedPaths">
+        <text>強化されたネットワーク パスを指定します。
+名前フィールドには、各ネットワーク リソースの完全修飾された UNC パスを入力します。
+サーバー名に関係なく特定の名前の共有へのすべてのアクセスをセキュリティで保護するには、サーバー名として '*' (アスタリスク) を指定します。例: "\\*\NETLOGON"。
+サーバー上でホストされているすべての共有への全アクセスをセキュリティで保護する場合は、UNC パスの共有名部分を省略できます。例: "\\SERVER"。
+
+値フィールドには、次の 1 つ以上のオプションを指定します (複数のオプションを指定する場合は、オプションをカンマで区切ります)。
+    'RequireMutualAuthentication=1': クライアントが適切なサーバーに接続できるようにするために、クライアントとサーバーの間の相互認証が必要です。
+    'RequireIntegrity=1': データの改ざんを防止するために、クライアントとサーバーの間の通信に整合性メカニズムを組み込む必要があります。
+    'RequirePrivacy=1': 重要なデータを第三者が見ることができないようにするために、クライアントとサーバーの間の通信を暗号化する必要があります。</text>
+        <listBox refId="Pol_HardenedPaths">強化された UNC パス:</listBox>
+        <text> </text>
+        <text>実行可能プログラム、スクリプト ファイル、またはセキュリティ ポリシーを制御するファイルをホストするすべての UNC パスで整合性と相互認証を必須にする必要があります。
+
+パフォーマンスを最適化するには、整合性またはプライバシーの保護を必要としないファイルを、このようなセキュリティが必ず必要となるファイルとは別の共有でホストすることを検討してください。
+
+特定の UNC パスにアクセスするときに追加のセキュリティを必要とするように Windows コンピューターを構成する方法の詳細については、http://support.microsoft.com/kb/3000483 を参照してください。</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

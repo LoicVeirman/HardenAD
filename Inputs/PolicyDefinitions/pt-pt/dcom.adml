@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>introduzir o nome a apresentar aqui</displayName>
+  <description>introduzir a descrição aqui</description>
+  <resources>
+    <stringTable>
+      <string id="DCOM">COM Distribuído</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList">Permitir exceções para a verificação de segurança de ativação local</string>
+      <string id="DCOMActivationSecurityCheckAllowLocalList_Explain">Permite especificar que os administradores de computadores locais podem complementar a lista "Definir exceções para a Verificação de Segurança de Ativação".
+
+Se ativar esta definição de política e o DCOM não localizar uma entrada explícita para um ID de aplicação (AppID) de servidor DCOM na política "Definir exceções para a Verificação de Segurança de Ativação" (se ativada), o DCOM irá procurar uma entrada na lista configurada localmente.
+
+Se desativar esta definição de política, o DCOM não irá procurar na lista de exceções para a verificação de segurança de ativação DCOM configurada localmente.
+
+Se não configurar esta definição de política, o DCOM irá procurar apenas na lista de exceções configurada localmente, se a política "Definir exceções para a Verificação de Segurança de Ativação" não estiver configurada.
+</string>
+      <string id="DCOMActivationSecurityCheckExemptionList">Definir exceções para a Verificação de Segurança de Ativação</string>
+      <string id="DCOMActivationSecurityCheckExemptionList_Explain">Permite ver e alterar uma lista de IDs de aplicação (AppIDs) de servidor DCOM que estão excluídos da Verificação de segurança de ativação DCOM. O DCOM utiliza estas duas listas, uma configurada através da Política de Grupo por intermédio desta definição de política e a outra através das ações dos administradores de computadores locais. O DCOM ignora a segunda lista quando esta definição de política está configurada, a não ser que a política "Permitir exceções para a verificação de segurança de ativação local" esteja ativada.
+
+Os AppIDs de servidor DCOM adicionados a esta política têm de ser listados no formato de chavetas. Por exemplo: {b5dcb061-cefb-42e0-a1be-e6a6438133fe}. Se introduzir um AppID não existente ou formatado incorretamente, o DCOM irá adicioná-lo à lista sem verificar se existem erros.
+
+Se ativar esta definição de política, pode ver e alterar a lista de exceções para a verificação de segurança de ativação DCOM configurada pelas definições de Política de Grupo. Se adicionar um AppID a esta lista e definir o respetivo valor como 1, o DCOM não irá impor a Verificação de segurança de ativação para esse servidor DCOM. Se adicionar um AppID a esta lista e definir o respetivo valor como 0, o DCOM irá impor sempre a Verificação de segurança de ativação para esse servidor DCOM, independentemente das definições locais.
+
+Se desativar esta definição de política, a lista de exceções de AppID definida pela Política de Grupo é eliminada, sendo utilizada a lista definida pelos administradores de computadores locais.
+
+Se não configurar esta definição de política, é utilizada a lista de exceções de AppID definida pelos administradores de computadores locais.
+
+Notas:
+
+A Verificação de segurança de ativação DCOM é efetuada após o início de um processo do servidor DCOM, mas antes de um pedido de ativação de objeto ser enviado para o processo do servidor. Esta verificação de acesso é efetuada relativamente ao descritor de segurança de permissão de início personalizado do servidor DCOM, se existir, ou relativamente às predefinições configuradas.
+
+Se a permissão de início personalizado do servidor DCOM contiver entradas NEGAR explícitas, isto pode significar que as ativações de objetos, que anteriormente eram efetuadas com êxito para os utilizadores especificados, assim que o processo do servidor DCOM estivesse ativo e em execução, agora poderão vir a falhar. A ação indicada nesta situação é reconfigurar as definições de permissão de início personalizado do servidor DCOM para as definições de segurança corretas, mas esta definição de política pode ser utilizada a curto prazo como uma ajuda na implementação da compatibilidade entre aplicações.
+
+Os servidores DCOM adicionados a esta lista de exceções só são excluídos se as respetivas permissões de início personalizado não contiverem entradas de concessão ou negação de LocalLaunch, RemoteLaunch, LocalActivate ou RemoteActivate específicas para quaisquer utilizadores ou grupos. Note também que as exceções para AppIDs de Servidor DCOM adicionadas a esta lista serão aplicáveis às versões de 32 bits e 64 bits do servidor, se existirem.</string>
+      <string id="DCOMAppCompatPolicies">Definições de Compatibilidade entre Aplicações</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="DCOMActivationSecurityCheckExemptionList">
+        <text>Introduza AppIDs de servidor DCOM a par com um valor de ação listado abaixo.</text>
+        <text>O AppID deve incluir as chavetas de abertura e de fecho.</text>
+        <text> </text>
+        <listBox refId="DCOM_Lbl_ActSecCheckExemptionList">Adicionar\remover servidores DCOM da lista de exceções: </listBox>
+        <text> </text>
+        <text>Valores:</text>
+        <text>0 = O AppID especificado não está excluído da Verificação de segurança de ativação</text>
+        <text>1 = O AppID especificado está excluído da Verificação de segurança de ativação</text>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>

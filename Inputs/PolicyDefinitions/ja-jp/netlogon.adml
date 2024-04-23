@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitionResources xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <displayName>表示名をここに入力する</displayName>
+  <description>説明をここに入力する</description>
+  <resources>
+    <stringTable>
+      <string id="Netlogon">Net Logon</string>
+      <string id="Netlogon_AllowSingleLabelDnsDomain">NetBIOS 名前解決の代わりに単一ラベル ドメイン名の DNS 名前解決を使用して DC を検出する</string>
+      <string id="Netlogon_AllowSingleLabelDnsDomain_Help">このポリシー設定では、この設定の適用先のコンピューターで単一ラベル ドメイン名の DNS 名前解決を実行するかどうかを指定します。
+
+既定では、AllowDnsSuffixSearch に指定された動作が使用されます。AllowDnsSuffixSearch ポリシーを無効にした場合、単一ラベル名で指定されている Active Directory ドメインをホストしているドメイン コントローラーを検出するために、NetBIOS 名前解決が排他的に使用されます。
+
+このポリシー設定を有効にした場合、このポリシーの適用先であるコンピューターは、単一ラベル名で指定されている Active Directory ドメインをホストしているドメイン コントローラーを DNS 名前解決を使用して検出しようとします。
+
+このポリシー設定を無効にすると、この設定の適用先であるコンピューターは、単一ラベル名で指定されている Active Directory ドメインをホストしているドメイン コントローラーを検出するために、AllowDnsSuffixSearch ポリシー (無効でない場合) を使用するか、それ以外の場合は NetBIOS 名前解決を実行します。このコンピューターが参加している Active Directory フォレストにある単一ラベル DNS 名を持つドメインをこのコンピューターで検索していない限り、DNS 名前解決は使用されません。
+
+このポリシー設定を構成しない場合、設定はどのコンピューターにも適用されず、コンピューターではローカルの構成が使用されます。</string>
+      <string id="Netlogon_AllowDnsSuffixSearch">AllowSingleLabelDnsDomain 設定が有効でない場合、単一ラベル名ドメイン名が使用されているときは、別の登録済み DNS サフィックスを付加して DNS 名前解決を使用します。</string>
+      <string id="Netlogon_AllowDnsSuffixSearch_Help">このポリシー設定は、この設定の適用先であるコンピューターが別の登録済み DNS サフィックスを付加して単一ラベル ドメイン名の DNS 名前解決を試行したうえで、DNS 名前解決が失敗した場合にのみ NetBIOS 名前解決を使用するかどうかを指定します。AllowSingleLabelDnsDomain ポリシー設定が有効な場合、指定された既定の動作を含むこのポリシーは使用されません。
+
+AllowSingleLabelDnsDomain ポリシー設定が有効な場合を除き、既定では、このポリシーに対して設定が指定されていない場合の動作はこのポリシーを明示的に有効にした場合と同じになります。
+
+AllowSingleLabelDnsDomain ポリシーが有効でないときにこのポリシー設定を有効にすると、このポリシーの適用先であるコンピューターは、DNS 名前解決を実行するための別の登録済み DNS サフィックスを付加して、単一ラベル名で指定されている Active Directory ドメインをホストしているドメイン コントローラーを検出しようとします。単一ラベル DNS 名を Active Directory フォレストに持つドメインにコンピューターが参加していない限り、DNS サフィックスが付加されない単一ラベル名は使用されません。NetBIOS 名前解決は、DNS 名前解決が失敗した場合に単一ラベル名に対してのみ実行されます。
+
+AllowSingleLabelDnsDomain ポリシーが有効でないときにこのポリシー設定を無効にした場合、このポリシーの適用先であるコンピューターは、単一ラベル名で指定されている Active Directory ドメインをホストしているドメイン コントローラーを NetBIOS 名前解決だけを使用して検出しようとします。コンピューターが検索している対象が、Active Directory フォレスト内でこのコンピューターが参加している単一ラベル DNS 名を持つドメインである場合を除き、DNS 名前解決は使用されません。
+
+</string>
+      <string id="Netlogon_AutoSiteCoverage">DC ロケーター DNS SRV レコードによる自動サイト カバレージを使用する</string>
+      <string id="Netlogon_AutoSiteCoverage_Help">このポリシー設定では、ドメイン コントローラー (DC) が、同じドメイン用の DC が存在しない場合 (または同じフォレスト用のグローバル カタログが存在しない場合) に、DC ロケーター サイト専用の SRV レコードを動的に登録するかどうかを決定します。これらの DNS レコードは Net Logon サービスによって動的に登録され、これらのレコードを使って DC が検索されます。
+
+このポリシー設定を有効にした場合、この設定の適用先である DC は DC ロケーター サイト専用の DNS SRV レコードを、同じドメインのための DC または同じフォレストのためのグローバル カタログが存在しないサイトで一番近いサイトに動的に登録します。
+
+このポリシー設定を無効にした場合、DC は自らのサイトのみのためにサイト専用 DC ロケーター DNS SRV レコードを登録します。
+
+このポリシー設定を構成しない場合、設定はどの DC にも適用されず、DC ではローカルの構成が使用されます。</string>
+      <string id="Netlogon_AvoidPdcOnWan">ログオン エラーが発生したら PDC に連絡する</string>
+      <string id="Netlogon_AvoidPdcOnWan_Help">このポリシー設定では、ドメイン コントローラー (DC) がパスワードを検証できなかった場合に、DC でクライアントが提示したパスワードを PDC エミュレーターと照らし合わせて検証するかどうかを定義します。
+
+クライアントのパスワードが最近変更され、まだ DC に伝達されていない場合に、PDC エミュレーターは便利です。PDC エミュレーターで低速 WAN 接続を使用する場合は、この機能を無効にすることをお勧めします。
+
+このポリシー設定を有効にした場合、このポリシー設定が適用される DC でパスワードの検証に失敗すると、パスワードは PDC エミュレーターと照らし合わせて検証されます。
+
+このポリシー設定を無効にした場合、パスワードは PDC エミュレーターと照らし合わせて検証されません。
+
+このポリシー設定を構成しない場合、設定はどの DC にも適用されません。</string>
+      <string id="Netlogon_BackgroundRetryInitialPeriod">バックグラウンド呼び出しの、DC 発見の試行開始を使用する</string>
+      <string id="Netlogon_BackgroundRetryInitialPeriod_Help">このポリシー設定では、ドメイン コントローラー (DC) を定期的に検索しているアプリケーションが DC を見つけることができない場合の再試行までの経過時間 (秒) を設定します。
+
+この設定の既定値は 10 分 (10*60) です。この設定の最大値は 49 日です (0x49*24*60*60=4233600)。この設定の最小値は 0 です。
+
+この設定は、DS_BACKGROUND_ONLY フラグを指定した DsGetDcName の呼び出しにのみ関係します。
+
+この設定の値が NegativeCachePeriod サブキーで指定された値未満の場合は、NegativeCachePeriod サブキーの値が使用されます。
+
+警告: この設定の値が大きすぎると、クライアントは最初に利用できなかった DC の検索を試行しません。この設定の値が非常に小さく、また DC が利用できない場合は、定期的な DC 検索によってトラフィックが過度に発生している可能性があります。</string>
+      <string id="Netlogon_BackgroundRetryMaximumPeriod">バックグラウンド呼び出しの、DC 発見の再試行間隔の最大値設定を使用する</string>
+      <string id="Netlogon_BackgroundRetryMaximumPeriod_Help">このポリシー設定では、ドメイン コントローラー (DC) を定期的に検索しているアプリケーションが DC を見つけられない場合に、再検索を行う間隔の最大値を指定します。
+
+たとえば、再試行間隔を 10 分、20 分、40 分に設定しても、間隔がこの設定で指定されている値に達すると、[DC 発見の試行時間] で設定されている時間になるまで、その値がその後のすべての再試行の間隔として使用されます。
+
+この設定の既定値は 60 分 (60*60) です。この設定の最大値は 49 日です (0x49*24*60*60=4233600)。この設定の最小値は 0 です。
+
+この設定の値が [DC 発見の試行開始] 設定で指定された値未満の場合は、[DC 発見の試行開始] の値が使用されます。
+
+警告: この設定の値が大きすぎると、クライアントが DC を探すまでに時間がかかる可能性があります。
+
+この設定の値が小さすぎ、また DC が利用できない場合は、頻繁に再試行するとネットワークのトラフィックを過度に増やすことになります。</string>
+      <string id="Netlogon_BackgroundRetryQuitTime">バックグラウンド呼び出しの、DC 発見の試行時間設定を使用する</string>
+      <string id="Netlogon_BackgroundRetryQuitTime_Help">このポリシー設定では、ドメイン コントローラー (DC) を定期的に検索しているアプリケーションが DC を見つけられない場合にいつまで検索を再試行するかを決定します。たとえば、[DC 発見の再試行間隔の最大値設定を使用する] ポリシー設定に基づいて発見が試行されている場合でも、このポリシー設定で指定されている値に達すると、発見は中止されます。このポリシー設定の値が [DC 発見の再試行間隔の最大値設定を使用する] ポリシー設定の値未満の場合は、[DC 発見の再試行間隔の最大値設定を使用する] の値が使用されます。
+
+この設定の既定値は、試行を中止しない (0) です。この設定の最大値は 49 日です (0x49*24*60*60=4233600)。この設定の最小値は 0 です。
+
+警告: この設定の値が小さすぎる場合、クライアントでは DC の検索が十分でないうちに打ち切られます。</string>
+      <string id="Netlogon_BackgroundSuccessfulRefreshPeriod">バックグラウンド呼び出しの、ポジティブ定期 DC キャッシュ更新を使用する</string>
+      <string id="Netlogon_BackgroundSuccessfulRefreshPeriod_Help">このポリシー設定は、正常な DC キャッシュ エントリの更新のタイミングを決定します。このポリシー設定は、DC の発見を定期的に試行する呼び出しプログラムに適用され、DC 情報を呼び出しプログラムに返す前に適用されます。この設定の既定値は、無限 (4294967200) です。この設定の最大値は (4294967200) ですが、無制限にならないための最大値は 49 日 (49*24*60*60=4233600) です。49 日を超える値は無制限として処理されます。この設定の最小値は、常に更新する (0) です。</string>
+      <string id="Netlogon_DC_Locator_DNS_Records">DC ロケーター DNS レコード</string>
+      <string id="Netlogon_DebugFlag">ログ ファイルのデバッグ出力レベルを指定する</string>
+      <string id="Netlogon_DebugFlag_Help">このポリシー設定では、Net Logon サービスのデバッグ出力のレベルを指定します。
+
+Net Logon サービスにより、デバッグ情報がディレクトリ %windir%\debug のログ ファイル netlogon.log に出力されます。既定では、デバッグ情報はログに記録されません。
+
+このポリシー設定を有効にして 0 以外の値を指定すると、デバッグ情報がファイルにログとして記録されます。 高い値を指定するとさらに詳細なログになります。通常、最適な設定としては 536936447 の値が使用されます。
+
+このポリシー設定に 0 を指定した場合は、既定の動作が実行されます。
+
+このポリシー設定を無効にした場合、または構成しなかった場合も、既定の動作が実行されます。</string>
+      <string id="Netlogon_DnsAvoidRegisterRecords">DC によって登録されない DC ロケーター DNS レコードを指定する</string>
+      <string id="Netlogon_DnsAvoidRegisterRecords_Help">このポリシー設定では、Netlogon サービスによって登録されない DC ロケーター DNS レコードを設定します。
+
+このポリシー設定を有効にする場合は、[有効] をクリックし、この設定が適用される DC によって登録されない DC ロケーター DNS レコードのスペース区切りのニーモニック (指示) の一覧を指定します。
+
+次の一覧からニーモニックを選択してください。
+
+ニーモニック         種類  DNS レコード
+
+LdapIpAddress    A     &lt;DnsDomainName&gt;
+Ldap             SRV   _ldap._tcp.&lt;DnsDomainName&gt;
+LdapAtSite       SRV   _ldap._tcp.&lt;SiteName&gt;._sites.&lt;DnsDomainName&gt;
+Pdc              SRV   _ldap._tcp.pdc._msdcs.&lt;DnsDomainName&gt;
+Gc               SRV   _ldap._tcp.gc._msdcs.&lt;DnsForestName&gt;
+GcAtSite         SRV   _ldap._tcp.&lt;SiteName&gt;._sites.gc._msdcs.&lt;DnsForestName&gt;
+DcByGuid         SRV   _ldap._tcp.&lt;DomainGuid&gt;.domains._msdcs.&lt;DnsForestName&gt;
+GcIpAddress      A     gc._msdcs.&lt;DnsForestName&gt;
+DsaCname         CNAME &lt;DsaGuid&gt;._msdcs.&lt;DnsForestName&gt;
+Kdc              SRV   _kerberos._tcp.dc._msdcs.&lt;DnsDomainName&gt;
+KdcAtSite        SRV   _kerberos._tcp.&lt;SiteName&gt;._sites.dc._msdcs.&lt;DnsDomainName&gt;
+Dc               SRV   _ldap._tcp.dc._msdcs.&lt;DnsDomainName&gt;
+DcAtSite         SRV   _ldap._tcp.&lt;SiteName&gt;._sites.dc._msdcs.&lt;DnsDomainName&gt;
+Rfc1510Kdc       SRV   _kerberos._tcp.&lt;DnsDomainName&gt;
+Rfc1510KdcAtSite SRV   _kerberos._tcp.&lt;SiteName&gt;._sites.&lt;DnsDomainName&gt;
+GenericGc        SRV   _gc._tcp.&lt;DnsForestName&gt;
+GenericGcAtSite  SRV   _gc._tcp.&lt;SiteName&gt;._sites.&lt;DnsForestName&gt;
+Rfc1510UdpKdc    SRV   _kerberos._udp.&lt;DnsDomainName&gt;
+Rfc1510Kpwd      SRV   _kpasswd._tcp.&lt;DnsDomainName&gt;
+Rfc1510UdpKpwd   SRV   _kpasswd._udp.&lt;DnsDomainName&gt;
+
+このポリシー設定を無効にした場合、DC ロケーター DNS レコードの動的な登録を実行するように構成された DC では、すべての DC ロケーター DNS リソース レコードが登録されます。
+
+このポリシー設定を構成しない場合、DC ではローカルの構成が使用されます。</string>
+      <string id="Netlogon_DnsRefreshInterval">DC ロケーター DNS レコードの更新間隔を指定する</string>
+      <string id="Netlogon_DnsRefreshInterval_Help">このポリシー設定では、この設定が適用される DC の DC ロケーター DNS リソース レコードの更新間隔を指定します。これらの DNS レコードは Net Logon サービスによって動的に登録され、DC ロケーター アルゴリズムはこれらのレコードを使って DC を検索します。この設定は動的な更新を使用している DC のみに適用されます。
+
+DC ロケーター DNS リソース レコードを動的に登録するように構成されている DC では、データが変更されていない場合でもレコードが定期的に DNS サーバーに登録されます。権限のある DNS サーバーが古いレコードの清掃を実行するように構成されている場合、古いレコードを自動的に削除 (清掃) するように構成されている DNS サーバーに、これらのレコードが最新であり、データベースに保管する必要があることを知らせるために、この登録が必要です。
+
+警告: DNS リソース レコードが、清掃が有効になっているゾーンに登録されている場合、この設定の値はこれらのゾーン用に構成されている更新間隔よりも長い値に指定しないでください。DC ロケーター DNS レコードの更新間隔を DNS ゾーンの更新間隔よりも長い値に設定すると、DNS リソース レコードが削除される可能性があります。
+
+DC レコードの更新間隔を指定するには、[有効] をクリックし、1800 を超える値を入力します。この値には、DC レコードの更新間隔を秒単位で指定します (例: 3600 の値は 60 分を表します)。
+
+このポリシー設定を構成しない場合、設定はどの DC にも適用されず、DC ではローカルの構成が使用されます。</string>
+      <string id="Netlogon_DnsTtl">DC ロケーター DNS レコードの TTL を設定する</string>
+      <string id="Netlogon_DnsTtl_Help">このポリシー設定では、Net Logon サービスで登録されている SRV リソース レコードの Time-To-Live (TTL) フィールドの値を指定します。これらの DNS レコードは動的に登録され、ドメイン コントローラー (DC) の検索に使用されます。
+
+DC ロケーター DNS レコードの TTL を指定するには、[有効] をクリックしてから値を秒単位 (例: 900 は 15 分) で入力します。
+
+このポリシー設定を構成しない場合、設定はどの DC にも適用されず、DC ではローカルの構成が使用されます。</string>
+      <string id="Netlogon_ExpectedDialupDelay">ログオン時に予期されているダイヤルアップの遅延を指定する</string>
+      <string id="Netlogon_ExpectedDialupDelay_Help">このポリシー設定では、ネットワークへのログオン時に、ドメイン コントローラー (DC) の応答を待機する追加時間を指定します。
+
+ログオン時に予期されるダイヤルアップの遅延を指定するには、[有効] をクリックし、必要な値を秒単位で入力します (たとえば、値 "60" は 1 分です)。
+
+このポリシー設定を構成しない場合、設定はどのコンピューターにも適用されず、コンピューターのローカルの構成が使用されます。</string>
+      <string id="Netlogon_GcSiteCoverage">GC ロケーター DNS SRV レコードでカバーされるサイトを指定する</string>
+      <string id="Netlogon_GcSiteCoverage_Help">このポリシー設定では、グローバル カタログ (GC) でサイト専用 GC ロケーター DNS SRV リソース レコードを登録する対象となるサイトを指定します。GC が常駐するサイトで登録されているサイト専用 SRV レコード、および最も近い GC がないサイトで GC ロケーター DNS SRV レコードを登録するように構成されている GC によって登録されたレコードに加えて、これらのレコードが登録されます。
+
+GC ロケーター DNS レコードとサイト専用 SRV レコードは Net Logon サービスによって動的に登録され、GC の発見に使用されます。Active Directory サイトとは、管理者に Active Directory アクセスとレプリケーションの構成を許可する、1 つまたは複数の正しく接続された TCP/IP サブネットです。GC は、Active Directory のすべてのドメインの部分的なレプリカを含むドメイン コントローラーです。
+
+GC ロケーター DNS SRV レコードでカバーされるサイトを指定するには、[有効] をクリックしてからサイト名をスペース区切り形式で入力します。
+
+このポリシー設定を構成しない場合、設定はどの GC にも適用されず、GC ではローカルの構成が使用されます。</string>
+      <string id="Netlogon_LdapSrvPriority">DC ロケーター DNS SRV レコードの優先順位を設定する</string>
+      <string id="Netlogon_LdapSrvPriority_Help">このポリシー設定では、この設定が適用されるドメイン コントローラー (DC) によって登録される SRV リソース レコードの "優先順位" フィールドを指定します。これらの DNS レコードは Net Logon サービスによって動的に登録され、これらのレコードを使って DC が検索されます。
+
+SRV レコードの "優先順位" フィールドは、ターゲット ホスト (SRV レコードの "ターゲット" フィールドに指定) の基本設定を行います。SRV リソース レコードを照会している DNS クライアントは、優先順位が一番低いホストの中で最初に到達できるホストにアクセスしようとします。
+
+DC ロケーター DNS SRV リソース レコードの優先順位を指定するには、[有効] をクリックしてから値を入力してください。値の範囲は 0 から 65535 です。
+
+このポリシー設定を構成しない場合、設定はどの DC にも適用されず、DC ではローカルの構成が使用されます。</string>
+      <string id="Netlogon_LdapSrvWeight">DC ロケーター DNS SRV レコードの重さを設定する</string>
+      <string id="Netlogon_LdapSrvWeight_Help">このポリシー設定では、この設定が適用されるドメイン コントローラー (DC) によって登録される SRV リソース レコードの "重さ" フィールドを指定します。これらの DNS レコードは Net Logon サービスによって動的に登録され、これらのレコードを使って DC が検索されます。
+
+SRV レコードの "ターゲット" フィールドに複数のサーバーが指定され、その優先順位が同一に設定されている場合、"優先順位" の値に加え、SRV レコードの "重さ" フィールドを使って負荷分散メカニズムを提供できます。DNS クライアントがアクセスするターゲット ホストを無作為に選択する可能性は SRV レコードの "重さ" フィールドに比例します。
+
+DC ロケーター DNS SRV レコードの重さを指定するには、[有効] をクリックしてから値を入力します。値の範囲は 0 から 65535 です。
+
+このポリシー設定を構成しない場合、設定はどの DC にも適用されず、DC ではローカルの構成が使用されます。</string>
+      <string id="Netlogon_MaximumLogFileSize">ログ ファイルの最大サイズを指定する</string>
+      <string id="Netlogon_MaximumLogFileSize_Help">このポリシー設定は、ログが有効なときに、ディレクトリ %windir%\debug のログ ファイル netlogon.log の最大サイズをバイト数で指定します。
+
+既定では、ログ ファイルの最大サイズは 20 MB です。このポリシー設定を有効にした場合、ログ ファイルの最大サイズは指定のサイズに設定されます。 このサイズに達すると、ログ ファイルは netlogon.bak に保存され、netlogon.log は切り捨てられます。利用可能な記憶域を基にした妥当な値を指定してください。
+
+このポリシー設定を無効にした場合、または構成しなかった場合は、既定の動作が実行されます。</string>
+      <string id="Netlogon_NdncSiteCoverage">アプリケーション ディレクトリ パーティション DC ロケーター DNS SRV レコードでカバーされるサイトを指定する</string>
+      <string id="Netlogon_NdncSiteCoverage_Help">このポリシー設定では、アプリケーション ディレクトリ パーティションをホストするドメイン コントローラー (DC) で、サイト専用、アプリケーション ディレクトリ パーティション専用 DC ロケーター DNS SRV リソース レコードを登録する対象となるサイトを指定します。DC が常駐するサイトで登録されているサイト専用 SRV レコード、および最も近い DC がないサイトで DC ロケーター DNS SRV レコードを登録するように構成されている DC によって登録されたレコードに加えてこれらのレコードが登録されます。
+
+アプリケーション ディレクトリ パーティション DC ロケーター DNS レコードとサイト専用 SRV レコードは Net Logon サービスによって動的に登録され、アプリケーション ディレクトリ パーティション専用 DC の検索に使用されます。Active Directory サイトとは、管理者に Active Directory アクセスとレプリケーションの構成を許可する、1 つまたは複数の正しく接続された TCP/IP サブネットです。
+
+DC ロケーター アプリケーション ディレクトリ パーティション専用 DNS SRV レコードでカバーされるサイトを指定するには、[有効] をクリックし、サイト名をスペース区切り形式で入力します。
+
+このポリシー設定を構成しない場合、設定はどの DC にも適用されず、DC ではローカルの構成が使用されます。</string>
+      <string id="Netlogon_NegativeCachePeriod">ネガティブ DC 発見キャッシュ設定を指定する</string>
+      <string id="Netlogon_NegativeCachePeriod_Help">このポリシー設定では、DC ロケーターで、ドメイン コントローラー (DC) がドメインに見つからないことを記憶する時間の長さを指定します (単位: 秒)。この設定で指定された時間内に DC の再検索が行われると、DC の発見を試みる前にすぐに操作は失敗します。
+
+この設定の既定値は 45 秒です。この設定の最大値は 7 (7*24*60*60) 日です。この設定の最小値は 0 です。
+
+警告: この設定の値が大きすぎると、クライアントは最初に利用できなかった DC の検索を試行しません。この設定の値が小さすぎると、クライアントは利用可能な DC がない場合でも DC の検索を試みます。</string>
+      <string id="Netlogon_NetlogonShareCompatibilityMode">Netlogon 共有の互換性を設定する</string>
+      <string id="Netlogon_NetlogonShareCompatibilityMode_Help">このポリシー設定では、ドメイン コントローラー (DC) 上で Net Logon サービスによって作成された Netlogon 共有が、以前のアプリケーションとセマンティクスを共有しているファイルで互換性をサポートするかどうかを制御します。
+
+このポリシー設定を有効にした場合、Netlogon 共有により、呼び出し側に読み取りアクセス許可しかない場合でも、共有上のファイルへの排他的読み取りアクセスの要求を受け入れるファイル共有セマンティクスが優先されます。
+
+このポリシー設定を無効にした場合、または構成しない場合、排他的アクセスが要求されて呼び出し側に読み取りアクセス許可しかないときは、Netlogon 共有により、共有上のファイルへの共有読み取りアクセスが与えられるようになります。
+
+既定では、排他的アクセスが要求されたとき、Netlogon 共有により共有上のファイルへの共有読み取りアクセスが与えられます。
+
+注: Netlogon 共有は、ドメインのクライアント コンピューターで使用する、Net Logon サービスによって作成された共有です。Netlogon 共有の既定の動作では、Netlogon 共有上のファイルへの読み取りアクセス許可しかないアプリケーションは、排他的読み取りアクセスを要求してファイルをロックすることはできません。ファイルがロックされると、グループ ポリシーの設定がドメインのクライアントで更新されない可能性があります。この設定が有効な場合、Netlogon 共有上でファイルをロックできる機能に依存している読み取りアクセス許可しかないアプリケーションは、グループ ポリシー クライアントによるファイルの読み取りを拒否できるようになります。また、一般的にはドメイン上の Netlogon 共有の可用性が低くなります。
+
+このポリシー設定を有効にした場合、ドメイン管理者は、ドメインで排他的読み取り機能を使用しているアプリケーションが、管理者に承認されたアプリケーションだけであることを確認する必要があります。</string>
+      <string id="Netlogon_NonBackgroundSuccessfulRefreshPeriod">非バックグラウンド呼び出しの、ポジティブ定期 DC キャッシュ更新を指定する</string>
+      <string id="Netlogon_NonBackgroundSuccessfulRefreshPeriod_Help">このポリシー設定は、正常な DC キャッシュ エントリの更新のタイミングを決定します。このポリシー設定は、DC の検索を定期的に試行しない呼び出しプログラムに適用され、DC 情報を呼び出しプログラムに返す前に適用されます。このポリシー設定は、DS_BACKGROUND_ONLY フラグを指定していない DsGetDcName の呼び出しにのみ関係します。
+
+この設定の既定値は 30 分 (1800) です。この設定の最大値は (4294967200) ですが、無制限にならないための最大値は 49 日 (49*24*60*60=4233600) です。49 日を超える値は無制限として処理されます。この設定の最小値は、常に更新する (0) です。</string>
+      <string id="Netlogon_ScavengeInterval">清掃の間隔を設定する</string>
+      <string id="Netlogon_ScavengeInterval_Help">このポリシー設定では、Netlogon で以下の清掃操作を行う間隔を決定します。
+
+- セキュリティで保護されたチャネル上のパスワードの修正が必要かどうかを確認し、必要であれば修正します。
+
+- ドメイン コントローラー (DC) 上で、発見されていない DC を発見します。
+
+- PDC 上で、&lt;DomainName&gt;[1B] NetBIOS 名を追加します (正しく追加されていない場合)。
+
+これらの操作はどれも重要ではありません。特殊な場合を除いて通常 15 分が適切です。たとえば、コストの高い回線 (ISDN など) によって DC が信頼されたドメインから分離された場合、このパラメーターを上向き調整して、信頼されたドメインにある DC の自動発見を頻繁に行わないようにできます。
+
+設定を有効にするには [有効] をクリックしてから間隔を秒単位で入力してください。</string>
+      <string id="Netlogon_SiteCoverage">DC ロケーター DNS SRV レコードでカバーされるサイトを指定する</string>
+      <string id="Netlogon_SiteCoverage_Help">このポリシー設定では、ドメイン コントローラー (DC) が、サイト専用 DC ロケーター DNS SRV リソース レコードを登録する対象となるサイトを指定します。DC が常駐するサイトで登録されているサイト専用 SRV レコード、および最も近い DC がないサイトで DC ロケーター DNS SRV レコードを登録するように構成されている DC によって登録されたレコードに加えてこれらのレコードが登録されます。
+
+DC ロケーター DNS レコードは Net Logon サービスによって動的に登録され、DC の発見に使用されます。Active Directory サイトとは、管理者に Active Directory アクセスとレプリケーションの構成を許可する、1 つまたは複数の正しく接続された TCP/IP サブネットです。
+
+DC ロケーター DNS SRV レコードでカバーされるサイトを指定するには、[有効] をクリックし、サイト名をスペース区切り形式で入力します。
+
+このポリシー設定を構成しない場合、設定はどの DC にも適用されず、DC ではローカルの構成が使用されます。</string>
+      <string id="Netlogon_SiteName">サイト名を指定する</string>
+      <string id="Netlogon_SiteName_Help">このポリシー設定では、コンピューターが所属する Active Directory サイトを指定します。
+
+Active Directory サイトとは、管理者に Active Directory アクセスとレプリケーションの構成を許可する、1 つまたは複数の正しく接続された TCP/IP サブネットです。
+
+この設定のサイト名を指定するには、[有効] をクリックし、サイトの名前を入力します。コンピューターの所属するサイトが指定されていない場合、コンピューターは Active Directory から自動的にサイトを発見します。
+
+このポリシー設定を構成しない場合、設定はどのコンピューターにも適用されず、コンピューターではローカルの構成が使用されます。</string>
+      <string id="Netlogon_SysvolShareCompatibilityMode">SYSVOL 共有の互換性を設定する</string>
+      <string id="Netlogon_SysvolShareCompatibilityMode_Help">このポリシー設定は、ドメイン コントローラー (DC) 上で Net Logon サービスによって作成された SYSVOL 共有が、以前のアプリケーションとセマンティクスを共有しているファイルで互換性をサポートするかどうかを制御します。
+
+この設定が有効な場合は、呼び出し側に読み取りアクセス許可しかない場合でも、SYSVOL 共有により、共有上のファイルに対する排他的読み取りアクセスの要求を受け入れるファイル共有セマンティクスが優先されます。
+
+この設定が無効な場合、または構成していない場合は、排他的アクセスが要求されて呼び出し側に読み取りアクセス許可しかないときは、SYSVOL 共有により、共有上のファイルに対する共有読み取りアクセスが与えられるようになります。
+
+既定では、排他的アクセスが要求されたとき、SYSVOL 共有により共有上のファイルへの共有読み取りアクセスが与えられます。
+
+注: SYSVOL 共有は、Net Logon サービスによって作成された、ドメインのグループ ポリシー クライアントで使用される共有です。SYSVOL 共有の既定の動作では、SYSVOL 共有上のファイルに対する読み取りアクセス許可しかないアプリケーションは、排他的読み取りアクセスを要求してファイルをロックすることはできません。ファイルがロックされると、グループ ポリシーの設定がドメインのクライアントで更新されなくなる可能性があります。この設定が有効な場合、SYSVOL 共有上でファイルをロックできる機能に依存している読み取りアクセス許可しかないアプリケーションは、グループ ポリシー クライアントによるファイルの読み取りを拒否できるようになります。また、一般的にはドメイン上の SYSVOL 共有の可用性が低くなります。
+
+このポリシー設定を有効にした場合、ドメイン管理者は、ドメインで排他的読み取り機能を使用しているアプリケーションが、管理者に承認されたアプリケーションだけであることを確認する必要があります。</string>
+      <string id="Netlogon_UseDynamicDns">DC ロケーター DNS レコードの動的登録を指定する</string>
+      <string id="Netlogon_UseDynamicDns_Help">このポリシー設定では、ドメイン コントローラー (DC) ロケーター DNS リソース レコードの動的登録を有効にするかどうかを設定します。これらの DNS レコードは Net Logon サービスによって動的に登録され、ロケーター アルゴリズムはこれらのレコードを使って DC を検索します。
+
+このポリシー設定を有効にした場合、この設定の適用先である DC は、動的 DNS 更新が有効なネットワーク接続を介して DC ロケーター DNS リソース レコードを動的に登録します。
+
+このポリシー設定を無効にした場合、DC は DC ロケーター DNS リソース レコードを登録しません。
+
+このポリシー設定を構成しない場合、設定はどの DC にも適用されず、DC ではローカルの構成が使用されます。</string>
+      <string id="Netlogon_TryNextClosestSite">次に最も近いサイトを試す</string>
+      <string id="Netlogon_TryNextClosestSite_Help">このポリシー設定を使用すると、DC ロケーターは同じサイトに DC が見つからなかった場合、サイト リンク コストに基づいて最も近いサイトの DC を探そうとします。複数のサイトがある場合、DC の検索中に次に最も近いサイトを探してみることにより、ネットワーク トラフィックが効率化します。
+
+DC ロケーター サービスは、クライアントが Active Directory ドメインのドメイン コントローラーを検索する場合に使用されます。既定では、DC ロケーターは同じサイトの DC を検索します。同じサイトに DC が見つからない場合は、数サイト離れた別のサイトの DC を検索し、DC ロケーターに返すことがあります。2 つのサイト間の距離は、サイト間のサイト リンク コスト合計で決定されます。サイト リンク コストが低いサイトは、サイト リンク コストが高いサイトよりも近くにあります。
+
+このポリシー設定を有効にすると、[DC の検索中に次に最も近いサイトを試す] がコンピューターに対して有効になります。
+
+このポリシー設定を無効にすると、[DC の検索中に次に最も近いサイトを試す] はコンピューターの既定として使用されません。ただし、DS_TRY_NEXTCLOSEST_SITE フラグを明示的に使用して DC ロケーターを呼び出すと、[次に最も近いサイトを試す] の動作が優先されます。
+
+このポリシー設定を構成しない場合、[DC の検索中に次に最も近いサイトを試す] はコンピューターの既定として使用されません。DS_TRY_NEXTCLOSEST_SITE フラグを明示的に使用すると、[次に最も近いサイトを試す] の動作が使用されます。</string>
+      <string id="Netlogon_ForceRediscoveryInterval">強制的再検出の間隔</string>
+      <string id="Netlogon_ForceRediscoveryInterval_Help">このポリシー設定では、DC ロケーターで強制的再検出を実行する間隔を設定します。
+
+ドメイン コントローラー ロケーター (DC ロケーター) サービスは、クライアントが Active Directory ドメインのドメイン コントローラーを探す場合に使用されます。DC ロケーターがドメイン コントローラーを見つけると、ドメイン コントローラーをキャッシュして検索アルゴリズムを効率化します。キャッシュされたドメイン コントローラーが要件を満たし、実行中である限り、DC ロケーターは継続的にそのドメイン コントローラーを返します。新しいドメイン コントローラーが導入された場合、DC ロケーターによって強制的再検出が実行されている場合にのみ既存のクライアントでドメイン コントローラーを検出します。ネットワーク状況の変化に対応するために、既定では DC ロケーターが特定の間隔で強制的再検出を実行し、すべてのドメインやフォレストのすべての利用可能なドメイン コントローラーにわたってクライアントの効率的な負荷分散を維持します。DC ロケーターの強制的再検出では、既定の間隔は 12 時間です。強制的再検出は、DC ロケーターの呼び出しに DS_FORCE_REDISCOVERY フラグを使用した場合も起動することができます。再検出によって、キャッシュされたドメイン コントローラーのエントリでタイマーがリセットされます。
+
+このポリシー設定を有効にすると、コンピューターの DC ロケーターは構成された間隔に基づいて定期的に強制的再検出を実行します。再検出による過剰なネットワーク トラフィックを防止する最短の間隔は 3600 秒 (1 時間) です。設定できる最長の間隔は 4294967200 秒ですが、4294967 秒 (49 日) を超える値は無制限として処理されます。
+
+このポリシー設定を無効にした場合、既定ではコンピューターに対して 12 時間ごとに強制的再検出が使用されます。
+
+このポリシー設定を構成しない場合、レジストリのローカル コンピューターの設定が異なる値でない限り、既定ではコンピューターに対して 12 時間ごとに強制的再検出が使用されます。</string>
+      <string id="Netlogon_AddressTypeReturned">ドメイン コントローラー アドレスの種類を返す</string>
+      <string id="Netlogon_AddressTypeReturned_Help">このポリシー設定は、ドメイン コントローラーに対して返される IP アドレスの種類を決定します。DC ロケーター API は、DC の IP アドレスを他の情報と共に返します。IPv6 がサポートされる前は、返される DC IP アドレスは IPv4 でした。IPv6 がサポートされるようになり、DC ロケーター API は IPv6 DC アドレスを返すことができるようになりました。既存のアプリケーションのなかには、返された IPv6 DC アドレスを正しく処理できないものがあります。このため、このポリシーを指定してそのような状況に対応します。
+
+既定では、DC ロケーター API は IPv4 および IPv6 DC アドレスを返すことができます。ただし、返された IPv6 DC アドレスによって一部のアプリケーションが破損している場合、このポリシーで既定の動作を無効にして、強制的に IPv4 DC アドレスのみを返すことができます。アプリケーションが修正された後、このポリシーを使用して既定の動作を有効にすることができます。
+
+このポリシー設定を有効にすると、DC ロケーター API は IPv4 および IPv6 DC アドレスを返すことができます。これは、DC ロケーターの既定の動作です。
+
+このポリシー設定を無効にすると、DC ロケーター API は IPv4 DC アドレスがある場合にそのアドレスのみを返します。したがって、ドメイン コントローラーが IPv4 アドレスと IPv6 アドレスの両方をサポートする場合、DC ロケーター API は IPv4 アドレスを返します。ただし、ドメイン コントローラーが IPv6 アドレスのみをサポートする場合、DC ロケーター API は失敗します。
+
+このポリシー設定を構成しない場合、DC ロケーター API は IPv4 および IPv6 DC アドレスを返すことができます。これは、DC ロケーターの既定の動作です。</string>
+      <string id="Netlogon_AllowNT4Crypto">Windows NT 4.0 と互換性のある暗号化アルゴリズムを許可する</string>
+      <string id="Netlogon_AllowNT4Crypto_Help">このポリシー設定は、Net Logon サービスで、Windows NT 4.0 で使用されている古い暗号化アルゴリズムの使用を許可するかどうかを指定します。Windows NT 4.0 以前で使用されている暗号化アルゴリズムは、Windows 2000 以降 (このバージョンの Windows を含む) で使用されている新しいアルゴリズムのようにセキュリティで保護されていません。
+
+既定では、Net Logon で古い暗号化アルゴリズムの使用が許可されないため、暗号化アルゴリズムのネゴシエーションにそれらのアルゴリズムは含まれません。このため、Windows NT 4.0 を実行しているコンピューターは、このドメイン コントローラーへの接続を確立できません。
+ 
+このポリシー設定を有効にした場合、Net Logon では、Windows NT 4.0 と互換性のある古い暗号化アルゴリズムの使用が許可されます。ただし、古いアルゴリズムを使用すると、セキュリティ上の危険を引き起こす可能性があります。
+
+このポリシー設定を無効にした場合、Net Logon では古い暗号化アルゴリズムの使用が許可されません。
+
+このポリシー設定を構成しない場合、Net Logon では古い暗号化アルゴリズムの使用が許可されません。</string>
+      <string id="Netlogon_IgnoreIncomingMailslotMessages">NetBIOS ドメイン名に基づくドメイン コントローラーの検出に使用される受信メールスロット メッセージを処理しない</string>
+      <string id="Netlogon_IgnoreIncomingMailslotMessages_Help">このポリシー設定では、ローカル ドメイン コントローラー (DC) による受信メールスロット メッセージの処理を制御できます。
+
+注: NetBios (単一ラベル) のドメイン名に基づいてリモート DC を検出するため、DC ロケーターはまずローカル クライアント設定内で構成された WINS サーバーから DC の一覧を取得します。次に、DC ロケーターはメールスロット メッセージを各リモート DC に送信し、追加の情報を取得します。リモート DC がこのメールスロット メッセージに応答する場合のみ、DC の検出が成功します。
+
+DC に対する攻撃を回避するには、このポリシー設定を使用することをお勧めします。また、この設定は、WINS のない環境の場合、IPv6 のみの環境の場合、および NetBIOS ドメイン名に基づく DC 検出が必要ない場合にも使用できます。このポリシー設定は、DNS 名に基づいた DC の検出には影響しません。
+
+このポリシー設定を有効にした場合、DC は NetBIOS ドメイン名に基づいた DC の検出に使用される受信メールスロット メッセージを処理しません。
+
+このポリシー設定を無効にした場合、または構成しなかった場合、DC は受信メールスロット メッセージを処理します。これは DC ロケーターの既定の動作です。</string>
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery">DNS ベースの検出が失敗したときに、ドメイン コントローラーの検出に NetBIOS ベースの検出を使用しない</string>
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">このポリシー設定を使用して、ドメイン コントローラー (DC) の検出アルゴリズムを制御できます。既定では、DNS ドメイン名が判明している場合、DC 検出アルゴリズムでは DNS ベースの検出が優先されます。DNS ベースの検出に失敗し、NetBIOS ドメイン名が判明している場合は、フォールバック メカニズムとして NetBIOS ベースの検出が使用されます。
+
+NetBIOS ベースの検出では、WINS サーバーとメールスロット メッセージは使用されますが、サイト情報は使用されません。したがって、クライアントが確実に最も近い DC を検出することはできません。また、ブランチ サイトの DC でサイト専用の DNS レコードのみ登録される場合 (推奨) であっても、ハブ サイトのクライアントはブランチ サイトの DC を検出できます。このような理由から、NetBIOS ベースの検出はお勧めできません。
+
+このポリシー設定は、NetBIOS ドメイン名のみが判明している場合の NetBIOS ベースの検出には影響しません。
+
+このポリシー設定を有効にした場合、または構成しない場合、DC 検出アルゴリズムでは、DNS ベースの検出に失敗したときにフォールバック メカニズムとして Net BIOS ベースの検出は使用されません。これは既定の動作です。
+
+このポリシー設定を無効にした場合、DC 検出アルゴリズムでは、DNS ベースの検出に失敗したときにフォールバック メカニズムとして Net BIOS ベースの検出を使用できます。</string>
+
+      <string id="Netlogon_AddressLookupOnPingBehavior">DC ロケーター ping のアドレス検索の動作を指定する</string>
+      <string id="Netlogon_AddressLookupOnPingBehavior_Help">このポリシー設定は、構成されたサイトに IP アドレスがマップされないクライアントに応答するときのドメイン コントローラー (DC) の動作を構成します。
+
+ドメイン コントローラーは、DC ロケーターの ping 要求時にクライアント IP アドレスを使用して、クライアントが属している Active Directory サイトを計算します。  サイト マッピングを計算できない場合、DC はクライアントのネットワーク名に基づいてアドレス検索を実行し、クライアントに対応するサイトの計算に使用できる他の IP アドレスを検出します。
+
+この設定に使用できる値によって次の動作が指定されます:
+
+0 - DC はアドレス検索を実行しません。
+1 - DC は完全なアドレス検索を実行して、追加のクライアント IP アドレスを検出します。
+2 - DC は、高速な DNS のみのアドレス検索を実行して、追加のクライアント IP アドレスを検出します。
+
+DC ロケーター DNS SRV レコードでこの動作を指定するには、[有効] をクリックしてから値を入力します。値の範囲は 0 から 2 です。
+
+このポリシー設定を構成しない場合、設定はどの DC にも適用されず、DC ではローカルの構成が使用されます。</string>
+
+      <string id="Netlogon_PingUrgencyMode">ドメイン コントローラーに ping するときに緊急モードを使用する</string>
+      <string id="Netlogon_PingUrgencyMode_Help">このポリシー設定は、この設定の適用先のコンピューターがドメイン コントローラー (DC) を探すときに、より積極的に行うかどうかを構成します。
+
+古いオペレーティング システムと新しいオペレーティング システムの両方を実行している多数の DC がある環境では、新しいオペレーティング システムを実行している DC を検出するのに、DC ロケーターの既定の検出動作では不十分な場合があります。 このポリシー設定では、DC への ping の頻度を増やすことで、そのような環境で DC の検出をより積極的に行うよう DC ロケーターを構成できます。 この設定を有効にすると、ネットワーク トラフィックが増え、DC の負荷が大きくなる場合があります。 すべての DC が同じ OS バージョンを実行するようになったら、この設定は無効にします。
+
+この設定に使用できる値によって次の動作が指定されます:
+
+1 - コンピューターは通常の頻度で DC に ping します。
+2 - コンピューターはより高い頻度で DC に ping します。
+
+この動作を指定するには、[有効] をクリックしてから値を入力します。値の範囲は 1 から 2 です。
+
+このポリシー設定を構成しない場合、設定はどのコンピューターにも適用されず、コンピューターではローカルの構成が使用されます。</string>
+
+      <string id="Netlogon_DnsSrvRecordUseLowerCaseHostNames">ドメイン コントローラーの SRV レコード登録時に小文字の DNS ホスト名を使用する</string>
+      <string id="Netlogon_DnsSrvRecordUseLowerCaseHostNames_Help">このポリシー設定は、SRV レコードを登録するときに、この設定が適用されるドメイン コントローラーの DNS ホスト名を小文字にするかどうかを構成します。
+
+有効にした場合、ドメイン コントローラーの SRV レコードを登録するときに、ドメイン コントローラーの DNS ホスト名を小文字にします。以前に登録された SRV レコードのうち、大文字と小文字が混在する DNS ホスト名が含まれているレコードについては、ベストエフォートでの削除が試行されます。詳細および手動クリーンアップの手順については、以下のリンクを参照してください。
+
+無効にした場合、ドメイン コントローラーの SRV レコードの登録時に、ドメイン コントローラーは構成されている DNS ホスト名をそのまま使用します。
+
+構成されていない場合、ドメイン コントローラーは既定でローカル構成を使用します。
+
+既定のローカル構成が有効になっています。
+
+この設定に対する変更を有効にするために、再起動は必要ありません。
+
+詳細については、https://aka.ms/lowercasehostnamesrvrecord を参照してください。
+      </string>
+
+    </stringTable>
+    <presentationTable>
+      <presentation id="Netlogon_BackgroundRetryInitialPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundRetryInitialPeriodLabel" defaultValue="600" spinStep="600">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundRetryMaximumPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundRetryMaximumPeriodLabel" defaultValue="3600" spinStep="3600">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundRetryQuitTime">
+        <decimalTextBox refId="Netlogon_BackgroundRetryQuitTimeLabel" defaultValue="0" spinStep="100">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_BackgroundSuccessfulRefreshPeriod">
+        <decimalTextBox refId="Netlogon_BackgroundSuccessfulRefreshPeriodLabel" defaultValue="4294967200" spinStep="1000">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DebugFlag">
+        <decimalTextBox refId="Netlogon_DebugFlagLabel" defaultValue="536936447">レベル:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DnsAvoidRegisterRecords">
+        <textBox refId="Netlogon_DnsAvoidRegisterRecordsLabel">
+          <label>ニーモニック:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_DnsRefreshInterval">
+        <decimalTextBox refId="Netlogon_DnsRefreshIntervalLabel" defaultValue="1800" spinStep="100">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_DnsTtl">
+        <decimalTextBox refId="Netlogon_DnsTtlLabel" defaultValue="600" spinStep="100">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_ExpectedDialupDelay">
+        <decimalTextBox refId="Netlogon_ExpectedDialupDelayLabel" defaultValue="0" spinStep="100">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_GcSiteCoverage">
+        <textBox refId="Netlogon_GcSiteCoverageLabel">
+          <label>サイト:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_LdapSrvPriority">
+        <decimalTextBox refId="Netlogon_LdapSrvPriorityLabel" defaultValue="0" spinStep="100">優先順位:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_LdapSrvWeight">
+        <decimalTextBox refId="Netlogon_LdapSrvWeightLabel" defaultValue="100" spinStep="100">重さ:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_MaximumLogFileSize">
+        <decimalTextBox refId="Netlogon_MaximumLogFileSizeLabel" defaultValue="536936447">バイト数:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_NdncSiteCoverage">
+        <textBox refId="Netlogon_NdncSiteCoverageLabel">
+          <label>サイト:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_NegativeCachePeriod">
+        <decimalTextBox refId="Netlogon_NegativeCachePeriodLabel" defaultValue="45" spinStep="60">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_NonBackgroundSuccessfulRefreshPeriod">
+        <decimalTextBox refId="Netlogon_NonBackgroundSuccessfulRefreshPeriodLabel" defaultValue="1800" spinStep="1000">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_ScavengeInterval">
+        <decimalTextBox refId="Netlogon_ScavengeIntervalLabel" defaultValue="900" spinStep="900">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_SiteCoverage">
+        <textBox refId="Netlogon_SiteCoverageLabel">
+          <label>サイト:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_SiteName">
+        <textBox refId="Netlogon_SiteNameLabel">
+          <label>サイト:</label>
+        </textBox>
+      </presentation>
+      <presentation id="Netlogon_ForceRediscoveryInterval">
+        <decimalTextBox refId="Netlogon_ForceRediscoveryIntervalLabel" defaultValue="43200" spinStep="100">時間 (秒):</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_AddressLookupOnPingBehavior">
+        <decimalTextBox refId="Netlogon_AddressLookupOnPingBehaviorLabel" defaultValue="2" spinStep="1">アドレス検索の動作:</decimalTextBox>
+      </presentation>
+      <presentation id="Netlogon_PingUrgencyMode">
+        <decimalTextBox refId="Netlogon_PingUrgencyModeLabel" defaultValue="2" spinStep="1">ping 緊急モード:</decimalTextBox>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>
