@@ -312,7 +312,7 @@ Function New-AdministrationAccounts {
 ## This function will create the group objects needed to use    ##
 ## the tier model and declared in the taskSequence xml file.    ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 01.01.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function New-AdministrationGroups {
@@ -327,10 +327,11 @@ Function New-AdministrationGroups {
         
         .Notes
          Version: 
-            01.00 -- contact@hardenad.net 
+            01.01 -- contact@hardenad.net 
          
          history: 
             01.00 -- Script creation
+            01.01 -- Add a child domain use case to avoid the group EA creation in childs.
     #>
     param(
     )
@@ -401,6 +402,10 @@ Function New-AdministrationGroups {
             $DomainRootDN = (Get-ADDomain).DistinguishedName
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
 
+            ## Getting root domain name
+            $ForestDomain = (Get-ADDomain).Forest
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter ForestDomain...: $ForestDomain"
+
             ## Getting specified schema
             $xmlData  = @()
             $xmlData += $xmlSkeleton.settings.groups.group
@@ -414,6 +419,19 @@ Function New-AdministrationGroups {
                 
                 #.Begin object creation loop
                 foreach ($account in $xmlData) {
+                    #-Ensure this is not EA in a child domain
+                    if ($account.Name -eq 'Enterprise Admins' -or $account.Name -like 'Administrateurs de l*')
+                    {
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Enterprise Admins Group: Detected."
+                        if ($ForestDomain -ne ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq '%domaindns%'}).translateTo)
+                        {
+                            ## Do not create it, move to next group.
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Enterprise Admins Group: working in a child domain! Skipping."
+                            continue
+                        } Else {
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Enterprise Admins Group: root domain - will manage from here."
+                        }
+                    }
                     #-Create a LDAP search filter
                     $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainRootDN)
                     $Searcher.Filter = "(&(ObjectClass=Group)(sAMAccountName=" + $account.Name + "))"
@@ -782,7 +800,7 @@ function Add-SourceToDestGrps {
         $DestDomDns,
 
         [Parameter(Mandatory)]
-        $Cred
+        [pscredential]$Cred
     )
 
     $res = @()
@@ -849,7 +867,7 @@ function Add-SourceToDestGrps {
             {
                 $Dest_GSGroups | ForEach-Object {
                     try {
-                        Add-ADGroupMember -Identity $Src_LSTX -Members $_
+                        Add-ADGroupMember -Identity $Src_LSTX -Members $_ -Credential $Cred
                     } 
                     catch {
                         $res += "$($Src_LSTX.DistinguishedName): $($_.Exception.Message)"
@@ -861,7 +879,7 @@ function Add-SourceToDestGrps {
             {
                 $Src_GSGroups | ForEach-Object {
                     try {
-                        Get-ADGroup $Dest_LSTX -Server $DestDomDns -Credential $Cred | Add-ADGroupMember -Members (Get-ADGroup $_ -Server $SrcDomDns) 
+                        Get-ADGroup $Dest_LSTX -Server $DestDomDns -Credential $Cred | Add-ADGroupMember -Members (Get-ADGroup $_ -Server $SrcDomDns) -Credential $Cred
                     }
                     catch {
                         $res += "$($Dest_LSTX.DistinguishedName): $($_.Exception.Message)"
@@ -937,7 +955,7 @@ function Add-ManagerToEA {
 ##                                                              ##
 ##################################################################
 function Add-GroupsOverDomain {
-    # VÃ©rifier qu'il y a plusieurs domaine dans la forÃªt
+    # Vérifier qu'il y a plusieurs domaine dans la forêt
 
     $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
     $dbgMess = @()
@@ -976,7 +994,7 @@ function Add-GroupsOverDomain {
         $ValidDomains = @()
 
         #.Ask for EA Admin cred.
-        $EAadmin = Get-Credential -Message "Provide a Tier 0 Manager account from $RootDomainDns"
+        $EAadmin = Get-Credential -Message "Provide a Tier 0 Manager account from $($Forest.RootDomain)"
 
         foreach ($Domain in $AllDomains) {
             try {
