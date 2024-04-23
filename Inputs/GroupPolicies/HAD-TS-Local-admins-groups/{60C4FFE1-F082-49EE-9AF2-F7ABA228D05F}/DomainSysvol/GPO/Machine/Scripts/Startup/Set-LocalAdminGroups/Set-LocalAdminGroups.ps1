@@ -375,6 +375,21 @@ if ($UpdateConfig)
             $debugMessage += Write-DebugLog inf "File configuration.xml generated."
             Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "configuration.xml: successfully updated."
 
+            # If a backup file exists, then we need to overwrite it with the new file.
+            if (Test-Path $CurrentDir\configuration.xml.backup)
+            {
+                $debugMessage += Write-DebugLog warn "File configuration.xml.backup is present!"
+                Try {
+                    Copy-Item -Path $CurrentDir\configuration.xml -Destination $CurrentDir\configuration.xml.backup -Force | Out-Null
+                    $debugMessage += Write-DebugLog inf "File configuration.xml copied to configuration.xml.backup (overwrite)."
+                } Catch {
+                    $debugMessage += Write-DebugLog error "failed to copy the file configuration.xml to configuration.xml.backup (overwrite)!"
+                }
+            } Else {
+                $debugMessage += Write-DebugLog inf "File configuration.xml.backup is not present: no action taken."
+            }
+
+
         } Else {
             $debugMessage += Write-DebugLog error "$xmlSourcePath is not a correct XML!"
             Write-Error "$xmlSourcePath is not a correct XML!"
