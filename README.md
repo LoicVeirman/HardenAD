@@ -3,7 +3,7 @@ This is the version 2 of the Hardening Active Directory project by then Harden C
 Feel free to use it and adapt following your needs!
 
 # DISCLAIMER
-**ALL TASKS ARE ALL DISABLED BY DEFAULT!**      
+**ALL TASKS ARE DISABLED BY DEFAULT!**      
 This is the way we ensure the script will not be run into production and make unwanted changes. Please refer to the welcome page of the latest release to learn how you can activate them.
 
 ## Just a word...
