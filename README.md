@@ -19,3 +19,6 @@ You can review our documentation here:
 
 ## Some videos (French speaks)
 When Guillaume demonstrate Harden AD: https://www.linkedin.com/events/7132717233872474112/comments/
+
+## Credit to ... Well. All those mails, tchat threads, ...
+![image](https://github.com/LoicVeirman/HardenAD/assets/85032445/551013f9-8c08-4f5b-864a-624c27ac7b1b)
