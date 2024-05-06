@@ -382,7 +382,7 @@ function Set-Translation {
     $historyScript.SourcePath = [string]((Get-Location).Path)
 
     # Saving file and keeping formating with tab...    
-    Format-XMLFile $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
+    Format-XMLData -XMLData $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
 }
 
 
@@ -504,7 +504,7 @@ if ($EnableTask) {
     }
 
     # Saving file...
-    Format-XMLFile $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
+    Format-XMLData -XMLData $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
 
     # Prepare output
     $ActionMade = "enable"
@@ -529,7 +529,7 @@ if ($DisableTask) {
     }
 
     # Saving file...
-    Format-XMLFile $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
+    Format-XMLData -XMLData $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
 
     # Prepare output
     $ActionMade = "disable"

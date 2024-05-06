@@ -5,7 +5,7 @@ $configXMLFilePath = Join-Path -Path $scriptRootPath -ChildPath "Configs\TasksSe
 
 $configXMLFileName = $configXMLFilePath | Split-Path -Leaf
 
-$xmlModule = "$scriptRootPath\Modules\Format-XMLFile.psm1"
+$xmlModule = "$scriptRootPath\Modules\Format-XML.psm1"
 Import-Module "$xmlModule"
 
 $TasksSeqConfig = [xml](Get-Content $configXMLfilePath -Encoding utf8)
@@ -113,7 +113,7 @@ $SaveButton.Add_Click({
         }
 
         # Saving file
-        Format-XMLFile $TasksSeqConfig | Out-File $configXMLFilePath -Encoding utf8 -Force
+        Format-XMLData -XMLData $TasksSeqConfig | Out-File $configXMLFilePath -Encoding utf8 -Force
         
         $SaveLabel.Text = "$([System.DateTime]::Now.ToString('HH:mm:ss')) - File $configXMLFileName saved!"
     })

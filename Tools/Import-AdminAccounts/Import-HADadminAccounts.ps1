@@ -27,7 +27,7 @@ $Config = [xml](Get-Content .\config.xml -Encoding UTF8)
 $HADFil = Convert-Path '..\..\Configs\TasksSequence_HardenAD.xml'
 
 $scriptRootPath = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
-$xmlModule = "$scriptRootPath\Modules\Format-XMLFile.psm1"
+$xmlModule = "$scriptRootPath\Modules\Format-XML.psm1"
 Import-Module "$xmlModule"
 
 #$HADxml = New-Object System.Xml.XmlDocument
@@ -616,6 +616,6 @@ foreach ($Account in $Accounts) {
 }
 
 #.Saving file and keeping formating with tab...
-Format-XMLFile $HADxml | Out-File $HADFil -Encoding utf8 -Force
+Format-XMLData -XMLData $HADxml | Out-File $HADFil -Encoding utf8 -Force
 
 Write-Host "Done.`n" -ForegroundColor Yellow

@@ -61,7 +61,7 @@ function Set-TranslationOld {
     $TasksSeqConfig = [xml](Get-Content $ScriptPath\Configs\$TasksSequence -Encoding utf8)
 
     $scriptRootPath = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
-    $xmlModule = "$scriptRootPath\Modules\Format-XMLFile.psm1"
+    $xmlModule = "$scriptRootPath\Modules\Format-XML.psm1"
     Import-Module "$xmlModule"
 
     #.Getting running domain and forest context
@@ -243,6 +243,6 @@ function Set-TranslationOld {
     $wellKnownID_Users.translateTo = "$users_"
 
     #.Saving file and keeping formating with tab...
-    Format-XMLFile $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
+    Format-XMLData -XMLData $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
 }
 
