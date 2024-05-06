@@ -30,7 +30,7 @@ function Get-GroupNameFromSID {
     catch {
         Write-Host "An error occurred while searching for the group with SID '$GroupSID'."
         $inputValid = $false
-        $userInput  = $null
+        $userInput = $null
         return $userInput
     }
 }
@@ -56,8 +56,7 @@ function Set-TranslationOld {
     )
 
     #.Function to reformat XML as we need
-    function Format-XML ([xml]$xml, $indent=1)
-    {
+    function Format-XML ([xml]$xml, $indent = 1) {
         $StringWriter = New-Object System.IO.StringWriter
         $XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
         $xmlWriter.Formatting = “indented”
@@ -72,18 +71,18 @@ function Set-TranslationOld {
     #.Main code
     #.Gettings tasks sequence data
     $xmlFileFullName = convert-path $ScriptPath\Configs\$TasksSequence
-    $TasksSeqConfig  = [xml](get-content $ScriptPath\Configs\$TasksSequence -Encoding utf8)
+    $TasksSeqConfig = [xml](get-content $ScriptPath\Configs\$TasksSequence -Encoding utf8)
 
     #.Getting running domain and forest context
     $Domain = Get-ADDomain
     $Forest = Get-ADForest
 
     #.Grabbing required data from domain
-    $DomainDNS     = $Domain.DNSRoot
+    $DomainDNS = $Domain.DNSRoot
     $DomainNetBios = $Domain.NetBIOSName
-    $DN            = $Domain.DistinguishedName
-    $DomainSID     = $Domain.DomainSID
-    $ForestDNS     = $Forest.RootDomain
+    $DN = $Domain.DistinguishedName
+    $DomainSID = $Domain.DomainSID
+    $ForestDNS = $Forest.RootDomain
 
     #.Prompting for running domain information.
     Write-Warning "Current forest root domain........: $ForestDNS"
@@ -92,20 +91,17 @@ function Set-TranslationOld {
     Write-Warning "Current domain DistinguishedName..: $DN"
 
     #.If not the same as the forest, will ask for confirmation.
-    if ($DomainDNS -ne $ForestDNS) 
-    {
+    if ($DomainDNS -ne $ForestDNS) {
         Write-Warning "Your domain is a child domain of $($ForestDNS)!"
         Write-Warning ""
         Write-Warning "PLEASE, CONFIRM THIS IS THE RIGHT DOMAIN TO DEAL WITH BY PRESSING Y." 
         
         #.Waiting key input and deal with Y,y, ESC, return and Q.
         $isChild = $null
-        While ($null -eq $isChild)
-        {
+        While ($null -eq $isChild) {
             $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
             
-            Switch ($key.VirtualKeyCode)
-            {
+            Switch ($key.VirtualKeyCode) {
                 #.Return
                 13 { $isChild = $true }
                 #.Escape
@@ -117,15 +113,14 @@ function Set-TranslationOld {
             }
         }
         #.Test if child domain or not
-        if ($isChild) 
-        {
+        if ($isChild) {
             #.Is Child Domain. Adjusting the tasksSequence acordingly.
             #.Grabbing expected values...
-            $RootDomain        = Get-ADDomain -Identity $ForestDNS
-            $RootDomainDNS     = $RootDomain.DNSRoot
+            $RootDomain = Get-ADDomain -Identity $ForestDNS
+            $RootDomainDNS = $RootDomain.DNSRoot
             $RootDomainNetBios = $RootDomain.NetBIOSName
-            $RootDN            = $RootDomain.DistinguishedName
-            $RootDomainSID     = $RootDomain.DomainSID
+            $RootDN = $RootDomain.DistinguishedName
+            $RootDomainSID = $RootDomain.DomainSID
 
             Write-Warning "Root domain DNS is................: $RootDomainDNS"
             Write-Warning "Root domain NetBIOS...............: $RootDomainNetBios"
@@ -136,10 +131,10 @@ function Set-TranslationOld {
         } 
         else {
             #.Not a child, setting up root domain value with current domain
-            $RootDomainDNS     = $DomainDNS
+            $RootDomainDNS = $DomainDNS
             $RootDomainNetBios = $DomainNetBios
-            $RootDN            = $DN
-            $RootDomainSID     = $DomainSID
+            $RootDN = $DN
+            $RootDomainSID = $DomainSID
         }
         
         #.Validating result and opening to a manual input if needed.
@@ -148,12 +143,10 @@ function Set-TranslationOld {
         
         #.Waiting key input and deal with Y,y, ESC, return and Q.
         $isOK = $null
-        While ($null -eq $isOK)
-        {
+        While ($null -eq $isOK) {
             $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
             
-            Switch ($key.VirtualKeyCode)
-            {
+            Switch ($key.VirtualKeyCode) {
                 #.N or n
                 78 { $isOK = $false }
                 #.Y or y
@@ -161,22 +154,21 @@ function Set-TranslationOld {
             }
         }
         # .If Yes, then we continue. Else we ask for new values.
-        if ($isOK) 
-        {
+        if ($isOK) {
             Write-Warning "Information validated."
         }
         else {
             $isOK = $null
-            while ($null -eq $isOK) 
-            {
+            while ($null -eq $isOK) {
                 # If user answers "N" --> ask for domain name parts
                 $netbiosName = Read-Host "Enter the NetBIOS domain name.."
-                $Domaindns   = Read-Host "Enter the Domain DNS..........."
+                $Domaindns = Read-Host "Enter the Domain DNS..........."
     
                 #.Checking if the domain is reachable.
                 Try {
                     $DistinguishedName = Get-ADDomain -Server $DomainDNS -ErrorAction Stop
-                } Catch {
+                }
+                Catch {
                     $DistinguishedName = $null
                     #.Force leaving                    
                     $isOK = $false
@@ -199,65 +191,65 @@ function Set-TranslationOld {
     }
     else {
         #.Not a child, setting up root domain value with current domain
-        $RootDomainDNS     = $DomainDNS
+        $RootDomainDNS = $DomainDNS
         $RootDomainNetBios = $DomainNetBios
-        $RootDN            = $DN
-        $RootDomainSID     = $DomainSID
+        $RootDN = $DN
+        $RootDomainSID = $DomainSID
     }
     #.Compute new wellKnownSID
     $authenticatedUsers_SID = "S-1-5-11"
-    $administrators_SID     = "S-1-5-32-544"
-    $RDUsers_SID            = "S-1-5-32-555"
-    $users_SID              = "S-1-5-32-545"
+    $administrators_SID = "S-1-5-32-544"
+    $RDUsers_SID = "S-1-5-32-555"
+    $users_SID = "S-1-5-32-545"
 
     # Specific admins group of a domain
     $enterpriseAdmins_SID = "$($RootDomainSID)-519"
-    $domainAdmins_SID     = "$($domainSID)-512"
-    $schemaAdmins_SID     = "$($RootDomainSID)-518"
+    $domainAdmins_SID = "$($domainSID)-512"
+    $schemaAdmins_SID = "$($RootDomainSID)-518"
 
     # Get group names from SID
     $authenticatedUsers_ = Get-GroupNameFromSID -GroupSID $authenticatedUsers_SID
-    $administrators_     = Get-GroupNameFromSID -GroupSID $administrators_SID
-    $RDUsers_            = Get-GroupNameFromSID -GroupSID $RDUsers_SID
-    $users_              = Get-GroupNameFromSID -GroupSID $users_SID
-    $enterpriseAdmins_   = Get-GroupNameFromSID -GroupSID $enterpriseAdmins_SID
-    $domainAdmins_       = Get-GroupNameFromSID -GroupSID $domainAdmins_SID
-    $schemaAdmins_       = Get-GroupNameFromSID -GroupSID $schemaAdmins_SID
+    $administrators_ = Get-GroupNameFromSID -GroupSID $administrators_SID
+    $RDUsers_ = Get-GroupNameFromSID -GroupSID $RDUsers_SID
+    $users_ = Get-GroupNameFromSID -GroupSID $users_SID
+    $enterpriseAdmins_ = Get-GroupNameFromSID -GroupSID $enterpriseAdmins_SID
+    $domainAdmins_ = Get-GroupNameFromSID -GroupSID $domainAdmins_SID
+    $schemaAdmins_ = Get-GroupNameFromSID -GroupSID $schemaAdmins_SID
 
     # Locate the nodes to update in taskSequence File
-    $wellKnownID_AU            = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%AuthenticatedUsers%" }
-    $wellKnownID_Adm           = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Administrators%" }
-    $wellKnownID_EA            = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%EnterpriseAdmins%" }
-    $wellKnownID_domainAdm     = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%DomainAdmins%" }
-    $wellKnownID_SchemaAdm     = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%SchemaAdmins%" }
-    $wellKnownID_RDP           = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RemoteDesktopUsers%" }
-    $wellKnownID_Users         = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Users%" }
-    $wellKnownID_Netbios       = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%NetBios%" }
-    $wellKnownID_domaindns     = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%domaindns%" }
-    $wellKnownID_DN            = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%DN%" }
-    $wellKnownID_RootNetbios   = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootNetBios%" }
+    $wellKnownID_AU = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%AuthenticatedUsers%" }
+    $wellKnownID_Adm = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Administrators%" }
+    $wellKnownID_EA = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%EnterpriseAdmins%" }
+    $wellKnownID_domainAdm = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%DomainAdmins%" }
+    $wellKnownID_SchemaAdm = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%SchemaAdmins%" }
+    $wellKnownID_RDP = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RemoteDesktopUsers%" }
+    $wellKnownID_Users = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Users%" }
+    $wellKnownID_Netbios = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%NetBios%" }
+    $wellKnownID_domaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%domaindns%" }
+    $wellKnownID_DN = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%DN%" }
+    $wellKnownID_RootNetbios = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootNetBios%" }
     $wellKnownID_Rootdomaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Rootdomaindns%" }
-    $wellKnownID_RootDN        = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootDN%" }
+    $wellKnownID_RootDN = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootDN%" }
 
     # Updating Values :
     # ..Domain values
-    $wellKnownID_Netbios.translateTo   = $DomainNetBios
+    $wellKnownID_Netbios.translateTo = $DomainNetBios
     $wellKnownID_domaindns.translateTo = $DomainDNS
-    $wellKnownID_DN.translateTo        = $DN
+    $wellKnownID_DN.translateTo = $DN
 
     #..RootDomain value
-    $wellKnownID_RootNetbios.translateTo   = $RootDomainNetBios
+    $wellKnownID_RootNetbios.translateTo = $RootDomainNetBios
     $wellKnownID_Rootdomaindns.translateTo = $RootDomainDNS
-    $wellKnownID_RootDN.translateTo        = $RootDN
+    $wellKnownID_RootDN.translateTo = $RootDN
     
     # ..Group values
-    $wellKnownID_AU.translateTo        = "$authenticatedUsers_"
-    $wellKnownID_Adm.translateTo       = "$administrators_"
-    $wellKnownID_EA.translateTo        = "$enterpriseAdmins_"
+    $wellKnownID_AU.translateTo = "$authenticatedUsers_"
+    $wellKnownID_Adm.translateTo = "$administrators_"
+    $wellKnownID_EA.translateTo = "$enterpriseAdmins_"
     $wellKnownID_domainAdm.translateTo = "$domainAdmins_"
     $wellKnownID_SchemaAdm.translateTo = "$schemaAdmins_"
-    $wellKnownID_RDP.translateTo       = "$RDUsers_"
-    $wellKnownID_Users.translateTo     = "$users_"
+    $wellKnownID_RDP.translateTo = "$RDUsers_"
+    $wellKnownID_Users.translateTo = "$users_"
 
     #.Saving file and keeping formating with tab...
     Format-XML $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force

@@ -10,14 +10,13 @@
 #>
 
 param(
-	[Parameter(Mandatory=$True)]
+	[Parameter(Mandatory = $True)]
 	[String]
 	$XmlFile
 )
 
 #.Function
-function Format-XML ([xml]$xml, $indent=1)
-{
+function Format-XML ([xml]$xml, $indent = 1) {
 	$StringWriter = New-Object System.IO.StringWriter
 	$XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
 	$xmlWriter.Formatting = "indented"
@@ -30,21 +29,20 @@ function Format-XML ([xml]$xml, $indent=1)
 }
 
 #.Check if file exists.
-if (Test-Path $XmlFile) 
-{
+if (Test-Path $XmlFile) {
 	$FilePath = (resolve-path $XmlFile).Path
-	$myXML    = [XML](Get-Content $FilePath -encoding UTF8)
+	$myXML = [XML](Get-Content $FilePath -encoding UTF8)
 	
 	#.Save file
 	Try {
 		Format-XML $myXml | Out-File $FilePath -Encoding utf8 -Force
 		Write-Host "+++ File $FilePath saved successfully." -foregroundColor Green
-	} Catch {
+	}
+ Catch {
 		Write-Host "!!! File $FilePath could not be saved!" -foregroundColor Red
 	}
 }
-else
-{
+else {
 	Write-Host "Error: " -foregroundColor Red -NoNewLine
 	Write-Host "File not found!" -foregroundColor Yellow
 }
