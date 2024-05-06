@@ -27,16 +27,15 @@ for ($i = 0; $i -lt $Tasks.Count; $i++) {
 
     # Check if the task is enabled. If it is, the checkbox will be checked, otherwise it will be unchecked
     $taskEnabled = $task.TaskEnabled -eq 'Yes'
-        
-    #$checkboxesArray.Add("<CheckBox x:Name='ID_$($task.Number)' Content='$($task.Number) - $($task.Name)' IsChecked='$taskEnabled' Grid.Row='$row' Grid.Column='$column' HorizontalAlignment='Left' VerticalAlignment='Center' Margin='5' />")
-    $task.TaskDescription = $task.TaskDescription.Replace("'", "").Replace("`(", '')
-    $checkboxesArray.Add("<CheckBox x:Name='ID_$($task.Number)' Content='$($task.Number) - $($task.Name)' IsChecked='$taskEnabled' Grid.Row='$row' Grid.Column='$column' HorizontalAlignment='Left' VerticalAlignment='Center' Margin='5' ToolTip='$($task.TaskDescription)' />")
+    $taskDescription = $task.TaskDescription.Replace("'", "").Replace("`(", '')
+
+    $checkboxesArray.Add("<CheckBox x:Name='ID_$($task.Number)' Content='$($task.Number) - $($task.Name)' IsChecked='$taskEnabled' Grid.Row='$row' Grid.Column='$column' HorizontalAlignment='Left' VerticalAlignment='Center' Margin='5' ToolTip='$taskDescription' />")
 }
 
 Add-Type -AssemblyName PresentationFramework, System.Drawing, System.Windows.Forms, WindowsFormsIntegration
 Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase
 
-$labelText1 = "To prevent accidental changes, all the tasks are disabled by default in the XML configuration file.."
+$labelText1 = "To prevent accidental changes, all the tasks are disabled by default in the XML configuration file."
 $labelText2 = "Select the tasks you want to enable/disable and click Save."
 $labelText3 = "The only purpose of the GUI is to configure HardenAD config file, it does not perform any actions!"
 

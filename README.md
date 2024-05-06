@@ -20,5 +20,15 @@ You can review our documentation here:
 ## Some videos (French speaks)
 When Guillaume demonstrate Harden AD: https://www.linkedin.com/events/7132717233872474112/comments/
 
+## Configuration with GUI
+To prevent accidental changes, all the tasks are disabled by default in the XML configuration file.
+To help you to configure this XML file, you can use the GUI.
+Please note the only purpose of the GUI is to configure HardenAD config file, it does not perform any actions!
+
+To run the GUI, you have two options:
+- run `./HardenAD.ps1 -GUI`
+- run `Run-HardenADGui.ps1`
+![image](images/hardenAD-GUI.gif)
+
 ## Credit to ... Well. All those mails, tchat threads, ...
 ![image](https://github.com/LoicVeirman/HardenAD/assets/85032445/551013f9-8c08-4f5b-864a-624c27ac7b1b)
