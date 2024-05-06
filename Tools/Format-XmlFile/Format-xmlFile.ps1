@@ -2,29 +2,35 @@
 	.SYNOSPIS
 	This script will load and rewrite an XML file to indent it with tab.
 	
-	.PARAMETER XmlFile
-	Path to the xml file.
+	.PARAMETER XMLFile
+	Path to the XML file.
 	
 	.NOTES
-	Version 01.00 by Loic VEIRMAN MSSec
+	Version 02.00 by Loic VEIRMAN MSSec
 #>
+function Format-XMLFile {
+	param(
+		[Parameter(Mandatory = $True)]
+		[String]
+		$XmlFile,
+		[Parameter(Mandatory = $True)]
+		[Int]
+		$Indent = 1
+	)
 
-param(
-	[Parameter(Mandatory = $True)]
-	[String]
-	$XmlFile
-)
-
-#.Function
-function Format-XML ([xml]$xml, $indent = 1) {
+	# Prepare the XML handler object
 	$StringWriter = New-Object System.IO.StringWriter
 	$XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
-	$xmlWriter.Formatting = "indented"
+	
+	# Configure the XML handler with our specific formatting expectation
+	$xmlWriter.Formatting = 'indented'
 	$xmlWriter.Indentation = $Indent
 	$xmlWriter.IndentChar = "`t"
+	# Reformatting the XML...
 	$xml.WriteContentTo($XmlWriter)
 	$XmlWriter.Flush()
 	$StringWriter.Flush()
+	# Returning result.
 	return $StringWriter.ToString()
 }
 

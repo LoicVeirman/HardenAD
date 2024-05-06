@@ -20,23 +20,15 @@ Param(
     $AddText
 )
 
-function Format-XML ([xml]$xml, $indent = 1) {
-    $StringWriter = New-Object System.IO.StringWriter
-    $XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
-    $xmlWriter.Formatting = “indented”
-    $xmlWriter.Indentation = $Indent
-    $xmlWriter.IndentChar = "`t"
-    $xml.WriteContentTo($XmlWriter)
-    $XmlWriter.Flush()
-    $StringWriter.Flush()
-    return $StringWriter.ToString()
-}
-
 #.Load XML file
 $Config = [xml](Get-Content .\config.xml -Encoding UTF8)
 
 #.Load XML from Harden AD and keeping formating
 $HADFil = Convert-Path '..\..\Configs\TasksSequence_HardenAD.xml'
+
+$scriptRootPath = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
+$xmlModule = "$scriptRootPath\Modules\Format-XMLFile.psm1"
+Import-Module "$xmlModule"
 
 #$HADxml = New-Object System.Xml.XmlDocument
 #$HADxml.PreserveWhitespace = $true
@@ -624,6 +616,6 @@ foreach ($Account in $Accounts) {
 }
 
 #.Saving file and keeping formating with tab...
-Format-XML $HADxml | Out-File $HADFil -Encoding utf8 -Force
+Format-XMLFile $HADxml | Out-File $HADFil -Encoding utf8 -Force
 
 Write-Host "Done.`n" -ForegroundColor Yellow

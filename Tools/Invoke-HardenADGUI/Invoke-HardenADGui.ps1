@@ -1,12 +1,13 @@
-Import-Module "$PSScriptRoot\..\Format-XmlFile\Format-XmlFile.ps1"
-
 # get root path of the solution
 $scriptRootPath = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 
 $configXMLFilePath = Join-Path -Path $scriptRootPath -ChildPath "Configs\TasksSequence_HardenAD.xml"
 
 $configXMLFileName = $configXMLFilePath | Split-Path -Leaf
-Import-Module "$scriptRootPath\Tools\Format-XmlFile\Format-XmlFile.ps1"
+
+$xmlModule = "$scriptRootPath\Modules\Format-XMLFile.psm1"
+Import-Module "$xmlModule"
+
 $TasksSeqConfig = [xml](Get-Content $configXMLfilePath -Encoding utf8)
 
 $Tasks = $TasksSeqConfig.Settings.Sequence.ID | Sort-Object Number
@@ -112,7 +113,7 @@ $SaveButton.Add_Click({
         }
 
         # Saving file
-        Format-XML $TasksSeqConfig | Out-File $configXMLFilePath -Encoding utf8 -Force
+        Format-XMLFile $TasksSeqConfig | Out-File $configXMLFilePath -Encoding utf8 -Force
         
         $SaveLabel.Text = "$([System.DateTime]::Now.ToString('HH:mm:ss')) - File $configXMLFileName saved!"
     })

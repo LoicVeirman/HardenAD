@@ -55,23 +55,14 @@ function Set-TranslationOld {
         [switch]$Child
     )
 
-    #.Function to reformat XML as we need
-    function Format-XML ([xml]$xml, $indent = 1) {
-        $StringWriter = New-Object System.IO.StringWriter
-        $XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
-        $xmlWriter.Formatting = “indented”
-        $xmlWriter.Indentation = $Indent
-        $xmlWriter.IndentChar = "`t"
-        $xml.WriteContentTo($XmlWriter)
-        $XmlWriter.Flush()
-        $StringWriter.Flush()
-        return $StringWriter.ToString()
-    }
-
     #.Main code
     #.Gettings tasks sequence data
-    $xmlFileFullName = convert-path $ScriptPath\Configs\$TasksSequence
-    $TasksSeqConfig = [xml](get-content $ScriptPath\Configs\$TasksSequence -Encoding utf8)
+    $xmlFileFullName = Convert-Path $ScriptPath\Configs\$TasksSequence
+    $TasksSeqConfig = [xml](Get-Content $ScriptPath\Configs\$TasksSequence -Encoding utf8)
+
+    $scriptRootPath = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
+    $xmlModule = "$scriptRootPath\Modules\Format-XMLFile.psm1"
+    Import-Module "$xmlModule"
 
     #.Getting running domain and forest context
     $Domain = Get-ADDomain
