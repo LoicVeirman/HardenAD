@@ -243,6 +243,6 @@ function Set-TranslationOld {
     $wellKnownID_Users.translateTo = "$users_"
 
     #.Saving file and keeping formating with tab...
-    Format-XML $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
+    Format-XMLFile $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
 }
 
