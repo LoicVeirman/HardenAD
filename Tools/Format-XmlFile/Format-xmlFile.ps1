@@ -28,6 +28,7 @@ function Format-XML ([xml]$xml, $indent = 1) {
 	return $StringWriter.ToString()
 }
 
+<#
 #.Check if file exists.
 if (Test-Path $XmlFile) {
 	$FilePath = (resolve-path $XmlFile).Path
@@ -46,3 +47,4 @@ else {
 	Write-Host "Error: " -foregroundColor Red -NoNewLine
 	Write-Host "File not found!" -foregroundColor Yellow
 }
+#>

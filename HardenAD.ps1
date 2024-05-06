@@ -26,12 +26,17 @@
     .EXAMPLE
     HardenAD.ps1
     
-    Runs the script in interactive mode.
+    Runs the script.
 
     .EXAMPLE
     HardenAD.ps1 -NoConfirmationForSingleDomain
     
     Runs the script in non-interactive mode in the root forest domain only.
+
+    .EXAMPLE
+    HardenAD.ps1 -GUI
+
+    Launches the GUI to configure the task sequence.
 
     .EXAMPLE
     HardenAD.ps1 -EnableTask All
@@ -81,6 +86,11 @@ Param(
     [Parameter(Position = 0)]
     [switch]
     $NoConfirmationForRootDomain,
+
+    [Parameter(ParameterSetName = 'CONFIG')]
+    [Parameter(Position = 0)]
+    [switch]
+    $GUI,
 
     [Parameter(ParameterSetName = 'TASK')]
     [ValidateSet('All', 'Activate Active Directory Recycle Bin', 'Create administration accounts', 'Create administration groups', 'Default computer location on creation', 'Default user location on creation', 'Enforce delegation model through ACEs', 'Import additional WMI Filters', 'Import new GPO or update existing ones', 'Prepare GPO files before GPO import', 'Restrict computer junction to the domain', 'Reset HAD Protected Groups Memberships', 'Set Administration Organizational Unit', 'Set GPO Central Store', 'Set Legacy Organizational Unit', 'Set Notify on every Site Links', 'Set Provisioning Organizational Unit', 'Set Tier 0 Organizational Unit', 'Set Tier 1 and Tier 2 Organizational Unit', 'Setup LAPS permissions over the domain', 'Update Ad schema for LAPS and deploy PShell tools', 'Update LAPS deployment scripts', 'Upgrade Domain Functional Level', 'Upgrade Forest Functional Level')]
@@ -492,6 +502,13 @@ $Block = {
     Denying a task will overide enabling it...
 #>
 # Loading xml and readiness for backup...
+
+if ($GUI) {
+    # Launching GUI
+    & "$PSSCRIPTROOT\Tools\Invoke-HardenADGUI\Invoke-HardenADGui.ps1"
+    return 0
+}
+
 if ($EnableTask -or $DisableTask) {
     $TasksSeqConfig = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
     $xmlFileFullName = (Resolve-Path .\Configs\TasksSequence_HardenAD.xml).Path
