@@ -39,7 +39,7 @@
     Enable all tasks in the file TasksSequence_HardenAD.xml.
 
     .EXAMPLE
-    HardenAD.ps1 -disableTask All
+    HardenAD.ps1 -DisableTask All
     
     Disable all tasks in the file TasksSequence_HardenAD.xml.
 
@@ -196,13 +196,13 @@ function Set-Translation {
         
         # Waiting key input. If not Y, then leaves.
         $isChild = $null
-        While ($null -eq $isChild) {
+        while ($null -eq $isChild) {
             $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
             if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) {
                 Write-Host "Expected, so you say...`n" -ForegroundColor Green
                 $isChild = $true
             }
-            Else {
+            else {
                 Write-Host "Unexpected? Do, or do not. But there there is no try.`n" -ForegroundColor Red
                 $isChild = $false
             }
@@ -237,19 +237,20 @@ function Set-Translation {
         Write-Host "Root NetBIOS...........: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainNetBios -ForegroundColor Yellow
         Write-Host "Root DistinguishedName.: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDN            -ForegroundColor Yellow
     
-        # Validating result and opening to a manual input if needed.
-        Write-Host "`nAre those informations correct? " -ForegroundColor Yellow -NoNewline
+        # Validate result and open for manual input if necessary.
+        Write-Host "`nAre those pieces of information correct? " -ForegroundColor Yellow -NoNewline
+        
         Write-Host "[Y/N] " -NoNewline
         
-        # Waiting key input and deal with Y and return.
+        # Waiting for key input and deal with Y and return.
         $isOK = $null
-        While ($null -eq $isOK) {
+        while ($null -eq $isOK) {
             $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
             if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) {
                 Write-Host "Glad you'll agree with it!`n" -ForegroundColor Green
                 $isOK = $true
             }
-            Else {
+            else {
                 Write-Host "'Kay... You're too old for this sh**t, Roger?`n" -ForegroundColor Red
                 $isOK = $false
             }
@@ -262,11 +263,11 @@ function Set-Translation {
             $Domaindns = Read-Host "Enter the Root Domain DNS..........."
 
             # Checking if the domain is reachable.
-            Try {
+            try {
                 $DistinguishedName = Get-ADDomain -Server $DomainDNS -ErrorAction Stop
                 $RootDomainSID = (Get-ADDomain -Server $DomainDNS -ErrorAction Stop).DomainSID.value
             }
-            Catch {
+            catch {
                 $DistinguishedName = $null
                 # Force leaving                    
                 $isOK = $false
@@ -285,7 +286,7 @@ function Set-Translation {
             if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) {  
                 $isOK = $true 
             }
-            Else {
+            else {
                 $isOK = $false
             }
         }
@@ -296,7 +297,7 @@ function Set-Translation {
         }
         else { 
             Write-Host "Installation canceled... Help me, Obi-Wan Kenobi. You're my only hope!`n" -ForegroundColor red
-            Exit 2 
+            exit 2 
         }
     }
     else {
@@ -319,7 +320,7 @@ function Set-Translation {
             else {
                 # Just leaving
                 Write-Host "Ok, canceling... I find your lack of faith disturbing." -ForegroundColor Red
-                Exit 0
+                exit 0
             }
         }
     }
@@ -347,7 +348,7 @@ function Set-Translation {
     # Exit from script if Enterprise Admins is empty
     if ($enterpriseAdmins_ -eq "" -or $isnull -eq $enterpriseAdmins_) {
         Write-host "`nInstallation cancelled! You blew-up the process: the Enterprise Admins group is unreachable...`n" -ForegroundColor red
-        Exit 1
+        exit 1
     }
 
     # Locate the nodes to update in taskSequence File
@@ -443,20 +444,20 @@ $Block = {
     $is2k8r2 = (Get-WMIObject win32_operatingsystem).name -like "*2008*"
 
     # Loading modules, if needed.
-    Try { 
+    try { 
         # Module loading...
         Switch ($is2k8r2) {
             $true { $null = $mods | ForEach-Object { Import-Module $_.fullName } }
             $false { $null = $mods | ForEach-Object { Import-Module $_ } }
         }
     }
-    Catch { 
+    catch { 
         # The script block failed to load prerequiered module(s). Exiting.
         $RunData = New-Object -TypeName psobject -Property @{ResultCode = 9 ; ResultMesg = "Error loading one or more module" ; TaskExeLog = "Error" }
     }
 
     # Run the expected function
-    Try {
+    try {
         # Checking for multiple parameters and OS: more than 1 parameter but greater than 2008 R2
         if ($Parameters.count -gt 1 -and -not ($is2k8r2)) {
             $RunData = . $Command @Parameters | Select-Object -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
@@ -475,7 +476,7 @@ $Block = {
             $RunData = . $Command $Parameters | Select-Object -ExcludeProperty PSComputerName, RunspaceId, PSShowComputerName
         }
     }
-    Catch {
+    catch {
         $RunData = New-Object -TypeName psobject -Property @{ResultCode = 9 ; ResultMesg = "Error launching the function $command" ; TaskExeLog = "Error" }
     }
         
@@ -492,8 +493,8 @@ $Block = {
 #>
 # Loading xml and readiness for backup...
 if ($EnableTask -or $DisableTask) {
-    $TasksSeqConfig = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
-    $xmlFileFullName = (resolve-path .\Configs\TasksSequence_HardenAD.xml).Path
+    $TasksSeqConfig = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
+    $xmlFileFullName = (Resolve-Path .\Configs\TasksSequence_HardenAD.xml).Path
 }
 
 # When someone wan't me to perform...
@@ -504,7 +505,7 @@ if ($EnableTask) {
         $outArray = @() 
         $tmpArray.Name | ForEach-Object { $outArray += $_ }
     }
-    Else {
+    else {
         $outArray = $EnableTask | Where-Object { $_ -ne 'All' }
     }
 
@@ -529,7 +530,7 @@ if ($DisableTask) {
         $outArray = @()
         $tmpArray.Name | ForEach-Object { $outArray += $_ }
     }
-    Else {
+    else {
         $outArray = $DisableTask | Where-Object { $_ -ne 'All' }
     }
 
@@ -552,8 +553,8 @@ if ($EnableTask -or $DisableTask) {
     Write-Host $ActionMade        -ForegroundColor Cyan   -NoNewline
     Write-Host " the selected task(s). Please find below a quick resume of the new values:" -ForegroundColor Yellow
 
-    # Reload file to ensure that we display the real file value, not the momory ones.
-    $TasksSeqConfig = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
+    # Reload file to ensure that we display the real file values, not the memory ones.
+    $TasksSeqConfig = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
 
     # Display
     $tasks = Select-Xml $TasksSeqConfig -XPath "//Sequence/Id" | Select-Object -ExpandProperty "Node"
@@ -561,7 +562,7 @@ if ($EnableTask -or $DisableTask) {
 
     # Exist
     Write-Host "`nScript's done.`n" -ForegroundColor Green
-    Exit 0
+    exit 0
 }
 
 <#
@@ -634,7 +635,7 @@ foreach ($line in $LogoData) {
 # New in version 3.0.0: the cartridge will now dynamically display information about xml files used.
 # Loading Cartridge: separation line (we build a separator with a custom character and a max length previsously computed)
 $SeparationLine = ""
-For ($i = 1 ; $i -le $MaxLength ; $i++) { 
+for ($i = 1 ; $i -le $MaxLength ; $i++) { 
     $SeparationLine += $SchedulrConfig.SchedulerSettings.ScriptHeader.Cartridge.BorderChar 
 }
 
@@ -700,18 +701,18 @@ if ($TShistoryLastRun -eq "" -and $TShistoryRootDns -eq "" -and $TShistoryDomain
     # Script has never run.
     $allowedRun = $True
 }
-Else {
+else {
     # The script has already been ran. We need to ensure this is not a "copy/paste" in another domain/forest.
     # First: is it the same system? If so, this is ok.
     if (($env:COMPUTERNAME) -eq $TasksSeqConfig.Settings.History.LastRun.System) {
         $allowedRun = $true
     }
-    Else {
+    else {
         # This is not the same system, but if the domain and forest are the same, then it's ok.
         if ((Get-ADDomain).Forest -eq $TShistoryRootDns -and (Get-ADDomain).DNSRoot -eq $TShistoryDomainDns) {
             $allowedRun = $True
         }
-        Else {
+        else {
             # This is a problem: we need to ensure that the sources are fresh.
             # To achieve this goal, we simply hunt for any translated.migtable file in the GroupPolicy folder (those file are generated by the script on its first run).
             $TranslatedMigTable = Get-ChildItem C:\HardenAD\Inputs\GroupPolicies\ -Recurse -File -Filter "translated.migtable"
@@ -736,7 +737,7 @@ if (-not ($FlagPreReq) -or -not($allowedRun)) {
         Write-Host $Line -ForegroundColor Yellow
     }
     Write-Host "`nFix the issue(s) and retry.`n" -ForegroundColor Magenta
-    Exit 1
+    exit 1
 }
 
 # Updating the TasksSequence file to reflect the new data.
@@ -749,7 +750,7 @@ if ($FlagPreReq) {
     $TasksSeqConfig = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
 
 }
-Else {
+else {
     Write-Host "Some check have failed!" -ForegroundColor Red
     exit 1
 }
@@ -893,7 +894,7 @@ foreach ($task in $Tasks) {
     
     # Remove the job from the queue
     if (-not ($doNotRun)) {   
-        Try { Remove-Job $job.ID -ErrorAction Stop } Catch { }
+        try { Remove-Job $job.ID -ErrorAction Stop } catch { }
     }
     # Next line ;)
     write-host $resetAll$showCursor
@@ -920,11 +921,11 @@ Write-Host "Exporting results to .\Logs\" -ForegroundColor Gray     -NoNewline
 Write-Host $csvName                       -ForegroundColor DarkGray -NoNewline
 Write-Host "..."                          -ForegroundColor Gray     -NoNewline
 
-Try { 
+try { 
     $Resume | Select-Object TaskId, TaskResult, TaskName | Sort-Object TaskID | Export-Csv .\Logs\$CsvName -Delimiter "`t" -Encoding utf8 -NoTypeInformation
     Write-Host "success" -ForegroundColor Green
 }
-Catch {
+catch {
     Write-Host "failure" -ForegroundColor red
 }
 
@@ -932,11 +933,11 @@ Write-Host "Exporting logging to .\Logs\" -ForegroundColor Gray     -NoNewline
 Write-Host $logName                       -ForegroundColor DarkGray -NoNewline
 Write-Host "..."                          -ForegroundColor Gray     -NoNewline
 
-Try { 
+try { 
     $SchedulrLoging | Out-File .\Logs\$LogName -Encoding utf8
     Write-Host "success`n" -ForegroundColor Green
 }
-Catch {
+catch {
     Write-Host "failure`n" -ForegroundColor red
 }
 
