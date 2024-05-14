@@ -21,13 +21,13 @@ Param(
 $Array = @()
 
 # Compute Domain Admins
-$DAsid  = [String](Get-ADDomain).DomainSID.Value + "-512"
+$DAsid = [String](Get-ADDomain).DomainSID.Value + "-512"
 $DAName = (Get-ADGroup $DAsid).Name
 
-$EAsid  = [String](Get-ADDomain).DomainSID.Value + "-519"
+$EAsid = [String](Get-ADDomain).DomainSID.Value + "-519"
 $EAName = (Get-ADGroup $EAsid).Name
 
-$ASsid  = "S-1-5-32-544"
+$ASsid = "S-1-5-32-544"
 $ASName = (Get-ADGroup $ASsid).Name
 
 
@@ -37,14 +37,14 @@ $AllComputers = Get-ADComputer -Server $TargetDomain -Filter * -Properties nTSec
  
 # Store Info
 $AllComputers | foreach {
-    $DistinguishedName    = $_.DistinguishedName
-    $GroupCategory        = $_.GroupCategory
-    $GroupScope           = $_.GroupScope
-    $Name                 = $_.Name
-    $ObjectClass          = $_.ObjectClass
-    $ObjectGUID           = $_.ObjectGUID
-    $SamAccountName       = $_.SamAccountName
-    $SID                  = $_.SID
+    $DistinguishedName = $_.DistinguishedName
+    $GroupCategory = $_.GroupCategory
+    $GroupScope = $_.GroupScope
+    $Name = $_.Name
+    $ObjectClass = $_.ObjectClass
+    $ObjectGUID = $_.ObjectGUID
+    $SamAccountName = $_.SamAccountName
+    $SID = $_.SID
     $nTSecurityDescriptor = $_.nTSecurityDescriptor
 
 
@@ -58,18 +58,18 @@ $AllComputers | foreach {
         SamAccountName    = $SamAccountName
         SID               = $SID
         Owner             = $nTSecurityDescriptor.owner
-        }
-     
-    $DistinguishedName    = $null
-    $DNSHostName          = $null
-    $Enabled              = $null
-    $Name                 = $null
-    $ObjectClass          = $null
-    $ObjectGUID           = $null
-    $SamAccountName       = $null
-    $SID                  = $null
-    $nTSecurityDescriptor = $null
     }
+     
+    $DistinguishedName = $null
+    $DNSHostName = $null
+    $Enabled = $null
+    $Name = $null
+    $ObjectClass = $null
+    $ObjectGUID = $null
+    $SamAccountName = $null
+    $SID = $null
+    $nTSecurityDescriptor = $null
+}
  
 # How many Accounts were returns ?
 Write-Host "Found " -NoNewline -ForegroundColor Gray
@@ -77,7 +77,7 @@ Write-Host $Array.Count -ForegroundColor Yellow -NoNewline
 Write-Host " computers" -ForegroundColor Gray
 
 # How many Accounts need to be reviewed ?
-$NoGood = $Array.Where({(($_.Owner -ne "$domain\$DAName") -and ($_.Owner -ne "$domain\$EAName") -and ($_.Owner -ne "$domain\$ASName"))})
+$NoGood = $Array.Where({ (($_.Owner -ne "$domain\$DAName") -and ($_.Owner -ne "$domain\$EAName") -and ($_.Owner -ne "$domain\$ASName")) })
 
 Write-Host "About " -NoNewline -ForegroundColor Gray
 Write-Host $NoGood.count -ForegroundColor Cyan -NoNewline
@@ -96,27 +96,27 @@ $NoGood | foreach {
     write-host "`tchanging owner of " -NoNewline -ForegroundColor $color
 
     # Change Owner
-    Try   {
-            # Define Target
-            $TargetObject = Get-ADComputer $SamAccountName -Server $TargetDomain
-            $AdsiTarget = [adsi]"LDAP://$($TargetObject.DistinguishedName)"
+    Try {
+        # Define Target
+        $TargetObject = Get-ADComputer $SamAccountName -Server $TargetDomain
+        $AdsiTarget = [adsi]"LDAP://$($TargetObject.DistinguishedName)"
  
-            # Set new Owner
-            $NewOwner = New-Object System.Security.Principal.NTAccount($DAName)
-            $AdsiTarget.PSBase.ObjectSecurity.SetOwner($NewOwner)
-            $AdsiTarget.PSBase.CommitChanges()
+        # Set new Owner
+        $NewOwner = New-Object System.Security.Principal.NTAccount($DAName)
+        $AdsiTarget.PSBase.ObjectSecurity.SetOwner($NewOwner)
+        $AdsiTarget.PSBase.CommitChanges()
 
-            Write-Host "`tSuccess" -ForegroundColor $succol
-          }
+        Write-Host "`tSuccess" -ForegroundColor $succol
+    }
     Catch {
-            Write-Warning $($_)
-            #$SamAccountName
-            Write-Host "`tfailed!" -ForegroundColor red
-          }
+        Write-Warning $($_)
+        #$SamAccountName
+        Write-Host "`tfailed!" -ForegroundColor red
+    }
  
     # Reset ACL
     # get computer default ACL
-    $SchemaNamingContext       = (Get-ADRootDSE -Server $TargetDomain).schemaNamingContext
+    $SchemaNamingContext = (Get-ADRootDSE -Server $TargetDomain).schemaNamingContext
     $DefaultSecurityDescriptor = Get-ADObject -Identity "CN=Computer,$SchemaNamingContext" -Properties defaultSecurityDescriptor -Server $TargetDomain | Select-Object -ExpandProperty defaultSecurityDescriptor
 
     $DescriptionMessage = "Resetting SDDL for computer $SamAccountName"
@@ -126,20 +126,18 @@ $NoGood | foreach {
         
     $ADObj = Get-ADComputer -Identity $SamAccountName -Properties nTSecurityDescriptor -ErrorVariable GetADObjError -Server $TargetDomain
 
-    if ($GetADobjError) 
-    { 
+    if ($GetADobjError) { 
         Write-Host "`tFailed!" -ForegroundColor Red 
     }
-    Else 
-    {
-        Try   {
-                $ADObj.nTSecurityDescriptor.SetSecurityDescriptorSddlForm( $DefaultSecurityDescriptor )
-                Set-ADObject -Identity $ADObj.DistinguishedName -Replace @{ nTSecurityDescriptor = $ADObj.nTSecurityDescriptor } -Confirm:$false -Server $TargetDomain
-                Write-Host "`tSuccess" -ForegroundColor $succol
-              } 
+    Else {
+        Try {
+            $ADObj.nTSecurityDescriptor.SetSecurityDescriptorSddlForm( $DefaultSecurityDescriptor )
+            Set-ADObject -Identity $ADObj.DistinguishedName -Replace @{ nTSecurityDescriptor = $ADObj.nTSecurityDescriptor } -Confirm:$false -Server $TargetDomain
+            Write-Host "`tSuccess" -ForegroundColor $succol
+        } 
         Catch {
-                Write-Host "`tFailed" -ForegroundColor red
-              }
+            Write-Host "`tFailed" -ForegroundColor red
+        }
     }
     
     # Release variable

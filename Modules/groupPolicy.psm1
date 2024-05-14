@@ -389,8 +389,7 @@ Function Import-WmiFilters {
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Resultat"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
         {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
@@ -499,19 +498,16 @@ Function New-GpoObject {
             #.Check if the GPO already exists
             $gpChek = Get-GPO -Name $gpName -ErrorAction SilentlyContinue
 
-            if ($gpChek -or $gpVali -eq "No") 
-			{
-                if ($gpChek) 
-				{
-					Write-DebugMessage "---> GPO $gpName already exists."
-				}
-				if ($gpVali -eq "No")
-				{
-					Write-DebugMessage "---> GPO $gpName is set to not be imported (validation=No)."
-				}
-				#GPO Exists - Set flag according to the overwrite attribute.
-				$gpFlag = $false
-				$result = 0
+            if ($gpChek -or $gpVali -eq "No") {
+                if ($gpChek) {
+                    Write-DebugMessage "---> GPO $gpName already exists."
+                }
+                if ($gpVali -eq "No") {
+                    Write-DebugMessage "---> GPO $gpName is set to not be imported (validation=No)."
+                }
+                #GPO Exists - Set flag according to the overwrite attribute.
+                $gpFlag = $false
+                $result = 0
             }
             Else {
                 #.Create empty GPO
