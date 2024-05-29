@@ -209,7 +209,10 @@ function Set-Translation
             {
                 Write-Host "Expected, so you say...`n" -ForegroundColor Green
                 $isChild = $true
-            } Else {
+            } 
+            # Handle use case where you press Shift or Maj...
+            ElseIf ($key.VirtualKeyCode -ne 16 -and $key.VirtualKeyCode -ne 20) 
+            {
                 Write-Host "Unexpected? Do, or do not. But there there is no try.`n" -ForegroundColor Red
                 $isChild = $false
             }
@@ -257,7 +260,10 @@ function Set-Translation
             {
                 Write-Host "Glad you'll agree with it!`n" -ForegroundColor Green
                 $isOK = $true
-            } Else {
+            }
+            # Handle use case where you press Shift or Maj...
+            ElseIf ($key.VirtualKeyCode -ne 16 -and $key.VirtualKeyCode -ne 20)
+            {
                 Write-Host "'Kay... You're too old for this sh**t, Roger?`n" -ForegroundColor Red
                 $isOK = $false
             }
@@ -288,13 +294,21 @@ function Set-Translation
             Write-Host "`nAre those informations correct? " -ForegroundColor Magenta -NoNewline
             Write-Host "(Y/N) " -NoNewline
             
-            $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
-                
-            if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) 
-            {  
-                $isOK = $true 
-            } Else {
-                $isOK = $false
+            $invalidKeyPress = $true
+            While ($invalidKeyPress)
+            {
+                $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
+                    
+                if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) 
+                {  
+                    $isOK = $true
+                    $invalidKeyPress = $false
+                } 
+                # Handle use case where you press Shift or Maj...
+                ElseIf ($key.VirtualKeyCode -ne 16 -and $key.VirtualKeyCode -ne 20) {
+                    $isOK = $false
+                    $invalidKeyPress = $false
+                }
             }
         }
 
@@ -318,16 +332,24 @@ function Set-Translation
         {
             Write-Host "`nDo you want to continue with those values? " -ForegroundColor Yellow -NoNewline
             Write-Host "[Y/N] " -NoNewline
-            
-            # Waiting key input. If not Y, then leaves.
-            $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
-            if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13)
+
+            $badKeyPRess = $true
+            While ($badKeyPRess)
             {
-                Write-Host "Going on... Or: nearly 'Just Secured', I should say." -ForegroundColor Green
-            } else {
-                # Just leaving
-                Write-Host "Ok, canceling... I find your lack of faith disturbing." -ForegroundColor Red
-                Exit 0
+                # Waiting key input. If not Y, then leaves.
+                $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
+                if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13)
+                {
+                    Write-Host "Going on... Or: nearly 'Just Secured', I should say." -ForegroundColor Green
+                    $badKeyPRess = $false
+                } 
+                # Handle use case where you press Shift or Maj...
+                elseif ($key.VirtualKeyCode -ne 16 -and $key.VirtualKeyCode -ne 20) {
+                    # Just leaving
+                    Write-Host "Ok, canceling... I find your lack of faith disturbing." -ForegroundColor Red
+                    Exit 0
+                    $badKeyPRess = $false
+                }
             }
         }
     }
