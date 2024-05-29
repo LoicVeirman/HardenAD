@@ -104,6 +104,36 @@ Param(
 )
 
 <#
+    FUNCTION: FORMAT-XML
+    This function out an XML with a TAB indentation - requiered when you modify an XML.
+#>
+Function Format-XML
+{
+    Param(
+        # The XML data to be formatted
+        [Parameter(mandatory,Position=0)]
+        [XML]
+        $XML
+    )  
+    # Prepare the XML handler object
+    $StringWriter = New-Object System.IO.StringWriter
+    $XmlWriter    = New-Object System.XMl.XmlTextWriter $StringWriter
+
+    # Configure the XML handler with our specific formatting expectation
+    $xmlWriter.Formatting  = 'indented'
+    $xmlWriter.Indentation = 1
+    $xmlWriter.IndentChar  = "`t"
+
+    # Reformatting the XML...
+    $xml.WriteContentTo($XmlWriter)
+    $XmlWriter.Flush()
+    $StringWriter.Flush()
+
+    # Returning result.
+    return $StringWriter.ToString()
+}
+
+<#
     FUNCTION: NEW-LOGENTRY
     This function will format the log file output.
 #>
