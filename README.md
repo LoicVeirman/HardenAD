@@ -4,14 +4,14 @@ Feel free to use it and adapt following your needs!
 
 ## Release update list
 *Bugs:* 
-> Fixed a misconfiguration in HAD-LoginRestrictions-Tx, where the Deny Network Logon was set on the guest user instead of the guests group.  
+> 1. Fixed a misconfiguration in HAD-LoginRestrictions-Tx, where the Deny Network Logon was set on the guest user instead of the guests group.  
 
 *Tools:*
-> Added a script to fix HAD-LoginRestrictions-Tx bug (see upper). to be used on 2.9.8 edition BEFORE implementing it.  
+> 1. Added a script to fix HAD-LoginRestrictions-Tx bug (see upper). to be used on 2.9.8 edition BEFORE implementing it.  
 
 *Enhancements:*
-> Clean-up of useless files/folders (.vs, .git, .dsStore, ...)  
-> Added a .gitignore file to ease maintenance  
+> 1. Clean-up of useless files/folders (.vs, .git, .dsStore, ...)  
+> 2. Added a .gitignore file to ease maintenance  
  
 ## Just a word...
 Welcome to our GitHub Repo dedicated to enhance the security of Active Directory. We both believe in a world were knowledge have to be shared, especialy when we are talking of protecting companies against cyber attacks. Our IT journey drove us to many situation in which we had to harden an existing directory hierarchy, most oftenly lacking of a security posture due to a lack of technical knowledge or usefull guidance.
