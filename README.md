@@ -11,11 +11,16 @@ Welcome to our GitHub Repo dedicated to enhance the security of Active Directory
 
 This script is intended to assist you in setting-up a hardened directory, based on a strategy derivated from the Microsoft's red-forest model (also known as ESEA). 
 
+## Tools
+Since 2024/07, I add new script tools to help in fixing minor configuration issue. 
+The scripts are located in *tools\Scripts Fix*.  
+Feel free to use them.  
+
 ## Documentation...
 You can review our documentation here:
-> Administrator Guide: https://hardenad.net/wp-content/uploads/2022/12/Harden-AD-2.9-User-Manual.pdf
-> Quick Setup for lazy guys: https://hardenad.net/wp-content/uploads/2023/03/Harden-AD-2.9-deploiement-et-personnalisation-du-modele.pdf
-> AD Security Training Simplified: https://hardenad.net/wp-content/uploads/2022/08/Harden-AD-formation-AD-cybsersecurite.pdf
+> Administrator Guide: https://hardenad.net/wp-content/uploads/2022/12/Harden-AD-2.9-User-Manual.pdf  
+> Quick Setup for lazy guys: https://hardenad.net/wp-content/uploads/2023/03/Harden-AD-2.9-deploiement-et-personnalisation-du-modele.pdf  
+> AD Security Training Simplified: https://hardenad.net/wp-content/uploads/2022/08/Harden-AD-formation-AD-cybsersecurite.pdf  
 
 ## Some videos (French speaks)
 When Guillaume demonstrate Harden AD: https://www.linkedin.com/events/7132717233872474112/comments/
