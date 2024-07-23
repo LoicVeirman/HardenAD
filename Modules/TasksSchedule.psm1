@@ -1,8 +1,7 @@
 <#
     This module will manage tasks scheduling to maintain them.
 #>
-Function Set-TSLocalAdminGroups
-{
+Function Set-TSLocalAdminGroups {
     <#
         .SYNOPSIS
         This function will setup the configuration.xml file from ./Inputs/GroupPolicies/HAD-TS-Local-admins-groups.
@@ -18,7 +17,7 @@ Function Set-TSLocalAdminGroups
         Version 01.00.000
     #>
     Param(
-        [Parameter(Mandatory,Position=0)]
+        [Parameter(Mandatory, Position = 0)]
         [String]
         $GpoBackupID
     )
@@ -46,17 +45,18 @@ Function Set-TSLocalAdminGroups
     $isPresent = Test-Path $zeScript
 
     ## If the script is present, then we can call it to generate the dynamic configuration file.
-    if ($isPresent)
-    {
+    if ($isPresent) {
         try {
             $void = & $zeScript -UpdateConfig -xmlSourcePath .\Configs\TasksSequence_HardenAD.xml
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- --- The script has be run. The file is now generated."
             $Result = 0
-        } Catch {
+        }
+        Catch {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- !!! Error: failed to generate the dynamic configuration file!"
             $Result = 2
         }
-    } Else {
+    }
+    Else {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- !!! Error: the script Set-LocalAdminGroups.ps1 is not present!"
         $Result = 2
     }

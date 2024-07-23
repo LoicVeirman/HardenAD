@@ -176,21 +176,6 @@ Function Export-DebugLog
     }
 }
 
-# FUNCTION: FORMAT-XML
-# This function ensure the file is written nicely with tab indentation.
-Function Format-XML ([xml]$xml, $indent=1)
-{
-    $StringWriter = New-Object System.IO.StringWriter
-    $XmlWriter = New-Object System.XMl.XmlTextWriter $StringWriter
-    $xmlWriter.Formatting = “indented”
-    $xmlWriter.Indentation = $Indent
-    $xmlWriter.IndentChar = "`t"
-    $xml.WriteContentTo($XmlWriter)
-    $XmlWriter.Flush()
-    $StringWriter.Flush()
-    return $StringWriter.ToString()
-}
-
 # STATIC PARTS 
 $CurrentDir     = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $EventLogName   = "Application"

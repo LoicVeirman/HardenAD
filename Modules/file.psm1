@@ -40,11 +40,11 @@ Function Set-GpoCentralStore {
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
     
     ## Getting existing Sysvol base path
-    if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) 
-    {
+    if (((Get-WMIObject win32_operatingsystem).name -like "*2008*")) {
         Import-Module ActiveDirectory
         $sysVolBasePath = ((net share | Where-Object { $_ -like "SYSVOL*" }) -split " " | Where-Object { $_ -ne "" })[1]
-    } else {
+    }
+    else {
         $sysVolBasePath = (Get-SmbShare SYSVOL).path
     }
 
@@ -52,12 +52,12 @@ Function Set-GpoCentralStore {
     $domName = (Get-AdDomain).DNSRoot
 
     # Testing if the path is as expected (i.e. centralStore)
-    if (Test-Path "$sysVolBasePath\$domName\Policies\PolicyDefinitions") 
-    {
+    if (Test-Path "$sysVolBasePath\$domName\Policies\PolicyDefinitions") {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is present"
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is already enabled"
         $result = 0
-    } else {
+    }
+    else {
         # We need to enable the central store
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Central Store path is not enable yet"
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Robocopy C:\Windows\PolicyDefinitions $sysVolBasePath\$domName\Policies\PolicyDefinitions /MIR (start)"
@@ -70,8 +70,7 @@ Function Set-GpoCentralStore {
         $SourceItemsCount = (Get-ChildItem "C:\Windows\PolicyDefinitions" -File -Recurse).count
         $TargetItemsCount = (Get-ChildItem "$sysVolBasePath\$domName\Policies\PolicyDefinitions" -File -Recurse).count
         
-        if ($TargetItemsCount -eq $SourceItemsCount) 
-        {
+        if ($TargetItemsCount -eq $SourceItemsCount) {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> file copy as worked as expected ($TargetItemsCount files found in the CentralStore - same as the source repository)."
             $result = 0
         }
@@ -86,8 +85,7 @@ Function Set-GpoCentralStore {
     $HardenPolicyDefinition = Get-Item $PSScriptRoot\..\Inputs\PolicyDefinitions
     $GPOCentralStore = "$sysVolBasePath\$domName\Policies"
 
-    if (Test-Path $GPOCentralStore) 
-    {
+    if (Test-Path $GPOCentralStore) {
         # Rename the current repository
         $UniqueId = (Get-Date -Format yyyy-MM-yy_HHmmss)
         try {
@@ -103,8 +101,7 @@ Function Set-GpoCentralStore {
         }
         
         # Update the central with the latest repository release
-        if ($result -eq 0)
-        {
+        if ($result -eq 0) {
             try {
                 Copy-Item $HardenPolicyDefinition.FullName -Destination "$sysVolBasePath\$domName\Policies" -Recurse -Force -ErrorAction SilentlyContinue
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinitions has been copied to $sysVolBasePath\$domName\Policies"
@@ -130,7 +127,8 @@ Function Set-GpoCentralStore {
         $bugFix = Get-ChildItem $GPOCentralStore\PolicyDefinitions -File -Filter "winstoreui.adm?" -Recurse
         $bugFix | Remove-Item -Force -Confirm:$false -ErrorAction Stop
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Found $($bugFix.count) winstoreui.admx/l file(s) and removed them successfully from the central store"
-    } Catch {
+    }
+    Catch {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Found $($bugFix.count) winstoreui.admx/l file(s) to remove from central store but failed to delete them!"
     }
         
@@ -551,7 +549,7 @@ Function Install-LAPS {
         }
     }
     ## Load Task sequence
-    $xmlSkeleton   = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
+    $xmlSkeleton = [xml](Get-Content "$PSScriptRoot\..\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
     $RootDomainDns = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Rootdomaindns%" }).translateTo
 
     ## Check prerequesite: running user must be member of the Schema Admins group and running computer should be Schema Master owner.

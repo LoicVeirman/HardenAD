@@ -2,6 +2,11 @@
 This is the version 2.9.9 of the Hardening Active Directory project by then Harden Community. 
 Feel free to use it and adapt following your needs!
 
+
+# DISCLAIMER
+**ALL TASKS ARE DISABLED BY DEFAULT!**      
+This is the way we ensure the script will not be run into production and make unwanted changes. Please refer to the welcome page of the latest release to learn how you can activate them.
+
 ## Release update list
 *Bugs:* 
 > 1. Fixed a misconfiguration in HAD-LoginRestrictions-Tx, where the Deny Network Logon was set on the guest user instead of the guests group.  
@@ -31,3 +36,16 @@ AD Security Training Simplified:
 
 ## Some videos (French speaks)
 When Guillaume demonstrate Harden AD: https://www.linkedin.com/events/7132717233872474112/comments/
+
+## Configuration with GUI
+To prevent accidental changes, all the tasks are disabled by default in the XML configuration file.
+To help you to configure this XML file, you can use the GUI.
+Please note the only purpose of the GUI is to configure HardenAD config file, it does not perform any actions!
+
+To run the GUI, you have two options:
+- run `./HardenAD.ps1 -GUI`
+- run `Run-HardenADGui.ps1`
+![image](images/hardenAD-GUI.gif)
+
+## Credit to ... Well. All those mails, tchat threads, ...
+![image](https://github.com/LoicVeirman/HardenAD/assets/85032445/551013f9-8c08-4f5b-864a-624c27ac7b1b)

@@ -389,8 +389,7 @@ Function Import-WmiFilters {
     ## Exit
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Resultat"
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile)
-    {
+    if (Test-Path .\Logs\Debug\$DbgFile) {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
         {
             $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
@@ -486,6 +485,16 @@ Function New-GpoObject {
     $GpoData = $xmlFile.Settings.GroupPolicies.GPO
     Write-DebugMessage "---> Recovering GPOs data from xml file : success"
 
+    # Recovering GPOs GUID and Name
+    # hashtable : GUID = GPO Folder Name
+    $gpoGuidNameHashTable = @{}
+
+    Get-ChildItem ".\Inputs\GroupPolicies" -Directory | ForEach-Object {
+        Get-ChildItem $_.FullName -Directory | ForEach-Object {
+            $gpoGuidNameHashTable.Add($_.Name, $_.Parent.Name)
+        }
+    }
+
     ## Analyzing and processing
     if ($Result -ne 2) {
         foreach ($Gpo in $GpoData) {
@@ -496,22 +505,27 @@ Function New-GpoObject {
             $gpVali = $Gpo.Validation
             $gpBack = $Gpo.BackupID
         
+            # Get the GPO folder name from the GUID
+            $gpFolderName = $gpoGuidNameHashTable[$gpBack]
+
+            if($null -eq $gpFolderName) {
+                Write-DebugMessage "---> GPO with GUID $gpBack not found in Inputs\GroupPolicies folder."
+                continue
+            }
+
             #.Check if the GPO already exists
             $gpChek = Get-GPO -Name $gpName -ErrorAction SilentlyContinue
 
-            if ($gpChek -or $gpVali -eq "No") 
-			{
-                if ($gpChek) 
-				{
-					Write-DebugMessage "---> GPO $gpName already exists."
-				}
-				if ($gpVali -eq "No")
-				{
-					Write-DebugMessage "---> GPO $gpName is set to not be imported (validation=No)."
-				}
-				#GPO Exists - Set flag according to the overwrite attribute.
-				$gpFlag = $false
-				$result = 0
+            if ($gpChek -or $gpVali -eq "No") {
+                if ($gpChek) {
+                    Write-DebugMessage "---> GPO $gpName already exists."
+                }
+                if ($gpVali -eq "No") {
+                    Write-DebugMessage "---> GPO $gpName is set to not be imported (validation=No)."
+                }
+                #GPO Exists - Set flag according to the overwrite attribute.
+                $gpFlag = $false
+                $result = 0
             }
             Else {
                 #.Create empty GPO
@@ -531,34 +545,34 @@ Function New-GpoObject {
 
             #.If no issue, time to import data, set deny mermission and, if needed, link the GPO
             if ($gpFlag) {
-                $null = Convert-MigrationTable    -GpoName "$gpName\$gpBack"
-                $null = Convert-GpoPreferencesXml -GpoName "$gpName\$gpBack"
-                Write-DebugMessage "---> Trying to import datas of GPO $gpName :"
+                $null = Convert-MigrationTable    -GpoName "$gpFolderName\$gpBack"
+                $null = Convert-GpoPreferencesXml -GpoName "$gpFolderName\$gpBack"
+                Write-DebugMessage "---> Trying to import datas of GPO in folder $gpFolderName :"
 
                 #.Import backup
                 try {
                     # Case 1 : no translated.migtable
-                    $MigTableFile = "$curDir\Inputs\GroupPolicies\$gpName\$gpBack\translated.migtable"
+                    $MigTableFile = "$curDir\Inputs\GroupPolicies\$gpFolderName\$gpBack\translated.migtable"
                     if (-not(Test-Path $MigTableFile)) {
                         Write-DebugMessage "---> Importing datas of GPO without translated.migtable"
-                        $null = Import-GPO -BackupId $gpBack -TargetName $gpName -Path $curDir\Inputs\GroupPolicies\$gpName -ErrorAction Stop
+                        $null = Import-GPO -BackupId $gpBack -TargetName $gpName -Path $curDir\Inputs\GroupPolicies\$gpFolderName -ErrorAction Stop
                         Write-DebugMessage "---> Success"
                         $importFlag = $true
                     }
                     # Case 2 : translated.migtable
                     else {
                         Write-DebugMessage "---> Importing datas of GPO with translated.migtable"
-                        $null = Import-GPO -BackupId $gpBack -TargetName $gpName -MigrationTable $MigTableFile -Path $curDir\Inputs\GroupPolicies\$gpName -ErrorAction Stop
+                        $null = Import-GPO -BackupId $gpBack -TargetName $gpName -MigrationTable $MigTableFile -Path $curDir\Inputs\GroupPolicies\$gpFolderName -ErrorAction Stop
                         Write-DebugMessage "---> Success"
                         $importFlag = $true
                     }
-                    Write-DebugMessage "---> Datas of GPO $gpName has been imported."
+                    Write-DebugMessage "---> Datas of GPO in folder $gpFolderName has been imported."
                 }
                 Catch {
                     $result = 1
                     $errMess += " Failed to import at least one GPO : $Error[0]"
                     $errMess += ""
-                    Write-DebugMessage "---! Failed to import Datas of GPO $gpName"
+                    Write-DebugMessage "---! Failed to import Datas of GPO in folder $gpFolderName"
                     $importFlag = $false
                 }
 
