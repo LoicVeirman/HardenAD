@@ -41,6 +41,11 @@
     Launches the GUI to configure the task sequence.
 
     .EXAMPLE
+    HardenAD.ps1 -GUI
+
+    Launches the GUI to configure the task sequence.
+
+    .EXAMPLE
     HardenAD.ps1 -EnableTask All
     
     Enable all tasks in the file TasksSequence_HardenAD.xml.
@@ -106,11 +111,19 @@ Param(
     $DisableTask
 )
 
+# Format-XML functions are used in several places in the script. We need to load it first.
+Import-Module .\Modules\Format-XML.psm1
+
 <#
     FUNCTION: NEW-LOGENTRY
     This function will format the log file output.
 #>
 Function New-LogEntry {
+    Param(
+        [Parameter(Mandatory, Position = 0)]
+        [ValidateSet("info", "warning", "debug", "error")]
+        [String]
+        $LogLevel,
 
     Param(
         [Parameter(ParameterSetName = 'RUN')]
@@ -170,6 +183,8 @@ function Set-Translation {
         # Return result
         return $Result
     }
+    # Loading required modules
+    Import-Module .\Modules\translation.psm1
 
     # Main code
     # Getting running domain and forest context
@@ -234,7 +249,6 @@ function Set-Translation {
             Write-Host "Root NetBIOS...........: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainNetBios -ForegroundColor Yellow
             Write-Host "Root DistinguishedName.: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDN            -ForegroundColor Yellow
         
-
         }
         else {
             # Not a child, setting up root domain value with current domain
@@ -454,14 +468,12 @@ $Block = {
         Switch ($is2k8r2) {
             $true { $null = $mods | ForEach-Object { Import-Module $_.fullName } }
             $false { $null = $mods | ForEach-Object { Import-Module $_ } }
-
         }
     }
     catch { 
         # The script block failed to load prerequiered module(s). Exiting.
         $RunData = New-Object -TypeName psobject -Property @{ResultCode = 9 ; ResultMesg = "Error loading one or more module" ; TaskExeLog = "Error" }
     }
-
 
     # Run the expected function
     try {
@@ -531,8 +543,6 @@ if ($EnableTask) {
 
     # Saving file...
     Format-XMLData -XMLData $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
-
-
         # Display
         $tasks = Select-Xml $TasksSeqConfig -XPath "//Sequence/Id" | Select-Object -ExpandProperty "Node"
         $tasks | Select-Object Number, Name, TaskEnabled | Sort-Object Number | Format-Table Number,Name,TaskEnabled -AutoSize
@@ -727,7 +737,6 @@ foreach ($Prerequesite in $Prerequesites.Directory) {
             if (-not (Test-Path (".\" + $Prerequesite.Name + "\" + $file))) { 
                 $NoRunDetails += "File .\$($Prerequesite.Name)\$File is missing" 
                 $FlagPreReq = $false 
-
             }
             
             # Checking files, if any.
@@ -1098,4 +1107,3 @@ catch {
 }
 
 Write-Host "`nScript's done.`n" -ForegroundColor Yellow
-
