@@ -1,37 +1,39 @@
-<#
-    .SYNOPSIS
-    This script and all its dependencies will assist you in hardening an Active Directory domain.
+#Region HELP AND PARAMS
+    <#
+        .SYNOPSIS
+        This script and all its dependencies will assist you in hardening an Active Directory domain.
 
-    .DESCRIPTION
-    Welcome to the Harden AD Community Edition! 
-    We are really happy to offers to the comunity this free edition of Harden AD, a fully designed hardening model based on best practices and recommendation from the AD Security experts.
-    We strongly encourage that you firstly read our documentation and review, at least, the TasksSequences_HardenAD.xml file. you should also give a try to our website to hunt for videos or blog articles.
-    
-    If you need support, please use contact@hardenad.net to reach us.
+        .DESCRIPTION
+        Welcome to the Harden AD Community Edition! 
+        We are really happy to offers to the comunity this free edition of Harden AD, a fully designed hardening model based on best practices and recommendation from the AD Security experts.
+        We strongly encourage that you firstly read our documentation and review, at least, the TasksSequences_HardenAD.xml file. you should also give a try to our website to hunt for videos or blog articles.
+        
+        If you need support, please use contact@hardenad.net to reach us.
 
-    Remember: this tool is free and you are not allowed to resell it to customers. 
+        Remember: this tool is free and you are not allowed to resell it to customers. 
 
-    .PARAMETER NoConfirmationForRootDomain
-    This parameter teach the script to automatically validate a confirmation request. Only used when working in a root domain of a forest.
+        .PARAMETER NoConfirmationForRootDomain
+        This parameter teach the script to automatically validate a confirmation request. Only used when working in a root domain of a forest.
 
-    .PARAMETER EnableTask
-    This parameter will modify the script and enable all or specific task on demand. You can use it in combination with -DisableTask.
-    Note: this parameter will force the script to exit once the modification is done.
+        .PARAMETER EnableTask
+        This parameter will modify the script and enable all or specific task on demand. You can use it in combination with -DisableTask.
+        Note: this parameter will force the script to exit once the modification is done.
 
-    .PARAMETER DisableTask
-    This parameter will modify the script and disable all or specific task on demand. You can use it in combination with -EnableTask.
-    Note: This parameter superseed -EnableTask.
-    Note: this parameter will force the script to exit once the modification is done.
+        .PARAMETER DisableTask
+        This parameter will modify the script and disable all or specific task on demand. You can use it in combination with -EnableTask.
+        Note: This parameter superseed -EnableTask.
+        Note: this parameter will force the script to exit once the modification is done.
+
 
     .EXAMPLE
     HardenAD.ps1
     
     Runs the script.
 
-    .EXAMPLE
-    HardenAD.ps1 -NoConfirmationForSingleDomain
-    
-    Runs the script in non-interactive mode in the root forest domain only.
+        .EXAMPLE
+        HardenAD.ps1 -NoConfirmationForSingleDomain
+        
+        Runs the script in non-interactive mode in the root forest domain only.
 
     .EXAMPLE
     HardenAD.ps1 -GUI
@@ -48,15 +50,16 @@
     
     Disable all tasks in the file TasksSequence_HardenAD.xml.
 
-    .EXAMPLE
-    HardenAD.ps1 -EnableTask All -Disable 'Activate Active Directory Recycle Bin','Create administration accounts'
-    
-    Enable all tasks by default, then disable 'Activate Active Directory Recycle Bin' and 'Create administration accounts' in the file TasksSequence_HardenAD.xml.
+        .EXAMPLE
+        HardenAD.ps1 -EnableTask All -Disable 'Activate Active Directory Recycle Bin','Create administration accounts'
+        
+        Enable all tasks by default, then disable 'Activate Active Directory Recycle Bin' and 'Create administration accounts' in the file TasksSequence_HardenAD.xml.
 
-    .EXAMPLE
-    HardenAD.ps1 -EnableTask 'Activate Active Directory Recycle Bin','Create administration accounts'
-    
-    Enable 'Activate Active Directory Recycle Bin' and 'Create administration accounts' in the file TasksSequence_HardenAD.xml.
+        .EXAMPLE
+        HardenAD.ps1 -EnableTask 'Activate Active Directory Recycle Bin','Create administration accounts'
+        
+        Enable 'Activate Active Directory Recycle Bin' and 'Create administration accounts' in the file TasksSequence_HardenAD.xml.
+
 
     .EXAMPLE
     HardenAD.ps1 -DisableTask 'Activate Active Directory Recycle Bin','Create administration accounts'
@@ -108,15 +111,24 @@ Param(
     This function will format the log file output.
 #>
 Function New-LogEntry {
-    Param(
-        [Parameter(Mandatory, Position = 0)]
-        [ValidateSet("info", "warning", "debug", "error")]
-        [String]
-        $LogLevel,
 
-        [Parameter(Mandatory, Position = 1)]
-        $LogText
+    Param(
+        [Parameter(ParameterSetName = 'RUN')]
+        [Parameter(Position=0)]
+        [switch]
+        $NoConfirmationForRootDomain,
+
+        [Parameter(ParameterSetName = 'TASK')]
+        [ValidateSet('All','Activate Active Directory Recycle Bin','Create administration accounts','Create administration groups','Default computer location on creation','Default user location on creation','Enforce delegation model through ACEs','Import additional WMI Filters','Import new GPO or update existing ones','Prepare GPO files before GPO import','Restrict computer junction to the domain','Reset HAD Protected Groups Memberships','Set Administration Organizational Unit','Set GPO Central Store','Set Legacy Organizational Unit','Set Notify on every Site Links','Set Provisioning Organizational Unit','Set Tier 0 Organizational Unit','Set Tier 1 and Tier 2 Organizational Unit','Setup LAPS permissions over the domain','Update Ad schema for LAPS and deploy PShell tools','Update LAPS deployment scripts','Upgrade Domain Functional Level','Upgrade Forest Functional Level')]
+        [Array]
+        $EnableTask,
+
+        [Parameter(ParameterSetName = 'TASK')]
+        [ValidateSet('All','Activate Active Directory Recycle Bin','Create administration accounts','Create administration groups','Default computer location on creation','Default user location on creation','Enforce delegation model through ACEs','Import additional WMI Filters','Import new GPO or update existing ones','Prepare GPO files before GPO import','Reset HAD Protected Groups Memberships','Restrict computer junction to the domain','Set Administration Organizational Unit','Set GPO Central Store','Set Legacy Organizational Unit','Set Notify on every Site Links','Set Provisioning Organizational Unit','Set Tier 0 Organizational Unit','Set Tier 1 and Tier 2 Organizational Unit','Setup LAPS permissions over the domain','Update Ad schema for LAPS and deploy PShell tools','Update LAPS deployment scripts','Upgrade Domain Functional Level','Upgrade Forest Functional Level')]
+        [Array]
+        $DisableTask
     )
+
     
     # Variables
     $Result = @()
@@ -149,8 +161,15 @@ function Set-Translation {
     param (
     )
 
-    # Loading requiered module
-    Import-Module .\Modules\translation.psm1
+        # Format text (able to handle multiple line)
+        foreach ($entry in $LogText) 
+        {
+            $Result += "$Timstamp`t[$Level]`t$entry"
+        }
+        
+        # Return result
+        return $Result
+    }
 
     # Main code
     # Getting running domain and forest context
@@ -186,8 +205,8 @@ function Set-Translation {
             else {
                 Write-Host "Unexpected? Do, or do not. But there there is no try.`n" -ForegroundColor Red
                 $isChild = $false
+
             }
-        }
 
         # Test if child domain or not
         if ($isChild) {
@@ -201,10 +220,21 @@ function Set-Translation {
 
             # Disable FFL Upgrade
             ($TasksSeqConfig.Settings.Sequence.Id | Where-Object { $_.Number -eq "006" }).TaskEnabled = "No"
+
             
-            # Disable LAPS Schema update
-            ($TasksSeqConfig.Settings.Sequence.Id | Where-Object { $_.Number -eq "134" }).TaskEnabled = "No"
+            } else {
+                # Not a child, setting up root domain value with current domain
+                $RootDomainDNS     = $DomainDNS
+                $RootDomainNetBios = $DomainNetBios
+                $RootDN            = $DN
+                $RootDomainSID     = $DomainSID
+            }
+
+            Write-Host "Root Domain............: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainDNS     -ForegroundColor Yellow
+            Write-Host "Root NetBIOS...........: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainNetBios -ForegroundColor Yellow
+            Write-Host "Root DistinguishedName.: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDN            -ForegroundColor Yellow
         
+
         }
         else {
             # Not a child, setting up root domain value with current domain
@@ -253,14 +283,6 @@ function Set-Translation {
                 # Force leaving                    
                 $isOK = $false
             }
-
-            Write-Host "`nNew values:"            -ForegroundColor Magenta
-            Write-Host "Root NetBIOS Name........: " -ForegroundColor Gray -NoNewline ; Write-Host $netbiosName       -ForegroundColor Yellow
-            Write-Host "Root Domain DNS..........: " -ForegroundColor Gray -NoNewline ; Write-Host $Domaindns         -ForegroundColor Yellow
-            Write-Host "Root Distinguished Name..: " -ForegroundColor Gray -NoNewline ; Write-Host $DistinguishedName -ForegroundColor Yellow
-            Write-Host "Root Domain SID..........: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainSID     -ForegroundColor Yellow
-            Write-Host "`nAre those informations correct? " -ForegroundColor Magenta -NoNewline
-            Write-Host "(Y/N) " -NoNewline
             
             $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
                 
@@ -303,8 +325,8 @@ function Set-Translation {
                 Write-Host "Ok, canceling... I find your lack of faith disturbing." -ForegroundColor Red
                 exit 0
             }
+
         }
-    }
 
     # Compute new wellKnownSID
     $authenticatedUsers_SID = "S-1-5-11"
@@ -432,12 +454,14 @@ $Block = {
         Switch ($is2k8r2) {
             $true { $null = $mods | ForEach-Object { Import-Module $_.fullName } }
             $false { $null = $mods | ForEach-Object { Import-Module $_ } }
+
         }
     }
     catch { 
         # The script block failed to load prerequiered module(s). Exiting.
         $RunData = New-Object -TypeName psobject -Property @{ResultCode = 9 ; ResultMesg = "Error loading one or more module" ; TaskExeLog = "Error" }
     }
+
 
     # Run the expected function
     try {
@@ -508,9 +532,11 @@ if ($EnableTask) {
     # Saving file...
     Format-XMLData -XMLData $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
 
-    # Prepare output
-    $ActionMade = "enable"
-}
+
+        # Display
+        $tasks = Select-Xml $TasksSeqConfig -XPath "//Sequence/Id" | Select-Object -ExpandProperty "Node"
+        $tasks | Select-Object Number, Name, TaskEnabled | Sort-Object Number | Format-Table Number,Name,TaskEnabled -AutoSize
+
 
 # When someone don't wan't me to perform...
 if ($DisableTask) {
@@ -522,7 +548,31 @@ if ($DisableTask) {
     }
     else {
         $outArray = $DisableTask | Where-Object { $_ -ne 'All' }
+
     }
+#EndRegion
+
+#Region MAIN SCRIPT
+    <#
+        MAIN SCRIPT
+        -----------
+        Script routing which will drive the hardening of Active Dir.
+    #>
+
+    #Region SCREEN SETUP AND WELCOMING
+        # Setting backgroundColor and foregroundColor, Then freshup display
+        $Host.UI.RawUI.BackgroundColor = 'black'
+        $Host.UI.RawUI.ForegroundColor = 'white'
+        Clear-Host
+
+        # Loading modules
+        # When dealing with 2008R2, we need to import AD module first
+        Switch ((Get-WMIObject win32_operatingsystem).name -like "*2008*")
+        {
+            $True  { $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1") | Select-Object FullName }
+            $false { $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1").FullName }
+        }
+
 
     # Array is ready, let's go to modify...
     ForEach ($Task in $outArray) {
@@ -677,6 +727,20 @@ foreach ($Prerequesite in $Prerequesites.Directory) {
             if (-not (Test-Path (".\" + $Prerequesite.Name + "\" + $file))) { 
                 $NoRunDetails += "File .\$($Prerequesite.Name)\$File is missing" 
                 $FlagPreReq = $false 
+
+            }
+            
+            # Checking files, if any.
+            if ($Prerequesite.File) 
+            {
+                foreach ($file in $Prerequesite.File) 
+                {
+                    if (-not (Test-Path (".\" + $Prerequesite.Name + "\" + $file)))
+                    { 
+                        $NoRunDetails += "File .\$($Prerequesite.Name)\$File is missing" 
+                        $FlagPreReq    = $false 
+                    }
+                }
             }
         }
     }
@@ -730,14 +794,26 @@ if (-not ($FlagPreReq) -or -not($allowedRun)) {
     exit 1
 }
 
-# Updating the TasksSequence file to reflect the new data.
-Set-Translation
+
+        # If not allowed to run, we leave the script.
+        if (-not ($FlagPreReq) -or -not($allowedRun))
+        {
+            Write-Host "`nTHE SCRIPT COULD NOT RUN:" -ForegroundColor Red
+            foreach ($line in $NoRunDetails)
+            {
+                Write-Host "> "  -ForegroundColor Red -NoNewline
+                Write-Host $Line -ForegroundColor Yellow
+            }
+            Write-Host "`nFix the issue(s) and retry.`n" -ForegroundColor Magenta
+            Exit 1
+        }
+
 
 if ($FlagPreReq) {
     Write-Host "All prerequesites are OK.`n" -ForegroundColor Green
 
-    # Reload the config file
-    $TasksSeqConfig = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
+            # Reload the config file
+            $TasksSeqConfig = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
 
 }
 else {
@@ -745,13 +821,15 @@ else {
     exit 1
 }
 
-# Catch initial cursor position
-$InitialPosition = $host.UI.RawUI.CursorPosition
-                                                     
-#-Using XML
-$Resume = @()
 
-$Tasks = $TasksSeqConfig.Settings.Sequence.ID | Sort-Object Number
+    #Region INITATE TASKS LIST AND SCREEN MANAGEMENT
+        # Catch initial cursor position
+        $InitialPosition = $host.UI.RawUI.CursorPosition
+                                                            
+        #-Using XML
+        $Resume = @()
+
+        $Tasks = $TasksSeqConfig.Settings.Sequence.ID | Sort-Object Number
 
 foreach ($task in $Tasks) {
     # Update log
@@ -763,15 +841,15 @@ foreach ($task in $Tasks) {
         Default { $doNotRun = $True }
     }
 
-    # Get current cusror position on screen
-    $InitialPosition = $host.UI.RawUI.CursorPosition
+            # Get current cusror position on screen
+            $InitialPosition = $host.UI.RawUI.CursorPosition
 
-    # Write the newline to initiate the progress bar
-    Write-Host $ColorsAndTexts.PendingText -ForegroundColor $ColorsAndTexts.PendingColor -NoNewline
-    Write-Host ": " -ForegroundColor $ColorsAndTexts.BaseTxtColor -NoNewline
+            # Write the newline to initiate the progress bar
+            Write-Host $ColorsAndTexts.PendingText -ForegroundColor $ColorsAndTexts.PendingColor -NoNewline
+            Write-Host ": " -ForegroundColor $ColorsAndTexts.BaseTxtColor -NoNewline
 
-    #-Display the task description and managing color output
-    $TextToDisplay = $task.TaskDescription -split '`'
+            #-Display the task description and managing color output
+            $TextToDisplay = $task.TaskDescription -split '`'
 
     foreach ($Section in $TextToDisplay) {
         # Looking at the first character: if this one is one of the AltBaseHTxt, the applying special color scheme.
@@ -805,8 +883,9 @@ foreach ($task in $Tasks) {
         $resetAll = $null 
     }
 
-    # Logging
-    $SchedulrLoging += New-LogEntry "debug" ("--- ----: Calling function " + [string]($task.CallingFunction) + " with parameters " + [string]($task.UseParameters))
+            # Logging
+            $SchedulrLoging += New-LogEntry "debug" ("--- ----: Calling function " + [string]($task.CallingFunction) + " with parameters " + [string]($task.UseParameters))
+    #EndRegion
     
     # Run the job
     if (-not ($doNotRun)) { 
@@ -846,11 +925,98 @@ foreach ($task in $Tasks) {
             else { 
                 # This character is written as usual
                 Write-Host (${hideCursor} + ([string]($ColorsAndTexts.RunningText)[$ptr]).toLower()) -ForegroundColor $ColorsAndTexts.PendingColor -NoNewline 
+
             } 
+            
+            # Text animation to show the running status
+            # First, moving to the next highlighted character
+            $CharIndex++
+            # Second, managing the case when we face the end of the string
+            if ($CharIndex -ge [String]($ColorsAndTexts.RunningText).length) 
+            {
+                #-Reinit the index to 0 (aka first character). 
+                $CharIndex = 0
+            }
+            
+            # Managing the output
+            # First, lets relocate the cursor position to the line beginning
+            $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
+            
+            # Second, using a loop condition, let's rewrite
+            for ($ptr = 0 ; $ptr -lt ($ColorsAndTexts.RunningText).length ; $ptr++) 
+            { 
+                if ($CharIndex -eq $ptr) 
+                { 
+                    #-This character will be highlighted
+                    Write-Host (${hideCursor} + ([string]($ColorsAndTexts.RunningText)[$ptr]).toUpper()) -ForegroundColor $ColorsAndTexts.RunningColor -NoNewline 
+                } 
+                else 
+                { 
+                    # This character is written as usual
+                    Write-Host (${hideCursor} + ([string]($ColorsAndTexts.RunningText)[$ptr]).toLower()) -ForegroundColor $ColorsAndTexts.PendingColor -NoNewline 
+                } 
+            }
+
+            # Waiting a little time. This is the speeding for animation.
+            Start-Sleep -Milliseconds 175
+        }
+    #EndRegion
+
+    #Region JOB RETURNS
+        # Logging
+        $SchedulrLoging += New-LogEntry "debug" ("--- ----: function's ended")
+
+        # Grab the job result.
+        if (-not ($doNotRun)) 
+        { 
+            $result = Receive-Job $job.Id
+        } 
+        else 
+        {
+            $result = New-Object -TypeName psobject -Property @{Resultcode = 4 }
         }
 
-        # Waiting a little time. This is the speeding for animation.
-        Start-Sleep -Milliseconds 175
+        # Special use case: some function ask for credential and this report badly the result - We will taks this into account.
+        if ($task.CallingFunction -eq "Add-GroupsOverDomain")
+        {
+            $result = New-Object -TypeName psobject -Property @{Resultcode = 0}
+        }
+
+        # Display result on screen
+        Switch ($result.ResultCode) 
+        {
+            0       { $zText = $ColorsAndTexts.SuccessText  ; $zColor = $ColorsAndTexts.SuccessColor  }
+            1       { $zText = $ColorsAndTexts.WarningText  ; $zColor = $ColorsAndTexts.WarningColor  }
+            2       { $zText = $ColorsAndTexts.FailureText  ; $zColor = $ColorsAndTexts.FailureColor  }
+            3       { $zText = $ColorsAndTexts.IgnoredText  ; $zColor = $ColorsAndTexts.IgnoredColor  }
+            4       { $zText = $ColorsAndTexts.DisabledText ; $zColor = $ColorsAndTexts.DisabledColor }
+            default { $zText = $ColorsAndTexts.FuncErrText  ; $zColor = $ColorsAndTexts.FailureColor  }
+        }
+
+        $Host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates $InitialPosition.X, $InitialPosition.Y
+        Write-Host (${hideCursor} + [string]$zText) -ForegroundColor $zColor -NoNewline
+        
+        # Remove the job from the queue
+        if (-not ($doNotRun)) 
+        {   
+            Try { Remove-Job $job.ID -ErrorAction Stop } Catch { }
+        }
+        # Next line ;)
+        write-host $resetAll$showCursor
+        
+        # Keeping a resume to be displayed at the end and exported to the output folder
+        $Resume += New-Object -TypeName psobject -Property @{ TaskID = $Task.Number ; TaskName = $task.Name ; TaskResult = $zText }
+        
+        # Logging
+        $SchedulrLoging += New-LogEntry "debug" @(("--- ----: TaskID     = " + $Task.Number), ("--- ----: TaskName   = " + $task.Name), "--- ----: TaskResult = $zText", ("--- ----: Message    = " + $result.ResultMesg))
+        
+        # Extra logging when an error was faced.
+        if ($zText -eq $ColorsAndTexts.FuncErrText) 
+        {
+            $SchedulrLoging += New-LogEntry "error" "ERR FUNC: it seems that the called function is missing or is not properly returning its result!" 
+            $SchedulrLoging += New-LogEntry "error" ("ERR FUNC: received result code: " + $result.ResultCode)
+        }
+    #EndRegion
     }
     
     # Logging
@@ -932,3 +1098,4 @@ catch {
 }
 
 Write-Host "`nScript's done.`n" -ForegroundColor Yellow
+

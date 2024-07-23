@@ -201,7 +201,7 @@ Function Set-ADRecycleBin {
 ## This function will set the Notify Option on each replication ##
 ## Link.                                                        ##
 ##                                                              ##
-## Version: 01.00.000                                           ##
+## Version: 01.03.000                                           ##
 ##  Author: contact@hardenad.net                                ##
 ##################################################################
 Function Set-SiteLinkNotify {
@@ -220,8 +220,9 @@ Function Set-SiteLinkNotify {
          
          history: 
             01.00 -- Script creation
-            01.01 -- Fix replink auto discver
+            01.01 -- Fix replink auto discover
             01.02 -- Removed DesiredState parameter
+            01.03 -- Added manually created site link (0x8 for instant rep)
     #>
     param(
     )
@@ -250,6 +251,7 @@ Function Set-SiteLinkNotify {
     }
 
     #.Only if not 2008 or 2008 R2.
+
     if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
         #.List of rep link
         $RepSiteLinks = Get-ADReplicationSiteLink -Filter * 
@@ -279,13 +281,14 @@ Function Set-SiteLinkNotify {
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Urgent Replication Options on " + $RepSiteLink.Name + " is properly set"
                 }
                 else { 
+
                     $Result = 2
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Urgent Replication Options are already enabled with value " + (Get-ADReplicationSiteLink $RepSiteLink.Name -Properties *).options + " for " + $RepSiteLink.Name
                 }
             }
         }
     }
     Else {
+
         $Result = 1
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Windows 2008 and 2008 R2 are not compliant with this function."
         $ResMess = "2008/R2 is not compliant with this function"
