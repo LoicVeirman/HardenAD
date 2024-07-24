@@ -28,6 +28,14 @@ $S_Red      = "$([char]0x1b)[38;2;255;0;0m"
 $S_Green    = "$([char]0x1b)[38;5;42;24m"
 $Cend       = "$([char]0x1b)[0m"
 #EndRegion
+# Retrieve XML file
+Try {
+    $xmlTS = [xml](Get-Content .\..\..\Configs\TasksSequence_HardenAD.xml -Encoding UTF8 -ErrorAction Stop)
+    write-host "${S_Orange}File${Cend}${S_yellow} TasksSequence_HardenAD.xml ${Cend}${S_Orange}Loaded${Cend}"
+} Catch {
+    Write-Host "${S_Red}Error${Cend}: ${S_Purple2}$($_.ToString())${Cend}"
+    exit 1
+}
 
 # Get GPO list to work with
 Try {
