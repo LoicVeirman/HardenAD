@@ -31,7 +31,7 @@ Param()
     $S_Red      = "$([char]0x1b)[38;2;255;0;0m"
     $bCyan      = "$([char]0x1b)[96;24m"
     $S_brown    = "$([char]0x1b)[38;2;206;145;120m"
-    $Cend = "$([char]0x1b)[0m"
+    $Cend       = "$([char]0x1b)[0m"
 #EndRegion
 
 # Retrieve XML file

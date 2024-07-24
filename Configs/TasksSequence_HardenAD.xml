@@ -5,7 +5,7 @@
 	-->
 	<Version>
 		<Edition Name="Community Edition" />
-		<Release Major="02" Minor="09" BugFix="008" />
+		<Release Major="02" Minor="09" BugFix="009" />
 	</Version>
 	<History>
 		<LastRun Date="" System="" isPDCemulator="" />
@@ -24,41 +24,59 @@
       			This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtion.
 			-->
 			<OU Class="HardenAD_ADMIN" Name="_Administration" Description="Privileged accounts administrative OU">
-				<ChildOU Name="GroupsT0" Description="Groups to manage Tier 0 objects">
-					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
-					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
-					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
-					<ChildOU Name="Logon" Description="Groups used to login access to a resource" />
+				<!-- GPO -->
+				<ChildOU Name="GPO" Description="Groups dedicated to OU filtering (apply and deny)" >
+					<ChildOU Name="Apply" Description="Groups dedicated to filter who/what will apply GPO" />
+					<ChildOU Name="Deny" Description="Groups dedicated to filter who/what will NOT apply GPO" />
 				</ChildOU>
-				<ChildOU Name="GroupsT1" Description="Groups to manage Tier 1 objects">
-					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
-					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
-					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
+				<!-- PAW -->
+				<ChildOU Name="PAW" Description="Privileged Admin Workstations" >
+					<ChildOU Name="Groups" Description="Protected group used by PAW (managed by T0 Manager)" />
+					<ChildOU Name="Stations" Description="PAW Computer objects" >
+						<ChildOU Name="Access" Description="Physical PAW dedicated to connect to a jump server" />
+						<ChildOU Name="T0" Description="Physical or virtual PAW dedicated to manage Tier 0 only" />
+						<ChildOU Name="T12L" Description="Physical or virtual PAW dedicated to manage Tier 1, 2 or Legacy" />
+					</ChildOU>
+					<ChildOU Name="Users" Description="Dedicated login account to open a session on a PAW (primary access)" />
 				</ChildOU>
-				<ChildOU Name="GroupsT1L" Description="Groups to manage Tier 1 Legacy objects">
-					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
-					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
-					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
+				<!-- TIER 0 -->
+				<ChildOU Name="Tier 0" Description="Privileged groups and users dedicated to Tier 0" >
+					<ChildOU Name="Groups" Description="Groups to manage Tier 0 objects" >
+						<ChildOU Name="Deleg" Description="Delegation groups" />
+						<ChildOU Name="LocalAdmins" Description="System Local Administrator groups" />
+					</ChildOU>
+					<ChildOU Name="Users" Description="Administration accounts (Manager, Administrator and Operator)" />
 				</ChildOU>
-				<ChildOU Name="GroupsT2" Description="Groups to manage Tier 2 objects">
-					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
-					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
-					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
+				<!-- TIER 1 -->
+				<ChildOU Name="Tier 1" Description="Privileged groups and users dedicated to Tier 1" >
+					<ChildOU Name="Groups" Description="Groups to manage Tier 1 objects" >
+						<ChildOU Name="Deleg" Description="Delegation groups" />
+						<ChildOU Name="LocalAdmins" Description="System Local Administrator groups" />
+					</ChildOU>
+					<ChildOU Name="Users" Description="Administration accounts (Manager, Administrator and Operator)" />
 				</ChildOU>
-				<ChildOU Name="GroupsT2L" Description="Groups to manage Tier 1 Legacy objects">
-					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
-					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
-					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
+				<!-- TIER 1 LEGACY -->
+				<ChildOU Name="Tier 1 Legacy" Description="Privileged groups and users dedicated to Tier 1 Legacy" >
+					<ChildOU Name="Groups" Description="Groups to manage Tier 1 Legacy objects" >
+						<ChildOU Name="LocalAdmins" Description="System Local Administrator groups" />
+					</ChildOU>
+					<ChildOU Name="Users" Description="Administration accounts (Operator only)" />
 				</ChildOU>
-				<ChildOU Name="PawAccess" Description="First Node Privilege Admin Worstations" />
-				<ChildOU Name="PawT0" Description="Privilege Admin Worstations Tier 0 assets" />
-				<ChildOU Name="PawT12L" Description="Privilege Admin Worstations for Tier 1, Tier 2 and Tier Legacy assets" />
-				<ChildOU Name="UserAccess" Description="First User Node Privilege Admin Worstations" />
-				<ChildOU Name="UsersT0" Description="Users to manage Tier 0 objects" />
-				<ChildOU Name="UsersT1" Description="Users to manage Tier 1 objects" />
-				<ChildOU Name="UsersT1L" Description="Users to manage Tier 1 Legacy objects" />
-				<ChildOU Name="UsersT2" Description="Users to manage Tier 2 objects" />
-				<ChildOU Name="UsersT2L" Description="Users to manage Tier 1 Legacy objects" />
+				<!-- TIER 2 -->
+				<ChildOU Name="Tier 2" Description="Privileged groups and users dedicated to Tier 2" >
+					<ChildOU Name="Groups" Description="Groups to manage Tier 2 objects" >
+						<ChildOU Name="Deleg" Description="Delegation groups" />
+						<ChildOU Name="LocalAdmins" Description="System Local Administrator groups" />
+					</ChildOU>
+					<ChildOU Name="Users" Description="Administration accounts (Manager, Administrator and Operator)" />
+				</ChildOU>
+				<!-- TIER 2 LEGACY -->
+				<ChildOU Name="Tier 2 Legacy" Description="Privileged groups and users dedicated to Tier 2 Legacy" >
+					<ChildOU Name="Groups" Description="Groups to manage Tier 2 Legacy objects" >
+						<ChildOU Name="LocalAdmins" Description="System Local Administrator groups" />
+					</ChildOU>
+					<ChildOU Name="Users" Description="Administration accounts (Operator only)" />
+				</ChildOU>
 			</OU>
 			<!--
 				CLASS: HardenAD_PROD-T0
@@ -84,22 +102,39 @@
 				This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtion.
 			-->
 			<OU Class="HardenAD_PROD-T1and2" Name="Harden_T12" Description="Tier 1 and Tier 2 resources">
-				<ChildOU Name="Contacts" Description="Contacts objects belonging to this Tier" />
-				<ChildOU Name="Groups" Description="Groups objects belonging to this Tier" >
-					<ChildOU Name="AADSync" Description="Groups objects synced with Azure AD" />
+				<ChildOU Name="Exchange" Description="Synced with EntraID - Exchange dedicated user, group and contact objects" >				
+					<ChildOU Name="Contacts" Description="Contacts objects" >
+						<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+					</ChildOU>
+					<ChildOU Name="Distribution List" Description="Groups used to handle distribution list" >
+						<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+					</ChildOU>
+					<ChildOU Name="Resources" Description="Groups and Users used to handle resources (room, etc.)" >
+						<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+					</ChildOU>
+					<ChildOU Name="Shared Mailboxes" Description="Deactivated users to manage Shared Mailbox (should be converted to Native EntraID users)" >
+						<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+					</ChildOU>
 				</ChildOU>
-				<ChildOU Name="Servers" Description="Computer objects belonging to this Tier and acting as servers">
+				<ChildOU Name="Groups" Description="Synced with EntraID - group objects (no Exchange groups) (Tier 1 and Tier 2)" >
+					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+				</ChildOU>
+				<ChildOU Name="Provisioning" Description="Default OU for user and computer object creation (Tier 1 and Tier 2)" >
+					<ChildOU Name="Users" Description="New user objects" />
+					<ChildOU Name="Computers" Description="New computer objects" />
+				</ChildOU>
+				<ChildOU Name="Servers" Description="Computer objects with a Server OS (Tier 1)">
 					<ChildOU Name="Disabled" Description="Disabled computer objects" />
 				</ChildOU>
-				<ChildOU Name="Services" Description="Service accounts belonging to this Tier">
-					<ChildOU Name="Disabled" Description="Disabled sevice accounts" />
+				<ChildOU Name="Services" Description="User objects acting as a service account on systems (Tier 1)">
+					<ChildOU Name="Disabled" Description="Disabled service accounts" />
 				</ChildOU>
-				<ChildOU Name="Users" Description="User objects belonging to this Tier">
-					<ChildOU Name="AADSync" Description="User objects synced with Azure AD" />
+				<ChildOU Name="Users" Description="Synced with EntraID - User objects for login on system or application (Tier 2)">
+					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
 					<ChildOU Name="Disabled" Description="Disabled user objects" />
 				</ChildOU>
-				<ChildOU Name="Workstations" Description="Computer Objects belonging to this Tier and acting as clients">
-					<ChildOU Name="AADSync" Description="Computer objects synced with Azure AD" />
+				<ChildOU Name="Workstations" Description="Synced with EntraID - Computer Objects with a Client OS (Tier 2)">
+					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
 					<ChildOU Name="Disabled" Description="Disabled computer objects" />
 				</ChildOU>
 			</OU>
@@ -108,21 +143,21 @@
 				This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtion.
 			-->
 			<OU Class="HardenAD_PROD-LEGACY" Name="Harden_TL" Description="Legacy resources">
-				<ChildOU Name="Groups" Description="Groups objects belonging to this Tier" >
-					<ChildOU Name="AADSync" Description="Groups objects synced with Azure AD" />
+				<ChildOU Name="Groups" Description="Synced with EntraID - group objects (no Exchange groups) (Tier 1 and Tier 2)" >
+					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
 				</ChildOU>
-				<ChildOU Name="Servers" Description="Computer objects belonging to this Tier and acting as servers">
+				<ChildOU Name="Servers" Description="Computer objects with a Server OS (Tier 1)">
 					<ChildOU Name="Disabled" Description="Disabled computer objects" />
 				</ChildOU>
-				<ChildOU Name="Services" Description="Service accounts belonging to this Tier">
-					<ChildOU Name="Disabled" Description="Disabled sevice accounts" />
+				<ChildOU Name="Services" Description="User objects acting as a service account on systems (Tier 1)">
+					<ChildOU Name="Disabled" Description="Disabled service accounts" />
 				</ChildOU>
-				<ChildOU Name="Users" Description="User objects belonging to this Tier">
-					<ChildOU Name="AADSync" Description="User objects synced with Azure AD" />
+				<ChildOU Name="Users" Description="Synced with EntraID - User objects for login on system or application (Tier 2)">
+					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
 					<ChildOU Name="Disabled" Description="Disabled user objects" />
 				</ChildOU>
-				<ChildOU Name="Workstations" Description="Computer Objects belonging to this Tier and acting as clients">
-					<ChildOU Name="AADSync" Description="Computer objects synced with Azure AD" />
+				<ChildOU Name="Workstations" Description="Synced with EntraID - Computer Objects with a Client OS (Tier 2)">
+					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
 					<ChildOU Name="Disabled" Description="Disabled computer objects" />
 				</ChildOU>
 			</OU>
@@ -444,7 +479,7 @@
 			GPO GROUP SETTINGS: used to generate APPLY and DENY Group Name. Use %tier% to mark the Tier localization in the new name
 				> GpoName..: define the group name for applying or denying a group
 		-->
-		<GlobalGpoSettings GroupName="L-S-%tier%-GPO_%GpoName%_%mode%" Tier0="T0" Tier1="T1" Tier2="T2">
+		<GlobalGpoSettings GroupName="L-S-GPO-%mode%-%GpoName%" Tier0="T0" Tier1="T1" Tier2="T2">
 			<GpoTier0 OU="OU=GPO,OU=%OU-ADM-GROUPS-T0%,OU=%OU-ADM%,%DN%" />
 			<GpoTier1 OU="OU=GPO,OU=%OU-ADM-GROUPS-T1%,OU=%OU-ADM%,%DN%" />
 			<GpoTier2 OU="OU=GPO,OU=%OU-ADM-GROUPS-T2%,OU=%OU-ADM%,%DN%" />
