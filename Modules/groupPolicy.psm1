@@ -421,16 +421,16 @@ Function Import-WmiFilters {
 Function New-GpoObject {
     <#
         .Synopsis
-         Add all GPOs from the TasksSequence_HardenAD.xml.
+        Add all GPOs from the TasksSequence_HardenAD.xml.
         
         .Description
-         The TasksSequence_HardenAD.xml file contain a section named <GPO>: this section will be readen by the script and every input will be added to the target domain.
+        The TasksSequence_HardenAD.xml file contain a section named <GPO>: this section will be readen by the script and every input will be added to the target domain.
         
         .Notes
-         Version: 
+        Version: 
             01.00 -- contact@hardenad.net 
-         
-         history: 
+        
+        history: 
             01.00 -- Script creation
             01.01 -- Added Security Filter option
             02.00 -- Uses new functions 2.0
@@ -457,7 +457,6 @@ Function New-GpoObject {
     ## Indicates caller and options used
     $caller = "---> Function caller..........: " + (Get-PSCallStack)[1].Command
     Write-DebugMessage $caller
-    #Write-DebugMessage "---> Function caller..........: " + (Get-PSCallStack)[1].Command
 
     ## When dealing with 2008R2, we need to import AD module first
     if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
@@ -570,7 +569,7 @@ Function New-GpoObject {
                 }
                 Catch {
                     $result = 1
-                    $errMess += " Failed to import at least one GPO : $Error[0]"
+                    $errMess += " Failed to import at least one GPO : $($_.ToString())"
                     $errMess += ""
                     Write-DebugMessage "---! Failed to import Datas of GPO in folder $gpFolderName"
                     $importFlag = $false

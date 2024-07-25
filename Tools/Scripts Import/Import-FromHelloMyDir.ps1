@@ -82,7 +82,7 @@ $node  = $xml_TasksSequence.Settings.Translation.wellKnownID                    
 $nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL                              | Where-Object { $_.TargetDN -Like "*=_Administration*" }     ; foreach ($node in $nodes) { $node.TargetDN = $node.TargetDN -replace "OU=_Administration","OU=$newName1" }
 $nodes = $xml_TasksSequence.Settings.GroupPolicies.GPO                               | Where-Object { $_.GpoLink.Path -like "*=_Administration*" } ; foreach ($node in $nodes) { foreach ($tmpnode in $Node.GpoLink) { $tmpnode.Path = $tmpnode.Path -replace "OU=_Administration","OU=$newName1" } }
 $nodes = $xml_TasksSequence.Settings.Accounts.User                                   | Where-Object { $_.Path -like "*=_Administration*" }         ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=_Administration","OU=$newName1" }
-$nodes = $xml_TasksSequence.Settings.Groups                                          | Where-Object { $_.Path -like "*=_Administration*" }         ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=_Administration","OU=$newName1" }
+$nodes = $xml_TasksSequence.Settings.Groups.Group                                    | Where-Object { $_.Path -like "*=_Administration*" }         ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=_Administration","OU=$newName1" }
 $nodes = $xml_TasksSequence.Settings.LocalAdminPasswordSolution.AdmPwdSelfPermission | Where-Object { $_.Target -like "*=_Administration*" }       ; foreach ($node in $nodes) { $node.Target = $node.Target -replace "OU=_Administration","OU=$newName1" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
@@ -284,9 +284,18 @@ $nodes = $xml_TasksSequence.Settings.Groups.Group | Where-Object { $_.Path -like
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
-
 Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT0 ${S_Yellow} with ${S_Brown}OU=Groups,OU=Tier 0${Cend}" -NoNewline
-$nodes = $xml_TasksSequence.Settings.Groups.Group | Where-Object { $_.Path -like "*=GroupsT0*" } ; foreach ($node in $nodes) { $node.path = $node.path -replace "OU=GroupsT0","OU=Groups,OU=Tier 0" }
+
+$node  = $xml_TasksSequence.Settings.translation.wellKnownID  | Where-Object { $_.TranslateFrom -eq "%OU-ADM-Groups-T0%" }  ; $node.TranslateTo = $node.TranslateTo -replace "OU=GroupsT0","OU=Groups,OU=Tier 0"
+$nodes = $xml_TasksSequence.Settings.Groups.Group             | Where-Object { $_.Path -like "*=GroupsT0*" }                ; foreach ($node in $nodes) { $node.path = $node.path -replace "OU=GroupsT0","OU=Groups,OU=Tier 0" }
+
+$Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
+Write-Host "${s_Green}done"
+#endregion
+#region Renaming Target DN to match the new OU design : Users in T0
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT0 ${S_Yellow} with ${S_Brown}OU=Users,OU=Tier 0${Cend}" -NoNewline
+
+$nodes = $xml_TasksSequence.Settings.Accounts.User | Where-Object { $_.Path -like "*=UsersT0*" } ; foreach ($node in $nodes) { $node.path = $node.path -replace "OU=UsersT0","OU=Users,OU=Tier 0" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
