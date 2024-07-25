@@ -92,9 +92,7 @@ Write-Host "${s_Green}done"
 Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}renaming ${S_Brown}_Administration | GPO ${S_Yellow}OU${Cend}" -NoNewline
 
 $node  = $xml_TasksSequence.Settings.OrganizationalUnits.ouTree.OU.ChildOU | Where-Object { $_.Description -eq "Groups dedicated to OU filtering (apply and deny)" } ; $node.Name = "$newName2"
-$node  = $xml_TasksSequence.Settings.GroupPolicies.GlobalGpoSettings.GpoTier0 ; $node.OU = $node.OU -replace "OU=GPO","OU=$newName2"
-$node  = $xml_TasksSequence.Settings.GroupPolicies.GlobalGpoSettings.GpoTier1 ; $node.OU = $node.OU -replace "OU=GPO","OU=$newName2"
-$node  = $xml_TasksSequence.Settings.GroupPolicies.GlobalGpoSettings.GpoTier2 ; $node.OU = $node.OU -replace "OU=GPO","OU=$newName2"
+$node  = $xml_TasksSequence.Settings.Translation.wellKnownID               | Where-Object { $_.TranslateFrom -eq '%OU-ADM-GPO%' } ; $node.TranslateTo = "$newName2"
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
@@ -200,7 +198,6 @@ $nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL      | Where-Object { $_
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #Endregion
-
 #region Renaming Target DN to match the new OU design : GroupsT1
 Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT1 ${S_Yellow} with ${S_Brown}OU=Groups,OU=Tier 1${Cend}" -NoNewline
 
@@ -286,7 +283,7 @@ $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT0 ${S_Yellow} with ${S_Brown}OU=Groups,OU=Tier 0${Cend}" -NoNewline
 
-$node  = $xml_TasksSequence.Settings.translation.wellKnownID  | Where-Object { $_.TranslateFrom -eq "%OU-ADM-Groups-T0%" }  ; $node.TranslateTo = $node.TranslateTo -replace "OU=GroupsT0","OU=Groups,OU=Tier 0"
+$node  = $xml_TasksSequence.Settings.translation.wellKnownID  | Where-Object { $_.TranslateFrom -eq "%OU-ADM-Groups-T0%" }  ; $node.TranslateTo = "Groups,OU=GPO"
 $nodes = $xml_TasksSequence.Settings.Groups.Group             | Where-Object { $_.Path -like "*=GroupsT0*" }                ; foreach ($node in $nodes) { $node.path = $node.path -replace "OU=GroupsT0","OU=Groups,OU=Tier 0" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}

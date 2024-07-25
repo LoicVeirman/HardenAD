@@ -353,6 +353,9 @@
 		<wellKnownID objectClass="group" translateFrom="%Prefix-global%" translateTo="G-S-" />
 		<wellKnownID objectClass="group" translateFrom="%Groups_Computers%" translateTo="LocalAdmins_%ComputerName%" />
 		<wellKnownID objectClass="text" translateFrom="%OU-Adm%" translateTo="_Administration" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-GPO%" translateTo="GPO" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-GPO-APPLY%" translateTo="Apply" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-GPO-DENY%" translateTo="Deny" />
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T0%" translateTo="GroupsT0" />
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T1%" translateTo="GroupsT1" />
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T2%" translateTo="GroupsT2" />
@@ -449,6 +452,7 @@
 			<Filter Name="Windows-x86-NoDC" Source="Windows-x86-NoDC.mof" />
 			<Filter Name="Windows-PDC" Source="Windows-PDC.mof" />
 		</WmiFilters>
+		<GlobalGpoSettings GroupName="L-S-GPO-%mode%-%GpoName%" OU="OU=%OU-ADM-GPO%,OU=%OU-ADM%,%DN%" />
 		<!--
 			The <GPO> elements list the Group Policy added (or refreshed) to the target domain.
 			Each of this Group Policy is first generated with no data (if not existing), then data is imported from its backup folder.
@@ -479,11 +483,6 @@
 			GPO GROUP SETTINGS: used to generate APPLY and DENY Group Name. Use %tier% to mark the Tier localization in the new name
 				> GpoName..: define the group name for applying or denying a group
 		-->
-		<GlobalGpoSettings GroupName="L-S-GPO-%mode%-%GpoName%" Tier0="T0" Tier1="T1" Tier2="T2">
-			<GpoTier0 OU="OU=GPO,OU=%OU-ADM-GROUPS-T0%,OU=%OU-ADM%,%DN%" />
-			<GpoTier1 OU="OU=GPO,OU=%OU-ADM-GROUPS-T1%,OU=%OU-ADM%,%DN%" />
-			<GpoTier2 OU="OU=GPO,OU=%OU-ADM-GROUPS-T2%,OU=%OU-ADM%,%DN%" />
-		</GlobalGpoSettings>
 		<!-- 
 			WINDOWS UPDATE 
 		-->

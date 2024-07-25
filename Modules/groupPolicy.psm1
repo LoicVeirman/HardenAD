@@ -436,6 +436,7 @@ Function New-GpoObject {
             02.00 -- Uses new functions 2.0
             02.01 -- Added Debug log
             02.02 -- Fixed bug that let unvalited GPO being imported anyway
+            02.03 -- Added ability to store in Deny and Apply sub-OU
     #>
     param(
     )
@@ -650,16 +651,14 @@ Function New-GpoObject {
                 }
                 $SrcGrpName = $newGrpName
 
-                #.Guessing 
-                Switch ($Tier) {
-                    "tier0" { $GrpPath = $xmlFile.Settings.GroupPolicies.GlobalGpoSettings.GpoTier0.OU }
-                    "tier1" { $GrpPath = $xmlFile.Settings.GroupPolicies.GlobalGpoSettings.GpoTier0.OU }
-                    "tier2" { $GrpPath = $xmlFile.Settings.GroupPolicies.GlobalGpoSettings.GpoTier0.OU }
-                }
-                
-                #.Cheking if any translation is requiered
+                #.Cheking if any translation is requiered (updated in 2.9.9)
+                $GrpPath = $xmlFile.Settings.GroupPolicies.GlobalGpoSettings.OU
+                $DenyOU  = "OU=%OU-ADM-GPO-DENY%"
+                $ApplyOU = "OU=%OU-ADM-GPO-APPLY%"
                 foreach ($translate in $xmlFile.Settings.Translation.wellKnownID) {
                     $GrpPath = $GrpPath -replace $translate.translateFrom, $translate.TranslateTo
+                    $DenyOU  = $DenyOU  -replace $translate.translateFrom, $translate.TranslateTo
+                    $ApplyOU = $ApplyOU -replace $translate.translateFrom, $translate.TranslateTo
                 }
 
                 if ($mode -eq "BOTH" -or $mode -eq "DENY") {
@@ -674,7 +673,7 @@ Function New-GpoObject {
                     }
                     if ($notExist) {
                         Try {
-                            $null = New-ADGroup -Name $GrpName -Path $GrpPath -Description "DENY GPO: $GpName" -GroupCategory Security -GroupScope DomainLocal -ErrorAction SilentlyContinue
+                            $null = New-ADGroup -Name $GrpName -Path "$DenyOU,$GrpPath" -Description "DENY GPO: $GpName" -GroupCategory Security -GroupScope DomainLocal -ErrorAction SilentlyContinue
                         }
                         Catch {
                             #.Failed Creation, set error code to Error
@@ -719,7 +718,7 @@ Function New-GpoObject {
                     }
                     if ($notExist) {
                         Try {
-                            $null = New-ADGroup -Name $GrpName -Path $GrpPath -Description "APPLY GPO: $GpName" -GroupCategory Security -GroupScope DomainLocal -ErrorAction SilentlyContinue
+                            $null = New-ADGroup -Name $GrpName -Path "$ApplyOU,$GrpPath" -Description "APPLY GPO: $GpName" -GroupCategory Security -GroupScope DomainLocal -ErrorAction SilentlyContinue
                         }
                         Catch {
                             #.Failed Creation, set error code to Error
