@@ -1,3 +1,6 @@
+# Script requirement
+#Requires -RunAsAdministrator
+#Requires -Version 5.0
 <#
     .SYNOPSIS
     This script and all its dependencies will assist you in hardening an Active Directory domain.
@@ -73,12 +76,12 @@
     Version 02.00.004 - Updated to reflect new requierement from release 2.9.0.
     Version 02.01.000 - Added the function Format-XML to maintain the xml file in a readable format when this one is modified.
     Version 02.02.000 - Fixed some minor issues with display screen and the checking section.
-
     Version 03.00.000 - Script sanitization. The parameter TasksSequence has been removed. 
                         The Help section has been completed. Version are now embedded within the configuration_HardenAD.xml file.
                         The script as some easter eggs when interacting with you, that's just to make you smiling once at least ;)
                         A new parameter to bypass the validation step when running in a single forest/domain: -NoConfirmationForRootDomain.
                         Two new parameters have been added to manage the task sequence from the script: -TaskEnable and -TaskDisable (combinable).
+    Version 03.01.000 - Script rewrite to handle move of some function that was part of the main code.
 #>
 [CmdletBinding(DefaultParameterSetName = 'RUN')]
 Param(
@@ -102,300 +105,15 @@ Param(
     [Array]
     $DisableTask
 )
-
-# Format-XML functions are used in several places in the script. We need to load it first.
-Import-Module .\Modules\Format-XML.psm1
-
-<#
-    FUNCTION: NEW-LOGENTRY
-    This function will format the log file output.
-#>
-Function New-LogEntry {
-    Param(
-        [Parameter(Mandatory, Position = 0)]
-        [ValidateSet("info", "warning", "debug", "error")]
-        [String]
-        $LogLevel,
-
-        [Parameter(Mandatory, Position = 1)]
-        $LogText
-    )
-    
-    # Variables
-    $Result = @()
-    
-    # Generate timestamp
-    $Timstamp = Get-Date -Format "yyyy/MM/dd HH:mm:ss"
-    
-    # Generate log level
-    Switch ($LogLevel) {
-        "info" { $Level = "INFO" }
-        "warning" { $Level = "WARN" }
-        "debug" { $Level = "DBUG" }
-        "error" { $Level = "ERR!" }
-    }
-
-    # Format text (able to handle multiple line)
-    foreach ($entry in $LogText) {
-        $Result += "$Timstamp`t[$Level]`t$entry"
-    }
-    
-    # Return result
-    return $Result
+#region Initialize and functions
+# Load modules
+try {
+    $modules = (Get-ChildItem .\modules).FullName
+    [void](Import-Module $modules -ErrorAction Stop)
+} Catch {
+    Write-Host "Error: $($_.ToString())" -ForegroundColor Red
+    exit 999
 }
-
-<#
-    FUNCTION: SET-TRANSLATION
-    This function will set the translation in TaskSequence.xml
-#>
-function Set-Translation {
-    param (
-    )
-
-    # Loading required modules
-    Import-Module .\Modules\translation.psm1
-
-    # Main code
-    # Getting running domain and forest context
-    $Domain = Get-ADDomain
-    
-    # Grabbing required data from domain
-    $DomainDNS = $Domain.DNSRoot
-    $DomainNetBios = $Domain.NetBIOSName
-    $DN = $Domain.DistinguishedName
-    $DomainSID = $Domain.DomainSID
-    $ForestDNS = $Domain.Forest
-
-    # Prompting for running domain information.
-    Write-Host "Current forest ................: "  -ForegroundColor Gray -NoNewline ; Write-host $ForestDNS     -ForegroundColor Yellow
-    Write-Host "Current domain ................: "  -ForegroundColor Gray -NoNewline ; Write-Host $DomainDNS     -ForegroundColor Yellow
-    Write-Host "Current NetBIOS................: "  -ForegroundColor Gray -NoNewline ; Write-Host $DomainNetBios -ForegroundColor Yellow
-    Write-Host "Current DistinguishedName......: "  -ForegroundColor Gray -NoNewline ; Write-Host $DN            -ForegroundColor Yellow
-
-    # If not the same as the forest, will ask for confirmation.
-    if ($DomainDNS -ne $ForestDNS) {
-        Write-Host ""
-        Write-Host "Your domain is a child domain of $($ForestDNS)! Is it expected?" -ForegroundColor White -BackgroundColor Red -NoNewline
-        Write-Host " [Y/N] " -NoNewline
-        
-        # Waiting key input. If not Y, then leaves.
-        $isChild = $null
-        while ($null -eq $isChild) {
-            $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
-            if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) {
-                Write-Host "Expected, so you say...`n" -ForegroundColor Green
-                $isChild = $true
-            }
-            else {
-                Write-Host "Unexpected? Do, or do not. But there there is no try.`n" -ForegroundColor Red
-                $isChild = $false
-            }
-        }
-
-        # Test if child domain or not
-        if ($isChild) {
-            #.This is a Child Domain. Adjusting the tasksSequence acordingly.
-            # Grabbing expected values...
-            $RootDomain = Get-ADDomain -Identity $ForestDNS
-            $RootDomainDNS = $RootDomain.DNSRoot
-            $RootDomainNetBios = $RootDomain.NetBIOSName
-            $RootDN = $RootDomain.DistinguishedName
-            $RootDomainSID = $RootDomain.DomainSID.value
-
-            # Disable FFL Upgrade
-            ($TasksSeqConfig.Settings.Sequence.Id | Where-Object { $_.Number -eq "006" }).TaskEnabled = "No"
-            
-            # Disable LAPS Schema update
-            ($TasksSeqConfig.Settings.Sequence.Id | Where-Object { $_.Number -eq "134" }).TaskEnabled = "No"
-        
-        }
-        else {
-            # Not a child, setting up root domain value with current domain
-            $RootDomainDNS = $DomainDNS
-            $RootDomainNetBios = $DomainNetBios
-            $RootDN = $DN
-            $RootDomainSID = $DomainSID
-        }
-
-        Write-Host "Root Domain............: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainDNS     -ForegroundColor Yellow
-        Write-Host "Root NetBIOS...........: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainNetBios -ForegroundColor Yellow
-        Write-Host "Root DistinguishedName.: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDN            -ForegroundColor Yellow
-    
-        # Validate result and open for manual input if necessary.
-        Write-Host "`nAre those pieces of information correct? " -ForegroundColor Yellow -NoNewline
-        
-        Write-Host "[Y/N] " -NoNewline
-        
-        # Waiting for key input and deal with Y and return.
-        $isOK = $null
-        while ($null -eq $isOK) {
-            $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
-            if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) {
-                Write-Host "Glad you'll agree with it!`n" -ForegroundColor Green
-                $isOK = $true
-            }
-            else {
-                Write-Host "'Kay... You're too old for this sh**t, Roger?`n" -ForegroundColor Red
-                $isOK = $false
-            }
-        }
-
-        # We ask for new values if nedded, else we start.
-        if (-not $isOK) {
-            # Ask for domain name parts
-            $netbiosName = Read-Host "Enter the Root NetBIOS domain name.."
-            $Domaindns = Read-Host "Enter the Root Domain DNS..........."
-
-            # Checking if the domain is reachable.
-            try {
-                $DistinguishedName = Get-ADDomain -Server $DomainDNS -ErrorAction Stop
-                $RootDomainSID = (Get-ADDomain -Server $DomainDNS -ErrorAction Stop).DomainSID.value
-            }
-            catch {
-                $DistinguishedName = $null
-                # Force leaving                    
-                $isOK = $false
-            }
-
-            Write-Host "`nNew values:"            -ForegroundColor Magenta
-            Write-Host "Root NetBIOS Name........: " -ForegroundColor Gray -NoNewline ; Write-Host $netbiosName       -ForegroundColor Yellow
-            Write-Host "Root Domain DNS..........: " -ForegroundColor Gray -NoNewline ; Write-Host $Domaindns         -ForegroundColor Yellow
-            Write-Host "Root Distinguished Name..: " -ForegroundColor Gray -NoNewline ; Write-Host $DistinguishedName -ForegroundColor Yellow
-            Write-Host "Root Domain SID..........: " -ForegroundColor Gray -NoNewline ; Write-Host $RootDomainSID     -ForegroundColor Yellow
-            Write-Host "`nAre those informations correct? " -ForegroundColor Magenta -NoNewline
-            Write-Host "(Y/N) " -NoNewline
-            
-            $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
-                
-            if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) {  
-                $isOK = $true 
-            }
-            else {
-                $isOK = $false
-            }
-        }
-
-        # If no issue, then script will continue. Else it exits with code 2
-        if ($isOK) { 
-            Write-Host "Information validated.`n" -ForegroundColor Green 
-        }
-        else { 
-            Write-Host "Installation canceled... Help me, Obi-Wan Kenobi. You're my only hope!`n" -ForegroundColor red
-            exit 2 
-        }
-    }
-    else {
-        # Not a child, setting up root domain value with current domain
-        $RootDomainDNS = $DomainDNS
-        $RootDomainNetBios = $DomainNetBios
-        $RootDN = $DN
-        $RootDomainSID = $DomainSID
-
-        # Prompting for confirmation, if needed (default value)
-        if (-not $NoConfirmationForRootDomain) {
-            Write-Host "`nDo you want to continue with those values? " -ForegroundColor Yellow -NoNewline
-            Write-Host "[Y/N] " -NoNewline
-            
-            # Waiting key input. If not Y, then leaves.
-            $dontLeaveMe = $true
-            While ($dontLeaveMe)
-            {
-                $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
-                if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) {
-                    Write-Host "Going on... Or: nearly 'Just Secured', I should say." -ForegroundColor Green
-                    $dontLeaveMe = $false
-                }
-                elseif ($key.VirtualKeyCode -eq 78) {
-                    # Just leaving
-                    Write-Host "Ok, canceling... I find your lack of faith disturbing." -ForegroundColor Red
-                    exit 0
-                }
-            }
-        }
-    }
-
-    # Compute new wellKnownSID
-    $authenticatedUsers_SID = "S-1-5-11"
-    $administrators_SID = "S-1-5-32-544"
-    $RDUsers_SID = "S-1-5-32-555"
-    $users_SID = "S-1-5-32-545"
-
-    # Specific admins group of a domain
-    $enterpriseAdmins_SID = "$($RootDomainSID)-519"
-    $domainAdmins_SID = "$($domainSID)-512"
-    $schemaAdmins_SID = "$($RootDomainSID)-518"
-
-    # Get group names from SID
-    $authenticatedUsers_ = Get-GroupNameFromSID -GroupSID $authenticatedUsers_SID
-    $administrators_ = Get-GroupNameFromSID -GroupSID $administrators_SID
-    $RDUsers_ = Get-GroupNameFromSID -GroupSID $RDUsers_SID
-    $users_ = Get-GroupNameFromSID -GroupSID $users_SID
-    $enterpriseAdmins_ = Get-GroupNameFromSID -GroupSID $enterpriseAdmins_SID
-    $domainAdmins_ = Get-GroupNameFromSID -GroupSID $domainAdmins_SID
-    $schemaAdmins_ = Get-GroupNameFromSID -GroupSID $schemaAdmins_SID
-
-    # Exit from script if Enterprise Admins is empty
-    if ($enterpriseAdmins_ -eq "" -or $isnull -eq $enterpriseAdmins_) {
-        Write-host "`nInstallation cancelled! You blew-up the process: the Enterprise Admins group is unreachable...`n" -ForegroundColor red
-        exit 1
-    }
-
-    # Locate the nodes to update in taskSequence File
-    $wellKnownID_AU            = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%AuthenticatedUsers%" }
-    $wellKnownID_Adm           = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Administrators%" }
-    $wellKnownID_EA            = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%EnterpriseAdmins%" }
-    $wellKnownID_domainAdm     = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%DomainAdmins%" }
-    $wellKnownID_SchemaAdm     = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%SchemaAdmins%" }
-    $wellKnownID_RDP           = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RemoteDesktopUsers%" }
-    $wellKnownID_Users         = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Users%" }
-    $wellKnownID_Netbios       = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%NetBios%" }
-    $wellKnownID_Domain        = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Domain%" }
-    $wellKnownID_domaindns     = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%domaindns%" }
-    $wellKnownID_DN            = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%DN%" }
-    $wellKnownID_RootNetbios   = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootNetBios%" }
-    $wellKnownID_Rootdomaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Rootdomaindns%" }
-    $wellKnownID_RootDN = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootDN%" }
-    $historyScript = $TasksSeqConfig.Settings.History.Script
-    $historyLastRun = $TasksSeqConfig.Settings.History.LastRun
-    $historyDomains = $TasksSeqConfig.Settings.History.Domains
- 
-    # Check if this is a PDC
-    $isPDC = ((Get-ADDomain).PDCemulator -split '\.')[0] -eq $env:COMPUTERNAME
-
-    # Updating Values :
-    # ..Domain values
-    $wellKnownID_Netbios.translateTo   = $DomainNetBios
-    $wellKnownID_Domain.translateTo    = $DomainNetBios
-    $wellKnownID_domaindns.translateTo = [string]$DomainDNS
-    $wellKnownID_DN.translateTo = $DN
-
-    # ..RootDomain value
-    $wellKnownID_RootNetbios.translateTo = $RootDomainNetBios
-    $wellKnownID_Rootdomaindns.translateTo = $RootDomainDNS
-    $wellKnownID_RootDN.translateTo = $RootDN
-    
-    # ..Group values
-    $wellKnownID_AU.translateTo = "$authenticatedUsers_"
-    $wellKnownID_Adm.translateTo = "$administrators_"
-    $wellKnownID_EA.translateTo = "$enterpriseAdmins_"
-    $wellKnownID_domainAdm.translateTo = "$domainAdmins_"
-    $wellKnownID_SchemaAdm.translateTo = "$schemaAdmins_"
-    $wellKnownID_RDP.translateTo = "$RDUsers_"
-    $wellKnownID_Users.translateTo = "$users_"
-
-    # ..History
-    $historyLastRun.Date = [string](Get-Date -Format "yyyy/MM/dd - HH:mm")
-    $historyLastRun.System = $env:COMPUTERNAME
-    $historyLastRun.isPDCemulator = [string]$isPDC
-    $historyDomains.Root = $RootDomainDNS
-    $historyDomains.Domain = [string]$DomainDNS
-    $historyScript.SourcePath = [string]((Get-Location).Path)
-
-    # Saving file and keeping formating with tab...    
-    Format-XMLData -XMLData $TasksSeqConfig | Out-File $xmlFileFullName -Encoding utf8 -Force
-}
-
-
 <#
     SCRIPT BLOCK FOR RUN-JOB
     ------------------------
@@ -431,20 +149,16 @@ $Block = {
     # Relocating the new pShell session to the same location as the calling script.
     Push-Location $Location
 
-    # Checking OS to handle pShell 2.0
-    $is2k8r2 = (Get-WMIObject win32_operatingsystem).name -like "*2008*"
-
     # Loading modules, if needed.
     try { 
         # Module loading...
-        Switch ($is2k8r2) {
-            $true { $null = $mods | ForEach-Object { Import-Module $_.fullName } }
-            $false { $null = $mods | ForEach-Object { Import-Module $_ } }
-        }
+        #write-host (resolve-path .\modules) -backgroundcolor red -ForegroundColor white
+        $modules = (Get-ChildItem .\modules).FullName
+        [void](Import-Module $modules -ErrorAction Stop)
     }
     catch { 
         # The script block failed to load prerequiered module(s). Exiting.
-        $RunData = New-Object -TypeName psobject -Property @{ResultCode = 9 ; ResultMesg = "Error loading one or more module" ; TaskExeLog = "Error" }
+        $RunData = New-Object -TypeName psobject -Property @{ResultCode = 9 ; ResultMesg = "Error:$($_.ToString())" ; TaskExeLog = "Error" }
     }
 
     # Run the expected function
@@ -474,7 +188,9 @@ $Block = {
     # Return the result
     $RunData
 }
+#endregion
 
+#region Tasks Sequence Management
 <#
     MANAGE TASKS SEQUENCE
     ---------------------
@@ -562,7 +278,9 @@ if ($EnableTask -or $DisableTask) {
     Write-Host "`nScript's done.`n" -ForegroundColor Green
     exit 0
 }
+#endregion
 
+#region Script
 <#
     MAIN SCRIPT
     -----------
@@ -576,17 +294,17 @@ Clear-Host
 
 # Loading modules
 # When dealing with 2008R2, we need to import AD module first
-Switch ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
-    $True { $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1") | Select-Object FullName }
-    $false { $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1").FullName }
-}
+#Switch ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
+#    $True  { $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1") | Select-Object FullName }
+#    $false { $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1").FullName }
+#}
 
 # Setting-up usefull variables
 $SchedulrConfig = [xml](get-content .\Configs\Configuration_HardenAD.xml -Encoding utf8)
-$SchedulrLoging = @()
-$TasksSeqConfig = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
-$ScriptLocation = Get-Location
-$pShellMajorVer = ((Get-Host).version -split '\.')[0]
+$SchedulrLoging  = @()
+$TasksSeqConfig  = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
+$ScriptLocation  = Get-Location
+$pShellMajorVer  = ((Get-Host).version -split '\.')[0]
 $xmlFileFullName = (resolve-path .\Configs\TasksSequence_HardenAD.xml).Path
 
 <# 
@@ -594,28 +312,31 @@ $xmlFileFullName = (resolve-path .\Configs\TasksSequence_HardenAD.xml).Path
     To deal with highlight color in display, use the ` to initiate (or end) a color change in your string, then use ont of the three characters specified in value AltBaseHTxt(A,B, or C) to select your color.
     The color will switch back to normal at the next `. Example : "This is a `[marvelous` text!"
 #>
-$ColorsAndTexts = New-Object -TypeName psobject -Property @{    PendingColor = "DarkGray"
-    RunningColor                                                             = "Cyan"
-    WarningColor                                                             = "Yellow"
-    FailureColor                                                             = "Red"
-    IgnoredColor                                                             = "cyan"
-    SuccessColor                                                             = "green"
-    DisabledColor                                                            = "gray"
-    BaseTxtColor                                                             = "white"
-    AltBaseHColA                                                             = "magenta"
-    AltBaseHColB                                                             = "darkgray"
-    AltBaseHColC                                                             = "gray"
-    PendingText                                                              = "pending"
-    RunningText                                                              = "running"
-    WarningText                                                              = "warning"
-    FailureText                                                              = "failure"
-    SuccessText                                                              = "success"
-    ignoredText                                                              = "ignored"
-    FuncErrText                                                              = "!ERROR!"
-    DisabledText                                                             = "disable"
-    AltBaseHTxtA                                                             = "["
-    AltBaseHTxtB                                                             = "("
-    AltBaseHTxtC                                                             = "{" 
+$ColorsAndTexts = New-Object -TypeName psobject -Property @{    
+    PendingColor = "DarkGray"
+    RunningColor = "Cyan"
+    WarningColor = "Yellow"
+    FailureColor = "Red"
+    IgnoredColor = "cyan"
+    SuccessColor = "green"
+    DisabledColor= "gray"
+    CanceledColor= "Magenta"
+    BaseTxtColor = "white"
+    AltBaseHColA = "magenta"
+    AltBaseHColB = "darkgray"
+    AltBaseHColC = "gray"
+    PendingText  = "pending"
+    RunningText  = "running"
+    WarningText  = "warning"
+    FailureText  = "failure"
+    SuccessText  = "success"
+    ignoredText  = "ignored"
+    CanceledText = "cancel!"
+    FuncErrText  = "!ERROR!"
+    DisabledText = "disable"
+    AltBaseHTxtA = "["
+    AltBaseHTxtB = "("
+    AltBaseHTxtC = "{" 
 }
 
 # Loading Header (yes, a bit of fun)
@@ -691,8 +412,8 @@ foreach ($Prerequesite in $Prerequesites.Directory) {
 }
 
 # New in version 3.0.0: The script will now update the tasksSequence to teach that it has already been ran and add forest/domain information.
-$TShistoryLastRun = $TasksSeqConfig.Settings.History.LastRun.Date
-$TShistoryRootDns = $TasksSeqConfig.Settings.History.Domains.Root
+$TShistoryLastRun   = $TasksSeqConfig.Settings.History.LastRun.Date
+$TShistoryRootDns   = $TasksSeqConfig.Settings.History.Domains.Root
 $TShistoryDomainDns = $TasksSeqConfig.Settings.History.Domains.Domain
 
 if ($TShistoryLastRun -eq "" -and $TShistoryRootDns -eq "" -and $TShistoryDomainDns -eq "") {
@@ -739,8 +460,10 @@ if (-not ($FlagPreReq) -or -not($allowedRun)) {
 }
 
 # Updating the TasksSequence file to reflect the new data.
-Set-Translation
-
+$control = Set-Translation -tasksSeqConfig $TasksSeqConfig -xmlFileFullName $xmlFileFullName
+switch ($control) {
+    ${[0-2]} { Exit $control }
+}
 if ($FlagPreReq) {
     Write-Host "All prerequesites are OK.`n" -ForegroundColor Green
 
@@ -755,7 +478,7 @@ else {
 
 # Catch initial cursor position
 $InitialPosition = $host.UI.RawUI.CursorPosition
-                                                     
+
 #-Using XML
 $Resume = @()
 
@@ -884,6 +607,7 @@ foreach ($task in $Tasks) {
         2 { $zText = $ColorsAndTexts.FailureText  ; $zColor = $ColorsAndTexts.FailureColor }
         3 { $zText = $ColorsAndTexts.IgnoredText  ; $zColor = $ColorsAndTexts.IgnoredColor }
         4 { $zText = $ColorsAndTexts.DisabledText ; $zColor = $ColorsAndTexts.DisabledColor }
+        5 { $zText = $ColorsAndTexts.CanceledText ; $zColor = $ColorsAndTexts.CanceledColor }
         default { $zText = $ColorsAndTexts.FuncErrText  ; $zColor = $ColorsAndTexts.FailureColor }
     }
 
@@ -909,7 +633,9 @@ foreach ($task in $Tasks) {
         $SchedulrLoging += New-LogEntry "error" ("ERR FUNC: received result code: " + $result.ResultCode)
     }
 }
+#endregion
 
+#region finalization
 #-Script over. exporting run log.
 $csvName = (Get-Date -Format "yyyy-MM-dd_hhmmss_") + "HardenAD-Results.csv"
 $logName = (Get-Date -Format "yyyy-MM-dd_hhmmss_") + "HardenAD-Results.log"
@@ -940,3 +666,4 @@ catch {
 }
 
 Write-Host "`nScript's done.`n" -ForegroundColor Yellow
+#endregion

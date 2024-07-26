@@ -4,9 +4,7 @@ $scriptRootPath = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 $configXMLFilePath = Join-Path -Path $scriptRootPath -ChildPath "Configs\TasksSequence_HardenAD.xml"
 
 $configXMLFileName = $configXMLFilePath | Split-Path -Leaf
-
-$xmlModule = "$scriptRootPath\Modules\Format-XML.psm1"
-Import-Module "$xmlModule"
+Import-Module .\Modules\module-fileHandling
 
 $TasksSeqConfig = [xml](Get-Content $configXMLfilePath -Encoding utf8)
 
