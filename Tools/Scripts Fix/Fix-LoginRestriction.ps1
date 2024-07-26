@@ -59,7 +59,7 @@ foreach ($GPO in $GPOList) {
         # Get data
         $GPOBkpID = $GPO.BackupID
         $GPOPath = Resolve-Path -LiteralPath ".\..\..\Inputs\GroupPolicies\$($GPO.Name)\$GPOBkpID" -ErrorAction Stop
-        $SecPolData = Get-Content "$GPOPath\DomainSysVol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf" -Encoding UTF8 -ErrorAction Stop
+        $SecPolData = Get-Content "$GPOPath\DomainSysVol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf" -Encoding Unicode -ErrorAction Stop
         Write-Host "$($GPO.NAme) ${S_Green}Success${Cend}: ${S_Yellow}GptTmpl.inf loaded${Cend}"
 
         # Replacing value
@@ -67,7 +67,7 @@ foreach ($GPO in $GPOList) {
         Write-Host "$($GPO.NAme) ${S_Green}Success${Cend}: ${S_Yellow}S-1-5-21-776332210-1913898547-2567112534-501' replaced by 'S-1-5-32-546'${Cend}"
 
         # output to file
-        $SecPolData | Out-File "$GPOPath\DomainSysVol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf" -Force -ErrorAction Stop -Encoding utf8
+        $SecPolData | Out-File "$GPOPath\DomainSysVol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf" -Force -ErrorAction Stop -Encoding unicode
         Write-Host "$($GPO.NAme) ${S_Green}Success${Cend}: ${S_Yellow}file GptTmpl.inf updated${Cend}"
 
     } Catch {
