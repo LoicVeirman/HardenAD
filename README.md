@@ -6,16 +6,13 @@ Feel free to use it and adapt following your needs!
 **ALL TASKS ARE DISABLED BY DEFAULT!**      
 This is the way we ensure the script will not be run into production and make unwanted changes. Please refer to the welcome page of the latest release to learn how you can activate them.
 
-## Release update list
-*Bugs:* 
-> 1. Fixed a misconfiguration in HAD-LoginRestrictions-Tx, where the Deny Network Logon was set on the guest user instead of the guests group.  
-
-*Tools:*
-> 1. Added a script to fix HAD-LoginRestrictions-Tx bug (see upper). to be used on 2.9.8 edition BEFORE implementing it.  
-
-*Enhancements:*
-> 1. Clean-up of useless files/folders (.vs, .git, .dsStore, ...)  
-> 2. Added a .gitignore file to ease maintenance  
+## Release update list  
+Major updates are:  
+1. Fixed issue with LocalAdmin groups name (mismatch between script and schedules)  
+2. Fixed issue with Deny Network Logon permission (Guests was mispealed)  
+3. Fixed issue with Error message when the laps installation fail: it now returns *cancel!* to the script and the script log get the reason (user not a Schema Admins or whatsoever...)  
+   
+There are also plenty of changes related to the core script structure, you can review them in the new **/documentation/Release Update Logs** files.
  
 ## Just a word...
 Welcome to our GitHub Repo dedicated to enhance the security of Active Directory. We both believe in a world were knowledge have to be shared, especialy when we are talking of protecting companies against cyber attacks. Our IT journey drove us to many situation in which we had to harden an existing directory hierarchy, most oftenly lacking of a security posture due to a lack of technical knowledge or usefull guidance.
