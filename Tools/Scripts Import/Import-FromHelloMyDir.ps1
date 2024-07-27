@@ -199,100 +199,100 @@ $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #Endregion
 #region Renaming Target DN to match the new OU design : GroupsT1
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT1 ${S_Yellow} with ${S_Brown}OU=Groups,OU=Tier 1${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT1 ${S_Yellow} with ${S_Brown}OU=%OU-PRD-GROUPS%,OU=Tier 1${Cend}" -NoNewline
 
-$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL      | Where-Object { $_.TargetDN -like "*=GroupsT1,*" }            ; foreach ($node in $nodes) { $node.TargetDN = $node.TargetDN -replace "OU=GroupsT1","OU=Groups,OU=Tier 1" }
+$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL      | Where-Object { $_.TargetDN -like "*=GroupsT1,*" }            ; foreach ($node in $nodes) { $node.TargetDN = $node.TargetDN -replace "OU=GroupsT1","OU=%OU-PRD-GROUPS%,OU=Tier 1" }
 $Node  = $xml_TasksSequence.Settings.Translation.wellKnownID | Where-Object { $_.TranslateFrom -eq "%OU-ADM-Groups-T1%" }   ; $node.translateTo = "Groups,OU=Tier 1"
-$Nodes = $xml_TasksSequence.Settings.Groups.Group            | Where-Object { $_.Path -like "*=GroupsT1,*" }                ; foreach ($node in $nodes) { $node.path = $node.Path -replace "OU=GroupsT1","OU=Groups,OU=Tier 1" }
+$Nodes = $xml_TasksSequence.Settings.Groups.Group            | Where-Object { $_.Path -like "*=GroupsT1,*" }                ; foreach ($node in $nodes) { $node.path = $node.Path -replace "OU=GroupsT1","OU=%OU-PRD-GROUPS%,OU=Tier 1" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #Endregion
 #region Renaming Target DN to match the new OU design : GroupsT1L
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT1L ${S_Yellow} with ${S_Brown}OU=Groups,OU=Tier 1 Legacy${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT1L ${S_Yellow} with ${S_Brown}OU=%OU-PRD-GROUPS%,OU=Tier 1 Legacy${Cend}" -NoNewline
 
-$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL      | Where-Object { $_.TargetDN -like "*=GroupsT1L,*" }           ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=GroupsT1L","OU=Groups,OU=Tier 1 Legacy" }
+$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL      | Where-Object { $_.TargetDN -like "*=GroupsT1L,*" }           ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=GroupsT1L","OU=%OU-PRD-GROUPS%,OU=Tier 1 Legacy" }
 $Node  = $xml_TasksSequence.Settings.Translation.wellKnownID | Where-Object { $_.TranslateFrom -eq "%OU-ADM-Groups-L1%" }  ; $node.translateTo = "Groups,OU=Tier 1 Legacy"
-$Nodes = $xml_TasksSequence.Settings.Groups.Group            | Where-Object { $_.Path -like "*=GroupsT1L,*" }               ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=GroupsT1L","OU=Groups,OU=Tier 1 Legacy" }
+$Nodes = $xml_TasksSequence.Settings.Groups.Group            | Where-Object { $_.Path -like "*=GroupsT1L,*" }               ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=GroupsT1L","OU=%OU-PRD-GROUPS%,OU=Tier 1 Legacy" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #Endregion
 #region Renaming Target DN to match the new OU design : GroupsT2
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT2 ${S_Yellow} with ${S_Brown}OU=Groups,OU=Tier 2${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT2 ${S_Yellow} with ${S_Brown}OU=%OU-PRD-GROUPS%,OU=Tier 2${Cend}" -NoNewline
 
-$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL      | Where-Object { $_.TargetDN -like "*=GroupsT2,*" }            ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=GroupsT2","OU=Groups,OU=Tier 2" }
+$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL      | Where-Object { $_.TargetDN -like "*=GroupsT2,*" }            ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=GroupsT2","OU=%OU-PRD-GROUPS%,OU=Tier 2" }
 $Node  = $xml_TasksSequence.Settings.Translation.wellKnownID | Where-Object { $_.TranslateFrom -eq "%OU-ADM-Groups-T2%" }   ; $node.translateTo = "Groups,OU=Tier 2"
-$Nodes = $xml_TasksSequence.Settings.Groups.Group            | Where-Object { $_.Path -like "*=GroupsT2,*" }                ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=GroupsT2","OU=Groups,OU=Tier 2" }
+$Nodes = $xml_TasksSequence.Settings.Groups.Group            | Where-Object { $_.Path -like "*=GroupsT2,*" }                ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=GroupsT2","OU=%OU-PRD-GROUPS%,OU=Tier 2" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #Endregion
 #region Renaming Target DN to match the new OU design : GroupsT2L
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT2L ${S_Yellow} with ${S_Brown}OU=Groups,OU=Tier 2 Legacy${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT2L ${S_Yellow} with ${S_Brown}OU=%OU-PRD-GROUPS%,OU=Tier 2 Legacy${Cend}" -NoNewline
 
-$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL      | Where-Object { $_.TargetDN -like "*=GroupsT2L,*" }           ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=GroupsT2L","OU=Groups,OU=Tier 2 Legacy" }
+$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL      | Where-Object { $_.TargetDN -like "*=GroupsT2L,*" }           ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=GroupsT2L","OU=%OU-PRD-GROUPS%,OU=Tier 2 Legacy" }
 $Node  = $xml_TasksSequence.Settings.Translation.wellKnownID | Where-Object { $_.TranslateFrom -eq "%OU-ADM-Groups-L2%" }  ; $node.translateTo = "Groups,OU=Tier 2 Legacy"
-$Nodes = $xml_TasksSequence.Settings.Groups.Group            | Where-Object { $_.Path -like "*=GroupsT2L,*" }               ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=GroupsT2L","OU=Groups,OU=Tier 2 Legacy" }
+$Nodes = $xml_TasksSequence.Settings.Groups.Group            | Where-Object { $_.Path -like "*=GroupsT2L,*" }               ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=GroupsT2L","OU=%OU-PRD-GROUPS%,OU=Tier 2 Legacy" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #Endregion
 #region Renaming Target DN to match the new OU design : UsersT1
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT1 ${S_Yellow} with ${S_Brown}OU=Users,OU=Tier 1${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT1 ${S_Yellow} with ${S_Brown}OU=%OU-PRD-USERS%,OU=Tier 1${Cend}" -NoNewline
 
-$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL  | Where-Object { $_.TargetDN -like "*=UsersT1,*" } ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=UsersT1","OU=Users,OU=Tier 1" }
-$Nodes = $xml_TasksSequence.Settings.Accounts.User       | Where-Object { $_.Path -like "*=UsersT1,*" }     ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=UsersT1","OU=Users,OU=Tier 1" }
+$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL  | Where-Object { $_.TargetDN -like "*=UsersT1,*" } ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=UsersT1","OU=%OU-PRD-USERS%,OU=Tier 1" }
+$Nodes = $xml_TasksSequence.Settings.Accounts.User       | Where-Object { $_.Path -like "*=UsersT1,*" }     ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=UsersT1","OU=%OU-PRD-USERS%,OU=Tier 1" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #Endregion
 #region Renaming Target DN to match the new OU design : UsersT1L
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT1L ${S_Yellow} with ${S_Brown}OU=Users,OU=Tier 1 Legacy${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT1L ${S_Yellow} with ${S_Brown}OU=%OU-PRD-USERS%,OU=Tier 1 Legacy${Cend}" -NoNewline
 
-$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL | Where-Object { $_.TargetDN -like "*=UsersT1L,*" } ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=UsersT1L","OU=Users,OU=Tier 1 Legacy" }
-$Nodes = $xml_TasksSequence.Settings.Accounts.User      | Where-Object { $_.Path -like "*=UsersT1L,*" }     ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=UsersT1L","OU=Users,OU=Tier 1 Legacy" }
+$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL | Where-Object { $_.TargetDN -like "*=UsersT1L,*" } ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=UsersT1L","OU=%OU-PRD-USERS%,OU=Tier 1 Legacy" }
+$Nodes = $xml_TasksSequence.Settings.Accounts.User      | Where-Object { $_.Path -like "*=UsersT1L,*" }     ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=UsersT1L","OU=%OU-PRD-USERS%,OU=Tier 1 Legacy" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #Endregion
 #region Renaming Target DN to match the new OU design : UsersT2
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT2 ${S_Yellow} with ${S_Brown}OU=Users,OU=Tier 2${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT2 ${S_Yellow} with ${S_Brown}OU=%OU-PRD-USERS%,OU=Tier 2${Cend}" -NoNewline
 
-$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL | Where-Object { $_.TargetDN -like "*=UsersT2,*" }  ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=UsersT2","OU=Users,OU=Tier 2" }
-$Nodes = $xml_TasksSequence.Settings.Accounts.User      | Where-Object { $_.Path -like "*=UsersT2,*" }      ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=UsersT2","OU=Users,OU=Tier 2" }
+$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL | Where-Object { $_.TargetDN -like "*=UsersT2,*" }  ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=UsersT2","OU=%OU-PRD-USERS%,OU=Tier 2" }
+$Nodes = $xml_TasksSequence.Settings.Accounts.User      | Where-Object { $_.Path -like "*=UsersT2,*" }      ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=UsersT2","OU=%OU-PRD-USERS%,OU=Tier 2" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #Endregion
 #region Renaming Target DN to match the new OU design : UsersT2L
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT2L ${S_Yellow} with ${S_Brown}OU=Users,OU=Tier 2 Legacy${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT2L ${S_Yellow} with ${S_Brown}OU=%OU-PRD-USERS%,OU=Tier 2 Legacy${Cend}" -NoNewline
 
-$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL | Where-Object { $_.TargetDN -like "*=UsersT2L,*" } ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=UsersT2L","OU=Users,OU=Tier 2 Legacy" }
-$Nodes = $xml_TasksSequence.Settings.Accounts.User      | Where-Object { $_.Path -like "*=UsersT2L,*" }     ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=UsersT2L","OU=Users,OU=Tier 2 Legacy" }
+$nodes = $xml_TasksSequence.Settings.DelegationACEs.ACL | Where-Object { $_.TargetDN -like "*=UsersT2L,*" } ; foreach ($node in $nodes) { $node.TargetDN= $node.TargetDN-replace "OU=UsersT2L","OU=%OU-PRD-USERS%,OU=Tier 2 Legacy" }
+$Nodes = $xml_TasksSequence.Settings.Accounts.User      | Where-Object { $_.Path -like "*=UsersT2L,*" }     ; foreach ($node in $nodes) { $node.Path = $node.Path -replace "OU=UsersT2L","OU=%OU-PRD-USERS%,OU=Tier 2 Legacy" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #Endregion
 #region Renaming Target DN to match the new OU design : Groups in T0
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=Logon,OU=Tier 0 ${S_Yellow}with ${S_Brown}OU=Groups,OU=$($newName3)${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=Logon,OU=Tier 0 ${S_Yellow}with ${S_Brown}OU=%OU-PRD-GROUPS%,OU=$($newName3)${Cend}" -NoNewline
 
-$nodes = $xml_TasksSequence.Settings.Groups.Group | Where-Object { $_.Path -like "*=Logon*" } ; foreach ($node in $nodes) { $node.path = $node.path -replace "OU=Logon,OU=GroupsT0","OU=Groups,OU=$newName3" }
+$nodes = $xml_TasksSequence.Settings.Groups.Group | Where-Object { $_.Path -like "*=Logon*" } ; foreach ($node in $nodes) { $node.path = $node.path -replace "OU=Logon,OU=GroupsT0","OU=%OU-PRD-GROUPS%,OU=$newName3" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT0 ${S_Yellow} with ${S_Brown}OU=Groups,OU=Tier 0${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=GroupsT0 ${S_Yellow} with ${S_Brown}OU=%OU-PRD-GROUPS%,OU=Tier 0${Cend}" -NoNewline
 
 $node  = $xml_TasksSequence.Settings.translation.wellKnownID  | Where-Object { $_.TranslateFrom -eq "%OU-ADM-Groups-T0%" }  ; $node.TranslateTo = "Groups,OU=GPO"
-$nodes = $xml_TasksSequence.Settings.Groups.Group             | Where-Object { $_.Path -like "*=GroupsT0*" }                ; foreach ($node in $nodes) { $node.path = $node.path -replace "OU=GroupsT0","OU=Groups,OU=Tier 0" }
+$nodes = $xml_TasksSequence.Settings.Groups.Group             | Where-Object { $_.Path -like "*=GroupsT0*" }                ; foreach ($node in $nodes) { $node.path = $node.path -replace "OU=GroupsT0","OU=%OU-PRD-GROUPS%,OU=Tier 0" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"
 #endregion
 #region Renaming Target DN to match the new OU design : Users in T0
-Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT0 ${S_Yellow} with ${S_Brown}OU=Users,OU=Tier 0${Cend}" -NoNewline
+Write-Host "<    > ${bCyan}New OU Design..: ${S_Yellow}Replacing Target ${S_Brown}OU=UsersT0 ${S_Yellow} with ${S_Brown}OU=%OU-PRD-USERS%,OU=Tier 0${Cend}" -NoNewline
 
-$nodes = $xml_TasksSequence.Settings.Accounts.User | Where-Object { $_.Path -like "*=UsersT0*" } ; foreach ($node in $nodes) { $node.path = $node.path -replace "OU=UsersT0","OU=Users,OU=Tier 0" }
+$nodes = $xml_TasksSequence.Settings.Accounts.User | Where-Object { $_.Path -like "*=UsersT0*" } ; foreach ($node in $nodes) { $node.path = $node.path -replace "OU=UsersT0","OU=%OU-PRD-USERS%,OU=Tier 0" }
 
 $Host.UI.RawUI.CursorPosition = @{X=1;Y=$Host.UI.RawUI.CursorPosition.Y}
 Write-Host "${s_Green}done"

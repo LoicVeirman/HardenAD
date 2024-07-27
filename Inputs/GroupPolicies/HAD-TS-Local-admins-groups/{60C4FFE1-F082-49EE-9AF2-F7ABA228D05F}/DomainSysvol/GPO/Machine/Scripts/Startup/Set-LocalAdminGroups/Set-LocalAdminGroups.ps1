@@ -3,7 +3,7 @@
     This script is intended to manage system's local administrator group membership.
 
     .DESCRIPTION
-    When a windows computer object is joined to the domain, a GPO will apply to fillup the builtin\administrator group with a dedicated domainLocal group (L-S-LocalAdmins_%computername%).
+    When a windows computer object is joined to the domain, a GPO will apply to fillup the builtin\administrator group with a dedicated domainLocal group (L-S-LocalAdmins-%ComputerName%).
     If the group does not exists, then an attackant with a right to create a group in AD will be able to sneak into the system by granting himself the local admin rights (and even move to another system in another tier). To circumvent this risk, this script is ran through a Task Schedule that will operate each time a computer object is created, modified or deleted - the schedule runs on every DC.
 
     ** How does the script works?

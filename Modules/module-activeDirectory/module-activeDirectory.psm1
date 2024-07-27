@@ -179,7 +179,7 @@ Function Push-DelegationModel {
     ## Main action
     ## Import xml file with OU build requierment
     Try { 
-        [xml]$xmlSkeleton = Get-Content (".\Configs\TasksSequence_HardenAD.xml") -ErrorAction Stop
+        $xmlSkeleton = [xml](Get-Content ".\Configs\TasksSequence_HardenAD.xml" -Encoding UTF8 -ErrorAction Stop)
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml skeleton file........: loaded successfully"
         $xmlLoaded = $true
     }
@@ -233,10 +233,13 @@ Function Push-DelegationModel {
                 
                 #.Begin object creation loop
                 foreach ($HADacl in $xmlData) {
+                    $TargetOU = $HADacl.TargetDN -replace "RootDN",$DomainRootDN
+                    $TargetOU = Rename-ThroughTranslation $TargetOU $xmlSkeleton.Settings.Translation.wellKnownID
+                    
                     Switch ($HADacl.InheritedObjects) {
                         "" {
                             if ($HADacl.Audit) {
-                                Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                Set-HardenACL -TargetDN $TargetOU `
                                     -Trustee          $HADacl.Trustee `
                                     -Right            $HADacl.Right`
                                     -RightType        $HADacl.RightType`
@@ -245,7 +248,7 @@ Function Push-DelegationModel {
                                     -AuditSwitch
                             }
                             else {
-                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                $result = Set-HardenACL -TargetDN $TargetOU `
                                     -Trustee          $HADacl.Trustee `
                                     -Right            $HADacl.Right`
                                     -RightType        $HADacl.RightType`
@@ -255,7 +258,7 @@ Function Push-DelegationModel {
                         }
                         Default {
                             if ($HADacl.Audit) {
-                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                $result = Set-HardenACL -TargetDN $TargetOU `
                                     -Trustee          $HADacl.Trustee `
                                     -Right            $HADacl.Right `
                                     -RightType        $HADacl.RightType `
@@ -264,7 +267,7 @@ Function Push-DelegationModel {
                                     -AuditSwitch
                             }
                             else {
-                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                $result = Set-HardenACL -TargetDN $TargetOU `
                                     -Trustee          $HADacl.Trustee `
                                     -Right            $HADacl.Right`
                                     -RightType        $HADacl.RightType`
@@ -274,7 +277,7 @@ Function Push-DelegationModel {
                         }
                     }
                     if ($result) {
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ ACL added: TargetDN= " + ($HADacl.TargetDN -replace "RootDN", $DomainRootDN)
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ ACL added: TargetDN= " + $TargetOU
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + $HADacl.Trustee
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                   Right= " + $HADacl.Right
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->               RightType= " + $HADacl.RightType
@@ -284,7 +287,7 @@ Function Push-DelegationModel {
                     }
                     Else {
                         $ErrIdx++
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! !!! ACL ERROR: TargetDN= " + ($HADacl.TargetDN -replace "RootDN", $DomainRootDN)
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! !!! ACL ERROR: TargetDN= " + $TargetOU
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!                 Trustee= " + $HADacl.Trustee
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!                   Right= " + $HADacl.Right
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!               RightType= " + $HADacl.RightType
@@ -310,18 +313,21 @@ Function Push-DelegationModel {
             if ($xmlData) {
                 #.Begin object creation loop
                 foreach ($HADacl in $xmlData) {
+                    $TargetOU = $HADacl.TargetDN -replace "RootDN",$DomainRootDN
+                    $TargetOU = Rename-ThroughTranslation $TargetOU $xmlSkeleton.Settings.Translation.wellKnownID
+
                     # Custom Rights
-                    $result = Set-HardenSDDL -TargetDN ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) -Trustee $HADacl.Trustee -CustomAccessRule $HADacl.CustomAccessRule
+                    $result = Set-HardenSDDL -TargetDN $TargetOU -Trustee $HADacl.Trustee -CustomAccessRule $HADacl.CustomAccessRule
 
                     if ($result) {
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ Cus. Rule: TargetDN= " + $HADacl.TargetDN
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ Cus. Rule: TargetDN= " + $TargetOU
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + $HADacl.Trustee
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                   Right= " + $HADacl.CustomAccessRule
                     }
                     Else {
                         $ErrIdx++
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! Cus. Rule addition failed!"
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! Cus. Rule: TargetDN= " + $HADacl.TargetDN
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! Cus. Rule: TargetDN= " + $TargetOU
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + $HADacl.Trustee
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                   Right= " + $HADacl.CustomAccessRule
                     }
@@ -2065,8 +2071,9 @@ Function New-AdministrationAccounts {
     }
 
     ## Function dynamic OU path rewriting
-    Function Rewrite-OUPath ([String]$OUPath) {
+    Function Write-OUPath ([String]$OUPath) {
         $OUPath2 = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
+        $OUPath2 = Rename-ThroughTranslation $OUPath2 $xmlSkeleton.Settings.Translation.wellKnownID
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> [OUPath2]: new variable set with [OUPath] data and ROOTDN replaced. New value: $OUPath2"    
         return $OUPath2
     }
@@ -2225,9 +2232,9 @@ Function New-AdministrationAccounts {
 
                             #-Create new user object
                             New-ADUser  -Name $account.DisplayName -AccountNotDelegated $true -AccountPassword $SecPwd -Description $account.description `
-                                -DisplayName $account.displayName -Enabled $true -GivenName $account.GivenName -SamAccountName $account.sAMAccountName `
-                                -Surname $account.surname -UserPrincipalName ($account.sAMAccountName + "@" + (Get-Addomain).DNSRoot) `
-                                -Path (Rewrite-OUPath $account.Path) -ErrorAction Stop
+                                        -DisplayName $account.displayName -Enabled $true -GivenName $account.GivenName -SamAccountName $account.sAMAccountName `
+                                        -Surname $account.surname -UserPrincipalName ($account.sAMAccountName + "@" + (Get-Addomain).DNSRoot) `
+                                        -Path (Write-OUPath $account.Path) -ErrorAction Stop
 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ user created: " + $account.displayName
                         
@@ -2282,7 +2289,6 @@ Function New-AdministrationAccounts {
 
             }
             else {
-     
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! Warning: xmlData is empty!"
                 $result = 1
                 $ResMess = "No Data to deal with"
@@ -2341,8 +2347,9 @@ Function New-AdministrationGroups {
     )
 
     ## Function dynamic OU path rewriting
-    Function Rewrite-OUPath ([String]$OUPath) {
+    Function Write-OUPath ([String]$OUPath) {
         $OUPath2 = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
+        $OUPath2 = Rename-ThroughTranslation $OUPath2 $xmlSkeleton.Settings.Translation.wellKnownID
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> [OUPath2]: new variable set with [OUPath] data and ROOTDN replaced. New value: $OUPath2"    
         return $OUPath2
     }
@@ -2447,7 +2454,7 @@ Function New-AdministrationGroups {
                         ## Create Group
                         Try {
                             #-Create new group object
-                            New-ADGroup -Name $account.Name -Description $account.description -Path (Rewrite-OUPath $account.Path) -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
+                            New-ADGroup -Name $account.Name -Description $account.description -Path (Write-OUPath $account.Path) -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ group created: " + $account.Name
                             $AddUser = $true
                         } 
@@ -2508,7 +2515,6 @@ Function New-AdministrationGroups {
                 }
             }
             else {
-     
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! Warning: xmlData is empty!"
                 $result = 1
                 $ResMess = "No Data to deal with"

@@ -27,37 +27,37 @@ TranslateFrom | TranslateTo | Description
 %t0-global%|L-S-T0|
 %t1-global%|L-S-T1|
 %t2-global%|L-S-T2|
-%t1l-global%|L-S-T1L|
-%t2l-global%|L-S-T2L|
-%t0-managers%|G-S-T0_Managers|
-%pawaccess-logon%|L-S-T0_PawAccess_Logon|
-%pawt0-logon%|L-S-T0_PawT0_Logon|
-%pawt12l-logon%|L-S-T0_PawT12L_Logon|
-%t0-localAdmin-servers%|L-S-T0_LocalAdmins_Servers|
-%t0-localAdmin-workstations%|L-S-T0_LocalAdmins_Workstations|
-%t1-managers%|G-S-T1_Managers|
-%t1-administrators%|G-S-T1_Administrators|
-%t1-operators%|G-S-T1_Operators|
-%t1-localAdmin-servers%|L-S-T1_LocalAdmins_Servers|
-%t2-managers%|G-S-T2_Managers|
-%t2-administrators%|G-S-T2_Administrators|
-%t2-operators%|G-S-T2_Operators|
-%t2-localAdmin-workstations%|L-S-T2_LocalAdmins_Workstations|
-%tll-operators%|G-S-T1L_Operators|
-%t2l-operators%|G-S-T2L_Operators|
-%t1l-localAdmin-servers%|L-S-T1L_LocalAdmins_Servers|
-%t2l-localAdmin-workstations%|L-S-T2L_LocalAdmins_Workstations|
-%T1-LAPS-PasswordReset%|L-S-T1-DELEG_LAPS_PwdReset|
-%T1-LAPS-PasswordReader%|L-S-T1-DELEG_LAPS_PwdRead|
-%T2-LAPS-PasswordReset%|L-S-T2-DELEG_LAPS_PwdReset|
-%T2-LAPS-PasswordReader%|L-S-T2-DELEG_LAPS_PwdRead|
-%T0-DLG-CptrDomJoin%|L-S-T0-DELEG_Computer - Join Domain|
-%T1-DLG-CptrDomJoin%|L-S-T1-DELEG_Computer - Join Domain|
-%T2-DLG-CptrDomJoin%|L-S-T2-DELEG_Computer - Join Domain|
+%t1l-global%|L-S-L1|
+%t2l-global%|L-S-L2|
+%t0-managers%|G-S-T0-Managers|
+%pawaccess-logon%|L-S-T0-PawAccess-Logon|
+%pawt0-logon%|L-S-T0-PawT0-Logon|
+%pawt12l-logon%|L-S-T0-PawT12L-Logon|
+%t0-localAdmin-servers%|L-S-T0-LocalAdmins-Servers|
+%t0-localAdmin-workstations%|L-S-T0-LocalAdmins-Workstations|
+%t1-managers%|G-S-T1-Managers|
+%t1-administrators%|G-S-T1-Administrators|
+%t1-operators%|G-S-T1-Operators|
+%t1-localAdmin-servers%|L-S-T1-LocalAdmins-Servers|
+%t2-managers%|G-S-T2-Managers|
+%t2-administrators%|G-S-T2-Administrators|
+%t2-operators%|G-S-T2-Operators|
+%t2-localAdmin-workstations%|L-S-T2-LocalAdmins-Workstations|
+%tll-operators%|G-S-L1-Operators|
+%t2l-operators%|G-S-L2-Operators|
+%t1l-localAdmin-servers%|L-S-L1-LocalAdmins-Servers|
+%t2l-localAdmin-workstations%|L-S-L2-LocalAdmins-Workstations|
+%T1-LAPS-PasswordReset%|L-S-T1-DELEG-LAPS-PwdReset|
+%T1-LAPS-PasswordReader%|L-S-T1-DELEG-LAPS-PwdRead|
+%T2-LAPS-PasswordReset%|L-S-T2-DELEG-LAPS-PwdReset|
+%T2-LAPS-PasswordReader%|L-S-T2-DELEG-LAPS-PwdRead|
+%T0-DLG-CptrDomJoin%|L-S-T0-DELEG-Computer - Join Domain|
+%T1-DLG-CptrDomJoin%|L-S-T1-DELEG-Computer - Join Domain|
+%T2-DLG-CptrDomJoin%|L-S-T2-DELEG-Computer - Join Domain|
 %Prefix%|L-S|
 %Prefix-domLoc%|L-S-|
 %Prefix-global%|G-S-|
-%Groups_Computers%|LocalAdmins_%ComputerName%|
+%Groups_Computers%|LocalAdmins-%ComputerName%|
 %OU-ADM%|_Administration|
 %OU-ADM-LOCALADMINS%|LocalAdmins|
 %OU-ADM-DELEGATION%|Deleg|
