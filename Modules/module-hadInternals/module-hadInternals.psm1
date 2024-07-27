@@ -447,3 +447,60 @@ function Write-DebugMessage {
     }
 }
 #endregion
+
+#region Rename-ThroughTranslation
+Function Rename-ThroughTranslation {
+    <#
+        .Synopsis
+        Translate an input string through the <translation> section.
+
+        .Description
+        The <translation> section contains a lot of dynamic reference to ease maintenability and accessibility of the script and modules.
+        When calling this function, the string object passed as input will be compared to each possible translation. The translated object is returned to the caller.
+
+        .Parameter ToTranslate
+        String to be translated.
+
+        .Parameter xmlTranslateTo
+        xml data to be used for translation. This will avoid loading each time the xml file.
+
+        .Notes
+        Author
+            Loic VEIRMAN MSSec
+        
+        Version history
+            1.0.0   Script creation
+    #>
+    [CmdletBinding()]
+    param (
+        [Parameter(mandatory,position=0)]
+        [string]
+        $ToTranslate,
+
+        [Parameter(mandatory,position=1)]
+        $xmlTranslateTo
+    )
+
+    # This function will not generate any log.
+    Try {
+        # We use another variable to manipulate the data. This save the initial value if needed (see catch area)
+        $newValue = $ToTranslate
+        # Looping through translation
+        foreach ($translation in $xmlTranslateTo) {
+            $newValue = $newValue -replace $translation.translateFrom, $translation.translateTo
+        }
+        # if new value conains % then we do it a second time - this is to allow call to dynamic value in the TranslateTo value.
+        if ($newValue -match '%') {
+            foreach ($translation in $xmlTranslateTo) {
+                $newValue = $newValue -replace $translation.translateFrom, $translation.translateTo
+            }   
+        }
+        # send result back
+        return $newValue
+    }
+    Catch {
+        # if something goes wrong, then we return the initial value.
+        return $ToTranslate
+    }
+}
+#endregion

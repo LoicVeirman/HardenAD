@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Settings>
 	<!--
-  		Revision: 2024/04/13 - contact@hardenad.net
+		Revision: 2024/07/27 - contact@hardenad.net
 	-->
 	<Version>
 		<Edition Name="Community Edition" />
@@ -15,127 +15,127 @@
 	<OrganizationalUnits>
 		<!-- 
 			The section <ouTree> handle the base model for OU creation.
-    		When calling the function [Set-OUTree], you need to add as parameter the "OU class" name of the tree structure you want to add.
-    		This could also be used to manage new OU generation.
+			When calling the function [Set-OUTree], you need to add as parameter the "OU class" name of the tree structure you want to add.
+			This could also be used to manage new OU generation.
 		-->
 		<ouTree>
 			<!-- 
 				CLASS: HardenAD_ADMIN
-      			This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtion.
+				This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtion.
 			-->
-			<OU Class="HardenAD_ADMIN" Name="_Administration" Description="Privileged accounts administrative OU">
+			<OU Class="HardenAD_ADMIN" Name="%OU-ADM%" Description="Privileged accounts administrative OU">
 				<!-- GPO -->
-				<ChildOU Name="GPO" Description="Groups dedicated to OU filtering (apply and deny)">
-					<ChildOU Name="Apply" Description="Groups dedicated to filter who/what will apply GPO" />
-					<ChildOU Name="Deny" Description="Groups dedicated to filter who/what will NOT apply GPO" />
+				<ChildOU Name="%OU-ADM-GPO%" Description="Groups dedicated to OU filtering (apply and deny)">
+					<ChildOU Name="%OU-ADM-GPO-Apply%" Description="Groups dedicated to filter who/what will apply GPO" />
+					<ChildOU Name="%OU-ADM-GPO-Deny%" Description="Groups dedicated to filter who/what will NOT apply GPO" />
 				</ChildOU>
 				<!-- PAW -->
-				<ChildOU Name="PAW" Description="Privileged Admin Workstations">
-					<ChildOU Name="Groups" Description="Protected group used by PAW (managed by T0 Manager)" />
-					<ChildOU Name="Stations" Description="PAW Computer objects">
-						<ChildOU Name="Access" Description="Physical PAW dedicated to connect to a jump server" />
-						<ChildOU Name="T0" Description="Physical or virtual PAW dedicated to manage Tier 0 only" />
-						<ChildOU Name="T12L" Description="Physical or virtual PAW dedicated to manage Tier 1, 2 or Legacy" />
+				<ChildOU Name="%OU-ADM-PAW%" Description="Privileged Admin Workstations">
+					<ChildOU Name="%OU-ADM-GROUPS%" Description="Protected group used by PAW (managed by T0 Manager)" />
+					<ChildOU Name="%OU-ADM-PAW-STATIONS%" Description="PAW Computer objects">
+						<ChildOU Name="%OU-ADM-PAW-STATIONS-ACCESS%" Description="Physical PAW dedicated to connect to a jump server" />
+						<ChildOU Name="%OU-ADM-PAW-STATIONS-T0%" Description="Physical or virtual PAW dedicated to manage Tier 0 only" />
+						<ChildOU Name="%OU-ADM-PAW-STATIONS-T12L%" Description="Physical or virtual PAW dedicated to manage Tier 1, 2 or Legacy" />
 					</ChildOU>
-					<ChildOU Name="Users" Description="Dedicated login account to open a session on a PAW (primary access)" />
+					<ChildOU Name="%OU-ADM-USERS%" Description="Dedicated login account to open a session on a PAW (primary access)" />
 				</ChildOU>
 				<!-- TIER 0 -->
-				<ChildOU Name="Tier 0" Description="Privileged groups and users dedicated to Tier 0">
-					<ChildOU Name="Groups" Description="Groups to manage Tier 0 objects">
-						<ChildOU Name="Deleg" Description="Delegation groups" />
-						<ChildOU Name="LocalAdmins" Description="System Local Administrator groups" />
+				<ChildOU Name="%OU-ADM-T0%" Description="Privileged groups and users dedicated to Tier 0">
+					<ChildOU Name="%OU-ADM-GROUPS%" Description="Groups to manage Tier 0 objects">
+						<ChildOU Name="%OU-ADM-DELEGATION%" Description="Delegation groups" />
+						<ChildOU Name="%OU-ADM-LOCALADMINS%" Description="System Local Administrator groups" />
 					</ChildOU>
-					<ChildOU Name="Users" Description="Administration accounts (Manager, Administrator and Operator)" />
+					<ChildOU Name="%OU-ADM-USERS%" Description="Administration accounts (Manager, Administrator and Operator)" />
 				</ChildOU>
 				<!-- TIER 1 -->
-				<ChildOU Name="Tier 1" Description="Privileged groups and users dedicated to Tier 1">
-					<ChildOU Name="Groups" Description="Groups to manage Tier 1 objects">
-						<ChildOU Name="Deleg" Description="Delegation groups" />
-						<ChildOU Name="LocalAdmins" Description="System Local Administrator groups" />
+				<ChildOU Name="%OU-ADM-T1%" Description="Privileged groups and users dedicated to Tier 1">
+					<ChildOU Name="%OU-ADM-GROUPS%" Description="Groups to manage Tier 1 objects">
+						<ChildOU Name="%OU-ADM-DELEGATION%" Description="Delegation groups" />
+						<ChildOU Name="%OU-ADM-LOCALADMINS%" Description="System Local Administrator groups" />
 					</ChildOU>
-					<ChildOU Name="Users" Description="Administration accounts (Manager, Administrator and Operator)" />
+					<ChildOU Name="%OU-ADM-USERS%" Description="Administration accounts (Manager, Administrator and Operator)" />
 				</ChildOU>
 				<!-- TIER 1 LEGACY -->
-				<ChildOU Name="Tier 1 Legacy" Description="Privileged groups and users dedicated to Tier 1 Legacy">
-					<ChildOU Name="Groups" Description="Groups to manage Tier 1 Legacy objects">
-						<ChildOU Name="LocalAdmins" Description="System Local Administrator groups" />
+				<ChildOU Name="%OU-ADM-L1%" Description="Privileged groups and users dedicated to Tier 1 Legacy">
+					<ChildOU Name="%OU-ADM-GROUPS%" Description="Groups to manage Tier 1 Legacy objects">
+						<ChildOU Name="%OU-ADM-LOCALADMINS%" Description="System Local Administrator groups" />
 					</ChildOU>
-					<ChildOU Name="Users" Description="Administration accounts (Operator only)" />
+					<ChildOU Name="%OU-ADM-USERS%" Description="Administration accounts (Operator only)" />
 				</ChildOU>
 				<!-- TIER 2 -->
-				<ChildOU Name="Tier 2" Description="Privileged groups and users dedicated to Tier 2">
-					<ChildOU Name="Groups" Description="Groups to manage Tier 2 objects">
-						<ChildOU Name="Deleg" Description="Delegation groups" />
-						<ChildOU Name="LocalAdmins" Description="System Local Administrator groups" />
+				<ChildOU Name="%OU-ADM-T2%" Description="Privileged groups and users dedicated to Tier 2">
+					<ChildOU Name="%OU-ADM-GROUPS%" Description="Groups to manage Tier 2 objects">
+						<ChildOU Name="%OU-ADM-DELEGATION%" Description="Delegation groups" />
+						<ChildOU Name="%OU-ADM-LOCALADMINS%" Description="System Local Administrator groups" />
 					</ChildOU>
-					<ChildOU Name="Users" Description="Administration accounts (Manager, Administrator and Operator)" />
+					<ChildOU Name="%OU-ADM-USERS%" Description="Administration accounts (Manager, Administrator and Operator)" />
 				</ChildOU>
 				<!-- TIER 2 LEGACY -->
-				<ChildOU Name="Tier 2 Legacy" Description="Privileged groups and users dedicated to Tier 2 Legacy">
-					<ChildOU Name="Groups" Description="Groups to manage Tier 2 Legacy objects">
-						<ChildOU Name="LocalAdmins" Description="System Local Administrator groups" />
+				<ChildOU Name="%OU-ADM-L2%" Description="Privileged groups and users dedicated to Tier 2 Legacy">
+					<ChildOU Name="%OU-ADM-GROUPS%" Description="Groups to manage Tier 2 Legacy objects">
+						<ChildOU Name="%OU-ADM-LOCALADMINS%" Description="System Local Administrator groups" />
 					</ChildOU>
-					<ChildOU Name="Users" Description="Administration accounts (Operator only)" />
+					<ChildOU Name="%OU-ADM-USERS%" Description="Administration accounts (Operator only)" />
 				</ChildOU>
 			</OU>
 			<!--
 				CLASS: HardenAD_PROD-T0
-      			This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtion.
+				This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtion.
 			-->
-			<OU Class="HardenAD_PROD-T0" Name="Harden_T0" Description="Tier 0 resources">
-				<ChildOU Name="Groups" Description="Groups objects belonging to this Tier" />
-				<ChildOU Name="Servers" Description="Computer objects belonging to this Tier and acting as servers">
-					<ChildOU Name="Disabled" Description="Disabled computer objects" />
+			<OU Class="HardenAD_PROD-T0" Name="%OU-PRD-T0%" Description="Tier 0 resources">
+				<ChildOU Name="%OU-PRD-GROUPS%" Description="Groups objects belonging to this Tier" />
+				<ChildOU Name="%OU-PRD-SERVERS%" Description="Computer objects belonging to this Tier and acting as servers">
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled computer objects" />
 				</ChildOU>
-				<ChildOU Name="Services" Description="Service accounts belonging to this Tier">
-					<ChildOU Name="Disabled" Description="Disabled sevice accounts" />
+				<ChildOU Name="%OU-PRD-SERVICES%" Description="Service accounts belonging to this Tier">
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled sevice accounts" />
 				</ChildOU>
-				<ChildOU Name="Users" Description="User objects belonging to this Tier">
-					<ChildOU Name="Disabled" Description="Disabled user objects" />
+				<ChildOU Name="%OU-PRD-USERS%" Description="User objects belonging to this Tier">
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled user objects" />
 				</ChildOU>
-				<ChildOU Name="Workstations" Description="Computer Objects belonging to this Tier and acting as clients">
-					<ChildOU Name="Disabled" Description="Disabled computer objects" />
+				<ChildOU Name="%OU-PROD-WORKSTATIONS%" Description="Computer Objects belonging to this Tier and acting as clients">
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled computer objects" />
 				</ChildOU>
 			</OU>
 			<!-- 
 				CLASS: HardenAD_PROD-T1and2
 				This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtion.
 			-->
-			<OU Class="HardenAD_PROD-T1and2" Name="Harden_T12" Description="Tier 1 and Tier 2 resources">
-				<ChildOU Name="Exchange" Description="Synced with EntraID - Exchange dedicated user, group and contact objects">
-					<ChildOU Name="Contacts" Description="Contacts objects">
-						<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+			<OU Class="HardenAD_PROD-T1and2" Name="%OU-PROD-T12%" Description="Tier 1 and Tier 2 resources">
+				<ChildOU Name="%OU-PROD-EXCHANGE%" Description="Synced with EntraID - Exchange dedicated user, group and contact objects">
+					<ChildOU Name="%OU-PROD-EXCHANGE-CONTACTS%" Description="Contacts objects">
+						<ChildOU Name="%OU-PROD-AADSYNC%" Description="Objects in this OU will not be synched with EntraID" />
 					</ChildOU>
-					<ChildOU Name="Distribution List" Description="Groups used to handle distribution list">
-						<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+					<ChildOU Name="%OU-PROD-EXCHANGE-DL%" Description="Groups used to handle distribution list">
+						<ChildOU Name="%OU-PROD-AADSYNC%" Description="Objects in this OU will not be synched with EntraID" />
 					</ChildOU>
-					<ChildOU Name="Resources" Description="Groups and Users used to handle resources (room, etc.)">
-						<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+					<ChildOU Name="%OU-PROD-EXCHANGE-RESOURCES%" Description="Groups and Users used to handle resources (room, etc.)">
+						<ChildOU Name="%OU-PROD-AADSYNC%" Description="Objects in this OU will not be synched with EntraID" />
 					</ChildOU>
-					<ChildOU Name="Shared Mailboxes" Description="Deactivated users to manage Shared Mailbox (should be converted to Native EntraID users)">
-						<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+					<ChildOU Name="%OU-PROD-EXCHANGE-SHAREDMBX%" Description="Deactivated users to manage Shared Mailbox (should be converted to Native EntraID users)">
+						<ChildOU Name="%OU-PROD-AADSYNC%" Description="Objects in this OU will not be synched with EntraID" />
 					</ChildOU>
 				</ChildOU>
-				<ChildOU Name="Groups" Description="Synced with EntraID - group objects (no Exchange groups) (Tier 1 and Tier 2)">
-					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+				<ChildOU Name="%OU-PRD-GROUPS%" Description="Synced with EntraID - group objects (no Exchange groups) (Tier 1 and Tier 2)">
+					<ChildOU Name="%OU-PROD-AADSYNC%" Description="Objects in this OU will not be synched with EntraID" />
 				</ChildOU>
-				<ChildOU Name="Provisioning" Description="Default OU for user and computer object creation (Tier 1 and Tier 2)">
-					<ChildOU Name="Users" Description="New user objects" />
-					<ChildOU Name="Computers" Description="New computer objects" />
+				<ChildOU Name="%OU-PRD-T12-Provisioning%" Description="Default OU for user and computer object creation (Tier 1 and Tier 2)">
+					<ChildOU Name="%OU-PRD-T12-Provisioning-User%" Description="New user objects" />
+					<ChildOU Name="%OU-PRD-T12-Provisioning-Cptr%" Description="New computer objects" />
 				</ChildOU>
-				<ChildOU Name="Servers" Description="Computer objects with a Server OS (Tier 1)">
-					<ChildOU Name="Disabled" Description="Disabled computer objects" />
+				<ChildOU Name="%OU-PRD-SERVERS%"Description="Computer objects with a Server OS (Tier 1)">
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled computer objects" />
 				</ChildOU>
-				<ChildOU Name="Services" Description="User objects acting as a service account on systems (Tier 1)">
-					<ChildOU Name="Disabled" Description="Disabled service accounts" />
+				<ChildOU Name="%OU-PRD-SERVICES%" Description="User objects acting as a service account on systems (Tier 1)">
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled service accounts" />
 				</ChildOU>
-				<ChildOU Name="Users" Description="Synced with EntraID - User objects for login on system or application (Tier 2)">
-					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
-					<ChildOU Name="Disabled" Description="Disabled user objects" />
+				<ChildOU Name="%OU-PRD-USERS%" Description="Synced with EntraID - User objects for login on system or application (Tier 2)">
+					<ChildOU Name="%OU-PROD-AADSYNC%" Description="Objects in this OU will not be synched with EntraID" />
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled user objects" />
 				</ChildOU>
-				<ChildOU Name="Workstations" Description="Synced with EntraID - Computer Objects with a Client OS (Tier 2)">
-					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
-					<ChildOU Name="Disabled" Description="Disabled computer objects" />
+				<ChildOU Name="%OU-PRD-WORKSTATIONS%" Description="Synced with EntraID - Computer Objects with a Client OS (Tier 2)">
+					<ChildOU Name="%OU-PROD-AADSYNC%" Description="Objects in this OU will not be synched with EntraID" />
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled computer objects" />
 				</ChildOU>
 			</OU>
 			<!-- 
@@ -143,22 +143,22 @@
 				This class generate an OU tree used for administration purpose in a tiering model. This is the English Edtion.
 			-->
 			<OU Class="HardenAD_PROD-LEGACY" Name="Harden_TL" Description="Legacy resources">
-				<ChildOU Name="Groups" Description="Synced with EntraID - group objects (no Exchange groups) (Tier 1 and Tier 2)">
-					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
+				<ChildOU Name="%OU-PRD-GROUPS%" Description="Synced with EntraID - group objects (no Exchange groups) (Tier 1 and Tier 2)">
+					<ChildOU Name="%OU-PROD-AADSYNC%" Description="Objects in this OU will not be synched with EntraID" />
 				</ChildOU>
-				<ChildOU Name="Servers" Description="Computer objects with a Server OS (Tier 1)">
-					<ChildOU Name="Disabled" Description="Disabled computer objects" />
+				<ChildOU Name="%OU-PRD-SERVERS%"Description="Computer objects with a Server OS (Tier 1)">
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled computer objects" />
 				</ChildOU>
-				<ChildOU Name="Services" Description="User objects acting as a service account on systems (Tier 1)">
-					<ChildOU Name="Disabled" Description="Disabled service accounts" />
+				<ChildOU Name="%OU-PRD-SERVICES%" Description="User objects acting as a service account on systems (Tier 1)">
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled service accounts" />
 				</ChildOU>
-				<ChildOU Name="Users" Description="Synced with EntraID - User objects for login on system or application (Tier 2)">
-					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
-					<ChildOU Name="Disabled" Description="Disabled user objects" />
+				<ChildOU Name="%OU-PRD-USERS%" Description="Synced with EntraID - User objects for login on system or application (Tier 2)">
+					<ChildOU Name="%OU-PROD-AADSYNC%" Description="Objects in this OU will not be synched with EntraID" />
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled user objects" />
 				</ChildOU>
-				<ChildOU Name="Workstations" Description="Synced with EntraID - Computer Objects with a Client OS (Tier 2)">
-					<ChildOU Name="DoNotSync" Description="Objects in this OU will not be synched with EntraID" />
-					<ChildOU Name="Disabled" Description="Disabled computer objects" />
+				<ChildOU Name="%OU-PRD-WORKSTATIONS%" Description="Synced with EntraID - Computer Objects with a Client OS (Tier 2)">
+					<ChildOU Name="%OU-PROD-AADSYNC%" Description="Objects in this OU will not be synched with EntraID" />
+					<ChildOU Name="%OU-PROD-DISABLED%" Description="Disabled computer objects" />
 				</ChildOU>
 			</OU>
 			<!-- 
@@ -352,24 +352,54 @@
 		<wellKnownID objectClass="group" translateFrom="%Prefix-domLoc%" translateTo="L-S-" />
 		<wellKnownID objectClass="group" translateFrom="%Prefix-global%" translateTo="G-S-" />
 		<wellKnownID objectClass="group" translateFrom="%Groups_Computers%" translateTo="LocalAdmins_%ComputerName%" />
-		<wellKnownID objectClass="text" translateFrom="%OU-Adm%" translateTo="_Administration" />
+		<!-- OU name in administration -->
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM%" translateTo="_Administration" />
+		<!-- Generic OU name used in Administration OU -->
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-LOCALADMINS%" translateTo="LocalAdmins" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-DELEGATION%" translateTo="Deleg" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-GROUPS%" translateTo="Groups" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-USERS%" translateTo="Users" />
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-GPO%" translateTo="GPO" />
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-GPO-APPLY%" translateTo="Apply" />
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-GPO-DENY%" translateTo="Deny" />
-		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T0%" translateTo="GroupsT0" />
-		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T1%" translateTo="GroupsT1" />
-		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T2%" translateTo="GroupsT2" />
-		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T1L%" translateTo="GroupsT1L" />
-		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T2L%" translateTo="GroupsT2L" />
-		<wellKnownID objectClass="text" translateFrom="%OU-PawAcs%" translateTo="PawAccess" />
-		<wellKnownID objectClass="text" translateFrom="%OU-PAW-T0%" translateTo="PawT0" />
-		<wellKnownID objectClass="text" translateFrom="%OU-PAW-T12L%" translateTo="PawT12L" />
-		<wellKnownID objectClass="text" translateFrom="%OU-LocalAdmins%" translateTo="LocalAdmins" />
-		<wellKnownID objectClass="text" translateFrom="%OU-Production-T0%" translateTo="Harden_T0" />
-		<wellKnownID objectClass="text" translateFrom="%OU-Production-T12%" translateTo="Harden_T12" />
-		<wellKnownID objectClass="text" translateFrom="%OU-PRD-T12-Workstations%" translateTo="Workstations" />
-		<wellKnownID objectClass="text" translateFrom="%OU-PRD-T12-Servers%" translateTo="Servers" />
-		<wellKnownID objectClass="text" translateFrom="%OU-Production-TL%" translateTo="Harden_TL" />
+		<!-- OU name for Tier in Administration -->
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-T0%" translateTo="Tier 0" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-T1%" translateTo="Tier 1" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-L1%" translateTo="Tier 1 Legacy" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-T2%" translateTo="Tier 2" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-L2%" translateTo="Tier 2 Legacy" />
+		<!-- Historical: to be dealed through other reference... Keep it that way.-->
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T0%" translateTo="%OU-ADM-GROUPS%,OU=%OU-ADM-T0%" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T1%" translateTo="%OU-ADM-GROUPS%,OU=%OU-ADM-T1%" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T2%" translateTo="%OU-ADM-GROUPS%,OU=%OU-ADM-L1%" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-L1%" translateTo="%OU-ADM-GROUPS%,OU=%OU-ADM-T2%" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-L2%" translateTo="%OU-ADM-GROUPS%,OU=%OU-ADM-L2%" />
+		<!-- OU name in Administration -->
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-PAW%" translateTo="PAW" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-PAW-STATIONS%" translateTo="Stations" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-PAW-STATIONS-ACCESS%" translateTo="PawAccess" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-PAW-STATIONS-T0%" translateTo="PawT0" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-PAW-STATIONS-T12L%" translateTo="PawT12L" />
+		<!-- OU name in Production and Legacy -->
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-DISABLED%" translateTo="Disabled" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-AADSYNC%" translateTo="DoNotSync" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-GROUPS%" translateTo="Groups" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-USERS%" translateTo="Users" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-SERVICES%" translateTo="Services" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-WORKSTATIONS%" translateTo="Workstations" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-SERVERS%" translateTo="Servers" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-EXCHANGE%" translateTo="Exchange" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-EXCHANGE-CONTACTS%" translateTo="Contacts" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-EXCHANGE-DL%" translateTo="Distribution Lists" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-EXCHANGE-SHAREDMBX%" translateTo="Shared Mailboxes" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-EXCHANGE-RESOURCES%" translateTo="Resources" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-T0%" translateTo="Harden_T0" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-T12%" translateTo="Harden_T12" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-T12-Provisioning%" translateTo="Provisioning" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-T12-Provisioning-User%" translateTo="Users" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-T12-Provisioning-Cptr%" translateTo="Computers" />
+		<wellKnownID objectClass="text" translateFrom="%OU-PRD-TL%" translateTo="Harden_TL" />
+		<!-- Password length and complexity used to generate admin accounts password -->
 		<wellKnownID objectClass="param" translateFrom="%pwdLength%" translateTo="16" />
 		<wellKnownID objectClass="param" translateFrom="%pwdNonAlphaNumChar%" translateTo="3" />
 		<!-- 
@@ -1371,8 +1401,8 @@
 	<Sequence>
 		<!-- 
 			The <Sequence> section define the different tasks to iterate in "sequence" (can't resist to this one).
-    		To deal with highlight color in display, use the ` to initiate and end a color change in your string, then use one of the three
-    		characters specified in value AltBaseHTxt(A,B, or C) to select your color: the color will switch back to normal at the next `.
+			To deal with highlight color in display, use the ` to initiate and end a color change in your string, then use one of the three
+			characters specified in value AltBaseHTxt(A,B, or C) to select your color: the color will switch back to normal at the next `.
 
 			The default highlight values are those one:
 				> `[my text` : magenta
@@ -1388,7 +1418,7 @@
 				> Name           : ID task name as refered in the final log output.
 				> CallingFunction: Name of the function to be called from one of the .psm1 files present in the modules directory.
 				> UseParameters  : Mandatory (but could be empty). Specify parameter to pass as argument to CallingFunction.
-				                   Use on per parameter and sort them in sequence (your script should refer them using input ordering).
+								   Use on per parameter and sort them in sequence (your script should refer them using input ordering).
 				> TaskEnabled    : YES or NO. When set to NO, the tasks is disabled and will not be applied.
 		-->
 		<!-- 
@@ -1489,19 +1519,21 @@
 		<!-- 
 			GENERATE NEW DEFAULT OBJECTS LOCATION TREE
 		-->
+		<!--
 		<Id Number="060" Name="Set Provisioning Organizational Unit">
 			<CallingFunction>Set-TreeOU</CallingFunction>
 			<UseParameters>PROVISIONNING-EN</UseParameters>
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>set `(Provisioning` organizational unit</TaskDescription>
 		</Id>
+		-->
 		<!-- 
 			RELOCATE NEW USER/GROUP OBJECT LOCATION
 		-->
 		<Id Number="070" Name="Default user location on creation">
 			<CallingFunction>Set-DefaultObjectLocation</CallingFunction>
 			<UseParameters>User</UseParameters>
-			<UseParameters>OU=users,OU=provisioning,RootDN</UseParameters>
+			<UseParameters>OU=%OU-PRD-T12-Provisioning-USER%,OU=%OU-PRD-T12-Provisioning%,OU=%OU-PRD-T12%,RootDN</UseParameters>
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>set `(user objects` default location</TaskDescription>
 		</Id>
@@ -1511,7 +1543,7 @@
 		<Id Number="071" Name="Default computer location on creation">
 			<CallingFunction>Set-DefaultObjectLocation</CallingFunction>
 			<UseParameters>Computer</UseParameters>
-			<UseParameters>OU=computers,OU=provisioning,RootDN</UseParameters>
+			<UseParameters>OU=%OU-PRD-T12-Provisioning-CPTR%,OU=%OU-PRD-T12-Provisioning%,OU=%OU-PRD-T12%,RootDN</UseParameters>
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>set `(computer objects` default location</TaskDescription>
 		</Id>

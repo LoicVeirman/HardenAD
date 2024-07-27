@@ -823,6 +823,7 @@ Function Set-DefaultObjectLocation {
         Version:    01.00 -- contact@hardenad.net
         history:    01.00 -- Script creation
                     01.01 -- Adapt to match relocation in any path
+                    01.02 -- Adapt to resolve dynamic name with the translation table.
     #>
     param(
         [Parameter(mandatory = $true, position = 0)]
@@ -859,32 +860,49 @@ Function Set-DefaultObjectLocation {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module."   
         }
     }
+
+    ## Loading XML data
+    Try {
+        $xmlTasksSequence = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding UTF8 -ErrorAction Stop)
+    } Catch {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + " !!! ERROR! $($_.ToString())"
+        # Force the script to do nothing
+        $ObjectType = $null
+    }
+
     ## dynamic OU path rewriting
-    $OUPath2 = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
+    if ($xmlTasksSequence) {
+        foreach ($translation in $xmlTasksSequence.Settings.Translation.wellKnownID) {
+            $OUPath = $OUPath -replace $translation.translateFrom,$translation.translateTo
+        }
+    }
+    $OUPath = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
 
     ## Checking object class
     switch ($ObjectType) {
         "User" {
             ## User
             Try {
-                $null = redirusr $OUPath2
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> REDIRUSR $OUPath2 (success)" 
+                $null = redirusr $OUPath
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> REDIRUSR $OUPath (success)" 
                 $result = 0
             }
             Catch {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! REDIRUSR $OUPath2 (failure)" 
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! REDIRUSR $OUPath (failure)" 
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: $($_.ToString())" 
                 $result = 2
             }
         }
         "Computer" {
             ##Computer
             Try {
-                $null = redircmp $OUPath2
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> REDIRUSR $OUPath2 (success)" 
+                $null = redircmp $OUPath
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> REDIRUSR $OUPath (success)" 
                 $result = 0
             }
             Catch {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! REDIRUSR $OUPath2 (failure)" 
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! REDIRUSR $OUPath (failure)" 
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: $($_.ToString())" 
                 $result = 2
             }
         }
@@ -2752,12 +2770,12 @@ function Add-SourceToDestGrps {
     $xmlSkeleton = [xml](Get-Content ".\Configs\TasksSequence_HardenAD.xml" -Encoding utf8)
     
     #.Retrieving dynamic data...
-    [string]$OUadmin = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm%" }).translateTo
+    [string]$OUadmin = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-ADM%" }).translateTo
     [string]$OUtier0 = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm-Groups-T0%" }).translateTo
     [string]$OUtier1 = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm-Groups-T1%" }).translateTo
     [string]$OUtier2 = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm-Groups-T2%" }).translateTo
-    [string]$OUt1Leg = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm-Groups-T1L%" }).translateTo
-    [string]$OUt2Leg = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-Adm-Groups-T2L%" }).translateTo
+    [string]$OUt1Leg = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-ADM-Groups-L1%" }).translateTo
+    [string]$OUt2Leg = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%OU-ADM-Groups-L2%" }).translateTo
     [string]$GrpGlob = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%prefix-global%" }).translateTo
     [string]$GrpDloc = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%prefix-DomLoc%" }).translateTo
     [string]$T0 = ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%isT0%" }).translateTo
@@ -3030,9 +3048,12 @@ Function Set-TreeOU {
     Function CreateOU ($OUObject, $OUPath) {
         $dbgMess = @()
         
+        ## Translate OU name
+        $ChildOUname = Rename-ThroughTranslation $OUOBject.Name $xmlSkeleton.settings.translation.wellKnownID
+
         ## Testing if OU is already present
-        if ([adsi]::exists(("LDAP://OU=" + $OUOBject.Name + "," + $OUPath))) {
-            $hrOUs = (("OU=" + $OUOBject.Name + "," + $OUPath) -split "," -replace "OU=", "") -replace "DC=", ""
+        if ([adsi]::exists(("LDAP://OU=" + $ChildOUName + "," + $OUPath))) {
+            $hrOUs = (("OU=" + $ChildOUName + "," + $OUPath) -split "," -replace "OU=", "") -replace "DC=", ""
             for ($i = $hrOUs.count - 1 ; $i -ge 0 ; $i--) {
                 $hrOUname += " | " + $hrOUs[$i] 
             }
@@ -3041,12 +3062,12 @@ Function Set-TreeOU {
 
         }
         Else {
-            $hrOUs = (("OU=" + $OUOBject.Name + "," + $OUPath) -split "," -replace "OU=", "") -replace "DC=", ""
+            $hrOUs = (("OU=" + $ChildOUName + "," + $OUPath) -split "," -replace "OU=", "") -replace "DC=", ""
             for ($i = $hrOUs.count - 1 ; $i -ge 0 ; $i--) {
                 $hrOUname += " | " + $hrOUs[$i] 
             }
             Try {
-                New-ADOrganizationalUnit -Name $OUObject.Name -Path $OUPath -Description $OUObject.Description -ErrorAction Stop
+                New-ADOrganizationalUnit -Name $ChildOUName -Path $OUPath -Description $OUObject.Description -ErrorAction Stop
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ $hrOUname (success)"
             } 
             Catch {
@@ -3056,7 +3077,7 @@ Function Set-TreeOU {
         
         ## Looking for sub organizational unit(s)...        
         if ($OUOBject.ChildOU) {
-            $newPath = "OU=" + $OUObject.Name + "," + $OUPath
+            $newPath = "OU=" + $ChildOUName + "," + $OUPath
             $OUObject.ChildOU | foreach { $dbgMess += CreateOU $_ $newPath }
         }
         ## Return logs
@@ -3120,19 +3141,22 @@ Function Set-TreeOU {
         if ($noError) {
             ## Getting root DNS name
             $DomainRootDN = (Get-ADDomain).DistinguishedName
-     
+    
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter DomainRootDN...: $DomainRootDN"
 
             ## Getting specified schema
             $xmlData = $xmlSkeleton.settings.OrganizationalUnits.ouTree.OU | Where-Object { $_.class -eq $ClassName }
-     
+    
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> xml data loaded (" + $xmlData.ChildOU.count + " child's OU - class=$ClassName)"
 
             ## if we got data, begining creation loop
             if ($xmlData) {
-                if ([adsi]::exists(("LDAP://OU=" + $xmlData.Name + "," + $DomainRootDN))) {
+                #.Translate OU Name.
+                $ouName = Rename-ThroughTranslation $xmlData.name $xmlSkeleton.Settings.Translation.wellKnownID
+                # Hunt for OU creation
+                if ([adsi]::exists(("LDAP://OU=" + $ouName + "," + $DomainRootDN))) {
                     ## OU Present
-                    $hrOUs = (("OU=" + $xmlData.Name + "," + $DomainRootDN) -split "," -replace "OU=", "") -replace "DC=", ""
+                    $hrOUs = (("OU=" + $ouName + "," + $DomainRootDN) -split "," -replace "OU=", "") -replace "DC=", ""
                     for ($i = $hrOUs.count - 1 ; $i -ge 0 ; $i--) {
                         $hrOUname += " | " + $hrOUs[$i] 
                     }
@@ -3141,12 +3165,12 @@ Function Set-TreeOU {
                 }
                 Else {
                     ## Create Root OU
-                    $hrOUs = (("OU=" + $xmlData.Name + "," + $DomainRootDN) -split "," -replace "OU=", "") -replace "DC=", ""
+                    $hrOUs = (("OU=" + $ouName + "," + $DomainRootDN) -split "," -replace "OU=", "") -replace "DC=", ""
                     for ($i = $hrOUs.count - 1 ; $i -ge 0 ; $i--) {
                         $hrOUname += " | " + $hrOUs[$i] 
                     }
                     Try {
-                        New-ADOrganizationalUnit -Name $xmlData.Name -Description $xmlData.Description -Path $DomainRootDN
+                        New-ADOrganizationalUnit -Name $ouName -Description $xmlData.Description -Path $DomainRootDN
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ $hrOUname created"
                     }
                     Catch {
@@ -3157,7 +3181,7 @@ Function Set-TreeOU {
                 
                 ## Now creating all childs OU
                 foreach ($OU in $xmlData.ChildOU) {
-                    $dbgMess += CreateOU $OU ("OU=" + $xmlData.Name + "," + $DomainRootDN)
+                    $dbgMess += CreateOU $OU ("OU=" + $ouName + "," + $DomainRootDN)
                 }
 
                 $result = 0

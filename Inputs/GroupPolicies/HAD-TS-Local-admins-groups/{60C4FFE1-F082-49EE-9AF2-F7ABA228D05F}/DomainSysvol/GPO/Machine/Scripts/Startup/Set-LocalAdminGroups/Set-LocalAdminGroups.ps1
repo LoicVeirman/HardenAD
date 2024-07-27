@@ -18,14 +18,14 @@
     A PAW is identified by the distinguished name (DN) of the computer object.
     To detect if the is the DN match the PAW main OU, the script use an XML file containing relevant information from the TasksSequence_HardenAD.xml file - created on script deployment. The group is then stored as a TIER 0 Protected group. 
     
-    XML Reference: Settings/Translation/WellKnownID --> %OU-PAW-Acs%, %OU-PAW-T0%, %OU-PAW-T12L%
+    XML Reference: Settings/Translation/WellKnownID --> %OU-PAW-Acs%, %OU-ADM-PAW-STATIONS-T0%, %OU-ADM-PAW-STATIONS-T12L%
 
 
     ** How TIER 0 is identified?
     A TIER 0 is identified by the distinguished name (DN) of the computer object.
     To detect if the is the DN match the TIER 0 main OU, the script use an XML file containing relevant information from the TasksSequence_HardenAD.xml file - created on script deployment. The group is then stored as a TIER 0 Protected group.
     
-    XML Reference: Settings/Translation/WellKnownID --> %OU-Production-T0%
+    XML Reference: Settings/Translation/WellKnownID --> %OU-PRD-T0%
     
 
     ** How TIER 1 is identified?
@@ -48,13 +48,13 @@
 
     ** How is determined the target path for the group (move/create)?
     The script will compute the target path from the XML file. There is two parts for the computation:
-    > First of all, the script computing the common static part of the path: OU=%OU-LocalAdmins%,OU=?,OU=%OU-ADM%,%DN%
+    > First of all, the script computing the common static part of the path: OU=%OU-ADM-LOCALADMINS%,OU=?,OU=%OU-ADM%,%DN%
     > Secondly, the script will replace the question mark (?) by the tier specific group OU: 
       - Tier 0.......: %OU-ADM-Groups-T0%
       - Tier 1.......: %OU-ADM-Groups-T1%
       - Tier 2.......: %OU-ADM-Groups-T2%
-      - Tier 1 Legacy: %OU-ADM-Groups-T1L%
-      - Tier 2 Legacy: %OU-ADM-Groups-T2L%
+      - Tier 1 Legacy: %OU-ADM-Groups-L1%
+      - Tier 2 Legacy: %OU-ADM-Groups-L2%
 
     ** What if I modify my OU structure?
     If you modify your OU structure AFTER the GPO has been deployed (and thus the configuration.xml generated from the TasksSequence_HardenAD.xml file), you'll need to reflect this change to the configuration.xml file.
@@ -265,32 +265,32 @@ if ($UpdateConfig)
             $XmlWriter.WriteComment("Creation timestamp: $(Get-Date -Format 'yyyy/MM/dd at hh:mm:ss')")
             $XmlWriter.WriteStartElement('translation')
             
-            # Settings/Translation/WellKnownID --> %OU-PAWAcs%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-PAWAcs%' }).TranslateTo
+            # Settings/Translation/WellKnownID --> %OU-ADM-PAW-STATIONS-ACCESS%
+            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-PAW-STATIONS-ACCESS%' }).TranslateTo
             $XmlWriter.WriteComment('OU PAW ACCESS')
             $XmlWriter.WriteElementString('OU-PAW-ACCESS',$Data)
             $debugMessage += Write-DebugLog inf "Added to xml: OU-PAW-ACCESS ($data)"
             
-            # Settings/Translation/WellKnownID --> %OU-PAW-T0%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-PAW-T0%' }).TranslateTo
+            # Settings/Translation/WellKnownID --> %OU-ADM-PAW-STATIONS-T0%
+            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-PAW-STATIONS-T0%' }).TranslateTo
             $XmlWriter.WriteComment('OU PAW T0')
             $XmlWriter.WriteElementString('OU-PAW-T0',$Data)
             $debugMessage += Write-DebugLog inf "Added to xml: OU-PAW-T0 ($data)"
             
-            # Settings/Translation/WellKnownID --> %OU-PAW-T12L%
-            $data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-PAW-T12L%' }).TranslateTo
+            # Settings/Translation/WellKnownID --> %OU-ADM-PAW-STATIONS-T12L%
+            $data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-PAW-STATIONS-T12L%' }).TranslateTo
             $XmlWriter.WriteComment('OU PAW T12L')
             $XmlWriter.WriteElementString('OU-PAW-T12L',$Data)
             $debugMessage += Write-DebugLog inf "Added to xml: OU-PAW-T12L ($data)"
 
-            # Settings/Translation/WellKnownID --> %OU-Production-T0%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-Production-T0%' }).TranslateTo
+            # Settings/Translation/WellKnownID --> %OU-PRD-T0%
+            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-PRD-T0%' }).TranslateTo
             $XmlWriter.WriteComment('OU TIER 0')
             $XmlWriter.WriteElementString('OU-PRD-T0',$Data)
             $debugMessage += Write-DebugLog inf "Added to xml: OU-PRD-T0 ($data)"
 
-            # Settings/Translation/WellKnownID --> %OU-LocalAdmins%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-LocalAdmins%' }).TranslateTo
+            # Settings/Translation/WellKnownID --> %OU-ADM-LOCALADMINS%
+            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-LOCALADMINS%' }).TranslateTo
             $XmlWriter.WriteComment('OU Local Admins Group')
             $XmlWriter.WriteElementString('OU-LOCALADMINS',$Data)
             $debugMessage += Write-DebugLog inf "Added to xml: OU-LOCALADMINS ($data)"
@@ -325,14 +325,14 @@ if ($UpdateConfig)
             $XmlWriter.WriteElementString('OU-ADM-GRP-T2',$Data)
             $debugMessage += Write-DebugLog inf "Added to xml: OU-ADM-GRP-T2 ($data)"
 
-            # Settings/Translation/WellKnownID --> %OU-ADM-Groups-T1L%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-Groups-T1L%' }).TranslateTo
+            # Settings/Translation/WellKnownID --> %OU-ADM-Groups-L1%
+            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-Groups-L1%' }).TranslateTo
             $XmlWriter.WriteComment('OU TIER 1 LEGACY GROUP')
             $XmlWriter.WriteElementString('OU-ADM-GRP-L1',$Data)
             $debugMessage += Write-DebugLog inf "Added to xml: OU-ADM-GRP-L1 ($data)"
 
-            # Settings/Translation/WellKnownID --> %OU-ADM-Groups-T2L%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-Groups-T2L%' }).TranslateTo
+            # Settings/Translation/WellKnownID --> %OU-ADM-Groups-L2%
+            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-Groups-L2%' }).TranslateTo
             $XmlWriter.WriteComment('OU TIER 2 LEGACY GROUP')
             $XmlWriter.WriteElementString('OU-ADM-GRP-L2',$Data)
             $debugMessage += Write-DebugLog inf "Added to xml: OU-ADM-GRP-L2 ($data)"
