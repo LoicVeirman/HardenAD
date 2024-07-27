@@ -340,12 +340,15 @@ $ColorsAndTexts = New-Object -TypeName psobject -Property @{
 }
 
 # Loading Header (yes, a bit of fun)
+$S_blueHarden = "$([char]0x1b)[38;2;43;200;255m"
+$Cend         = "$([char]0x1b)[0m"
+
 $LogoData = Get-Content (".\Configs\" + $SchedulrConfig.SchedulerSettings.ScriptHeader.Logo.file)
 $PriTxCol = $SchedulrConfig.SchedulerSettings.ScriptHeader.Logo.DefltColor
 $MaxLength = 0
 
 foreach ($line in $LogoData) {
-    Write-Host $line -ForegroundColor $PriTxCol
+    Write-Host "${S_BlueHarden}$line${Cend}" #-ForegroundColor $PriTxCol
     if ($line.length -gt $MaxLength) { 
         $MaxLength = $line.Length 
     }
