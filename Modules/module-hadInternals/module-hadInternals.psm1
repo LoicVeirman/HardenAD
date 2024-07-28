@@ -162,7 +162,10 @@ function Set-Translation {
         $TasksSeqConfig,
 
         [Parameter(Position=1)]
-        $xmlFileFullName 
+        $xmlFileFullName,
+
+        [Parameter(Position=2)]
+        $NoConfirmationForRootDomain
     )
 
     # Using ANSI Escape code
@@ -308,7 +311,7 @@ function Set-Translation {
         else { 
             Write-Host "Installation canceled... Help me, Obi-Wan Kenobi. You're my only hope!`n" -ForegroundColor red
             return 2
-            exit 2
+            #exit 2
         }
     }
     else {
@@ -329,14 +332,14 @@ function Set-Translation {
             {
                 $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
                 if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13) {
-                    Write-Host "Going on... Or: nearly 'Just Secured', I should say." -ForegroundColor Green
+                    Write-Host "Y`nGoing on... Or: nearly 'Just Secured', I should say." -ForegroundColor Green
                     $dontLeaveMe = $false
                 }
                 elseif ($key.VirtualKeyCode -eq 78) {
                     # Just leaving
-                    Write-Host "Ok, canceling... I find your lack of faith disturbing." -ForegroundColor Red
-                    return 0
-                    exit 0
+                    Write-Host "N`nOk, canceling... I find your lack of faith disturbing." -ForegroundColor Red
+                    return 1
+                    #exit 0
                 }
             }
         }

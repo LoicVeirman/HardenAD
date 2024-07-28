@@ -292,13 +292,6 @@ $Host.UI.RawUI.BackgroundColor = 'black'
 $Host.UI.RawUI.ForegroundColor = 'white'
 Clear-Host
 
-# Loading modules
-# When dealing with 2008R2, we need to import AD module first
-#Switch ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
-#    $True  { $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1") | Select-Object FullName }
-#    $false { $scriptModules = (Get-ChildItem .\Modules -Filter "*.psm1").FullName }
-#}
-
 # Setting-up usefull variables
 $SchedulrConfig = [xml](get-content .\Configs\Configuration_HardenAD.xml -Encoding utf8)
 $SchedulrLoging  = @()
@@ -344,7 +337,6 @@ $S_blueHarden = "$([char]0x1b)[38;2;43;200;255m"
 $Cend         = "$([char]0x1b)[0m"
 
 $LogoData = Get-Content (".\Configs\" + $SchedulrConfig.SchedulerSettings.ScriptHeader.Logo.file)
-$PriTxCol = $SchedulrConfig.SchedulerSettings.ScriptHeader.Logo.DefltColor
 $MaxLength = 0
 
 foreach ($line in $LogoData) {
@@ -463,16 +455,15 @@ if (-not ($FlagPreReq) -or -not($allowedRun)) {
 }
 
 # Updating the TasksSequence file to reflect the new data.
-$control = Set-Translation -tasksSeqConfig $TasksSeqConfig -xmlFileFullName $xmlFileFullName
-switch ($control) {
-    ${[0-2]} { Exit $control }
+$control = Set-Translation -tasksSeqConfig $TasksSeqConfig -xmlFileFullName $xmlFileFullName $NoConfirmationForRootDomain
+switch -regex ($control) {
+    [0-2] { Exit $control }
 }
 if ($FlagPreReq) {
     Write-Host "All prerequesites are OK.`n" -ForegroundColor Green
 
     # Reload the config file
     $TasksSeqConfig = [xml](get-content .\Configs\TasksSequence_HardenAD.xml -Encoding utf8)
-
 }
 else {
     Write-Host "Some check have failed!" -ForegroundColor Red
