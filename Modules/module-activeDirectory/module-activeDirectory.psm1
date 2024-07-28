@@ -953,7 +953,8 @@ Function Set-ADFunctionalLevel {
         .Parameter DsiAgreement
         YES if the DSI is informed and agreed.
         .Notes
-        Version: 01.00 -- contact@hardenad.net
+        Version:    01.00   --  contact@hardenad.net
+                    02.00   --  Rewriten to handle Windows Server 2025
     #>
     param(
         [Parameter(mandatory = $true, position = 0)]
@@ -962,19 +963,10 @@ Function Set-ADFunctionalLevel {
         $TargetScope,
 
         [Parameter(mandatory = $true, position = 1)]
-        [ValidateSet("2008R2", "2012", "2012R2", "2016", "Last")]
+        [ValidateSet("2008R2", "2012", "2012R2", "2016","2025","Last")]
         [String]
         $TargetLevel
     )
-
-    ## TargetLevel and OS Version
-    $OSlevelAndVersion = @{
-        '2008'   = '6.0'
-        '2008R2' = '6.1'
-        '2012'   = '6.2'
-        '2012R2' = '6.3'
-        '2016'   = '10.0*'
-    }
 
     ## Function Log Debug File
     $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
@@ -1003,6 +995,7 @@ Function Set-ADFunctionalLevel {
 
     ## checking preRequisites : run on FSMO, OS newer or equal to TargetLevel, Replication OK if several DCs
     $blnPreRequisitesOK = $true
+    # Domain update Check
     If ($TargetScope -like "Domain") {
         try {
             $DomainObj = Get-ADDomain
@@ -1016,31 +1009,107 @@ Function Set-ADFunctionalLevel {
             }
         }
         catch {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! Some issue occured when getting domain / DC Info : $($_.Exception.Message)" 
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! Some issue occured when getting domain / DC Info : $($_.ToString())" 
             $blnPreRequisitesOK = $false
         }
 
         If ($blnPreRequisitesOK) {
             # Check OS of all DCs of the current domain 
             [array]$AllDomainControllers = Get-ADDomainController -Filter * | Select-Object Name, HostName, OperatingSystem, OperatingSystemVersion
-            $intLowestOSVersion = 9999
+            #$intLowestOSVersion = 9999
             $AllDomainControllers | ForEach-Object {
                 $DCName = $_.HostName
-                $OSversion = $_.OperatingSystemVersion
-                $intOSVersion = [int]($OSversion.Substring(0, $OSversion.IndexOf(".") + 2).Replace(".", ""))
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> DC: $DCName | OS: $OSversion | intVersion: $intOSVersion"
-                If ($TargetLevel -like "Last") {
-                    If ($intOSVersion -lt $intLowestOSVersion) {
-                        $intLowestOSVersion = $intOSVersion
-                        $LowestOSVersion = $OSversion
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $LowestOSVersion"
+                $OSName = $_.OperatingSystem
+                $FindFL = $TargetLevel
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> DC: $DCName | OS: $OSName"
+                
+                If ($FindFL -eq "Last") {
+                    # We loop around to check which DC OS is the lowest and set the level accordingly.
+                    if ($OSName -match "2008" -and $OSName -notmatch "R2") {
+                        $WinOver = @("2008R2","2012","2012R2","2016","2025")
+                        if ($WinOver -contains $TargetLevel) {
+                            $TargetLevel = "2008"
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
+                        }
                     }
-                } 
+                    if ($OSName -match "2008" -and $OSName -match "R2") {
+                        $WinOver = @("2012","2012R2","2016","2025")
+                        if ($WinOver -contains $TargetLevel) {
+                            $TargetLevel = "2008R2" 
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
+                        }
+                    }
+                    if ($OSName -match "2012" -and $OSName -notmatch "R2")  {
+                        $WinOver = @("2012R2","2016","2025")
+                        if ($WinOver -contains $TargetLevel) {
+                            $TargetLevel = "2012" 
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
+                        }
+                    }
+                    if ($OSName -match "2012" -and $OSName -match "R2") { 
+                        $WinOver = @("2016","2025")
+                        if ($WinOver -contains $TargetLevel) {
+                            $TargetLevel = "2012R2" 
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
+                        }
+                    }
+                    if ($OSName -match "2016" -or $OSName -match "2019" -Or $OSName -match "2022") { 
+                        $WinOver = @("2025")
+                        if ($WinOver -contains $TargetLevel) {
+                            $TargetLevel = "2016" 
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
+                        }
+                    }
+                    if ($OSName -match "2025") {
+                        $TargetLevel = "2025"   
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
+                    }
+                }
                 Else {
-                    $intTargetOSVersion = [int](($OSlevelAndVersion[$TargetLevel]).Substring(0, ($OSlevelAndVersion[$TargetLevel]).IndexOf(".") + 2).Replace(".", ""))
-                    If ($intOSVersion -lt $intTargetOSVersion) { 
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OperatingSystem of '$DCName' is '$($_.OperatingSystem)', which is too low for target Domain Level ($($OSlevelAndVersion[$TargetLevel]))" 
-                        $blnPreRequisitesOK = $false
+                    # We loop around each DC OS and ensure there is no incompatibilty with the requested functional level.
+                    Switch ($TargetLevel) {
+                        "2008" {
+                            $NotAllow = @("2000","2003")
+                            if (($NotAllow | ForEach-Object { $OSName -match $_ }) | Where-Object { $_ -eq $true }) {
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OperatingSystem of '$DCName' is '$($_.OperatingSystem)', which is too low for target functional Level $TargetLevel)" 
+                                $blnPreRequisitesOK = $false
+                            }
+                        }
+                        "2008R2" {
+                            $NotAllow = @("2000","2003","2008")
+                            if (($NotAllow | ForEach-Object { $OSName -match $_ -and -not($OSName -match 'R2')}) | Where-Object { $_ -eq $true }) {
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OperatingSystem of '$DCName' is '$($_.OperatingSystem)', which is too low for target functional Level $TargetLevel)" 
+                                $blnPreRequisitesOK = $false
+                            }
+                        }
+                        "2012" {
+                            $NotAllow = @("2000","2003","2008")
+                            if (($NotAllow | ForEach-Object { $OSName -match $_ }) | Where-Object { $_ -eq $true }) {
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OperatingSystem of '$DCName' is '$($_.OperatingSystem)', which is too low for target functional Level $TargetLevel)" 
+                                $blnPreRequisitesOK = $false
+                            }
+                        } 
+                        "2012R2" {
+                            $NotAllow = @("2000","2003","2008","2012")
+                            if (($NotAllow | ForEach-Object { $OSName -match $_ -and -not($OSName -match 'R2')}) | Where-Object { $_ -eq $true }) {
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OperatingSystem of '$DCName' is '$($_.OperatingSystem)', which is too low for target functional Level $TargetLevel)" 
+                                $blnPreRequisitesOK = $false
+                            }
+                        }
+                        "2016" {
+                            $NotAllow = @("2000","2003","2008","2012")
+                            if (($NotAllow | ForEach-Object { $OSName -match $_ }) | Where-Object { $_ -eq $true }) {
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OperatingSystem of '$DCName' is '$($_.OperatingSystem)', which is too low for target functional Level $TargetLevel)" 
+                                $blnPreRequisitesOK = $false
+                            }
+                        }
+                        "2025" {
+                            $NotAllow = @("2000","2003","2008","2012","2016","2019","2022")
+                            if (($NotAllow | ForEach-Object { $OSName -match $_ }) | Where-Object { $_ -eq $true }) {
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OperatingSystem of '$DCName' is '$($_.OperatingSystem)', which is too low for target functional Level $TargetLevel)" 
+                                $blnPreRequisitesOK = $false
+                            }
+                        }
                     }
                 }
             }
@@ -1060,16 +1129,9 @@ Function Set-ADFunctionalLevel {
                 $blnPreRequisitesOK = $false
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! Current DomainController is not PDCEmulator"  
             }
-
-            # If TargetLevel is Last, set it to the lowest OS found amongst Domain Controllers
-            If ($TargetLevel -like "Last") {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> TargetLevel is Last -> Set to LowestOSVersion ($LowestOSVersion)"
-                $LowestOSVersion = $LowestOSVersion.Substring(0, $LowestOSVersion.IndexOf(".") + 2) + "*"
-                $TargetLevel = ($OSlevelAndVersion.GetEnumerator() | Where-Object { $_.Value -like $LowestOSVersion }).Name
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Set Target Level to $TargetLevel (Lowest OS found is $LowestOSVersion)" 
-            }
         }
     }
+    # Forest Update Check
     Else {
         # check PreRequisites for Forest Functional Update
         try {
@@ -1097,7 +1159,7 @@ Function Set-ADFunctionalLevel {
                     $DflLabel = [string](Get-ADDomain $DomainDns).DomainMode
                     $DflShort = ($DflLabel.Replace("Windows", "")).Replace("Domain", "")
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Domain $DomainDns : DFL = $DflLabel ($DflShort)" 
-                    If ($TargetLevel -like "Last") {
+                    If ($TargetLevel -eq "Last") {
                         If ($DflShort -lt $LowestFL) { $LowestFL = $DflShort }
                     } 
                     Else {
@@ -1124,7 +1186,7 @@ Function Set-ADFunctionalLevel {
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! Current DomainController is not in the root domain"           
             }
             # set Target Level if parameter is Last 
-            If ($TargetLevel -like "Last") { $TargetLevel = $LowestFL }
+            If ($TargetLevel -eq "Last") { $TargetLevel = $LowestFL }
         }
     }
 
@@ -1134,7 +1196,6 @@ Function Set-ADFunctionalLevel {
 
         If ($TargetScope -like "Domain") {
             $TargetMode = "Windows" + $TargetLevel + "Domain"
-
             If ($TargetMode -like $CurrentDomainLevel) {
                 # Skip operation if Target = Current   
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> IGNORED : DFL is already at $TargetMode (no change needed)"
@@ -1658,12 +1719,13 @@ Function New-GpoObject {
             01.00 -- contact@hardenad.net 
         
         history: 
-            01.00 -- Script creation
-            01.01 -- Added Security Filter option
-            02.00 -- Uses new functions 2.0
-            02.01 -- Added Debug log
-            02.02 -- Fixed bug that let unvalited GPO being imported anyway
-            02.03 -- Added ability to store in Deny and Apply sub-OU
+            01.00 --    Script creation
+            01.01 --    Added Security Filter option
+            02.00 --    Uses new functions 2.0
+            02.01 --    Added Debug log
+            02.02 --    Fixed bug that let unvalited GPO being imported anyway
+            02.03 --    Added ability to store in Deny and Apply sub-OU
+                        Added flexibility with GpLink which now can handle dynamic path (through <translation>)
     #>
     param(
     )
@@ -1990,6 +2052,7 @@ Function New-GpoObject {
                 if ($gpVali -eq "yes" -or $gpVali -eq "no") {
                     foreach ($gpLink in $GPO.GpoLink) {
                         $gpPath = $gpLink.Path -replace 'RootDN', ((Get-ADDomain).DistinguishedName)
+                        $gpPath = Rename-ThroughTranslation $gpPath $xmlFile.Settings.Translation.wellKnownID
                         #.Test if already linked
                         $gpLinked = Get-ADObject -Filter { DistinguishedName -eq $gpPath } -Properties gpLink | Select-Object -ExpandProperty gpLink | Where-Object { $_ -Match ("LDAP://CN={" + (Get-Gpo -Name $gpName).ID + "},") }
                         if ($gpLinked) {
@@ -2001,6 +2064,7 @@ Function New-GpoObject {
                                 $result = 1
                                 $errMess += " Error: could not link one or more GPO"
                                 Write-DebugMessage "---! ERROR while linking GPO $GpName to OU $gpPath"
+                                Write-DebugMessage "---! Error: $($_.ToString())"
                             }
                         }
                         Else {
@@ -2012,6 +2076,7 @@ Function New-GpoObject {
                                 $result = 1
                                 $errMess += " Error: could not link one or more GPO"
                                 Write-DebugMessage "---! ERROR while linking GPO $GpName to OU $gpPath"
+                                Write-DebugMessage "---! Error: $($_.ToString())"
                             }
                         }
                     }
