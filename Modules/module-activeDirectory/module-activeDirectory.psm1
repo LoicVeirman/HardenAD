@@ -1034,33 +1034,33 @@ Function Set-ADFunctionalLevel {
                     }
                     if ($OSName -match "2008" -and $OSName -match "R2") {
                         $WinOver = @("2012","2012R2","2016","2025")
-                        if ($WinOver -contains $TargetLevel) {
+                        if ($WinOver -contains $TargetLevel -or $TargetLevel -eq "Last") {
                             $TargetLevel = "2008R2" 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
                         }
                     }
                     if ($OSName -match "2012" -and $OSName -notmatch "R2")  {
                         $WinOver = @("2012R2","2016","2025")
-                        if ($WinOver -contains $TargetLevel) {
+                        if ($WinOver -contains $TargetLeve -or $TargetLevel -eq "Last") {
                             $TargetLevel = "2012" 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
                         }
                     }
                     if ($OSName -match "2012" -and $OSName -match "R2") { 
                         $WinOver = @("2016","2025")
-                        if ($WinOver -contains $TargetLevel) {
+                        if ($WinOver -contains $TargetLevel -or $TargetLevel -eq "Last") {
                             $TargetLevel = "2012R2" 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
                         }
                     }
                     if ($OSName -match "2016" -or $OSName -match "2019" -Or $OSName -match "2022") { 
                         $WinOver = @("2025")
-                        if ($WinOver -contains $TargetLevel) {
+                        if ($WinOver -contains $TargetLevel -or $TargetLevel -eq "Last") {
                             $TargetLevel = "2016" 
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
                         }
                     }
-                    if ($OSName -match "2025") {
+                    if ($OSName -match "2025" -and $TargetLevel -eq "Last") {
                         $TargetLevel = "2025"   
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> LowestOSVersion: $TargetLevel" 
                     }
