@@ -507,3 +507,119 @@ Function Rename-ThroughTranslation {
     }
 }
 #endregion
+
+#region Set-GpttmplSID
+Function Set-GptTmplSID {
+    <#
+        .Synopsis
+        Replace SID value per the new in GptTmpl.inf.
+
+        .Description
+        Allow to manipulate inf file within a GPO backup repository to replace SID value. Use a fixed array.
+
+        .Notes
+        Author:
+            Loic VEIRMAN Mssec
+        Version:
+            01.00.00    Script creation
+    #>
+    Param(
+        [Parameter(Mandatory, Position = 0)]
+        [String]
+        $GpoBackupID
+    )
+    
+    ## Function Log Debug File
+    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+    $dbgMess = @()
+
+    ## Start Debug Trace
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+
+    ## Indicates caller and options used
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
+
+    ## Report parameters to log
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter GpoBackupID....: $($GpoBackupID)"
+
+    # - Fixed value
+    $KnownSIDs = @(
+        "S-1-5-21-1646015392-45128516-3240267615-3147;%T0-Operators%",
+        "S-1-5-21-1646015392-45128516-3240267615-3148;%T1-Operators%",
+        "S-1-5-21-1646015392-45128516-3240267615-3157;%T2-Operators%"
+    )
+
+    Try {
+        # - Loading xmlRef file
+        $xmlTS = [xml](Get-Content .\Configs\TasksSequence_HardenAD.xml -Encoding UTF8 -ErrorAction Stop)
+        $xmlTranslation = $xmlTS.Settings.Translation.wellKnownID
+        # - find Gpo path
+        $gpoPath = (Get-ChildItem .\Inputs\GroupPolicies -Recurse | Where-Object { $_.Name -eq $GpoBackupID }).FullName
+        # - Loading inf file
+        $GptTmpl = Get-Content "$($gpoPath)\DomainSysvol\GPO\Machine\microsoft\Windows nt\SecEdit\GptTmpl.inf" -Encoding Unicode -ErrorAction Stop
+    }
+    Catch {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! Error: $($_.ToString())"
+    }
+
+    # Modus Operandi...
+    $newArray = @()
+    foreach ($KnowSID in $KnownSIDs) {
+        # what to find and sid to find
+        $TranslateIt = ($KnowSID -split ";")[0]
+        $findThisSID = ($KnowSID -split ";")[1]
+        # Translating
+        foreach ($translation in $xmlTranslation) {
+            $findThisSID = $findThisSID -replace $translation.TranslateFrom, $translation.TranslateTo
+        }
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Finding $($findThisSID)..."
+        # finding sid (if any)
+        Try {
+            $newSID = (Get-ADObject -Filter { samAccountName -eq $findThisSID } -ErrorAction Stop -Properties ObjectSID).ObjectSID
+        } 
+        Catch {
+            $newSID = $TranslateIt
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! Error: $($_.ToString())"
+        }
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> New SID will be: $NewSID"
+        #  adding to array
+        $newArray += "$($TranslateIt);$($newSID)"
+    }
+    # rewrite file
+    $newFile = @()
+    foreach ($line in $GptTmpl) {
+        $tmpLine = $line
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Working on: $line"
+        foreach ($id in $newArray) {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- ----> Find........: $(($id -split ';')[0])"
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- ----> Replace with: $(($id -split ';')[1])"
+            $tmpLine = $tmpLine -replace ($id -split ';')[0], ($id -split ';')[1]
+        }
+        $newFile += $tmpLine
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- ----> new line value: $($tmpLine)"
+    }
+    # outing file.
+    $newFile | Out-File "$($gpoPath)\DomainSysvol\GPO\Machine\microsoft\Windows nt\SecEdit\GptTmpl.inf" -Encoding unicode -Force
+
+    ## Exit
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | INIT  ROTATIVE  LOG "
+    if (Test-Path .\Logs\Debug\$DbgFile) {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
+        if (((Get-WMIObject win32_operatingsystem).name -notlike "*2008*")) {
+            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
+        }
+    }
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
+
+    return (New-Object -TypeName psobject -Property @{ResultCode = 0 ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+    
+}
+#endregion
