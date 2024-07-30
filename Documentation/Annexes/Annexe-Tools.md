@@ -42,7 +42,7 @@ This have to be run prior to the GPO import. If you already have imported the GP
 ** BEWARE ** *Use it with caution!*
 This is not a production tool, it has only be designed to prepare customer environment. The community gracefully share it with you, but you'll have to adapt it to your needs. The CSV is not provided.
   
-This function will add to the <Accounts> section and all the CSV data.
+This function will add to the *Accounts* section and all the CSV data.
   
 ## Scripts Manage  
 ### Clean-ADComputerACL
