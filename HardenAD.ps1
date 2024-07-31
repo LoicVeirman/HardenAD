@@ -320,14 +320,18 @@ function Set-Translation
             Write-Host "[Y/N] " -NoNewline
             
             # Waiting key input. If not Y, then leaves.
-            $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
-            if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13)
-            {
-                Write-Host "Going on... Or: nearly 'Just Secured', I should say." -ForegroundColor Green
-            } else {
-                # Just leaving
-                Write-Host "Ok, canceling... I find your lack of faith disturbing." -ForegroundColor Red
-                Exit 0
+            $dontLeaveMe = $true
+            While ($dontLeaveMe) {
+                $key = $Host.UI.RawUI.ReadKey("IncludeKeyDown,NoEcho")
+                if ($key.VirtualKeyCode -eq 89 -or $key.VirtualKeyCode -eq 13)
+                {
+                    Write-Host "Going on... Or: nearly 'Just Secured', I should say." -ForegroundColor Green
+                    $dontLeaveMe = $false
+                } elseif ($key.VirtualKeyCode -eq 78) {
+                    # Just leaving
+                    Write-Host "Ok, canceling... I find your lack of faith disturbing." -ForegroundColor Red
+                    Exit 0
+                }
             }
         }
     }
