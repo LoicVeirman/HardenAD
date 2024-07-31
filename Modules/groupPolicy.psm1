@@ -480,6 +480,7 @@ Function New-GpoObject {
     Catch {
         $Result = 2
         Write-DebugMessage "---! FAILED loading xml skeleton file "
+        Write-DebugMessage "---! Error: $($_.ToString())"
     }
     
     ## Recovering GPOs data
@@ -525,6 +526,7 @@ Function New-GpoObject {
                 Catch {
                     $gpFlag = $false
                     Write-DebugMessage "---! Error when creating GPO $gpName "
+                    Write-DebugMessage "---! Error: $($_.ToString())"
                     $result = 1
                 }
             }
@@ -559,6 +561,7 @@ Function New-GpoObject {
                     $errMess += " Failed to import at least one GPO : $Error[0]"
                     $errMess += ""
                     Write-DebugMessage "---! Failed to import Datas of GPO $gpName"
+                    Write-DebugMessage "---! Error: $($_.ToString())"
                     $importFlag = $false
                 }
 
@@ -590,6 +593,7 @@ Function New-GpoObject {
                         Catch {
                             $Result = 1
                             Write-DebugMessage "---!Error while setting WMI Filter of GPO $gpName."
+                            Write-DebugMessage "---! Error: $($_.ToString())"
                         }
                     } 
                 }
@@ -623,6 +627,7 @@ Function New-GpoObject {
                     }
                     catch {
                         #To write
+                        Write-DebugMessage "---! Error: $($_.ToString())"
                     }
                 }
                 #.Space
@@ -633,6 +638,7 @@ Function New-GpoObject {
                     }
                     catch {
                         #To write
+                        Write-DebugMessage "---! Error: $($_.ToString())"
                     }     
                 }
                 $SrcGrpName = $newGrpName
@@ -668,6 +674,7 @@ Function New-GpoObject {
                             $result = 1
                             $errMess += " Error: failed to create GPO group $grpName"
                             Write-DebugMessage "---! Error: failed to create GPO group $grpName"
+                            Write-DebugMessage "---! Error: $($_.ToString())"
                         }
                     }
 
@@ -689,6 +696,7 @@ Function New-GpoObject {
                         $result = 1
                         $errMess += " Error: could not apply the deny permission on one or more GPO"
                         Write-DebugMessage "---!Error while applying  Deny permission on GPO $GpName"
+                        Write-DebugMessage "---! Error: $($_.ToString())"
                     }
                 }
 
@@ -713,6 +721,7 @@ Function New-GpoObject {
                             $result = 1
                             $errMess += " Error: failed to create GPO group $grpName"
                             Write-DebugMessage "---! Error: failed to create GPO group $grpName"
+                            Write-DebugMessage "---! Error: $($_.ToString())"
                         }
                     }
 
@@ -730,6 +739,7 @@ Function New-GpoObject {
                         $result = 1
                         $errMess += " Error: could not apply the apply permission on one or more GPO"
                         Write-DebugMessage "---! Error while setting Apply permission on $GpName"
+                        Write-DebugMessage "---! Error: $($_.ToString())"
                     }
 
                     #.recover group name to adapt with AD running language
@@ -744,6 +754,7 @@ Function New-GpoObject {
                         $result = 1
                         $errMess += " Error: failed to rewrite S-1-5-11 from security filter list"
                         Write-DebugMessage "---! ERROR while resetting Permission for authenticated on $GpName"
+                        Write-DebugMessage "---! Error: $($_.ToString())"
                     }
                 }
 
@@ -762,6 +773,7 @@ Function New-GpoObject {
                                 $result = 1
                                 $errMess += " Error: could not link one or more GPO"
                                 Write-DebugMessage "---! ERROR while linking GPO $GpName to OU $gpPath"
+                                Write-DebugMessage "---! Error: $($_.ToString())"
                             }
                         }
                         Else {
@@ -773,6 +785,7 @@ Function New-GpoObject {
                                 $result = 1
                                 $errMess += " Error: could not link one or more GPO"
                                 Write-DebugMessage "---! ERROR while linking GPO $GpName to OU $gpPath"
+                                Write-DebugMessage "---! Error: $($_.ToString())"
                             }
                         }
                     }
