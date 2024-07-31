@@ -11,7 +11,10 @@
     This wil add to the Description and DisplayName data the text from the config.xml file.
 
     .NOTES
-    Version 0.1 by loic.veirman@mssec.fr 
+    Author  loic.veirman@mssec.fr 
+
+    Version 1.0     Script Creation
+            1.1     Replace fixed name per dynamic resolution from <translation>
 #>
 
 Param(
@@ -20,30 +23,25 @@ Param(
     $AddText
 )
 
+#.Import required module
+Import-Module ..\..\..\Modules\module-fileHandling
+
 #.Load XML file
-$Config = [xml](Get-Content .\config.xml -Encoding UTF8)
+$Config = [xml](Get-Content .\config\config.xml -Encoding UTF8)
 
 #.Load XML from Harden AD and keeping formating
-$HADFil = Convert-Path '..\..\Configs\TasksSequence_HardenAD.xml'
-
-$scriptRootPath = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
-$xmlModule = "$scriptRootPath\Modules\Format-XML.psm1"
-Import-Module "$xmlModule"
-
-#$HADxml = New-Object System.Xml.XmlDocument
-#$HADxml.PreserveWhitespace = $true
-#$HADxml.Load($HADFil)
-
-$HADxml = [xml](Get-Content $HADFil -Encoding UTF8)
-
-#.Load Section for accounts
-$ACCnode = Select-Xml $HADxml -XPath "//*/Accounts" | Select-Object -ExpandProperty "Node"
-
-#.Load section for groups
-$GRPnode = Select-Xml $HADxml -XPath "//*/Groups"   | Select-Object -ExpandProperty "Node"
+Try {
+    $HADFil = Convert-Path '..\..\..\Configs\TasksSequence_HardenAD.xml'
+    $HADxml = [xml](Get-Content $HADFil -Encoding UTF8)
+}
+Catch {
+    Write-host "Error: " -NoNewline -ForegroundColor Red
+    write-Host " $($_.ToString())" -ForegroundColor Yellow
+    Exit 1
+}
 
 #.Parsing elements to add or modify
-$Accounts = Import-Csv .\admins.csv -Delimiter ";" -Encoding UTF8
+$Accounts = Import-Csv .\csv\admins.csv -Delimiter ";" -Encoding UTF8
 
 foreach ($Account in $Accounts) {
     Write-Host "> Working on " -ForegroundColor Gray -NoNewline
@@ -114,17 +112,18 @@ foreach ($Account in $Accounts) {
             $null = $Node.AppendChild($NewChild)
         }
 
+        #.Getting Tier Group Name
+        $TargetGroup = Rename-ThroughTranslation -toTranslate $Config.Settings.Group.samAccountName.T0M -xmlTranslateTo $HADxml.Settings.Translation.wellKnownID
+
         #.Append new user to groups, if not already present
-        $isPresent = Select-Xml $HADxml -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T0M)']" | Select-Object -ExpandProperty "Node"
+        $FilterGrp = Select-Xml $HADxml    -XPath "//*/Groups/Group[@Name='$($TargetGroup)']" | Select-Object -ExpandProperty "Node"
+        $isPresent = Select-Xml $FilterGrp -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T0M)']" | Select-Object -ExpandProperty "Node"
 
         if (-not $isPresent) {
-            $Node = Select-Xml $HADxml -XPath "//*/Group[@name='$($Config.Settings.Group.samAccountName.T0M)']" | Select-Object -ExpandProperty "Node"
-                            
+            $Node     = Select-Xml $HADxml -XPath "//*/Group[@name='$($FilterGrp)']" | Select-Object -ExpandProperty "Node"
             $NewChild = $HADxml.CreateElement("Member")
-            
-            $null = $NewChild.SetAttribute("samAccountName", $($Account.T0M))
-
-            $null = $Node.AppendChild($NewChild) 
+            [void]($NewChild.SetAttribute("samAccountName", $($Account.T0M)))
+            [void]($Node.AppendChild($NewChild))
         }
     }
 
@@ -168,17 +167,18 @@ foreach ($Account in $Accounts) {
             $null = $Node.AppendChild($NewChild)
         }
 
+        #.Getting Tier Group Name
+        $TargetGroup = Rename-ThroughTranslation -toTranslate $Config.Settings.Group.samAccountName.T0O -xmlTranslateTo $HADxml.Settings.Translation.wellKnownID
+
         #.Append new user to groups, if not already present
-        $isPresent = Select-Xml $HADxml -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T0O)']" | Select-Object -ExpandProperty "Node"
+        $FilterGrp = Select-Xml $HADxml    -XPath "//*/Groups/Group[@Name='$($TargetGroup)']" | Select-Object -ExpandProperty "Node"
+        $isPresent = Select-Xml $FilterGrp -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T0O)']" | Select-Object -ExpandProperty "Node"
 
         if (-not $isPresent) {
-            $Node = Select-Xml $HADxml -XPath "//*/Group[@name='$($Config.Settings.Group.samAccountName.T0O)']" | Select-Object -ExpandProperty "Node"
-                            
+            $Node     = Select-Xml $HADxml -XPath "//*/Group[@name='$($FilterGrp)']" | Select-Object -ExpandProperty "Node"
             $NewChild = $HADxml.CreateElement("Member")
-            
-            $null = $NewChild.SetAttribute("samAccountName", $($Account.T0O))
-
-            $null = $Node.AppendChild($NewChild) 
+            [void]($NewChild.SetAttribute("samAccountName", $($Account.T0O)))
+            [void]($Node.AppendChild($NewChild))
         }
     }
 
@@ -222,17 +222,18 @@ foreach ($Account in $Accounts) {
             $null = $Node.AppendChild($NewChild)
         }
 
+        #.Getting Tier Group Name
+        $TargetGroup = Rename-ThroughTranslation -toTranslate $Config.Settings.Group.samAccountName.T1M -xmlTranslateTo $HADxml.Settings.Translation.wellKnownID
+
         #.Append new user to groups, if not already present
-        $isPresent = Select-Xml $HADxml -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T1M)']" | Select-Object -ExpandProperty "Node"
+        $FilterGrp = Select-Xml $HADxml    -XPath "//*/Groups/Group[@Name='$($TargetGroup)']" | Select-Object -ExpandProperty "Node"
+        $isPresent = Select-Xml $FilterGrp -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T1M)']" | Select-Object -ExpandProperty "Node"
 
         if (-not $isPresent) {
-            $Node = Select-Xml $HADxml -XPath "//*/Group[@name='$($Config.Settings.Group.samAccountName.T1M)']" | Select-Object -ExpandProperty "Node"
-                            
+            $Node     = Select-Xml $HADxml -XPath "//*/Group[@name='$($FilterGrp)']" | Select-Object -ExpandProperty "Node"
             $NewChild = $HADxml.CreateElement("Member")
-            
-            $null = $NewChild.SetAttribute("samAccountName", $($Account.T1M))
-
-            $null = $Node.AppendChild($NewChild) 
+            [void]($NewChild.SetAttribute("samAccountName", $($Account.T1M)))
+            [void]($Node.AppendChild($NewChild))
         }
     }
 
@@ -276,17 +277,18 @@ foreach ($Account in $Accounts) {
             $null = $Node.AppendChild($NewChild)
         }
 
+        #.Getting Tier Group Name
+        $TargetGroup = Rename-ThroughTranslation -toTranslate $Config.Settings.Group.samAccountName.T1A -xmlTranslateTo $HADxml.Settings.Translation.wellKnownID
+
         #.Append new user to groups, if not already present
-        $isPresent = Select-Xml $HADxml -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T1A)']" | Select-Object -ExpandProperty "Node"
+        $FilterGrp = Select-Xml $HADxml    -XPath "//*/Groups/Group[@Name='$($TargetGroup)']" | Select-Object -ExpandProperty "Node"
+        $isPresent = Select-Xml $FilterGrp -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T1A)']" | Select-Object -ExpandProperty "Node"
 
         if (-not $isPresent) {
-            $Node = Select-Xml $HADxml -XPath "//*/Group[@name='$($Config.Settings.Group.samAccountName.T1A)']" | Select-Object -ExpandProperty "Node"
-                            
+            $Node     = Select-Xml $HADxml -XPath "//*/Group[@name='$($FilterGrp)']" | Select-Object -ExpandProperty "Node"
             $NewChild = $HADxml.CreateElement("Member")
-            
-            $null = $NewChild.SetAttribute("samAccountName", $($Account.T1A))
-
-            $null = $Node.AppendChild($NewChild) 
+            [void]($NewChild.SetAttribute("samAccountName", $($Account.T1A)))
+            [void]($Node.AppendChild($NewChild))
         }
     }
 
@@ -330,17 +332,18 @@ foreach ($Account in $Accounts) {
             $null = $Node.AppendChild($NewChild)
         }
 
+        #.Getting Tier Group Name
+        $TargetGroup = Rename-ThroughTranslation -toTranslate $Config.Settings.Group.samAccountName.T1O -xmlTranslateTo $HADxml.Settings.Translation.wellKnownID
+
         #.Append new user to groups, if not already present
-        $isPresent = Select-Xml $HADxml -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T1O)']" | Select-Object -ExpandProperty "Node"
+        $FilterGrp = Select-Xml $HADxml    -XPath "//*/Groups/Group[@Name='$($TargetGroup)']" | Select-Object -ExpandProperty "Node"
+        $isPresent = Select-Xml $FilterGrp -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T1O)']" | Select-Object -ExpandProperty "Node"
 
         if (-not $isPresent) {
-            $Node = Select-Xml $HADxml -XPath "//*/Group[@name='$($Config.Settings.Group.samAccountName.T1O)']" | Select-Object -ExpandProperty "Node"
-                            
+            $Node     = Select-Xml $HADxml -XPath "//*/Group[@name='$($FilterGrp)']" | Select-Object -ExpandProperty "Node"
             $NewChild = $HADxml.CreateElement("Member")
-            
-            $null = $NewChild.SetAttribute("samAccountName", $($Account.T1O))
-
-            $null = $Node.AppendChild($NewChild) 
+            [void]($NewChild.SetAttribute("samAccountName", $($Account.T1O)))
+            [void]($Node.AppendChild($NewChild))
         }
     }
 
@@ -384,17 +387,18 @@ foreach ($Account in $Accounts) {
             $null = $Node.AppendChild($NewChild)
         }
 
+        #.Getting Tier Group Name
+        $TargetGroup = Rename-ThroughTranslation -toTranslate $Config.Settings.Group.samAccountName.T2M -xmlTranslateTo $HADxml.Settings.Translation.wellKnownID
+
         #.Append new user to groups, if not already present
-        $isPresent = Select-Xml $HADxml -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T2M)']" | Select-Object -ExpandProperty "Node"
+        $FilterGrp = Select-Xml $HADxml    -XPath "//*/Groups/Group[@Name='$($TargetGroup)']" | Select-Object -ExpandProperty "Node"
+        $isPresent = Select-Xml $FilterGrp -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T2M)']" | Select-Object -ExpandProperty "Node"
 
         if (-not $isPresent) {
-            $Node = Select-Xml $HADxml -XPath "//*/Group[@name='$($Config.Settings.Group.samAccountName.T2M)']" | Select-Object -ExpandProperty "Node"
-                            
+            $Node     = Select-Xml $HADxml -XPath "//*/Group[@name='$($FilterGrp)']" | Select-Object -ExpandProperty "Node"
             $NewChild = $HADxml.CreateElement("Member")
-            
-            $null = $NewChild.SetAttribute("samAccountName", $($Account.T2M))
-
-            $null = $Node.AppendChild($NewChild) 
+            [void]($NewChild.SetAttribute("samAccountName", $($Account.T2M)))
+            [void]($Node.AppendChild($NewChild))
         }
     }
 
@@ -438,17 +442,18 @@ foreach ($Account in $Accounts) {
             $null = $Node.AppendChild($NewChild)
         }
 
+        #.Getting Tier Group Name
+        $TargetGroup = Rename-ThroughTranslation -toTranslate $Config.Settings.Group.samAccountName.T2A -xmlTranslateTo $HADxml.Settings.Translation.wellKnownID
+
         #.Append new user to groups, if not already present
-        $isPresent = Select-Xml $HADxml -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T2A)']" | Select-Object -ExpandProperty "Node"
+        $FilterGrp = Select-Xml $HADxml    -XPath "//*/Groups/Group[@Name='$($TargetGroup)']" | Select-Object -ExpandProperty "Node"
+        $isPresent = Select-Xml $FilterGrp -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T2A)']" | Select-Object -ExpandProperty "Node"
 
         if (-not $isPresent) {
-            $Node = Select-Xml $HADxml -XPath "//*/Group[@name='$($Config.Settings.Group.samAccountName.T2A)']" | Select-Object -ExpandProperty "Node"
-                            
+            $Node     = Select-Xml $HADxml -XPath "//*/Group[@name='$($FilterGrp)']" | Select-Object -ExpandProperty "Node"
             $NewChild = $HADxml.CreateElement("Member")
-            
-            $null = $NewChild.SetAttribute("samAccountName", $($Account.T2A))
-
-            $null = $Node.AppendChild($NewChild) 
+            [void]($NewChild.SetAttribute("samAccountName", $($Account.T2A)))
+            [void]($Node.AppendChild($NewChild))
         }
     }
 
@@ -492,17 +497,18 @@ foreach ($Account in $Accounts) {
             $null = $Node.AppendChild($NewChild)
         }
 
+        #.Getting Tier Group Name
+        $TargetGroup = Rename-ThroughTranslation -toTranslate $Config.Settings.Group.samAccountName.T2O -xmlTranslateTo $HADxml.Settings.Translation.wellKnownID
+
         #.Append new user to groups, if not already present
-        $isPresent = Select-Xml $HADxml -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T2O)']" | Select-Object -ExpandProperty "Node"
+        $FilterGrp = Select-Xml $HADxml    -XPath "//*/Groups/Group[@Name='$($TargetGroup)']" | Select-Object -ExpandProperty "Node"
+        $isPresent = Select-Xml $FilterGrp -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.T2O)']" | Select-Object -ExpandProperty "Node"
 
         if (-not $isPresent) {
-            $Node = Select-Xml $HADxml -XPath "//*/Group[@name='$($Config.Settings.Group.samAccountName.T2O)']" | Select-Object -ExpandProperty "Node"
-                            
+            $Node     = Select-Xml $HADxml -XPath "//*/Group[@name='$($FilterGrp)']" | Select-Object -ExpandProperty "Node"
             $NewChild = $HADxml.CreateElement("Member")
-            
-            $null = $NewChild.SetAttribute("samAccountName", $($Account.T2O))
-
-            $null = $Node.AppendChild($NewChild) 
+            [void]($NewChild.SetAttribute("samAccountName", $($Account.T2O)))
+            [void]($Node.AppendChild($NewChild))
         }
     }
 
@@ -546,17 +552,18 @@ foreach ($Account in $Accounts) {
             $null = $Node.AppendChild($NewChild)
         }
 
+        #.Getting Tier Group Name
+        $TargetGroup = Rename-ThroughTranslation -toTranslate $Config.Settings.Group.samAccountName.L1O -xmlTranslateTo $HADxml.Settings.Translation.wellKnownID
+
         #.Append new user to groups, if not already present
-        $isPresent = Select-Xml $HADxml -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.L1O)']" | Select-Object -ExpandProperty "Node"
+        $FilterGrp = Select-Xml $HADxml    -XPath "//*/Groups/Group[@Name='$($TargetGroup)']" | Select-Object -ExpandProperty "Node"
+        $isPresent = Select-Xml $FilterGrp -XPath "//*/Groups/Group/Member[@samAccountName='$($Account.L1O)']" | Select-Object -ExpandProperty "Node"
 
         if (-not $isPresent) {
-            $Node = Select-Xml $HADxml -XPath "//*/Group[@name='$($Config.Settings.Group.samAccountName.L1O)']" | Select-Object -ExpandProperty "Node"
-                            
+            $Node     = Select-Xml $HADxml -XPath "//*/Group[@name='$($FilterGrp)']" | Select-Object -ExpandProperty "Node"
             $NewChild = $HADxml.CreateElement("Member")
-            
-            $null = $NewChild.SetAttribute("samAccountName", $($Account.L1O))
-
-            $null = $Node.AppendChild($NewChild) 
+            [void]($NewChild.SetAttribute("samAccountName", $($Account.L1O)))
+            [void]($Node.AppendChild($NewChild))
         }
     }
 
