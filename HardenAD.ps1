@@ -209,7 +209,7 @@ function Set-Translation
             {
                 Write-Host "Expected, so you say...`n" -ForegroundColor Green
                 $isChild = $true
-            } Else {
+            } Elseif ($key.VirtualKeyCode -eq 78) {
                 Write-Host "Unexpected? Do, or do not. But there there is no try.`n" -ForegroundColor Red
                 $isChild = $false
             }
@@ -257,8 +257,8 @@ function Set-Translation
             {
                 Write-Host "Glad you'll agree with it!`n" -ForegroundColor Green
                 $isOK = $true
-            } Else {
-                Write-Host "'Kay... You're too old for this sh**t, Roger?`n" -ForegroundColor Red
+            } Elseif ($key.VirtualKeyCode -eq 78) {
+                Write-Host "'Kay... You break my heart...`n" -ForegroundColor Red
                 $isOK = $false
             }
         }
@@ -337,20 +337,26 @@ function Set-Translation
     $administrators_SID     = "S-1-5-32-544"
     $RDUsers_SID            = "S-1-5-32-555"
     $users_SID              = "S-1-5-32-545"
+    $Guests_SID             = "S-1-5-32-546"
 
     # Specific admins group of a domain
     $enterpriseAdmins_SID = "$($RootDomainSID)-519"
     $domainAdmins_SID     = "$($domainSID)-512"
     $schemaAdmins_SID     = "$($RootDomainSID)-518"
+    $Guest_SID            = "$($RootDomainSID)-501"
+    $DomainUsers_SID      = "$($RootDomainSID)-513"
 
     # Get group names from SID
+    $DomainUsers_        = Get-GroupNameFromSID -GroupSID $DomainUsers_SID
     $authenticatedUsers_ = Get-GroupNameFromSID -GroupSID $authenticatedUsers_SID
     $administrators_     = Get-GroupNameFromSID -GroupSID $administrators_SID
     $RDUsers_            = Get-GroupNameFromSID -GroupSID $RDUsers_SID
     $users_              = Get-GroupNameFromSID -GroupSID $users_SID
+    $Guests_             = Get-GroupNameFromSID -GroupSID $Guests_SID
     $enterpriseAdmins_   = Get-GroupNameFromSID -GroupSID $enterpriseAdmins_SID
     $domainAdmins_       = Get-GroupNameFromSID -GroupSID $domainAdmins_SID
     $schemaAdmins_       = Get-GroupNameFromSID -GroupSID $schemaAdmins_SID
+    $Guest_              = Get-GroupNameFromSID -GroupSID $Guest_SID
 
     # Exit from script if Enterprise Admins is empty
 	if ($enterpriseAdmins_ -eq "" -or $isnull -eq $enterpriseAdmins_)
@@ -368,21 +374,27 @@ function Set-Translation
     $wellKnownID_RDP           = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RemoteDesktopUsers%" }
     $wellKnownID_Users         = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Users%" }
     $wellKnownID_Netbios       = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%NetBios%" }
+    $wellKnownID_Domain        = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Domain%" }
     $wellKnownID_domaindns     = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%domaindns%" }
     $wellKnownID_DN            = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%DN%" }
     $wellKnownID_RootNetbios   = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootNetBios%" }
     $wellKnownID_Rootdomaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Rootdomaindns%" }
     $wellKnownID_RootDN        = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootDN%" }
+    $wellKnownID_Guests        = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Guests%" }
+    $wellKnownID_Guest         = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Guest%" }
     $historyScript             = $TasksSeqConfig.Settings.History.Script
     $historyLastRun            = $TasksSeqConfig.Settings.History.LastRun
     $historyDomains            = $TasksSeqConfig.Settings.History.Domains
- 
+    $Groups_Group_EAmember     = $TasksSeqConfig.Settings.Groups.Group | Where-Object { $_.Name -eq "Enterprise Admins" }
+    $DlgAces_ACL_Audit         = $TasksSeqConfig.Settings.DelegationACEs.ACL | Where-Object { $_.Audit -eq "True" }
+
     # Check if this is a PDC
     $isPDC = ((Get-ADDomain).PDCemulator -split '\.')[0] -eq $env:COMPUTERNAME
 
     # Updating Values :
     # ..Domain values
     $wellKnownID_Netbios.translateTo   = $DomainNetBios
+    $wellKnownID_Domain.translateTo    = $DomainNetBios
     $wellKnownID_domaindns.translateTo = [string]$DomainDNS
     $wellKnownID_DN.translateTo        = $DN
 
@@ -399,6 +411,10 @@ function Set-Translation
     $wellKnownID_SchemaAdm.translateTo = "$schemaAdmins_"
     $wellKnownID_RDP.translateTo       = "$RDUsers_"
     $wellKnownID_Users.translateTo     = "$users_"
+    $wellKnownID_Guests.translateTo    = "$Guests_"
+    $wellKnownID_Guest.translateTo     = "$Guest_"
+    $Groups_Group_EAmember.Name        = "$EnterpriseAdmins_"
+    $DlgAces_ACL_Audit.Trustee         = "$DomainUsers_"
 
     # ..History
     $historyLastRun.Date          = [string](Get-Date -Format "yyyy/MM/dd - HH:mm")
