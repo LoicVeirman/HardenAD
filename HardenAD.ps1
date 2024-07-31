@@ -389,7 +389,7 @@ function Set-Translation
     $historyScript             = $TasksSeqConfig.Settings.History.Script
     $historyLastRun            = $TasksSeqConfig.Settings.History.LastRun
     $historyDomains            = $TasksSeqConfig.Settings.History.Domains
-    $Groups_Group_EAmember     = $TasksSeqConfig.Settings.Groups.Group | Where-Object { $_.Name -eq "Enterprise Admins" }
+    $Groups_Group_EAmember     = $TasksSeqConfig.Settings.Groups.Group | Where-Object { $_.Scope -eq "Universal" }
     $DlgAces_ACL_Audit         = $TasksSeqConfig.Settings.DelegationACEs.ACL | Where-Object { $_.Audit -eq "True" }
 
     # Check if this is a PDC
