@@ -107,10 +107,12 @@ Function Set-HardenACL {
         }
 
         switch ($Trustee) {
-            ("Authenticated Users") { 
+            ("Authenticated Users" -or "Utilisateurs authentifiés") 
+            { 
                 $SID = New-Object System.Security.Principal.SecurityIdentifier("S-1-5-11")
             }
-            Default {
+            Default 
+            {
                 $group = Get-ADGroup $trustee
                 $SID = New-Object System.Security.Principal.SecurityIdentifier $($group.SID)
             }

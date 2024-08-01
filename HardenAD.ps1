@@ -390,7 +390,6 @@ function Set-Translation
     $historyLastRun            = $TasksSeqConfig.Settings.History.LastRun
     $historyDomains            = $TasksSeqConfig.Settings.History.Domains
     $Groups_Group_EAmember     = $TasksSeqConfig.Settings.Groups.Group | Where-Object { $_.Scope -eq "Universal" }
-    $DlgAces_ACL_Audit         = $TasksSeqConfig.Settings.DelegationACEs.ACL | Where-Object { $_.Audit -eq "True" }
 
     # Check if this is a PDC
     $isPDC = ((Get-ADDomain).PDCemulator -split '\.')[0] -eq $env:COMPUTERNAME
@@ -418,7 +417,6 @@ function Set-Translation
     $wellKnownID_Guests.translateTo    = "$Guests_"
     $wellKnownID_Guest.translateTo     = "$Guest_"
     $Groups_Group_EAmember.Name        = "$EnterpriseAdmins_"
-    $DlgAces_ACL_Audit.Trustee         = "$DomainUsers_"
 
     # ..History
     $historyLastRun.Date          = [string](Get-Date -Format "yyyy/MM/dd - HH:mm")
