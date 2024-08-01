@@ -1,0 +1,1 @@
+& "$PSSCRIPTROOT\Tools\Invoke-HardenADGPO\Invoke-HardenADGPO.ps1"
