@@ -1,10 +1,42 @@
+<#
+    FUNCTION: FORMAT-XML
+    This function out an XML with a TAB indentation - requiered when you modify an XML.
+#>
+Function Format-XML
+{
+    Param(
+        # The XML data to be formatted
+        [Parameter(mandatory,Position=0)]
+        [XML]
+        $XML
+    )  
+    # Prepare the XML handler object
+    $StringWriter = New-Object System.IO.StringWriter
+    $XmlWriter    = New-Object System.XMl.XmlTextWriter $StringWriter
+
+    # Configure the XML handler with our specific formatting expectation
+    $xmlWriter.Formatting  = 'indented'
+    $xmlWriter.Indentation = 1
+    $xmlWriter.IndentChar  = "`t"
+
+    # Reformatting the XML...
+    $xml.WriteContentTo($XmlWriter)
+    $XmlWriter.Flush()
+    $StringWriter.Flush()
+
+    # Returning result.
+    return $StringWriter.ToString()
+}
+
 # get root path of the solution
 $scriptRootPath = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 
 $configXMLFilePath = Join-Path -Path $scriptRootPath -ChildPath "Configs\TasksSequence_HardenAD.xml"
 
 $configXMLFileName = $configXMLFilePath | Split-Path -Leaf
-Import-Module .\Modules\module-fileHandling
+
+#.Loading modules
+gci .\Modules\*.psm1 | % { Import-Module $_.fullname }
 
 $TasksSeqConfig = [xml](Get-Content $configXMLfilePath -Encoding utf8)
 
@@ -111,7 +143,7 @@ $SaveButton.Add_Click({
         }
 
         # Saving file
-        Format-XMLData -XMLData $TasksSeqConfig | Out-File $configXMLFilePath -Encoding utf8 -Force
+        Format-XML -XML $TasksSeqConfig | Out-File $configXMLFilePath -Encoding utf8 -Force
         
         $SaveLabel.Text = "$([System.DateTime]::Now.ToString('HH:mm:ss')) - File $configXMLFileName saved!"
     })
