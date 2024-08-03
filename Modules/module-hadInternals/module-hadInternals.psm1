@@ -350,11 +350,13 @@ function Set-Translation {
     $administrators_SID     = "S-1-5-32-544"
     $RDUsers_SID            = "S-1-5-32-555"
     $users_SID              = "S-1-5-32-545"
+    $Guests_SID             = "S-1-5-32-546"
 
     # Specific admins group of a domain
     $enterpriseAdmins_SID = "$($RootDomainSID)-519"
     $domainAdmins_SID     = "$($domainSID)-512"
     $schemaAdmins_SID     = "$($RootDomainSID)-518"
+    $Guest_SID            = "$($RootDomainSID)-501"
 
     # Get group names from SID
     $authenticatedUsers_ = Get-GroupNameFromSID -GroupSID $authenticatedUsers_SID
@@ -364,6 +366,8 @@ function Set-Translation {
     $enterpriseAdmins_   = Get-GroupNameFromSID -GroupSID $enterpriseAdmins_SID
     $domainAdmins_       = Get-GroupNameFromSID -GroupSID $domainAdmins_SID
     $schemaAdmins_       = Get-GroupNameFromSID -GroupSID $schemaAdmins_SID
+    $Guest_              = Get-GroupNameFromSID -GroupSID $Guest_SID
+    $Guests_             = Get-GroupNameFromSID -GroupSID $Guests_SID
 
     # Exit from script if Enterprise Admins is empty
     if ($enterpriseAdmins_ -eq "" -or $isnull -eq $enterpriseAdmins_) {
@@ -387,6 +391,8 @@ function Set-Translation {
     $wellKnownID_RootNetbios   = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootNetBios%" }
     $wellKnownID_Rootdomaindns = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Rootdomaindns%" }
     $wellKnownID_RootDN        = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RootDN%" }
+    $wellKnownID_Guests        = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Guests%" }
+    $wellKnownID_Guest         = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Guest%" }
     $historyScript             = $TasksSeqConfig.Settings.History.Script
     $historyLastRun            = $TasksSeqConfig.Settings.History.LastRun
     $historyDomains            = $TasksSeqConfig.Settings.History.Domains
@@ -414,6 +420,8 @@ function Set-Translation {
     $wellKnownID_SchemaAdm.translateTo = "$schemaAdmins_"
     $wellKnownID_RDP.translateTo       = "$RDUsers_"
     $wellKnownID_Users.translateTo     = "$users_"
+    $wellKnownID_Guests                = "$Guests_"
+    $wellKnownID_Guest                 = "$Guest_"
 
     # ..History
     $historyLastRun.Date          = [string](Get-Date -Format "yyyy/MM/dd - HH:mm")
