@@ -9,6 +9,7 @@ TranslateFrom | TranslateTo | Description
 %EnterpriseAdmins%|Enterprise Admins|
 %Users%|Users|
 %Guest%|Guest|
+%Guests%|Guests|
 %AuthenticatedUsers%|Authenticated Users|
 %RemoteDesktopUsers%|Remote Desktop Users|
 %NetBios%|HARDEN|
@@ -30,6 +31,7 @@ TranslateFrom | TranslateTo | Description
 %t1l-global%|L-S-L1|
 %t2l-global%|L-S-L2|
 %t0-managers%|G-S-T0-Managers|
+%t0-operators%|G-S-T0-Operators|
 %pawaccess-logon%|L-S-T0-PawAccess-Logon|
 %pawt0-logon%|L-S-T0-PawT0-Logon|
 %pawt12l-logon%|L-S-T0-PawT12L-Logon|
