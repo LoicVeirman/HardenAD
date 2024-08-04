@@ -17,6 +17,12 @@
     .PARAMETER NoConfirmationForRootDomain
     This parameter teach the script to automatically validate a confirmation request. Only used when working in a root domain of a forest.
 
+    .PARAMETER EditTasksSequence
+    Run the GUI to edit which tasksSequence should be performed.
+
+    .PARAMETER EditGpoActivation
+    Run the GUI to edit which GPO should be imported.
+
     .PARAMETER EnableTask
     This parameter will modify the script and enable all or specific task on demand. You can use it in combination with -DisableTask.
     Note: this parameter will force the script to exit once the modification is done.
@@ -37,9 +43,14 @@
     Runs the script in non-interactive mode in the root forest domain only.
 
     .EXAMPLE
-    HardenAD.ps1 -GUI
+    HardenAD.ps1 -EditTasksSequence
 
-    Launches the GUI to configure the task sequence.
+    Launches the GUI to enable or disable task in the sequence.
+
+    .EXAMPLE
+    HArdenAD.ps1 -EditGpoActivation
+
+    Launches the GUI to enable or disable a GPO import.
 
     .EXAMPLE
     HardenAD.ps1 -EnableTask All
@@ -82,6 +93,7 @@
                         A new parameter to bypass the validation step when running in a single forest/domain: -NoConfirmationForRootDomain.
                         Two new parameters have been added to manage the task sequence from the script: -TaskEnable and -TaskDisable (combinable).
     Version 03.01.000 - Script rewrite to handle move of some function that was part of the main code.
+    Version 03.01.001 - Integration of 2 GUI (GPO and TASKS management).
 #>
 [CmdletBinding(DefaultParameterSetName = 'RUN')]
 Param(
@@ -90,10 +102,15 @@ Param(
     [switch]
     $NoConfirmationForRootDomain,
 
-    [Parameter(ParameterSetName = 'CONFIG')]
+    [Parameter(ParameterSetName = 'CONFIGTASK')]
     [Parameter(Position = 0)]
     [switch]
-    $GUI,
+    $EditTasksSequence,
+
+    [Parameter(ParameterSetName = 'CONFIGGPO')]
+    [Parameter(Position = 0)]
+    [switch]
+    $EditGpoActivation,
 
     [Parameter(ParameterSetName = 'TASK')]
     [ValidateSet('All', 'Activate Active Directory Recycle Bin', 'Create administration accounts', 'Create administration groups', 'Default computer location on creation', 'Default user location on creation', 'Enforce delegation model through ACEs', 'Import additional WMI Filters', 'Import new GPO or update existing ones', 'Prepare GPO files before GPO import', 'Restrict computer junction to the domain', 'Reset HAD Protected Groups Memberships', 'Set Administration Organizational Unit', 'Set GPO Central Store', 'Set Legacy Organizational Unit', 'Set Notify on every Site Links', 'Set Provisioning Organizational Unit', 'Set Tier 0 Organizational Unit', 'Set Tier 1 and Tier 2 Organizational Unit', 'Setup LAPS permissions over the domain', 'Update Ad schema for LAPS and deploy PShell tools', 'Update LAPS deployment scripts', 'Upgrade Domain Functional Level', 'Upgrade Forest Functional Level')]
@@ -200,9 +217,15 @@ $Block = {
 #>
 # Loading xml and readiness for backup...
 
-if ($GUI) {
+if ($EditTasksSequence) {
     # Launching GUI
-    & "$PSSCRIPTROOT\Tools\Invoke-HardenADGUI\Invoke-HardenADGui.ps1"
+    & "$PSSCRIPTROOT\Tools\Invoke-HardenADTask\Invoke-HardenADTask.ps1"
+    return 0
+}
+
+if ($EditTasksSequence) {
+    # Launching GUI
+    & "$PSSCRIPTROOT\Tools\Invoke-HardenADGpo\Invoke-HardenADGpo.ps1"
     return 0
 }
 

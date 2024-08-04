@@ -1,1 +1,0 @@
-& "$PSSCRIPTROOT\Tools\Invoke-HardenADGUI\Invoke-HardenADGui.ps1"
