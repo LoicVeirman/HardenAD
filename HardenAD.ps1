@@ -123,6 +123,24 @@ Param(
     $DisableTask
 )
 #region Initialize and functions
+
+# Using ANSI Escape code
+$FG_Purple      = "$([char]0x1b)[38;2;142;140;216;24m"                  # 38:Foreground, 2:RGB, Red:142, Green:140, Blue:216, 24: not underlined
+$BG_Purple      = "$([char]0x1b)[48;2;142;140;216m"                     # 48:background, 2:RGB, Red:142, Green:140, Blue:216
+$FG_Purple_U    = "$([char]0x1b)[38;2;142;140;216;4m"                   # 38:Foreground, 2:RGB, Red:142, Green:140, Blue:216, 4: underlined
+$FG_Blue        = "$([char]0x1b)[38;2;94;153;255m"                      # 38:Foreground, 2:RGB, Red:94 , Green:153, Blue:255 
+$FG_Turquoise   = "$([char]0x1b)[38;2;0;175;204;24m"                    # 38:Foreground, 2:RGB, Red:0  , Green:175, Blue:204, 24: not underlined
+$FG_RedLight    = "$([char]0x1b)[38;2;244;135;69m"                      # 38:Foreground, 2:RGB, Red:244, Green:135, Blue:69
+$FG_Orange      = "$([char]0x1b)[38;2;255;171;21m"                      # 38:Foreground, 2:RGB, Red:255, Green:171, Blue:21
+$FG_GreenLight  = "$([char]0x1b)[38;5;42;24m"                           # 38:Foreground, 5:Indexed Color, 42: Green, 24: not underlined
+$FG_PinkDark    = "$([char]0x1b)[38;2;218;101;167m"                     # 38:Foreground, 2:RGB, Red:218, Green:101, Blue:167
+$FG_yellowLight = "$([char]0x1b)[38;2;220;220;170;24m"                  # 38:Foreground, 2:RGB, Red:22°, Green:220, Blue:170, 24: not underlined
+$FG_Red         = "$([char]0x1b)[38;2;255;0;0m"                         # 38:Foreground, 2:RGB, Red:255, Green:0  , Blue:0
+$FG_BrightCyan  = "$([char]0x1b)[96;24m"                                # 96:24 bits color code from standard VGA, 24: not underlined
+$FG_brown       = "$([char]0x1b)[38;2;206;145;120m"                     # 38:Foreground, 2:RGB, Red:206, Green:146, Blue:120
+$SelectedChoice = "$([char]0x1b)[38;2;255;210;0;48;2;0;175;204;24m"     # 38:Foreground, 2:RGB, Red:255, Green:210, Blue:0  , 48:Background, 2:RGB, Red:0  ,Green:175, Blue:204, 24: not underlined
+$ANSI_End       = "$([char]0x1b)[0m"                                    # 0: end of ANSI, reset to default. 
+
 # Load modules
 try {
     $modules = (Get-ChildItem .\modules).FullName
@@ -220,13 +238,13 @@ $Block = {
 if ($EditTasksSequence) {
     # Launching GUI
     & "$PSSCRIPTROOT\Tools\Invoke-HardenADTask\Invoke-HardenADTask.ps1"
-    return 0
+    return "${FG_yellowLight}Please, rerun ${FG_Purple_U}HardenAD.ps1${ANSI_End}${FG_yellowLight} to continue your hardening journey.${ANSI_End}"
 }
 
-if ($EditTasksSequence) {
+if ($EditGpoActivation) {
     # Launching GUI
     & "$PSSCRIPTROOT\Tools\Invoke-HardenADGpo\Invoke-HardenADGpo.ps1"
-    return 0
+    return "${FG_yellowLight}Please, rerun ${FG_Purple_U}HardenAD.ps1${ANSI_End}${FG_yellowLight} to continue your hardening journey.${ANSI_End}"
 }
 
 if ($EnableTask -or $DisableTask) {
