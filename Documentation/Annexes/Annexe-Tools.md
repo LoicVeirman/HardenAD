@@ -4,9 +4,12 @@ Version 2024/07/30
 ## Goals  
 This document list tools available with Harden AD and how to use them.  
 
-## Invoke-HardenADGUI  
+## Invoke-HardenADTask  
 Script used to select which tasks should be activated in the script sequence through a graphic user interface.  
-  
+
+## Invoke-HardenADGpo  
+Script used to select which GPO should be activated in the script sequence through a graphic user interface.  
+
 ## Keepass-2.48.1
 Keepass binaries used by HardenAD to store password when creating a new user.  
   
