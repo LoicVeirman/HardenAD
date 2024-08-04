@@ -180,7 +180,7 @@ Function Export-DebugLog
 $CurrentDir     = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $EventLogName   = "Application"
 $EventLogSource = 'HardenAD_{0}' -f $MyInvocation.MyCommand
-$DebugFileName  = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+$DebugFileName  = "Debug_{0}_$(Get-Date -Format yyyyMMddhhmmss).log" -f $MyInvocation.MyCommand
 $DebugFile      = "$($CurrentDir)\$($DebugFileName)"
 $myPDC          = (Get-ADDomain).PDCEmulator
 
