@@ -35,15 +35,10 @@ try { New-EventLog -LogName Application -Source "HAD_TS_Reset-Computer-SDDL" -Er
 $DAsid  = [String](Get-ADDomain).DomainSID.Value + "-512"
 $DAName = (Get-ADGroup $DAsid).Name
 
-$EAsid  = [String](Get-ADDomain).DomainSID.Value + "-519"
-$EAName = (Get-ADGroup $EAsid).Name
-
-$ASsid  = "S-1-5-32-544"
-$ASName = (Get-ADGroup $ASsid).Name
 
 
 # Collect AD infos
-$Domain = Get-ADDomain | select -ExpandProperty NetBIOSName
+$Domain = Get-ADDomain | Select-Object -ExpandProperty NetBIOSName
 $Cptr   = Get-ADComputer $Computer -Properties nTSecurityDescriptor
  
 # Store Info
