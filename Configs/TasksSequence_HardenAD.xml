@@ -445,6 +445,7 @@
 			-->
 			<Filter Name="Windows-10" Source="Windows-10.mof" />
 			<Filter Name="Windows-11" Source="Windows-11.mof" />
+			<Filter Name="Windows-11-and-Windows-2022" Source="Windows-11-and-Windows-2022.mof" />
 			<Filter Name="Windows-2000-XP" Source="Windows-2000-XP.mof" />
 			<Filter Name="Windows-2003-2003R2-NoDC" Source="Windows-2003-2003R2-NoDC.mof" />
 			<Filter Name="Windows-2008-Vista-and-Newer" Source="Windows-2008-Vista-and-Newer.mof" />
@@ -485,7 +486,7 @@
 			<Filter Name="Windows-x86-NoDC" Source="Windows-x86-NoDC.mof" />
 			<Filter Name="Windows-PDC" Source="Windows-PDC.mof" />
 		</WmiFilters>
-		<GlobalGpoSettings GroupName="L-S-GPO-%mode%-%GpoName%" OU="OU=%OU-ADM-GPO%,OU=%OU-ADM%,%DN%" />
+		<GlobalGpoSettings GroupName="%Prefix-domLoc%GPO-%mode%-%GpoName%" OU="OU=%OU-ADM-GPO%,OU=%OU-ADM%,%DN%" />
 		<!--
 			The <GPO> elements list the Group Policy added (or refreshed) to the target domain.
 			Each of this Group Policy is first generated with no data (if not existing), then data is imported from its backup folder.
@@ -1008,6 +1009,14 @@
 		</GPO>
 		<GPO BackupID="{CBEE8835-3DB2-42E7-9497-9C1B70710342}" Validation="Yes" Name="HAD-TLS-1_2-Enabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
+		</GPO>
+		<GPO BackupID="{2DB8426F-75E3-44E2-B793-2EDE3BAEB9A1}" Validation="Yes" Name="HAD-TLS-1_3-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disable TLS 1.3 on target system.">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-11-and-Windows-2022" />
+		</GPO>
+		<GPO BackupID="{2E528F44-AF5F-40F7-8E8E-F1FECADBC437}" Validation="Yes" Name="HAD-TLS-1_3-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enable TLS 1.3 on target system.">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-11-and-Windows-2022" />
 		</GPO>
 		<!--
 			DOMAIN JOIN
