@@ -7,7 +7,7 @@
 
     .DESCRIPTION
     Welcome to the Harden AD Community Edition! 
-    We are really happy to offers to the comunity this free edition of Harden AD, a fully designed hardening model based on best practices and recommendation from the AD Security experts.
+     We are really happy to offer to the community this free edition of Harden AD, a fully designed hardening model based on best practices and recommendation from the AD Security experts.
     We strongly encourage that you firstly read our documentation and review, at least, the TasksSequences_HardenAD.xml file. you should also give a try to our website to hunt for videos or blog articles.
     
     If you need support, please use contact@hardenad.net to reach us.
@@ -17,11 +17,8 @@
     .PARAMETER NoConfirmationForRootDomain
     This parameter teach the script to automatically validate a confirmation request. Only used when working in a root domain of a forest.
 
-    .PARAMETER EditTasksSequence
-    Run the GUI to edit which tasksSequence should be performed.
-
-    .PARAMETER EditGpoActivation
-    Run the GUI to edit which GPO should be imported.
+    .PARAMETER EditConfiguration
+    Launches the GUI to configure HardenAD (enable-disable task(s) in the sequence, enable/disable GPO import).
 
     .PARAMETER EnableTask
     This parameter will modify the script and enable all or specific task on demand. You can use it in combination with -DisableTask.
@@ -43,14 +40,9 @@
     Runs the script in non-interactive mode in the root forest domain only.
 
     .EXAMPLE
-    HardenAD.ps1 -EditTasksSequence
+    HardenAD.ps1 -EditConfiguration
 
-    Launches the GUI to enable or disable task in the sequence.
-
-    .EXAMPLE
-    HArdenAD.ps1 -EditGpoActivation
-
-    Launches the GUI to enable or disable a GPO import.
+    Launches the GUI to configure HardenAD (enable-disable task(s) in the sequence, enable/disable GPO import).
 
     .EXAMPLE
     HardenAD.ps1 -EnableTask All
@@ -105,12 +97,7 @@ Param(
     [Parameter(ParameterSetName = 'CONFIGTASK')]
     [Parameter(Position = 0)]
     [switch]
-    $EditTasksSequence,
-
-    [Parameter(ParameterSetName = 'CONFIGGPO')]
-    [Parameter(Position = 0)]
-    [switch]
-    $EditGpoActivation,
+    $EditConfiguration,
 
     [Parameter(ParameterSetName = 'TASK')]
     [ValidateSet('All', 'Activate Active Directory Recycle Bin', 'Create administration accounts', 'Create administration groups', 'Default computer location on creation', 'Default user location on creation', 'Enforce delegation model through ACEs', 'Import additional WMI Filters', 'Import new GPO or update existing ones', 'Prepare GPO files before GPO import', 'Restrict computer junction to the domain', 'Reset HAD Protected Groups Memberships', 'Set Administration Organizational Unit', 'Set GPO Central Store', 'Set Legacy Organizational Unit', 'Set Notify on every Site Links', 'Set Provisioning Organizational Unit', 'Set Tier 0 Organizational Unit', 'Set Tier 1 and Tier 2 Organizational Unit', 'Setup LAPS permissions over the domain', 'Update Ad schema for LAPS and deploy PShell tools', 'Update LAPS deployment scripts', 'Upgrade Domain Functional Level', 'Upgrade Forest Functional Level')]
@@ -235,15 +222,9 @@ $Block = {
 #>
 # Loading xml and readiness for backup...
 
-if ($EditTasksSequence) {
+if ($EditConfiguration) {
     # Launching GUI
-    & "$PSSCRIPTROOT\Tools\Invoke-HardenADTask\Invoke-HardenADTask.ps1"
-    return "${FG_yellowLight}Please, rerun ${FG_Purple_U}HardenAD.ps1${ANSI_End}${FG_yellowLight} to continue your hardening journey.${ANSI_End}"
-}
-
-if ($EditGpoActivation) {
-    # Launching GUI
-    & "$PSSCRIPTROOT\Tools\Invoke-HardenADGpo\Invoke-HardenADGpo.ps1"
+    & "$PSSCRIPTROOT\Tools\Invoke-HardenADGUI\Invoke-HardenADGUI.ps1"
     return "${FG_yellowLight}Please, rerun ${FG_Purple_U}HardenAD.ps1${ANSI_End}${FG_yellowLight} to continue your hardening journey.${ANSI_End}"
 }
 

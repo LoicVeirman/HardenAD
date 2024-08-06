@@ -35,17 +35,17 @@ Quick Setup for lazy guys:
 AD Security Training Simplified: 
 > https://hardenad.net/wp-content/uploads/2022/08/Harden-AD-formation-AD-cybsersecurite.pdf  
 
-## Some videos (French speaks)
-When Guillaume demonstrate Harden AD: https://www.linkedin.com/events/7132717233872474112/comments/
+## Some videos (French speaking)
+When Guillaume demonstrates Harden AD: https://www.linkedin.com/events/7132717233872474112/comments/
 
 ## Configuration with GUI
 To prevent accidental changes, all the tasks are disabled by default in the XML configuration file.
 To help you to configure this XML file, you can use the GUI.
-Please note the only purpose of the GUI is to configure HardenAD config file, it does not perform any actions!
+Please note that the GUI is only used to set up the HardenAD configuration file and does not perform any other tasks.
 
-To run the GUI, you have two options:
-- run `./HardenAD.ps1 -GUI`
-- run `Run-HardenADGui.ps1`
+To run the GUI,options:
+- run `./HardenAD.ps1 -EditConfiguration`
+
 ![image](images/hardenAD-GUI.gif)
 
 ## Credit to ... Well. All those mails, tchat threads, ...
