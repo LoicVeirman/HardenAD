@@ -631,3 +631,42 @@ Function Set-GptTmplSID {
     
 }
 #endregion
+
+#region Set-hADColorSchema
+Function Set-hADColorSchema {
+    <#
+        .SYNOPSIS
+        A function to load the color scheme used on screen.
+
+        .DESCRIPTION
+        This allow to custom any output using ansi code. To use it, add to the display text with the colorname this way: 
+        "Text to ${ColorVariable}Display${ANSI_End} on screen."
+
+        The value ${ANSI_End} is mandatory to finalize the ANSI format, but you can call multiple color/style before closing.
+
+        .NOTES
+        Version 01.00.00 By l. Veirman MSSEC
+        ANSI source: 
+        https://jafrog.com/2013/11/23/colors-in-terminal.html
+        https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_parameters
+
+        Read it carrefully, details are important!
+    #>
+    # Using ANSI Escape code
+    New-Variable -Name FG_Purple      -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;142;140;216;24m"                  -Description "38:Foreground, 2:RGB, Red:142, Green:140, Blue:216, 24: not underlined"
+    New-Variable -Name BG_Purple      -Option AllScope -Scope Global -Value "$([char]0x1b)[48;2;142;140;216m"                     -Description "48:background, 2:RGB, Red:142, Green:140, Blue:216"
+    New-Variable -Name FG_Purple_U    -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;142;140;216;4m"                   -Description "38:Foreground, 2:RGB, Red:142, Green:140, Blue:216, 4: underlined"
+    New-Variable -Name FG_Blue        -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;94;153;255m"                      -Description "38:Foreground, 2:RGB, Red:94 , Green:153, Blue:255"
+    New-Variable -Name FG_Turquoise   -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;0;175;204;24m"                    -Description "38:Foreground, 2:RGB, Red:0  , Green:175, Blue:204, 24: not underlined"
+    New-Variable -Name FG_RedLight    -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;244;135;69m"                      -Description "38:Foreground, 2:RGB, Red:244, Green:135, Blue:69"
+    New-Variable -Name FG_Orange      -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;255;171;21m"                      -Description "38:Foreground, 2:RGB, Red:255, Green:171, Blue:21"
+    New-Variable -Name FG_GreenLight  -Option AllScope -Scope Global -Value "$([char]0x1b)[38;5;42;24m"                           -Description "38:Foreground, 5:Indexed Color, 42: Green, 24: not underlined"
+    New-Variable -Name FG_PinkDark    -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;218;101;167m"                     -Description "38:Foreground, 2:RGB, Red:218, Green:101, Blue:167"
+    New-Variable -Name FG_yellowLight -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;220;220;170;24m"                  -Description "38:Foreground, 2:RGB, Red:22°, Green:220, Blue:170, 24: not underlined"
+    New-Variable -Name FG_Red         -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;255;0;0m"                         -Description "38:Foreground, 2:RGB, Red:255, Green:0  , Blue:0"
+    New-Variable -Name FG_BrightCyan  -Option AllScope -Scope Global -Value "$([char]0x1b)[96;24m"                                -Description "96:24 bits color code from standard VGA, 24: not underlined"
+    New-Variable -Name FG_brown       -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;206;145;120m"                     -Description "38:Foreground, 2:RGB, Red:206, Green:146, Blue:120"
+    New-Variable -Name SelectedChoice -Option AllScope -Scope Global -Value "$([char]0x1b)[38;2;255;210;0;48;2;0;175;204;24m"     -Description "38:Foreground, 2:RGB, Red:255, Green:210, Blue:0  , 48:Background, 2:RGB, Red:0  ,Green:175, Blue:204, 24: not underlined"
+    New-Variable -Name ANSI_End       -Option AllScope -Scope Global -Value "$([char]0x1b)[0m"                                    -Description "0: end of ANSI, reset to default."
+}
+#endregion
