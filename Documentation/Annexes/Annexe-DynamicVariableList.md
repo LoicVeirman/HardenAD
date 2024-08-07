@@ -28,13 +28,13 @@ TranslateFrom | TranslateTo | Description
 %t0-global%|L-S-T0|
 %t1-global%|L-S-T1|
 %t2-global%|L-S-T2|
-%t1l-global%|L-S-L1|
-%t2l-global%|L-S-L2|
+%t1l-global%|L-S-T1L|
+%t2l-global%|L-S-T2L|
 %t0-managers%|G-S-T0-Managers|
 %t0-operators%|G-S-T0-Operators|
 %pawaccess-logon%|L-S-T0-PawAccess-Logon|
 %pawt0-logon%|L-S-T0-PawT0-Logon|
-%pawt12l-logon%|L-S-T0-PawT12L-Logon|
+%pawt1-logon%|L-S-T0-PawT12L-Logon|
 %t0-localAdmin-servers%|L-S-T0-LocalAdmins-Servers|
 %t0-localAdmin-workstations%|L-S-T0-LocalAdmins-Workstations|
 %t1-managers%|G-S-T1-Managers|
@@ -47,8 +47,8 @@ TranslateFrom | TranslateTo | Description
 %t2-localAdmin-workstations%|L-S-T2-LocalAdmins-Workstations|
 %tll-operators%|G-S-L1-Operators|
 %t2l-operators%|G-S-L2-Operators|
-%t1l-localAdmin-servers%|L-S-L1-LocalAdmins-Servers|
-%t2l-localAdmin-workstations%|L-S-L2-LocalAdmins-Workstations|
+%t1l-localAdmin-servers%|L-S-T1L-LocalAdmins-Servers|
+%t2l-localAdmin-workstations%|L-S-T2L-LocalAdmins-Workstations|
 %T1-LAPS-PasswordReset%|L-S-T1-DELEG-LAPS-PwdReset|
 %T1-LAPS-PasswordReader%|L-S-T1-DELEG-LAPS-PwdRead|
 %T2-LAPS-PasswordReset%|L-S-T2-DELEG-LAPS-PwdReset|

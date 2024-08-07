@@ -360,7 +360,7 @@ $icon = "$PSScriptRoot\hardenAD.ico"
 		<wellKnownID objectClass="group" translateFrom="%t0-managers%" translateTo="G-S-T0_Managers" />
 		<wellKnownID objectClass="group" translateFrom="%pawaccess-logon%" translateTo="L-S-T0_PawAccess_Logon" />
 		<wellKnownID objectClass="group" translateFrom="%pawt0-logon%" translateTo="L-S-T0_PawT0_Logon" />
-		<wellKnownID objectClass="group" translateFrom="%pawt12l-logon%" translateTo="L-S-T0_PawT12L_Logon" />
+		<wellKnownID objectClass="group" translateFrom="%pawt1-logon%" translateTo="L-S-T0_PawT12L_Logon" />
 		<wellKnownID objectClass="group" translateFrom="%t0-localAdmin-servers%" translateTo="L-S-T0_LocalAdmins_Servers" />
 		<wellKnownID objectClass="group" translateFrom="%t0-localAdmin-workstations%" translateTo="L-S-T0_LocalAdmins_Workstations" />
 		<wellKnownID objectClass="group" translateFrom="%t1-managers%" translateTo="G-S-T1_Managers" />
