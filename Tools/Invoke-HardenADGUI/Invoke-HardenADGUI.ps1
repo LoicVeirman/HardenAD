@@ -56,7 +56,7 @@ for ($i = 0; $i -lt $groupPolicies.Count; $i++) {
 	#$groupPolicyDescription = $groupPolicy.Description.Replace("'", "").Replace("`(", '')
 	$groupPolicyEnabled = $groupPolicy.Validation -eq 'Yes'
 
-	$groupPoliciesCheckboxesArray.Add("<CheckBox x:Name='ID_$i' Content='$groupPolicyName' IsChecked='$groupPolicyEnabled' Grid.Row='$row' Grid.Column='$column' HorizontalAlignment='Left' VerticalAlignment='Center' Margin='1, 1 ,1, 1' />")
+	$groupPoliciesCheckboxesArray.Add("<CheckBox x:Name='IG_$i' Content='$groupPolicyName' IsChecked='$groupPolicyEnabled' Grid.Row='$row' Grid.Column='$column' HorizontalAlignment='Left' VerticalAlignment='Center' Margin='1, 1 ,1, 1' />")
 }
 
 Add-Type -AssemblyName PresentationFramework, System.Drawing, System.Windows.Forms, WindowsFormsIntegration, PresentationCore, WindowsBase
@@ -214,7 +214,7 @@ $SaveButton.Add_Click({
 			# get all CheckBoxes and update the XML configuration file
 			$checkBoxes = $Form.FindName("MyGrid2").Children | Where-Object { $_ -is [System.Windows.Controls.CheckBox] }
 			foreach ($checkBox in $checkBoxes) {
-				$number = [int]($checkBox.Name -replace 'ID_', '')
+				$number = [int]($checkBox.Name -replace 'IG_', '')
 			
 				# get GUID from ID
 				$gpoGUID = $gpoGUIDHashTables[$number]

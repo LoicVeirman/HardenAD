@@ -34,6 +34,7 @@
 							<ChildOU Name="%OU-ADM-GPO-Apply%" Description="Groups dedicated to filter who/what will apply GPO" />
 							<ChildOU Name="%OU-ADM-GPO-Deny%" Description="Groups dedicated to filter who/what will NOT apply GPO" />
 						</ChildOU>
+						<ChildOU Name="%OU-ADM-PAM%" Description="System Local Administrator groups" />
 					</ChildOU>
 					<ChildOU Name="%OU-ADM-USERS%" Description="Administration accounts (Manager, Administrator and Operator)" />
 				</ChildOU>
@@ -314,11 +315,11 @@
 		<wellKnownID objectClass="group" translateFrom="%t2l-global%" translateTo="L-S-T2L" />
 		<wellKnownID objectClass="group" translateFrom="%t0-managers%" translateTo="G-S-T0-Managers" />
 		<wellKnownID objectClass="group" translateFrom="%t0-Operators%" translateTo="G-S-T0-Operators" />
-		<wellKnownID objectClass="group" translateFrom="%pawt0-logon%" translateTo="L-S-T0-PawT0-Logon" />
-		<wellKnownID objectClass="group" translateFrom="%pawt1-logon%" translateTo="L-S-T0-PawT1-Logon" />
-		<wellKnownID objectClass="group" translateFrom="%pawL1-logon%" translateTo="L-S-T0-PawT1L-Logon" />
-		<wellKnownID objectClass="group" translateFrom="%pawt2-logon%" translateTo="L-S-T0-PawT2-Logon" />
-		<wellKnownID objectClass="group" translateFrom="%pawL2-logon%" translateTo="L-S-T0-PawT2L-Logon" />
+		<wellKnownID objectClass="group" translateFrom="%pamt0-logon%" translateTo="L-S-T0-Pam" />
+		<wellKnownID objectClass="group" translateFrom="%pamt1-logon%" translateTo="L-S-T1-Pam" />
+		<wellKnownID objectClass="group" translateFrom="%pamL1-logon%" translateTo="L-S-T1L-Pam" />
+		<wellKnownID objectClass="group" translateFrom="%pamt2-logon%" translateTo="L-S-T2-Pam" />
+		<wellKnownID objectClass="group" translateFrom="%pamL2-logon%" translateTo="L-S-T2L-Pam" />
 		<wellKnownID objectClass="group" translateFrom="%t0-localAdmin-servers%" translateTo="L-S-T0-LocalAdmins-Servers" />
 		<wellKnownID objectClass="group" translateFrom="%t0-localAdmin-workstations%" translateTo="L-S-T0-LocalAdmins-Workstations" />
 		<wellKnownID objectClass="group" translateFrom="%t1-Managers%" translateTo="G-S-T1-Managers" />
@@ -346,6 +347,7 @@
 		<wellKnownID objectClass="group" translateFrom="%Groups_Computers%" translateTo="LocalAdmins-%ComputerName%" />
 		<!-- OU name in administration -->
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM%" translateTo="_Administration" />
+		<wellKnownID objectClass="text" translateFrom="%OU-ADM-PAM%" translateTo="PAM" />
 		<!-- Generic OU name used in Administration OU -->
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-LOCALADMINS%" translateTo="LocalAdmins" />
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-DELEGATION%" translateTo="Deleg" />
@@ -705,23 +707,23 @@
 		<!-- 
 			LOCAL ADMINISTRATORS 
 		-->
-		<GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7A}" Validation="Yes" Name="HAD-LocalAdmins-Paw-T0" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding PAW's integrated administrator group">
+		<GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7A}" Validation="Yes" Name="HAD-LocalAdmins-Pam-T0" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding PAW's integrated administrator group">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=%OU-ADM-CPTRS%,OU=%OU-ADM-T0%,OU=%OU-ADM%,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7B}" Validation="Yes" Name="HAD-LocalAdmins-Paw-T1" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T0 PAW's integrated administrator group">
+		<GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7B}" Validation="Yes" Name="HAD-LocalAdmins-Pam-T1" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T0 PAW's integrated administrator group">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=%OU-ADM-CPTRS%,OU=%OU-ADM-T1%,OU=%OU-ADM%,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7C}" Validation="Yes" Name="HAD-LocalAdmins-Paw-T1L" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T12L PAW's integrated administrator group">
+		<GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7C}" Validation="Yes" Name="HAD-LocalAdmins-Pam-T1L" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T12L PAW's integrated administrator group">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=%OU-ADM-CPTRS%,OU=%OU-ADM-L1%,OU=%OU-ADM%,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7D}" Validation="Yes" Name="HAD-LocalAdmins-Paw-T2" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T0 PAW's integrated administrator group">
+		<GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7D}" Validation="Yes" Name="HAD-LocalAdmins-Pam-T2" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T0 PAW's integrated administrator group">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=%OU-ADM-CPTRS%,OU=%OU-ADM-T2%,OU=%OU-ADM%,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7E}" Validation="Yes" Name="HAD-LocalAdmins-Paw-T2L" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T12L PAW's integrated administrator group">
+		<GPO BackupID="{0CC9CFC9-29C0-49DE-B23E-6C103028AC7E}" Validation="Yes" Name="HAD-LocalAdmins-Pam-T2L" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T12L PAW's integrated administrator group">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=%OU-ADM-CPTRS%,OU=%OU-ADM-L2%,OU=%OU-ADM%,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
@@ -771,6 +773,26 @@
 		<!-- 
 			LOGIN RESTRICTION 
 		-->
+		<GPO BackupID="{C43D0DC2-CDD7-442D-BFB7-8756188DF74D}" Validation="Yes" Name="HAD-LoginRestrictions-Pam-T0" Description="--- Harden AD --- &quot; ,&quot; Restrict login to members of L-S-T0-PAM on administration computers (i.e. PAW, Bastion, Management Severs, ...)">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="OU=%OU-ADM-CPTRS%,OU=%OU-ADM-T0%,OU=%OU-ADM%,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{F3853C5F-3A2A-4DD0-B968-801E89758902}" Validation="Yes" Name="HAD-LoginRestrictions-Pam-T1" Description="--- Harden AD --- &quot; ,&quot; Restrict login to members of L-S-T1-PAM on administration computers (i.e. PAW, Bastion, Management Severs, ...)">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="OU=%OU-ADM-CPTRS%,OU=%OU-ADM-T1%,OU=%OU-ADM%,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{79966E94-30C0-49A9-AF81-88CBE8A7EDC3}" Validation="Yes" Name="HAD-LoginRestrictions-Pam-T1L" Description="--- Harden AD --- &quot; ,&quot; Restrict login to members of L-S-T1L-PAM on administration computers (i.e. PAW, Bastion, Management Severs, ...)">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="OU=%OU-ADM-CPTRS%,OU=%OU-ADM-L1%,OU=%OU-ADM%,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{EDECA1C9-A769-4741-A589-5C92F50E0D2E}" Validation="Yes" Name="HAD-LoginRestrictions-Pam-T2" Description="--- Harden AD --- &quot; ,&quot; Restrict login to members of L-S-T2-PAM on administration computers (i.e. PAW, Bastion, Management Severs, ...)">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="OU=%OU-ADM-CPTRS%,OU=%OU-ADM-T2%,OU=%OU-ADM%,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{9BE975F9-9305-4564-9EBA-58971CA02813}" Validation="Yes" Name="HAD-LoginRestrictions-Pam-T2L" Description="--- Harden AD --- &quot; ,&quot; Restrict login to members of L-S-T2L-PAM on administration computers (i.e. PAW, Bastion, Management Severs, ...)">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="OU=%OU-ADM-CPTRS%,OU=%OU-ADM-L2%,OU=%OU-ADM%,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
 		<GPO BackupID="{7F2DE5D7-B30E-4F9D-BA75-BCD4990C090D}" Validation="Yes" Name="HAD-LoginRestrictions-T0" Description="--- Harden AD --- &quot; ,&quot; Blocks connections to tier 0 machines from other tier accounts">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=%OU-PRD-T0%,RootDN" Enabled="Yes" Enforced="Yes" />
@@ -1148,19 +1170,19 @@
 		<!--
 			PAW Groups
 		-->
-		<Group name="L-S-T0-PawT0-Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the T0 administration stations" Path="OU=%OU-ADM-GROUPS%,OU=%OU-ADM-T0%,OU=%OU-ADM%,ROOTDN">
+		<Group name="L-S-T0-Pam" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the Tier 0 PAM systems (Privileged Administration Management)" Path="OU=%OU-ADM-PAM%,OU=%OU-ADM-GROUPS%,OU=%OU-ADM-T0%,OU=%OU-ADM%,ROOTDN">
 			<Member samAccountName="L-S-T0" />
 		</Group>
-		<Group name="L-S-T0-PawT1-Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the T1, T2 and TLegacy administration stations" Path="OU=%OU-ADM-GROUPS%,OU=%OU-ADM-T1%,OU=%OU-ADM%,ROOTDN">
+		<Group name="L-S-T1-Pam" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the Tier 1 PAM systems (Privileged Administration Management)" Path="OU=%OU-ADM-PAM%,OU=%OU-ADM-GROUPS%,OU=%OU-ADM-T0%,OU=%OU-ADM%,ROOTDN">
 			<Member samAccountName="L-S-T1" />
 		</Group>
-		<Group name="L-S-T0-PawT1L-Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the T1, T2 and TLegacy administration stations" Path="OU=%OU-ADM-GROUPS%,OU=%OU-ADM-L1%,OU=%OU-ADM%,ROOTDN">
+		<Group name="L-S-T1L-Pam" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the Tier 1 Legacy PAM systems (Privileged Administration Management)" Path="OU=%OU-ADM-PAM%,OU=%OU-ADM-GROUPS%,OU=%OU-ADM-T0%,OU=%OU-ADM%,ROOTDN">
 			<Member samAccountName="L-S-T1L" />
 		</Group>
-		<Group name="L-S-T0-PawT2-Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the T1, T2 and TLegacy administration stations" Path="OU=%OU-ADM-GROUPS%,OU=%OU-ADM-T2%,OU=%OU-ADM%,ROOTDN">
+		<Group name="L-S-T2-Pam" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the Tier 2 PAM systems (Privileged Administration Management)" Path="OU=%OU-ADM-PAM%,OU=%OU-ADM-GROUPS%,OU=%OU-ADM-T0%,OU=%OU-ADM%,ROOTDN">
 			<Member samAccountName="L-S-T2" />
 		</Group>
-		<Group name="L-S-T0-PawT2L-Logon" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the T1, T2 and TLegacy administration stations" Path="OU=%OU-ADM-GROUPS%,OU=%OU-ADM-L2%,OU=%OU-ADM%,ROOTDN">
+		<Group name="L-S-T2L-Pam" Category="Security" Scope="domainLocal" Description="Members of this group will be able to connect to the Tier 2 Legacy PAM systems (Privileged Administration Management)" Path="OU=%OU-ADM-PAM%,OU=%OU-ADM-GROUPS%,OU=%OU-ADM-T0%,OU=%OU-ADM%,ROOTDN">
 			<Member samAccountName="L-S-T2L" />
 		</Group>
 		<!--

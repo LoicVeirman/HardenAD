@@ -33,8 +33,8 @@ TranslateFrom | TranslateTo | Description
 %t0-managers%|G-S-T0-Managers|
 %t0-operators%|G-S-T0-Operators|
 %pawaccess-logon%|L-S-T0-PawAccess-Logon|
-%pawt0-logon%|L-S-T0-PawT0-Logon|
-%pawt1-logon%|L-S-T0-PawT12L-Logon|
+%pamt0-logon%|L-S-T0-PawT0-Logon|
+%pamt1-logon%|L-S-T0-PawT12L-Logon|
 %t0-localAdmin-servers%|L-S-T0-LocalAdmins-Servers|
 %t0-localAdmin-workstations%|L-S-T0-LocalAdmins-Workstations|
 %t1-managers%|G-S-T1-Managers|
