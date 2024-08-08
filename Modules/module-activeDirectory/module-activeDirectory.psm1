@@ -1941,17 +1941,22 @@ Function New-GpoObject {
                 $SrcGrpName = $newGrpName
 
                 #.Cheking if any translation is requiered (updated in 2.9.9)
-                $GrpPath = $xmlFile.Settings.GroupPolicies.GlobalGpoSettings.OU
-                $DenyOU  = "OU=%OU-ADM-GPO-DENY%"
-                $ApplyOU = "OU=%OU-ADM-GPO-APPLY%"
+                $GrpPath   = $xmlFile.Settings.GroupPolicies.GlobalGpoSettings.OU
+                $DenyOU    = "OU=%OU-ADM-GPO-DENY%"
+                $ApplyOU   = "OU=%OU-ADM-GPO-APPLY%"
+                $modeApply = "%OU-ADM-GPO-APPLY%"
+                $modeDeny  = "%OU-ADM-GPO-DENY%"
+                
                 foreach ($translate in $xmlFile.Settings.Translation.wellKnownID) {
-                    $GrpPath = $GrpPath -replace $translate.translateFrom, $translate.TranslateTo
-                    $DenyOU  = $DenyOU  -replace $translate.translateFrom, $translate.TranslateTo
-                    $ApplyOU = $ApplyOU -replace $translate.translateFrom, $translate.TranslateTo
+                    $GrpPath   = $GrpPath   -replace $translate.translateFrom, $translate.TranslateTo
+                    $DenyOU    = $DenyOU    -replace $translate.translateFrom, $translate.TranslateTo
+                    $ApplyOU   = $ApplyOU   -replace $translate.translateFrom, $translate.TranslateTo
+                    $modeApply = $modeApply -replace $translate.translateFrom, $translate.TranslateTo
+                    $modeDeny  = $modeDeny  -replace $translate.translateFrom, $translate.TranslateTo
                 }
 
                 if ($mode -eq "BOTH" -or $mode -eq "DENY") {
-                    $GrpName = $SrcGrpName -replace "%mode%", "DENY"
+                $GrpName = $SrcGrpName -replace "%mode%", $modeDeny
                     Try {
                         $null = Get-ADGroup $GrpName -ErrorAction stop
                         $notExist = $False
@@ -1995,7 +2000,7 @@ Function New-GpoObject {
 
                 #.v1.1: added Security Filter
                 if ($mode -eq "BOTH" -or $mode -eq "APPLY") {
-                    $GrpName = $SrcGrpName -replace "%mode%", "APPLY"
+                    $GrpName = $SrcGrpName -replace "%mode%", $modeApply
 
                     Try {
                         $null = Get-ADGroup $GrpName -ErrorAction stop
