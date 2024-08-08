@@ -61,7 +61,6 @@ for ($i = 0; $i -lt $groupPolicies.Count; $i++) {
 
 Add-Type -AssemblyName PresentationFramework, System.Drawing, System.Windows.Forms, WindowsFormsIntegration, PresentationCore, WindowsBase
 
-
 $labelText1 = "To prevent accidental changes, all the tasks are disabled by default in the XML configuration file."
 $labelText2 = "In the tab 'Task Sequence', you can enable the tasks you want to run."
 $labelText3 = "In the tab 'Group Policies', you can enable the GPOs you want to import."
@@ -76,7 +75,7 @@ $icon = "$PSScriptRoot\hardenAD.ico"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="Harden AD Configuration" Width="1010" Height="650" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" mc:Ignorable="d" Icon="$icon">
+        Title="Harden AD Configuration" Width="1010" Height="680" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" mc:Ignorable="d" Icon="$icon">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -84,11 +83,11 @@ $icon = "$PSScriptRoot\hardenAD.ico"
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <TextBlock Text="$labelText1" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"	Padding="0,0,0,10"/>
+            <TextBlock Text="$labelText1" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"	Padding="0,0,0,5"/>
 			<TextBlock Text="$labelText2" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
             <TextBlock Text="$labelText3" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
-            <TextBlock Text="$labelText4" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Padding="0,10,0,0"/>
-			<TextBlock Text="$labelText5" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Padding="0,10,0,10"/>
+            <TextBlock Text="$labelText4" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Padding="0,5,0,0"/>
+			<TextBlock Text="$labelText5" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Padding="0,5,0,5"/>
         </StackPanel>
 		<TabControl Grid.Row="1">
             <TabItem Header="Task Sequence">
