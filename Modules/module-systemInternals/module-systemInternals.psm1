@@ -1,3 +1,7 @@
+# Default behavior when an error is met.
+# Can be overwritten in function by using -ErrorAction.
+$ErrorActionPreference = 'Stop'
+
 #region Set-GpoCentralStore
 Function Set-GpoCentralStore {
     <#

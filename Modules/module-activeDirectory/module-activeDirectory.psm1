@@ -1,3 +1,7 @@
+# Default behavior when an error is met.
+# Can be overwritten in function by using -ErrorAction.
+$ErrorActionPreference = 'Stop'
+
 #region SET-HardenACL
 Function Set-HardenACL { 
     <#
@@ -627,83 +631,94 @@ Function Set-ADRecycleBin {
         .Notes
         Version: 02.00 -- contact@hardenad.net
         history: 19.08.31 Script creation
-                21.06.05 Version 2.0.0
+                 21.06.05 Version 2.0.0
+                 24.08.11 Version 2.0.1 - Manage unexpected error.
     #>
     param(
     )
 
-    ## Function Log Debug File
-    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
-    $dbgMess = @()
+    Try
+    {
+        ## Function Log Debug File
+        $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+        $dbgMess = @()
 
-    ## Start Debug Trace
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+        ## Start Debug Trace
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
 
-    ## Indicates caller and options used
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
-    
-    ## When dealing with 2008R2, we need to import AD module first
-    if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
-        Try { 
-            Import-Module ActiveDirectory
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
-        }
-        Catch {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module."   
-        }
-    }
-    ## Test Options current settings
-    if ((Get-ADOptionalFeature -Filter 'name -like "Recycle Bin Feature"').EnabledScopes) {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Active Directory Recycle Bin is already enabled"
-        $result = 0
-    }
-    else {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Active Directory Recycle Bin is not enabled yet"
+        ## Indicates caller and options used
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
         
-        Try {
-            $NoEchoe = Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target (Get-ADForest).Name -WarningAction SilentlyContinue -Confirm:$false
-
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target " + (Get-ADForest).Name + ' -WarningAction SilentlyContinue -Confirm:$false'
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Active Directory Recycle Bin is enabled"
-            
+        ## When dealing with 2008R2, we need to import AD module first
+        if ((Get-WMIObject win32_operatingsystem).name -like "*2008*") {
+            Try { 
+                Import-Module ActiveDirectory
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> OS is 2008/R2, added AD module."    
+            }
+            Catch {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! ERROR! OS is 2008/R2, but the script could not add AD module."   
+            }
+        }
+        ## Test Options current settings
+        if ((Get-ADOptionalFeature -Filter 'name -like "Recycle Bin Feature"').EnabledScopes) {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Active Directory Recycle Bin is already enabled"
             $result = 0
         }
-        catch {
-            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while configuring the active directory Recycle Bin"
+        else {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Active Directory Recycle Bin is not enabled yet"
             
-            $result = 2
-        }
+            Try {
+                $NoEchoe = Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target (Get-ADForest).Name -WarningAction SilentlyContinue -Confirm:$false
 
-        ##Ensure result is as expected
-        if ($result -eq 0) {
-            if ((Get-ADOptionalFeature -Filter 'name -like "Recycle Bin Feature"').EnabledScopes) {
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> The active directory Recycle Bin is enabled as expected."
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Enable-ADOptionalFeature 'Recycle Bin Feature' -Scope ForestOrConfigurationSet -Target " + (Get-ADForest).Name + ' -WarningAction SilentlyContinue -Confirm:$false'
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Active Directory Recycle Bin is enabled"
+                
+                $result = 0
             }
-            else {
+            catch {
+                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error while configuring the active directory Recycle Bin"
+                
                 $result = 2
-                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: the active directory Recycle Bin has not the expected status!"
             }
-        }    
-    }    
-    ## Exit
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
-    if (Test-Path .\Logs\Debug\$DbgFile) {
-        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-        {
-            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
-            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
-        }
-    }
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
-    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
-    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
 
-    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $null ; TaskExeLog = $null })
+            ##Ensure result is as expected
+            if ($result -eq 0) {
+                if ((Get-ADOptionalFeature -Filter 'name -like "Recycle Bin Feature"').EnabledScopes) {
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> The active directory Recycle Bin is enabled as expected."
+                }
+                else {
+                    $result = 2
+                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Error: the active directory Recycle Bin has not the expected status!"
+                }
+            }    
+        }    
+        ## Exit
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
+        if (Test-Path .\Logs\Debug\$DbgFile) {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
+            {
+                $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+                $Backup | Out-File .\Logs\Debug\$DbgFile -Force
+            }
+        }
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+        $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
+    }
+    Cath
+    {
+        $result = 2
+        $ResMes = "Unexpected Error: $($_.ToString())"
+    }
+    finally 
+    {
+        return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMes ; TaskExeLog = $ResMes })
+    }
 }
 #endregion
 
