@@ -393,3 +393,161 @@ Function Set-TSLocalAdminGroups {
     return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
 }
 #endregion
+
+#region Set-PowerShellEvtLogSDDL
+Function Set-PowerShellEvtLogSDDL
+{
+    <# 
+        .SYNOPSIS
+        Set SDDL on Microsoft-Windows-PowerShell/Operational/
+
+        .DESCRIPTION
+        PowerShell information stored in the eventviewer are required to proceed with forensic analysis (security or stability). As the contained data are sensible, the default ACLs must be hardened.
+        This script remove the ability from Everyone to read the event log.
+
+        .NOTES
+        Version 2.0.0 by L.Veirman.
+    #>
+    Param()
+
+    ## Function Log Debug File
+    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+    $dbgMess = @()
+
+    ## Start Debug Trace
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+
+    ## Indicates caller and options used
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
+
+    Try {
+        # Microsoft-Windows-PowerShell/Operationnal reg path
+        $Path = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\winevt\Channels\Microsoft-Windows-PowerShell/Operational'
+        
+        # Get SSDL from the security event log, which is protectected as we need.
+        $Sddl = ((wevtutil gl security) -like 'channelAccess*').Split(' ')[1]
+
+        # Append log for debug purpose
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Get those SDDL from SECURITY event log:"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- ---> SDDL: $($sddl)"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- ---> Human readable discretionary ACL:"
+        foreach ($dACL in (ConvertFrom-SddlString $Sddl).DiscretionaryAcl)
+        {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- ---- ---> $($dACL -replace ':','`t')"
+        }
+
+        # Push SDDL to the Microsoft-Windows-PowerShell/Operationnal log
+        Set-ItemProperty -Path $Path -Name ChannelAccess -Value $Sddl -ErrorAction Stop
+
+        # Log
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Success: SDDL pushed wuccessfully to $($Path)"
+        $result = 0
+        $ResMess = "Success"
+    }
+    Catch {
+        # Manage error.
+        $result = 2
+        $ResMess = $_.ToString()
+    }
+
+    ## Exit log to file
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | INIT  ROTATIVE  LOG "
+    if (Test-Path .\Logs\Debug\$DbgFile) 
+    {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
+        $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+        $Backup | Out-File .\Logs\Debug\$DbgFile -Force
+    }
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
+
+    # return result to caller
+    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+}
+#endregion
+
+#region Set-NetLogonContent
+Function Set-NetLogonContent
+{
+    <#
+        .SYNOPSIS
+        Copy the content of ./Inputs/NetLogon to /windir/sysvol/domain/policy/scripts/HAD.
+
+        .DESCRIPTION
+        Allow to update netlogon with necessary scripts or files that can be then called back by a GPO with no need of reboot (startup script)
+
+        .NOTES
+        Version 01.00.000 -- Script creation
+    #>
+    Param()
+
+    Try {
+        ## Function Log Debug File
+        $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+        $dbgMess = @()
+
+        ## Start Debug Trace
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "**** FUNCTION STARTS"
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "****"
+
+        ## Indicates caller and options used
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
+
+        ## retrieving NetLogon local path
+        $NetLogonPath = (Get-SmbShare NetLogon -ErrorAction Stop).Path 
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> NetLong Local Path.......: $($NetLogonPath)"
+
+        ## Check if folder exists
+        if (Test-Path "$($NetLogonPath)\HAD") 
+        {
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Folder HAD exists in $($NetLogonPath)"
+        }
+        Else 
+        {
+            New-Item -Name HAD -ItemType Directory -Path $NetLogonPath
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---+ Folder HAD created in $($NetLogonPath)"
+        }
+
+        ## Copying files / folders
+        foreach ($item in (Get-ChildItem .\Inputs\NetLogon)) 
+        {
+            Copy-Item -LiteralPath $item.FullName -Destination "$($NetLogonPath)\HAD" -Recurse -ErrorAction Stop -Force
+            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---+ Item $item copied to $netLogonPath"
+        }
+
+        ## Exit 
+        $result = 0
+        $resMess = "Success"
+    }
+    Catch {
+        $result = 2
+        $resMess = $_.ToString()
+    }
+
+    # Exit log to file
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $Result"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> function return RESULT: $ResMess"
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | INIT  ROTATIVE  LOG "
+    if (Test-Path .\Logs\Debug\$DbgFile) 
+    {
+        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
+        $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+        $Backup | Out-File .\Logs\Debug\$DbgFile -Force
+    }
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "=== | STOP  ROTATIVE  LOG "
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T **** FUNCTION ENDS")
+    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
+    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
+
+    # return
+    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+}
+#endregion

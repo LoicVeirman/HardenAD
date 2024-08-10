@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScheduledTasks clsid="{CC63F200-7309-4ba0-B154-A71CD118DBCC}"><ImmediateTaskV2 clsid="{9756B581-76EC-4169-9AFC-0CA8D43ADB5F}" name="Import HAD Scripts" image="0" changed="2024-08-10 07:51:52" uid="{F269DB28-FC60-4FA3-8755-518D73BEEC44}" userContext="0" removePolicy="0"><Properties action="C" name="Import HAD Scripts" runAs="NT AUTHORITY\Network Service" logonType="S4U"><Task version="1.3">
+				<RegistrationInfo>
+					<Date>2024-08-10T04:26:04.0366807</Date>
+					<Author>HAD\Administrator</Author>
+					<URI>\import</URI>
+					<Description></Description></RegistrationInfo>
+				<Principals>
+					<Principal id="Author">
+						<UserId>NT AUTHORITY\Network Service</UserId>
+						<RunLevel>LeastPrivilege</RunLevel><LogonType>S4U</LogonType></Principal>
+				</Principals>
+				<Settings>
+					<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+					<StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+					<MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+					<IdleSettings>
+						<StopOnIdleEnd>true</StopOnIdleEnd>
+						<RestartOnIdle>false</RestartOnIdle>
+						<Duration>PT5M</Duration><WaitTimeout>PT1H</WaitTimeout></IdleSettings>
+					<Hidden>false</Hidden><DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter><StartWhenAvailable>true</StartWhenAvailable><AllowStartOnDemand>false</AllowStartOnDemand><ExecutionTimeLimit>PT0S</ExecutionTimeLimit><AllowHardTerminate>false</AllowHardTerminate></Settings>
+				<Triggers><TimeTrigger><StartBoundary>%LocalTimeXmlEx%</StartBoundary><EndBoundary>%LocalTimeXmlEx%</EndBoundary><Enabled>true</Enabled></TimeTrigger></Triggers><Actions Context="Author"><Exec><Command>robocopy</Command><Arguments>\\had.299.Labo\NetLogon\HAD\Set-PowerShellEvtLogSDDL\ %ProgramData%\HardenAD\Set-PowerShellEvtLogSDDL /MIR</Arguments></Exec>
+				</Actions></Task></Properties></ImmediateTaskV2>
+	<TaskV2 clsid="{D8896631-B747-47a7-84A6-C155337F3BC8}" name="Setup PoSh Event log Security" image="2" userContext="0" removePolicy="0" changed="2024-08-10 07:54:47" uid="{A796869A-0F99-446F-979A-CB88BF329AA0}"><Properties action="U" name="Setup PoSh Event log Security" runAs="NT AUTHORITY\System" logonType="S4U"><Task version="1.3">
+				<RegistrationInfo>
+					<Date>2024-08-10T02:25:39.3151339</Date>
+					<Author>HAD\Administrator</Author>
+					<URI>\test</URI>
+					<Description></Description></RegistrationInfo>
+				<Principals>
+					<Principal id="Author">
+						<UserId>NT AUTHORITY\System</UserId>
+						<RunLevel>LeastPrivilege</RunLevel><LogonType>S4U</LogonType></Principal>
+				</Principals>
+				<Settings>
+					<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+					<StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+					<ExecutionTimeLimit>PT1H</ExecutionTimeLimit>
+					<MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+					<IdleSettings>
+						<StopOnIdleEnd>true</StopOnIdleEnd>
+						<RestartOnIdle>false</RestartOnIdle>
+						<Duration>PT5M</Duration><WaitTimeout>PT1H</WaitTimeout></IdleSettings>
+					<UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+					<Hidden>false</Hidden><AllowStartOnDemand>false</AllowStartOnDemand><AllowHardTerminate>false</AllowHardTerminate></Settings>
+				<Triggers><EventTrigger><Enabled>true</Enabled><Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="Microsoft-Windows-TaskScheduler/Operational"&gt;&lt;Select Path="Microsoft-Windows-TaskScheduler/Operational"&gt;*[EventData [@Name='TaskSuccessEvent'][Data[@Name='TaskName']='\Import HAD Scripts']]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription></EventTrigger>
+				</Triggers><Actions Context="Author"><Exec>
+						<Command>powershell.exe</Command>
+						<Arguments>-ExecutionPolicy ByPass -File "Set-PowerShellEvtLogSDDL.ps1"</Arguments>
+						<WorkingDirectory>%ProgramData%\HardenAD\Set-PowerShellEvtLogSDDL</WorkingDirectory>
+					</Exec></Actions></Task></Properties></TaskV2>
+</ScheduledTasks>

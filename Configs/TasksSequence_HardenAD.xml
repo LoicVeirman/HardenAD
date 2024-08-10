@@ -904,13 +904,13 @@
 		<!-- 
 			GENERAL LOGS AND AUDIT 
 		-->
-		<GPO BackupID="{9BC7A0A1-5911-4505-8800-A5A12C837301}" Validation="Yes" Name="HAD-PowerShell-Logs" Description="--- Harden AD --- &quot; ,&quot; Enable Logs for PowerShell.">
-			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoFilter WMI="Windows-2008-Vista-and-Newer" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
-		</GPO>
 		<GPO BackupID="{57559440-1A69-4B88-954D-67CFBDAC90B1}" Validation="Yes" Name="HAD-Security-Logs" Description="--- Harden AD --- &quot; ,&quot; Configures security logs based on ANSSI recommendations.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{7D0FE25F-7C90-450F-87CE-B86E9B6B4E18}" Validation="Yes" Name="HAD-PowerShell-Logs" Description="--- Harden AD --- &quot; ,&quot; Enable Logs for PowerShell and secure event log.">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-2008-Vista-and-Newer" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
@@ -1499,6 +1499,15 @@
 			</UseParameters>
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>set `(GPO Central Store` and `(update adm and admx` files</TaskDescription>
+		</Id>
+		<!--
+			UPDATE NETLOGON WITH NECESSARY DATA
+		-->
+		<Id Number="041" Name="Update NetLogon Repository">
+			<CallingFunction>Set-NetLogonContent</CallingFunction>
+			<UseParameters />
+			<TaskEnabled>No</TaskEnabled>
+			<TaskDescription>update `(netlogon` share with new scripts and files` files</TaskDescription>
 		</Id>
 		<!-- 
 			GENERATE NEW ADMINISTRATION ORGANIZATIONAL UNIT

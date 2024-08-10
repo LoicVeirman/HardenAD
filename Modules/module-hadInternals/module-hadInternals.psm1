@@ -420,8 +420,8 @@ function Set-Translation {
     $wellKnownID_SchemaAdm.translateTo = "$schemaAdmins_"
     $wellKnownID_RDP.translateTo       = "$RDUsers_"
     $wellKnownID_Users.translateTo     = "$users_"
-    $wellKnownID_Guests                = "$Guests_"
-    $wellKnownID_Guest                 = "$Guest_"
+    $wellKnownID_Guests.translateTo    = "$Guests_"
+    $wellKnownID_Guest.translateTo     = "$Guest_"
 
     # ..History
     $historyLastRun.Date          = [string](Get-Date -Format "yyyy/MM/dd - HH:mm")
