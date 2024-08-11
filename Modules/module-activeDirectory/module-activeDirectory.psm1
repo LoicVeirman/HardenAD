@@ -699,10 +699,8 @@ Function Set-ADRecycleBin {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| INIT  ROTATIVE  LOG "
         if (Test-Path .\Logs\Debug\$DbgFile) {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Rotate log file......: 1000 last entries kept" 
-            {
-                $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
-                $Backup | Out-File .\Logs\Debug\$DbgFile -Force
-            }
+            $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+            $Backup | Out-File .\Logs\Debug\$DbgFile -Force
         }
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "===| STOP  ROTATIVE  LOG "
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
@@ -710,15 +708,12 @@ Function Set-ADRecycleBin {
         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ****")
         $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
     }
-    Cath
+    Catch
     {
         $result = 2
         $ResMes = "Unexpected Error: $($_.ToString())"
     }
-    finally 
-    {
-        return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMes ; TaskExeLog = $ResMes })
-    }
+    return (New-Object -TypeName psobject -Property @{ResultCode = $result ; ResultMesg = $ResMes ; TaskExeLog = $ResMes })
 }
 #endregion
 

@@ -918,16 +918,21 @@
 		-->
 		<GPO BackupID="{60C4FFE1-F082-49EE-9AF2-F7ABA228D05F}" Validation="Yes" Name="HAD-TS-Local-admins-groups" Description="--- Harden AD --- &quot; ,&quot; Import the HADLocalAdmins module and create the associated scheduled task.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="No" />
 		</GPO>
 		<GPO BackupID="{A8C72199-7FB0-4234-A737-4E5843814F1E}" Validation="Yes" Name="HAD-TS-PDC-Flush-admin-groups" Description="--- Harden AD --- &quot; ,&quot; Import the Group flushing script and create the associated scheduled task.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-PDC" />
-			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="No" />
 		</GPO>
 		<GPO BackupID="{1767DE3C-3F23-4357-94F9-D252D2BC462C}" Validation="Yes" Name="HAD-TS-Reset-Computer-Sddl" Description="--- Harden AD --- &quot; ,&quot; Reset the sddl and owner of new computer objects through a schedule task.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="No" />
+		</GPO>
+		<GPO BackupID="{549A98DA-2861-4407-A173-71BFB377EA35}" Validation="Yes" Name="HAD-TS-AdminSDholder-check" Description="--- Harden AD --- &quot; ,&quot; Setup a Task Scheduled on the PDC to review all accounts with a non-null AdminCount' value and reset them accordingly.">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-PDC" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="No" />
 		</GPO>
 		<!-- 
 			SECURE RDP 
