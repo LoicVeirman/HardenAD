@@ -2557,22 +2557,31 @@ Function New-AdministrationGroups {
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: xml data loaded (" + $xmlData.count + " group(s))"
 
             ## if we got data, begining creation loop
-            if ($xmlData) {
+            if ($xmlData) 
+            {
                 #-Failing Creation index
                 $ErrIdx = 0
                 
                 #.Begin object creation loop
-                foreach ($account in $xmlData) {
+                $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---> LOOP START <---"
+                foreach ($account in $xmlData) 
+                {
+                    $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")----"
+                    $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- XML GROUP: $($account.Name)"
                     #-Ensure this is not EA in a child domain
-                    if ($account.Name -eq 'Enterprise Admins' -or $account.Name -like 'Administrateurs de l*') {
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Enterprise Admins Group: Detected."
-                        if ($ForestDomain -ne ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq '%domaindns%' }).translateTo) {
+                    if ($account.Name -eq 'Enterprise Admins' -or $account.Name -like 'Administrateurs de l*') 
+                    {
+                        $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ---> Detected EA group"
+                        
+                        if ($ForestDomain -ne ($xmlSkeleton.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq '%domaindns%' }).translateTo) 
+                        {
                             ## Do not create it, move to next group.
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Enterprise Admins Group: working in a child domain! Skipping."
+                            $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ---> This is not the root domain! No action performed."
                             continue
                         }
-                        Else {
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Enterprise Admins Group: root domain - will manage from here."
+                        Else 
+                        {
+                            $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ---> This is the root domain: group will be handled."
                         }
                     }
                     #-Create a LDAP search filter
@@ -2580,71 +2589,65 @@ Function New-AdministrationGroups {
                     $Searcher.Filter = "(&(ObjectClass=Group)(sAMAccountName=" + $account.Name + "))"
 
                     #.Check if the object already exists
-                    if ($Searcher.FindAll() -ne $null) {
+                    if ($Searcher.FindAll() -ne $null) 
+                    {
                         ## Account is Present
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: === " + $account.Name + " already exists"
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- ==== Group creation: already exists"
                         $AddUser = $true
                     }
-                    Else {
+                    Else
+                    {
                         ## Create Group
                         Try {
                             #-Create new group object
                             New-ADGroup -Name $account.Name -Description $account.description -Path (Write-OUPath $account.Path) -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ group created: " + $account.Name
+                            $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ++++ Group creation: success"
                             $AddUser = $true
                         } 
                         Catch {
                             # Failed at creating!
                             $ErrIdx++
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! group could not be created! (" + $account.Name + ")"
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- !!!! Group creation: Failed"
                             $AddUser = $false
                         }
                     }
 
-                    #.Logging AddUser value
-                    $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter AddUser........: $AddUser"
                     #.Adding members to group, if any
-                    if ($AddUser) {
+                    if ($AddUser) 
+                    {
+                        $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ---> Managing group memberships:"
                         #.Collection members forthis specific group
                         $members = $account.Member
                         #.create a collection object with all members
-                        $MbrsList = @()
-                        foreach ($member in $members) {
-                            $MbrsList += $member.sAMAccountName
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ adding member: " + $member.SAMAccountName
-                        }
-                        #.Adding members
-                        Try {
-                            if ($members) {
-                                Add-ADGroupMember -Identity $account.Name -Members $MbrsList | Out-Null
-                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: +++ all members added successfully."
+                        foreach ($member in $members) 
+                        {
+                            Try {
+                                [void](Add-ADGroupMember -Identity $account.Name -Members $member.sAMAccountName)
+                                $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ---- ++++ Added successfully $($member.samAccountName)"
                             }
-                            Else {
-                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: === No members to add."
+                            Catch {
+                                $ErrIdx++
+                                $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ---- !!!! Fail adding member $($member.samAccountName)"
                             }
                         }
-                        Catch {
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! Failed to add new members!"
-                            $ErrIdx++
-                        }
-                    }
-                    Else {
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> .........................: !!! members could not be added! (" + $account.Name + ")"
                     }
                 }
-                
+
                 #-Success: no issue
-                if ($ErrIdx -eq 0) { 
+                if ($ErrIdx -eq 0) 
+                { 
                     $result = 0 
                     $ResMess = "no error"
                 }
                 #-Warning: some were not created and generate an error
-                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) { 
+                if ($ErrIdx -gt 0 -and $ErrIdx -lt $xmlData.count) 
+                { 
                     $result = 1
                     $ResMess = "$ErrIdx out of " + $xmlData.count + " failed"
                 }
                 #-Error: none were created!
-                if ($ErrIdx -ge $xmlData.count) { 
+                if ($ErrIdx -ge $xmlData.count) 
+                { 
                     $result = 2
                     $ResMess = "error when creating accounts"
                 }
