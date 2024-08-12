@@ -10,8 +10,12 @@ Script used to select which tasks should be activated in the script sequence thr
 ## Invoke-HardenADGpo  
 Script used to select which GPO should be activated in the script sequence through a graphic user interface.  
 
-## Keepass-2.48.1
-Keepass binaries used by HardenAD to store password when creating a new user.  
+## Keepass-2.57
+Keepass binaries used by HardenAD to store password when creating a new user.
+Now a custom password could be used.
+
+### KPScript 2.57
+Additionnal Keepass plugin used there to apply the custom database password.
   
 ## Scripts Fix  
 ### Fix-LocalAdminGroups
