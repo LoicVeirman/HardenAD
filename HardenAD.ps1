@@ -414,8 +414,8 @@ foreach ($Prerequesite in $Prerequesites.Directory) {
 }
 
 # New in version 3.0.0: The script will now update the tasksSequence to teach that it has already been ran and add forest/domain information.
-$TShistoryLastRun   = $TasksSeqConfig.Settings.History.LastRun.Date
-$TShistoryRootDns   = $TasksSeqConfig.Settings.History.Domains.Root
+$env:TShistoryLastRun = $TasksSeqConfig.Settings.History.LastRun.Date
+$TShistoryRootDns = $TasksSeqConfig.Settings.History.Domains.Root
 $TShistoryDomainDns = $TasksSeqConfig.Settings.History.Domains.Domain
 
 if ($TShistoryLastRun -eq "" -and $TShistoryRootDns -eq "" -and $TShistoryDomainDns -eq "") {

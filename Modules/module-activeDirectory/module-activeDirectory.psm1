@@ -79,11 +79,21 @@ Function Set-HardenACL {
     try {            
         if ($inheritedObjects -ne "" -and $Null -ne $inheritedObjects) {
             switch ($inheritedObjects) {
-                "group" { $inheritanceguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 }
-                "user" { $inheritanceguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 }
-                "computer" { $inheritanceguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
-                "contact" { $inheritanceguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
-                "member" { $inheritanceguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
+                "group" {
+                    $inheritanceguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 
+                }
+                "user" {
+                    $inheritanceguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 
+                }
+                "computer" {
+                    $inheritanceguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 
+                }
+                "contact" {
+                    $inheritanceguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 
+                }
+                "member" {
+                    $inheritanceguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 
+                }
             }
         }
         else {
@@ -92,11 +102,21 @@ Function Set-HardenACL {
 
         if ($ObjectType -ne "" -and $Null -ne $ObjectType) {
             switch ($ObjectType) {
-                "group" { $Objectguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 }
-                "user" { $Objectguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 }
-                "computer" { $Objectguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
-                "contact" { $Objectguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
-                "member" { $Objectguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
+                "group" {
+                    $Objectguid = New-Object Guid bf967a9c-0de6-11d0-a285-00aa003049e2 
+                }
+                "user" {
+                    $Objectguid = New-Object Guid bf967aba-0de6-11d0-a285-00aa003049e2 
+                }
+                "computer" {
+                    $Objectguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 
+                }
+                "contact" {
+                    $Objectguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 
+                }
+                "member" {
+                    $Objectguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 
+                }
             }
         }
         else {
@@ -2234,7 +2254,7 @@ Function New-AdministrationAccounts {
                 $ErrIdx = 0
             
                 #-Reacling Keepass binaries to avoid issue with read-only permissions
-                $path = (Get-Location).Path + "\Tools\KeePass-2.48.1\"
+                $path = (Get-Location).Path + "\Tools\KeePass-2.57\"
                 $pathdb = (Get-Location).Path + "\Outputs\"
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> binaries path=$path"
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> database path=$pathdb"
@@ -2266,6 +2286,7 @@ Function New-AdministrationAccounts {
                 Try {
                     [Reflection.Assembly]::LoadFile("$path\KeePass.exe") | Out-Null
                     [Reflection.Assembly]::LoadFile("$path\KeePass.XmlSerializers.dll") | Out-Null
+                    $KPScriptExe = "$path\KPScript.exe"
                     $IoConnectionInfo = New-Object KeePassLib.Serialization.IOConnectionInfo
                     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> keepass binaries loaded"
                 }
@@ -2276,6 +2297,40 @@ Function New-AdministrationAccounts {
                 if ($KpsFlag) {
                     #-Opening database
                     Try {
+                        # Loading VB Assembly for password inputbox
+                        $fullName = "Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+                        $an = New-Object System.Reflection.AssemblyName($fullName)
+                        Add-Type -Assembly 'System.Windows.Forms'
+                        [System.Reflection.Assembly]::Load($an)
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> TShistoryLastRun: $env:TShistoryLastRun"
+                        
+                        ### Setting keepass password if script never run
+                        if ($null -eq $env:TShistoryLastRun -or $env:TShistoryLastRun -eq "") {                            
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> setting database password"
+
+                            # Script has never run. Password never set.
+                            $title = 'Keepass Password'
+                            $msg = "By typing a unique and strong password to be set on the Keepass Database, you will efficiently protect the newly created admin accounts by not using the default password.`r`n`r`nLeave the password blank to keep the default one (H4rd3n@D!!)."
+                            $KeepassPwd = [Microsoft.VisualBasic.Interaction]::InputBox($msg, $title)
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> database password set, changin database password"
+
+                            try {
+                                . $KPScriptExe -c:ChangeMasterKey ($pathdb + "\HardenAD.kdbx") -pw:"H4rd3n@D!!" -newpw:$KeepassPwd
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> database password changed"
+                            }
+                            catch {
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! unable to change database password !" 
+                            }
+                        }
+                        else {
+                            # Script has already ran. Prompt for password.
+                            $title = 'Keepass Password'
+                            $msg = "Enter your Keepass database password."
+                            $KeepassPwd = [Microsoft.VisualBasic.Interaction]::InputBox($msg, $title)
+                            
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> database password typed"
+                        }
+                        
                         $IoConnectionInfo.Path = $pathdb + "\HardenAD.kdbx"
                         $Key = New-Object KeePassLib.Keys.CompositeKey
                         $Key.AddUserKey((New-Object KeePassLib.Keys.KcpPassword($KeepassPwd)))
@@ -2285,7 +2340,7 @@ Function New-AdministrationAccounts {
                     }
                     Catch {
                         $KpsFlag = $false
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! keepass database not found!"
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "-!!! keepass database not found or password incorrect!"
                     }
                 }
                 foreach ($account in $xmlData) {
