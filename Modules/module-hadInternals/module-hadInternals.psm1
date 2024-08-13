@@ -674,3 +674,74 @@ Function Set-hADColorSchema {
     New-Variable -Name ANSI_End       -Option AllScope -Force -Scope Global -Value "$([char]0x1b)[0m"                                    -Description "0: end of ANSI, reset to default."
 }
 #endregion
+
+#region Set-hADconfigurationFiles
+function Set-hADconfigurationFiles
+{
+    <#
+        .Synopsis
+        Setup the running system with HardenAD data file.
+
+        .Description
+        Setup the running system with a copy of required files to %programData%\HardenAD\Configuration.
+
+        .Notes
+        Version 01.00.000   2024/08/13
+    #>
+    Param()
+    ## Start Debug Trace
+    [System.Collections.Generic.List[Object]]$dbgMess = @()
+    ## Function Log Debug File
+    $DbgFile = 'Debug_{0}.log' -f $MyInvocation.MyCommand
+    $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')****")
+    $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')**** FUNCTION STARTS")
+    $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')****")
+
+    ## Indicates caller and options used
+    $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')---> Function caller..........: $((Get-PSCallStack)[1].Command)")
+
+    ## Copying files
+    Try {
+        $targetPath = "$($env:ProgramData)\HardenAD\Configuration"
+        
+        ## Create pathes
+        if (-not(Test-Path $targetPath))
+        {
+            New-Item -Path $env:ProgramData\HardenAD -Name Configuration -ItemType Directory
+        }
+        ## Copying configuration xml
+        Copy-Item -Path .\configs\Configuration_HardenAD.xml -Destination $targetPath\Configuration_HardenAD.xml -Force
+        $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')---> Configuration_HardenAD.xml: file copied to $targetPath")
+        
+        ## Copying tasks sequence xml
+        Copy-Item -Path .\configs\TasksSequence_HardenAD.xml -Destination $targetPath\TasksSequence_HardenAD.xml -Force
+        $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')---> TasksSequence_HardenAD.xml: file copied to $targetPath")
+
+        ## Result code and message
+        $resultCode = 0
+        $ResMess = "Success"
+    }
+    Catch {
+        ## Got an error...
+        $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')!!!! Error: $($_.ToString())")
+        $resultCode = 2
+        $ResMess = "UNEXPECTED ERROR: $($_.ToString())"
+    }
+    ## Exit
+    $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')---> function return RESULT: $Result")
+    $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')=== | INIT  ROTATIVE  LOG ")
+    if (Test-Path .\Logs\Debug\$DbgFile) 
+    {
+        $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')---> Rotate log file......: 1000 last entries kept")
+        $Backup = Get-Content .\Logs\Debug\$DbgFile -Tail 1000 
+        $Backup | Out-File .\Logs\Debug\$DbgFile -Force
+    }
+    $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')=== | STOP  ROTATIVE  LOG ")
+    $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')****")
+    $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')**** FUNCTION ENDS")
+    $dbgMess.add("$(Get-Date -UFormat '%Y-%m-%d %T ')****")
+    $DbgMess | Out-File .\Logs\Debug\$DbgFile -Append
+
+    return (New-Object -TypeName psobject -Property @{ResultCode = $resultCode ; ResultMesg = $ResMess ; TaskExeLog = $ResMess })
+}
+#endregion
