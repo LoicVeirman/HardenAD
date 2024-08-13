@@ -683,7 +683,7 @@ function Set-hADconfigurationFiles
         Setup the running system with HardenAD data file.
 
         .Description
-        Setup the running system with a copy of required files to %programData%\HardenAD\Configuration.
+        Setup the running system with a copy of required files to \\%domainDNS%\NetLogon\HardenAD\Configuration.
 
         .Notes
         Version 01.00.000   2024/08/13
@@ -702,12 +702,14 @@ function Set-hADconfigurationFiles
 
     ## Copying files
     Try {
-        $targetPath = "$($env:ProgramData)\HardenAD\Configuration"
+        $SysVolPath = (Get-SmbShare SYSVOL).path -replace '\\SYSVOL\\sysvol','\\SYSVOL\Domain'
+        $targetPath = "$SysVolPath\HardenAD\Configuration"
         
         ## Create pathes
         if (-not(Test-Path $targetPath))
         {
-            New-Item -Path $env:ProgramData\HardenAD -Name Configuration -ItemType Directory
+            ## Creating folder
+            New-Item -Path ($targetPath -replace '\\Configuration',$null) -Name Configuration -ItemType Directory
         }
         ## Copying configuration xml
         Copy-Item -Path .\configs\Configuration_HardenAD.xml -Destination $targetPath\Configuration_HardenAD.xml -Force
