@@ -916,7 +916,7 @@
 		<!-- 
 			DC SCHEDULED TASKS 
 		-->
-		<GPO BackupID="{40318F51-DB4B-45CF-8561-1C1FAB9ED251}" Validation="Yes" Name="HAD-TS-Local-admins-groups" Description="--- Harden AD --- &quot; ,&quot; Import the HADLocalAdmins module and create the associated scheduled task.">
+		<GPO BackupID="{AFADDAD2-C284-436F-9789-F229EE9A2D77}" Validation="Yes" Name="HAD-TS-Local-admins-groups" Description="--- Harden AD --- &quot; ,&quot; Import the HADLocalAdmins module and create the associated scheduled task.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="No" />
 		</GPO>
@@ -1449,11 +1449,11 @@
 		<!-- 
 			Configure ProgramData for futur use.
 		-->
-		<Id Number="001" Name="Setting-up ProgramData">
+		<Id Number="001" Name="Setting-up Sysvol">
 			<CallingFunction>Set-hADconfigurationFiles</CallingFunction>
 			<UseParameters />
 			<TaskEnabled>No</TaskEnabled>
-			<TaskDescription>Copying configuration files to `(ProgramData`</TaskDescription>
+			<TaskDescription>Copying configuration files to `(SYSVOL\HardenAD`</TaskDescription>
 		</Id>
 		<!-- 
 			Upgrade Domain Functional Level
@@ -1559,16 +1559,6 @@
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>set `(Tier Legacy` organizational unit</TaskDescription>
 		</Id>
-		<!-- 
-			GENERATE NEW DEFAULT OBJECTS LOCATION TREE
-		-->
-		<!--
-		<Id Number="060" Name="Set Provisioning Organizational Unit">
-			<CallingFunction>Set-TreeOU</CallingFunction>
-			<UseParameters>PROVISIONNING-EN</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
-			<TaskDescription>set `(Provisioning` organizational unit</TaskDescription>
-		</Id>
 		-->
 		<!-- 
 			RELOCATE NEW USER/GROUP OBJECT LOCATION
@@ -1622,12 +1612,6 @@
 		<!--
 			FILE CUSTOMIZATION BEFORE GPO IMPORT
 		-->
-		<Id Number="100" Name="Prepare GPO files before GPO import: Local Admins">
-			<CallingFunction>Set-TSLocalAdminGroups</CallingFunction>
-			<UseParameters>{60C4FFE1-F082-49EE-9AF2-F7ABA228D05F}</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
-			<TaskDescription>Prepare `(Configuration.xml` before the GPO importation of '`(HAD-TS-Local-admins-groups`'</TaskDescription>
-		</Id>
 		<Id Number="101" Name="Prepare GPO files before GPO import: Allow Computer ReUse">
 			<CallingFunction>Set-GptTmplSID</CallingFunction>
 			<UseParameters>{3B6DC475-6822-49C1-B47A-4199DF4FE1E6}</UseParameters>

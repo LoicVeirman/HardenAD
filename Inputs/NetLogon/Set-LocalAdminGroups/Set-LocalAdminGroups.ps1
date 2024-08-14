@@ -93,30 +93,14 @@
 
     .NOTES
     Script version 01.00 by Loic VEIRMAN - MSSEC / 9th April 2024.
+    Script version 01.01 by Loic VEIRMAN - MSSEC / 14th August 2024.
 #>
 
-[CmdletBinding(DefaultParameterSetName = 'RUN')]
 Param(
     # Catch Computer name to works on
-    [Parameter(ParameterSetName = 'RUN',   Position = 0)]
-    [Parameter(ParameterSetName = 'CUSTO', Position = 1)]
+    [Parameter(Mandatory)]
     [String]
-    $ComputerName,
-
-    # Instrcut to generate the configuration.xml file
-    [Parameter(ParameterSetName = 'BUILD', Position = 0)]
-    [Switch]
-    $UpdateConfig,
-
-    # Indicate where to find the source xml file. If not specified, will consider as ran from the /tools folder.
-    [Parameter(ParameterSetName = 'BUILD', Position = 1)]
-    [String]
-    $xmlSourcePath,
-
-    # Instruct to use configuration-custom.xml instead of configuration.xml.
-    [Parameter(ParameterSetName = 'CUSTO', Position = 0)]
-    [Switch]
-    $CustomRules
+    $ComputerName
 )
 
 # FUNCTION: WRITE-DEBUGLOG
@@ -177,12 +161,10 @@ Function Export-DebugLog
 }
 
 # STATIC PARTS 
-$CurrentDir     = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $EventLogName   = "Application"
 $EventLogSource = 'HardenAD_{0}' -f $MyInvocation.MyCommand
 $DebugFileName  = "Debug_{0}_$(Get-Date -Format yyyyMMddhhmmss).log" -f $MyInvocation.MyCommand
-$DebugFile      = "$($CurrentDir)\$($DebugFileName)"
-$myPDC          = (Get-ADDomain).PDCEmulator
+$DebugFile      = "$($env:ProgramData)\HardenAD\Logs\$($DebugFileName)"
 
 # PREPARE FOR LOGGING: EVENTVWR IS USED FOR TRACKING ACTIVITIES, WHEREAS DEBUGFILE IS USED FOR SCRIPT MAINTENANCE.
 # First, we initiate the debug array. This one will be output to the file once the script is over.
@@ -193,7 +175,9 @@ $debugMessage += Write-DebugLog inf "--------------------`n### SCRIPT START ###`
 if ((New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
 {
     $debugMessage += Write-DebugLog inf "RUN AS ADMINISTRATOR: True"
-} Else {
+} 
+Else 
+{
     $debugMessage += Write-DebugLog inf "RUN AS ADMINISTRATOR: false"
     Write-Error "The script should be ran in the administrator context."
     Export-DebugLog $debugMessage $DebugFile
@@ -205,573 +189,239 @@ Try {
     $null = New-EventLog -LogName $EventLogName -Source $EventLogSource -ErrorAction Stop
     $debugMessage += Write-DebugLog inf "EVENT VIEWER: the eventlog name '$eventLogName' has been updated with the source '$eventLogSource'."
 
-} Catch {
+} 
+Catch {
     $debugMessage += Write-DebugLog inf "EVENT VIEWER: the eventlog name '$EventLogName' has already been set with the source '$EventLogSource'."
 }
+
+
+# RUN THE SCRIPT
 $debugMessage += Write-DebugLog inf "ComputerName: '$computerName'."
+$debugMessage += Write-DebugLog inf "[CustomRules] called"
 
-# Debug: is paramater computerName set?
-
-# FIRST CASE: BUILD THE CONFIGURATION FILE
-if ($UpdateConfig)
-{
-    $debugMessage += Write-DebugLog inf "[UpdateConfig] called"
-    # Checking if a xml file has been specified.
-    if ($xmlSourcePath) 
-    {
-        $debugMessage += Write-DebugLog inf "The xmlSourcePath has been specified. the script will use the following value: $xmlSourcePath"
-     } Else {
-        $xmlSourcePath = Convert-Path -LiteralPath "..\..\Configs\TasksSequence_HardenAD.xml"
-        $debugMessage += Write-DebugLog warn "NO xmlSourcePath has been specified. the script will use the following value: $xmlSourcePath"
-    }
-    
-    # Checking if the file exist, and if so will ensure this is the one expected.
-    if (Test-Path $xmlSourcePath)
-    {
-        $debugMessage += Write-DebugLog inf "$xmlSourcePath is present"
-        # Load file as XML
-        Try {
-            $SourceXml = [xml](Get-Content $xmlSourcePath -Encoding utf8 -ErrorAction Stop)
-        } Catch {
-            $debugMessage += Write-DebugLog error "Failed to get content of $xmlSourcePath"
-            Write-Error "Failed to get content of $xmlSourcePath"
-            Export-DebugLog $debugMessage $DebugFile
-            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 3 -Category 0 -Message "Could not update configuration.xml: failed to get content of $xmlSourcePath"
-            exit 3
-        }
-        # Ensure this is the expected xml format...
-        $CheckXml = $SourceXml.Settings.Translation.WellKnownID
-
-        if ($CheckXml.count -gt 1)
-        {
-            $debugMessage += Write-DebugLog inf "successfully loaded the source xml file. Retrieving values..."
-            
-            # Creating the XML file
-            Try {
-                $XmlWriter = New-Object System.XMl.XmlTextWriter("$CurrentDir\configuration.xml",$null)
-                $xmlWriter.Formatting = "indented"
-                $xmlWriter.Indentation = 1
-                $xmlWriter.IndentChar = "`t"
-                $debugMessage += Write-DebugLog inf "new configuration.xml array object created"
-            } Catch {
-                $debugMessage += Write-DebugLog error "Failed to create the configuration.xml variable"
-                Write-Error "Failed to create the configuration.xml variable"
-                Export-DebugLog $debugMessage $DebugFile
-                Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 5 -Category 0 -Message "Could not update configuration.xml: Failed to create the configuration.xml variable"
-                exit 5
-            }
-            # Getting value from file...
-            $XmlWriter.WriteStartDocument()
-            $XmlWriter.WriteComment("Creation timestamp: $(Get-Date -Format 'yyyy/MM/dd at hh:mm:ss')")
-            $XmlWriter.WriteStartElement('translation')
-            
-            # Settings/Translation/WellKnownID --> %OU-ADM-PAW-STATIONS-ACCESS%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-PAW-STATIONS-ACCESS%' }).TranslateTo
-            $XmlWriter.WriteComment('OU PAW ACCESS')
-            $XmlWriter.WriteElementString('OU-PAW-ACCESS',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-PAW-ACCESS ($data)"
-            
-            # Settings/Translation/WellKnownID --> %OU-ADM-PAW-STATIONS-T0%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-PAW-STATIONS-T0%' }).TranslateTo
-            $XmlWriter.WriteComment('OU PAW T0')
-            $XmlWriter.WriteElementString('OU-PAW-T0',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-PAW-T0 ($data)"
-            
-            # Settings/Translation/WellKnownID --> %OU-ADM-PAW-STATIONS-T12L%
-            $data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-PAW-STATIONS-T12L%' }).TranslateTo
-            $XmlWriter.WriteComment('OU PAW T12L')
-            $XmlWriter.WriteElementString('OU-PAW-T12L',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-PAW-T12L ($data)"
-
-            # Settings/Translation/WellKnownID --> %OU-PRD-T0%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-PRD-T0%' }).TranslateTo
-            $XmlWriter.WriteComment('OU TIER 0')
-            $XmlWriter.WriteElementString('OU-PRD-T0',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-PRD-T0 ($data)"
-
-            # Settings/Translation/WellKnownID --> %OU-ADM-LOCALADMINS%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-LOCALADMINS%' }).TranslateTo
-            $XmlWriter.WriteComment('OU Local Admins Group')
-            $XmlWriter.WriteElementString('OU-LOCALADMINS',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-LOCALADMINS ($data)"
-
-            # Settings/Translation/WellKnownID --> %OU-ADM%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM%' }).TranslateTo
-            $XmlWriter.WriteComment('OU ADMINISTRATION')
-            $XmlWriter.WriteElementString('OU-ADM',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-ADM ($data)"
-
-            # Settings/Translation/WellKnownID --> %DN%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%DN%' }).TranslateTo
-            $XmlWriter.WriteComment('DN OF THE DOMAIN')
-            $XmlWriter.WriteElementString('DN',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: DN ($data)"
-
-            # Settings/Translation/WellKnownID --> %OU-ADM-Groups-T0%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-Groups-T0%' }).TranslateTo
-            $XmlWriter.WriteComment('OU TIER 0 GROUP')
-            $XmlWriter.WriteElementString('OU-ADM-GRP-T0',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-ADM-GRP-T0 ($data)"
-
-            # Settings/Translation/WellKnownID --> %OU-ADM-Groups-T1%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-Groups-T1%' }).TranslateTo
-            $XmlWriter.WriteComment('OU TIER 1 GROUP')
-            $XmlWriter.WriteElementString('OU-ADM-GRP-T1',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-ADM-GRP-T1 ($data)"
-
-            # Settings/Translation/WellKnownID --> %OU-ADM-Groups-T2%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-Groups-T2%' }).TranslateTo
-            $XmlWriter.WriteComment('OU TIER 2 GROUP')
-            $XmlWriter.WriteElementString('OU-ADM-GRP-T2',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-ADM-GRP-T2 ($data)"
-
-            # Settings/Translation/WellKnownID --> %OU-ADM-Groups-L1%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-Groups-L1%' }).TranslateTo
-            $XmlWriter.WriteComment('OU TIER 1 LEGACY GROUP')
-            $XmlWriter.WriteElementString('OU-ADM-GRP-L1',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-ADM-GRP-L1 ($data)"
-
-            # Settings/Translation/WellKnownID --> %OU-ADM-Groups-L2%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%OU-ADM-Groups-L2%' }).TranslateTo
-            $XmlWriter.WriteComment('OU TIER 2 LEGACY GROUP')
-            $XmlWriter.WriteElementString('OU-ADM-GRP-L2',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: OU-ADM-GRP-L2 ($data)"
-
-            # Settings/Translation/WellKnownID --> %Prefix-domLoc%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%PREFIX-DOMLOC%' }).TranslateTo
-            $XmlWriter.WriteComment('PREFIX DOMAINLOCAL GROUP')
-            $XmlWriter.WriteElementString('PREFIX-DOMLOC',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: PREFIX-DOMLOC ($data)"
-
-            # Settings/Translation/WellKnownID --> %Groups_Computers%
-            $Data = ($SourceXml.Settings.Translation.WellKnownID | Where-Object { $_.TranslateFrom -eq '%Groups_Computers%' }).TranslateTo
-            $XmlWriter.WriteComment('GROUP COMPUTER NAME')
-            $XmlWriter.WriteElementString('GRP-NAME',$Data)
-            $debugMessage += Write-DebugLog inf "Added to xml: GRP-NAME ($data)"
-
-            # Closing XML
-            $XmlWriter.WriteEndElement()
-            $XmlWriter.WriteEndDocument()
-            $debugMessage += Write-DebugLog inf "File configuration.xml ready to be created"
-
-            # Saving to file
-            $XmlWriter.Flush()
-            $XmlWriter.close()
-            $debugMessage += Write-DebugLog inf "File configuration.xml generated."
-            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "configuration.xml: successfully updated."
-
-            # If a backup file exists, then we need to overwrite it with the new file.
-            if (Test-Path $CurrentDir\configuration.xml.backup)
-            {
-                $debugMessage += Write-DebugLog warn "File configuration.xml.backup is present!"
-                Try {
-                    Copy-Item -Path $CurrentDir\configuration.xml -Destination $CurrentDir\configuration.xml.backup -Force | Out-Null
-                    $debugMessage += Write-DebugLog inf "File configuration.xml copied to configuration.xml.backup (overwrite)."
-                } Catch {
-                    $debugMessage += Write-DebugLog error "failed to copy the file configuration.xml to configuration.xml.backup (overwrite)!"
-                }
-            } Else {
-                $debugMessage += Write-DebugLog inf "File configuration.xml.backup is not present: no action taken."
-            }
-
-
-        } Else {
-            $debugMessage += Write-DebugLog error "$xmlSourcePath is not a correct XML!"
-            Write-Error "$xmlSourcePath is not a correct XML!"
-            Export-DebugLog $debugMessage $DebugFile
-            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 4 -Category 0 -Message "Could not update configuration.xml: $xmlSourcePath is not a correct XML!"
-            exit 4
-        }
-    } Else {
-        $debugMessage += Write-DebugLog error "$xmlSourcePath not found!"
-        Write-Error "$xmlSourcePath not found!"
-        Export-DebugLog $debugMessage $DebugFile
-        Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 2 -Category 0 -Message "Could not update configuration.xml: $xmlSourcePath not found!"
-        exit 2
-    }
+# Get Computer AD information
+Try {
+    $myComputer = Get-ADComputer $ComputerName -Properties OperatingSystem -ErrorAction Stop
+    $debugMessage += Write-DebugLog inf "[WORKING ON $($myComputer.Name)]"
+} 
+Catch {
+    $debugMessage += Write-DebugLog error "Could not retrieve computer object $ComputerName"
+    Export-DebugLog $debugMessage $DebugFile
+    Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 21 -Category 0 -Message "Could not retrieve computer object $ComputerName. No group created."
+    Export-DebugLog $debugMessage $DebugFile
+    exit 21
 }
 
-# SECOND CASE: RUN THE SCRIPT (STANDARD USE CASE)
-if ($ComputerName -and -not($UpdateConfig) -and -not($CustomRules))
-{
-    $debugMessage += Write-DebugLog inf "[ComputerName] called"
-
-    # Get Computer AD information
-    Try {
-        $myComputer = Get-ADComputer $ComputerName -Server $myPDC -Properties * -ErrorAction Stop
-        $debugMessage += Write-DebugLog inf "[WORKING ON $myComputer]"
-    } Catch {
-        $debugMessage += Write-DebugLog error "Could not retrieve computer object $ComputerName"
-        Export-DebugLog $debugMessage $DebugFile
-        Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 11 -Category 0 -Message "Could not retrieve computer object $ComputerName. No group created."
-        exit 11
-    }
-
-    # Loading XML configuration
-    $myConfig = [xml](Get-Content .\configuration.xml -Encoding UTF8)
-
-    # Checking to which tier the computer belong...
-    $isMsftOS  = $false
-    $isServer  = $false
-    $isLegacy  = $false
-    $isPawOrT0 = $false
-    $DoMoreChk = $true
-    
-    if ($myComputer.OperatingSystem -eq "" -or $myComputer.OperatingSystem -eq $null)
-    {
-        # This is an unknown OS or a computer not yet joined to the domain
-        # In such case, the group is protected as if it was a Paw or a Tier 0 one.
-        $isPawOrT0 = $true
-        $DoMoreChk = $false
-
-        $debugMessage += Write-DebugLog inf "Found an unkown OS, or a not yet joined windows system."
-    }
-
-    if ($DoMoreChk)
-    {
-        # Let's see if this a PAW or Tier 0 object...
-        $PawAccs = $myComputer.DistinguishedName -match $myConfig.translation.'OU-PAW-ACCESS'
-        $pawT0   = $myComputer.DistinguishedName -match $myConfig.translation.'OU-PAW-T0'
-        $pawT12L = $myComputer.DistinguishedName -match $myConfig.translation.'OU-PAW-T12L'
-        $Tier0   = $myComputer.DistinguishedName -match $myConfig.translation.'OU-PRD-T0'
-
-        if ($PawAccs -or $pawT0 -or $pawT12L -or $Tier0)
-        {
-            # Found a Tier 0 Protected group, no more check to do.
-            $isPawOrT0 = $true
-            $DoMoreChk = $false
-
-            $debugMessage += Write-DebugLog inf "Found an object belonging to a tier 0 protected area."
-        }
-    }
-
-    if ($DoMoreChk -and $myComputer.OperatingSystem -like "Windows*")
-    {
-        # We are dealing a windows system.
-        $isMsftOS = $true
-
-        $debugMessage += Write-DebugLog inf "Found a windows system."
-
-        # Because this is a windows system, let see if it is a server or a client OS
-        if ($myComputer.OperatingSystem -like "*serv*")
-        {
-            # This is a server
-            $isServer = $true
-            $debugMessage += Write-DebugLog inf "The system is a server."
-        }  Else {
-            $debugMessage += Write-DebugLog inf "The system is a client."
-        }
-
-        # Let's see if this is a legacy OS or not.
-        Switch ($isServer)
-        {
-            $true {
-                # The Major OS version is 6 and the minor is greater than 2.
-                $OSversion = ($myComputer.OperatingSystemVersion -split " ")[0] -split "\."
-                $MajorVer  = [int]$OSversion[0]
-                $MinorVer  = [int]$OSversion[1]
-
-                if ($MajorVer -lt 6 -or ($MajorVer -eq 6 -and $MinorVer -le 2))
-                {
-                    $isLegacy = $true
-                    $debugMessage += Write-DebugLog inf "The system is a legacy one."
-                } Else {
-                    $debugMessage += Write-DebugLog inf "The system is supported."
-                }
-            }
-            $false {
-                # The major 0S version is 10.
-                $OSversion = ($myComputer.OperatingSystemVersion -split " ")[0] -split "\."
-                $MajorVer  = [int]$OSversion[0]
-                $MinorVer  = [int]$OSversion[1]
-
-                if ($MajorVer -lt 10)
-                {
-                    $isLegacy = $true
-                    $debugMessage += Write-DebugLog inf "The system is a legacy one."
-                } Else {
-                    $debugMessage += Write-DebugLog inf "The system is supported."
-                }
-            }
-        }
-    }
-
-    # Define group target
-    $myBaseDN = "OU=$($myConfig.translation.'OU-LOCALADMINS'),OU=?,OU=$($myConfig.translation.'OU-ADM'),$($myConfig.translation.DN)"
-
-    # replacing ? per appropriate value for the tier
-    if ($isPawOrT0)
-    {
-        $myBaseDN = ($myBaseDN).Replace('?',$myConfig.translation.'OU-ADM-GRP-T0')
-    } elseif ($isServer) {
-        switch ($isLegacy)
-        {
-            $true  { $myBaseDN = ($myBaseDN).Replace('?',$myConfig.translation.'OU-ADM-GRP-L1') }
-            $false { $myBaseDN = ($myBaseDN).Replace('?',$myConfig.translation.'OU-ADM-GRP-T1') }
-        }
-    } Else {
-        switch ($isLegacy)
-        {
-            $true  { $myBaseDN = ($myBaseDN).Replace('?',$myConfig.translation.'OU-ADM-GRP-L2') }
-            $false { $myBaseDN = ($myBaseDN).Replace('?',$myConfig.translation.'OU-ADM-GRP-T2') }
-        }
-    }
-
-    $debugMessage += Write-DebugLog inf "The group will be moved/created in $myBaseDN"
-
-    # Time to go with the group itself
-    $myGrpName = "$($myConfig.translation.'PREFIX-DOMLOC')$(($myConfig.translation.'GRP-NAME').Replace('%ComputerName%',$myComputer.name))"
-    $debugMessage += Write-DebugLog inf "[TARGET GROUP: $myGrpName]"
-
-    # Check if the group exists or not
-    $isCreated = Get-ADObject -Filter { Name -eq $myGrpName -and ObjectClass -eq 'group' }
-
-    if ($isCreated)
-    {
-        $debugMessage += Write-DebugLog warn "The group already exists ($($isCreated.DistinguishedName))"
-
-        # Checking if the group has to be moved or not
-        $CurrentPath = ($isCreated.DistinguishedName).replace("CN=$($isCreated.Name),",'')
-        if ($myBaseDN -eq $CurrentPath)
-        {
-            # The object belong to the appropriate Tier, nothing to do.
-            $debugMessage += Write-DebugLog inf "The group is already in the right OU. Nothing to do."
-            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "SUCCESS: the group '$myGrpName' is already in the correct OU ($myBaseDN)."
-        
-        } Else {
-            # The group has to be moved away and cleaned.
-            $debugMessage += Write-DebugLog warn "The group is not localized in the appropriate OU. The group will be moved to a new location and its membership cleared."
-
-            # Clearing membership
-            Try {
-                $myGroup = Get-ADGroup $myGrpName -Server $myPDC
-                $void = $myGroup | Set-ADGroup -Clear member
-                $debugMessage += Write-DebugLog inf "The group $myGrpName has been cleared from its members."
-                Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "SUCCESS: the group '$myGrpName' has been flushed from its members."
-            } Catch {
-                $debugMessage += Write-DebugLog error "The group $myGrpName has NOT been cleared from its members."
-                Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 13 -Category 0 -Message "ERROR: the group '$myGrpName' was not flushed from its members."
-            }
-
-            # Moving group to the nnew OU
-            Try {
-                $void = Move-ADObject -Identity $myGroup.ObjectGUID -TargetPath $myBaseDN
-                $debugMessage += Write-DebugLog inf "The group $myGrpName has been relocated to $myBaseDN."
-                Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "SUCCESS: the group '$myGrpName' has been relocated to $myBaseDN."
-            } Catch {
-                $debugMessage += Write-DebugLog error "The group $myGrpName has NOT been relocated to $myBaseDN."
-                Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 14 -Category 0 -Message "ERROR: the group '$myGrpName' has NOT been relocated to $myBaseDN."
-            }
-        }
-    } Else {
-        # The group does not exist, then we simply create it.
-        try {
-            $void = New-ADGroup -Name $myGrpName -SamAccountName $myGrpName -DisplayName $myGrpName -Description "This group manage members of builtin administrators group for $($myComputer.Name)" -GroupCategory Security -GroupScope DomainLocal -Server $myPDC -Path $myBaseDN
-            $debugMessage += Write-DebugLog inf "SUCCESS: the group '$myGrpName' has been created in $myBaseDN"
-            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "SUCCESS: the group '$myGrpName' has been created in $myBaseDN."
-        } Catch {
-            $debugMessage += Write-DebugLog error "FAILED: the group '$myGrpName' could not be created in $myBaseDN"
-            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 12 -Category 0 -Message "Could not create group object '$myGrpName' in $myBaseDN."   
-        }
-    }
+# Loading XML configuration
+Try {
+	$xmlFileName = "configuration-custom.xml"
+    $myConfig = [xml](Get-Content .\$xmlFileName -Encoding UTF8 -ErrorAction Stop)
+    $debugMessage += Write-DebugLog inf "File 'configuration-custom.xml' loaded"
+	
+	$xmlFileName = "TasksSequence_HardenAD.xml"
+    $TskSqXml = [xml](Get-Content $env:ProgramData\HardenAD\Configuration\$xmlFileName -Encoding UTF8 -ErrorAction Stop)
+    $debugMessage += Write-DebugLog inf "File 'tasksSequence_HardenAD.xml' loaded"
+} 
+Catch {
+    $debugMessage += Write-DebugLog error "File '$xmlFileName' is not accessible!"
+    Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 22 -Category 0 -Message "One or More configuration File is not readable`n`n$($_.ToString())"
+    Export-DebugLog $debugMessage $DebugFile
+    Exit 22
 }
 
-# THIRD CASE: RUN THE SCRIPT (CUSTOM RULES USE CASE)
-if ($ComputerName -and -not($UpdateConfig) -and $CustomRules)
+# Build Sources Pattern...
+$Sources = Select-Xml $myConfig -XPath "//sources/source" | Select-Object -ExpandProperty "Node"
+$debugMessage += Write-DebugLog inf "Found $($Sources.count) Source as source identity."
+
+# Checking to which tier the computer belong...
+$debugMessage += Write-DebugLog inf "Analyzing: $($myComputer.DistinguishedName)"
+
+# Check for a match...
+$srcFound = $false
+foreach ($Source in $Sources)
 {
-    $debugMessage += Write-DebugLog inf "[CustomRules] called"
+    $SourcednPattern = $Source.dnPattern
+    # Translating Raw data
+    foreach ($Translation in $TskSqXml.Settings.Translation.wellKnownID) { $SourcednPattern = $SourcednPattern.replace($Translation.TranslateFrom,$Translation.TranslateTo) }
+    # translating TranslateTo to match ref. to TranslateFrom.
+    foreach ($Translation in $TskSqXml.Settings.Translation.wellKnownID) { $SourcednPattern = $SourcednPattern.replace($Translation.TranslateFrom,$Translation.TranslateTo) }
 
-    # Get Computer AD information
-    Try {
-        $myComputer = Get-ADComputer $ComputerName -Server $myPDC -Properties * -ErrorAction SilentlyContinue
-        $debugMessage += Write-DebugLog inf "[WORKING ON $myComputer]"
-    } Catch {
-        $debugMessage += Write-DebugLog error "Could not retrieve computer object $ComputerName"
-        Export-DebugLog $debugMessage $DebugFile
-        Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 21 -Category 0 -Message "Could not retrieve computer object $ComputerName. No group created."
-        Export-DebugLog $debugMessage $DebugFile
-        exit 21
-    }
-
-    # Loading XML configuration
-    Try {
-        $myConfig = [xml](Get-Content .\configuration-custom.xml -Encoding UTF8 -ErrorAction SilentlyContinue)
-        $debugMessage += Write-DebugLog inf "File 'configuration-custom.xml' loaded"
-    } Catch {
-        $debugMessage += Write-DebugLog error "File 'configuration-custom.xml' is not accessible!"
-        Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 22 -Category 0 -Message "File 'configuration-custom.xml' is not accessible"
-        Export-DebugLog $debugMessage $DebugFile
-        Exit 22
-    }
-
-    # Build Sources Pattern...
-    $Sources = Select-Xml $myConfig -XPath "//sources/source" | Select-Object -ExpandProperty "Node"
-    $debugMessage += Write-DebugLog inf "Found $($Sources.count) Source as source identity."
-    
-    # Checking to which tier the computer belong...
-    $debugMessage += Write-DebugLog inf "Analyzing: $($myComputer.DistinguishedName)"
-
-    # Check for a match...
-    $srcFound = $false
-    foreach ($Source in $Sources)
+    # Compare dnPattern to Computer DN. If match, exit.
+    if ($myComputer.DistinguishedName -match $SourcednPattern)
     {
-        # Compare dnPattern to Computer DN. If match, exit.
-        if ($myComputer.DistinguishedName -match $Source.dnPattern)
+        $debugMessage += Write-DebugLog inf "DN PATTERN: matching with $($SourcednPattern)"
+        # Second level of check: osPattern (if any)
+        if ($myComputer.OperatingSystem -match $Source.osPattern)
         {
-            $debugMessage += Write-DebugLog inf "DN PATTERN: matching with $($Source.dnPattern)"
-            # Second level of check: osPattern (if any)
-            if ($myComputer.OperatingSystem -match $Source.osPattern)
+            $debugMessage += Write-DebugLog inf "OS PATTERN: matching with $($Source.osPattern)"
+            # Third level: is it a legacy OS?
+            if ($myComputer.OperatingSystem -match "Windows")
             {
-                $debugMessage += Write-DebugLog inf "OS PATTERN: matching with $($Source.osPattern)"
-                # Third level: is it a legacy OS?
-                if ($myComputer.OperatingSystem -match "Windows")
+                $debugMessage += Write-DebugLog inf "OS PATTERN: detected as a Windows system"
+                # Legacy is different for servers and clients. We use the common base "serv" (from servers and serveurs) to identify a server OS.
+                switch ($myComputer.OperatingSystem -match 'serv')
                 {
-                    $debugMessage += Write-DebugLog inf "OS PATTERN: detected as a Windows system"
-                    # Legacy is different for servers and clients. We use the common base "serv" (from servers and serveurs) to identify a server OS.
-                    switch ($myComputer.OperatingSystem -match 'serv')
-                    {
-                        $true {
-                            $debugMessage += Write-DebugLog inf "OS PATTERN: detected as a Windows server (OperatingSystem matching 'serv')"
-                            $osMaj = [int]$myConfig.customRuleSet.default.operatingSystems.supported.server.MajorVersion
-                            $osMin = [int]$myConfig.customRuleSet.default.operatingSystems.supported.server.MinorVersion
-                        }
-                        $false {
-                            $debugMessage += Write-DebugLog inf "OS PATTERN: detected as a Windows client (OperatingSystem not matching 'serv'.)"
-                            $osMaj = [int]$myConfig.customRuleSet.default.operatingSystems.supported.client.MajorVersion
-                            $osMin = [int]$myConfig.customRuleSet.default.operatingSystems.supported.client.MinorVersion
-                        }
+                    $true {
+                        $debugMessage += Write-DebugLog inf "OS PATTERN: detected as a Windows server (OperatingSystem matching 'serv')"
+                        $osMaj = [int]$myConfig.customRuleSet.default.operatingSystems.supported.server.MajorVersion
+                        $osMin = [int]$myConfig.customRuleSet.default.operatingSystems.supported.server.MinorVersion
                     }
-                    # Comparing existing value...
-                    $CptrOSver = ($myComputer.OperatingSystemVersion -split ' ')[0] -split '\.'
-                    if ([int]$CptrOSver[0] -lt $osMaj -or ([int]$CptrOSver[0] -eq $osMaj -and [int]$CptrOSver[1] -lt $osMin))
+                    $false {
+                        $debugMessage += Write-DebugLog inf "OS PATTERN: detected as a Windows client (OperatingSystem not matching 'serv'.)"
+                        $osMaj = [int]$myConfig.customRuleSet.default.operatingSystems.supported.client.MajorVersion
+                        $osMin = [int]$myConfig.customRuleSet.default.operatingSystems.supported.client.MinorVersion
+                    }
+                }
+                # Comparing existing value...
+                $CptrOSver = ($myComputer.OperatingSystemVersion -split ' ')[0] -split '\.'
+                if ([int]$CptrOSver[0] -lt $osMaj -or ([int]$CptrOSver[0] -eq $osMaj -and [int]$CptrOSver[1] -lt $osMin))
+                {
+                    # is Legacy
+                    $debugMessage += Write-DebugLog warn "OS VERSION: legacy OS detected (MajorVersion=$($CptrOSver[0]) vs $osMaj, MinorVersion=$($CptrOSver[1]) vs $osMin)"
+                    $debugMessage += Write-DebugLog warn "OS VERSION: [debug: <target='$($Source.target)' targetLegacy='$($Source.Legacytarget)'>]"
+                    if ($Source.LegacyTarget -ne "" -and $Source.LegacyTarget -ne $null)
                     {
-                        # is Legacy
-                        $debugMessage += Write-DebugLog warn "OS VERSION: legacy OS detected (MajorVersion=$($CptrOSver[0]) vs $osMaj, MinorVersion=$($CptrOSver[1]) vs $osMin)"
-                        $debugMessage += Write-DebugLog warn "OS VERSION: [debug: <target='$($Source.target)' targetLegacy='$($Source.Legacytarget)'>]"
-                        if ($Source.LegacyTarget -ne "" -and $Source.LegacyTarget -ne $null)
-                        {
-                            $myTarget = $Source.LegacyTarget
-                        } Else {
-                            $myTarget = $Source.Target
-                        }
+                        $myTarget = $Source.LegacyTarget
                     } Else {
-                        $debugMessage += Write-DebugLog inf "OS VERSION: modern OS detected (MajorVersion=$($CptrOSver[0]) vs $osMaj, MinorVersion=$($CptrOSver[1]) vs $osMin)"
-                        $myTarget = $Source.target
+                        $myTarget = $Source.Target
                     }
                 } Else {
-                    # Not a windows, we don't manage legacy use case here.
-                    $debugMessage += Write-DebugLog inf "OS VERSION: unknown OS or unjoined Windows computer detect"
+                    $debugMessage += Write-DebugLog inf "OS VERSION: modern OS detected (MajorVersion=$($CptrOSver[0]) vs $osMaj, MinorVersion=$($CptrOSver[1]) vs $osMin)"
                     $myTarget = $Source.target
                 }
-                $srcFound = $true
-                $debugMessage += Write-DebugLog inf "TARGET....: <$myTarget>"
-                break
+            } Else {
+                # Not a windows, we don't manage legacy use case here.
+                $debugMessage += Write-DebugLog inf "OS VERSION: unknown OS or unjoined Windows computer detect"
+                $myTarget = $Source.target
             }
-        }
-    }
-    # A target is maybe found, but does it means that the <targets><myTarget> section exists? 
-    if ($srcFound)
-    {
-        Try {
-            $xmlTarget = Select-Xml $myConfig -XPath "//targets/$($myTarget)" -ErrorAction Stop | Select-Object -ExpandProperty "Node"
-            $debugMessage += Write-DebugLog inf "TARGET....: xml data catche successfully"
-        } Catch {
-            $debugMessage += Write-DebugLog error "TARGET....: ERROR! Could not grab the xml data!"
-            Export-DebugLog $debugMessage $DebugFile
-            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 99 -Category 0 -Message "TARGET....: ERROR! Could not grab the xml data!"   
-            Exit 99
-        }
-        if ($xmlTarget.count -eq 0) 
-        {
-            # Not found!
-            $debugMessage += Write-DebugLog error "TARGET....: <$myTarget> exists? FALSE! the default target will be use. Note: the target detection is case sensitive."
-            $myTarget = $null
-        } Else {
-            $debugMessage += Write-DebugLog inf "TARGET....: <$myTarget> exists? True."
-        }
-    }
-    # Loop is done. Do we have found a target, or do we have to use the default one?
-    if ($srcFound)
-    {
-        # Reading data from expected target.
-        $GroupName = ($xmlTarget.name).replace('%ComputerName%',$myComputer.Name)
-        $GroupDesc = ($xmlTarget.description).replace('%ComputerName%',$myComputer.Name)
-        $GroupPath = $xmlTarget.path
-        $GroupCate = $xmlTarget.category
-        $GroupScop = $xmlTarget.scope
-    } Else {
-        # Reading data from default target.
-        $xmlTarget = Select-Xml $myConfig -XPath "//default/target" | Select-Object -ExpandProperty "Node"
-        $GroupName = ($xmlTarget.name).replace( '%ComputerName',$myComputer.Name)
-        $GroupDesc = ($xmlTarget.description).replace( '%ComputerName',$myComputer.Name)
-        $GroupPath = $xmlTarget.path
-        $GroupCate = $xmlTarget.category
-        $GroupScop = $xmlTarget.scope
-    }
-    # Debug log and clearing xmlTarget
-    $xmlTarget = $void
-    $debugMessage += Write-DebugLog inf ">> TARGET DATA:`n>> Group Name......: $GroupName`n>> Description.....: $GroupDesc`n>> Group Category..: $GroupCate`n>> Group Scope.....: $GroupScop`n>> Path............: $GroupPath"
-
-    # Time to deal with the group object. 
-    # First: does the group already exists?
-    Try {
-        $myGroup = Get-ADGroup $GroupName -ErrorAction SilentlyContinue
-        $debugMessage += Write-DebugLog inf "Group object exists. the group will be checked."
-        $CreateGrp = $false
-    } Catch {
-        $debugMessage += Write-DebugLog warn "Group object does not exists. the group will be created."
-        $CreateGrp = $true
-    }
-    # Dealing the group creation
-    if ($CreateGrp)
-    {
-        try {
-            $void = New-ADGroup -Name $GroupName -SamAccountName $GroupName -DisplayName $GroupName -Description $GroupDesc -GroupCategory $GroupCate -GroupScope $GroupScop -Server $myPDC -Path $GroupPath
-            $debugMessage += Write-DebugLog inf "SUCCESS: the group '$GroupName' has been created in $GroupPath"
-            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "SUCCESS: the group '$GroupName' has been created in $GroupPath"
-        
-        } Catch {
-            $debugMessage += Write-DebugLog error "FAILED: the group '$GroupName' could not be created in $GroupePath"
-            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 23 -Category 0 -Message "Could not create group object '$GroupName' in $GroupPath."   
-        }
-
-    } Else {
-        # Checking if the group is localized at the right place. If not, the group will be moved and flushed of its members.
-        $debugMessage += Write-DebugLog inf "Debug: [CurrentPath=$(($myGroup.DistinguishedName).Replace("CN=$($myGroup.Name),",''))]`nDebug: [  GroupPath=$GroupPath]"
-
-        if (($myGroup.DistinguishedName).Replace("CN=$($myGroup.Name),",'') -eq $GroupPath)
-        {
-            # Nothing to do, the  group object is properly localized.
-            $debugMessage += Write-DebugLog inf "NO CHANGE: the group '$GroupName' is already presents in $GroupPath"
-            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "NO CHANGE: the group '$GroupName' is already presents in $GroupPath"
-
-        } Else {
-            # The group is not present in the right OU. The group will be purged of its members and moved.
-            $debugMessage += Write-DebugLog warn "CHANGE DETECTED: the group is not present in the right OU"
-
-            # Clearing membership
-            Try {
-                $void = $myGroup | Set-ADGroup -Clear member
-                $debugMessage += Write-DebugLog inf "The group $GroupName has been cleared from its members."
-                Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "SUCCESS: the group '$GroupName' has been flushed from its members."
-            } Catch {
-                $debugMessage += Write-DebugLog error "The group $GroupName has NOT been cleared from its members."
-                Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 24 -Category 0 -Message "ERROR: the group '$GroupName' was not flushed from its members."
-            }
-
-            # Moving group to the new OU
-            Try {
-                $void = Move-ADObject -Identity $myGroup.ObjectGUID -TargetPath $GroupPath
-                $debugMessage += Write-DebugLog inf "The group $GroupName has been relocated to $GroupPath."
-                Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "SUCCESS: the group '$GroupName' has been relocated to $GroupPath."
-            } Catch {
-                $debugMessage += Write-DebugLog error "The group $GroupName has NOT been relocated to $GroupPath."
-                Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 25 -Category 0 -Message "ERROR: the group '$GroupName' has NOT been relocated to $GroupPath."
-            }
+            $srcFound = $true
+            $debugMessage += Write-DebugLog inf "TARGET....: <$myTarget>"
+            break
         }
     }
 }
+# A target is maybe found, but does it means that the <targets><myTarget> section exists? 
+if ($srcFound)
+{
+    Try {
+        $xmlTarget = Select-Xml $myConfig -XPath "//targets/$($myTarget)" -ErrorAction Stop | Select-Object -ExpandProperty "Node"
+        $debugMessage += Write-DebugLog inf "TARGET....: xml data catche successfully"
+    } 
+    Catch {
+        $debugMessage += Write-DebugLog error "TARGET....: ERROR! Could not grab the xml data!"
+        Export-DebugLog $debugMessage $DebugFile
+        Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 99 -Category 0 -Message "TARGET....: ERROR! Could not grab the xml data!"   
+        Exit 99
+    }
+    if ($xmlTarget.count -eq 0) 
+    {
+        # Not found!
+        $debugMessage += Write-DebugLog error "TARGET....: <$myTarget> exists? FALSE! the default target will be use. Note: the target detection is case sensitive."
+        $myTarget = $null
+    } Else {
+        $debugMessage += Write-DebugLog inf "TARGET....: <$myTarget> exists? True."
+    }
+}
+# Loop is done. Do we have found a target, or do we have to use the default one?
+if ($srcFound)
+{
+    # Reading data from expected target.
+    $GroupName = $xmlTarget.name
+    $GroupDesc = $xmlTarget.description
+    $GroupPath = $xmlTarget.path
+    $GroupCate = $xmlTarget.category
+    $GroupScop = $xmlTarget.scope
+} Else {
+    # Reading data from default target.
+    $xmlTarget = Select-Xml $myConfig -XPath "//default/target" | Select-Object -ExpandProperty "Node"
+    $GroupName = $xmlTarget.name
+    $GroupDesc = $xmlTarget.description
+    $GroupPath = $xmlTarget.path
+    $GroupCate = $xmlTarget.category
+    $GroupScop = $xmlTarget.scope
+}
+# Translating... 2 times (RAWX the TranslateTo with ref. to TranslateFrom)
+foreach  ($translation in $TskSqXml.settings.Translation.wellKnownID)
+{
+    $GroupName = $GroupName -replace $translation.TranslateFrom, $translation.TranslateTo
+    $GroupDesc = $GroupDesc -replace $translation.TranslateFrom, $translation.TranslateTo
+    $GroupPath = $GroupPath -replace $Translation.TranslateFrom, $translation.TranslateTo
+}
+foreach  ($translation in $TskSqXml.settings.Translation.wellKnownID)
+{
+    $GroupName = $GroupName -replace $translation.TranslateFrom, $translation.TranslateTo
+    $GroupDesc = $GroupDesc -replace $translation.TranslateFrom, $translation.TranslateTo
+    $GroupPath = $GroupPath -replace $translation.TranslateFrom, $translation.TranslateTo
+}
+# Updating with computer name
+$GroupName = $GroupName.replace('%ComputerName%',$myComputer.Name)
+$GroupDesc = $GroupDesc.replace('%ComputerName%',$myComputer.Name)
+# Debug log and clearing xmlTarget
+$xmlTarget = $void
+$debugMessage += Write-DebugLog inf ">> TARGET DATA:`n>> Group Name......: $GroupName`n>> Description.....: $GroupDesc`n>> Group Category..: $GroupCate`n>> Group Scope.....: $GroupScop`n>> Path............: $GroupPath"
 
+# Time to deal with the group object. 
+# First: does the group already exists?
+Try {
+    $myGroup = Get-ADGroup $GroupName -ErrorAction SilentlyContinue
+    $debugMessage += Write-DebugLog inf "Group object exists. the group will be checked."
+    $CreateGrp = $false
+} 
+Catch {
+    $debugMessage += Write-DebugLog warn "Group object does not exists. the group will be created."
+    $CreateGrp = $true
+}
+# Dealing the group creation
+if ($CreateGrp)
+{
+    try {
+        $void = New-ADGroup -Name $GroupName -SamAccountName $GroupName -DisplayName $GroupName -Description $GroupDesc -GroupCategory $GroupCate -GroupScope $GroupScop -Path $GroupPath
+        $debugMessage += Write-DebugLog inf "SUCCESS: the group '$GroupName' has been created in $GroupPath"
+        Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "SUCCESS: the group '$GroupName' has been created in $GroupPath"
+    
+    } 
+    Catch {
+        $debugMessage += Write-DebugLog error "FAILED: the group '$GroupName' could not be created in $GroupePath"
+        Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 23 -Category 0 -Message "Could not create group object '$GroupName' in $GroupPath."   
+    }
+
+} Else {
+    # Checking if the group is localized at the right place. If not, the group will be moved and flushed of its members.
+    $debugMessage += Write-DebugLog inf "Debug: [CurrentPath=$(($myGroup.DistinguishedName).Replace("CN=$($myGroup.Name),",''))]`nDebug: [  GroupPath=$GroupPath]"
+
+    if (($myGroup.DistinguishedName).Replace("CN=$($myGroup.Name),",'') -eq $GroupPath)
+    {
+        # Nothing to do, the  group object is properly localized.
+        $debugMessage += Write-DebugLog inf "NO CHANGE: the group '$GroupName' is already presents in $GroupPath"
+        Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "NO CHANGE: the group '$GroupName' is already presents in $GroupPath"
+
+    } Else {
+        # The group is not present in the right OU. The group will be purged of its members and moved.
+        $debugMessage += Write-DebugLog warn "CHANGE DETECTED: the group is not present in the right OU"
+
+        # Clearing membership
+        Try {
+            $void = $myGroup | Set-ADGroup -Clear member
+            $debugMessage += Write-DebugLog inf "The group $GroupName has been cleared from its members."
+            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "SUCCESS: the group '$GroupName' has been flushed from its members."
+        } 
+        Catch {
+            $debugMessage += Write-DebugLog error "The group $GroupName has NOT been cleared from its members."
+            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 24 -Category 0 -Message "ERROR: the group '$GroupName' was not flushed from its members."
+        }
+
+        # Moving group to the new OU
+        Try {
+            $void = Move-ADObject -Identity $myGroup.ObjectGUID -TargetPath $GroupPath
+            $debugMessage += Write-DebugLog inf "The group $GroupName has been relocated to $GroupPath."
+            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType SuccessAudit -EventId 0 -Category 0 -Message "SUCCESS: the group '$GroupName' has been relocated to $GroupPath."
+        } 
+        Catch {
+            $debugMessage += Write-DebugLog error "The group $GroupName has NOT been relocated to $GroupPath."
+            Write-EventLog -LogName $EventLogName -Source $EventLogSource -EntryType FailureAudit -EventId 25 -Category 0 -Message "ERROR: the group '$GroupName' has NOT been relocated to $GroupPath."
+        }
+    }
+}
 ## Exit
 Export-DebugLog $debugMessage $DebugFile
 Exit 0

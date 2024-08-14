@@ -107,11 +107,11 @@ Try {
 }
 
 # Loading XML configuration
-$myConfig = [xml](Get-Content .\configuration.xml -Encoding utf8)
+$myConfig = [xml](Get-Content .\configuration-custom.xml -Encoding utf8)
 $TasksXml = [xml](Get-Content "$($env:ProgramData)\HardenAD\Configuration\TasksSequence_HardenAD.xml" -Encoding utf8)
 
 # Ensure the file is readable
-if ($myConfig.translation.'OU-ADM')
+if ($myConfig.customRuleSet)
 {
     $debugMessage += Write-DebugLog inf "SUCCESS: the file configuration.xml has been loaded"
 } Else {
@@ -122,11 +122,12 @@ if ($myConfig.translation.'OU-ADM')
 }
 
 # Computing group name filter
-$GroupNameFilter = "$($myConfig.translation.'PREFIX-DOMLOC')$($myConfig.translation.'GRP-NAME')"
-foreach ($translation in $TasksXml.Settings.Translation.wellKnownID) 
-{
-    $GroupNameFilter = $GroupNameFilter -replace $translation.TranslateFrom, $translation.TranslateTo
-}
+$GroupNameFilter = $($myConfig.customRuleSet.default.Target.Name)
+# translate raw data
+foreach ($translation in $TasksXml.Settings.Translation.wellKnownID) { $GroupNameFilter = $GroupNameFilter -replace $translation.TranslateFrom, $translation.TranslateTo }
+# translate TranslateTo when refering to TranslateFrom
+foreach ($translation in $TasksXml.Settings.Translation.wellKnownID) { $GroupNameFilter = $GroupNameFilter -replace $translation.TranslateFrom, $translation.TranslateTo }
+
 $GroupNameFilter = $GroupNameFilter -REPLACE '%ComputerName%',$null
 $debugMessage += Write-DebugLog INF "GROUP FILTER: $GroupNameFilter"
 
