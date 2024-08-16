@@ -31,13 +31,13 @@ $NotThoseOnes = Import-Csv .\Exceptions.csv -Delimiter ';' -Encoding utf8
 $Code = 0
 
 # Event Log update
-try { New-EventLog -LogName Application -Source "HAD_TS_Reset-Computer-SDDL" -ErrorAction SilentlyContinue } Catch { }
+try { New-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -ErrorAction SilentlyContinue } Catch { }
 
 # Log schedule start
 $StartMsg = "The reconcile process has started (computer owner and ACL).`n`nThe following objects will be discarded if met:`n"
 foreach ($avoidThis in $NotThoseOnes) { $StartMsg += "> Exception: $($avoidThis.SamAccountName)`n" }
 
-Write-EventLog -LogName Application -Source "HAD_TS_Reset-Computer-SDDL" -EntryType SuccessAudit -EventId 100 -Category 0 -Message $StartMsg
+Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType SuccessAudit -EventId 100 -Category 0 -Message $StartMsg
 
 # Computer Domain NetBIOS name
 $DomNbios = [String](Get-ADDomain).NetBIOSName
@@ -67,11 +67,11 @@ $Computers | ForEach-Object {
         $AdsiTarget.PSBase.CommitChanges()
 
         # Write to event log
-        Write-EventLog -LogName Application -Source "HAD_TS_Reset-Computer-SDDL" -EntryType SuccessAudit -EventId 110 -Category 0 -Message "The computer '$SamaccountName' owner has been refreshed to $DAName"
+        Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType SuccessAudit -EventId 110 -Category 0 -Message "The computer '$SamaccountName' owner has been refreshed to $DAName"
     }
     Catch {
         # Failed.
-        Write-EventLog -LogName Application -Source "HAD_TS_Reset-Computer-SDDL" -EntryType  FailureAudit -EventId 210 -Category 0 -Message "The computer '$SamaccountName' owner Failed to be updted! Error: $($_.ToString())"
+        Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType  FailureAudit -EventId 210 -Category 0 -Message "The computer '$SamaccountName' owner Failed to be updted! Error: $($_.ToString())"
         $Code += 1
         }
 
@@ -87,7 +87,7 @@ $Computers | ForEach-Object {
         $Code += 10
 
         # Write to event log
-        Write-EventLog -LogName Application -Source "HAD_TS_Reset-Computer-SDDL" -EntryType FailureAudit -EventId 300 -Category 0 -Message "The computer '$SamaccountName' ntSecurityDescriptor could not be retrieved! Error: $($_.ToString())"
+        Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType FailureAudit -EventId 300 -Category 0 -Message "The computer '$SamaccountName' ntSecurityDescriptor could not be retrieved! Error: $($_.ToString())"
     }
     Else {
         Try {
@@ -95,7 +95,7 @@ $Computers | ForEach-Object {
             Set-ADObject -Identity $ADObj.DistinguishedName -Replace @{ nTSecurityDescriptor = $ADObj.nTSecurityDescriptor } -Confirm:$false
             
             # Write to event log
-            Write-EventLog -LogName Application -Source "HAD_TS_Reset-Computer-SDDL" -EntryType SuccessAudit -EventId 120 -Category 0 -Message "The computer '$SamaccountName' SDDL has been recycled to its default value."
+            Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType SuccessAudit -EventId 120 -Category 0 -Message "The computer '$SamaccountName' SDDL has been recycled to its default value."
 
         } 
         Catch {
@@ -103,7 +103,7 @@ $Computers | ForEach-Object {
             $Code += 100
 
             # Write to event log
-            Write-EventLog -LogName Application -Source "HAD_TS_Reset-Computer-SDDL" -EntryType FailureAudit -EventId 200 -Category 0 -Message "The computer '$SamaccountName' SDDL could not be refreshed! Error: $($_.ToString())"
+            Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType FailureAudit -EventId 200 -Category 0 -Message "The computer '$SamaccountName' SDDL could not be refreshed! Error: $($_.ToString())"
         }
     }
     # Release variable
@@ -111,6 +111,6 @@ $Computers | ForEach-Object {
 }
 
 # Log schedule end
-Write-EventLog -LogName Application -Source "HAD_TS_Reset-Computer-SDDL" -EntryType SuccessAudit -EventId 100 -Category 0 -Message "The reconcile process has ended (computer owner and ACL)."
+Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType SuccessAudit -EventId 100 -Category 0 -Message "The reconcile process has ended (computer owner and ACL)."
 
 Exit 0
