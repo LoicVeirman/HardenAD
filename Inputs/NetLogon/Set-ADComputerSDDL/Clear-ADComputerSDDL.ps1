@@ -92,7 +92,7 @@ $Array | foreach {
             $Code += 1
 
             # Write to event log
-            Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType FailureAudit -EventId $Code -Category 0 -Message "The computer '$Computer' owner could not be modified to $DAName!"
+            Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType Wanring -EventId $Code -Category 0 -Message "The computer '$Computer' owner could not be modified to $DAName!"
           }
  
     # Reset ACL
@@ -108,7 +108,7 @@ $Array | foreach {
         $Code += 10
 
         # Write to event log
-        Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType FailureAudit -EventId $Code -Category 0 -Message "The computer '$Computer' ntSecurityDescriptor could not be retrieved!"
+        Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType Error -EventId $Code -Category 0 -Message "The computer '$Computer' ntSecurityDescriptor could not be retrieved!"
 
     }
     Else 
@@ -126,7 +126,7 @@ $Array | foreach {
                 $Code += 100
 
                 # Write to event log
-                Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType FailureAudit -EventId $Code -Category 0 -Message "The computer '$Computer' SDDL could not be refreshed!"
+                Write-EventLog -LogName Application -source "HardenAD_Clear-ADComputerSDDL" -EntryType Warning -EventId $Code -Category 0 -Message "The computer '$Computer' SDDL could not be refreshed!"
 
               }
     }
