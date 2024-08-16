@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Config>
+    <!--
+        ** Configuration file used by clear-ProtectedGroups.ps1. **
+
+        Each group define in this file will considered as protected ones, and be flushed everyday at 11pm.
+        The purpose is to ensure that temporary access given to someone will not remains ad vitam.
+
+        Only the direct members of a group are challenged: neasting is not processed - this way you can grant privileges through
+        group membership without modifying the strategy define here.
+
+        To add a group, use the section <Group> with attributes:
+        - Name...: sAMAccountName of the target group. 
+        - Enabled: Yes or No.
+
+        to allow permanent member of a group, use <Whitelisted> as a child node of <Group> with the attribute:
+        - sAMAccountName: sAMAccountName of the member (lookup-up with get-adObject)
+
+        You can refer to the <Translation> section of TasksSequence_HardenAD.xml to match a group name.
+    -->
+    <!--
+        Definition: default harden AD model.
+    -->
+    <!-- 
+        Protected Users
+    -->
+    <Group Name="Protected Users" Enabled="No" >
+        <Whitelisted sAMAccountName="%t0-managers%" />
+    </Group>
+    <!-- 
+        Domain Admins 
+    -->
+    <Group Name="%DomainAdmins%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Enterprise Admins 
+    -->
+    <Group Name="%EnterpriseAdmins%" Enabled="No" >
+        <Whitelisted sAMAccountName="%t0-managers%" />
+    </Group>
+    <!-- 
+        Schema Admins 
+    -->
+    <Group Name="%SchemaAdmins%" Enabled="Yes" />
+    <!-- 
+        Dns Admins 
+    -->
+    <Group Name="%DnsAdmins%" Enabled="No" >
+        <Whitelisted sAMAccountName="%t0-managers%" />
+    </Group>
+    <!-- 
+        Tier 0 Global
+    -->
+    <Group Name="%t0-Global%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t0-managers%" />
+        <Whitelisted sAMAccountName="%t0-operators%" />
+    </Group>
+    <!-- 
+        Tier 1 Global
+    -->
+    <Group Name="%t1-Global%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t1-managers%" />
+        <Whitelisted sAMAccountName="%t1-administrators%" />
+        <Whitelisted sAMAccountName="%t1-operators%" />
+        <Whitelisted sAMAccountName="jeanpierre.palnor" />
+    </Group>
+    <!-- 
+        Tier 1 Legacy Global
+    -->
+    <Group Name="%t1l-Global%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t1l-operators%" />
+    </Group>
+    <!-- 
+        Tier 2 Global
+    -->
+    <Group Name="%t2-Global%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t2-managers%" />
+        <Whitelisted sAMAccountName="%t2-administrators%" />
+        <Whitelisted sAMAccountName="%t2-operators%" />
+    </Group>
+    <!-- 
+        Tier 2 Legacy Global
+    -->
+    <Group Name="%t2l-Global%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t2l-operators%" />
+    </Group>
+    <!-- 
+        Tier 0 Managers
+    -->
+    <Group Name="%t0-Managers%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Tier 0 Operators
+    -->
+    <Group Name="%t0-Operators%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Tier 1 Managers
+    -->
+    <Group Name="%t1-Managers%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Tier 1 Administrators
+    -->
+    <Group Name="%t1-Administrators%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Tier 1 Operators
+    -->
+    <Group Name="%t1-Operators%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Tier 2 Managers
+    -->
+    <Group Name="%t2-Managers%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Tier 2 Administrators
+    -->
+    <Group Name="%t2-Administrators%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Tier 2 Operators
+    -->
+    <Group Name="%t2-Operators%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Tier 1 Legacy Operators
+    -->
+    <Group Name="%t1l-Operators%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Tier 2 Legacy Operators
+    -->
+    <Group Name="%t2l-Operators%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        PAM Logon Tier 0
+    -->
+    <Group Name="%pamT0-logon%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        PAM Logon Tier 1
+    -->
+    <Group Name="%pamT1-logon%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        PAM Logon Tier 2
+    -->
+    <Group Name="%pamT2-logon%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        PAM Logon Tier 1 Legacy
+    -->
+    <Group Name="%pamL1-logon%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        PAM Logon Tier 2 Legacy
+    -->
+    <Group Name="%pamL2-logon%" Enabled="No" >
+        <Whitelisted sAMAccountName=""/>
+    </Group>
+    <!-- 
+        Local Admin : Server Tier 0
+    -->
+    <Group Name="%t0-localAdmin-servers%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t0-managers%" />
+        <Whitelisted sAMAccountName="%t0-operators%" />
+    </Group>
+    <!-- 
+        Local Admin : Workstation Tier 0
+    -->
+    <Group Name="%t0-localAdmin-Workstations%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t0-managers%" />
+        <Whitelisted sAMAccountName="%t0-operators%" />
+    </Group>
+    <!-- 
+        Local Admin : Server Tier 1
+    -->
+    <Group Name="%t1-localAdmin-servers%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t1-operators%" />
+    </Group>
+    <!-- 
+        Local Admin : Workstation Tier 2
+    -->
+    <Group Name="%t2-localAdmin-Workstations%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t2-operators%" />
+    </Group>
+<!-- 
+        Local Admin : Server Tier 1 Legacy
+    -->
+    <Group Name="%t1-localAdmin-servers%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t1l-operators%" />
+    </Group>
+    <!-- 
+        Local Admin : Workstation Tier 2 Legacy
+    -->
+    <Group Name="%t2-localAdmin-Workstations%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t2l-operators%" />
+    </Group>
+    <!-- 
+        Windows LAPS : Password Reset Tier 1
+    -->
+    <Group Name="%t1-laps-passwordReset%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t1-operators%" />
+    </Group>
+    <!-- 
+        Windows LAPS : Password Reset Tier 2
+    -->
+    <Group Name="%t2-laps-passwordReset%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t2-operators%" />
+    </Group>
+    <!-- 
+        Windows LAPS : Password Reader Tier 1
+    -->
+    <Group Name="%t1-laps-passwordReader%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t1-operators%" />
+    </Group>
+    <!-- 
+        Windows LAPS : Password Reader Tier 2
+    -->
+    <Group Name="%t2-laps-passwordReader%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t2-operators%" />
+    </Group>
+    <!-- 
+        Computer Domain Join Tier 0
+    -->
+    <Group Name="%t0-dlg-CptrDomJoin%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t0-operators%" />
+    </Group>
+    <!-- 
+        Computer Domain Join Tier 1
+    -->
+    <Group Name="%t1-dlg-CptrDomJoin%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t1-operators%" />
+    </Group>
+    <!-- 
+        Computer Domain Join Tier 2
+    -->
+    <Group Name="%t2-dlg-CptrDomJoin%" Enabled="Yes" >
+        <Whitelisted sAMAccountName="%t2-operators%" />
+    </Group>
+
+</Config>

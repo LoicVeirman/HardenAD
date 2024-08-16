@@ -48,7 +48,7 @@ TranslateFrom | TranslateTo | Description
 %t2-administrators%|G-S-T2-Administrators| Group name: Tier 2 administrators
 %t2-operators%|G-S-T2-Operators| Group name: Tier 2 operators
 %t2-localAdmin-workstations%|L-S-T2-LocalAdmins-Workstations|Group name: Workstation Local admins in Tier 2
-%tll-operators%|G-S-L1-Operators| Group name: Tier 1 Legacy operators
+%t1l-Operators%|G-S-L1-Operators| Group name: Tier 1 Legacy operators
 %t2l-operators%|G-S-L2-Operators| Group name: Tier 2 Legacy operators
 %t1l-localAdmin-servers%|L-S-T1L-LocalAdmins-Servers| Group name: Server local admins in Tier 1 Legacy
 %t2l-localAdmin-workstations%|L-S-T2L-LocalAdmins-Workstations| Group name: Workstation local admins in Tier 2 Legacy

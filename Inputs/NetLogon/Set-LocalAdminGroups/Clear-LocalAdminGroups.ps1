@@ -78,7 +78,7 @@ Function Export-DebugLog
 # STATIC PARTS 
 $CurrentDir     = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $EventLogName   = "Application"
-$EventLogSource = 'HardenAD_{0}' -f $MyInvocation.MyCommand
+$EventLogSource = "HardenAD_$(($MyInvocation.MyCommand) -replace '.PS1',$Null)"
 $DebugFileName  = "Debug_{0}_$(Get-Date -Format yyyyMMddhhmmss).log" -f $MyInvocation.MyCommand
 $DebugFile      = "$($env:ProgramData)\HardenAD\Logs\$($DebugFileName)"
 
