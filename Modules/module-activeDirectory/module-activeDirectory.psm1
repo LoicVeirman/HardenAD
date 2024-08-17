@@ -1529,6 +1529,7 @@ Function Set-LapsPermissions {
                     Catch {
                         $result = 1
                         $ResMess = "Failed to apply Permission on one or more OU. ($($_.ToString()))"
+                    }    
                 }
                 #.Getting Domain Netbios name
                 $NBname = (Get-ADDomain).netBiosName
