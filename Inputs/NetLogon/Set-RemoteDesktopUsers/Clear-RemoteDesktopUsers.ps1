@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    This script hunt for local admins group which are no more used as the computer objet is inexistant.
+    This script hunt for Remote Desktop Users group which are no more used as the computer objet is inexistant.
 
     .DESCRIPTION
-    On a periodic basis, the script set-lacolAdminsGroups.ps1 create new groups to handles builtin administrators delagation upon systems. This script will ensure that all of those groups are still needed.
+    On a periodic basis, the script set-RemoteDesktopUsers.ps1 create new groups to handles Remote Desktop Users delagation upon systems. This script will ensure that all of those groups are still needed.
 
     **How does it proceed?
     The script use the configuration.xml file to compute the base name of those group. 
@@ -13,7 +13,7 @@
     Just schedule it on one DC at a frequency that best feet your need (every hour is enough).
 
     .NOTES
-    Version 01.00 by Loic VEIRMAN on 2024/04.09.
+    Version 01.00 by Loic VEIRMAN on 2024/08/16.
 #>
 
 Param()
@@ -79,7 +79,7 @@ Function Export-DebugLog
 $EventLogName   = "Application"
 $EventLogSource = "HardenAD_$(($MyInvocation.MyCommand) -replace '.PS1',$Null)"
 $DebugFileName  = "Debug_{0}_$(Get-Date -Format yyyyMMddhhmmss).log" -f $MyInvocation.MyCommand
-$DebugFile      = "$($env:ProgramData)\HardenAD\Logs\Set-LocalAdminGroups\$($DebugFileName)"
+$DebugFile      = "$($env:ProgramData)\HardenAD\Logs\Set-RemoteDeskopUsers\$($DebugFileName)"
 
 # PREPARE FOR LOGGING: EVENTVWR IS USED FOR TRACKING ACTIVITIES, WHEREAS DEBUGFILE IS USED FOR SCRIPT MAINTENANCE.
 # First, we initiate the debug array. This one will be output to the file once the script is over.

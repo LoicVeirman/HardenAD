@@ -1,10 +1,10 @@
 <#
     .SYNOPSIS
-    This script is intended to manage system's local administrator group membership.
+    This script is intended to manage system's local Remote Desktop Users group membership.
 
     .DESCRIPTION
-    When a windows computer object is joined to the domain, a GPO will apply to fillup the builtin\administrator group with a dedicated domainLocal group (L-S-LocalAdmins-%ComputerName%).
-    If the group does not exists, then an attackant with a right to create a group in AD will be able to sneak into the system by granting himself the local admin rights (and even move to another system in another tier). To circumvent this risk, this script is ran through a Task Schedule that will operate each time a computer object is created, modified or deleted - the schedule runs on every DC.
+    When a windows computer object is joined to the domain, a GPO will apply to fillup the builtin\RemoteDesktopUsers group with a dedicated domainLocal group (L-S-RemoteDesktopUsers-%ComputerName%).
+    If the group does not exists, then an attackant with a right to create a group in AD will be able to sneak into the system by granting himself an access right (and even move to another system in another tier). To circumvent this risk, this script is ran through a Task Schedule that will operate each time a computer object is created, modified or deleted - the schedule runs on every DC.
 
     ** How does the script works?
     The script receive from the event triggered the computer name to deal with:
@@ -164,7 +164,7 @@ Function Export-DebugLog
 $EventLogName   = "Application"
 $EventLogSource = "HardenAD_$(($MyInvocation.MyCommand) -replace '.PS1',$Null)"
 $DebugFileName  = "Debug_{0}_$(Get-Date -Format yyyyMMddhhmmss).log" -f $MyInvocation.MyCommand
-$DebugFile      = "$($env:ProgramData)\HardenAD\Logs\Set-LocalAdminGroups\$($DebugFileName)"
+$DebugFile      = "$($env:ProgramData)\HardenAD\Logs\Set-RemoteDesktopUsers\$($DebugFileName)"
 
 # PREPARE FOR LOGGING: EVENTVWR IS USED FOR TRACKING ACTIVITIES, WHEREAS DEBUGFILE IS USED FOR SCRIPT MAINTENANCE.
 # First, we initiate the debug array. This one will be output to the file once the script is over.
