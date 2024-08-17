@@ -184,7 +184,8 @@ Function Push-DelegationModel {
             01.00 -- contact@hardenad.net 
         
         history: 
-            01.00 -- Script creation        
+            01.00 -- Script creation
+            01.01 -- Add Dynamic Translation ability from <Translation> in TasksSequence.        
     #>
     Param(
     )
@@ -264,7 +265,7 @@ Function Push-DelegationModel {
                         "" {
                             if ($HADacl.Audit) {
                                 Set-HardenACL -TargetDN $TargetOU `
-                                    -Trustee          $HADacl.Trustee `
+                                    -Trustee          (Rename-ThroughTranslation $HADacl.Trustee $xmlSkeleton.Settings.Translation.wellKnownID)  `
                                     -Right            $HADacl.Right`
                                     -RightType        $HADacl.RightType`
                                     -Inheritance      $HADacl.Inheritance`
@@ -273,7 +274,7 @@ Function Push-DelegationModel {
                             }
                             else {
                                 $result = Set-HardenACL -TargetDN $TargetOU `
-                                    -Trustee          $HADacl.Trustee `
+                                    -Trustee          (Rename-ThroughTranslation $HADacl.Trustee $xmlSkeleton.Settings.Translation.wellKnownID)  `
                                     -Right            $HADacl.Right`
                                     -RightType        $HADacl.RightType`
                                     -Inheritance      $HADacl.Inheritance`
@@ -283,7 +284,7 @@ Function Push-DelegationModel {
                         Default {
                             if ($HADacl.Audit) {
                                 $result = Set-HardenACL -TargetDN $TargetOU `
-                                    -Trustee          $HADacl.Trustee `
+                                    -Trustee          (Rename-ThroughTranslation $HADacl.Trustee $xmlSkeleton.Settings.Translation.wellKnownID)  `
                                     -Right            $HADacl.Right `
                                     -RightType        $HADacl.RightType `
                                     -Inheritance      $HADacl.Inheritance `
@@ -292,7 +293,7 @@ Function Push-DelegationModel {
                             }
                             else {
                                 $result = Set-HardenACL -TargetDN $TargetOU `
-                                    -Trustee          $HADacl.Trustee `
+                                    -Trustee          (Rename-ThroughTranslation $HADacl.Trustee $xmlSkeleton.Settings.Translation.wellKnownID)  `
                                     -Right            $HADacl.Right`
                                     -RightType        $HADacl.RightType`
                                     -Inheritance      $HADacl.Inheritance`
@@ -302,7 +303,7 @@ Function Push-DelegationModel {
                     }
                     if ($result) {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ ACL added: TargetDN= " + $TargetOU
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + $HADacl.Trustee
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + (Rename-ThroughTranslation $HADacl.Trustee $xmlSkeleton.Settings.Translation.wellKnownID) 
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                   Right= " + $HADacl.Right
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->               RightType= " + $HADacl.RightType
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->             Inheritance= " + $HADacl.Inheritance
@@ -312,7 +313,7 @@ Function Push-DelegationModel {
                     Else {
                         $ErrIdx++
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! !!! ACL ERROR: TargetDN= " + $TargetOU
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!                 Trustee= " + $HADacl.Trustee
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!                 Trustee= " + (Rename-ThroughTranslation $HADacl.Trustee $xmlSkeleton.Settings.Translation.wellKnownID) 
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!                   Right= " + $HADacl.Right
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!               RightType= " + $HADacl.RightType
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---!             Inheritance= " + $HADacl.Inheritance
@@ -341,18 +342,18 @@ Function Push-DelegationModel {
                     $TargetOU = Rename-ThroughTranslation $TargetOU $xmlSkeleton.Settings.Translation.wellKnownID
 
                     # Custom Rights
-                    $result = Set-HardenSDDL -TargetDN $TargetOU -Trustee $HADacl.Trustee -CustomAccessRule $HADacl.CustomAccessRule
+                    $result = Set-HardenSDDL -TargetDN $TargetOU -Trustee (Rename-ThroughTranslation $HADacl.Trustee $xmlSkeleton.Settings.Translation.wellKnownID)  -CustomAccessRule $HADacl.CustomAccessRule
 
                     if ($result) {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ Cus. Rule: TargetDN= " + $TargetOU
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + $HADacl.Trustee
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + (Rename-ThroughTranslation $HADacl.Trustee $xmlSkeleton.Settings.Translation.wellKnownID) 
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                   Right= " + $HADacl.CustomAccessRule
                     }
                     Else {
                         $ErrIdx++
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! Cus. Rule addition failed!"
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! Cus. Rule: TargetDN= " + $TargetOU
-                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + $HADacl.Trustee
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                 Trustee= " + (Rename-ThroughTranslation $HADacl.Trustee $xmlSkeleton.Settings.Translation.wellKnownID) 
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "--->                   Right= " + $HADacl.CustomAccessRule
                     }
                 }
@@ -860,6 +861,7 @@ Function Set-DefaultObjectLocation {
         history:    01.00 -- Script creation
                     01.01 -- Adapt to match relocation in any path
                     01.02 -- Adapt to resolve dynamic name with the translation table.
+                    01.03 -- Use fonction Rename-ThroughTranslation to rename OU path
     #>
     param(
         [Parameter(mandatory = $true, position = 0)]
@@ -907,13 +909,14 @@ Function Set-DefaultObjectLocation {
     }
 
     ## dynamic OU path rewriting
-    if ($xmlTasksSequence) {
-        foreach ($translation in $xmlTasksSequence.Settings.Translation.wellKnownID) {
-            $OUPath = $OUPath -replace $translation.translateFrom,$translation.translateTo
-        }
-    }
-    $OUPath = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
-
+    #if ($xmlTasksSequence) {
+        #foreach ($translation in $xmlTasksSequence.Settings.Translation.wellKnownID) {
+        #    $OUPath = $OUPath -replace $translation.translateFrom,$translation.translateTo
+        #}
+    #}
+    #$OUPath = $OUPath -replace 'RootDN', (Get-ADDomain).DistinguishedName
+    $OUPath = (Rename-ThroughTranslation $OUPath $xmlTasksSequence.Settings.Translation.wellKnownID) -replace 'RootDN', (Get-ADDomain).DistinguishedName
+   
     ## Checking object class
     switch ($ObjectType) {
         "User" {
@@ -1391,7 +1394,7 @@ Function Install-LAPS {
             }
             Catch {
                 $result = 1
-                $ResMess = "LAPS installed but the schema extension has failed (warning: .Net 4.0 or greater requiered)"
+                $ResMess = "LAPS installed but the schema extension has failed ($($_.ToString()))"
             }
         }
         Else {
@@ -1442,7 +1445,6 @@ Function Set-LapsPermissions {
             Import-Module ActiveDirectory
         } 
         Catch {
-            $noError = $false
             $result = 2
             $ResMess = "AD module not available."
         }
@@ -1517,19 +1519,16 @@ Function Set-LapsPermissions {
                 $Granting = $cfgXml.Settings.LocalAdminPasswordSolution.AdmPwdSelfPermission
                 foreach ($Granted in $Granting) {
                     Try {
-                        $TargetOU = $Granted.Target
-                        foreach ($transID in $translat.wellKnownID) {
-                            $TargetOU = $TargetOU -replace $TransID.translateFrom, $TransID.translateTo
-                        }
-                        Set-AdmPwdComputerSelfPermission -OrgUnit $TargetOU -ErrorAction Stop | Out-Null
+                        #$TargetOU = $Granted.Target
+                        #foreach ($transID in $translat.wellKnownID) {
+                        #    $TargetOU = $TargetOU -replace $TransID.translateFrom, $TransID.translateTo
+                        #}
+                        $TargetOU = Rename-ThroughTranslation $TargetOU $Translat.WellKnownID
+                        [void](Set-AdmPwdComputerSelfPermission -OrgUnit $TargetOU -ErrorAction Stop)
                     }
                     Catch {
                         $result = 1
-                        $ResMess = "Failed to apply Permission on one or more OU."
-                        # Write-Host $_.Exception.Message
-                        # Write-Host $TargetOU
-                        # Pause
-                    }
+                        $ResMess = "Failed to apply Permission on one or more OU. ($($_.ToString()))"
                 }
                 #.Getting Domain Netbios name
                 $NBname = (Get-ADDomain).netBiosName
@@ -1540,15 +1539,13 @@ Function Set-LapsPermissions {
                     Try {
                         $TargetOU = $Granted.Target
                         $GrantedId = $Granted.Id
-                        foreach ($transID in $translat.wellKnownID) {
-                            $TargetOU = $TargetOU -replace $TransID.translateFrom, $TransID.translateTo
-                            $GrantedId = $GrantedId -replace $TransID.translateFrom, $TransID.translateTo
-                        }
+                        $TargetOU = Rename-ThroughTranslation $TargetOU $Translat.WellKnownID
+                        $GrantedId = Rename-ThroughTranslation $GrantedId $Translat.WellKnownID
                         Set-AdmPwdReadPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
                     }
                     Catch {
                         $result = 1
-                        $ResMess = "Failed to apply Permission on one or more OU."
+                        $ResMess = "Failed to apply Permission on one or more OU ($($_.ToString()))."
                     }
                 }
 
@@ -1558,15 +1555,13 @@ Function Set-LapsPermissions {
                     Try {
                         $TargetOU = $Granted.Target
                         $GrantedId = $Granted.Id
-                        foreach ($transID in $translat.wellKnownID) {
-                            $TargetOU = $TargetOU -replace $TransID.translateFrom, $TransID.translateTo
-                            $GrantedId = $GrantedId -replace $TransID.translateFrom, $TransID.translateTo
-                        }
+                        $TargetOU = Rename-ThroughTranslation $TargetOU $Translat.WellKnownID
+                        $GrantedId = Rename-ThroughTranslation $GrantedId $Translat.WellKnownID
                         Set-AdmPwdResetPasswordPermission -Identity:$TargetOU -AllowedPrincipals $GrantedId
                     }
                     Catch {
                         $result = 1
-                        $ResMess = "Failed to apply Permission on one or more OU."
+                        $ResMess = "Failed to apply Permission on one or more OU ($($_.ToString()))."
                     }
                 }
             }
@@ -2477,6 +2472,7 @@ Function New-AdministrationGroups {
         history: 
             01.00 -- Script creation
             01.01 -- Add a child domain use case to avoid the group EA creation in childs.
+            01.02 -- Add dynamic translation to use <translation> from tasksSequence.
     #>
     param(
     )
@@ -2566,10 +2562,11 @@ Function New-AdministrationGroups {
                 $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---> LOOP START <---"
                 foreach ($account in $xmlData) 
                 {
+                    $Accountname = Rename-ThroughTranslation $account.name $xmlSkeleton.Settings.Translation.wellKnownID
                     $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")----"
-                    $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- XML GROUP: $($account.Name)"
+                    $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- XML GROUP: $accountname"
                     #-Ensure this is not EA in a child domain
-                    if ($account.Name -eq 'Enterprise Admins' -or $account.Name -like 'Administrateurs de l*') 
+                    if ($accountname -eq 'Enterprise Admins' -or $accountname -like 'Administrateurs de l*') 
                     {
                         $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ---> Detected EA group"
                         
@@ -2586,7 +2583,7 @@ Function New-AdministrationGroups {
                     }
                     #-Create a LDAP search filter
                     $Searcher = New-Object System.DirectoryServices.DirectorySearcher($DomainRootDN)
-                    $Searcher.Filter = "(&(ObjectClass=Group)(sAMAccountName=" + $account.Name + "))"
+                    $Searcher.Filter = "(&(ObjectClass=Group)(sAMAccountName=$accountname))"
 
                     #.Check if the object already exists
                     if ($Searcher.FindAll() -ne $null) 
@@ -2600,7 +2597,7 @@ Function New-AdministrationGroups {
                         ## Create Group
                         Try {
                             #-Create new group object
-                            New-ADGroup -Name $account.Name -Description $account.description -Path (Write-OUPath $account.Path) -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
+                            New-ADGroup -Name $accountname -Description (Rename-ThroughTranslation $account.description $xmlSkeleton.Settings.Translation.wellKnownID) -Path (Write-OUPath $account.Path) -GroupCategory $account.Category -GroupScope $account.Scope -ErrorAction Stop 
                             $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ++++ Group creation: success"
                             $AddUser = $true
                         } 
@@ -2622,12 +2619,12 @@ Function New-AdministrationGroups {
                         foreach ($member in $members) 
                         {
                             Try {
-                                [void](Add-ADGroupMember -Identity $account.Name -Members $member.sAMAccountName)
+                                [void](Add-ADGroupMember -Identity $accountname -Members (Rename-ThroughTranslation $member.sAMAccountName $xmlSkeleton.Settings.Translation.wellKnownID))
                                 $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ---- ++++ Added successfully $($member.samAccountName)"
                             }
                             Catch {
                                 $ErrIdx++
-                                $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ---- !!!! Fail adding member $($member.samAccountName)"
+                                $dbgMess += "$(Get-Date -UFormat "%Y-%m-%d %T ")---- ---- !!!! Fail adding member $(Rename-ThroughTranslation $member.sAMAccountName $xmlSkeleton.Settings.Translation.wellKnownID)"
                             }
                         }
                     }
@@ -2771,7 +2768,9 @@ Function Reset-GroupMembership {
                 #.Group identity
                 $GroupID = $group.target -replace '%domainSid%', $DomainSID
                 $Action = $group.AllowedTo
-
+                #.Add dynamic translation
+                $GroupID = Rename-ThroughTranslation $GroupID $xmlSkeleton.settings.translation.WellKnownID
+                #.log
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- --> GroupID is...: '$GroupID'"
                 $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---- --> AllowedTo....: $Action"
 
@@ -2782,10 +2781,8 @@ Function Reset-GroupMembership {
                     $mbrTranslated = $member -replace '%domainsid%', $DomainSID
                     
                     ## Dynamic replacement
-                    foreach ($transID in $translat.wellKnownID) {
-                        $mbrTranslated = $mbrTranslated -replace $TransID.translateFrom, $TransID.translateTo
-                    }
-                    
+                    $mbrTranslated = Rename-ThroughTranslation $mbrTranslated $xmlSkeleton.settings.trnaslation.wellKnownID
+
                     ## Double test to discover the object class and run the proper command
                     ##This is not a clean approach but... It works :)
                     $test = $false

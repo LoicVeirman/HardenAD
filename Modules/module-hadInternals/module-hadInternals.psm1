@@ -173,15 +173,10 @@ function Set-Translation {
     )
 
     # Using ANSI Escape code
-    $S_Orange   = "$([char]0x1b)[38;2;244;135;69m"
     $S_OrangeC  = "$([char]0x1b)[38;2;255;171;21m"
     $S_bluec    = "$([char]0x1b)[38;2;94;153;255m"
-    $S_CBlue    = "$([char]0x1b)[38;2;0;175;204;24m"
-    $S_Green    = "$([char]0x1b)[38;5;42;24m"
     $S_yellow   = "$([char]0x1b)[38;2;220;220;170;24m"
     $bCyan      = "$([char]0x1b)[96;24m"
-    $S_brown    = "$([char]0x1b)[38;2;206;145;120m"
-    $S_purple   = "$([char]0x1b)[38;2;218;101;167m"
     $S_Red      = "$([char]0x1b)[38;2;255;0;0m"
     $Cend       = "$([char]0x1b)[0m"
 
@@ -360,7 +355,8 @@ function Set-Translation {
     $enterpriseAdmins_SID = "$($RootDomainSID)-519"
     $domainAdmins_SID     = "$($domainSID)-512"
     $schemaAdmins_SID     = "$($RootDomainSID)-518"
-    $Guest_SID            = "$($RootDomainSID)-501"
+    $Guest_SID            = "$($DomainSID)-501"
+    $domainUsers_SID      = "$($DomainSID)-513"
 
     # Get group names from SID
     $authenticatedUsers_ = Get-GroupNameFromSID -GroupSID $authenticatedUsers_SID
@@ -372,6 +368,7 @@ function Set-Translation {
     $schemaAdmins_       = Get-GroupNameFromSID -GroupSID $schemaAdmins_SID
     $Guest_              = Get-GroupNameFromSID -GroupSID $Guest_SID
     $Guests_             = Get-GroupNameFromSID -GroupSID $Guests_SID
+    $DomainUsers_        = Get-GroupNameFromSID -GroupSID $domainUsers_SID
 
     # Exit from script if Enterprise Admins is empty
     if ($enterpriseAdmins_ -eq "" -or $isnull -eq $enterpriseAdmins_) {
@@ -385,6 +382,7 @@ function Set-Translation {
     $wellKnownID_Adm           = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Administrators%" }
     $wellKnownID_EA            = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%EnterpriseAdmins%" }
     $wellKnownID_domainAdm     = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%DomainAdmins%" }
+    $wellKnownID_domainUsr     = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%DomainUsers%" }
     $wellKnownID_SchemaAdm     = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%SchemaAdmins%" }
     $wellKnownID_RDP           = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%RemoteDesktopUsers%" }
     $wellKnownID_Users         = $TasksSeqConfig.Settings.Translation.wellKnownID | Where-Object { $_.translateFrom -eq "%Users%" }
@@ -421,6 +419,7 @@ function Set-Translation {
     $wellKnownID_Adm.translateTo       = "$administrators_"
     $wellKnownID_EA.translateTo        = "$enterpriseAdmins_"
     $wellKnownID_domainAdm.translateTo = "$domainAdmins_"
+    $wellKnownID_domainUsr.translateTo = "$domainUsers_"
     $wellKnownID_SchemaAdm.translateTo = "$schemaAdmins_"
     $wellKnownID_RDP.translateTo       = "$RDUsers_"
     $wellKnownID_Users.translateTo     = "$users_"

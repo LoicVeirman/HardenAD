@@ -503,7 +503,7 @@ foreach ($task in $Tasks) {
     Write-Host ": " -ForegroundColor $ColorsAndTexts.BaseTxtColor -NoNewline
 
     #-Display the task description and managing color output
-    $TextToDisplay = $task.TaskDescription -split '`'
+    $TextToDisplay = (Rename-ThroughTranslation $task.TaskDescription $TasksSeqConfig.Settings.Translation.wellKnownID) -split '`'
 
     foreach ($Section in $TextToDisplay) {
         # Looking at the first character: if this one is one of the AltBaseHTxt, the applying special color scheme.
