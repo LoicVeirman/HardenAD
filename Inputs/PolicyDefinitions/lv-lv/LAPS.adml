@@ -1,0 +1,188 @@
+<policyDefinitionResources revision="1.0" schemaVersion="1.0">
+  <displayName>
+  </displayName>
+  <description>
+  </description>
+  <resources>
+    <stringTable>
+      <string id="LAPS">LAPS</string>
+      <string id="LAPS_BackupDirectory">Configure password backup directory</string>
+      <string id="LAPS_BackupDirectory_Help">Use this setting to configure which directory the local admin account password is backed up to.
+
+The allowable settings are:
+
+0=Disabled (password will not be backed up)
+
+1=Backup the password to Azure Active Directory
+
+2=Backup the password to Active Directory
+
+If not specified, this setting will default to 0 (Disabled).
+
+If this setting is configured to 1, and the managed device is not joined to Azure Active Directory, the local administrator password will not be managed.
+
+If this setting is configured to 2, and the managed device is not joined to Active Directory, the local administrator password will not be managed.
+
+If this setting is disabled or not configured, the local administrator password is not managed.
+
+See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+      </string>
+      <string id="LAPS_BackupDirectoryDisabled">Disabled</string>
+      <string id="LAPS_BackupDirectoryAzure">Azure Active Directory</string>
+      <string id="LAPS_BackupDirectoryAD">Active Directory</string>
+      <string id="LAPS_PasswordSettings">Password Settings</string>
+      <string id="LAPS_PasswordSettings_Help">Configures password parameters
+
+Password complexity: which characters are used when generating a new password
+  Default: Large letters + small letters + numbers + special characters
+
+Password length
+  Minimum: 8 characters
+  Maximum: 64 characters
+  Default: 14 characters
+
+Password age in days
+  Minimum: 1 day (7 days when backup directory is configured to be Azure AD)
+  Maximum: 365 days
+  Default: 30 days
+
+See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+      </string>
+      <string id="LAPS_PwdComplexity_Item_1">Large letters</string>
+      <string id="LAPS_PwdComplexity_Item_2">Large letters + small letters</string>
+      <string id="LAPS_PwdComplexity_Item_3">Large letters + small letters + numbers</string>
+      <string id="LAPS_PwdComplexity_Item_4">Large letters + small letters + numbers + specials</string>
+      <string id="LAPS_AdminName">Name of administrator account to manage</string>
+      <string id="LAPS_AdminName_Help">This policy setting specifies a custom Administrator account name to manage the password for.
+
+If this policy setting is enabled, LAPS will manage the password for a local account with this name.
+
+If this policy setting is disabled or not configured, LAPS will manage the password for the well known Administrator account.
+
+DO NOT enable this policy setting to manage the built-in administrator account. The built-in administrator account is auto-detected by well-known SID and does not depend on the account name.
+
+See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+      </string>
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy">Do not allow password expiration time longer than required by policy</string>
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">If this setting is enabled or not configured, planned password expiration longer than the password age dictated by the "Password Settings" policy is NOT allowed. When such expiration is detected, the password is changed immediately and password expiration is set according to policy.
+
+If this setting is disabled, password expiration time may be longer than required by "Password Settings" policy.
+
+See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+      </string>
+      <string id="LAPS_ADPasswordEncryptionEnabled">Enable password encryption</string>
+      <string id="LAPS_ADPasswordEncryptionEnabled_Help">When you enable this setting, the managed password is encrypted before being sent to Active Directory.
+
+Enabling this setting has no effect unless 1) the password has been configured to be backed up to Active Directory and 2) the Active Directory domain functional level is at Windows Server 2016 or above.
+
+If this setting is enabled, and the domain functional level is at or above Windows Server 2016, the managed account password is encrypted.
+
+If this setting is enabled, and the domain functional level is less than Windows Server 2016, the managed account password is not backed up to the directory.
+
+If this setting is disabled, the managed account password is not encrypted.
+
+This setting will default to enabled if not configured.
+
+See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+      </string>
+      <string id="LAPS_ADPasswordEncryptionPrincipal">Configure authorized password decryptors</string>
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Configure this setting to control the specific user or group who is authorized to decrypt encrypted passwords.
+
+Configuring this setting has no effect unless password encryption has been enabled.
+
+If this setting is enabled, encrypted passwords will be decryptable by the specified group.
+
+If this setting is disabled or not configured, encrypted passwords will be decryptable by the Domain Admins group.
+
+This setting must be configured with either a SID in string format ("S-1-5-21-2127521184-1604012920-1887927527-35197") or the name of a group or user in "domain\(group or user)" format. The specified user or group must be resolvable by the managed device, otherwise passwords will not be backed up.
+
+See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+      </string>
+      <string id="LAPS_ADEncryptedPasswordHistorySize">Configure size of encrypted password history</string>
+      <string id="LAPS_ADEncryptedPasswordHistorySize_Help">Use this setting to configure how many previous encrypted passwords will be stored in Active Directory.
+
+Configuring this setting has no effect unless 1) the password has been configured to be backed up to Active Directory and 2) password encryption has been enabled.
+
+If this setting is enabled, the specified number of older passwords will be stored in Active Directory.
+
+If this setting is disabled or not configured, zero older passwords will be stored in Active Directory.
+
+This setting has a minimum allowed value of 0 passwords.
+
+This setting has a maximum allowed value of 12 passwords.
+
+See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+      </string>
+      <string id="LAPS_ADBackupDSRMPassword">Enable password backup for DSRM accounts</string>
+      <string id="LAPS_ADBackupDSRMPassword_Help">When you enable this setting, the DSRM administrator account password will be managed and backed up to Active Directory.
+
+Enabling this setting has no effect unless the managed device is a domain controller and password encryption is also enabled.
+
+If this setting is enabled, the password for the DSRM administrator account on the domain controller will be backed up to Active Directory.
+
+If this setting is disabled or not configured, the password for the DSRM administrator account on the domain controller will not be backed up to Active Directory.
+
+See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+      </string>
+      <string id="LAPS_PostAuthenticationActions">Post-authentication actions</string>
+      <string id="LAPS_PostAuthenticationActions_Help">This policy configures post-authentication actions which will be executed after detecting an authentication by the managed account.
+
+Grace period: specifies the amount of time (in hours) to wait after an authentication before executing the specified post-authentication actions.
+
+If this setting is enabled and greater than zero, the specified post-authentication actions will be executed upon expiry of the grace period.
+
+If this setting is disabled or not configured, the specified post-authentication actions will be executed after a default 24 hour grace period.
+
+If this setting is equal to zero, no post-authentication actions will be executed.
+
+Actions: specifies the actions to take upon expiry of the grace period.
+
+Reset password: upon expiry of the grace period, the managed account password will be reset.
+
+Reset the password and logoff the managed account: upon expiry of the grace period, the managed account password will be reset and any interactive logon sessions using the managed account will terminated.
+
+(NOTE: after any interactive logon sessions are terminated there may still be other authenticated sessions in use by the managed account. The only robust way to ensure that the previous password is longer in use is to reboot the device.)
+
+Reset the password and reboot: upon expiry of the grace period, the managed account password will be reset and the managed device will be immediately rebooted.
+
+If this setting is disabled or not configured, post-authentication actions will default to "Reset the password and logoff the managed account".
+
+Note: the DSRM account on domain controllers cannot be configured for post-authentication actions. This policy has no effect on domain controllers and will be ignored even if configured for a DC.
+
+See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+      </string>
+      <string id="PostAuthenticationActions_Item0">Disabled - take no actions</string>
+      <string id="PostAuthenticationActions_Item1">Reset the password</string>
+      <string id="PostAuthenticationActions_Item3">Reset the password and logoff the managed account</string>
+      <string id="PostAuthenticationActions_Item5">Reset the password and reboot the device</string>
+      <string id="SUPPORTED_Windows10">At least Microsoft Windows 10 or later</string>
+    </stringTable>
+    <presentationTable>
+      <presentation id="LAPS_BackupDirectory">
+        <dropdownList refId="LAPS_BackupDirectory" defaultItem="1">Backup directory</dropdownList>
+      </presentation>
+      <presentation id="LAPS_PasswordSettings">
+        <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Password Complexity</dropdownList>
+        <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Password Length</decimalTextBox>
+        <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Password Age (Days)</decimalTextBox>
+      </presentation>
+      <presentation id="LAPS_AdminName">
+        <textBox refId="TEXT_AdminAccountName">
+          <label>Administrator account name</label>
+        </textBox>
+      </presentation>
+      <presentation id="LAPS_ADPasswordEncryptionPrincipal">
+        <textBox refId="TEXT_ADPasswordEncryptionPrincipal">
+          <label>Authorized password decryptor</label>
+        </textBox>
+      </presentation>
+      <presentation id="LAPS_ADEncryptedPasswordHistorySize">
+        <decimalTextBox refId="LAPS_ADEncryptedPasswordHistorySize_INT" defaultValue="0">Encrypted password history size</decimalTextBox>
+      </presentation>
+      <presentation id="LAPS_PostAuthenticationActions">
+        <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Grace period (hours):</decimalTextBox>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Actions:</dropdownList>
+      </presentation>
+    </presentationTable>
+  </resources>
+</policyDefinitionResources>
