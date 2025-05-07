@@ -89,7 +89,7 @@ Function Set-GpoCentralStore {
     if (Test-Path $GPOCentralStore) 
     {
         # Rename the current repository
-        $UniqueId = (Get-Date -Format yyyy-MM-yy_HHmmss)
+        $UniqueId = (Get-Date -Format yyyy-MM-dd_HHmmss)
         try {
             Rename-Item "$GPOCentralStore\PolicyDefinitions" "$GPOCentralStore\PolicyDefinitions-$UniqueId" -ErrorAction SilentlyContinue
             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> PolicyDefinitions has been renamed to PolicyDefinitions-$UniqueID"
