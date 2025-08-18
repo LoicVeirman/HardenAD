@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2023 Microsoft Corporation  -->
+<policyDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <policyNamespaces>
+    <target prefix="refs" namespace="Microsoft.Policies.ReFS" />
+    <using prefix="filesys" namespace="Microsoft.Policies.FileSys" />
+    <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+  <categories>
+    <category name="ReFS" displayName="$(string.ReFS)">
+      <parentCategory ref="filesys:Filesystem" />
+    </category>
+  </categories>
+  <policies>
+    <policy name="EnableDevDrive" class="Machine"
+    displayName="$(string.EnableDevDrive)"
+    explainText="$(string.EnableDevDriveText)"
+    presentation="$(presentation.EnableDevDriveOptions)"
+    key="System\CurrentControlSet\Policies"
+    valueName="FsEnableDevDrive">
+      <parentCategory ref="filesys:Filesystem" />
+      <supportedOn ref="windows:SUPPORTED_Windows_11_0_22H2" />
+      <enabledValue>
+          <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+          <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <boolean id="DevDriveAllowAntivirusFilter" valueName="FltmgrDevDriveAllowAntivirusFilter">
+          <trueValue>
+            <decimal value="1" />
+          </trueValue>
+          <falseValue>
+            <decimal value="0" />
+          </falseValue>
+        </boolean>
+      </elements>
+    </policy>
+  </policies>
+</policyDefinitions>

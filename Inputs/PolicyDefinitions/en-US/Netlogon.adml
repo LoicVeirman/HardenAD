@@ -297,6 +297,7 @@ This policy setting is recommended to reduce the attack surface on a DC, and can
 If you enable this policy setting, this DC does not process incoming mailslot messages that are used for NetBIOS domain name based DC location.
 
 If you disable or do not configure this policy setting, this DC processes incoming mailslot messages. This is the default behavior of DC Locator.</string>
+
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery">Do not use NetBIOS-based discovery for domain controller location when DNS-based discovery fails</string>
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">This policy setting allows you to control the domain controller (DC) location algorithm. By default, the DC location algorithm prefers DNS-based discovery if the DNS domain name is known. If DNS-based discovery fails and the NetBIOS domain name is known, the algorithm then uses NetBIOS-based discovery as a fallback mechanism.
 
@@ -306,7 +307,18 @@ Note that this policy setting does not affect NetBIOS-based discovery for DC loc
 
 If you enable or do not configure this policy setting, the DC location algorithm does not use NetBIOS-based discovery as a fallback mechanism when DNS-based discovery fails. This is the default behavior.
 
-If you disable this policy setting, the DC location algorithm can use NetBIOS-based discovery as a fallback mechanism when DNS based discovery fails.</string>
+If you disable this policy setting, the DC location algorithm can use NetBIOS-based discovery as a fallback mechanism when DNS based discovery fails.
+
+This setting has no effect unless the BlockNetbiosDiscovery setting is disabled. NetBIOS-based discovery is considered unsecure, has many limitations, and will be deprecated in a future release. For these reasons, NetBIOS-based discovery is not recommended. See https://aka.ms/dclocatornetbiosdeprecation for more information.</string>
+
+      <string id="Netlogon_BlockNetbiosDiscovery">Block NetBIOS-based discovery for domain controller location</string>
+      <string id="Netlogon_BlockNetbiosDiscovery_Help">This policy setting allows you to control whether domain controller (DC) location algorithm uses NetBIOS_based discovery for domain controller location.
+
+If you enable or do not configure this policy setting, the DC location algorithm will never use NetBIOS-based discovery. This is the default behavior.
+
+If you disable this policy setting, the DC location algorithm may use NetBIOS-based discovery when necessary. The final behavior is further governed by the AvoidFallbackNetbiosDiscovery setting.
+
+NetBIOS-based discovery is considered unsecure, has many limitations, and will be deprecated in a future release. For these reasons, NetBIOS-based discovery is not recommended. See https://aka.ms/dclocatornetbiosdeprecation for more information.</string>
 
       <string id="Netlogon_AddressLookupOnPingBehavior">Specify address lookup behavior for DC locator ping</string>
       <string id="Netlogon_AddressLookupOnPingBehavior_Help">This policy setting configures how a domain controller (DC) behaves when responding to a client whose IP address does not map to any configured site.

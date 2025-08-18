@@ -795,6 +795,50 @@ If you enable this policy setting, users can't use their local authenticator ins
 
 If you disable or do not configure this policy setting, users can use local authenticators inside the Remote Desktop session.
 </string>
+      <string id="TS_SC_CLIPBOARD_DISABLED">Disable clipboard transfers from server to client</string>
+      <string id="TS_CS_CLIPBOARD_DISABLED">Disable clipboard transfers from client to server</string>
+      <string id="TS_CLIPBOARD_ALLOW_TEXT">Allow plain text</string>
+      <string id="TS_CLIPBOARD_ALLOW_TEXT_IMAGE">Allow plain text and images</string>
+      <string id="TS_CLIPBOARD_ALLOW_TEXT_IMAGE_RTF">Allow plain text, images and Rich Text Format</string>
+      <string id="TS_CLIPBOARD_ALLOW_TEXT_IMAGE_RTF_HTML">Allow plain text, images, Rich Text Format and HTML</string>
+      <string id="TS_SC_CLIPBOARD_RESTRICTION">Restrict clipboard transfer from server to client</string>
+      <string id="TS_SC_CLIPBOARD_RESTRICTION_EXPLAIN">This policy setting allows you to restrict clipboard data transfers from server to client.
+
+If you enable this policy setting, you must choose from the following behaviors:
+
+- Disable clipboard transfers from server to client.
+
+- Allow plain text copying from server to client.
+
+- Allow plain text and images copying from server to client.
+
+- Allow plain text, images and Rich Text Format copying from server to client.
+
+- Allow plain text, images, Rich Text Format and HTML copying from server to client.
+
+If you disable or do not configure this policy setting, users can copy arbitrary contents from server to client if clipboard redirection is enabled.
+
+Note: This policy setting appears in both Computer Configuration and User Configuration. If both policy settings are configured, the stricter restriction will be used.
+</string>
+      <string id="TS_CS_CLIPBOARD_RESTRICTION">Restrict clipboard transfer from client to server</string>
+      <string id="TS_CS_CLIPBOARD_RESTRICTION_EXPLAIN">This policy setting allows you to restrict clipboard data transfers from client to server.
+
+If you enable this policy setting, you must choose from the following behaviors:
+
+- Disable clipboard transfers from client to server.
+
+- Allow plain text copying from client to server.
+
+- Allow plain text and images copying from client to server.
+
+- Allow plain text, images and Rich Text Format copying from client to server.
+
+- Allow plain text, images, Rich Text Format and HTML copying from client to server.
+
+If you disable or do not configure this policy setting, users can copy arbitrary contents from client to server if clipboard redirection is enabled.
+
+Note: This policy setting appears in both Computer Configuration and User Configuration. If both policy settings are configured, the stricter restriction will be used.
+</string>
       <string id="TS_CLIPRDR_CLOUD_CLIP_INTEGRATION">Disable Cloud Clipboard integration for server-to-client data transfer</string>
       <string id="TS_CLIPRDR_CLOUD_CLIP_INTEGRATION_EXPLAIN">This policy setting lets you control whether data transferred from the remote session to the client using clipboard redirection is added to the client-side Cloud Clipboard.
 
@@ -817,6 +861,24 @@ If you do not configure this policy setting, the local setting on the target com
 Important: Disabling this policy setting provides less security because user authentication will occur later in the remote connection process.
 </string>
       <string id="TS_USER_AUTHENTICATION_POLICY">Require user authentication for remote connections by using Network Level Authentication</string>
+      <string id="TS_DISCONNECT_ON_LOCK_POLICY"> Disconnect remote session on lock for legacy authentication</string>
+      <string id="TS_DISCONNECT_ON_LOCK_POLICY_EXPLAIN">This policy setting allows you to configure the user experience when the Remote Desktop session is locked by the user or by a policy. You can specify whether the remote session will show the remote lock screen or disconnect when the remote session is locked. Disconnecting the remote session ensures that a remote session cannot be left on the lock screen and cannot reconnect automatically due to loss of network connectivity.
+
+This policy applies only when using legacy authentication to authenticate to the remote PC. Legacy authentication is limited to username and password, or certificates like smartcards. Legacy authentication doesn't leverage the Microsoft identity platform, such as Microsoft Entra ID. Legacy authentication includes the NTLM, CredSSP, RDSTLS, TLS, and RDP basic authentication protocols.
+
+If you enable this policy setting, Remote Desktop connections using legacy authentication will disconnect the remote session when the remote session is locked. Users can reconnect when they're ready and re-enter their credentials when prompted.
+
+If you disable or do not configure this policy setting, Remote Desktop connections using legacy authentication will show the remote lock screen when the remote session is locked. Users can unlock the remote session using their username and password, or certificates.
+</string>
+      <string id="TS_DISCONNECT_ON_LOCK_AAD_POLICY">Disconnect remote session on lock for Microsoft identity platform authentication</string>
+      <string id="TS_DISCONNECT_ON_LOCK_AAD_POLICY_EXPLAIN">This policy setting allows you to configure the user experience when the Remote Desktop session is locked by the user or by a policy. You can specify whether the remote session will show the remote lock screen or disconnect when the remote session is locked. Disconnecting the remote session ensures that a remote session cannot be left on the lock screen and cannot reconnect automatically due to loss of network connectivity.
+
+This policy applies only when using an identity provider that uses the Microsoft identity platform, such as Microsoft Entra ID, to authenticate to the remote PC. This policy doesn't apply when using Legacy authentication which includes the NTLM, CredSSP, RDSTLS, TLS, and RDP basic authentication protocols.
+
+If you enable or do not configure this policy setting, Remote Desktop connections using the Microsoft identity platform will disconnect the remote session when the remote session is locked. Users can reconnect when they're ready and can use passwordless authentication if configured.
+
+If you disable this policy setting, Remote Desktop connections using the Microsoft identity platform will show the remote lock screen when the remote session is locked. Users can unlock the remote session using their username and password, or certificates.
+</string>
       <string id="TS_User_Help">Controls configuration of Remote Desktop Services technologies that enable access to a server running Windows-based programs or the full Windows desktop</string>
       <string id="TS_USER_HOME">Set Remote Desktop Services User Home Directory</string>
       <string id="TS_USER_HOME_EXPLAIN">Specifies whether Remote Desktop Services uses the specified network share or local directory path as the root of the user's home directory for a Remote Desktop Services session.
@@ -1148,7 +1210,7 @@ Note: RemoteApp programs that are installed through RemoteApp and Desktop Connec
 
 If you enable this policy setting, you must specify if you would like RDP to use UDP.
 
-You can select one of the following options: "Use both UDP and TCP", "Use only TCP" or "Use either UDP or TCP (default)" 
+You can select one of the following options: "Use either UDP or TCP (default)" or "Use only TCP" 
 
 If you select "Use either UDP or TCP" and the UDP connection is successful, most of the RDP traffic will use UDP.
 
@@ -1156,9 +1218,8 @@ If the UDP connection is not successful or if you select "Use only TCP," all of 
 
 If you disable or do not configure this policy setting, RDP will choose the optimal protocols for delivering the best user experience.
 	  </string>
-	  <string id="TS_SELECT_TRANSPORT_UDP_AND_TCP">Use both UDP and TCP</string>
-	  <string id="TS_SELECT_TRANSPORT_TCP_ONLY">Use only TCP</string>
 	  <string id="TS_SELECT_TRANSPORT_UDP_OR_TCP">Use either UDP or TCP</string>
+	  <string id="TS_SELECT_TRANSPORT_TCP_ONLY">Use only TCP</string>
 
       <string id="TS_SELECT_NETWORK_DETECT">Select network detection on the server</string>
       <string id="TS_SELECT_NETWORK_DETECT_EXPLAIN">This policy setting allows you to specify how the Remote Desktop Protocol will try to detect the network quality (bandwidth and latency).
@@ -1378,6 +1439,12 @@ NOTE: The policy setting enables load-balancing of graphics processing units (GP
       </presentation>
       <presentation id="TS_SELECT_TRANSPORT">
         <dropdownList refId="TS_SELECT_TRANSPORT_TYPE" noSort="true" defaultItem="0">Select Transport Type</dropdownList>
+      </presentation>
+      <presentation id="TS_SC_CLIPBOARD_RESTRICTION">
+        <dropdownList refId="TS_SC_CLIPBOARD_RESTRICTION_Text" noSort="true" defaultItem="0">Restrict clipboard transfer from server to client:</dropdownList>
+      </presentation>
+      <presentation id="TS_CS_CLIPBOARD_RESTRICTION">
+        <dropdownList refId="TS_CS_CLIPBOARD_RESTRICTION_Text" noSort="true" defaultItem="0">Restrict clipboard transfer from client to server:</dropdownList>
       </presentation>
     </presentationTable>
   </resources>

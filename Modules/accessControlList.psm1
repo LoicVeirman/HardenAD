@@ -70,7 +70,7 @@ Function Set-HardenACL {
         $InheritedObjects,
     
         [Parameter(Position = 7  , Mandatory = $false, HelpMessage = "To which type of object the acl will apply")]
-        [ValidateSet("group", "user", "computer", "contact", "member")]
+        [ValidateSet("group", "user", "computer", "contact", "member", "msFVE-RecoveryInformation")]
         [string]
         $ObjectType,
         [Parameter(Position = 8, Mandatory = $false, HelpMessage = "Audit ACL")]
@@ -87,6 +87,7 @@ Function Set-HardenACL {
                 "computer" { $inheritanceguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
                 "contact"  { $inheritanceguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
                 "member"   { $inheritanceguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
+                "msFVE-RecoveryInformation"   { $inheritanceguid = New-Object Guid ea715d30-8f53-40d0-bd1e-6109186d782c }
             }
         }
         else {
@@ -100,6 +101,7 @@ Function Set-HardenACL {
                 "computer" { $Objectguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
                 "contact"  { $Objectguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
                 "member"   { $Objectguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
+                "msFVE-RecoveryInformation"   { $inheritanceguid = New-Object Guid ea715d30-8f53-40d0-bd1e-6109186d782c }
             }
         }
         else {
@@ -107,7 +109,7 @@ Function Set-HardenACL {
         }
 
         switch ($Trustee) {
-            ("Authenticated Users" -or "Utilisateurs authentifiés") 
+            ("Authenticated Users" -or "Utilisateurs authentifiÃ©s") 
             { 
                 $SID = New-Object System.Security.Principal.SecurityIdentifier("S-1-5-11")
             }

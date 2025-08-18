@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScheduledTasks clsid="{CC63F200-7309-4ba0-B154-A71CD118DBCC}">
+	<TaskV2 clsid="{D8896631-B747-47a7-84A6-C155337F3BC8}" name="HardenAD\HAD_Set-LocalAdminGroups" image="2" userContext="0" removePolicy="0" changed="2025-04-18 15:16:03" uid="{3C2B84E3-DE49-4CA0-B614-64652506CF12}">
+		<Properties action="U" name="HardenAD\HAD_Set-LocalAdminGroups" runAs="NT AUTHORITY\System" logonType="S4U">
+			<Task version="1.2">
+				<RegistrationInfo>
+					<Author>HARDEN.AD</Author>
+					<Description>This script manage lacal administrators groups when a computer is created or moved.</Description>
+				</RegistrationInfo>
+				<Principals>
+					<Principal id="Author">
+						<UserId>NT AUTHORITY\System</UserId>
+						<LogonType>S4U</LogonType>
+						<RunLevel>HighestAvailable</RunLevel>
+					</Principal>
+				</Principals>
+				<Settings>
+					<IdleSettings>
+						<Duration>PT5M</Duration>
+						<WaitTimeout>PT1H</WaitTimeout>
+						<StopOnIdleEnd>false</StopOnIdleEnd>
+						<RestartOnIdle>false</RestartOnIdle>
+					</IdleSettings>
+					<MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+					<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+					<StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+					<AllowHardTerminate>false</AllowHardTerminate>
+					<AllowStartOnDemand>true</AllowStartOnDemand>
+					<Enabled>true</Enabled>
+					<Hidden>false</Hidden>
+					<ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+					<Priority>7</Priority>
+				</Settings>
+				<Triggers>
+					<EventTrigger>
+						<Enabled>true</Enabled>
+						<Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="Security"&gt;&lt;Select Path="Security"&gt;*[System[EventID=5139]]&lt;/Select&gt;&lt;Select Path="Security"&gt;*[System[EventID=4743]]&lt;/Select&gt;&lt;Select Path="Security"&gt;*[System[EventID=4742]]&lt;/Select&gt;&lt;Select Path="Security"&gt;*[System[EventID=4741]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription>
+						<ValueQueries>
+							<Value name="TargetPC">Event/EventData/Data[@Name="TargetUserName"]</Value>
+							<Value name="ObjGUID">Event/EventData/Data[@Name="ObjectGUID"]</Value>
+						</ValueQueries>
+					</EventTrigger>
+				</Triggers>
+				<Actions Context="Author"><Exec><Command>powershell.exe</Command><Arguments>-NoProfile -File Set-LocalAdminGroups.ps1 -ComputerName "$(TargetPC)$(ObjGUID)"</Arguments><WorkingDirectory>%windir%\HardenAD\ScheduledTasks\Set-LocalAdminGroups</WorkingDirectory></Exec>
+				</Actions></Task>
+		</Properties>
+	</TaskV2>
+	<TaskV2 clsid="{D8896631-B747-47a7-84A6-C155337F3BC8}" name="HardenAD\HAD_Clear-LocalAdminGroups" image="2" changed="2025-04-18 15:15:15" uid="{DD9EA318-AA6E-4D7B-B813-ACEF01F7ED18}" userContext="0" removePolicy="0">
+		<Properties action="U" name="HardenAD\HAD_Clear-LocalAdminGroups" runAs="NT AUTHORITY\System" logonType="S4U">
+			<Task version="1.2">
+				<RegistrationInfo>
+					<Author>HARDEN.AD</Author>
+					<Description>This script hunt for local admins group which are no more used as the computer objet is inexistant</Description>
+				</RegistrationInfo>
+				<Principals>
+					<Principal id="Author">
+						<UserId>NT AUTHORITY\System</UserId>
+						<LogonType>S4U</LogonType>
+						<RunLevel>HighestAvailable</RunLevel>
+					</Principal>
+				</Principals>
+				<Settings>
+					<IdleSettings>
+						<Duration>PT10M</Duration>
+						<WaitTimeout>PT1H</WaitTimeout>
+						<StopOnIdleEnd>true</StopOnIdleEnd>
+						<RestartOnIdle>false</RestartOnIdle>
+					</IdleSettings>
+					<MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+					<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+					<StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+					<AllowHardTerminate>false</AllowHardTerminate>
+					<AllowStartOnDemand>true</AllowStartOnDemand>
+					<Enabled>true</Enabled>
+					<Hidden>false</Hidden>
+					<ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+					<Priority>7</Priority>
+				</Settings>
+				<Triggers><CalendarTrigger><StartBoundary>2024-04-01T06:00:00</StartBoundary><Enabled>true</Enabled><ScheduleByWeek><WeeksInterval>1</WeeksInterval><DaysOfWeek><Monday/></DaysOfWeek></ScheduleByWeek><Repetition><Interval>PT1H</Interval><Duration>P1D</Duration><StopAtDurationEnd>false</StopAtDurationEnd></Repetition></CalendarTrigger>
+				</Triggers><Actions Context="Author"><Exec><Command>powershell.exe</Command><Arguments>-ExecutionPolicy Bypass -File Clear-LocalAdminGroups.ps1</Arguments><WorkingDirectory>%windir%\HardenAD\ScheduledTasks\Set-LocalAdminGroups</WorkingDirectory></Exec>
+				</Actions></Task>
+		</Properties>
+		<Filters>
+			<FilterWmi bool="AND" not="0" query="SELECT * FROM Win32_ComputerSystem WHERE DomainRole = 5" nameSpace="Root\cimv2" property="" variableName=""/>
+		</Filters>
+	</TaskV2>
+	<TaskV2 clsid="{D8896631-B747-47a7-84A6-C155337F3BC8}" name="HardenAD\HAD_Fix-LocalAdminGroups" image="2" changed="2025-02-26 18:43:09" uid="{3F6A8282-82F2-40AD-BD10-ED791F2E75C2}" userContext="0" removePolicy="0">
+		<Properties action="U" name="HardenAD\HAD_Fix-LocalAdminGroups" runAs="NT AUTHORITY\System" logonType="S4U">
+			<Task version="1.2">
+				<RegistrationInfo>
+					<Author>HARDEN.AD</Author>
+					<Description>This script will grab all computer objects and ensure that a local admin group exists. If not, it will create it.</Description>
+				</RegistrationInfo>
+				<Principals>
+					<Principal id="Author">
+						<UserId>NT AUTHORITY\System</UserId>
+						<LogonType>S4U</LogonType>
+						<RunLevel>HighestAvailable</RunLevel>
+					</Principal>
+				</Principals>
+				<Settings>
+					<IdleSettings>
+						<Duration>PT5M</Duration>
+						<WaitTimeout>PT1H</WaitTimeout>
+						<StopOnIdleEnd>false</StopOnIdleEnd>
+						<RestartOnIdle>false</RestartOnIdle>
+					</IdleSettings>
+					<MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+					<DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+					<StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+					<AllowHardTerminate>false</AllowHardTerminate>
+					<AllowStartOnDemand>true</AllowStartOnDemand>
+					<Enabled>true</Enabled>
+					<Hidden>false</Hidden>
+					<ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+					<Priority>7</Priority>
+				</Settings>
+				<Triggers><CalendarTrigger><StartBoundary>2024-04-11T06:00:00</StartBoundary><Enabled>true</Enabled><ScheduleByWeek><WeeksInterval>1</WeeksInterval><DaysOfWeek><Monday/></DaysOfWeek></ScheduleByWeek><ExecutionTimeLimit>PT8H</ExecutionTimeLimit></CalendarTrigger></Triggers><Actions Context="Author"><Exec>
+						<Command>PowerShell.exe</Command>
+						<Arguments>-NoProfile -ExecutionPolicy Bypass -file Fix-LocalAdminGroups.ps1</Arguments>
+						<WorkingDirectory>%windir%\HardenAD\ScheduledTasks\Set-LocalAdminGroups</WorkingDirectory>
+					</Exec></Actions></Task>
+		</Properties>
+		<Filters>
+			<FilterWmi bool="AND" not="0" query="SELECT * FROM Win32_ComputerSystem WHERE DomainRole = 5" nameSpace="Root\cimv2" property="" variableName=""/>
+		</Filters>
+	</TaskV2>
+</ScheduledTasks>

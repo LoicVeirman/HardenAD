@@ -36,7 +36,7 @@ Function Set-TSLocalAdminGroups
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Function caller..........: " + (Get-PSCallStack)[1].Command
 
     ## Script path
-    $zeScript = ".\Inputs\GroupPolicies\HAD-TS-Local-admins-groups\$GpoBackupID\DomainSysvol\GPO\Machine\Scripts\Startup\Set-LocalAdminGroups\Set-LocalAdminGroups.ps1"
+    $zeScript = ".\Inputs\NetLogon\HAD-TS-Local-admins-groups\Set-LocalAdminGroups\Set-LocalAdminGroups.ps1"
 
     ## Report parameters to log
     $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> Parameter GpoBackupID....: $($GpoBackupID)"

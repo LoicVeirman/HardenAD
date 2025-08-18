@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">Use certificate for on-premises authentication</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">Use cloud trust for on-premises authentication</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">Disable caching of the Windows Hello for Business credential after sign-in</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello for Business is an alternative method for signing into Windows using your Active Directory or Azure Active Directory account that can replace passwords, Smart Cards, and Virtual Smart Cards.
 
@@ -114,13 +116,14 @@ NOTE: Disabling this policy prevents the user of biometric gestures on the devic
         <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Enhanced Sign-in Security (ESS) isolates Windows Hello biometric (face and fingerprint) template data and matching operations to trusted hardware or specified memory regions, meaning the rest of the operating system cannot access or tamper with them. Because the channel of communication between the sensors and the algorithm is also secured, it is impossible for malware to inject or replay data in order to simulate a user signing in or to lock a user out of their machine.
 If you enable this policy then it can have following possible values:
 
-0 - Enhanced Sign-in Security Enabled with peripheral and built-in non-ESS sensors
-Enhanced sign-in security will be enabled on systems with capable software and hardware, following the existing default behavior in Windows. Authentication operations of peripheral Windows Hello capable devices will be allowed, subject to current feature limitations. In addition, with this setting, ESS will be enabled on devices with a mixture of biometric devices, such as an ESS capable FPR and a non-ESS capable camera.
+0 - Enhanced Sign-in Security disabled with peripheral sensors
+ESS will be disabled on systems with capable software and hardware. Authentication operations of peripheral Windows Hello capable devices will be allowed, subject to current feature limitations.
 
-1 - Enhanced Sign-in Security Enabled without peripheral or built-in non-ESS sensors (default and recommended for highest security)
-Enhanced sign-in security will be enabled on systems with capable software and hardware, following the existing default behavior in Windows. Authentication operations of any peripheral biometric device will be blocked and not available for Windows Hello.
+1 - Enhanced Sign-in Security enabled without peripheral sensors (default and recommended)
+ESS will be enabled on systems with capable software and hardware, following the existing default behavior in Windows. Authentication operations of any peripheral biometric device will be blocked and not available for Windows Hello.
 
 If you disable or not configure this policy then non-ESS sensors will be blocked on the ESS device.
+
         </string>
         <string id="MSPassport_EnablePinRecovery">Use PIN Recovery</string>
         <string id="MSPassport_EnablePinRecoveryExplain">PIN recovery enables a user to change a forgotten PIN using the Windows Hello for Business PIN recovery service, without losing any associated credentials or certificates, including any keys associated with the user's personal accounts on the device. To achieve this, the Azure-based PIN recovery service encrypts a recovery secret, which is stored on the device, and requires both the PIN recovery service and the device to decrypt. PIN recovery requires the user to perform multi-factor authentication to Azure Active Directory.
@@ -149,6 +152,8 @@ If you disable or do not configure this policy setting, Windows Hello for Busine
  
 NOTE: An environment that enables both this policy setting, and the "Use Windows Hello for Business" policy setting requires one or more Windows Server 2016 domain controllers. Otherwise, Windows Hello for Business authentication will fail.
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">The Windows Hello for Business credential is cached after sign-in to allow certain security related applications to use the credential silently to not disrupt the user experience. Enable this policy to turn this off, removing the cache so user input is explicitly necessary.</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">Configure device unlock factors</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">Configure a comma separated list of credential provider GUIDs, such as face and fingerprint provider GUIDs, to be used as the first and second unlock factors. If the trusted signal provider is specified as one of the unlock factors, you should also configure a comma separated list of signal rules in the form of xml for each signal type to be verified.

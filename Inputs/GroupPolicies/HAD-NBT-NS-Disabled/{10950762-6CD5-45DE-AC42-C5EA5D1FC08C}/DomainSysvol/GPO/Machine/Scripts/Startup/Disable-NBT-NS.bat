@@ -1,0 +1,1 @@
+powershell.exe -executionPolicy Bypass -File "%~dp0\Disable-NBT-NS.ps1"

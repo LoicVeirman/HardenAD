@@ -46,6 +46,15 @@
         <category name="Remediation" displayName="$(string.Remediation)">
             <parentCategory ref="AntiSpywareDefender" />
         </category>
+        <category name="Remediation_BNB" displayName="$(string.Remediation_BNB)">
+            <parentCategory ref="Remediation" />
+        </category>
+        <category name="Remediation_BNB_REP" displayName="$(string.Remediation_BNB_REP)">
+            <parentCategory ref="Remediation_BNB" />
+        </category>
+        <category name="Remediation_BNB_BFP" displayName="$(string.Remediation_BNB_BFP)">
+            <parentCategory ref="Remediation_BNB" />
+        </category>
         <category name="Reporting" displayName="$(string.Reporting)">
             <parentCategory ref="AntiSpywareDefender" />
         </category>
@@ -117,8 +126,49 @@
             <elements>
                 <text id="DeviceControl_DataDuplicationRemoteLocation" valueName="DataDuplicationRemoteLocation" required="true" />
             </elements>
+        </policy>				
+		<policy name="DeviceControl_DataDuplicationLocalRetentionPeriod" class="Machine" displayName="$(string.DeviceControl_DataDuplicationLocalRetentionPeriod)" explainText="$(string.DeviceControl_DataDuplicationLocalRetentionPeriod_Explain)" key="Software\Policies\Microsoft\Windows Defender\Device Control" presentation="$(presentation.DeviceControl_DataDuplicationLocalRetentionPeriod)">
+            <parentCategory ref="DeviceControl" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <decimal id="DeviceControl_DataDuplicationLocalRetentionPeriod" valueName="DataDuplicationLocalRetentionPeriod" minValue="0" maxValue="10000"  required="true"/>
+            </elements>
         </policy>
-
+		<policy name="DeviceControl_SecuredDevicesConfiguration" class="Machine" displayName="$(string.DeviceControl_SecuredDevicesConfiguration)" explainText="$(string.DeviceControl_SecuredDevicesConfiguration_Explain)" key="Software\Policies\Microsoft\Windows Defender\Device Control" presentation="$(presentation.DeviceControl_SecuredDevicesConfiguration)">
+            <parentCategory ref="DeviceControl" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <text id="DeviceControl_SecuredDevicesConfiguration" valueName="SecuredDevicesConfiguration" />
+            </elements>
+        </policy>
+		<policy name="DeviceControl_CustomSupportLink" class="Machine" displayName="$(string.DeviceControl_CustomSupportLink)" explainText="$(string.DeviceControl_CustomSupportLink_Explain)" key="Software\Policies\Microsoft\Windows Defender\Device Control" presentation="$(presentation.DeviceControl_CustomSupportLink)">
+            <parentCategory ref="DeviceControl" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <text id="DeviceControl_CustomSupportLink" valueName="CustomSupportLink" required="false"/>
+            </elements>
+        </policy>
+		<policy name="DeviceControl_PolicyRefreshFailureInterval" class="Machine" displayName="$(string.DeviceControl_PolicyRefreshFailureInterval)" explainText="$(string.DeviceControl_PolicyRefreshFailureInterval_Explain)" key="Software\Policies\Microsoft\Windows Defender\Device Control" presentation="$(presentation.DeviceControl_PolicyRefreshFailureInterval)">
+            <parentCategory ref="DeviceControl" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <text id="DeviceControl_PolicyRefreshFailureInterval" valueName="PolicyRefreshFailureInterval" required="false"/>
+            </elements>
+        </policy>
+		<policy name="DeviceControl_AzureAdRefreshInterval" class="Machine" displayName="$(string.DeviceControl_AzureAdRefreshInterval)" explainText="$(string.DeviceControl_AzureAdRefreshInterval_Explain)" key="Software\Policies\Microsoft\Windows Defender\Device Control" presentation="$(presentation.DeviceControl_AzureAdRefreshInterval)">
+            <parentCategory ref="DeviceControl" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <text id="DeviceControl_AzureAdRefreshInterval" valueName="AzureAdRefreshInterval" required="false"/>
+            </elements>
+        </policy>
+		<policy name="DeviceControl_DataDuplicationMaximumQuota" class="Machine" displayName="$(string.DeviceControl_DataDuplicationMaximumQuota)" explainText="$(string.DeviceControl_DataDuplicationMaximumQuota_Explain)" key="Software\Policies\Microsoft\Windows Defender\Device Control" presentation="$(presentation.DeviceControl_DataDuplicationMaximumQuota)">
+            <parentCategory ref="DeviceControl" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <text id="DeviceControl_DataDuplicationMaximumQuota" valueName="DataDuplicationMaximumQuota" minValue="5" maxValue="5000" required="false"/>
+            </elements>
+        </policy>
         <policy name="DisableAutoExclusions" class="Machine" displayName="$(string.DisableAutoExclusions)" explainText="$(string.DisableAutoExclusions_Explain)" key="Software\Policies\Microsoft\Windows Defender\Exclusions" valueName="DisableAutoExclusions">
             <parentCategory ref="Exclusions" />
             <supportedOn ref="windows:SUPPORTED_Windows_10_0_SERVER" />
@@ -234,6 +284,16 @@
                 <decimal value="0" />
             </disabledValue>
         </policy>
+        <policy name="HideExclusionsFromLocalUsers" class="Machine" displayName="$(string.HideExclusionsFromLocalUsers)" explainText="$(string.HideExclusionsFromLocalUsers_Explain)" key="Software\Policies\Microsoft\Windows Defender" valueName="HideExclusionsFromLocalUsers">
+            <parentCategory ref="AntiSpywareDefender" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+             <enabledValue>
+                <decimal value="1" />
+            </enabledValue>
+            <disabledValue>
+                <decimal value="0" />
+            </disabledValue>
+        </policy>
         <policy name="Root_PUAProtection" class="Machine" displayName="$(string.Root_PUAProtection)" explainText="$(string.Root_PUAProtection_Explain)" key="Software\Policies\Microsoft\Windows Defender" valueName="PUAProtection" presentation="$(presentation.Root_PUAProtection)">
             <parentCategory ref="AntiSpywareDefender" />
             <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
@@ -338,11 +398,6 @@
                             <decimal value="5" />
                         </value>
                     </item>
-                    <item displayName="$(string.Root_UpdateChannel_Dropdown_Delayed)">
-                        <value>
-                            <decimal value="6" />
-                        </value>
-                    </item>
                 </enum>
             </elements>
         </policy>
@@ -421,6 +476,26 @@
         <policy name="RealtimeProtection_DisableSriptScanning" class="Machine" displayName="$(string.RealtimeProtection_DisableSriptScanning)" explainText="$(string.RealtimeProtection_DisableSriptScanning_Explain)" key="Software\Policies\Microsoft\Windows Defender\Real-Time Protection" valueName="DisableScriptScanning">
           <parentCategory ref="RealtimeProtection" />
           <supportedOn ref="windows:SUPPORTED_Windows8" />
+          <enabledValue>
+            <decimal value="0" />
+          </enabledValue>
+          <disabledValue>
+            <decimal value="1" />
+          </disabledValue>
+        </policy>
+        <policy name="RealtimeProtection_OobeEnableRtpAndSigUpdate" class="Machine" displayName="$(string.RealtimeProtection_OobeEnableRtpAndSigUpdate)" explainText="$(string.RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain)" key="Software\Policies\Microsoft\Windows Defender\Real-Time Protection" valueName="OobeEnableRtpAndSigUpdate">
+          <parentCategory ref="RealtimeProtection" />
+          <supportedOn ref="windows:SUPPORTED_Windows8" />
+          <enabledValue>
+            <decimal value="1" />
+          </enabledValue>
+          <disabledValue>
+            <decimal value="0" />
+          </disabledValue>
+        </policy>
+        <policy name="RealtimeProtection_PerformanceModeStatus" class="Machine" displayName="$(string.RealtimeProtection_PerformanceModeStatus)" explainText="$(string.RealtimeProtection_PerformanceModeStatus_Explain)" key="Software\Policies\Microsoft\Windows Defender\Real-Time Protection" valueName="DisableAsyncScanOnOpen">
+          <parentCategory ref="RealtimeProtection" />
+          <supportedOn ref="windows:SUPPORTED_Windows_11_0_22H1" />
           <enabledValue>
             <decimal value="0" />
           </enabledValue>
@@ -638,6 +713,136 @@
                 <decimal id="Remediation_Scan_ScheduleTime" valueName="Scan_ScheduleTime" minValue="0" maxValue="1440" />
             </elements>
         </policy>
+        <policy name="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" class="Machine" displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState)" explainText="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain)" key="Software\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Remote Encryption Protection" valueName="RemoteEncryptionProtectionConfiguredState" presentation="$(presentation.Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState)">
+            <parentCategory ref="Remediation_BNB_REP" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <enum id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" valueName="RemoteEncryptionProtectionConfiguredState" required="true">
+                    <item displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0)">
+                        <value>
+                            <decimal value="0" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1)">
+                        <value>
+                            <decimal value="1" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2)">
+                        <value>
+                            <decimal value="2" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3)">
+                        <value>
+                            <decimal value="4" />
+                        </value>
+                    </item>
+                </enum>
+            </elements>
+        </policy>
+        <policy name="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" class="Machine" displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime)" explainText="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain)" key="Software\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Remote Encryption Protection" valueName="RemoteEncryptionProtectionMaxBlockTime" presentation="$(presentation.Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime)">
+            <parentCategory ref="Remediation_BNB_REP" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <decimal id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" valueName="RemoteEncryptionProtectionMaxBlockTime" minValue="0" maxValue="4294967295" />
+            </elements>
+        </policy>
+        <policy name="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" class="Machine" displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness)" explainText="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain)" key="Software\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Remote Encryption Protection" valueName="RemoteEncryptionProtectionAggressiveness" presentation="$(presentation.Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness)">
+            <parentCategory ref="Remediation_BNB_REP" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <enum id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" valueName="RemoteEncryptionProtectionAggressiveness" required="true">
+                    <item displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0)">
+                        <value>
+                            <decimal value="0" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1)">
+                        <value>
+                            <decimal value="1" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2)">
+                        <value>
+                            <decimal value="2" />
+                        </value>
+                    </item>
+                </enum>
+            </elements>
+        </policy>
+        <policy name="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions" class="Machine" displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtectionExclusions)" explainText="$(string.Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain)" key="Software\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Remote Encryption Protection" valueName="RemoteEncryptionProtection_Exclusions" presentation="$(presentation.Remediation_BNB_REP_RemoteEncryptionProtectionExclusions)">
+            <parentCategory ref="Remediation_BNB_REP" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <list id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions" additive="true" explicitValue="true" key="Software\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Remote Encryption Protection\RemoteEncryptionProtectionExclusions" />
+            </elements>
+        </policy>
+        <policy name="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" class="Machine" displayName="$(string.Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState)" explainText="$(string.Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain)" key="Software\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Brute Force Protection" valueName="BruteForceProtectionConfiguredState" presentation="$(presentation.Remediation_BNB_BFP_BruteForceProtection_ConfiguredState)">
+            <parentCategory ref="Remediation_BNB_BFP" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <enum id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" valueName="BruteForceProtectionConfiguredState" required="true">
+                    <item displayName="$(string.Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0)">
+                        <value>
+                            <decimal value="0" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1)">
+                        <value>
+                            <decimal value="1" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2)">
+                        <value>
+                            <decimal value="2" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3)">
+                        <value>
+                            <decimal value="4" />
+                        </value>
+                    </item>
+                </enum>
+            </elements>
+        </policy>
+        <policy name="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" class="Machine" displayName="$(string.Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime)" explainText="$(string.Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain)" key="Software\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Brute Force Protection" valueName="BruteForceProtectionMaxBlockTime" presentation="$(presentation.Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime)">
+            <parentCategory ref="Remediation_BNB_BFP" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <decimal id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" valueName="BruteForceProtectionMaxBlockTime" minValue="0" maxValue="4294967295" />
+            </elements>
+        </policy>
+        <policy name="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" class="Machine" displayName="$(string.Remediation_BNB_BFP_BruteForceProtection_Aggressiveness)" explainText="$(string.Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain)" key="Software\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Brute Force Protection" valueName="BruteForceProtectionAggressiveness" presentation="$(presentation.Remediation_BNB_BFP_BruteForceProtection_Aggressiveness)">
+            <parentCategory ref="Remediation_BNB_BFP" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <enum id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" valueName="BruteForceProtectionAggressiveness" required="true">
+                    <item displayName="$(string.Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0)">
+                        <value>
+                            <decimal value="0" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1)">
+                        <value>
+                            <decimal value="1" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2)">
+                        <value>
+                            <decimal value="2" />
+                        </value>
+                    </item>
+                </enum>
+            </elements>
+        </policy>
+        <policy name="Remediation_BNB_BFP_BruteForceProtectionExclusions" class="Machine" displayName="$(string.Remediation_BNB_BFP_BruteForceProtectionExclusions)" explainText="$(string.Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain)" key="Software\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Brute Force Protection" valueName="BruteForceProtection_Exclusions" presentation="$(presentation.Remediation_BNB_BFP_BruteForceProtectionExclusions)">
+            <parentCategory ref="Remediation_BNB_BFP" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
+            <elements>
+                <list id="Remediation_BNB_BFP_BruteForceProtectionExclusions" additive="true" explicitValue="true" key="Software\Policies\Microsoft\Windows Defender\Remediation\Behavioral Network Blocks\Brute Force Protection\BruteForceProtectionExclusions" />
+            </elements>
+        </policy>
         <policy name="Reporting_AdditionalActionTimeout" class="Machine" displayName="$(string.Reporting_AdditionalActionTimeout)" explainText="$(string.Reporting_AdditionalActionTimeout_Explain)" key="Software\Policies\Microsoft\Windows Defender\Reporting" valueName="AdditionalActionTimeout" presentation="$(presentation.Reporting_AdditionalActionTimeout)">
             <parentCategory ref="Reporting" />
             <supportedOn ref="windows:SUPPORTED_Windows8" />
@@ -706,6 +911,16 @@
             <elements>
                 <decimal id="Reporting_ServiceHealthReportInterval" valueName="ServiceHealthReportInterval" minValue="0" maxValue="14400" />
             </elements>
+        </policy>
+        <policy name="Reporting_EnableDynamicSignatureDroppedEventReporting" class="Machine" displayName="$(string.Reporting_EnableDynamicSignatureDroppedEventReporting)" explainText="$(string.Reporting_EnableDynamicSignatureDroppedEventReporting_Explain)" key="Software\Policies\Microsoft\Windows Defender\Reporting" valueName="EnableDynamicSignatureDroppedEventReporting">
+            <parentCategory ref="Reporting" />
+            <supportedOn ref="windows:SUPPORTED_Windows8" />
+            <enabledValue>
+            <decimal value="1" />
+            </enabledValue>
+            <disabledValue>
+            <decimal value="0" />
+            </disabledValue>
         </policy>
         <policy name="Scan_AllowPause" class="Machine" displayName="$(string.Scan_AllowPause)" explainText="$(string.Scan_AllowPause_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="AllowPause">
             <parentCategory ref="Scan" />
@@ -787,6 +1002,13 @@
             <disabledValue>
                 <decimal value="1" />
             </disabledValue>
+        </policy>
+        <policy name="Scan_DaysUntilAggressiveCatchupQuickScan" class="Machine" displayName="$(string.Scan_DaysUntilAggressiveCatchupQuickScan)" explainText="$(string.Scan_DaysUntilAggressiveCatchupQuickScan_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="DaysUntilAggressiveCatchupQuickScan" presentation="$(presentation.Scan_DaysUntilAggressiveCatchupQuickScan)">
+            <parentCategory ref="Scan" />
+            <supportedOn ref="windows:SUPPORTED_Windows8" />
+            <elements>
+                <decimal id="Scan_DaysUntilAggressiveCatchupQuickScan" valueName="DaysUntilAggressiveCatchupQuickScan" minValue="7" maxValue="60" />
+            </elements>
         </policy>
         <policy name="Scan_DisableEmailScanning" class="Machine" displayName="$(string.Scan_DisableEmailScanning)" explainText="$(string.Scan_DisableEmailScanning_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="DisableEmailScanning">
             <parentCategory ref="Scan" />
@@ -1044,6 +1266,24 @@
                 <decimal value="0" />
             </disabledValue>
         </policy>
+        <policy name="Scan_QuickScanIncludeExclusions" class="Machine" displayName="$(string.Scan_QuickScanIncludeExclusions)" explainText="$(string.Scan_QuickScanIncludeExclusions_Explain)" key="Software\Policies\Microsoft\Windows Defender\Scan" valueName="QuickScanIncludeExclusions" presentation="$(presentation.Scan_QuickScanIncludeExclusions)">
+            <parentCategory ref="Scan" />
+            <supportedOn ref="windows:SUPPORTED_Windows8"/>
+            <elements>
+                <enum id="Scan_QuickScanIncludeExclusions" valueName="QuickScanIncludeExclusions" required="true">
+                    <item displayName="$(string.Scan_QuickScanIncludeExclusions_Disabled)">
+                        <value>
+                            <decimal value="0" />
+                        </value>
+                    </item>
+                    <item displayName="$(string.Scan_QuickScanIncludeExclusions_RtpExclusions)">
+                        <value>
+                            <decimal value="1" />
+                        </value>
+                    </item>
+                </enum>
+            </elements>
+        </policy>
         <policy name="MeteredConnectionUpdates" class="Machine" displayName="$(string.MeteredConnectionUpdates)" explainText="$(string.MeteredConnectionUpdates_Explain)" key="Software\Policies\Microsoft\Windows Defender\Signature Updates" valueName="MeteredConnectionUpdates">
             <parentCategory ref="SignatureUpdate" />
             <supportedOn ref="windows:SUPPORTED_Windows8" />
@@ -1064,7 +1304,27 @@
                 <decimal value="0" />
             </disabledValue>
         </policy>
-        <policy name="DisableDatagramProcessing" class="Machine" displayName="$(string.DisableDatagramProcessing)" explainText="$(string.AllowNetworkProtectionOnWinServer_Explain)" key="Software\Policies\Microsoft\Windows Defender\NIS" valueName="DisableDatagramProcessing">
+        <policy name="AllowSwitchToAsyncInspection" class="Machine" displayName="$(string.AllowSwitchToAsyncInspection)" explainText="$(string.AllowSwitchToAsyncInspection_Explain)" key="Software\Policies\Microsoft\Windows Defender\NIS" valueName="AllowSwitchToAsyncInspection">
+            <parentCategory ref="NetworkRealtimeInspection" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS3" />
+             <enabledValue>
+                <decimal value="1" />
+            </enabledValue>
+            <disabledValue>
+                <decimal value="0" />
+            </disabledValue>
+        </policy>
+        <policy name="DisableDatagramProcessing" class="Machine" displayName="$(string.DisableDatagramProcessing)" explainText="$(string.DisableDatagramProcessing_Explain)" key="Software\Policies\Microsoft\Windows Defender\NIS" valueName="DisableDatagramProcessing">
+            <parentCategory ref="NetworkRealtimeInspection" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS3" />
+             <enabledValue>
+                <decimal value="1" />
+            </enabledValue>
+            <disabledValue>
+                <decimal value="0" />
+            </disabledValue>
+        </policy>
+        <policy name="EnableConvertWarnToBlock" class="Machine" displayName="$(string.EnableConvertWarnToBlock)" explainText="$(string.EnableConvertWarnToBlock_Explain)" key="Software\Policies\Microsoft\Windows Defender\NIS" valueName="EnableConvertWarnToBlock">
             <parentCategory ref="NetworkRealtimeInspection" />
             <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS3" />
              <enabledValue>
@@ -1101,6 +1361,16 @@
             <elements>
                 <text id="SignatureUpdate_SharedSignaturesLocation" valueName="SharedSignatureRoot" required="true" />
             </elements>
+        </policy>
+        <policy name="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly" class="Machine" displayName="$(string.SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly)" explainText="$(string.SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain)" key="Software\Policies\Microsoft\Windows Defender\Signature Updates" valueName="SharedSignatureRootUpdateAtScheduledTimeOnly">
+            <parentCategory ref="SignatureUpdate" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS6" />
+            <enabledValue>
+                <decimal value="1" />
+            </enabledValue>
+            <disabledValue>
+                <decimal value="0" />
+            </disabledValue>
         </policy>
         <policy name="SignatureUpdate_DisableScanOnUpdate" class="Machine" displayName="$(string.SignatureUpdate_DisableScanOnUpdate)" explainText="$(string.SignatureUpdate_DisableScanOnUpdate_Explain)" key="Software\Policies\Microsoft\Windows Defender\Signature Updates" valueName="DisableScanOnUpdate">
             <parentCategory ref="SignatureUpdate" />
@@ -1368,13 +1638,6 @@
                 <decimal value="0" />
             </disabledValue>
         </policy>
-        <policy name="UX_Configuration_CustomDefaultActionToastString" class="Machine" displayName="$(string.UX_Configuration_CustomDefaultActionToastString)" explainText="$(string.UX_Configuration_CustomDefaultActionToastString_Explain)" key="Software\Policies\Microsoft\Windows Defender\UX Configuration" presentation="$(presentation.UX_Configuration_CustomDefaultActionToastString)">
-            <parentCategory ref="ClientInterface" />
-            <supportedOn ref="windows:SUPPORTED_Windows8" />
-            <elements>
-                <text id="UX_Configuration_CustomDefaultActionToastString" valueName="CustomDefaultActionToastString" required="true" />
-            </elements>
-        </policy>
         <policy name="MpEngine_MpCloudBlockLevel" class="Machine" displayName="$(string.MpCloudBlockLevel)" explainText="$(string.MpCloudBlockLevel_Explain)" key="Software\Policies\Microsoft\Windows Defender\MpEngine" valueName="MpCloudBlockLevel" presentation="$(presentation.MpCloudBlockLevel)">
         <parentCategory ref="MpEngine" />
         <supportedOn ref="windows:SUPPORTED_Windows_10_0" />
@@ -1427,7 +1690,7 @@
         </policy>
         <policy name="DisableGradualRelease" class="Machine" displayName="$(string.MpEngine_DisableGradualRelease)" explainText="$(string.MpEngine_DisableGradualRelease_Explain)" key="Software\Policies\Microsoft\Windows Defender\MpEngine" valueName="DisableGradualRelease">
             <parentCategory ref="MpEngine" />
-            <supportedOn ref="windows:SUPPORTED_Windows_10_RS1" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS1" />
             <enabledValue>
                 <decimal value="1" />
             </enabledValue>
@@ -1436,7 +1699,7 @@
             </disabledValue>
         </policy>
         <policy name="ExploitGuard_EnableNetworkProtection" class="Machine" displayName="$(string.ExploitGuard_EnableNetworkProtection)" explainText="$(string.ExploitGuard_EnableNetworkProtection_Explain)" key="Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Network Protection" valueName="EnableNetworkProtection" presentation="$(presentation.ExploitGuard_EnableNetworkProtection)">
-            "<parentCategory ref="ExploitGuard_NetworkProtection" />
+            <parentCategory ref="ExploitGuard_NetworkProtection" />
             <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS3" />
             <elements>
             <enum id="ExploitGuard_EnableNetworkProtection" valueName="EnableNetworkProtection" required="true">
@@ -1505,6 +1768,13 @@
                 <list id="ExploitGuard_ASR_ASROnlyExclusions" additive="true" explicitValue="true" key="Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\ASROnlyExclusions" />
             </elements>
         </policy>
+        <policy name="ExploitGuard_ASR_ASROnlyPerRuleExclusions" class="Machine" displayName="$(string.ExploitGuard_ASR_ASROnlyPerRuleExclusions)" explainText="$(string.ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain)" key="Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR" valueName="ExploitGuard_ASR_ASROnlyPerRuleExclusions" presentation="$(presentation.ExploitGuard_ASR_ASROnlyPerRuleExclusions)">
+            <parentCategory ref="ExploitGuard_ASR" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS3" />
+            <elements>
+                <list id="ExploitGuard_ASR_ASROnlyPerRuleExclusions" additive="true" explicitValue="true" key="Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\ASROnlyPerRuleExclusions" />
+            </elements>
+        </policy>
         <policy name="ExploitGuard_ControlledFolderAccess_AllowedApplications" class="Machine" displayName="$(string.ExploitGuard_ControlledFolderAccess_AllowedApplications)" explainText="$(string.ExploitGuard_ControlledFolderAccess_AllowedApplications_Explain)" key="Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access" valueName="ExploitGuard_ControlledFolderAccess_AllowedApplications" presentation="$(presentation.ExploitGuard_ControlledFolderAccess_AllowedApplications)">
             <parentCategory ref="ExploitGuard_ControlledFolderAccess" />
             <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS3" />
@@ -1518,6 +1788,26 @@
             <elements>
                 <list id="ExploitGuard_ControlledFolderAccess_ProtectedFolders" additive="true" explicitValue="true" key="Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\Controlled Folder Access\ProtectedFolders" />
             </elements>
+        </policy>
+        <policy name="Features_TDTFeatureEnabled" class="Machine" displayName="$(string.Features_TDTFeatureEnabled)" explainText="$(string.Features_TDTFeatureEnabled_Explain)" key="Software\Policies\Microsoft\Windows Defender\Features" valueName="TDTFeatureEnabled">
+            <parentCategory ref="Features" />
+            <supportedOn ref="windows:SUPPORTED_Windows_10_0" />
+            <enabledValue>
+                <decimal value="1" />
+            </enabledValue>
+            <disabledValue>
+                <decimal value="2" />
+            </disabledValue>
+        </policy>
+        <policy name="Features_PassiveRemediation" class="Machine" displayName="$(string.Features_PassiveRemediation)" explainText="$(string.Features_PassiveRemediation_Explain)" key="Software\Policies\Microsoft\Windows Defender\Features" valueName="PassiveRemediation">
+            <parentCategory ref="Features" />
+            <supportedOn ref="windows:SUPPORTED_Windows8" />
+            <enabledValue>
+                <decimal value="1" />
+            </enabledValue>
+            <disabledValue>
+                <decimal value="0" />
+            </disabledValue>
         </policy>
     </policies>
 </policyDefinitions>

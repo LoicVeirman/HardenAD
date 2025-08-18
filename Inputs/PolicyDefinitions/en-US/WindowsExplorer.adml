@@ -504,19 +504,27 @@ If you enable this policy setting, file shortcut icons are allowed to be obtaine
 If you disable or do not configure this policy setting, file shortcut icons that use remote paths are prevented from being displayed.
 
 Note: Allowing the use of remote paths in file shortcut icons can expose users’ computers to security risks.</string>
-      <string id="DefaultAssociationsConfiguration">Set a default associations configuration file</string>
-      <string id="DefaultAssociationsConfiguration_Help">This policy specifies the path to a file (e.g. either stored locally or on a network location) that contains file type and protocol default application associations. This file can be created using the DISM tool.
+      <string id="DisableMotWOnInsecurePathCopy_DisplayName">Do not apply the Mark of the Web tag to files copied from insecure sources</string>
+      <string id="DisableMotWOnInsecurePathCopy_Help">This policy setting determines the application of the Mark of the Web tag to files sourced from insecure locations.
 
+If you enable this policy setting, files copied from unsecure sources will not be tagged with the Mark of the Web.
+
+If you disable or do not configure this policy setting, files copied from unsecure sources will be tagged with the appropriate Mark of the Web.
+
+Note: Failure to tag files from unsecure sources with the Mark of the Web can expose users’ computers to security risks.</string>
+      <string id="DefaultAssociationsConfiguration">Set a default associations configuration file</string>
+      <string id="DefaultAssociationsConfiguration_Help">This policy specifies the path to a file (stored locally or on a network location) that contains file type and protocol default application associations. This file can be created using the DISM tool.
+      
 For example:
 Dism.exe /Online /Export-DefaultAppAssociations:C:\AppAssoc.txt
 
-For more information, refer to the DISM documentation on TechNet.
+For more information, refer to the DISM documentation.
+
+The file can be further edited after it is created to change how often the policy associations are applied. A "Version" attribute can be added to the "DefaultAssociations" element. The value should be an integer. A "Suggested" attribute can be added to any "Association" element. The value should be a bool and the default value is "false". When the policy is applied to a user, any Association that has Suggested="true" will only get applied once. If the Version value is ever incremented, Associations with Suggested="true" will get reapplied.
 
 If this group policy is enabled and the client machine is domain-joined, the file will be processed and default associations will be applied at logon time.
 
-If the group policy is not configured, disabled, or the client machine is not domain-joined, no default associations will be applied at logon time.
-
-If the policy is enabled, disabled, or not configured, users will still be able to override default file type and protocol associations.</string>
+If the policy is enabled, users will still be able to override default file type and protocol associations, but on next logon the file will be reapplied.</string>
     </stringTable>
     <presentationTable>
       <presentation id="MaxRecentDocs">

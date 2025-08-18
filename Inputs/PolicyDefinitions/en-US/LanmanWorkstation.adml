@@ -36,6 +36,8 @@ If you enable this policy setting or if you do not configure this policy setting
 
 If you disable this policy setting, the SMB client will reject insecure guest logons.
 
+If you enable signing, the SMB client will reject insecure guest logons.
+
 Insecure guest logons are used by file servers to allow unauthenticated access to shared folders. While uncommon in an enterprise environment, insecure guest logons are frequently used by consumer Network Attached Storage (NAS) appliances acting as file servers. Windows file servers require authentication and do not use insecure guest logons by default. Since insecure guest logons are unauthenticated, important security features such as SMB Signing and SMB Encryption are disabled. As a result, clients that allow insecure guest logons are vulnerable to a variety of man-in-the-middle attacks that can result in data loss, data corruption, and exposure to malware. Additionally, any data written to a file server using an insecure guest logon is potentially accessible to anyone on the network. Microsoft recommends disabling insecure guest logons and configuring file servers to require authenticated access."
       </string>
 
@@ -61,6 +63,7 @@ Insecure guest logons are used by file servers to allow unauthenticated access t
         Note: This policy has no effect when connecting Scale-out File Server shares provided by a Windows Server. Microsoft does not recommend enabling this policy for clients that routinely connect to files hosted on a Windows Failover Cluster with the File Server for General Use role, as it can lead to adverse failover times and increased memory and CPU usage.
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">At least Windows Server 2022, Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">At least Windows Server 2025, Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">Use SMB compression by default</string>
       <string id="Pol_EnableCompressedTraffic_Help">This policy controls whether the SMB client uses traffic compression by default.
 
@@ -77,11 +80,129 @@ If you enable this policy setting, the SMB client will never compress data, irre
 
 If you disable or do not configure this policy setting, the SMB client may compress traffic (depending on a combination of other policies and conditions).
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">Mandate the maximum version of SMB</string>
+      <string id="Pol_MaxSmb2Dialect_Help">This policy controls the maximum version of SMB protocol
+
+Note: This group policy does not prevent use of SMB 1 if that component is still installed and enabled.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">Mandate the minimum version of SMB</string>
+      <string id="Pol_MinSmb2Dialect_Help">This policy controls the minimum version of SMB protocol
+
+Note: This group policy does not prevent use of SMB 1 if that component is still installed and enabled.
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">Block NTLM (LM, NTLM, NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">This policy controls if the SMB client will block NTLM for remote connection authentication.
+
+If you enable this policy setting, the SMB client won't use NTLM for remote connection authentication.
+
+If you disable or do not configure this policy setting, the SMB client can still use NTLM.
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">Block NTLM Server Exception List</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">This policy setting determines if NTLM could be used to access to specified servers.
+
+If you enable this policy setting (vaild only if the Block NTLM (LM, NTLM, NTLMv2) policy is enabled), NTLM could be used to access servers specified. Please enter the desired servers (DNS name, IP address or NetBIOS name) in the edit box, one server name per line.
+
+If you disable or do not configure this policy setting, the NTLM access to servers will be determined by other settings.
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">Enable remote mailslots</string>
+      <string id="Pol_EnableRemoteMailslots_Help">This policy controls whether the SMB client will enable or disable remote mailslots over MUP.
+
+If you disable this policy setting, remote mailslots will not function over MUP, hence they will not go through the SMB client redirector.
+
+If you do not configure this policy setting, remote mailslots may be allowed through MUP.
+      </string>
+      <string id="Pol_RequireEncryption_Name">Require Encryption</string>
+      <string id="Pol_RequireEncryption_Help">This policy controls whether the SMB client will require encryption.
+
+If you enable this policy setting, the SMB client will require the SMB server to support encryption and encrypt the data.
+
+If you disable or do not configure this policy setting, the SMB client will not require encryption. However, SMB encryption may still be required; see notes below.
+
+Note: This policy is combined with per-share, per-server, and per mapped drive connection properties, through which SMB encryption may be required. The SMB server must support and enable SMB encryption. For example, should this policy be disabled (or not configured), the SMB client may still perform encryption if an SMB server share has required encryption.
+
+Important: SMB encryption requires SMB 3.0 or later
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">Enable Alternative Ports</string>
+      <string id="Pol_EnableAlternativePorts_Help">This policy controls whether the SMB client will enable or disable alternative ports.
+
+If you disable this policy setting, alternative ports will not be used by the SMB client.
+
+If you do not configure this policy setting, alternative ports may be used by the SMB client.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">Audit server does not support encryption</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">This policy controls whether the SMB client will enable the audit event when the SMB server doesn't support encryption.
+
+If you enable this policy setting, the SMB client will log the event when the SMB server doesn't support encryption.
+
+If you disable or do not configure this policy setting, the SMB client will not log the event.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">Audit server does not support signing</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">This policy controls whether the SMB client will enable the audit event when the SMB server doesn't support signing.
+
+If you enable this policy setting, the SMB client will log the event when the SMB server doesn't support signing.
+
+If you disable or do not configure this policy setting, the SMB client will not log the event.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Audit insecure guest logon</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">This policy controls whether the SMB client will enable the audit event when the client is logged on as guest account.
+
+If you enable this policy setting, the SMB client will log the event when the client is logged on as guest account.
+
+If you disable or do not configure this policy setting, the SMB client will not log the event.
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">Alternative Port Mappings</string>
+      <string id="Pol_AlternativePortMappings_Help">This policy setting determines the alternative port registry mappings used by the SMB client.
+
+If you enable this policy setting, the first valid mapping will be used if the mapping's server name matches the targeted server name for connectivity.
+
+If you enable this policy setting and do not specify at least one valid mapping, or if you disable or do not configure this policy setting, then the SMB client will refer to other methods of determining alternative port usage such as with the NET USE or New-SmbMapping commands.
+
+Examples:
+
+contososa.file.core.windows.net:tcp:448
+edgesrv1.corp.contoso.com:quic:450
+
+How to modify this setting:
+
+Arrange the desired alternative port mappings in the edit box with one mapping entry per line.
+
+The format of each mapping entry specifies a server name, transport type, and port number separated by colons as done so in the example above.
+
+Note: This policy does not require a Windows reboot to take effect.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>Cipher suites:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>Select SMB version:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Version:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>Select SMB version:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Version:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>Block NTLM Server Exception List:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>Alternative Port Registry Mappings:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

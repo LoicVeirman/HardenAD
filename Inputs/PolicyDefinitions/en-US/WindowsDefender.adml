@@ -17,6 +17,9 @@
     <string id="Quarantine">Quarantine</string>
     <string id="RealtimeProtection">Real-time Protection</string>
     <string id="Remediation">Remediation</string>
+    <string id="Remediation_BNB">Behavioral Network Blocks</string>
+    <string id="Remediation_BNB_REP">Remote Encryption Protection</string>
+    <string id="Remediation_BNB_BFP">Brute-Force Protection</string>
     <string id="Reporting">Reporting</string>
     <string id="Scan">Scan</string>
     <string id="SignatureUpdate">Security Intelligence Updates</string>
@@ -38,7 +41,7 @@
 
     Enabled: 
     Allow managed devices to update through metered connections. Data charges may apply.</string>
-    <string id="HideExclusionsFromLocalAdmins">Control whether or not exclusions are visible to Local Admins.</string>
+    <string id="HideExclusionsFromLocalAdmins">Control whether or not exclusions are visible to Local Admins</string>
     <string id="HideExclusionsFromLocalAdmins_Explain">
     This policy setting controls whether or not exclusions are visible to Local Admins.  For end users (that are not Local Admins) exclusions are not visible, whether or not this setting is enabled.
     Disabled(Default):
@@ -47,6 +50,10 @@
     Enabled: 
         If you enable this setting, Local Admins will no longer be able to see the exclusion list in Windows Security App or via PowerShell.
         Note: Applying this setting will not remove exclusions, it will only prevent them from being visible to Local Admins. This is reflected in Get-MpPreference.</string>
+    <string id="HideExclusionsFromLocalUsers">Control whether exclusions are visible to local users</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    This policy setting controls whether exclusions are visible to local users on the device.
+    Use the policy setting HideExclusionsFromLocalAdmins to hide exclusions from both standard and administrative local users.</string>
     <string id="AllowNetworkProtectionOnWinServer">This settings controls whether Network Protection is allowed to be configured into block or audit mode on Windows Server.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     Disabled (Default): 
@@ -57,11 +64,29 @@
     Note, that this configuration is dependent on the EnableNetworkProtection configuration. If this configuration is false, EnableNetworkProtection will be ignored, otherwise network protection will start on Windows Server depending on the value of EnableNetworkProtection.</string>
     <string id="DisableDatagramProcessing">This setting controls datagram processing for network protection.</string>
     <string id="DisableDatagramProcessing_Explain">
-    Enabled (Default): 
+    Disabled (Default): 
     If Not Configured or Disabled, datagram processing will be enabled for network protection.
 
     Enabled: 
     If Enabled, datagram processing will be disabled for network protection.</string>
+    <string id="EnableConvertWarnToBlock">Convert warn verdict to block</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    Network protection inspects network traffic and determines whether it allows or blocks traffic or displays a warning.
+    
+    Disabled (Default): 
+    If Not Configured or Disabled, network protection will display a warning for warn verdicts.
+
+    Enabled: 
+    If this setting is Enabled, network protection blocks network traffic instead of displaying a warning.</string>
+    <string id="AllowSwitchToAsyncInspection">Turn on asynchronous inspection</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    Control whether network protection can improve performance by switching from real-time inspection to asynchronous inspection.
+
+    Disabled (Default): 
+    If Not Configured or Disabled, asynchronous inspection will not be enabled for network protection.
+
+    Enabled: 
+    If Enabled, switching to asynchronous inspection will be allowed for network protection.</string>
     <string id="DisableAutoExclusions">Turn off Auto Exclusions</string>
     <string id="DisableAutoExclusions_Explain">
         Allows an administrator to specify if Automatic Exclusions feature for Server SKUs should be turned off.
@@ -142,15 +167,19 @@
       If you disable or do not configure this setting, the proxy will skip over this fallback step according to the order specified above.
     </string>
     <string id="RandomizeScheduleTaskTimes">Randomize scheduled task times</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">This policy setting allows you to configure the scheduled scan, and the scheduled security intelligence update, start time window in hours.
+    <string id="RandomizeScheduleTaskTimes_Explain">This policy setting allows you to configure the randomization of the scheduled scan start time and the scheduled definition update start time.
 
-    If you disable or do not configure this setting, scheduled tasks will begin at a random time within 4 hours after the time specified in Task Scheduler.
-    If you enable this setting, you can widen, or narrow, this randomization period. Specify a randomization window of between 1 and 23 hours.</string>
+        If you enable or do not configure this policy setting, and did not set a randomization window in the Configure scheduled task time randomization window setting , then randomization will be added between 0-4 hours.
+        If you enable or do not configure this policy setting, and set a randomization window in the Configure scheduled task time randomization window setting, the configured randomization window will be used.
+        If you disable this policy setting, but configured the scheduled task time randomization window, randomization will not be done. 
+    </string>
     <string id="SchedulerRandomizationTime">Configure scheduled task times randomization window</string>
-    <string id="SchedulerRandomizationTime_Explain">This policy setting allows you to configure scheduled scan start time and the scheduled security intelligence update start time window in hours.
+    <string id="SchedulerRandomizationTime_Explain">This policy setting allows you to configure scheduled task scan start time and the scheduled security intelligence update start time window in hours. This setting affects the Randomize scheduled task times configuration.
 
-    If you disable or do not configure this setting, scheduled tasks will begin at a random time within an interval of 4 hours after the specified start time.
-    If you enable this setting, you must pick a randomization window in hours. The possible randomization window interval is between 1 and 23 hours.</string>
+        If you enable this setting, you must pick a randomization window in hours. The possible randomization window interval is between 1 and 23 hours. The randomization interval implemented is between 0 and the configured value. 
+        When you enable this setting, Randomize scheduled task times settings uses the randomization window specified in this configuration setting. 
+        If you disable or do not configure this policy setting, Randomize scheduled task times settings will randomize scheduled task times between 0-4 hours.</string>
+
     <string id="ServiceKeepAlive">Allow antimalware service to remain running always</string>
     <string id="ServiceKeepAlive_Explain">This policy setting allows you to configure whether or not the antimalware service remains running when antivirus and antispyware security intelligence is disabled. It is recommended that this setting remain disabled.
 
@@ -219,6 +248,22 @@
     If you enable or do not configure this setting, script scanning will be enabled.
 
     If you disable this setting, script scanning will be disabled.</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">Configure real-time protection and Security Intelligence Updates during OOBE</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">This policy setting allows you to configure whether real-time protection and Security Intelligence Updates are enabled during OOBE (Out of Box experience).
+ 
+    If you enable this setting, real-time protection and Security Intelligence Updates are enabled during OOBE.
+ 
+    If you either disable or do not configure this policy setting, real-time protection and Security Intelligence Updates during OOBE is not enabled.</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">Configure performance mode status</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">This policy controls Microsoft Defender Antivirus performance mode for Dev Drives.
+
+    A Dev Drive is a disk drive optimized for higher performance in software development scenarios. When this policy is Enabled or not configured, Performance mode is turned on for Microsoft Defender Antivirus. In Performance mode, Microsoft Defender Antivirus security checks of content stored on Dev Drives are conducted asynchronously to enhance performance. Performance mode requires the following policies also be enabled: “Enable dev drive”, and “Dev drive filter attach policy”.
+
+    If you either Enable or do not configure this policy setting, Performance mode is turned on.
+
+    If you Disable this policy setting, Performance mode is turned off and Microsoft Defender Antivirus will protect a Dev Drive in the same way as other drives.</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">Turn on behavior monitoring</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">This policy setting allows you to configure behavior monitoring.
@@ -359,6 +404,92 @@
     If you enable this setting, a scheduled full scan to complete remediation will run at the time of day specified.
 
     If you disable or do not configure this setting, a scheduled full scan to complete remediation will run at a default time.</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">Configure Remote Encryption Protection Mode</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    Set the mode for Remote Encryption Protection in Microsoft Defender Antivirus, which can detect and block attempts to replace local files with encrypted versions from another device. 
+
+    Supported settings:
+    * 0 - Not configured or Default: Apply defaults, which can vary depending on the antivirus engine version and the platform
+    * 1 - Block: Prevent suspicious and malicious behaviors
+    * 2 - Audit: Generate EDR detections without blocking
+    * 4 - Off: Feature is off with no performance impact
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">Default</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">Block</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">Audit</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">Off</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">Configure Remote Encryption Protection blocking time</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    Set the maximum time an IP address is blocked by Remote Encryption Protection. After this time, blocked IP addresses will be able to reinitiate connections. 
+
+    Supported settings:
+    * 0 - None: Internal feature logic will determine the actual blocking time
+    * Specify other times in 15-minute increments
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">Configure how aggressively Remote Encryption Protection blocks threats</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    Set the criteria for when remote encryption preventionprotection blocks IP addresses.
+
+    Supported settings:
+    *0 - Low: Block only when confidence level is 100% (Default)
+    *1 - Medium: Use cloud aggregation and block when confidence level is above 99%
+    *2 - High: Use cloud intel and context, and block when confidence level is above 90%
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">Low</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">Medium</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">High</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> Set exclusions from Remote Encryption Protection</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    Specify IP addresses, subnets, and domain names to exclude from Remote Encryption Protection. Note that attackers can spoof excluded addresses and names to bypass protection.
+
+    Enter each address or subnet on a new line as a name-value pair:
+    - Name column: Enter an IP address or subnet name. For example, ""1.1.127.0"" will exclude this IP address from getting blocked.
+    - Value column: Enter ""0"" for each item
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">Configure Brute-Force Protection mode</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Set the mode for Brute-Force Protection in Microsoft Defender Antivirus, which can detect and block attempts to forcibly initiate sign in and initiate sessions.
+
+    Supported settings:
+    * 0 - Not configured or Default: Apply defaults, which can vary depending on the antivirus engine version and the platform
+    * 1 - Block: Prevent suspicious and malicious behaviors
+    * 2 - Audit: Generate EDR detections without blocking
+    * 4 - Off: Feature is off with no performance impact
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">Default</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">Block</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">Audit</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">Off</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">Configure Brute-Force Protection blocking time</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    Set the maximum time an IP address is blocked by Brute-Force Protection. After this time, blocked IP addresses will be able to sign-in and initiate sessions.
+
+    Supported settings:
+    * 0 - None: Internal feature logic will determine the actual blocking time
+    * Specify other times in 15-minute increments
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">Configure Brute-Force Protection aggressiveness</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    Set the criteria for when Brute-Force Protection blocks IP addresses.
+
+    Supported settings:
+    *0 - Low: Block only when confidence level is 100% (Default)
+    *1 - Medium: Use cloud aggregation and block when confidence level is above 99%
+    *2 - High: Use cloud intel and context, and block when confidence level is above 90%
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">Low</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">Medium</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">High</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">Set exclusions from Brute-Force Protection</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    Specify IP addresses, subnets or workstation names to exclude from Brute-Force Protection. Excluded IP addresses will not be checked for possible brute force activity.
+    
+    Note that attackers can spoof excluded addresses and names to bypass protection. Ensure the names are unique and unlikely to be guessed by attackers.
+
+    Enter each address or subnet on a new line as a name-value pair:
+    - Name column: Enter an IP address, subnet name, or workstation name. For example, "1.1.127.0" will exclude this IP address from getting blocked by BFP.
+    - Value column: Enter "0" for each item
+    </string>
     <string id="Reporting_AdditionalActionTimeout">Configure time out for detections requiring additional action</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">This policy setting configures the time in minutes before a detection in the "additional action" state moves to the "cleared" state.</string>
     <string id="Reporting_CriticalFailureTimeout">Configure time out for detections in critically failed state</string>
@@ -398,6 +529,12 @@
     If you configure this setting to 0, no service health reports will be sent.
 
     The maximum value allowed to be set is 14400 minutes (10 days).</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">Configure whether to report Dynamic Signature dropped events</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">This policy setting configures whether to report Dynamic Signature dropped events.
+
+    If you do not configure this setting, the default value will be applied. The default value is set to disabled (such events are not reported).
+    If you configure this setting to enabled, Dynamic Signature dropped events will be reported.
+    If you configure this setting to disabled, Dynamic Signature dropped events will not be reported.</string>
       <string id="Scan_AllowPause">Allow users to pause scan</string>
     <string id="Scan_AllowPause_Explain">This policy setting allows you to manage whether or not end users can pause a scan in progress.
 
@@ -456,6 +593,10 @@
     If you enable this setting, catch-up scans for scheduled quick scans will be turned on. If a computer is offline for two consecutive scheduled scans, a catch-up scan is started the next time someone logs on to the computer.  If there is no scheduled scan configured, there will be no catch-up scan run.
 
     If you disable or do not configure this setting, catch-up scans for scheduled quick scans will be turned off.</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">Trigger a quick scan after X days without any scans</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">This policy setting defines the number of days that can pass since the last scan before an aggresive catchup quick scan is automatically triggered. The value represents the number of days that can pass without any scans being performed before an agressive quick scan will be triggered.
+    
+    Valid values range from 7 to 60 days. If not configured, aggressive quick scans will be disabled. By default, the value is set to 25 days when enabled.</string>
     <string id="Scan_DisableEmailScanning">Turn on e-mail scanning</string>
     <string id="Scan_DisableEmailScanning_Explain">This policy setting allows you to configure e-mail scanning. When e-mail scanning is enabled, the engine will parse the mailbox and mail files, according to their specific format, in order to analyze the mail bodies and attachments. Several e-mail formats are currently supported, for example: pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac). Email scanning is not supported on modern email clients.
     
@@ -498,12 +639,12 @@
     If you enable this setting, mapped network drives will be scanned.
 
     If you disable or do not configure this setting, mapped network drives will not be scanned.</string>
-    <string id="Scan_DisableScanningNetworkFiles">Scan network files</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">This policy setting allows you to configure scanning for network files. It is recommended that you do not enable this setting.
+    <string id="Scan_DisableScanningNetworkFiles">Configure scanning of network files</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">This policy setting allows the scanning of network files using on access protection. The default is enabled. Recommended to remain enabled in most cases.
 
-    If you enable this setting, network files will be scanned.
+    If you enable or do not configure this setting, network files will be scanned.
 
-    If you disable or do not configure this setting, network files will not be scanned.</string>
+    If you disable this setting, network files will not be scanned.</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">Configure local setting override for maximum percentage of CPU utilization</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">This policy setting configures a local override for the configuration of maximum percentage of CPU utilization during scan. This setting can only be set by Group Policy.
 
@@ -615,6 +756,18 @@
 
         If you disable or do not configure this setting, not changes will be made to CPU priority for scheduled scans.
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">Scan excluded files and directories during quick scans</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        This policy setting allows you to scan excluded files and directories during quick scans.
+
+        If you set this policy setting to 1, all files and directories that are excluded from real-time protection using contextual exclusions are scanned during a quick scan.
+
+        If you set this policy to 0 or do not configure it, exclusions are not scanned during quick scans.
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">Define the number of days before spyware security intelligence is considered out of date</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">This policy setting allows you to define the number of days that must pass before spyware security intelligence is considered out of date. If security intelligence is determined to be out of date, this state may trigger several additional actions, including falling back to an alternative update source or displaying a warning icon in the user interface. By default, this value is set to 7 days.
 
@@ -637,6 +790,13 @@
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">This policy setting allows you to define the security intelligence location for VDI-configured computers. 
 
     If you disable or do not configure this setting, security intelligence will be referred from the default local source.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">Configure security intelligence updates according to the scheduler for VDI clients.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">This policy setting allows you to configure security intelligence updates according to the scheduler for VDI-configured computers. It is used together with the shared security intelligence location (SharedSignaturesLocation).
+
+    If you enable this policy setting and configure SharedSignaturesLocation, updates from the configured location occur only at the previously configured scheduled update time.
+
+    If you either disable or do not configure this policy setting, updates occur whenever a new security intelligence update is detected at the location that is specified by SharedSignaturesLocation.
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">Turn on scan after security intelligence update</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">This policy setting allows you to configure the automatic scan which starts after a security intelligence update has occurred.
 
@@ -829,12 +989,6 @@
 
       If you enable this setting, Microsoft Defender Antivirus notifications will not display on clients.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Display additional text to clients when they need to perform an action</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">This policy setting allows you to configure whether or not to display additional text to clients when they need to perform an action. The text displayed is a custom administrator-defined string. For example, the phone number to call the company help desk. The client interface will only display a maximum of 1024 characters. Longer strings will be truncated before display.
-
-    If you enable this setting, the additional text specified will be displayed.
-
-    If you disable or do not configure this setting, there will be no additional text displayed.</string>
     <string id="MpCloudBlockLevel">Select cloud protection level</string>
     <string id="MpCloudBlockLevel_Explain">
       This policy setting determines how aggressive Microsoft Defender Antivirus will be in blocking and scanning suspicious files.
@@ -912,6 +1066,17 @@
     Same as Disabled.
 
     You can configure ASR rules in the Configure Attack Surface Reduction rules GP setting.
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Apply a list of exclusions to specific attack surface reduction (ASR) rules</string>d
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    This policy allows an administrator to specify a list of exclusions for specific ASR rules.
+    Each entry is a name-value pair. The key indicates the rule GUID, and the value is a set of full paths separated by the &gt; character, indicating the exclusions for that particular ASR rule.
+
+    NOTE: The GUID is a KEY, not a value.
+
+    Example:
+    KEY: "{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}"
+    VALUE: "C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe"
     </string>
     <string id="ExploitGuard_ASR_Rules">Configure Attack Surface Reduction rules</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1119,12 +1284,65 @@
     <string id="DeviceControl_DataDuplicationRemoteLocation">Define Device Control evidence data remote location</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
         Define evidence file remote location, where Device Control service will move evidence data captured.
+
+        When configuring this setting, ensure that Device Control is Enabled and that the provided path is a remote path the user can access.
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">Set the retention period for files in the local device control cache</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        This policy setting determines how long device control retains files for evidence in its local cache on the device. Device control keeps a file in its local cache only if it is unable to upload the file to a designated network share or Azure storage. 
+
+        By default, device control retains files in its local cache for 60 days.
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">Turn on device control for specific device types</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        This policy setting controls which device types, identified by their PrimaryIds, will have device control protection turned on. If you enable this setting for certain device types, device control will regulate access to those devices based on the corresponding custom policy. Device control will be turned off for all other types of supported devices, even if custom protection policies are configured for those devices.
+ 
+        This setting currently supports these device types: RemovableMediaDevices, CdRomDevices, WpdDevices, and PrinterDevices. 
+ 
+        If you enable this policy setting but do not specify any PrimaryIds, device control will be turned off across all supported device types.
+ 
+        If you disable or don’t configure this policy setting, device control will be enforced on all supported devicesbased on their corresponding custom policies.
+    </string>
+	<string id="DeviceControl_CustomSupportLink">Set up a support link for device control notifications</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        This setting enables your organization to specify the ‘Get Support’ link in device control notifications. 
+		
+		When configured, the ‘Get Support” button automatically navigates to the specified link.
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">Set the policy refresh rate</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        This setting defines the interval, in minutes, at which the device will retry loading the policy configuration in the case that an error has occurred and the policy could not load.
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">Set the Azure AD refresh rate</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        This setting defines the interval, in minutes, at which the device will query Azure AD to update related settings, configuration, and group memberships.
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">Set the data duplication limit (MB)</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        This setting defines the maximum amount of data that can be duplicated for device control. 
+		
+		When the limit is reached, files that are copied to removable storage will not be duplicated on the machine.
+	</string>
     <string id="Features_DeviceControlEnabled">Device Control</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         Enable or Disable Defender Device Control on this machine.
         Note: You must be enrolled as E3 or E5 in order for Device Control to be enabled.
     </string>
+    <string id="Features_TDTFeatureEnabled">Intel TDT Integration Level</string>
+    <string id="Features_TDTFeatureEnabled_Explain">This policy setting configures the Intel TDT integration level for Intel TDT-capable devices.
+
+        If you do not configure this setting, the default value will be applied. The default value is controlled by Microsoft security intelligence updates. Microsoft will enable Intel TDT if there is a known threat.
+        If you configure this setting to enabled, Intel TDT integration will turn on.
+        If you configure this setting to disabled, Intel TDT integration will turn off.</string>
+    <string id="Features_PassiveRemediation">Enable EDR in block mode</string>
+    <string id="Features_PassiveRemediation_Explain">This policy setting enables or disables EDR in block mode (also known as "passive remediation"). EDR in block mode is recommended for devices running Microsoft Defender Antivirus in passive mode. Available with platform release: 4.18.2202.X
+
+        The data type is integer
+
+        Supported values:
+
+        1: Turn EDR in block mode on
+        0: Turn EDR in block mode off</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1389,38 @@
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">Configure monitoring for incoming and outgoing file and program activity</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">Specify the state of Remote Encryption Protection</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">Specify how long to block detections for, in minutes</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">Specify how aggressively Remote Encryption Protection blocks threats</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">Remote Encryption Protection Exclusions</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">Specify the state of Brute-Force Protection</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">Specify how long to block detections for, in minutes</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">Specify how aggressively Brute-Force Protection blocks threats</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Brute-Force Protection Exclusions</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">Specify the day of the week to run a scheduled full scan to complete remediation</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">Specify the time of day to run a scheduled full scan to complete remediation</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">Specify how many days without scans should pass before an aggressive quick scan is triggered</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">Define the number of scheduled scans that can be missed after which a catch-up scan is forced</decimalTextBox>
@@ -1273,11 +1518,6 @@
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Specify threat alert levels at which default action should not be taken when detected</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Display additional text to clients when they need to perform an action</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">Specify the interval for expiry notification</decimalTextBox>
     </presentation>
@@ -1293,6 +1533,9 @@
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">Exclusions from ASR rules:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Exclusions for each ASR rules:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">Set the state for each ASR rule:</listBox>
     </presentation>
@@ -1307,6 +1550,9 @@
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1584,34 @@
         <label>Define the Device Control data duplication remote location.</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">Set the retention period for files in the local device control cache</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>Turn on device control for specific device types</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>Set up a support link for device control notifications</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>Set the policy refresh rate</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>Set the Azure AD refresh rate</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>Set the data duplication limit (MB)</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

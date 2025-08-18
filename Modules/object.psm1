@@ -26,6 +26,7 @@ Function New-AdministrationAccounts {
          
          history: 
             01.00 -- Script creation
+            01.01 -- Added check against user creation
     #>
     param(
         [Parameter(mandatory = $false)]
@@ -197,23 +198,49 @@ Function New-AdministrationAccounts {
                     Else {
                         ## Create User
                         Try {
+                            # Validate sAMAccountName before proceeding : https://learn.microsoft.com/en-us/windows/win32/adschema/a-samaccountname
+                            $samAccountName = $account.sAMAccountName
+                            $invalidCharsRegex = '[/\\\[\]:;|=,+*?<>]'
+
+                            if ($samAccountName.Length -gt 20) {
+                                $errorMessage = "Validation Error: sAMAccountName '$samAccountName' exceeds the maximum length of 20 characters for user '$($account.DisplayName)'."
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! $errorMessage"
+                                throw $errorMessage
+                            }
+
+                            if ($samAccountName -match $invalidCharsRegex) {
+                                $errorMessage = "Validation Error: sAMAccountName '$samAccountName' contains invalid characters for user '$($account.DisplayName)'. Forbidden characters are: / \ [ ] : ; | = , + * ? < >"
+                                $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! $errorMessage"
+                                throw $errorMessage
+                            }
+
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ sAMAccountName '$samAccountName' validated successfully."
+
                             #-Generate a random password
                             $NewPwd = $null
-                            
-                            Add-Type -AssemblyName 'System.Web'
-
+                            Add-Type -AssemblyName 'System.Web' -ErrorAction SilentlyContinue
                             $NewPwd   = [System.Web.Security.Membership]::GeneratePassword($pwdLength, $pwdNANC)
                             $SecPwd   = ConvertTo-SecureString -AsPlainText $NewPwd -Force
                             $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ Password generated"
 
                             #-Create new user object
-                            New-ADUser  -Name $account.DisplayName -AccountNotDelegated $true -AccountPassword $SecPwd -Description $account.description `
-                                        -DisplayName $account.displayName -Enabled $true -GivenName $account.GivenName -SamAccountName $account.sAMAccountName `
-                                        -Surname $account.surname -UserPrincipalName ($account.sAMAccountName + "@" + (Get-Addomain).DNSRoot) `
-                                        -Path (Rewrite-OUPath $account.Path) -ErrorAction Stop
+                            New-ADUser  -Name $account.DisplayName `
+                                        -AccountNotDelegated $true `
+                                        -AccountPassword $SecPwd `
+                                        -Description $account.description `
+                                        -DisplayName $account.displayName `
+                                        -Enabled $true `
+                                        -GivenName $account.GivenName `
+                                        -SamAccountName $samAccountName `
+                                        -Surname $account.surname `
+                                        -UserPrincipalName ($samAccountName + "@" + (Get-ADDomain).DNSRoot) `
+                                        -Path (Rewrite-OUPath $account.Path) `
+                                        -ChangePasswordAtLogon $true ` 
 
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ user created: " + $account.displayName
-                        
+
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ User created: " + $account.displayName
+
+
                             #-Export Password
                             if ($KpsFlag) 
                             {
@@ -243,7 +270,8 @@ Function New-AdministrationAccounts {
                         Catch {
                             # Failed at creating!
                             $ErrIdx++
-                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! user could not be created! (" + $account.sAMAccountName + ")"
+                            $errorMessage = $_.Exception.Message
+                            $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> !!! ERROR creating user '$($account.DisplayName)': $errorMessage"
                         }
                     }
                 }

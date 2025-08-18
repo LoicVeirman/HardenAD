@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2015 Microsoft Corporation  -->
+<policyDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <policyNamespaces>
+    <target prefix="windowscopilot" namespace="Microsoft.Policies.WindowsCopilot" />
+    <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+  <categories>
+    <category name="WindowsAI" displayName="$(string.WindowsAI)">
+      <parentCategory ref="windows:WindowsComponents" />
+    </category>
+    <category name="WindowsCopilot" displayName="$(string.WindowsCopilot)">
+      <parentCategory ref="windows:WindowsComponents" />
+    </category>
+  </categories>
+  <policies>
+    <policy name="DisableAIDataAnalysis" class="User" displayName="$(string.DisableAIDataAnalysis)" explainText="$(string.DisableAIDataAnalysis_Help)" key="SOFTWARE\Policies\Microsoft\Windows\WindowsAI" valueName="DisableAIDataAnalysis">
+      <parentCategory ref="WindowsAI" />
+      <supportedOn ref="windows:SUPPORTED_Windows_11_0_NOSERVER_ENTERPRISE_EDUCATION_PRO_SANDBOX" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+    </policy>      
+    <policy name="TurnOffWindowsCopilot" class="User" displayName="$(string.TurnOffWindowsCopilot)" explainText="$(string.TurnOffWindowsCopilot_Help)" key="SOFTWARE\Policies\Microsoft\Windows\WindowsCopilot" valueName="TurnOffWindowsCopilot">
+      <parentCategory ref="WindowsCopilot" />
+      <supportedOn ref="windows:SUPPORTED_Windows_11_0_NOSERVER_ENTERPRISE_EDUCATION_PRO_SANDBOX" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+    </policy>
+  </policies>
+</policyDefinitions>

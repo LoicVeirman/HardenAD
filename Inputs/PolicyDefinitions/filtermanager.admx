@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2023 Microsoft Corporation  -->
+<policyDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <policyNamespaces>
+    <target prefix="fltmgr" namespace="Microsoft.Policies.FltMgr" />
+    <using prefix="filesys" namespace="Microsoft.Policies.FileSys" />
+    <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+  <categories>
+    <category name="FilterManager" displayName="$(string.FilterManager)">
+      <parentCategory ref="filesys:Filesystem" />
+    </category>
+  </categories>
+  <policies>
+    <policy name="DevDriveAttachPolicy" class="Machine"
+    displayName="$(string.DevDriveAttachPolicy)"
+    explainText="$(string.DevDriveAttachPolicyText)"
+    presentation="$(presentation.DevDriveAttachPolicy)"
+    key="System\CurrentControlSet\Policies">
+      <parentCategory ref="filesys:Filesystem" />
+      <supportedOn ref="windows:SUPPORTED_Windows_11_0_22H2" />
+      <elements>
+        <multiText id="DevDriveAttachPolicy" valueName="FltmgrDevDriveAttachPolicy" required="true" />
+      </elements>
+    </policy>
+  </policies>
+</policyDefinitions>

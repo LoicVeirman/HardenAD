@@ -46,12 +46,23 @@ Password age in days
   Maximum: 365 days
   Default: 30 days
 
+Passphrase length
+  Minimum: 3 words
+  Maximum: 10 words
+  Default: 6 words
+
 See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+
+Passphrase list taken from "Deep Dive: EFF's New Wordlists for Random Passphrases" by Electronic Frontier Foundation, and is used under a CC-BY-3.0 Attribution license. See https://go.microsoft.com/fwlink/?linkid=2255471 for more information.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Large letters</string>
       <string id="LAPS_PwdComplexity_Item_2">Large letters + small letters</string>
       <string id="LAPS_PwdComplexity_Item_3">Large letters + small letters + numbers</string>
       <string id="LAPS_PwdComplexity_Item_4">Large letters + small letters + numbers + specials</string>
+      <string id="LAPS_PwdComplexity_Item_5">Large letters + small letters + numbers + specials (improved readability)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Passphrase (long words)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Passphrase (short words)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Passphrase (short words with unique prefixes)</string>
       <string id="LAPS_AdminName">Name of administrator account to manage</string>
       <string id="LAPS_AdminName_Help">This policy setting specifies a custom Administrator account name to manage the password for.
 
@@ -94,7 +105,19 @@ If this setting is enabled, encrypted passwords will be decryptable by the speci
 
 If this setting is disabled or not configured, encrypted passwords will be decryptable by the Domain Admins group.
 
-This setting must be configured with either a SID in string format ("S-1-5-21-2127521184-1604012920-1887927527-35197") or the name of a group or user in "domain\(group or user)" format. The specified user or group must be resolvable by the managed device, otherwise passwords will not be backed up.
+This setting must be configured with either a domain-qualified name of a group or user, or a SID in string format. Valid examples include:
+
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Do not enclose the user\group name or SID in enclosing quotes or parentheses.
+
+The specified user or group must be resolvable by the managed device, otherwise passwords will not be backed up.
+
+NOTE: this setting is ignored when Directory Services Repair Mode (DSRM) account passwords are backed up on a domain controller. In that scenario, this setting always defaults to the Domain Admins group of the domain controller's domain.
 
 See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
       </string>
@@ -129,21 +152,23 @@ See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
 
 Grace period: specifies the amount of time (in hours) to wait after an authentication before executing the specified post-authentication actions.
 
-If this setting is enabled and greater than zero, the specified post-authentication actions will be executed upon expiry of the grace period.
+If this setting is enabled and greater than zero, the specified post-authentication actions will be executed upon expiration of the grace period.
 
 If this setting is disabled or not configured, the specified post-authentication actions will be executed after a default 24 hour grace period.
 
 If this setting is equal to zero, no post-authentication actions will be executed.
 
-Actions: specifies the actions to take upon expiry of the grace period.
+Actions: specifies the actions to take upon expiration of the grace period.
 
-Reset password: upon expiry of the grace period, the managed account password will be reset.
+Reset password: upon expiration of the grace period, the managed account password is reset.
 
-Reset the password and logoff the managed account: upon expiry of the grace period, the managed account password will be reset and any interactive logon sessions using the managed account will terminated.
+Reset the password and logoff the managed account: upon expiration of the grace period, the managed account password is reset and any interactive logon sessions using the managed account are logged off.
+
+Reset the password and reboot: upon expiration of the grace period, the managed account password is reset and the managed device is rebooted.
+
+Reset the password, logoff the managed account, and terminate any remaining processes: upon expiration of the grace period, the managed account password is reset, any interactive logon sessions using the managed account are logged off, and any remaining processes are terminated.
 
 (NOTE: after any interactive logon sessions are terminated there may still be other authenticated sessions in use by the managed account. The only robust way to ensure that the previous password is longer in use is to reboot the device.)
-
-Reset the password and reboot: upon expiry of the grace period, the managed account password will be reset and the managed device will be immediately rebooted.
 
 If this setting is disabled or not configured, post-authentication actions will default to "Reset the password and logoff the managed account".
 
@@ -155,6 +180,44 @@ See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
       <string id="PostAuthenticationActions_Item1">Reset the password</string>
       <string id="PostAuthenticationActions_Item3">Reset the password and logoff the managed account</string>
       <string id="PostAuthenticationActions_Item5">Reset the password and reboot the device</string>
+      <string id="PostAuthenticationActions_Item11">Reset the password, logoff the managed account, and terminate any remaining processes</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Configure automatic account management</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">This policy configures automatic account management policy options.
+
+Specify the target account to manage: specifies whether the built-in admin account or a custom account should be managed.
+
+Automatic account name (or name prefix): specifies the name, or name prefix, to use for the managed account.
+
+If this policy setting is configured, Windows LAPS will use it as the account name or name prefix for the target account.
+
+If this policy setting is not configured, Windows LAPS will use "WLapsAdmin" as the account name or name prefix.
+
+Note: this name is treated as a prefix when account name randomization is configured, see comments below.
+
+Enable the managed account: specifies whether the managed account should be enabled or not.
+
+If this policy setting is configured, Windows LAPS will enable the specified managed account.
+
+If this policy setting is not configured, Windows LAPS will disable the specified managed account.
+
+Note: Windows LAPS will regularly maintain and rotate the password of the managed account regardless of whether the account is maintained in an enabled\disabled status.
+
+Randomize the name of the managed account: specifies whether the name of the managed account should be randomized with a random numeric suffix.
+
+If this policy setting is configured, Windows LAPS will add an eight digit random numeric suffix to the managed automatic account name, and will re-randomize the name of the managed account every time the password is rotated.
+
+If this policy setting is not configured, Windows LAPS will use the managed automatic account name as configured.
+
+If the managed automatic account name prefix is configured, Windows LAPS will use up to the first twelve (12) characters of that name as a prefix for the random name. If the managed automatic account name is not configured, Windows LAPS will use "WLapsAdmin" as the name prefix.
+
+Note: the DSRM account on domain controllers cannot be configured for automatic account management. This policy has no effect on domain controllers and will be ignored even if configured for a DC.
+
+See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Manage the built-in admin account</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Manage a custom admin account</string>
+      <string id="AutomaticAccountName_Help">Specify the account name or name prefix</string>
+      <string id="AutomaticAccountNameRandomization_Help">Specifies whether the automatic account name should be randomized.</string>
       <string id="SUPPORTED_Windows10">At least Microsoft Windows 10 or later</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Password Complexity</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Password Length</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Password Age (Days)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Passphrase Length (words)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ See https://go.microsoft.com/fwlink/?linkid=2188435 for more information.
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Grace period (hours):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Actions:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Actions:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Specify the target account to manage:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Automatic account name (or name prefix):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Enable the managed account</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Randomize the name of the managed account</checkBox>
       </presentation>
     </presentationTable>
   </resources>

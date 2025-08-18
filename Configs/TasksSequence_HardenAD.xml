@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Settings>
 	<!--
-  		Revision: 2024/04/13 - contact@hardenad.net
+  		Revision: 2025/08/18 - contact@hardenad.net
 	-->
 	<Version>
 		<Edition Name="Community Edition" />
-		<Release Major="02" Minor="09" BugFix="008" />
+		<Release Major="02" Minor="09" BugFix="009" />
 	</Version>
 	<History>
 		<LastRun Date="" System="" isPDCemulator="" />
@@ -28,27 +28,33 @@
 					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
 					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
 					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
+					<ChildOU Name="LocalRDU" Description="Groups used to grant a user being local Remote Desktop user of a resource" />
 					<ChildOU Name="Logon" Description="Groups used to login access to a resource" />
 				</ChildOU>
 				<ChildOU Name="GroupsT1" Description="Groups to manage Tier 1 objects">
 					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
 					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
 					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
+					<ChildOU Name="LocalRDU" Description="Groups used to grant a user being local Remote Desktop user of a resource" />
 				</ChildOU>
 				<ChildOU Name="GroupsT1L" Description="Groups to manage Tier 1 Legacy objects">
 					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
 					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
 					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
+					<ChildOU Name="LocalRDU" Description="Groups used to grant a user being local Remote Desktop user of a resource" />
+					
 				</ChildOU>
 				<ChildOU Name="GroupsT2" Description="Groups to manage Tier 2 objects">
 					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
 					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
 					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
+					<ChildOU Name="LocalRDU" Description="Groups used to grant a user being local Remote Desktop user of a resource" />
 				</ChildOU>
 				<ChildOU Name="GroupsT2L" Description="Groups to manage Tier 1 Legacy objects">
 					<ChildOU Name="Deleg" Description="Groups used to delegate permissions on AD objects" />
 					<ChildOU Name="GPO" Description="Groups used to allow or deny settings via Group Policies Objects" />
 					<ChildOU Name="LocalAdmins" Description="Groups used to grant a user being local administrator of a resource" />
+					<ChildOU Name="LocalRDU" Description="Groups used to grant a user being local Remote Desktop user of a resource" />
 				</ChildOU>
 				<ChildOU Name="PawAccess" Description="First Node Privilege Admin Worstations" />
 				<ChildOU Name="PawT0" Description="Privilege Admin Worstations Tier 0 assets" />
@@ -166,6 +172,18 @@
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=UsersT2,OU=_Administration,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=UsersT2L,OU=_Administration,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=UsersT2L,OU=_Administration,ROOTDN" />
+		
+
+		<!-- 
+			Delegation for L-S-T2-DELEG_Group - Manage  BitlockerKey
+		-->
+		<ACL Trustee="L-S-T2-DELEG_Group - Manage BitlockerKey (administration)" Right="GenericAll" RightType="Allow" Inheritance="All" InheritedObjects="msFVE-RecoveryInformation" ObjectType="" TargetDN="OU=Workstations,OU=Harden_T12,ROOTDN" />
+		<ACL Trustee="L-S-T1-DELEG_Group - Manage BitlockerKey (administration)" Right="GenericAll" RightType="Allow" Inheritance="All" InheritedObjects="msFVE-RecoveryInformation" ObjectType="" TargetDN="OU=Servers,OU=Harden_T12,ROOTDN" />
+		
+		
+		
+		
+		
 		<!-- Production ==========
 			Delegation for L-S-T1-DELEG_Computer - Create and Delete 
 		-->
@@ -276,18 +294,24 @@
 		<wellKnownID objectClass="group" translateFrom="%pawt12l-logon%" translateTo="L-S-T0_PawT12L_Logon" />
 		<wellKnownID objectClass="group" translateFrom="%t0-localAdmin-servers%" translateTo="L-S-T0_LocalAdmins_Servers" />
 		<wellKnownID objectClass="group" translateFrom="%t0-localAdmin-workstations%" translateTo="L-S-T0_LocalAdmins_Workstations" />
+		<wellKnownID objectClass="group" translateFrom="%t0-localRDU-servers%" translateTo="L-S-T0_LocalRDU_Servers" />
+		<wellKnownID objectClass="group" translateFrom="%t0-localRDU-workstations%" translateTo="L-S-T0_LocalRDU_Workstations" />
 		<wellKnownID objectClass="group" translateFrom="%t1-managers%" translateTo="G-S-T1_Managers" />
 		<wellKnownID objectClass="group" translateFrom="%t1-administrators%" translateTo="G-S-T1_Administrators" />
 		<wellKnownID objectClass="group" translateFrom="%t1-operators%" translateTo="G-S-T1_Operators" />
 		<wellKnownID objectClass="group" translateFrom="%t1-localAdmin-servers%" translateTo="L-S-T1_LocalAdmins_Servers" />
+		<wellKnownID objectClass="group" translateFrom="%t1-localRDU-servers%" translateTo="L-S-T1_LocalRDU_Servers" />
 		<wellKnownID objectClass="group" translateFrom="%t2-managers%" translateTo="G-S-T2_Managers" />
 		<wellKnownID objectClass="group" translateFrom="%t2-administrators%" translateTo="G-S-T2_Administrators" />
 		<wellKnownID objectClass="group" translateFrom="%t2-operators%" translateTo="G-S-T2_Operators" />
 		<wellKnownID objectClass="group" translateFrom="%t2-localAdmin-workstations%" translateTo="L-S-T2_LocalAdmins_Workstations" />
+		<wellKnownID objectClass="group" translateFrom="%t2-localRDU-workstations%" translateTo="L-S-T2_LocalRDU_Workstations" />
 		<wellKnownID objectClass="group" translateFrom="%tll-operators%" translateTo="G-S-T1L_Operators" />
 		<wellKnownID objectClass="group" translateFrom="%t2l-operators%" translateTo="G-S-T2L_Operators" />
 		<wellKnownID objectClass="group" translateFrom="%t1l-localAdmin-servers%" translateTo="L-S-T1L_LocalAdmins_Servers" />
 		<wellKnownID objectClass="group" translateFrom="%t2l-localAdmin-workstations%" translateTo="L-S-T2L_LocalAdmins_Workstations" />
+		<wellKnownID objectClass="group" translateFrom="%t1l-localRDU-servers%" translateTo="L-S-T1L_LocalAdmins_Servers" />
+		<wellKnownID objectClass="group" translateFrom="%t2l-localRDU-workstations%" translateTo="L-S-T2L_LocalRDU_Workstations" />
 		<wellKnownID objectClass="group" translateFrom="%T1-LAPS-PasswordReset%" translateTo="L-S-T1-DELEG_LAPS_PwdReset" />
 		<wellKnownID objectClass="group" translateFrom="%T1-LAPS-PasswordReader%" translateTo="L-S-T1-DELEG_LAPS_PwdRead" />
 		<wellKnownID objectClass="group" translateFrom="%T2-LAPS-PasswordReset%" translateTo="L-S-T2-DELEG_LAPS_PwdReset" />
@@ -296,10 +320,12 @@
 		<wellKnownID objectClass="group" translateFrom="%T1-DLG-CptrDomJoin%" translateTo="L-S-T1-DELEG_Computer - Join Domain" />
 		<wellKnownID objectClass="group" translateFrom="%T2-DLG-CptrDomJoin%" translateTo="L-S-T2-DELEG_Computer - Join Domain" />
 		<wellKnownID objectClass="group" translateFrom="%Prefix%" translateTo="L-S" />
-		<wellKnownID objectClass="group" translateFrom="%Prefix-domLoc%" translateTo="L-S-" />
+		<wellKnownID objectClass="group" translateFrom="%Prefix-domLoc%" translateTo="L-S_" />
 		<wellKnownID objectClass="group" translateFrom="%Prefix-global%" translateTo="G-S-" />
-		<wellKnownID objectClass="group" translateFrom="%Groups_Computers%" translateTo="LocalAdmins_%ComputerName%" />
+		<wellKnownID objectClass="group" translateFrom="%Groups_Computers_LA%" translateTo="LocalAdmins_%ComputerName%" />
+		<wellKnownID objectClass="group" translateFrom="%Groups_Computers_RDU%" translateTo="LocalRDU_%ComputerName%" />
 		<wellKnownID objectClass="text" translateFrom="%OU-Adm%" translateTo="_Administration" />
+		<wellKnownID objectClass="text" translateFrom="%OU-Provisionning%" translateTo="Provisioning" />
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T0%" translateTo="GroupsT0" />
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T1%" translateTo="GroupsT1" />
 		<wellKnownID objectClass="text" translateFrom="%OU-ADM-Groups-T2%" translateTo="GroupsT2" />
@@ -309,13 +335,23 @@
 		<wellKnownID objectClass="text" translateFrom="%OU-PAW-T0%" translateTo="PawT0" />
 		<wellKnownID objectClass="text" translateFrom="%OU-PAW-T12L%" translateTo="PawT12L" />
 		<wellKnownID objectClass="text" translateFrom="%OU-LocalAdmins%" translateTo="LocalAdmins" />
+		<wellKnownID objectClass="text" translateFrom="%OU-LocalRDU%" translateTo="LocalRDU" />
 		<wellKnownID objectClass="text" translateFrom="%OU-Production-T0%" translateTo="Harden_T0" />
-		<wellKnownID objectClass="text" translateFrom="%OU-Production-T12%" translateTo="Harden_T12" />
+		<wellKnownID objectClass="text" translateFrom="%OU-Production-T1%" translateTo="Harden_T12" />
+		<wellKnownID objectClass="text" translateFrom="%OU-Production-T2%" translateTo="Harden_T12" />
 		<wellKnownID objectClass="text" translateFrom="%OU-PRD-T12-Workstations%" translateTo="Workstations" />
 		<wellKnownID objectClass="text" translateFrom="%OU-PRD-T12-Servers%" translateTo="Servers" />
-		<wellKnownID objectClass="text" translateFrom="%OU-Production-TL%" translateTo="Harden_TL" />
+		<wellKnownID objectClass="text" translateFrom="%OU-Production-T1L%" translateTo="Harden_T12L" />
+		<wellKnownID objectClass="text" translateFrom="%OU-Production-T2L%" translateTo="Harden_T12L" />
 		<wellKnownID objectClass="param" translateFrom="%pwdLength%" translateTo="16" />
 		<wellKnownID objectClass="param" translateFrom="%pwdNonAlphaNumChar%" translateTo="3" />
+
+		<wellKnownID objectClass="text" translateFrom="%LOCAL-ADMINS-RDU-MODE%" translateTo="BOTH" />		
+		<wellKnownID objectClass="text" translateFrom="%OS-SRV-MAJOR-VERSION%" translateTo="10" />
+		<wellKnownID objectClass="text" translateFrom="%OS-SRV-MINOR-VERSION%" translateTo="0" />
+		<wellKnownID objectClass="text" translateFrom="%OS-CLIENT-MAJOR-VERSION%" translateTo="10" />
+		<wellKnownID objectClass="text" translateFrom="%OS-CLIENT-MINOR-VERSION%" translateTo="0" />
+		
 		<!-- 
 			Keywords are used to shorten the GPO groups name.
 		-->
@@ -356,6 +392,7 @@
 			-->
 			<Filter Name="Windows-10" Source="Windows-10.mof" />
 			<Filter Name="Windows-11" Source="Windows-11.mof" />
+			<Filter Name="Windows-11_24h2-and-server-2025-NoDC" Source="Windows-11_24h2-and-server-2025-NoDC.mof" />
 			<Filter Name="Windows-2000-XP" Source="Windows-2000-XP.mof" />
 			<Filter Name="Windows-2003-2003R2-NoDC" Source="Windows-2003-2003R2-NoDC.mof" />
 			<Filter Name="Windows-2008-Vista-and-Newer" Source="Windows-2008-Vista-and-Newer.mof" />
@@ -395,6 +432,10 @@
 			<Filter Name="Windows-x86" Source="Windows-x86.mof" />
 			<Filter Name="Windows-x86-NoDC" Source="Windows-x86-NoDC.mof" />
 			<Filter Name="Windows-PDC" Source="Windows-PDC.mof" />
+			<Filter Name="Legacy-LAPS-Deployment-x32" Source="Legacy-LAPS-Deployment-x32.mof" />
+			<Filter Name="Legacy-LAPS-Deployment-x64" Source="Legacy-LAPS-Deployment-x64.mof" />
+			<Filter Name="Legacy-LAPS-Configuration" Source="Legacy-LAPS-Configuration.mof" />
+			<Filter Name="Windows-Laps-Supported" Source="Windows-Laps-Supported.mof" />
 		</WmiFilters>
 		<!--
 			The <GPO> elements list the Group Policy added (or refreshed) to the target domain.
@@ -477,19 +518,25 @@
 		<!--
 			BITLOCKER
 		-->
-		<GPO BackupID="{DD870AA3-5A5D-4C72-A602-C9AC78ED7B32}" Validation="Yes" Name="HAD-BitLocker-TPMOnly-Enabled-Win10-11" Description="--- Harden AD --- &quot; ,&quot; Enable BitLocker encryption with Trusted Platform Module.">
+		<GPO BackupID="{1B4B82CB-D2BC-487D-96E5-6DC7FF7A168B}" Validation="Yes" Name="HAD-BitLocker-TPMOnly-Enabled-Win10-11" Description="--- Harden AD --- &quot; ,&quot; Enable BitLocker encryption with Trusted Platform Module.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-Supported-OS-Clients" />
 			<GpoLink Path="OU=Workstations,OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
 			<GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{640E7540-7FCF-4B44-926C-CF38E885EDE1}" Validation="Yes" Name="HAD-BitLocker-PIN-Enabled-Win10-11" Description="--- Harden AD --- &quot; ,&quot; Enable BitLocker encryption with Trusted Platform Module. 6-digit PIN code required.">
+		<GPO BackupID="{ABAE4BF3-6399-48C5-A687-669FF1C8DC0A}" Validation="Yes" Name="HAD-BitLocker-PIN-Enabled-Win10-11" Description="--- Harden AD --- &quot; ,&quot; Enable BitLocker encryption with Trusted Platform Module. 6-digit PIN code required.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-Supported-OS-Clients" />
 			<GpoLink Path="OU=Workstations,OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
 			<GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{D71ADCFE-2648-481E-8CFC-936389800BBE}" Validation="Yes" Name="HAD-BitLocker-USB-Win10-11" Description="--- Harden AD --- &quot; ,&quot; Enable BitLocker encryption for USB drives with a password.">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Supported-OS-Clients" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{47755F08-5D33-4934-A33B-D795A076BDE0}" Validation="Yes" Name="HAD-BitLocker-RecoveryKey-Required" Description="--- Harden AD --- &quot; ,&quot; Enable BitLocker encryption for USB drives with a password.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-Supported-OS-Clients" />
 			<GpoLink Path="OU=Workstations,OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
@@ -523,13 +570,7 @@
 			<GpoFilter WMI="Windows-Legacy-OS-Servers" />
 			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<!-- 
-			FIPS 
-		-->
-		<GPO BackupID="{5B274948-774F-4604-96AD-45D2CFDA0015}" Validation="Yes" Name="HAD-FIPS-Enabled" Description="--- Harden AD --- &quot; ,&quot; Forces the use of the FIPS algorithm where possible.">
-			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
-		</GPO>
+		
 		<!-- 
 			MS FIREWALL 
 		-->
@@ -544,7 +585,7 @@
 		<!-- 
 			GPO PROCESSUS 
 		-->
-		<GPO BackupID="{B2FC1442-08FD-4CDE-AF82-417E0CE1046F}" Validation="Yes" Name="HAD-GPO-Refresh-Cycle" Description="--- Harden AD --- &quot; ,&quot; Set the GPO refresh rate to 15 minutes.">
+		<GPO BackupID="{2BB53A81-09F4-4F58-923A-297099978400}" Validation="Yes" Name="HAD-GPO-Refresh-Cycle" Description="--- Harden AD --- &quot; ,&quot; Set the GPO refresh rate to 15 minutes.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
@@ -589,7 +630,7 @@
 		</GPO>
 		<GPO BackupID="{CA093B03-5505-4704-B673-EA94ED4F8994}" Validation="Yes" Name="HAD-LDAP-CBT-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enforces validation of Channel Binding Tokens (CBT) received in LDAP bind requests.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{26CD251A-3354-44D5-94E4-30D0B854A3F3}" Validation="Yes" Name="HAD-LDAP-Client-Signing-Not-Required" Description="--- Harden AD --- &quot; ,&quot; Does not require a signature for LDAP communications with a client.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -601,7 +642,7 @@
 		</GPO>
 		<GPO BackupID="{DA84E960-529F-4580-A16A-E8C73CCE27F0}" Validation="Yes" Name="HAD-LDAP-Server-Signing-Required" Description="--- Harden AD --- &quot; ,&quot; Requires signing for LDAP communications with a server.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{37624146-725D-4C9D-812A-64980DEA40B4}" Validation="Yes" Name="HAD-LDAP-Audit-Disabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -680,6 +721,53 @@
 			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
+			LOCAL REMOTE DESKTOP USERS 
+		-->
+		<GPO BackupID="{59920D0E-D56E-4B75-8C18-ADA45FF8B8AE}" Validation="Yes" Name="HAD-LocalRDU-Paw" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding PAW's integrated Remote Desktop Users group">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="OU=PawAccess,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{479BC38B-2C1F-44FB-8427-634270EC1235}" Validation="Yes" Name="HAD-LocalRDU-PawT0" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T0 PAW's integrated Remote Desktop Users group">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="OU=PawT0,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{88B6ED9B-AD36-4894-A437-E789470D4AAE}" Validation="Yes" Name="HAD-LocalRDU-PawT12L" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T12L PAW's integrated Remote Desktop Users group">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="OU=PawT12L,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{61DBF03F-D6C5-4498-B4BD-762E1A7A0081}" Validation="Yes" Name="HAD-LocalRDU-T0-Srv" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T0 system's integrated Remote Desktop Users group">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Supported-OS-Servers-NoDC" />
+			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{5F7C58FE-76DE-4F00-B4B1-F8A4E58C3955}" Validation="Yes" Name="HAD-LocalRDU-T0-Wks" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T0 system's integrated Remote Desktop Users group">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Supported-OS-Clients" />
+			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{AD0FA494-5503-4C5F-8C18-1579B6572BAC}" Validation="Yes" Name="HAD-LocalRDU-T1" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T1 system's integrated Remote Desktop Users group">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Supported-OS-Servers-NoDC" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{77AC570A-210E-4CFD-9118-D6E808077E5C}" Validation="Yes" Name="HAD-LocalRDU-T1L" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding legacy server (T1L) system's integrated Remote Desktop Users group">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Legacy-OS-Servers-NoDC" />
+			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{A3F78957-98EA-450B-9E14-3A31D2C5C3A4}" Validation="Yes" Name="HAD-LocalRDU-T2" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding T2 system's integrated Remote Desktop Users group">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Supported-OS-Clients" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{C0386493-EA97-4399-A747-AA9590FABA72}" Validation="Yes" Name="HAD-LocalRDU-T2L" Description="--- Harden AD --- &quot; ,&quot; Add the local administration AD group to the corresponding legacy workstation (T2L) system's integrated Remote Desktop Users group">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Legacy-OS-Clients" />
+			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<!-- 
 			LOCAL ACCOUNTS SETUP 
 		-->
 		<GPO BackupID="{4D5DF38A-161D-42AD-A29B-94309EDE3D0D}" Validation="Yes" Name="HAD-Local-Accounts-Config" Description="--- Harden AD --- &quot; ,&quot; Enable and rename the local administrator account. Disable and rename the local guest account.">
@@ -693,7 +781,7 @@
 		<!-- 
 			LOGIN RESTRICTION 
 		-->
-		<GPO BackupID="{BB58C8C0-81A4-403E-99ED-E18F0C577632}" Validation="Yes" Name="HAD-LoginRestrictions-Paw" Description="--- Harden AD --- &quot; ,&quot; Restrict connections to administration stations">
+		<GPO BackupID="{0AA1348F-98F5-4A0D-9DF0-9EDFE33185C3}" Validation="Yes" Name="HAD-LoginRestrictions-Paw" Description="--- Harden AD --- &quot; ,&quot; Restrict connections to administration stations">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=PawAccess,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
@@ -737,7 +825,7 @@
 			<GpoFilter WMI="Windows-OS-Servers" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{BC9F44A0-7603-4223-AD48-9467B675086F}" Validation="Yes" Name="HAD-Logon-Cache-2" Description="--- Harden AD --- &quot; ,&quot; Keeps two login credentials cached from servers.">
+		<GPO BackupID="{8A504326-5E46-4446-B879-6D81286DD3E3}" Validation="Yes" Name="HAD-Logon-Cache-3" Description="--- Harden AD --- &quot; ,&quot; Keeps three login credentials cached from servers.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Clients" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
@@ -749,7 +837,7 @@
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{CBC80F59-C833-4D33-AC3A-4AA9F96822EB}" Validation="Yes" Name="HAD-NBT-NS-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables DNS Fallback functionality: NBT-NS.">
+		<GPO BackupID="{10950762-6CD5-45DE-AC42-C5EA5D1FC08C}" Validation="Yes" Name="HAD-NBT-NS-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables DNS Fallback functionality: NBT-NS.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
@@ -797,11 +885,11 @@
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{AA0F3BCB-8435-4A58-A8F4-5D631039B623}" Validation="Yes" Name="HAD-WinRM-Basic-Digest-Auth-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disallows basic, unencrypted authentication for WinRM use.">
+		<GPO BackupID="{118544C0-E432-4DE0-A070-55294BEC9ADD}" Validation="Yes" Name="HAD-WinRM-Basic-Digest-Auth-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disallows basic, unencrypted authentication for WinRM use.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{C79D8C30-10FD-4C5E-A2EE-5CFE50A0DA3D}" Validation="Yes" Name="HAD-WebProxyAutoDiscovery-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disable Web Proxy Auto-Discovery Protocol.">
+		<GPO BackupID="{A0BAE75B-F3AF-423B-B2EA-66C42DE37632}" Validation="Yes" Name="HAD-WebProxyAutoDiscovery-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disable Web Proxy Auto-Discovery Protocol.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
@@ -820,16 +908,17 @@
 		<!-- 
 			DC SCHEDULED TASKS 
 		-->
-		<GPO BackupID="{60C4FFE1-F082-49EE-9AF2-F7ABA228D05F}" Validation="Yes" Name="HAD-TS-Local-admins-groups" Description="--- Harden AD --- &quot; ,&quot; Import the HADLocalAdmins module and create the associated scheduled task.">
+		<GPO BackupID="{91F3A549-1054-49FC-9126-F1AB19D689C4}" Validation="Yes" Name="HAD-TS-Local-admins-groups" Description="--- Harden AD --- &quot; ,&quot; Import the HADLocalAdmins module and create the associated scheduled task.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{A8C72199-7FB0-4234-A737-4E5843814F1E}" Validation="Yes" Name="HAD-TS-PDC-Flush-admin-groups" Description="--- Harden AD --- &quot; ,&quot; Import the Group flushing script and create the associated scheduled task.">
+
+		<GPO BackupID="{9D67E470-F2E9-4E38-9500-3609F93BAC52}" Validation="Yes" Name="HAD-TS-PDC-Flush-admin-groups" Description="--- Harden AD --- &quot; ,&quot; Import the Group flushing script and create the associated scheduled task.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-PDC" />
 			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{1767DE3C-3F23-4357-94F9-D252D2BC462C}" Validation="Yes" Name="HAD-TS-Reset-Computer-Sddl" Description="--- Harden AD --- &quot; ,&quot; Reset the sddl and owner of new computer objects through a schedule task.">
+		<GPO BackupID="{8A1F5F6A-7DFD-408E-94F9-81E79ED14D97}" Validation="Yes" Name="HAD-TS-Reset-Computer-Sddl" Description="--- Harden AD --- &quot; ,&quot; Reset the sddl and owner of new computer objects through a schedule task.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
@@ -865,63 +954,56 @@
 		<!-- 
 			SMB HARDENING 
 		-->
-		<GPO BackupID="{6930963C-6F98-4496-93B9-09511AF49681}" Validation="Yes" Name="HAD-SMB-Signing-Configuration" Description="--- Harden AD --- &quot; ,&quot; Configure SMB signing for clients.">
+		<GPO BackupID="{589A5268-EEC7-4BA1-9A76-83413E07891A}" Validation="Yes" Name="HAD-SMB-Signing-Configuration" Description="--- Harden AD --- &quot; ,&quot; Configure SMB signing for clients.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{AC97557E-E12C-48F3-AB4C-F1C41D4E3603}" Validation="Yes" Name="HAD-SMB1-Audit-Enabled" Description="--- Harden AD --- &quot; ,&quot; Creates a scheduled task to audit SMBv1.">
-			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoFilter WMI="Windows-2008-Vista-and-Newer" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
-		</GPO>
-		<GPO BackupID="{AACD614B-7C19-4C6A-99AA-0CD91BADEC0E}" Validation="Yes" Name="HAD-SMB1-Client-Only-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1 only for clients.">
-			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
-		</GPO>
-		<GPO BackupID="{78001DDD-6357-4EAA-A645-1311F6E59411}" Validation="Yes" Name="HAD-SMB1-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables SMBv1.">
+		<GPO BackupID="{B87B962E-845A-400E-8B28-3C091B1BF3FF}" Validation="Yes" Name="HAD-SMB1-Audit-Enabled" Description="--- Harden AD --- &quot; ,&quot; Creates a scheduled task to audit SMBv1.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-2008-Vista-and-Newer" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{D552CA4B-C9E9-455A-9821-924E890676C0}" Validation="Yes" Name="HAD-SMB1-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1.">
+		<GPO BackupID="{EA56678C-2BC0-4072-B5EC-D1324F947620}" Validation="Yes" Name="HAD-SMB1-Client-Only-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1 only for clients.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{0532EF52-A725-4E26-9A8C-45C3E2E07324}" Validation="Yes" Name="HAD-SMB1-Server-Only-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1 only for servers.">
+		<GPO BackupID="{B8A4774E-05C7-45CE-AC2A-653F40946C02}" Validation="Yes" Name="HAD-SMB1-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disable SMBv1.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{2D9C0297-0579-46AB-89FC-91F3297B190B}" Validation="Yes" Name="HAD-UNC-Hardened-Path" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1 only for servers.">
+		<GPO BackupID="{824987C5-3B3A-4662-9708-42E6A1CEE9A0}" Validation="Yes" Name="HAD-SMB1-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1.">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+		</GPO>
+		<GPO BackupID="{061C9FFC-D968-4BB1-B83B-C3606AC33F2F}" Validation="Yes" Name="HAD-SMB1-Server-Only-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1 only for servers.">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+		</GPO>
+		<GPO BackupID="{2D9C0297-0579-46AB-89FC-91F3297B190B}" Validation="Yes" Name="HAD-UNC-Hardened-Path" Description="--- Harden AD --- &quot; ,&quot; Requires Integrity and Mutual Authentication for UNC paths.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			TLS AND SSL HARDENING 
 		-->
-		<GPO BackupID="{181A6227-DC22-4E7C-8EAE-DAC9DC2F43AD}" Validation="Yes" Name="HAD-SSL2-SSL3-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables SSLv2 and SSLv3 on Windows systems.">
+		<GPO BackupID="{C0267EE4-1CE1-4850-81A2-4DB345D44E6B}" Validation="Yes" Name="HAD-SSL2-SSL3-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables SSLv2 and SSLv3 on Windows systems.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{1FB916B9-F453-4342-8636-1523DC68F698}" Validation="Yes" Name="HAD-SSL2-SSL3-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SSLv2 and SSLv3 on Windows systems.">
+		<GPO BackupID="{8FFB2716-85D4-4484-A8ED-8ED26940CDE9}" Validation="Yes" Name="HAD-SSL2-SSL3-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SSLv2 and SSLv3 on Windows systems.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
-		<GPO BackupID="{5C8FC2E1-4D88-4DE1-ABAC-EADDFAB774EC}" Validation="Yes" Name="HAD-TLS-1_0-Disabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
+		<GPO BackupID="{B4C2B39F-E3A1-475A-9842-77E97684DC74}" Validation="Yes" Name="HAD-TLS-1_0-Disabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 		</GPO>
-		<GPO BackupID="{A3A7B599-37C0-484F-9560-8ED89D0B4C16}" Validation="Yes" Name="HAD-TLS-1_0-Enabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
+		<GPO BackupID="{224C9138-3AF5-409D-9C6D-9BFAC92B7238}" Validation="Yes" Name="HAD-TLS-1_0-Enabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 		</GPO>
-		<GPO BackupID="{E00C5E60-64BD-43AD-840F-CB1AFC59E264}" Validation="Yes" Name="HAD-TLS-1_1-Disabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
+		<GPO BackupID="{33A9A74F-8161-4161-8289-519C7745EECB}" Validation="Yes" Name="HAD-TLS-1_1-Disabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 		</GPO>
-		<GPO BackupID="{AFD12E92-B9D1-4139-9C5A-E8BD5C5B71A8}" Validation="Yes" Name="HAD-TLS-1_1-Enabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
+		<GPO BackupID="{310E54F3-C138-4D2E-9609-CD80A4E56C7E}" Validation="Yes" Name="HAD-TLS-1_1-Enabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 		</GPO>
-		<GPO BackupID="{DC5E5873-959B-422A-9FC5-2D88576ED9AB}" Validation="Yes" Name="HAD-TLS-1_2-Disabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
-			<GpoMode Mode="BOTH" Tier="Tier0" />
-		</GPO>
-		<GPO BackupID="{CBEE8835-3DB2-42E7-9497-9C1B70710342}" Validation="Yes" Name="HAD-TLS-1_2-Enabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
+		
+		<GPO BackupID="{7FD95C5F-05C8-4CBC-9257-F701C0D58A48}" Validation="Yes" Name="HAD-TLS-1_2-Enabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 		</GPO>
 		<!--
@@ -938,6 +1020,90 @@
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-x64-NoDC" />
 			<GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+
+		<!--
+			CIS GPO 
+		-->
+		<GPO BackupID="{A4339094-C7D6-46B5-8437-293603E9D28B}" Validation="Yes" Name="HAD-Applocker-Win10-11" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Supported-OS-Clients" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{C5FD539B-2FBE-4701-8C11-B59C814FCBA8}" Validation="Yes" Name="HAD-CredentialManager-Disabled" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-OS-Clients" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{AADB1B68-BF3A-4060-8C58-06CC12376B42}" Validation="Yes" Name="HAD-DEP-Config" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{3393F8AD-6A51-42BC-95DE-1E3207079E6F}" Validation="Yes" Name="HAD-DMA-Protection" Description="--- Harden AD --- &quot; ,&quot; Block external devices to access to the RAM without authorization">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Supported" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{C708DCBE-67AF-4AF7-A0D8-B414C8280292}" Validation="Yes" Name="HAD-Drivers-Config" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{23208CA5-9670-4053-A293-E93A1BFF5EED}" Validation="Yes" Name="HAD-Inactivity-Config" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-OS-Clients" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawT0,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawT12L,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawAccess,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{7A167C17-59F3-474C-8BBF-D395C27A59FE}" Validation="Yes" Name="HAD-LSASS-Audit" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{C1703AE2-DA27-4E5A-A593-BB20736AC05E}" Validation="Yes" Name="HAD-LSASS-Config" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{F72EB12F-47A6-4359-A1D7-4D60D6F86FA1}" Validation="Yes" Name="HAD-mDNS-Disabled" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{CD678449-FC2B-48C1-858A-36AA71A7FABE}" Validation="Yes" Name="HAD-NTLM-Disabled" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{EF230FE4-3A22-465C-947E-2D0A75C15A2D}" Validation="Yes" Name="HAD-Smart-Card-Config" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+		</GPO>
+		<GPO BackupID="{FC3CC8F2-3F10-4A4B-A31A-9644CB7E706B}" Validation="Yes" Name="HAD-SMB-Config-24H2" Description="--- Harden AD --- &quot; ,&quot; Harden the SMB protocol (minimum version : Windows 11 24h2)">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-11_24h2-and-server-2025-NoDC" />
+		</GPO>
+		<GPO BackupID="{6F71B9A1-CD97-4C3A-9556-71DC3C05BDB5}" Validation="Yes" Name="HAD-UAC-Advanced-Enabled" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{0E19D1BA-F69C-455D-B88C-7204C492F5BE}" Validation="Yes" Name="HAD-User-Config" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-OS-Clients" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawT0,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawT12L,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawAccess,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{ED9D1A53-4841-4410-9A43-BA6D78CA1EBD}" Validation="Yes" Name="HAD-Virtualization-Based-Protection-Enabled" Description="--- Harden AD --- &quot; ,&quot; ">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-OS-Clients" />
+			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+		</GPO>
+		<GPO BackupID="{218B7866-14AD-42AD-9DCD-9E284B85C5BA}" Validation="Yes" Name="HAD-Windows-LAPS" Description="--- Harden AD --- &quot; ,&quot; Deploy Windows LAPS">
+			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoFilter WMI="Windows-Laps-Supported" />
 		</GPO>
 	</GroupPolicies>
 	<Accounts>
@@ -1098,6 +1264,21 @@
 			<Member samAccountName="G-S-T2L_Operators" />
 		</Group>
 		<!--
+			Local RDU Groups
+		-->
+		<Group name="L-S-T0_LocalRDU_Servers" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\RDU group" Path="OU=LocalRDU,OU=GroupsT0,OU=_Administration,ROOTDN">
+		</Group>
+		<Group name="L-S-T1_LocalRDU_Servers" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\RDU group" Path="OU=LocalRDU,OU=GroupsT1,OU=_Administration,ROOTDN">
+		</Group>
+		<Group name="L-S-T1L_LocalRDU_Servers" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\RDU group" Path="OU=LocalRDU,OU=GroupsT1L,OU=_Administration,ROOTDN">
+		</Group>
+		<Group name="L-S-T0_LocalRDU_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\RDU group" Path="OU=LocalRDU,OU=GroupsT0,OU=_Administration,ROOTDN">
+		</Group>
+		<Group name="L-S-T2_LocalRDU_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\RDU group" Path="OU=LocalRDU,OU=GroupsT2,OU=_Administration,ROOTDN">
+		</Group>
+		<Group name="L-S-T2L_LocalRDU_Workstations" Category="Security" Scope="domainLocal" Description="Members of this group will become member of the builtin\RDU group" Path="OU=LocalRDU,OU=GroupsT2L,OU=_Administration,ROOTDN">
+		</Group>
+		<!--
 			Builtin Groups
 		-->
 		<Group name="Enterprise Admins" Category="Security" Scope="Universal" Description="" Path="CN=Users,ROOTDN">
@@ -1120,6 +1301,17 @@
 		</Group>
 		<Group name="L-S-T2-DELEG_User - Create and Delete (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
 			<Member samAccountName="G-S-T2_Managers" />
+		</Group>
+
+
+
+		<Group name="L-S-T1-DELEG_Group - Manage BitlockerKey (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT1,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T1_Managers" />
+			<Member samAccountName="G-S-T1_Administrators" />
+		</Group>
+		<Group name="L-S-T2-DELEG_Group - Manage BitlockerKey (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
+			<Member samAccountName="G-S-T2_Managers" />
+			<Member samAccountName="G-S-T2_Administrators" />
 		</Group>
 		<!-- 
 			Delegation groups on Production and Legacy OU
@@ -1350,6 +1542,21 @@
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>Upgrade `(ForestFunctionalLevel` </TaskDescription>
 		</Id>
+		<!--
+			FILE CUSTOMIZATION BEFORE GPO IMPORT
+		-->
+		<Id Number="007" Name="Prepare GPO files before GPO import: Local Admins">
+			<CallingFunction>Set-TSLocalAdminGroups</CallingFunction>
+			<UseParameters>{91F3A549-1054-49FC-9126-F1AB19D689C4}</UseParameters>
+			<TaskEnabled>No</TaskEnabled>
+			<TaskDescription>Prepare `(Configuration.xml` before the GPO importation of '`(HAD-TS-Local-admins-groups`'</TaskDescription>
+		</Id>
+		<Id Number="008" Name="Prepare GPO files before GPO import: Allow Computer ReUse">
+			<CallingFunction>Set-GptTmplSID</CallingFunction>
+			<UseParameters>{3B6DC475-6822-49C1-B47A-4199DF4FE1E6}</UseParameters>
+			<TaskEnabled>No</TaskEnabled>
+			<TaskDescription>Prepare `(GptTmpl.inf` before the GPO importation of '`(HAD-DC-Allow-Computer-Account-ReUse`'</TaskDescription>
+		</Id>
 		<!-- 
 			SET MS-DS-MACHINEACCOUNTQUOTA TO 0
 		-->
@@ -1388,6 +1595,15 @@
 			</UseParameters>
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>set `(GPO Central Store` and `(update adm and admx` files</TaskDescription>
+		</Id>
+		<!--
+			UPLOAD HARDEN DATA FILES ON NETLOGON FOLDER
+		-->
+		<Id Number="041" Name="Update NetLogon Repository">
+			<CallingFunction>Set-NetLogonContent</CallingFunction>
+			<UseParameters />
+			<TaskEnabled>No</TaskEnabled>
+			<TaskDescription>update `(\\%domaindns%\netlogon` share with new scripts and files` files</TaskDescription>
 		</Id>
 		<!-- 
 			GENERATE NEW ADMINISTRATION ORGANIZATIONAL UNIT
@@ -1437,7 +1653,7 @@
 		<!-- 
 			RELOCATE NEW USER/GROUP OBJECT LOCATION
 		-->
-		<Id Number="070" Name="Default user location on creation">
+		<Id Number="061" Name="Default user location on creation">
 			<CallingFunction>Set-DefaultObjectLocation</CallingFunction>
 			<UseParameters>User</UseParameters>
 			<UseParameters>OU=users,OU=provisioning,RootDN</UseParameters>
@@ -1447,7 +1663,7 @@
 		<!-- 
 			RELOCATE NEW COMPUTER OBJECT LOCATION
 		-->
-		<Id Number="071" Name="Default computer location on creation">
+		<Id Number="062" Name="Default computer location on creation">
 			<CallingFunction>Set-DefaultObjectLocation</CallingFunction>
 			<UseParameters>Computer</UseParameters>
 			<UseParameters>OU=computers,OU=provisioning,RootDN</UseParameters>
@@ -1457,7 +1673,7 @@
 		<!-- 
 			GENERATE NEW ADMIN ACCOUNTS ON WHICH THE DELEGATION MODEL WILL WORKS
 		-->
-		<Id Number="080" Name="Create administration accounts">
+		<Id Number="070" Name="Create administration accounts">
 			<CallingFunction>New-AdministrationAccounts</CallingFunction>
 			<UseParameters>H4rd3n@D!!</UseParameters>
 			<TaskEnabled>No</TaskEnabled>
@@ -1466,7 +1682,7 @@
 		<!-- 
 			GENERATE NEW ADMIN GROUPS ON WHICH THE DELEGATION MODEL WILL WORKS
 		-->
-		<Id Number="090" Name="Create administration groups">
+		<Id Number="080" Name="Create administration groups">
 			<CallingFunction>New-AdministrationGroups</CallingFunction>
 			<UseParameters>
 			</UseParameters>
@@ -1476,32 +1692,17 @@
 		<!-- 
 			ACEs DEPLOYMENT FOR DELEGATION MODEL
 		-->
-		<Id Number="095" Name="Enforce delegation model through ACEs">
+		<Id Number="090" Name="Enforce delegation model through ACEs">
 			<CallingFunction>Push-DelegationModel</CallingFunction>
 			<UseParameters>
 			</UseParameters>
 			<TaskEnabled>No</TaskEnabled>
 			<TaskDescription>Enforce `(Delegation ACEs` used by the tier model</TaskDescription>
 		</Id>
-		<!--
-			FILE CUSTOMIZATION BEFORE GPO IMPORT
-		-->
-		<Id Number="100" Name="Prepare GPO files before GPO import: Local Admins">
-			<CallingFunction>Set-TSLocalAdminGroups</CallingFunction>
-			<UseParameters>{60C4FFE1-F082-49EE-9AF2-F7ABA228D05F}</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
-			<TaskDescription>Prepare `(Configuration.xml` before the GPO importation of '`(HAD-TS-Local-admins-groups`'</TaskDescription>
-		</Id>
-		<Id Number="101" Name="Prepare GPO files before GPO import: Allow Computer ReUse">
-			<CallingFunction>Set-GptTmplSID</CallingFunction>
-			<UseParameters>{3B6DC475-6822-49C1-B47A-4199DF4FE1E6}</UseParameters>
-			<TaskEnabled>No</TaskEnabled>
-			<TaskDescription>Prepare `(GptTmpl.inf` before the GPO importation of '`(HAD-DC-Allow-Computer-Account-ReUse`'</TaskDescription>
-		</Id>
 		<!-- 
 			IMPORT WMI FILTERS
 		-->
-		<Id Number="125" Name="Import additional WMI Filters">
+		<Id Number="100" Name="Import additional WMI Filters">
 			<CallingFunction>Import-WmiFilters</CallingFunction>
 			<UseParameters>
 			</UseParameters>
@@ -1511,7 +1712,7 @@
 		<!-- 
 			IMPORT GPOs
 		-->
-		<Id Number="130" Name="Import new GPO or update existing ones">
+		<Id Number="110" Name="Import new GPO or update existing ones">
 			<CallingFunction>New-GpoObject</CallingFunction>
 			<UseParameters>
 			</UseParameters>

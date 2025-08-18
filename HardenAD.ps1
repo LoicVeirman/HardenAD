@@ -93,6 +93,17 @@ Param(
     $DisableTask
 )
 
+
+# Load modules
+try {
+    $modules = (Get-ChildItem .\modules).FullName
+    [void](Import-Module $modules -ErrorAction Stop)
+}
+catch {
+    Write-Host "Error: $($_.ToString())" -ForegroundColor Red
+    exit 999
+}
+
 <#
     FUNCTION: FORMAT-XML
     This function out an XML with a TAB indentation - requiered when you modify an XML.
@@ -785,7 +796,7 @@ if (-not ($FlagPreReq) -or -not($allowedRun))
     Exit 1
 }
 
-# Updating the TasksSequence file to reflect the new data.
+
 Set-Translation
 
 if ($FlagPreReq) 
@@ -828,7 +839,7 @@ foreach ($task in $Tasks)
     Write-Host ": " -ForegroundColor $ColorsAndTexts.BaseTxtColor -NoNewline
 
     #-Display the task description and managing color output
-    $TextToDisplay = $task.TaskDescription -split '`'
+    $TextToDisplay = (Rename-ThroughTranslation $task.TaskDescription $TasksSeqConfig.Settings.Translation.wellKnownID) -split '`'
 
     foreach ($Section in $TextToDisplay) 
     {

@@ -96,6 +96,13 @@
           <range ref="products:MicrosoftWindows" minVersionIndex="13"/>
         </or>
       </definition>
+
+      <!--At least Windows Server 2025, Windows 10 Version 21H2, or Windows 11 Version 22H2-->
+      <definition name="WU_SUPPORTED_WinServer2025_Win1021H2_Win1122H2" displayName="$(string.WU_SUPPORTED_WinServer2025_Win1021H2_Win1122H2)">
+        <or>
+          <range ref="products:MicrosoftWindows" minVersionIndex="13"/>
+        </or>
+      </definition>
     </definitions>
   </supportedOn>
 
@@ -588,7 +595,7 @@
             presentation="$(presentation.AlwaysAutoRebootAtScheduledTime_Presentation)"
             key="Software\Policies\Microsoft\Windows\WindowsUpdate\AU"
             valueName="AlwaysAutoRebootAtScheduledTime">
-      <parentCategory ref="WindowsUpdateExperience" />
+      <parentCategory ref="PreSV" />
       <supportedOn ref="windows:SUPPORTED_Windows8" />
       <enabledValue>
         <decimal value="1" />
@@ -2399,13 +2406,13 @@
         <boolean id="NoUpdateNotificationsDuringActiveHours" valueName="NoUpdateNotificationsDuringActiveHours" />
       </elements>
     </policy>
-    <policy name="ComplianceDeadline"
+    <policy name="ComplianceDeadlineForFU"
       class="Machine"
-      displayName="$(string.ComplianceDeadline_Title)"
-      explainText="$(string.ComplianceDeadline_Help)"
+      displayName="$(string.ComplianceDeadlineForFU_Title)"
+      explainText="$(string.ComplianceDeadlineForFU_Help)"
       key="Software\Policies\Microsoft\Windows\WindowsUpdate"
-      presentation="$(presentation.ComplianceDeadline_Title)"
-      valueName="SetComplianceDeadline">
+      presentation="$(presentation.ComplianceDeadlineForFU_Title)"
+      valueName="SetComplianceDeadlineForFU">
       <parentCategory ref="WindowsUpdateExperience"/>
       <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS3" />
       <enabledValue>
@@ -2415,8 +2422,8 @@
         <decimal value="0" />
       </disabledValue>
       <elements>
-        <enum id="ConfigureDeadlineForQualityUpdates" valueName="ConfigureDeadlineForQualityUpdates" required="true">
-          <item displayName="$(string.ComplianceDeadlineDay0)">
+          <enum id="ConfigureDeadlineForFeatureUpdates" valueName="ConfigureDeadlineForFeatureUpdates" required="true">
+              <item displayName="$(string.ComplianceDeadlineDay0)">
             <value>
               <decimal value="0"/>
             </value>
@@ -2572,7 +2579,68 @@
             </value>
           </item>
         </enum>
-        <enum id="ConfigureDeadlineForFeatureUpdates" valueName="ConfigureDeadlineForFeatureUpdates" required="true">
+        <enum id="ConfigureDeadlineGracePeriodForFeatureUpdates" valueName="ConfigureDeadlineGracePeriodForFeatureUpdates" required="true">
+          <item displayName="$(string.ComplianceDeadlineDay0)">
+            <value>
+              <decimal value="0"/>
+            </value>
+          </item>
+          <item displayName="$(string.ComplianceDeadlineDay1)">
+            <value>
+              <decimal value="1"/>
+            </value>
+          </item>
+          <item displayName="$(string.ComplianceDeadlineDay2)">
+            <value>
+              <decimal value="2"/>
+            </value>
+          </item>
+          <item displayName="$(string.ComplianceDeadlineDay3)">
+            <value>
+              <decimal value="3"/>
+            </value>
+          </item>
+          <item displayName="$(string.ComplianceDeadlineDay4)">
+            <value>
+              <decimal value="4"/>
+            </value>
+          </item>
+          <item displayName="$(string.ComplianceDeadlineDay5)">
+            <value>
+              <decimal value="5"/>
+            </value>
+          </item>
+          <item displayName="$(string.ComplianceDeadlineDay6)">
+            <value>
+              <decimal value="6"/>
+            </value>
+          </item>
+          <item displayName="$(string.ComplianceDeadlineDay7)">
+            <value>
+              <decimal value="7"/>
+            </value>
+          </item>
+        </enum>
+        <boolean id="ConfigureDeadlineNoAutoRebootForFeatureUpdates" valueName="ConfigureDeadlineNoAutoRebootForFeatureUpdates" />
+      </elements>
+    </policy>
+    <policy name="ComplianceDeadline"
+      class="Machine"
+      displayName="$(string.ComplianceDeadlineForQU_Title)"
+      explainText="$(string.ComplianceDeadlineForQU_Help)"
+      key="Software\Policies\Microsoft\Windows\WindowsUpdate"
+      presentation="$(presentation.ComplianceDeadlineForQU_Title)"
+      valueName="SetComplianceDeadlineForQU">
+      <parentCategory ref="WindowsUpdateExperience"/>
+      <supportedOn ref="windows:SUPPORTED_Windows_10_0_RS3" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <enum id="ConfigureDeadlineForQualityUpdates" valueName="ConfigureDeadlineForQualityUpdates" required="true">
           <item displayName="$(string.ComplianceDeadlineDay0)">
             <value>
               <decimal value="0"/>
@@ -2771,49 +2839,42 @@
             </value>
           </item>
         </enum>
-        <enum id="ConfigureDeadlineGracePeriodForFeatureUpdates" valueName="ConfigureDeadlineGracePeriodForFeatureUpdates" required="true">
-          <item displayName="$(string.ComplianceDeadlineDay0)">
+        <boolean id="ConfigureDeadlineNoAutoRebootForQualityUpdates" valueName="ConfigureDeadlineNoAutoRebootForQualityUpdates" />
+      </elements>
+    </policy>
+    <policy name="AllowOptionalContent"
+            class="Machine"
+            displayName="$(string.AllowOptionalContent_Title)"
+            explainText="$(string.AllowOptionalContent_Help)"
+            key="Software\Policies\Microsoft\Windows\WindowsUpdate"
+            presentation="$(presentation.AllowOptionalContent_Title)"
+            valueName="SetAllowOptionalContent">
+      <parentCategory ref="WindowsUpdateOffering" />
+      <supportedOn ref="WU_SUPPORTED_WinServer2025_Win1021H2_Win1122H2" />
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <enum id="AllowOptionalContent" valueName="AllowOptionalContent" required="true">
+          <item displayName="$(string.ReceiveOptionalContentWithAutoApproval)">
             <value>
-              <decimal value="0"/>
+              <decimal value="1" />
             </value>
           </item>
-          <item displayName="$(string.ComplianceDeadlineDay1)">
+          <item displayName="$(string.ReceiveOptionalLCUWithAutoApproval)">
             <value>
-              <decimal value="1"/>
+              <decimal value="2" />
             </value>
           </item>
-          <item displayName="$(string.ComplianceDeadlineDay2)">
+          <item displayName="$(string.ReceiveOptionalContentNeedUserApproval)">
             <value>
-              <decimal value="2"/>
-            </value>
-          </item>
-          <item displayName="$(string.ComplianceDeadlineDay3)">
-            <value>
-              <decimal value="3"/>
-            </value>
-          </item>
-          <item displayName="$(string.ComplianceDeadlineDay4)">
-            <value>
-              <decimal value="4"/>
-            </value>
-          </item>
-          <item displayName="$(string.ComplianceDeadlineDay5)">
-            <value>
-              <decimal value="5"/>
-            </value>
-          </item>
-          <item displayName="$(string.ComplianceDeadlineDay6)">
-            <value>
-              <decimal value="6"/>
-            </value>
-          </item>
-          <item displayName="$(string.ComplianceDeadlineDay7)">
-            <value>
-              <decimal value="7"/>
+              <decimal value="3" />
             </value>
           </item>
         </enum>
-        <boolean id="ConfigureDeadlineNoAutoReboot" valueName="ConfigureDeadlineNoAutoReboot" />
       </elements>
     </policy>
   </policies>

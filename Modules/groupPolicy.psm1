@@ -438,6 +438,7 @@ Function New-GpoObject {
             02.01 -- Added Debug log
             02.02 -- Fixed bug that let unvalited GPO being imported anyway
             02.03 -- Improved parsing speed by filtering only enabled ones.
+            02.04 -- Minor fixes. No change to script logical.
     #>
     param(
     )
@@ -489,6 +490,7 @@ Function New-GpoObject {
     #Write-DebugMessage "---> Recovering GPOs data from xml file : success"
     $GpoData = Select-Xml $xmlFile -XPath "//*/GroupPolicies/GPO[@Validation='Yes']" | Select-Object -ExpandProperty Node
     Write-DebugMessage "---> Recovering GPOs data from xml file : success (validation-'Yes' only)"
+    $pdc = (Get-ADDomain).PDCEmulator
 
     ## Analyzing and processing
     if ($Result -ne 2) {
@@ -586,10 +588,10 @@ Function New-GpoObject {
 
                         Try {
                             if ($hasFilter) {
-                                Set-ADObject $GpoDN -replace @{gPCWQLFilter = $wmiLinkVal }
+                                Set-ADObject $GpoDN -replace @{gPCWQLFilter = $wmiLinkVal } -ErrorAction Continue -Server $pdc
                             }
                             else {
-                                Set-ADObject $GpoDN -Add @{gPCWQLFilter = $wmiLinkVal }
+                                Set-ADObject $GpoDN -Add @{gPCWQLFilter = $wmiLinkVal } -ErrorAction Continue -Server $pdc
                             }
                             Write-DebugMessage "---> WMI Filter of GPO $gpName has been set."
                         }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  (c) 2006 Microsoft Corporation  -->
+<policyDefinitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" revision="1.0" schemaVersion="1.0" xmlns="http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions">
+  <policyNamespaces>
+    <target prefix="sudo" namespace="Microsoft.Policies.DeveloperTools" />
+    <using prefix="windows" namespace="Microsoft.Policies.Windows" />
+  </policyNamespaces>
+  <resources minRequiredRevision="1.0" />
+  <policies>
+    <policy
+        name="EnableSudo"
+        class="Machine"
+        displayName="$(string.EnableSudo)"
+        explainText="$(string.EnableSudo_Help)"
+        presentation="$(presentation.EnableSudo)"
+        key="Software\Policies\Microsoft\Windows\Sudo">
+      <parentCategory ref="windows:System" />
+      <supportedOn ref="windows:SUPPORTED_Windows_11_0_NOSERVER" />
+      <elements>
+        <enum id="SudoModes" valueName="Enabled">
+          <item displayName="$(string.Sudo_Disabled)">
+            <value>
+              <decimal value="0" />
+            </value>
+          </item>
+          <item displayName="$(string.Sudo_ForceNewWindow)">
+            <value>
+              <decimal value="1" />
+            </value>
+          </item>
+          <item displayName="$(string.Sudo_DisableInput)">
+            <value>
+              <decimal value="2" />
+            </value>
+          </item>
+          <item displayName="$(string.Sudo_Normal)">
+            <value>
+              <decimal value="3" />
+            </value>
+          </item>
+        </enum>
+      </elements>
+    </policy>
+  </policies>
+</policyDefinitions>

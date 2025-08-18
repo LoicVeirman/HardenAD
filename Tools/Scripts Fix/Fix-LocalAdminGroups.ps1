@@ -57,7 +57,7 @@ foreach ($GPO in $GPOList) {
         # load and replace content
         Try {
             $string = [System.IO.File]::ReadAllText((Resolve-Path -LiteralPath ".\..\..\Inputs\GroupPolicies\$($GPO.Name)\$($GPO.BackupID)\translation.xml"))
-            $string = $string.Replace('%NetBios%\%Prefix%_%Groups_Computers%', '%NetBios%\%Prefix-domLoc%%Groups_Computers%')
+            $string = $string.Replace('%NetBios%\%Prefix%_%Groups_Computers_LA%', '%NetBios%\%Prefix-domLoc%%Groups_Computers_LA%')
             [System.IO.File]::WriteAllText((Resolve-Path -LiteralPath ".\..\..\Inputs\GroupPolicies\$($GPO.Name)\$($GPO.BackupID)\translation.xml"), $string)
             Write-Host "${S_Green}File updated successfully${Cend}"
         }

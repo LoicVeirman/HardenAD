@@ -7,69 +7,82 @@
     <stringTable>
       <string id="DeviceGuard">Device Guard</string>
       <string id="VirtualizationBasedSecurity">Turn On Virtualization Based Security</string>
-      <string id="VirtualizationBasedSecurityHelp">Specifies whether Virtualization Based Security is enabled.
+      <string id="VirtualizationBasedSecurityHelp">
+          Specifies whether Virtualization Based Security is enabled.
 
-Virtualization Based Security uses the Windows Hypervisor to provide support for security services. Virtualization Based Security requires Secure Boot, and can optionally be enabled with the use of DMA Protections. DMA protections require hardware support and will only be enabled on correctly configured devices.
+          Virtualization Based Security uses the Windows Hypervisor to provide support for security services. Virtualization Based Security requires Secure Boot, and can optionally be enabled with the use of DMA Protections. DMA protections require hardware support and will only be enabled on correctly configured devices.
 
-Virtualization Based Protection of Code Integrity
+          Virtualization Based Protection of Code Integrity
 
-This setting enables virtualization based protection of Kernel Mode Code Integrity. When this is enabled, kernel mode memory protections are enforced and the Code Integrity validation path is protected by the Virtualization Based Security feature.
+          This setting enables virtualization based protection of Kernel Mode Code Integrity. When this is enabled, kernel mode memory protections are enforced and the Code Integrity validation path is protected by the Virtualization Based Security feature.
 
-The "Disabled" option turns off Virtualization Based Protection of Code Integrity remotely if it was previously turned on with the "Enabled without lock" option.
+          The "Disabled" option turns off Virtualization Based Protection of Code Integrity remotely if it was previously turned on with the "Enabled without lock" option.
 
-The "Enabled with UEFI lock" option ensures that Virtualization Based Protection of Code Integrity cannot be disabled remotely. In order to disable the feature, you must set the Group Policy to "Disabled" as well as remove the security functionality from each computer, with a physically present user, in order to clear configuration persisted in UEFI.
+          The "Enabled with UEFI lock" option ensures that Virtualization Based Protection of Code Integrity cannot be disabled remotely. In order to disable the feature, you must set the Group Policy to "Disabled" as well as remove the security functionality from each computer, with a physically present user, in order to clear configuration persisted in UEFI.
 
-The "Enabled without lock" option allows Virtualization Based Protection of Code Integrity to be disabled remotely by using Group Policy.
+          The "Enabled without lock" option allows Virtualization Based Protection of Code Integrity to be disabled remotely by using Group Policy.
 
-The "Not Configured" option leaves the policy setting undefined. Group Policy does not write the policy setting to the registry, and so it has no impact on computers or users. If there is a current setting in the registry it will not be modified.
+          The "Not Configured" option leaves the policy setting undefined. Group Policy does not write the policy setting to the registry, and so it has no impact on computers or users. If there is a current setting in the registry it will not be modified.
 
-The "Require UEFI Memory Attributes Table" option will only enable Virtualization Based Protection of Code Integrity on devices with UEFI firmware support for the Memory Attributes Table. Devices without the UEFI Memory Attributes Table may have firmware that is incompatible with Virtualization Based Protection of Code Integrity which in some cases can lead to crashes or data loss or incompatibility with certain plug-in cards. If not setting this option the targeted devices should be tested to ensure compatibility.
+          The "Require UEFI Memory Attributes Table" option will only enable Virtualization Based Protection of Code Integrity on devices with UEFI firmware support for the Memory Attributes Table. Devices without the UEFI Memory Attributes Table may have firmware that is incompatible with Virtualization Based Protection of Code Integrity which in some cases can lead to crashes or data loss or incompatibility with certain plug-in cards. If not setting this option the targeted devices should be tested to ensure compatibility.
 
-Warning: All drivers on the system must be compatible with this feature or the system may crash. Ensure that this policy setting is only deployed to computers which are known to be compatible.
+          Warning: All drivers on the system must be compatible with this feature or the system may crash. Ensure that this policy setting is only deployed to computers which are known to be compatible.
 
-Credential Guard
+          Credential Guard
 
-This setting lets users turn on Credential Guard with virtualization-based security to help protect credentials.
+          This setting lets users turn on Credential Guard with virtualization-based security to help protect credentials.
 
-For Windows 11 21H2 and earlier, the "Disabled" option turns off Credential Guard remotely if it was previously turned on with the "Enabled without lock" option. For later versions, the "Disabled" option turns off Credential Guard remotely if it was previously turned on with the "Enabled without lock" option or was "Not Configured".
+          For Windows 11 21H2 and earlier, the "Disabled" option turns off Credential Guard remotely if it was previously turned on with the "Enabled without lock" option. For later versions, the "Disabled" option turns off Credential Guard remotely if it was previously turned on with the "Enabled without lock" option or was "Not Configured".
 
-The "Enabled with UEFI lock" option ensures that Credential Guard cannot be disabled remotely. In order to disable the feature, you must set the Group Policy to "Disabled" as well as remove the security functionality from each computer, with a physically present user, in order to clear configuration persisted in UEFI.
+          The "Enabled with UEFI lock" option ensures that Credential Guard cannot be disabled remotely. In order to disable the feature, you must set the Group Policy to "Disabled" as well as remove the security functionality from each computer, with a physically present user, in order to clear configuration persisted in UEFI.
 
-The "Enabled without lock" option allows Credential Guard to be disabled remotely by using Group Policy. The devices that use this setting must be running at least Windows 10 (Version 1511).
+          The "Enabled without lock" option allows Credential Guard to be disabled remotely by using Group Policy. The devices that use this setting must be running at least Windows 10 (Version 1511).
 
-For Windows 11 21H2 and earlier, the "Not Configured" option leaves the policy setting undefined. Group Policy does not write the policy setting to the registry, and so it has no impact on computers or users. If there is a current setting in the registry it will not be modified. For later versions, if there is no current setting in the registry, the "Not Configured" option will enable Credential Guard without UEFI lock.
+          For Windows 11 21H2 and earlier, the "Not Configured" option leaves the policy setting undefined. Group Policy does not write the policy setting to the registry, and so it has no impact on computers or users. If there is a current setting in the registry it will not be modified. For later versions, if there is no current setting in the registry, the "Not Configured" option will enable Credential Guard without UEFI lock.
 
-Secure Launch
+          Machine Identity Isolation
 
-This setting sets the configuration of Secure Launch to secure the boot chain.
+          This setting controls Credential Guard protection of Active Directory machine accounts. Enabling this policy has certain prerequisites. The prerequisites and more information about this policy can be found at https://go.microsoft.com/fwlink/?linkid=2251066.
 
-The "Not Configured" setting is the default, and allows configuration of the feature by Administrative users.
+          The "Not Configured" option leaves the policy setting undefined. Group Policy does not write the policy setting to the registry, and so it has no impact on computers or users. If there is a current setting in the registry it will not be modified.
 
-The "Enabled" option turns on Secure Launch on supported hardware.
+          The "Disabled" option turns off Machine Identity Isolation. If this policy was previously set to "Enabled in audit mode", no further action is needed. If this policy was previously set to “Enabled in enforcement mode”, the device must be unjoined and rejoined to the domain. More details can be found at the link above.
 
-The "Disabled" option turns off Secure Launch, regardless of hardware support.
+          The "Enabled in audit mode" option copies the machine identity into Credential Guard. Both LSA and Credential Guard will have access to the machine identity. This allows users to validate that "Enabled in enforcement mode" will work in their Active Directory Domain.
 
-Kernel-mode Hardware-enforced Stack Protection
+          The "Enabled in enforcement mode" option moves the machine identity into Credential Guard. This makes the machine identity only accessible to Credential Guard.
 
-This setting enables Hardware-enforced Stack Protection for kernel-mode code. When this security feature is enabled, kernel-mode data stacks are hardened with hardware-based shadow stacks, which store intended return address targets to ensure that program control flow is not tampered.
+          Secure Launch
 
-This security feature has the following prerequisites:
-1) The CPU hardware supports hardware-based shadow stacks.
-2) Virtualization Based Protection of Code Integrity is enabled.
+          This setting sets the configuration of Secure Launch to secure the boot chain.
 
-If either prerequisite is not met, this feature will not be enabled, even if an "Enabled" option is selected for this feature. Note that selecting an "Enabled" option for this feature will not automatically enable Virtualization Based Protection of Code Integrity, that needs to be done separately.
+          The "Not Configured" setting is the default, and allows configuration of the feature by Administrative users.
 
-Devices that enable this security feature must be running at least Windows 11 (Version 22H2).
+          The "Enabled" option turns on Secure Launch on supported hardware.
 
-The "Disabled" option turns off kernel-mode Hardware-enforced Stack Protection.
+          The "Disabled" option turns off Secure Launch, regardless of hardware support.
 
-The "Enabled in audit mode" option enables kernel-mode Hardware-enforced Stack Protection in audit mode, where shadow stack violations are not fatal and will be logged to the system event log.
+          Kernel-mode Hardware-enforced Stack Protection
 
-The "Enabled in enforcement mode" option enables kernel-mode Hardware-enforced Stack Protection in enforcement mode, where shadow stack violations are fatal.
+          This setting enables Hardware-enforced Stack Protection for kernel-mode code. When this security feature is enabled, kernel-mode data stacks are hardened with hardware-based shadow stacks, which store intended return address targets to ensure that program control flow is not tampered.
 
-The "Not Configured" option leaves the policy setting undefined. Group Policy does not write the policy setting to the registry, and so it has no impact on computers or users. If there is a current setting in the registry it will not be modified.
+          This security feature has the following prerequisites:
+          1) The CPU hardware supports hardware-based shadow stacks.
+          2) Virtualization Based Protection of Code Integrity is enabled.
 
-Warning: All drivers on the system must be compatible with this security feature or the system may crash in enforcement mode. Audit mode can be used to discover incompatible drivers. For more information, refer to https://go.microsoft.com/fwlink/?LinkId=2162953.
+          If either prerequisite is not met, this feature will not be enabled, even if an "Enabled" option is selected for this feature. Note that selecting an "Enabled" option for this feature will not automatically enable Virtualization Based Protection of Code Integrity, that needs to be done separately.
+
+          Devices that enable this security feature must be running at least Windows 11 (Version 22H2).
+
+          The "Disabled" option turns off kernel-mode Hardware-enforced Stack Protection.
+
+          The "Enabled in audit mode" option enables kernel-mode Hardware-enforced Stack Protection in audit mode, where shadow stack violations are not fatal and will be logged to the system event log.
+
+          The "Enabled in enforcement mode" option enables kernel-mode Hardware-enforced Stack Protection in enforcement mode, where shadow stack violations are fatal.
+
+          The "Not Configured" option leaves the policy setting undefined. Group Policy does not write the policy setting to the registry, and so it has no impact on computers or users. If there is a current setting in the registry it will not be modified.
+
+          Warning: All drivers on the system must be compatible with this security feature or the system may crash in enforcement mode. Audit mode can be used to discover incompatible drivers. For more information, refer to https://go.microsoft.com/fwlink/?LinkId=2162953.
       </string>
       <string id="SecureBoot">Secure Boot</string>
       <string id="SecureBootAndDmaProtection">Secure Boot and DMA Protection</string>
@@ -80,8 +93,8 @@ Warning: All drivers on the system must be compatible with this security feature
       <string id="EnabledAudit">Enabled in audit mode</string>
       <string id="EnabledEnforcement">Enabled in enforcement mode</string>
       <string id="NotConfigured">Not Configured</string>
-      <string id="ConfigCIPolicy">Deploy Windows Defender Application Control</string>
-      <string id="ConfigCIPolicyHelp">Deploy Windows Defender Application Control
+      <string id="ConfigCIPolicy">Deploy App Control for Business</string>
+      <string id="ConfigCIPolicyHelp">Deploy App Control for Business
 
 This policy setting lets you deploy a Code Integrity Policy to a machine to control what is allowed to run on that machine.
 
@@ -101,6 +114,7 @@ If using a signed and protected policy then disabling this policy setting doesn'
         <dropdownList refId="HypervisorEnforcedCodeIntegrityDrop" defaultItem="3">Virtualization Based Protection of Code Integrity:</dropdownList>
         <checkBox refId="CheckboxMAT">Require UEFI Memory Attributes Table</checkBox>
         <dropdownList refId="CredentialIsolationDrop" defaultItem="3">Credential Guard Configuration:</dropdownList>
+        <dropdownList refId="MachineIdentityIsolationDrop" defaultItem="3">Machine Identity Isolation Configuration:</dropdownList>
         <dropdownList refId="SystemGuardDrop" defaultItem="2">Secure Launch Configuration:</dropdownList>
         <dropdownList refId="KernelShadowStacksDrop" defaultItem="3">Kernel-mode Hardware-enforced Stack Protection:</dropdownList>
       </presentation>

@@ -37,7 +37,6 @@
         displayName="$(string.LAPS_BackupDirectory)"
         explainText="$(string.LAPS_BackupDirectory_Help)"
         key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
-        valueName="BackupDirectory"
         name="LAPS_BackupDirectory"
         presentation="$(presentation.LAPS_BackupDirectory)"
         >
@@ -46,7 +45,6 @@
         <elements>
           <enum
             id="LAPS_BackupDirectory"
-            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
             valueName="BackupDirectory"
             >
             <item displayName="$(string.LAPS_BackupDirectoryDisabled)">
@@ -80,7 +78,6 @@
       <elements>
         <enum
             id="LAPS_PasswordComplexity"
-            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
             valueName="PasswordComplexity"
             >
           <item displayName="$(string.LAPS_PwdComplexity_Item_1)">
@@ -103,20 +100,44 @@
               <decimal value="4"/>
             </value>
           </item>
+          <item displayName="$(string.LAPS_PwdComplexity_Item_5)">
+            <value>
+              <decimal value="5"/>
+            </value>
+          </item>
+          <item displayName="$(string.LAPS_PwdComplexity_Item_6)">
+            <value>
+              <decimal value="6"/>
+            </value>
+          </item>
+          <item displayName="$(string.LAPS_PwdComplexity_Item_7)">
+            <value>
+              <decimal value="7"/>
+            </value>
+          </item>
+          <item displayName="$(string.LAPS_PwdComplexity_Item_8)">
+            <value>
+              <decimal value="8"/>
+            </value>
+          </item>
         </enum>
         <decimal
             id="LAPS_PasswordLength"
-            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            valueName="PasswordLength"
             minValue="8"
             maxValue="64"
-            valueName="PasswordLength"
             />
         <decimal
             id="LAPS_PasswordAgeDays"
-            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            valueName="PasswordAgeDays"
             minValue="1"
             maxValue="365"
-            valueName="PasswordAgeDays"
+            />
+        <decimal
+            id="LAPS_PassphraseLength"
+            valueName="PassphraseLength"
+            minValue="3"
+            maxValue="10"
             />
       </elements>
     </policy>
@@ -133,9 +154,8 @@
       <elements>
         <text
             id="TEXT_AdminAccountName"
-            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
-            maxLength="64"
             valueName="AdministratorAccountName"
+            maxLength="64"
             />
       </elements>
     </policy>
@@ -145,7 +165,7 @@
         explainText="$(string.LAPS_DontAllowPwdExpirationBehindPolicy_Help)"
         key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
         name="LAPS_DontAllowPwdExpirationBehindPolicy"
-        valueName="PwdExpirationProtectionEnabled"
+        valueName="PasswordExpirationProtectionEnabled"
         >
       <parentCategory ref="LAPS_CAT"/>
       <supportedOn ref="SUPPORTED_Windows10"/>
@@ -186,9 +206,8 @@
       <elements>
         <text
             id="TEXT_ADPasswordEncryptionPrincipal"
-            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
-            maxLength="128"
             valueName="ADPasswordEncryptionPrincipal"
+            maxLength="128"
             />
       </elements>
     </policy>
@@ -205,10 +224,9 @@
       <elements>
         <decimal
             id="LAPS_ADEncryptedPasswordHistorySize_INT"
-            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            valueName="ADEncryptedPasswordHistorySize"
             minValue="0"
             maxValue="12"
-            valueName="ADEncryptedPasswordHistorySize"
             />
       </elements>
     </policy>
@@ -242,14 +260,12 @@
       <elements>
         <decimal
             id="LAPS_PostAuthenticationResetDelay_INT"
-            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+            valueName="PostAuthenticationResetDelay"
             minValue="0"
             maxValue="24"
-            valueName="PostAuthenticationResetDelay"
             />
         <enum
             id="LAPS_PostAuthenticationActions"
-            key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
             valueName="PostAuthenticationActions"
             >
           <item displayName="$(string.PostAuthenticationActions_Item0)">
@@ -272,7 +288,60 @@
               <decimal value="5"/>
             </value>
           </item>
+          <item displayName="$(string.PostAuthenticationActions_Item11)">
+            <value>
+              <decimal value="11"/>
+            </value>
+          </item>
         </enum>
+      </elements>
+    </policy>
+    <policy
+        class="Machine"
+        displayName="$(string.LAPS_AutomaticAccountManagementPolicy)"
+        explainText="$(string.LAPS_AutomaticAccountManagementPolicy_Help)"
+        key="SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\LAPS"
+        name="LAPS_AutomaticAccountManagementPolicy"
+        valueName="AutomaticAccountManagementEnabled"
+        presentation="$(presentation.LAPS_AutomaticAccountManagementPolicy)"
+        >
+      <parentCategory ref="LAPS_CAT"/>
+      <supportedOn ref="SUPPORTED_Windows10"/>
+      <enabledValue>
+        <decimal value="1" />
+      </enabledValue>
+      <disabledValue>
+        <decimal value="0" />
+      </disabledValue>
+      <elements>
+        <enum
+            id="LAPS_AutomaticAccountManagementTarget"
+            valueName="AutomaticAccountManagementTarget"
+            >
+          <item displayName="$(string.AutomaticAccountManagementTarget_Item0)">
+            <value>
+              <decimal value="0"/>
+            </value>
+          </item>
+          <item displayName="$(string.AutomaticAccountManagementTarget_Item1)">
+            <value>
+              <decimal value="1"/>
+            </value>
+          </item>
+        </enum>
+        <text
+            id="LAPS_AutomaticAccountManagementNameOrPrefix"
+            valueName="AutomaticAccountManagementNameOrPrefix"
+            maxLength="20"
+            />
+        <boolean
+            id="LAPS_AutomaticAccountManagementEnableAccount"
+            valueName="AutomaticAccountManagementEnableAccount"
+            />
+        <boolean
+            id="LAPS_AutomaticAccountManagementRandomizeName"
+            valueName="AutomaticAccountManagementRandomizeName"
+            />
       </elements>
     </policy>
   </policies>
