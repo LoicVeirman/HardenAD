@@ -115,6 +115,25 @@ Eventi generati da questa configurazione: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Supportato</string>
       <string id="PKINITHashAlgorithm_Audited">Monitorato</string>
       <string id="PKINITHashAlgorithm_NotSupported">Non supportato</string>
+      <string id="StrongNameMatches">Consenti mappature forti basate sul nome per i certificati</string>
+      <string id="StrongNameMatches_explain">Questa impostazione di criterio consente l'uso di identificatori alternativi basati sul nome per mappare fortemente i certificati emessi agli account utente di Active Directory e specifica quali certificati vengono mappati a quali account. Senza questa impostazione, i certificati devono soddisfare i criteri di "mappatura forte" specificati in aka.ms/StrongCertMapKB, che in genere non ammettono identificatori basati sul nome.
+
+Ogni mappatura specificata in questo criterio deve includere un OID del criterio insieme a un IssuerSubject e/o un UPN Suffix utilizzando la sintassi specificata di seguito. Se non è possibile trovare una mappatura valida per un determinato certificato in questo criterio, Active Directory tenterà di trovare una corrispondenza utilizzando i criteri di mappatura sicuri esistenti specificati in KB5014754. Le mappature dei certificati non conformi ai criteri di "strong name mapping" (questo criterio) o ai criteri di "strong mapping" esistenti saranno considerate non valide per l'autenticazione.
+
+Il formato generale dei criteri e alcuni esempi sono elencati di seguito. Questo criterio si applica solo agli account utente di Active Directory.
+
+Sintassi generale
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+Esempi
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+Il criterio deve contenere esattamente un'identificazione personale del certificato per regola, con ogni regola rappresentata come tupla. Le identificazioni personali devono essere univoche e non possono essere ripetute in più regole. Le sezioni di ogni tupla separate da punti e virgola devono essere nell'ordine indicato, mentre i campi separati da virgole possono essere in qualsiasi ordine. Le regole stesse sono separate da linee nuove.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Eventi generati da questa configurazione: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Regole di corrispondenza nome sicuro:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

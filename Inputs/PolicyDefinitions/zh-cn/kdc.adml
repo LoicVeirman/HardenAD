@@ -115,6 +115,25 @@
       <string id="PKINITHashAlgorithm_Supported">支持</string>
       <string id="PKINITHashAlgorithm_Audited">已审核</string>
       <string id="PKINITHashAlgorithm_NotSupported">不支持</string>
+      <string id="StrongNameMatches">允许证书使用基于名称的强映射</string>
+      <string id="StrongNameMatches_explain">通过此策略设置，可使用基于名称的替代性标识符将证书强映射颁发到 Active Directory 用户帐户，并指定证书与帐户之间的映射关系。如果未启用此设置，证书必须满足 aka.ms/StrongCertMapKB 中指定的“强映射”条件，这通常不允许基于名称的标识符。
+
+此策略中指定的每个映射必须包含一个策略 OID 以及一个 IssuerSubject 和/或使用下面指定的语法的 UPN 后缀。如果在此策略中找不到给定证书的有效映射，Active Directory 将尝试使用 KB5014754 中指定的现有强映射标准查找匹配项。不符合“强名称映射”条件（此策略）或现有“强映射”条件的证书映射将被视为无效的身份验证。
+
+下面列出了常规策略格式和一些示例。此策略仅适用于 Active Directory 用户帐户。
+
+常规语法
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+示例
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+策略必须为每个规则只包含一个证书指纹，每个规则都表示为元组。指纹必须唯一，并且不能在多条规则中重复。每个元组中用分号分隔的部分必须按规定的顺序排列，而用逗号分隔的字段可以按任何顺序排列。规则本身由换行符分隔。
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">强名称匹配规则:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

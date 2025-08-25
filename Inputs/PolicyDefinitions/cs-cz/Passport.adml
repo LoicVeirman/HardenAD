@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">Používat certifikát k místnímu ověřování</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">Použití důvěryhodnosti cloudu pro místní ověřování</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">Po přihlášení zakázat ukládání přihlašovacích údajů Windows Hello pro firmy do mezipaměti</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello pro firmy je alternativní metoda pro přihlašování do Windows s použitím účtu Active Directory nebo Azure Active Directory, kterou můžete nahradit hesla, čipové karty a virtuální čipové karty.
 
@@ -111,16 +113,17 @@ Pokud toto nastavení zásad zakážete, Windows Hello pro firmy používání b
 POZNÁMKA: Pokud je tato zásada zakázaná, nebude moct uživatel na zařízení používat biometrická gesta pro žádné typy účtů.
         </string>
         <string id="MSPassport_EnableEnhancedSignInSecurity">Povolit ESS s podporovanými periferními zařízeními</string>
-        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Rozšířené zabezpečení přihlašování (ESS) izoluje Windows Hello biometrická data šablony (obličeje a otisku prstu) a odpovídající operace s důvěryhodným hardwarem nebo zadanými oblastmi paměti, což znamená, že zbytek operačního systému k nim nemá přístup a ani s nimi nemůže manipulovat. Vzhledem k tomu, že kanál komunikace mezi senzory a algoritmem je také zabezpečený, malware nemůže vkládat ani přehrávat data, aby simuloval přihlášení uživatele nebo znepřístupnil počítač uživateli.
+        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Rozšířené zabezpečení přihlašování (ESS) izoluje data biometrických šablon Windows Hello (obličeje a otisku prstu) a odpovídající operace v důvěryhodném hardwaru nebo určených oblastech paměti, což znamená, že zbytek operačního systému k nim nemá přístup a ani s nimi nemůže manipulovat. Vzhledem k tomu, že kanál komunikace mezi senzory a algoritmem je také zabezpečený, malware nemůže vkládat ani přehrávat data, aby simuloval přihlášení uživatele nebo znepřístupnil počítač uživateli.
 Pokud tuto zásadu povolíte, může mít následující hodnoty:
 
- 0 – Rozšířené zabezpečení přihlašování povoleno s periferními zařízeními a integrovanými senzory, které nejsou ESS
-Rozšířené zabezpečení přihlašování bude povoleno v systémech s kompatibilním softwarem a hardwarem podle stávajícího výchozího chování ve Windows. Operace ověřování pomocí periferních zařízení s podporou Windows Hello budou povoleny v souladu s aktuálními omezeními funkcí. Dále se s tímto nastavením povolí ESS na zařízeních s kombinací biometrických zařízení, jako je FPR s podporou ESS a kamera bez podpory ESS.
+0 – Rozšířené zabezpečení přihlašování zakázáno s periferními senzory
+Rozšířené zabezpečení přihlašování bude zakázáno v systémech s kompatibilním softwarem a hardwarem. Operace ověřování pomocí periferních zařízení s podporou Windows Hello budou povoleny v souladu s aktuálními omezeními funkcí.
 
-1 – Rozšířené zabezpečení přihlašování povoleno bez periferních nebo integrovaných senzorů, které nejsou ESS (výchozí a doporučené pro nejvyšší zabezpečení)
+1 – Rozšířené zabezpečení přihlašování povoleno bez periferních senzorů (výchozí a doporučené)
 Rozšířené zabezpečení přihlašování bude povoleno v systémech s kompatibilním softwarem a hardwarem podle stávajícího výchozího chování ve Windows. Operace ověřování pomocí jakéhokoli periferního biometrického zařízení budou blokovány a nebudou k dispozici pro Windows Hello.
 
 Pokud tuto zásadu zakážete nebo nenakonfigurujete, senzory jiné než ESS se na zařízení ESS zablokují.
+
         </string>
         <string id="MSPassport_EnablePinRecovery">Použít obnovení PIN kódu</string>
         <string id="MSPassport_EnablePinRecoveryExplain">Obnovení PIN kódu umožňuje uživateli změnit zapomenutý PIN kód pomocí služby pro obnovení PIN kódu ve Windows Hello pro firmy, a to bez ztráty přidružených přihlašovacích údajů nebo certifikátů, včetně případných klíčů přidružených k osobním účtům uživatele na zařízení. Aby to bylo možné, zašifruje služba pro obnovení PIN kódu, která je založena na Azure, tajný kód pro obnovení, který se uloží na zařízení a k dešifrování vyžaduje službu pro obnovení PIN kódu i samotné zařízení. Obnovení PIN kódu vyžaduje, aby uživatel provedl vícefaktorové ověření v Azure Active Directory.
@@ -149,6 +152,8 @@ Když nastavení této zásady zakážete nebo nenakonfigurujete, použije Windo
 
 POZNÁMKA: Prostředí, které povoluje jak tohle nastavení zásady, tak nastavení zásady Používat Windows Hello pro firmy, vyžaduje, aby mělo prostředí aspoň jeden řadič domény s Windows Serverem 2016, jinak Windows Hello pro firmy selže.
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">Přihlašovací údaje Windows Hello pro firmy se po přihlášení ukládají do mezipaměti, aby určité aplikace související se zabezpečením mohly používat přihlašovací údaje bez vyrušování uživatele. Pokud chcete tuto zásadu vypnout, povolte tuto možnost, aby byla odebrána mezipaměť a aby bylo explicitně nutné zadání uživatelem.</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">Nakonfigurovat faktory pro odemknutí zařízení</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">Umožňuje nakonfigurovat čárkami oddělený seznam identifikátorů GUID poskytovatelů přihlašovacích údajů, například identifikátory GUID poskytovatelů pro rozpoznávání obličeje a otisků prstů, kteří se mají používat jako první a druhý faktor pro odemknutí. Pokud je jako jeden z faktorů pro odemknutí zadán poskytovatel důvěryhodných signálů, měli byste také nakonfigurovat čárkami oddělený seznam pravidel pro signály ve formě XML pro každý typ signálu k ověření.

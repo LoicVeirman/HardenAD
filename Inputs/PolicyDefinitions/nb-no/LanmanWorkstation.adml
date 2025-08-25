@@ -37,7 +37,9 @@ Hvis denne policyinnstillingen aktiveres, eller hvis du ikke konfigurerer denne 
 
 Hvis denne policyinnstillingen deaktiveres, avviser SMB-klienten pålogging av usikre gjester.
 
-Pålogging av usikre gjester brukes av filservere som tillater uautorisert tilgang til delte mapper. Mens det er uvanlig i et bedriftsmiljø, brukes pålogging av usikre gjester ofte av NAS-forbrukerapparater (Network Attached Storage) som fungerer som filservere. Windows-filservere krever godkjenning og bruker ikke pålogging av usikre gjester som standard. Siden pålogging av usikre gjester ikke er godkjent, er viktige sikkerhetsfunksjoner som SMB-signering og kryptering for SMB, deaktivert. Derfor er klienter som tillater pålogging av usikre gjester, utsatt for en rekke mellommannbaserte angrep som kan føre til tap av data, skadde data og fare for skadelig programvare. I tillegg er alle data som er skrevet på en filserver ved hjelp av en usikker gjestepålogging, potensielt tilgjengelige for alle på nettverket. Microsoft anbefaler å deaktivere usikre gjestepålogginger og konfigurere filservere til å kreve godkjent tilgang."
+Hvis du aktiverer signering, vil SMB-klienten avvise usikre gjestepålogginger.
+
+Pålogging av usikre gjester brukes av filservere som tillater uautorisert tilgang til delte mapper. Mens det er uvanlig i et bedriftsmiljø, brukes pålogging av usikre gjester ofte av NAS-forbrukerapparater (Network Attached Storage) som fungerer som filservere. Windows-filservere krever godkjenning og bruker ikke pålogging av usikre gjester som standard. Siden pålogging av usikre gjester ikke er godkjent, er viktige sikkerhetsfunksjoner som SMB-signering og kryptering for SMB, deaktivert. Derfor er klienter som tillater pålogging av usikre gjester, utsatt for en rekke mellommannbaserte angrep som kan føre til tap av data, skadde data og fare for skadelig programvare. I tillegg er alle data som er skrevet på en filserver ved hjelp av en usikker gjestepålogging, potensielt tilgjengelige for alle på nettverket. Microsoft anbefaler å deaktivere usikre gjestepålogginger og konfigurere filservere til å kreve godkjent tilgang.
       </string>
 
       <string id="Pol_EnableCSCforCAShares_Name">Tilgjengelighet for frakoblede filer på delte ressurser for Kontinuerlig tilgjengelig</string>
@@ -62,6 +64,7 @@ Pålogging av usikre gjester brukes av filservere som tillater uautorisert tilga
         Obs! Denne policyen har ingen effekt når du kobler til delte ressurser for en filserver for utskalering fra en Windows Server. Microsoft anbefaler ikke at du aktiverer denne policyen for klienter som rutinemessig kobler til filer som driftes i en Windows Failover-klynge med filserveren for rollen Generell bruk. Dette kan føre til negative Failover-tider og økt minne- og CPU-bruk.
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Minst Windows Server 2022, Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Som et minimum Windows Server 2025, Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">Bruk SMB-komprimering som standard</string>
       <string id="Pol_EnableCompressedTraffic_Help">Denne policyen kontrollerer om SMB-klienten bruker trafikkkomprimering som standard.
 
@@ -78,11 +81,129 @@ Hvis du aktiverer denne policyinnstillingen, vil SMB-klienten aldri komprimere d
 
 Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, kan SMB-klienten komprimere trafikk (avhengig av en kombinasjon av andre policyer og betingelser).
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">Gi fullmakt til maksimumsversjonen av SMB</string>
+      <string id="Pol_MaxSmb2Dialect_Help">Denne policyen kontrollerer maksimumsversjonen av SMB-protokollen
+
+Obs! Denne gruppepolicyen forhindrer ikke bruk av SMB 1 hvis denne komponenten fremdeles er installert og aktivert.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">Gi fullmakt til minimumsversjonen av SMB</string>
+      <string id="Pol_MinSmb2Dialect_Help">Denne policyen styrer minimumsversjonen av SMB-protokollen
+
+Obs! Denne gruppepolicyen forhindrer ikke bruk av SMB 1 hvis denne komponenten fremdeles er installert og aktivert.
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">Blokker NTLM (LM, NTLM, NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">Denne policyen kontrollerer om SMB-klienten blokkerer NTLM for godkjenning av ekstern tilkobling.
+
+Hvis du aktiverer denne policyinnstillingen, bruker ikke SMB-klienten NTLM for ekstern tilkoblingsgodkjenning.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, kan SMB-klienten fortsatt bruke NTLM.
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">Liste over blokkeringsunntak for NTLM-server</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">Denne policyinnstillingen angir om NTLM kan brukes til å få tilgang til angitte servere.
+
+Hvis du aktiverer denne policyinnstillingen, som bare gjelder hvis policyen Blokker NTLM (LM, NTLM, NTLMv2) er aktivert, kan NTLM brukes til å få tilgang til de angitte servere. Angi de ønskede serverne (DNS-navn, IP-adresse eller NetBIOS-navn) i redigeringsboksen, ett servernavn per linje.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, bestemmes NTLM-tilgangen til servere av andre innstillinger.
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">Aktiver eksterne postkasser</string>
+      <string id="Pol_EnableRemoteMailslots_Help">Denne policyen kontrollerer om SMB-klienten kan aktivere eller deaktivere eksterne postkasser over MUP.
+
+Hvis du deaktiverer denne policyinnstillingen, fungerer ikke eksterne postkasser via MUP, og de vil derfor ikke gå gjennom SMB-klientens omadressering.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, kan eksterne postkasser tillates via MUP.
+      </string>
+      <string id="Pol_RequireEncryption_Name">Krev kryptering</string>
+      <string id="Pol_RequireEncryption_Help">Denne policyen kontrollerer om SMB-klienten krever kryptering.
+
+Hvis du aktiverer denne policyinnstillingen, krever SMB-klienten at SMB-serveren støtter kryptering og krypterer dataene.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, krever ikke SMB-klienten kryptering. SMB-kryptering kan imidlertid fortsatt være påkrevd. se notater nedenfor.
+
+Obs! Denne policyen kombineres med egenskaper for hver delt ressurs, per server og per tilordnede stasjonstilkobling, der SMB-kryptering kan være nødvendig. SMB-serveren må støtte og aktivere SMB-kryptering. Hvis denne policyen for eksempel deaktiveres (eller ikke konfigureres), kan SMB-klienten fortsatt utføre kryptering hvis en delt SMB-serverressurs har nødvendig kryptering.
+
+Viktig! SMB-kryptering krever SMB 3.0 eller nyere
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">Aktiver alternative porter</string>
+      <string id="Pol_EnableAlternativePorts_Help">Denne policyen kontrollerer om SMB-klienten vil aktivere eller deaktivere alternative porter.
+
+Hvis du deaktiverer denne policyinnstillingen, brukes ikke alternative porter av SMB-klienten.
+
+Hvis du ikke konfigurerer denne policyinnstillingen, kan alternative porter brukes av SMB-klienten.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">Overvåkingsserver støtter ikke kryptering</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">Denne policyen kontrollerer om SMB-klienten vil aktivere overvåkingshendelsen når SMB-serveren ikke støtter kryptering.
+
+Hvis du aktiverer denne policyinnstillingen, logger SMB-klienten hendelsen når SMB-serveren ikke støtter kryptering.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, logger ikke SMB-klienten hendelsen.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">Overvåkingsserveren støtter ikke signering</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">Denne policyen kontrollerer om SMB-klienten aktiverer overvåkingshendelsen når SMB-serveren ikke støtter signering.
+
+Hvis du aktiverer denne policyinnstillingen, logger SMB-klienten hendelsen når SMB-serveren ikke støtter signering.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, logger ikke SMB-klienten hendelsen.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Overvåk usikker gjestepålogging</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">Denne policyen kontrollerer om SMB-klienten aktiverer overvåkingshendelsen når klienten er logget på som gjestekonto.
+
+Hvis du aktiverer denne policyinnstillingen, logger SMB-klienten hendelsen når klienten er logget på som gjestekonto.
+
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, logger ikke SMB-klienten hendelsen.
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">Alternative porttilordninger</string>
+      <string id="Pol_AlternativePortMappings_Help">Denne policyinnstillingen bestemmer de alternative portregistertilordningene som brukes av SMB-klienten.
+
+Hvis du aktiverer denne policyinnstillingen, brukes den første gyldige tilordningen hvis tilordningens servernavn samsvarer med målservernavnet for tilkobling.
+
+Hvis du aktiverer denne policyinnstillingen og ikke angir minst én gyldig tilordning, eller hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, refererer SMB-klienten til andre metoder for å bestemme alternativ portbruk, for eksempel med NET USE- eller New-SmbMapping-kommandoene.
+
+Eksempler:
+
+contososa.file.core.windows.net:tcp:448
+edgesrv1.corp.contoso.com:quic:450
+
+Slik endrer du denne innstillingen:
+
+Ordne de ønskede alternative porttilordningene i redigeringsboksen med én tilordningsoppføring per linje.
+
+Formatet for hver tilordningsoppføring angir et servernavn, en transporttype og et portnummer atskilt med kolon slik det er gjort i eksemplet ovenfor.
+
+Obs! Denne policyen krever ikke omstart av Windows for å tre i kraft.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>Chiffreringssamlinger:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>Velg SMB-versjon:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Versjon:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>Velg SMB-versjon:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Versjon:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>Liste over blokkeringsunntak for NTLM-server:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>Alternative portregistertilordninger:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

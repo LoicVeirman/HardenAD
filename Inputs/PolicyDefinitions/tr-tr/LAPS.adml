@@ -19,7 +19,7 @@
 
 Belirtilmezse, bu ayar varsayılan olarak 0 'a (Devre Dışı) ayarlanır.
 
-Bu ayar 1 olarak yapılandırıldıysa ve yönetilen cihaz bu cihazla Azure Active Directory, yerel yönetici parolası yönetilmedi.
+Bu ayar 1 olarak yapılandırıldıysa ve yönetilen cihaz bu Azure Active Directory birleştirilmişse, yerel yönetici parolası yönetilmedi.
 
 Bu ayar 2 olarak yapılandırıldıysa ve yönetilen cihaz Active Directory'ye katılmamışsa, yerel yönetici parolası yönetilmedi.
 
@@ -31,27 +31,38 @@ Daha fazla https://go.microsoft.com/fwlink/?linkid=2188435 için daha fazla bilg
       <string id="LAPS_BackupDirectoryAzure">Azure Active Directory</string>
       <string id="LAPS_BackupDirectoryAD">Active Directory</string>
       <string id="LAPS_PasswordSettings">Parola Ayarları</string>
-      <string id="LAPS_PasswordSettings_Help">Parola parametrelerini yapılandır
+      <string id="LAPS_PasswordSettings_Help">Parola parametrelerini yapılandırır
 
-Parola karmaşıklığı: yeni bir parola oluşturulurken kullanılan karakterler
-  Varsayılan: Büyük harfler + küçük harfler + sayılar + özel karakterler
+Parola karmaşıklığı: yeni parola oluşturulurken kullanılacak karakterler
+  Varsayılan: Büyük harfler + küçük harfler + rakamlar + özel karakterler
 
 Parola uzunluğu
   En az: 8 karakter
   En fazla: 64 karakter
   Varsayılan: 14 karakter
 
-Gün olarak parola geçerlilik süresi
-  En az: 1 gün (yedekleme dizini varsayılan olarak yapılandırıldığında 7 Azure AD)
+Gün cinsinden parola geçerlilik süresi: 
+  En az: 1 gün (yedekleme dizini Azure AD olarak yapılandırıldığında 7 gün)
   En fazla: 365 gün
   Varsayılan: 30 gün
 
-Daha fazla https://go.microsoft.com/fwlink/?linkid=2188435 için daha fazla bilgi için bkz.
+Parola uzunluğu
+  En az: 3 sözcük
+  En fazla: 10 sözcük
+  Varsayılan: 6 sözcük
+
+Daha fazla bilgi için https://go.microsoft.com/fwlink/?linkid=2188435 adresini ziyaret edin.
+
+Parola listesi, Electronic Frontier Foundation kuruluşunun "Deep Dive: EFF's New Wordlists for Random Passphrases" adlı makalesinden alınmıştır ve CC-BY-3.0 Atıf lisansı kapsamında kullanılmaktadır. Daha fazla bilgi için https://go.microsoft.com/fwlink/?linkid=2255471 adresini ziyaret edin.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Büyük harfler</string>
       <string id="LAPS_PwdComplexity_Item_2">Büyük harfler + küçük harfler</string>
       <string id="LAPS_PwdComplexity_Item_3">Büyük harfler + küçük harfler +sayılar</string>
       <string id="LAPS_PwdComplexity_Item_4">Büyük harfler + küçük harfler + sayılar + özeller</string>
+      <string id="LAPS_PwdComplexity_Item_5">Büyük harfler + küçük harfler + sayılar + özeller (geliştirilmiş okunabilirlik)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Parola (uzun sözcükler)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Parola (kısa sözcükler)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Parola (benzersiz ön ekler içeren kısa sözcükler)</string>
       <string id="LAPS_AdminName">Yönetilecek yönetici hesabının adı</string>
       <string id="LAPS_AdminName_Help">Bu ilke ayarı, parolayı yönetmek için özel bir Yönetici hesabı adı belirtin.
 
@@ -64,7 +75,7 @@ Yerleşik yönetici hesabını yönetmek için bu ilke ayarını ETKINLEŞTIRMEY
 Daha fazla https://go.microsoft.com/fwlink/?linkid=2188435 için daha fazla bilgi için bkz.
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">Parola son kullanma tarihi süresinin ilke tarafından gerekli kılınandan daha uzun süre olmasına izin verme</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Bu ayar etkinleştirilirse veya yapılandırılmazsa, planlanan parolanın "Parola Ayarları" ilkesi tarafından belirlenen parola geçerlilik süresinden daha uzun planlanan parola süresine İZİN VERİLMEZ. Böyle bir süre algılandığında parola hemen değiştirilir ve parola geçerlilik süresi ilkeye göre ayarlanır.
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Bu ayar etkinleştirilirse veya yapılandırılmazsa, planlanan parolanın "Parola Ayarları" ilkesi tarafından dikte edilen parola geçerlilik süresinden daha uzun planlanan parola süresine İZİN VERİLMEZ. Böyle bir süre algılandığında parola hemen değiştirilir ve parola geçerlilik süresi ilkeye göre ayarlanır.
 
 Bu ayar devre dışı bırakılırsa, parola geçerlilik süresi "Parola Ayarları" ilkesinde belirtilenden daha uzun olarak ayarlanabilir.
 
@@ -86,22 +97,34 @@ Bu ayar yapılandırılmazsa varsayılan olarak etkin olarak ayarlanır.
 Daha fazla https://go.microsoft.com/fwlink/?linkid=2188435 için daha fazla bilgi için bkz.
       </string>
       <string id="LAPS_ADPasswordEncryptionPrincipal">Yetkili parola şifre çözücüleri yapılandır</string>
-      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Şifrelenmiş parolaların şifresini çözme yetkisi olan belirli kullanıcı veya grubu denetlemek için bu ayarı yapılandırın.
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Şifrelenmiş parolaların şifresini çözme yetkisi olan belirli kullanıcıyı veya grubu denetlemek için bu ayarı yapılandırın.
 
-Parola şifreleme etkinleştirilmediği sürece bu ayarı yapılandırmanın hiçbir etkisi olmaz.
+Parola şifreleme etkinleştirilmediği sürece bu ayarı yapılandırmanın etkisi olmaz.
 
 Bu ayar etkinleştirilirse, şifrelenmiş parolaların şifresi belirtilen grup tarafından çözülebilir.
 
-Bu ayar devre dışı bırakılırsa veya yapılandırılmazsa şifrelenen parolaların şifresi Domain Admins grubu tarafından çözülebilir.
+Bu ayar devre dışı bırakılırsa veya yapılandırılmazsa, şifrelenmiş parolaların şifresi Etki Alanı Yöneticileri grubu tarafından çözülebilir.
 
-Bu ayar, dize biçiminde bir SID ("S-1-5-21-2127521184-1604012920-1887927527-35197") ya da "etki alanı\(grup veya kullanıcı)" biçiminde bir grup ya da kullanıcının adı ile yapılandırmalıdır. Belirtilen kullanıcı veya grup yönetilen cihaz tarafından çözümlenebilir olmalıdır. Aksi takdirde parolalar yedeklenmez.
+Bu ayar, bir grubun veya kullanıcının etki alanı nitelikli adıyla ya da dize biçiminde bir SID ile yapılandırılmalıdır. Geçerli örnekler şunu içerir:
+
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Kullanıcı\grup adını veya SID'sini tırnak veya parantez içine almayın.
+
+Belirtilen kullanıcı veya grubun yönetilen cihaz tarafından çözümlenebilir olması gerekir, aksi takdirde parolalar yedeklenmez.
+
+NOT: Dizin Hizmetleri Onarım Modu (DSRM) hesap parolaları bir etki alanı denetleyicisine yedeklendiğinde bu ayar yoksayılır. Bu senaryoda, bu ayar her zaman varsayılan olarak etki alanı denetleyicisinin etki alanının Etki Alanı Yöneticileri grubuna ayarlanır.
 
 Daha fazla bilgi için bkz. https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_ADEncryptedPasswordHistorySize">Şifrelenmiş parola geçmişinin boyutunu yapılandır</string>
       <string id="LAPS_ADEncryptedPasswordHistorySize_Help">Active Directory'de kaç tane daha önce şifrelenmiş parola depolanacağını yapılandırmak için bu ayarı kullanın.
 
-Bu ayarın yapılandırılması şu durumlar dışında etkisizdir: 1) Parola, Active Directory'e yedeklenecek şekilde yapılandırılmadıysa ve 2) Parola şifrelemesi etkinleştirilmediyse.
+Bu ayarın yapılandırılması şu durumlar dışında etkisizdir: 1) Parola, Active Directory'ye yedeklenecek şekilde yapılandırılmadıysa ve 2) Parola şifrelemesi etkinleştirilmediyse.
 
 Bu ayar etkinleştirilirse, belirtilen sayıda eski parola Active Directory'de depolanır.
 
@@ -137,24 +160,64 @@ Bu ayar sıfıra eşitse, kimlik doğrulaması sonrası hiçbir eylem yürütül
 
 Eylemler: Yetkisiz kullanım süresinin sona ermesinin ardından gerçekleştirilecek eylemleri belirtir.
 
-Parolayı sıfırlama: Yetkisiz kullanım süresi dolduğunda yönetilen hesabın parolası sıfırlanır.
+Parolayı sıfırla: Yetkisiz kullanım süresi dolduğunda yönetilen hesabın parolası sıfırlanır.
 
-Parolayı sıfırlama ve yönetilen hesabın oturumunu kapatma: Yetkisiz kullanım süresi dolduğunda, yönetilen hesap parolası sıfırlanır ve yönetilen hesabı kullanan etkileşimli oturumlar sonlandırılır.
+Parolayı sıfırlamama ve yönetilen hesabın oturumunu kapatma: Yetkisiz kullanım süresinin sona ermesi üzerine, yönetilen hesap parolası sıfırlanır ve yönetilen hesabı kullanan etkileşimli oturumların oturumları kapatılır.
+
+Parolayı sıfırlama ve yeniden başlatma: Yetkisiz kullanım süresi dolduğunda yönetilen hesap parolası sıfırlanır ve yönetilen cihaz yeniden başlatılır.
+
+Parolayı sıfırlama, yönetilen hesabın oturumunu kapatma ve kalan tüm işlemleri sonlandırma: Yetkisiz kullanım süresinin sona ermesi üzerine, yönetilen hesabın parolası sıfırlanır, yönetilen hesabı kullanan tüm etkileşimli oturumların oturumları kapatılır ve kalan tüm işlemler sonlandırılır.
 
 (NOT: Etkileşimli oturumlar sonlandırıldıktan sonra hâlâ yönetilen hesap tarafından kullanılan kimliği doğrulanmış başka oturumlar olabilir. Önceki parolanın kullanımda olduğundan kesin olarak emin olmanın tek yolu cihazı yeniden başlatmaktır.)
-
-Parolayı sıfırlama ve yeniden başlatma: Yetkisiz kullanım süresi dolduğunda yönetilen hesap parolası sıfırlanır ve yönetilen cihaz hemen yeniden başlatılır.
 
 Bu ayar devre dışı bırakılırsa veya yapılandırılmazsa, kimlik doğrulaması sonrası eylemler varsayılan olarak "Parolayı sıfırla ve yönetilen hesabın oturumunu kapat" olarak ayarlanır.
 
 Not: Etki alanı denetleyicilerindeki DSRM hesabı kimlik doğrulaması sonrası eylemler için yapılandırılamaz. Bu ilkenin etki alanı denetleyicileri üzerinde etkisi yoktur ve DC için yapılandırılmış olsa bile yok sayılır.
 
-Daha fazla bilgi almak için https://go.microsoft.com/fwlink/?linkid=2188435 adresini ziyaret edin.
+Daha fazla bilgi için bkz. https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="PostAuthenticationActions_Item0">Devre dışı - eylem gerçekleştirmeyin</string>
       <string id="PostAuthenticationActions_Item1">Parolayı sıfırla</string>
       <string id="PostAuthenticationActions_Item3">Parolayı sıfırla ve yönetilen hesabın oturumunu kapat</string>
       <string id="PostAuthenticationActions_Item5">Parolayı sıfırla ve cihazı yeniden başlat</string>
+      <string id="PostAuthenticationActions_Item11">Parolayı sıfırlayın, yönetilen hesabı kapatın ve kalan işlemleri sonlandırın</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Otomatik hesap yönetimini yapılandır</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Bu ilke, otomatik hesap yönetimi ilkesi seçeneklerini yapılandırır.
+
+Yönetmek istediğiniz hedef hesabı belirtin: Yerleşik yönetici hesabının mı yoksa bir özel hesabın mı yönetileceğini belirtir.
+
+Otomatik hesap adı (veya ad ön eki): Yönetilen hesap için kullanılacak adı veya ad ön ekini belirtir.
+
+Bu ilke ayarı yapılandırılmışsa, Windows LAPS bunu hedef hesabın hesap adı veya ad ön eki olarak kullanır.
+
+Bu ilke ayarı yapılandırılmamışsa, Windows LAPS hesap adı veya ad ön eki olarak "WLapsAdmin" kullanır.
+
+Not: Hesap adını rastgele seçme yapılandırıldığında bu ad bir ön ek olarak kabul edilir, aşağıdaki açıklamalara bakın.
+
+Yönetilen hesabı etkinleştir: Yönetilen hesabın etkinleştirilip etkinleştirilmeyeceğini belirtir.
+
+Bu ilke ayarı yapılandırılmışsa, Windows LAPS belirtilen yönetilen hesabı etkinleştirir.
+
+Bu ilke ayarı yapılandırılmamışsa, Windows LAPS belirtilen yönetilen hesabı devre dışı bırakır.
+
+Not: Windows LAPS, hesabın etkin\devre dışı durumda tutulup tutulmadığına bakılmaksızın yönetilen hesabın parolasını düzenli olarak korur ve döndürür.
+
+Yönetilen hesabın adını rastgele seç: Yönetilen hesabın adının rastgele sayısal bir son ek içerecek şekilde rastgele seçilip seçilmeyeceğini belirtir.
+
+Bu ilke ayarı yapılandırılmışsa, Windows LAPS yönetilen otomatik hesap adına sekiz basamaklı bir rastgele sayısal sonek ekler ve parola her döndürüldüğünde yönetilen hesabın adını yeniden rastgele olarak seçer.
+
+Bu ilke ayarı yapılandırılmamışsa, Windows LAPS yönetilen otomatik hesap adını yapılandırıldığı şekilde kullanır.
+
+Yönetilen otomatik hesap adı ön eki yapılandırılmışsa, Windows LAPS rastgele ad için ön ek olarak bu addaki ilk on iki (12) karakteri kullanır. Yönetilen otomatik hesap adı yapılandırılmamışsa, Windows LAPS hesap ön eki olarak "WLapsAdmin" kullanır.
+
+Not: Etki alanı denetleyicilerindeki DSRM hesabı otomatik hesap yönetimi için yapılandırılamaz. Bu ilkenin etki alanı denetleyicileri üzerinde hiçbir etkisi yoktur ve DC için yapılandırılmış olsa bile yoksayılır.
+
+Daha fazla bilgi için bkz. https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Yerleşik yönetici hesabını yönet</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Özel yönetici hesabını yönet</string>
+      <string id="AutomaticAccountName_Help">Hesap adını veya ad öneki belirtin</string>
+      <string id="AutomaticAccountNameRandomization_Help">Otomatik hesap adının rastgele seçilemez olup olmadığını belirtin.</string>
       <string id="SUPPORTED_Windows10">En az Microsoft Windows 10 veya üstü</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ Daha fazla bilgi almak için https://go.microsoft.com/fwlink/?linkid=2188435 adr
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Parola Karmaşıklığı</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Parola Uzunluğu</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Parola Geçerlilik Süresi (Gün)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Parola Uzunluğu (sözcük)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ Daha fazla bilgi almak için https://go.microsoft.com/fwlink/?linkid=2188435 adr
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Yetkisiz Kullanım Süresi (saat):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Eylemler:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Eylemler:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Yönetmek istediğiniz hedef hesabı belirtin:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Otomatik hesap adı (veya ad öneki):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Yönetilen hesabı etkinleştir</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Yönetilen hesabın adını rastgele seç</checkBox>
       </presentation>
     </presentationTable>
   </resources>

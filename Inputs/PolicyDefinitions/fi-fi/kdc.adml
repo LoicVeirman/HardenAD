@@ -115,6 +115,25 @@ Tämän asetuksen muodostamat tapahtumat: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Tuettu</string>
       <string id="PKINITHashAlgorithm_Audited">Tarkastetut</string>
       <string id="PKINITHashAlgorithm_NotSupported">Ei tuettu</string>
+      <string id="StrongNameMatches">Salli nimiin perustuvat vahvat yhdistämismääritykset varmenteille</string>
+      <string id="StrongNameMatches_explain">Tämä käytäntöasetus mahdollistaa vaihtoehtoisten nimipohjaisten tunnisteiden käyttämisen, jotta Active Directory -käyttäjätileille myönnetyt varmenteet voidaan yhdistää vahvasti ja määrittää, mitkä varmenteet yhdistetään mihinkin tiliin. Jos tämä asetus ei ole käytössä, varmenteiden on täytettävä aka.ms/StrongCertMapKB määritetyt vahvan yhdistämisen ehdot, jotka yleensä eivät salli nimipohjaisia tunnisteita.
+
+Kunkin tässä käytännössä määritetyn yhdistämismäärityksen on sisällettävä käytännön OID sekä IssuerSubject- ja/tai UPN-jälkiliite alla määritetyn syntaksin avulla. Jos määritetyn varmenteen kelvollista yhdistämismääritystä ei löydy tästä käytännöstä, Active Directory yrittää löytää vastaavuuden käyttämällä KB5014754:ssä määritettyjä vahvoja yhdistämisehtoja. Varmenteiden yhdistämismäärityksiä, jotka eivät ole joko Vahva nimien yhdistäminen -ehtojen (tämä käytäntö) tai olemassa olevien Vahva yhdistämisen -ehtojen mukaisia, pidetään virheellisinä todennuksessa.
+
+Yleinen käytäntömuoto ja joitakin esimerkkejä on lueteltu alla. Tämä käytäntö koskee vain Active Directory käyttäjätilejä.
+
+Yleinen syntaksi
+==============
+&lt;peukalonjälkit;; &lt;oid-luettelot;; &lt;name-match-menetelmät &lt;
+
+Esimerkit
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+Käytännön on sisällettävä täsmälleen yksi varmenteen allekirjoitus sääntöä kohden, ja jokainen sääntö on esitetty monikkona. Allekirjoitusten on oltava yksilöllisiä, eikä niitä voi toistaa useissa säännöissä. Kunkin monikon osien, jotka on erotettu toisistaan puolipisteillä, on oltava ilmoitetussa järjestyksessä, kun taas pilkuilla erotetut kentät voivat olla missä tahansa järjestyksessä. Itse säännöt erotetaan toisistaan uusilla rivillä.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Tämän asetuksen muodostamat tapahtumat: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Vahvan nimen vastaavuuden säännöt:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

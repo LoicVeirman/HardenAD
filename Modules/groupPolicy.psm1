@@ -438,7 +438,6 @@ Function New-GpoObject {
             02.01 -- Added Debug log
             02.02 -- Fixed bug that let unvalited GPO being imported anyway
             02.03 -- Improved parsing speed by filtering only enabled ones.
-            02.04 -- Minor fixes. No change to script logical.
     #>
     param(
     )

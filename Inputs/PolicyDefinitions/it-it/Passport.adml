@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">Usa certificato per l'autenticazione locale</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">Usare cloud trust per l'autenticazione locale</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">Disabilita la memorizzazione nella cache delle credenziali Windows Hello for Business dopo l'accesso</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello for Business è un metodo alternativo per accedere a Windows con l'account di Active Directory o di Azure Active Directory che può sostituire password, smart card e smart card virtuali.
 
@@ -111,16 +113,17 @@ Se si disabilita questa impostazione dei criteri, Windows Hello for Business imp
 NOTA: la disabilitazione di questo criterio impedisce l'uso dei movimenti biometrici nel dispositivo per tutti i tipi di account.
         </string>
         <string id="MSPassport_EnableEnhancedSignInSecurity">Abilita ESS con periferiche supportate</string>
-        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Sicurezza accessi migliorata (ESS) isola i dati biometrici del modello (viso e impronta digitale) di Windows Hello e le operazioni corrispondenti all'hardware attendibile o alle aree di memoria specificate, il che significa che il resto del sistema operativo non può accedervi o manometterli. Poiché anche il canale di comunicazione tra i sensori e l'algoritmo è protetto, il malware non è in grado di inserire o riprodurre i dati per simulare l'accesso di un utente o per bloccare un utente fuori dal computer.
+        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">sicurezza accessi migliorata (ESS) isola i dati biometrici del modello (viso e impronta digitale) di Windows Hello e le operazioni corrispondenti all'hardware attendibile o alle aree di memoria specificate, il che significa che il resto del sistema operativo non può accedervi o manometterli. Poiché anche il canale di comunicazione tra i sensori e l'algoritmo è protetto, il malware non è in grado di inserire o riprodurre i dati per simulare l'accesso di un utente o per bloccare un utente fuori dal computer.
 Se si abilita questo criterio, potranno essere presenti i valori possibili seguenti:
 
-0 - Sicurezza accessi migliorata abilitata con sensori non ESS periferici e incorporati
-La sicurezza accessi migliorata verrà abilitata nei sistemi con software e hardware idonei, in base al comportamento predefinito esistente in Windows. Le operazioni di autenticazione dei dispositivi compatibili con le periferiche di Windows Hello saranno consentite, soggette alle limitazioni delle funzionalità correnti. Inoltre, con questa impostazione, la sicurezza accessi migliorata verrà abilitata nei dispositivi con una combinazione di dispositivi biometrici, ad esempio un FPR idoneo per ESS e una fotocamera che non supporta ESS.
+0 - Sicurezza avanzata dell'accesso disabilitata con i sensori delle periferiche
+ESS verrà disabilitato nei sistemi con software e hardware idonei. Le operazioni di autenticazione dei dispositivi compatibili con le periferiche di Windows Hello saranno consentite, soggetti alle limitazioni delle funzionalità correnti.
 
-1 - Sicurezza accessi migliorata abilitata senza sensori periferici o non ESS incorporati (impostazione predefinita e consigliata per la massima sicurezza)
-La sicurezza accessi migliorata verrà abilitata nei sistemi con software e hardware idonei, in base al comportamento predefinito esistente in Windows. Le operazioni di autenticazione di qualsiasi dispositivo biometrico periferica verranno bloccate e non saranno disponibili per Windows Hello.
+1 - Sicurezza accessi migliorata abilitata senza sensori periferici (impostazione predefinita e consigliata)
+EES verrà abilitata nei sistemi con software e hardware idonei, in base al comportamento predefinito esistente in Windows. Le operazioni di autenticazione di qualsiasi dispositivo biometrico periferica verranno bloccate e non saranno disponibili per Windows Hello.
 
 Se si disabilita o non si configura questo criterio, i sensori non ESS verranno bloccati nel dispositivo ESS.
+
         </string>
         <string id="MSPassport_EnablePinRecovery">Usa Ripristino PIN</string>
         <string id="MSPassport_EnablePinRecoveryExplain">Ripristino PIN consente all'utente di modificare un PIN dimenticato tramite il servizio di ripristino PIN di Windows Hello for Business, senza perdere alcuna credenziale o certificato associato, incluse eventuali chiavi associate agli account personali dell'utente sul dispositivo. Per eseguire tale operazione, il servizio di ripristino PIN basato su Azure crittografa un segreto di ripristino, archiviato nel dispositivo e richiede sia il servizio di ripristino PIN, sia il dispositivo per decrittografare. Ripristino PIN richiede che l'utente esegua l'autenticazione a più fattori ad Azure Active Directory.
@@ -149,6 +152,8 @@ Se si disabilita o non si configura questa impostazione dei criteri, Windows Hel
  
 Nota: un ambiente che attiva sia questa impostazione di criterio e l'impostazione dei criteri "usa Windows Hello for business" richiede uno o più controller di dominio di Windows Server 2016. In caso contrario, l'autenticazione di Windows Hello for business non riuscirà.
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">La credenziale di Windows Hello for Business viene memorizzata nella cache dopo l'accesso per consentire a determinate applicazioni correlate alla sicurezza di usare le credenziali automaticamente per non interrompere l'esperienza utente. Abilita questo criterio per disattivare questa impostazione, rimuovendo la cache in modo che l'input dell'utente sia necessario in modo esplicito.</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">Configura fattori di sblocco del dispositivo</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">Configura un elenco separato da virgole di GUID di provider di credenziali, ad esempio GUID del provider di riconoscimento volto o impronte digitali, da utilizzare come primo e secondo fattore di sblocco. Se il provider di segnali attendibile viene specificato come uno dei fattori di sblocco, devi anche configurare un elenco separato da virgole di regole di segnali sotto forma di xml per ogni tipo di segnale da verificare.

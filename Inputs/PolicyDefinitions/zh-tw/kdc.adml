@@ -115,6 +115,25 @@
       <string id="PKINITHashAlgorithm_Supported">支援</string>
       <string id="PKINITHashAlgorithm_Audited">已稽核</string>
       <string id="PKINITHashAlgorithm_NotSupported">不支援</string>
+      <string id="StrongNameMatches">允許憑證的名稱型強式對應</string>
+      <string id="StrongNameMatches_explain">此原則設定可使用替代的名稱型識別碼，以強式對應核發給 Active Directory 使用者帳戶的憑證，並指定憑證對應的帳戶。若不啟用此設定，憑證就必須符合 aka.ms/StrongCertMapKB 中所指定的「強對應」準則，通常不允許名稱型識別碼。
+
+此原則中指定的每個對應項目都必須包含一個原則 OID，以及使用下列指定語法的 IssuerSubject 和/或 UPN 尾碼。如果在此原則中找不到指定憑證的有效對應，Active Directory 會嘗試使用 KB5014754 中指定的現有強式對應準則來尋找相符項目。憑證地圖若不符合「強式名稱對應」準則 (本原則) 或現有的「強對應」準則，會被視為無效驗證。
+
+以下列出一般原則格式和一些範例。此原則僅適用於 Active Directory 使用者帳戶。
+
+一般語法
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+範例
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+此原則必須確實包含一個憑證指紋 (每個規則)，且每個規則以元組表示。指紋必須是唯一的，而且不能在多個規則中重複。每個以分號區隔的結構組區段必須是以指定的順序區隔，而以逗號區隔的欄位可依照任何順序區隔。規則本身會以新行分隔。
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">強式名稱比對規則：</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

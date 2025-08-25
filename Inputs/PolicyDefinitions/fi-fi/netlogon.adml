@@ -298,16 +298,34 @@ Tätä käytäntöasetusta suositellaan toimialueen ohjauskoneen hyökkäyspinna
 Jos otat tämän käytäntöasetuksen käyttöön, tämä toimialueen ohjauskone ei käsittele saapuvia viestipaikkasanomia, joita käytetään, kun NetBIOS-toimialuenimi perustuu toimialueen ohjauskoneen sijaintiin.
 
 Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, tämä toimialueen ohjauskone käsittelee saapuvat viestipaikkasanomat. Tämä on toimialueen ohjauskoneen paikantimen oletustoiminta.</string>
+
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery">Älä käytä NetBIOS-pohjaista etsintää toimialueen ohjauskoneen paikantamiseen, kun DNS-pohjainen etsintä epäonnistuu</string>
-      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Tämän käytäntöasetuksen avulla voit hallita toimialueen ohjauskoneen paikannusalgoritmia. Oletusarvoisesti ohjauskoneen paikannusalgoritmi suosii DNS-pohjaista etsintää, jos DNS-toimialueen nimi on tiedossa. Jos DNS-pohjainen etsintä epäonnistuu ja NetBIOS-toimialueen nimi on tiedossa, algoritmi käyttää NetBIOS-pohjaista etsintää varamenetelmänä.
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Tämän käytäntöasetuksen avulla voit hallita toimialueohjaimen (DC) sijaintialgoritmia. Oletusarvoisesti DC:n sijaintialgoritmi suosii DNS-pohjaista löytämistä, jos DNS-toimialueen nimi on tiedossa. Jos DNS-pohjainen etsintä epäonnistuu ja NetBIOS-toimialueen nimi on tiedossa, algoritmi käyttää NetBIOS-pohjaista etsintää varamekanismina.
 
-NetBIOS-pohjainen etsintä käyttää WINS-palvelinta ja lähetyspaikkaviestejä mutta ei toimipaikan tietoja. Tästä syystä se ei varmista, että asiakkaat etsivät lähimmän toimialueen ohjauskoneen. Se mahdollistaa myös sen, että keskitintoimialueen asiakas voi etsiä haaratoimialueen ohjauskoneen, vaikka haaratoimialueen ohjauskone rekisteröisi vain toimialuekohtaisia DNS-tietueita (suosituksen mukaan). Tästä syystä NetBIOS-pohjaista etsintää ei suositella.
+ 
+NetBIOS-pohjainen tunnistus käyttää WINS-palvelinta ja postiluukkuviestejä, mutta ei käytä sivustotietoja. Näin ollen se ei takaa, että asiakkaat löytävät lähimmän DC:n. Sen avulla keskuksen ja toimipisteen asiakas voi myös löytää sivutoimipisteen DC:n, vaikka sivutoimipisteen DC rekisteröisi vain toimipistekohtaiset DNS-tietueet (kuten suositellaan). Näistä syistä NetBIOS-pohjaista löytämistä ei suositella.
+ 
 
-Huomaa, että tämä käytäntöasetus ei vaikuta toimialueen ohjauskoneen sijainnin NetBIOS-pohjaiseen etsintään, jos vain NetBIOS-toimialueen nimi on tiedossa.
+ 
+Huomaa, että tämä käytäntöasetus ei vaikuta DC:n sijainnin NetBIOS-pohjaiseen löytämiseen, jos vain NetBIOS-toimialueen nimi on tiedossa.
+ 
+ 
+Jos otat tämän käytäntöasetuksen käyttöön tai et määritä sitä, DC-sijainnin algoritmi ei käytä NetBIOS-pohjaista löytämistä varamekanismina, kun DNS-pohjainen löytäminen epäonnistuu. Tämä on oletuskäyttäytyminen.
 
-Jos otat tämän käytäntöasetuksen käyttöön tai et määritä sitä, toimialueen ohjauskoneen sijaintialgoritmi ei käytä NetBIOS-pohjaista etsintää varamenetelmänä, kun DNS-pohjainen etsintä epäonnistuu. Tämä on oletustoiminta.
+ 
+Jos poistat tämän käytäntöasetuksen käytöstä, DC-sijaintialgoritmi voi käyttää NetBIOS-pohjaista löytämistä varamekanismina, kun DNS-pohjainen löytäminen epäonnistuu.
 
-Jos poistat tämän käytäntöasetuksen käytöstä, toimialueen ohjauskoneen sijaintialgoritmi voi käyttää NetBIOS-pohjaista etsintää varamenetelmänä, kun DNS-pohjainen etsintä epäonnistuu.</string>
+ 
+Tällä asetuksella ei ole vaikutusta, ellei BlockNetbiosDiscovery-asetusta ole poistettu käytöstä. NetBIOS-pohjaista löytämistä pidetään turvattomana, siihen liittyy monia rajoituksia ja se poistetaan käytöstä tulevassa versiossa. Näistä syistä NetBIOS-pohjaista löytämistä ei suositella. Lisätietoja on osoitteessa https://aka.ms/dclocatornetbiosdeprecation.</string>
+
+      <string id="Netlogon_BlockNetbiosDiscovery">Estä toimialueen ohjauskoneen sijainnin NetBIOS-pohjainen etsintä</string>
+      <string id="Netlogon_BlockNetbiosDiscovery_Help">Tämän käytäntöasetuksen avulla voit määrittää, käyttääkö toimialueen ohjauskoneen sijainnin algoritmi NetBIOS_based etsimistä toimialueen ohjauskoneen sijainnille.
+
+Jos otat tämän käytäntöasetuksen käyttöön tai et määritä sitä, toimialueen ohjauskoneen sijaintialgoritmi ei koskaan käytä NetBIOS-pohjaista etsintää. Tämä on oletustoiminta.
+
+Jos poistat tämän käytäntöasetuksen käytöstä, toimialueen ohjauskoneen sijaintialgoritmi voi tarvittaessa käyttää NetBIOS-pohjaista etsintää. Lopullista toimintaa hallitaan edelleen AvoidFallbackNetbiosDiscovery-asetuksella.
+
+NetBIOS-pohjaista etsintää pidetään suojaamattomana, sillä on monia rajoituksia ja se vanhentuu tulevassa versiossa. NetBIOS-pohjaista etsintää ei suositella näistä syistä. Lisätietoja on https://aka.ms/dclocatornetbiosdeprecation.</string>
 
       <string id="Netlogon_AddressLookupOnPingBehavior">Määritä osoitehaun toiminta toimialueen ohjauskoneen paikantimen ping-pyyntöä varten</string>
       <string id="Netlogon_AddressLookupOnPingBehavior_Help">Tämä käytäntöasetus määrittää, miten toimialueen ohjauskone toimii vastatessaan asiakkaalle, jonka IP-osoite ei yhdisty mihinkään määritettyyn toimipaikkaan.

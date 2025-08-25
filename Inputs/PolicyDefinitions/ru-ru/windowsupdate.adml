@@ -21,6 +21,7 @@
       <string id="WU_SUPPORTED_Server2016_Through_Server2022_Or_Windows10">Windows Server 2016 – Windows Server 2022 или Windows 10​</string>
       <string id="WU_SUPPORTED_Windows_Server_2019_Windows_10_0_1809">Windows Server 2019 или Windows 10 версии 1809 или более поздней версии​</string>
       <string id="WU_SUPPORTED_Windows_Server_2022_Windows_10_0_2004">Не ниже Windows Server 2022 или Windows 10 версии 2004​</string>
+      <string id="WU_SUPPORTED_WinServer2025_Win1021H2_Win1122H2">Не ниже Windows Server 2025, Windows 10 версии 21H2 или Windows 11 версии 22H2</string>
       <string id="AUDontShowUasHelp">Этот параметр позволяет указать, отображается ли параметр «Установить обновления и завершить работу» в диалоговом окне «Завершение работы Windows».
 
 Если этот параметр включен, параметр «Установить обновления и завершить работу» не появляется в диалоговом окне «Завершение работы Windows» при выборе в меню «Пуск» команды «Завершение работы», даже если имеются обновления, доступные для установки.
@@ -165,13 +166,13 @@
       <string id="OnlyUseSystemProxyForUpdateDetection">Использовать только системный прокси-сервер для обнаружения обновлений (по умолчанию)</string>
       <string id="AllowUserProxyAsFallbackForUpdateDetection">Разрешить использовать прокси-сервер пользователя в качестве резерва, если не удается выполнить обнаружение с использованием системного прокси-сервера</string>
       <string id="UpdateClassPolicySource_Title">Укажите исходную службу для конкретных классов обновлений Windows</string>
-      <string id="UpdateClassPolicySource_Help">When this policy is enabled, devices will receive Windows updates for the classes listed from the specified update source: either Windows Update or Windows Server Update Service.
+      <string id="UpdateClassPolicySource_Help">Если эта политика включена, устройства будут получать обновления Windows для перечисленных классов из указанного источника обновлений — Центра обновления Windows или службы Windows Server Update Service.
 
-        Note: To receive any updates from the Windows Server Update Service you must have properly configured an intranet Microsoft update service location via the “Specify intranet Microsoft update service location” policy.
+        Примечание. Чтобы получать обновления из службы Windows Server Update Service, необходимо правильно настроить расположение службы обновлений Майкрософт в интрасети с помощью политики "Указать расположение службы обновлений Майкрософт в интрасети".
 
-        If this policy is not configured or is disabled, the device will continue to detect updates per your other policy configurations.
+        Если эта политика не настроена или отключена, устройство продолжит обнаружение обновлений в соответствии с другими конфигурациями политики.
 
-        Note: If you are using “Do not allow deferral policies to cause scans against Windows Update” currently to ensure devices only scan against your specified server, we recommend configuring this policy instead or in addition to such.</string>
+        Примечание. Если в настоящее время используется политика "Не разрешать политикам задержки инициировать сканирование в Центре обновления Windows", чтобы обеспечить сканирование устройств только на указанном сервере, рекомендуется настроить эту политику вместо или в дополнение к этой.</string>
       <string id="UpdateClassPolicySourceSelectionWU">Центр обновления Windows</string>
       <string id="UpdateClassPolicySourceSelectionWSUS">Службы Windows Server Update Services</string>
       <string id="DetectionFrequency_Help">Указывает промежуток времени в часах для Windows между проверками доступных обновлений. Точное время ожидания определяется путем суммирования конкретного значения и произвольного варианта в пределах от 0 до 4 часов.
@@ -628,22 +629,39 @@ Windows Update будет также пробуждение системы и у
       <string id="DefaultNotification">0 (по умолчанию) – уведомления по умолчанию ОС Windows Update</string>
       <string id="ExcludingRebootWarnings">1 – Отключение всех уведомлений, исключая предупреждения перезапуска</string>
       <string id="IncludingRebootWarnings">2 – Отключение всех уведомлений, включая предупреждения о перезагрузке</string>
-      <string id="ComplianceDeadline_Title">Установка крайних сроков для автоматических обновлений и перезапусков</string>
-      <string id="ComplianceDeadline_Help">Эта политика позволяет указать количество дней до автоматической установки исправлений и обновлений компонентов на устройствах, а также период отсрочки, после которого обязательный перезапуск выполняется автоматически.
+      <string id="ComplianceDeadlineForFU_Title">Specify deadline for automatic updates and restarts for feature update</string>
+      <string id="ComplianceDeadlineForFU_Help">This policy lets you specify the number of days before feature updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
 
-Настраивайте крайние сроки для обновлений компонентов и исправлений, чтобы обеспечивать соответствие требованиям. Обновления будут скачиваться и устанавливаться сразу после их предложения, а попытка автоматического перезапуска будет предприниматься за пределами периода активности. После истечения крайнего срока перезапуск выполняется независимо от периода активности, и пользователи не смогут изменить расписание. Если крайний срок имеет значение 0 дней, обновление будет установлено сразу при предложении, но может не завершиться в течение дня из-за отсутствия доступности устройства и сетевого подключения.
+Set deadlines for feature updates and quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
 
-Настройте период отсрочки для обновлений компонентов и исправлений, чтобы предоставить пользователям минимальное время для управления перезапуском после установки обновлений. Пользователи смогут запланировать перезапуск в течение периода отсрочки, и Windows по-прежнему может автоматически перезапускаться вне периода активности, если пользователи решат не планировать перезапуск. Период отсрочки может не вступить в силу, если у пользователей уже настроено больше дней, чем в периоде отсрочки, для управления перезапуском на основе конфигурации крайнего срока.
+Set a grace period for feature updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
 
-Вы можете настроить на устройстве задержку перезапуска до завершения крайнего срока и периода отсрочки.
+You can set the device to delay restarting until both the deadline and grace period have expired.
 
-Если отключить или не настроить эту политику, устройства будут получать обновления и будут перезапускаться в соответствии с расписанием, используемым по умолчанию.
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
 
-Эта политика переопределяет следующие политики:
-1. Указание крайнего срока, который должен пройти перед автоматическим перезапуском для установки обновлений
-2. Создайте расписание преобразований и уведомлений о запланированном перезапуске для обновлений
-3. Всегда автоматически перезагружаться в запланированное время
-4. Настройка автоматического обновления
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
+      </string>
+      <string id="ComplianceDeadlineForQU_Title">Specify deadline for automatic updates and restarts for quality update</string>
+      <string id="ComplianceDeadlineForQU_Help">This policy lets you specify the number of days before quality updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
+
+Set deadlines for quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
+
+Set a grace period for quality updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
+
+You can set the device to delay restarting until both the deadline and grace period have expired.
+
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
+
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
       </string>
       <string id="ComplianceDeadlineDay0">0</string>
       <string id="ComplianceDeadlineDay1">1</string>
@@ -677,15 +695,30 @@ Windows Update будет также пробуждение системы и у
       <string id="ComplianceDeadlineDay29">29</string>
       <string id="ComplianceDeadlineDay30">30</string>
 
-      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Enable features introduced via servicing that are off by default</string>
-      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Features introduced via servicing (outside of the annual feature update) are off by default for devices that have their Windows updates managed*.
+      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Включить функции, предоставляемые посредством обслуживания, которые по умолчанию отключены</string>
+      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Функции, предоставляемые посредством обслуживания (вне ежегодного обновления компонентов), по умолчанию отключены для устройств, на которых применяется управление обновлениями Windows*.
 
-If this policy is configured to “Enabled”, then all features available in the latest monthly quality update installed will be on.
+Если для этой политики настроено значение "Включено", все функции, доступные в последнем ежемесячном исправлении, будут включены.
 
-If this policy is set to “Not Configured” or “Disabled” then features that are shipped via a monthly quality update (servicing) will remain off until the feature update that includes these features is installed.
+Если для этой политики установлено значение "Не настроено" или "Отключено", компоненты, которые доставляются в рамках ежемесячного исправления (обслуживания), останутся недоступными до тех пор, пока не будет установлено обновление компонентов, включающее эти компоненты.
 
- *Windows update managed devices are those that have their Windows updates managed via policy; whether via the cloud using Windows Update for Business or on-premises with Windows Server Update Services (WSUS).
+*Устройства с управляемыми обновлениями Windows — это устройства, на которых обновления Windows управляются посредством политики: с помощью облака с использованием Центра обновления Windows для бизнеса или локально с использованием Windows Server Update Services (WSUS).
       </string>
+      <string id="AllowOptionalContent_Title">Включить необязательные обновления</string>
+      <string id="AllowOptionalContent_Help">Эта политика дает возможность устройствам получать необязательные обновления (включая постепенные выпуски компонентов (CFR). Дополнительные сведения см. по адресу aka.ms/AllowOptionalContent)
+
+Когда эта политика настроена
+
+• Если выбрано значение "Автоматически получать необязательные обновления (включая CFR)", устройство будет автоматически получать последние необязательные обновления в соответствии с отложенными исправлениями, в том числе необязательные накопительные обновления и постепенные выпуски компонентов (CFR).
+
+• Если выбрано значение "Автоматически получать необязательные обновления", устройство будет автоматически получать только необязательные накопительные обновления в соответствии с отложенными исправлениями.
+
+• Если выбрано значение "Пользователи могут выбирать, какие необязательные обновления они будут получать", пользователи могут выбрать получаемые необязательные обновления в разделе "Параметры" &gt; "Центр обновления Windows" &gt; "Расширенные параметры" &gt; "Необязательные исправления". Кроме того, пользователи могут включить переключатель "Получать последние обновления, как только они будут доступны", чтобы автоматически получать необязательные обновления и постепенные выпуски компонентов.
+      </string>
+      <string id="DonotReceiveOptionalContent">Не получать необязательные обновления</string>
+      <string id="ReceiveOptionalContentWithAutoApproval">Автоматически получать необязательные обновления (включая CFR)</string>
+      <string id="ReceiveOptionalLCUWithAutoApproval">Автоматически получать необязательные обновления</string>
+      <string id="ReceiveOptionalContentNeedUserApproval">Пользователи могут выбирать, какие необязательные обновления они будут получать</string>
     </stringTable>
 
     <presentationTable>
@@ -827,16 +860,20 @@ If this policy is set to “Not Configured” or “Disabled” then features th
         <text></text>
         <checkBox refId="NoUpdateNotificationsDuringActiveHours" defaultChecked="false">Применять только в период активности</checkBox>
       </presentation>
-      <presentation id="ComplianceDeadline_Title">
-        <text>Исправления</text>
+       <presentation id="ComplianceDeadlineForFU_Title">
+        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="2">Крайний срок (дн.):</dropdownList>
+        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="7">Период отсрочки (дн.):</dropdownList>
+        <text></text>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForFeatureUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="ComplianceDeadlineForQU_Title">
         <dropdownList refId="ConfigureDeadlineForQualityUpdates" noSort="true" defaultItem="7">Крайний срок (дн.):</dropdownList>
         <dropdownList refId="ConfigureDeadlineGracePeriod" noSort="true" defaultItem="2">Период отсрочки (дн.):</dropdownList>
         <text></text>
-        <text>Обновления компонентов</text>
-        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="7">Крайний срок (дн.):</dropdownList>
-        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="2">Период отсрочки (дн.):</dropdownList>
-        <text></text>
-        <checkBox refId="ConfigureDeadlineNoAutoReboot" defaultChecked="false">Не перезапускать автоматически до окончания льготного периода</checkBox>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForQualityUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="AllowOptionalContent_Title">
+        <dropdownList refId="AllowOptionalContent" noSort="true" defaultItem="0">Выберите, как пользователи получают необязательные обновления</dropdownList>
       </presentation>
     </presentationTable>
   </resources>

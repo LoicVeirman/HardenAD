@@ -17,6 +17,9 @@
     <string id="Quarantine">隔離</string>
     <string id="RealtimeProtection">即時保護</string>
     <string id="Remediation">修復</string>
+    <string id="Remediation_BNB">行為網路封鎖</string>
+    <string id="Remediation_BNB_REP">遠端加密保護</string>
+    <string id="Remediation_BNB_BFP">蠻攻保護</string>
     <string id="Reporting">報告</string>
     <string id="Scan">掃描</string>
     <string id="SignatureUpdate">安全情報更新</string>
@@ -47,6 +50,10 @@
 已啟用：
         如果啟用此設定，本機系統管理員將無法再於Windows 安全性應用程式中或透過 PowerShell 看到排除清單。
         注意：套用此設定並不會移除排除項目，而只會使本機系統管理員看不到這些項目。這會反映在  Get-MpPreference 中。</string>
+    <string id="HideExclusionsFromLocalUsers">控制本機使用者是否可看到排除項目。</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    此原則設定可控制裝置上的本機使用者是否可看見排除專案。
+    使用原則設定 HideExclusionsFromLocalAdmins 隱藏標準使用者與系統管理本機使用者的排除專案。</string>
     <string id="AllowNetworkProtectionOnWinServer">此設定可控制是否允許在 Windows Server 上將網路保護設定為封鎖或稽核模式。</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     已停用 (預設)：
@@ -57,11 +64,29 @@
     請注意，此設定相依于 EnableNetworkProtection 設定。如果此設定為 false，將會略過 EnableNetworkProtection，否則會根據 EnableNetworkProtection 的值，在 Windows Server 上啟動網路保護。</string>
     <string id="DisableDatagramProcessing">這個設定控制網路保護的資料包處理。</string>
     <string id="DisableDatagramProcessing_Explain">
-    已啟用 (預設)：
+    已停用 (預設):
     若未設定或停用，將會啟用資料包處理以進行網路保護。
 
-啟用：
+已啟用:
     如果啟用，將會停用網路保護的資料包處理。</string>
+    <string id="EnableConvertWarnToBlock">將警告判斷轉換為封鎖</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    網路保護會檢查網路流量，並決定是否允許或封鎖流量或顯示警告。
+    
+已停用(預設):
+    如果 [未設定] 或 [已停用]，網路保護將會顯示警告警告以顯示警告。
+
+已啟用:
+    若此設定為 [已啟用]，網路保護會封鎖網路流量，而非顯示警告。</string>
+    <string id="AllowSwitchToAsyncInspection">開啟非同步檢查</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    控制網路保護是否可以透過從即時檢查切換到非同步檢查來改善效能。
+
+已停用(預設):
+    如果 [未設定] 或 [已停用]，將不會針對網路保護啟用非同步檢查。
+
+已啟用:
+    如果啟用，將會允許切換到非同步檢查以進行網路保護。</string>
     <string id="DisableAutoExclusions">關閉自動排除</string>
     <string id="DisableAutoExclusions_Explain">
         允許系統管理員指定伺服器 SKU 的「自動排除」功能。
@@ -142,15 +167,19 @@
       若停用或未設定此設定，Proxy 將跳過此遞補步驟 (根據上面指定的順序)。
     </string>
     <string id="RandomizeScheduleTaskTimes">隨機選擇排程工作時間</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">此原則設定可讓您設定排程的掃描開始時間，以及排程的安全情報更新開始時間時段 (小時)。
+    <string id="RandomizeScheduleTaskTimes_Explain">這個原則設定可讓您設定排定的掃描開始時間和排程定義更新開始時間的隨機化。
 
-    如果您停用或未設定此設定，則排程的工作將會在工作排程器中所指定的開始時間之後，在 4 小時之內於隨機時間開始。
-    如果您啟用這項設定，您可以將此隨機時段變寬或變窄。請指定介於 1 至 23 小時之間的隨機時段。</string>
+如果您啟用或未設定這個原則設定，而且未在 [設定排定的工作時間隨機化時間] 視窗設定中設定隨機化視窗，則會在 0-4 小時之間新增隨機化。
+        如果啟用或未設定此原則設定，並在 [設定排定的工作時間隨機化視窗] 設定中設定隨機化視窗，則會使用設定的隨機化視窗。
+        如果您停用這個原則設定，但已設定排定的工作時間隨機化時段，將不會完成隨機化。 
+    </string>
     <string id="SchedulerRandomizationTime">設定已排程的工作時間隨機化視窗。</string>
-    <string id="SchedulerRandomizationTime_Explain">此原則設定可讓您設定排程的掃描開始時間，以及排程的安全情報更新開始時間時段 (小時)。
+    <string id="SchedulerRandomizationTime_Explain">這個原則設定可讓您設定排定的工作掃描開始時間，以及排定的安全性情報更新開始時間間隔 (以小時為單位)。這個設定會影響排定的工作時間設定隨機化。
 
-    如果您停用或未設定此設定，則排程的工作將會在指定的開始時間之後，以 4 小時的時間間隔內於隨機時間開始。
-    如果您啟用這項設定，您必須以小時挑選一個隨機時段。可行的隨機時段間隔為 1 至 23 小時之間。</string>
+如果啟用此設定，則必須以小時為單位挑選隨機化視窗。可能的隨機時段間隔介於 1 到 23 小時之間。實作的隨機化間隔介於 0 到設定的值之間。
+        當您啟用這個設定時，隨機排定的工作時間設定會使用這個組態設定中指定的隨機化視窗。
+        如果您停用或未設定這個原則設定，則隨機安排的工作時間設定會隨機安排 0-4 小時之間的排程工作時間。</string>
+
     <string id="ServiceKeepAlive">允許反惡意程式碼服務一直持續執行</string>
     <string id="ServiceKeepAlive_Explain">這個原則設定可讓您設定當防毒和反間諜功能安全性情報停用時，是否繼續執行反惡意程式碼服務。建議您保持停用這個設定。
 
@@ -219,6 +248,22 @@
     如果您啟用或未設定這個設定，將啟用指令碼掃描。
 
     如果您停用這個設定，就會停用指令碼掃描。</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">在 OOBE 期間設定即時保護和安全性情報更新</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">此原則設定可讓您設定在 OOBE (Out of Box 體驗) 期間是否啟用即時保護和安全性情報更新。
+ 
+如果啟用此設定，則會在 OOBE 期間啟用即時保護和安全性情報更新。
+ 
+如果您停用或未設定這個原則設定，則不會啟用 OOBE 期間的即時保護和安全性情報更新。</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">設定效能模式狀態</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">此原則控制適用於開發人員磁碟機的 Microsoft Defender 防毒軟體效能模式。
+
+   開發人員磁碟機是一種經過最佳化處理的軟碟機，可在軟體發展案例中獲得較高的效能。啟用或未設定此原則時，Microsoft Defender 防毒軟體會開啟效能模式。在效能模式中，Microsoft Defender 防毒軟體對儲存在開發人員磁碟機上的內容安全性檢查會以非同步方式執行以提升效能。效能模式要求也一併啟用下列原則: “啟用開發人員磁碟機”和“開發人員磁碟機篩選附加原則”。
+
+   如果啟用或未設定此原則設定，則會開啟效能模式。
+
+   如果停用此原則設定，則會關閉效能模式，而且 Microsoft Defender 防毒軟體將以與其他磁碟機相同的方式保護開發人員磁碟機。</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">開啟行為監視</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">這個原則設定允許您設定行為監視。
@@ -359,6 +404,92 @@
 如果您啟用這個設定，會在指定的時間執行排程完整掃描以完成修復。
 
 如果您停用或未設定這個設定，則會在預設的時間執行排程完整掃描以完成修復。</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">設定遠端加密保護模式</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    在 Microsoft Defender 防毒軟體中設定遠端加密保護模式，可偵測並封鎖試圖使用其他裝置的加密版本取代本機檔案的嘗試。
+
+   支援的設定:
+   * 0 - 未設定或預設值: 套用預設值，預設值可能因防病毒軟體引擎版本和平台而異
+   * 1 - 封鎖: 防止可疑和惡意行為
+   * 2 - 稽核: 產生 EDR 偵測而不封鎖
+   * 4 - 關閉: 功能已關閉，不會影響任何效能
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">預設</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">封鎖</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">稽核</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">關閉</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">設定遠端加密保護封鎖時間</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    設定「遠端加密保護」封鎖IP位址的時間上限。在這段時間之後，封鎖的IP位址將可以重新啟動連線。
+
+支援的設定：
+    * 0 - 無： 內部功能邏輯會判斷實際的封鎖時間
+    * 以 15 分鐘為增量指定其他時間
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">設定遠端加密保護如何積極地封鎖威脅</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    設定遠端加密防止程式封鎖IP位址的準則。
+
+支援的設定：
+    *0 - 低： 只有在信賴等級為 100% (時才封鎖預設)
+    *1 - 中： 當信賴層級高於 99% 時，使用雲端匯總並封鎖
+    *2 - 高： 使用雲端資訊與內容，並在信賴層級高於 90%
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">低</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">適中</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">高</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> 設定遠端加密保護的排除項目</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    指定要從遠端加密保護排除的 IP位址、子網路和網域名稱。請注意，攻擊者可能會偽造排除的位址和名稱來繞過保護。
+
+   以名稱/值的形式在新的一行中輸入每個位址或子網路:
+   - 名稱欄位: 輸入 IP 位址或子網路名稱。例如，""1.1.127.0"" 會排除此 IP 位址不受到封鎖。
+   - 值欄位: 在每個項目中輸入 ""0""
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">設定蠻攻保護模式</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    在 Microsoft Defender 防毒軟體中設定蠻攻保護模式，其可偵測並封鎖強制初始化登入並初始化工作階段的嘗試。
+
+   支援的設定:
+   * 0 - 未設定或預設值: 套用預設值，預設值可能因防病毒軟體引擎版本和平台而異
+   * 1 - 封鎖: 防止可疑和惡意行為
+   * 2 - 稽核: 產生 EDR 偵測而不封鎖
+   * 4 - 關閉: 功能已關閉，不會影響任何效能
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">預設</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">封鎖</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">稽核</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">關閉</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">設定蠻攻保護封鎖時間</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    設定 Brute-Force 保護封鎖IP位址的時間上限。在這段時間之後，封鎖的IP位址將可以登入並起始會話。
+
+支援的設定：
+    * 0 - 無： 內部功能邏輯會判斷實際的封鎖時間
+    * 以 15 分鐘為增量指定其他時間
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">設定蠻攻保護積極性</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    設定 Brute-Force 保護何時封鎖IP位址的準則。
+
+支援的設定：
+    *0 - 低： 只有在信賴等級為 100% (時才封鎖預設)
+    *1 - 中： 當信賴層級高於 99% 時，使用雲端匯總並封鎖
+    *2 - 高： 使用雲端 intel 和內容，並在信賴層級高於 90% 時封鎖
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">低</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">適中</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">高</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">設定保護蠻攻的排除項目</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    指定要從蠻攻保護排除的 IP位址、子網路或工作站名稱。將不會檢查排除的 IP 位址是否可能存在蠻攻活動。
+   
+   請注意，攻擊者可能會偽造排除的位址和名稱來繞過保護。確保名稱是唯一的，且不太可能被攻擊者猜測。
+
+   以名稱/值的形式在新的一行中輸入每個位址或子網路:
+   - 名稱欄位: 輸入 IP 位址、子網路名稱或子網路名稱。例如，"1.1.127.0" 會排除此 IP 位址不受到 BFP 封鎖。
+   - 值欄位: 在每個項目中輸入 "0"
+    </string>
     <string id="Reporting_AdditionalActionTimeout">設定需要其他動作的偵測逾時</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">這個原則設定可設定將偵測從「其他動作」狀態移至「已清除」狀態前的分鐘數。</string>
     <string id="Reporting_CriticalFailureTimeout">設定嚴重失敗狀態的偵測逾時</string>
@@ -398,6 +529,12 @@
 如果將此設定設定為 0，則不會傳送任何服務健康情況報告。
 
 允許設定的最大值為 14400 分鐘(10 天)。</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">設定是否要報告動態簽章已丟棄的事件</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">這個原則設定可設定是否報告動態簽章卸載事件。
+
+如果您未設定這個設定，將會套用預設值。預設值設定為停用，(不會報告此類事件)。
+    如果您將這個設定設為啟用，將會報告動態簽章卸載事件。
+    如果您將這個設定設為停用，將不會報告動態簽章卸載事件。</string>
       <string id="Scan_AllowPause">允許使用者暫停掃描</string>
     <string id="Scan_AllowPause_Explain">這個原則設定可讓您管理使用者是否可暫停進行中的掃描。
 
@@ -456,6 +593,10 @@
 如果您啟用這個設定，就會針對排定的快速掃描開啟追補掃描。如果電腦連續在兩次排定的掃描離線，追補掃描會在下次有人登入電腦時啟動。 如果沒有設定排定的掃描，將不會執行追補掃描。
 
 如果您停用或未設定這個設定，將會針對排定的快速掃描關閉追補掃描。</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">在未進行任何掃描的 X 天後觸發快速掃描</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">此原則設定會定義自最後一次掃描起要經過多少天，才會自動觸發積極捕捉快速掃描。此值代表要經過多少天的無掃描情況，才會觸發積極快速掃描之前。
+    
+    有效值的範圍從 7 天到 60 天。如果未設定，就會停用積極快速掃描。此值預設為 25 天。</string>
     <string id="Scan_DisableEmailScanning">開啟電子郵件掃描</string>
     <string id="Scan_DisableEmailScanning_Explain">這個原則設定可讓您設定電子郵件掃描。啟用電子郵件掃描時，引擎會根據信箱和郵件檔的特定格式進行剖析，以分析郵件內文和附件。目前支援多個電子郵件格式，例如: pst (Outlook)、dbx、mbx、mime (Outlook Express)、binhex (Mac)。新式電子郵件用戶端不支援電子郵件掃描。
 
@@ -498,12 +639,12 @@
 如果您啟用這個設定，將會掃描連線的網路磁碟機。
 
 如果您停用或未設定這個設定，將不會掃描連線的網路磁碟機。</string>
-    <string id="Scan_DisableScanningNetworkFiles">掃描網路檔案</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">這個原則設定可讓您設定網路檔案的掃描。建議您不要啟用這個設定。
+    <string id="Scan_DisableScanningNetworkFiles">設定網路檔案掃描</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">此原則設定允許使用存取保護掃描網路檔案。預設為啟用。建議在大部分情況下保持啟用。
 
-如果您啟用這個設定，將會掃描網路檔案。
+    如果您啟用或未設置此設定，系統會掃描網路檔案。
 
-如果您停用或未設定這個設定，將不會掃描網路檔案。</string>
+    如果您停用此設定，系統將不會掃描網路檔案。</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">設定 CPU 使用率百分比上限的本機設定覆寫</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">這個原則設定可設定掃描期間 CPU 使用率百分比上限設定的本機覆寫。這個設定只能由群組原則進行設定。
 
@@ -615,6 +756,18 @@
 
         如果您停用或未進行此設定，排定的掃描期間不會對 CPU 優先順序進行任何變更。
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">在快速掃描期間掃描已排除的檔案和目錄</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        這個原則設定可讓您在快速掃描期間掃描排除的檔案和目錄。
+
+如果您將這個原則設定設定為 1，使用關聯式排除專案從即時保護中排除的所有檔案和目錄，在快速掃描期間會進行掃描。
+
+如果您將此原則設定為 0 或未設定，則不會在快速掃描期間掃描排除專案。
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">定義要將間諜軟體安全情報視為過時的天數</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">此原則設定允許您定義將病毒安全情報視為過時所需經過的天數。如果安全情報判斷為過時，則此狀態會觸發幾個額外的動作，包含回到替代的更新來源，或在使用者介面顯示警告圖示。此值預設為 7 天。\r\n\r\n    如果您啟用這個設定，會將經過指定的天數且尚未更新的間諜程式安全情報視為過時。
 
@@ -637,6 +790,13 @@
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">這個原則設定可讓您為 VDI 設定的電腦定義安全性情報位置。
 
     如果您停用或未設定這個設定，將會從預設本機來源參照安全性情報。</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">根據 VDI 用戶端的排程器設定安全性情報更新。</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">這個原則設定可讓您根據 VDI 設定電腦的排程器設定安全性情報更新。它與共享安全性情報位置 (SharedSignaturesLocation) 一起使用。
+
+如果您啟用這個原則設定並設定 SharedSignaturesLocation，則來自設定位置的更新只會在先前設定的排程更新時間進行。
+
+如果您停用或未設定這個原則設定，則每當在 SharedSignaturesLocation 指定的位置偵測到新的安全性情報更新時，就會發生更新。
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">安全情報更新後啟動掃描</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">這個原則設定可以讓您設定安全性情報更新後啟動的自動掃描。
 
@@ -829,12 +989,6 @@
 
       如果您啟用此設定，防毒軟體通知將不會在用戶端上顯示。
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">當用戶端需要執行動作時，對用戶端顯示其他文字</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">這個原則設定可讓您設定用戶端需要執行動作時，是否對用戶端顯示其他文字。顯示的文字是自訂的系統管理員定義的字串。例如，撥打給公司支援工程師的電話號碼。用戶端介面最多只能顯示 1024 個字元。較長的字串會在顯示之前截斷。
-
-如果您啟用這個設定，將會顯示指定的其他文字。
-
-如果您停用或未設定這個設定，則不會顯示其他文字。</string>
     <string id="MpCloudBlockLevel">選取雲端保護層級</string>
     <string id="MpCloudBlockLevel_Explain">
       這個原則設定會決定 Microsoft Defender 防毒軟體在封鎖和掃描可疑檔案方面的積極度。
@@ -912,6 +1066,17 @@
     與 [停用] 同。
 
     在 [設定 Attack Surface Reduction 規則] GP 設定中可設定 ASR 規則。
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">將排除清單套用至特定攻擊面減少 (ASR) 規則</string>天
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    此原則可讓系統管理員指定特定 ASR 規則的排除清單。
+    每個項目都是名稱值組。機碼指出規則 GUID，而值是一組以 &gt; 字元分隔的完整路徑，指出該特定 ASR 規則的排除項目。
+
+注意: GUID 是 KEY，而不是值。
+
+例子: 
+    金鑰: 「{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}」
+    值: 「C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe」
     </string>
     <string id="ExploitGuard_ASR_Rules">設定攻擊面減少規則</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1118,13 +1283,66 @@
     <string id="DeviceControl_DefaultEnforcement_DefaultDeny">預設拒絕</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation">定義 [裝置控制項] 辨識項資料遠端位置</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
-        定義辨識項檔遠端位置，[裝置控制項] 服務會在其中移動擷取的辨識項資料。
+        定義證明檔遠端位置，裝置控制服務會在其中移動擷取的證明數據。
+
+設定這個設定時，請確定 [裝置控制] 已啟用，而且提供的路徑是使用者可以存取的遠端路徑。
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">設定本機裝置控制快取中的檔案保留期間</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        此原則設定決定裝置控制項在裝置上的本機快取中保留檔案作為證據的時間長度。只有當裝置控制項無法將檔案上傳到指定的網路共用或 Azure 儲存空間時，裝置控制項才能將檔案保留在其本機快取中。
+
+        根據預設，裝置控制項會在其本機快取中保留檔案 60 天。
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">開啟特定裝置類型的裝置控制</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        此原則設定控制以 PrimaryId 識別的裝置類型並開啟裝置控制保護。如果您對特定裝置類型啟用這個設定，裝置控制會根據對應的自訂原則調整對這些裝置的存取。即使已針對這些裝置設定自訂保護原則，系統也會關閉所有其他支援裝置類型的裝置控制。
+ 
+        此設定目前支援這些裝置類型: RemovableMediaDevices、CdRomDevices、WpdDevices 和 PrinterDevices。 
+ 
+        如果您啟用此原則設定但未指定任何 PrimaryIds，系統將會關閉所有支援裝置類型上的裝置控制。
+ 
+        如果您停用或沒有未設置此原則設定，系統將會根據其對應的自訂原則，在所有支援的裝置上強制執行裝置控制。
+    </string>
+	<string id="DeviceControl_CustomSupportLink">設定裝置控制項通知的支援連結</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        此設定可讓您的組織在裝置控制通知中指定 [取得支援] 連結。
+		
+設定時，[取得支援] 按鈕會自動流覽至指定的連結。
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">設定原則重新整理的頻率</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        此設定定義在發生錯誤且原則無法載入的情況下，裝置重試載入原則設定的間隔，以分鐘為單位。
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">設定 Azure AD 重新整理的頻率</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        此設定定義裝置查詢Azure AD以更新相關設定、設定和群組成員資格的間隔，以分鐘為單位。
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">設定資料重複限制 (MB)</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        此設定定義裝置控制項可複製的資料量上限。
+		
+達到限制時，將不會在機器上複製複製到抽取式存放裝置的檔案。
+	</string>
     <string id="Features_DeviceControlEnabled">裝置控制項</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         啟用或停用此電腦上的 Defender 裝置控制項。
         注意： 您必須註冊為 E3 或 E5，裝置控制項才能啟用。
     </string>
+    <string id="Features_TDTFeatureEnabled">Intel TDT 整合層級</string>
+    <string id="Features_TDTFeatureEnabled_Explain">此原則設定可設定支援 Intel TDT 之裝置的 Intel TDT 整合層級。
+
+如果您未設定這個設定，將會套用預設值。預設值是由 Microsoft 安全性情報更新所控制。如果有已知的威脅，Microsoft 將會啟用 Intel TDT。
+
+如果您將此設定設為停用，Intel TDT 整合將會關閉。</string>
+    <string id="Features_PassiveRemediation">在封鎖模式中啟用 EDR</string>
+    <string id="Features_PassiveRemediation_Explain">這個原則設定可啟用或停用封鎖模式中的 EDR (也稱為「被動補救」)。建議在被動模式中執行 Microsoft Defender 防毒軟體的裝置使用封鎖模式的 EDR。適用于平臺版本: 4.18.2202.X
+
+資料類型為整數
+
+支援的值:
+
+1: 開啟封鎖模式中的 EDR
+        0: 關閉封鎖模式中的 EDR</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1389,38 @@
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">設定監視傳入和傳出檔案及程式活動</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">指定遠端加密保護的狀態</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">指定封鎖偵測的時間長度，以分鐘為單位</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">指定遠端加密保護如何積極地封鎖威脅</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">遠端加密保護排除項目</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">指定蠻攻保護的狀態</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">指定封鎖偵測的時間長度，以分鐘為單位</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">指定蠻攻保護封鎖威脅的積極程度</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">蠻攻保護排除項目</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">指定星期幾執行排程完整掃描以完成補救</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">指定一天中執行排程完整掃描以完成補救的時間</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">指定在經過未進行掃描的天數後才觸發積極快速掃描</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">定義在追補掃描強制發生後，排定掃描的掃描可被錯過的次數</decimalTextBox>
@@ -1273,11 +1518,6 @@
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">指定偵測到威脅時，不應採取預設動作的威脅警示等級</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>當用戶端需要執行動作時，對用戶端顯示其他文字</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">指定到期通知的間隔</decimalTextBox>
     </presentation>
@@ -1293,6 +1533,9 @@
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">ASR 規則要排除的項目:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">每個 ASR 規則的排除項目:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">設定每項 ASR 規則的狀態:</listBox>
     </presentation>
@@ -1307,6 +1550,9 @@
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1584,34 @@
         <label>定義 [裝置控制項] 資料重複遠端位置。</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">設定本機裝置控制快取中的檔案保留期間</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>開啟特定裝置類型的裝置控制</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>設定裝置控制項通知的支援連結</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>設定原則重新整理的頻率</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>設定 Azure AD 重新整理的頻率</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>設定資料重複限制 (MB)</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

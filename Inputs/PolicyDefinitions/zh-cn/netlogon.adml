@@ -298,8 +298,9 @@ Active Directory 站点是一个或多个连接良好的 TCP/IP 子网，允许�
 如果启用此策略设置，则此 DC 将不处理基于 NetBIOS 域名的 DC 查找所使用的传入 mailslot 消息。
 
 如果禁用或未配置此策略设置，则此 DC 将处理传入的 mailslot 消息。这是 DC 定位程序的默认行为。</string>
+
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery">请勿在基于 DNS 的查找失败时使用基于 NetBIOS 查找域名控制器位置</string>
-      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">使用此策略设置，可以控制域控制器(DC)位置算法。默认情况下，如果 DNS 域名已知，则 DC 查找算法首选使用基于 DNS 的查找。如果基于 DNS 的查找失败且知道 NetBIOS 域名，则算法使用基于 NetBIOS 的查找作为回退机制。
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">使用此策略设置，可以控制域控制器(DC)位置算法。默认情况下，如果 DNS 域名已知，则 DC 位置算法首选使用基于 DNS 的查找。如果基于 DNS 的查找失败且知道 NetBIOS 域名，则算法使用基于 NetBIOS 的查找作为回退机制。
 
 基于 NetBIOS 的查找使用 WINS 服务器和 mailslot 消息，但不使用站点信息。因此，它不保证客户端可以发现最近的 DC。它也允许中心站点客户端查找分支站点 DC，即使分支站点 DC 仅注册站点特定的 DNS 记录(推荐)。出于这些原因，不建议使用基于 NetBIOS 的查找。
 
@@ -307,7 +308,18 @@ Active Directory 站点是一个或多个连接良好的 TCP/IP 子网，允许�
 
 如果启用或未配置此策略设置，则当基于 DNS 的查找失败时，DC 位置算法不将基于 NetBIOS 的查找作为回退机制。这是默认的行为。
 
-如果禁用此策略设置，则当基于 DNS 的查找失败时，DC 位置算法可以使用基于 NetBIOS 的查找作为回退机制。</string>
+如果禁用此策略设置，则当基于 DNS 的查找失败时，DC 位置算法可以使用基于 NetBIOS 的查找作为回退机制。
+
+除非禁用 BlockNetbiosDiscovery 设置，否则此设置无效。我们认为基于 NetBIOS 的查找是不安全的，它有很多限制，并且将在未来的版本中弃用。因此，不建议使用基于 NetBIOS 的查找。请参阅 https://aka.ms/dclocatornetbiosdeprecation 了解详细信息。</string>
+
+      <string id="Netlogon_BlockNetbiosDiscovery">阻止基于 NetBIOS 查找域控制器位置</string>
+      <string id="Netlogon_BlockNetbiosDiscovery_Help">使用此策略设置可以控制域控制器(DC)位置算法是否使用基于 NetBIOS 查找来找到域控制器位置。
+
+如果启用或未配置此策略设置，则 DC 位置算法将从不使用基于 NetBIOS 的查找。这是默认行为。
+
+如果禁用此策略设置，则 DC 位置算法可能会在必要时使用基于 NetBIOS 的查找。最终行为会进一步受 AvoidFallbackNetbiosDiscovery 设置的约束。
+
+我们认为基于 NetBIOS 的查找是不安全的，它有很多限制，并且将在未来的版本中弃用。因此，不建议使用基于 NetBIOS 的查找。请参阅 https://aka.ms/dclocatornetbiosdeprecation 了解详细信息。</string>
 
       <string id="Netlogon_AddressLookupOnPingBehavior">指定 DC 定位程序 PING 的地址查找行为</string>
       <string id="Netlogon_AddressLookupOnPingBehavior_Help">此策略设置配置域控制器在响应其 IP 地址未映射到任何配置的站点的客户端时的行为。

@@ -17,6 +17,9 @@
     <string id="Quarantine">Karantän</string>
     <string id="RealtimeProtection">Skydd i realtid</string>
     <string id="Remediation">Reparation</string>
+    <string id="Remediation_BNB">Beteendebaserade nätverksblock</string>
+    <string id="Remediation_BNB_REP">Fjärrkrypteringsskydd</string>
+    <string id="Remediation_BNB_BFP">Brute-Force Protection</string>
     <string id="Reporting">Rapportering</string>
     <string id="Scan">Genomsökning</string>
     <string id="SignatureUpdate">Uppdateringar av säkerhetsinsikter</string>
@@ -47,6 +50,10 @@ Aktiverad
     Aktiverad: 
         Om du aktiverar den här inställningen kan lokala administratörer inte längre se undantagslistan i Windows-säkerhet-appen eller via PowerShell.
         Obs! Även om du använder den här inställningen tas inte undantag bort. Det förhindrar bara att de visas för lokala administratörer. Detta återspeglas i Get-MpPreference.</string>
+    <string id="HideExclusionsFromLocalUsers">Kontrollera om undantag är synliga för lokala användare</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    Den här principinställningen styr om undantag är synliga för lokala användare på enheten.
+    Använd principinställningen HideExclusionsFromLocalAdmins för att dölja undantag från både vanliga och administrativa lokala användare.</string>
     <string id="AllowNetworkProtectionOnWinServer">Den här inställningen styr om nätverks skydd får konfigureras till att blockeras eller granskas på Windows Server.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     Inaktiverad (standard): 
@@ -57,11 +64,29 @@ Aktiverad
     Observera att den här konfigurationen är beroende av EnableNetworkProtection konfiguration. Om den här konfigurationen är falsk kommer EnableNetworkProtection att ignoreras, annars kommer nätverksskyddet att starta på Windows Server beroende på värdet på EnableNetworkProtection.</string>
     <string id="DisableDatagramProcessing">Den här inställningen styr datagram-bearbetning för nätverks skydd.</string>
     <string id="DisableDatagramProcessing_Explain">
-    Aktive rad (standard): 
-    Om inställningen inte är konfigurerad eller inaktiverad aktiveras datagram-behandling för nätverksskydd.
+    Inaktiverad (standard): 
+    Om det inte är konfigurerat eller inaktiverat aktiveras datagrambearbetning för nätverksskydd.
 
-Aktiverad 
-    Om du aktiverar detta inaktiveras datagram-bearbetning för nätverksskydd.</string>
+Aktiverat: 
+    Om det är aktiverat inaktiveras datagrambearbetning för nätverksskydd.</string>
+    <string id="EnableConvertWarnToBlock">Konvertera varningsbedömning till blockering</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    Nätverksskyddet inspekterar nätverkstrafiken och avgör om den tillåter eller blockerar trafik eller visar en varning.
+    
+    Inaktiverad (standard): 
+    Om den inte är konfigurerad eller inaktiverad visas en varning för varningsbedömningar i nätverksskyddet.
+
+    Aktiverad: 
+    Om den här inställningen är aktiverad blockerar nätverksskyddet nätverkstrafik i stället för att visa en varning.</string>
+    <string id="AllowSwitchToAsyncInspection">Aktivera asynkron inspektion</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    Kontrollera om nätverksskyddet kan förbättra prestanda genom att växla från realtidsinspektion till asynkron inspektion.
+
+    Inaktiverad (standard): 
+    Om den inte är konfigurerad eller inaktiverad aktiveras inte asynkron kontroll för nätverksskydd.
+
+    Aktiverad: 
+    Om aktiverad tillåts växling till asynkron kontroll för nätverksskydd.</string>
     <string id="DisableAutoExclusions">Inaktivera automatiska undantag</string>
     <string id="DisableAutoExclusions_Explain">
         Tillåter att en administratör kan ange om automatiska undantag för server-SKU:er ska inaktiveras.
@@ -142,15 +167,19 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen kring
       Om du inaktiverar eller låter bli att konfigurera den här inställningen hoppar proxyn över det här steget.
     </string>
     <string id="RandomizeScheduleTaskTimes">Slumpgenerera tider för schemalagda aktiviteter</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">Med den här principinställningen kan du konfigurera schemalagda genomsökningar och det schemalagda starttidsfönstret för uppdatering av säkerhetsinsikter i timmar.
+    <string id="RandomizeScheduleTaskTimes_Explain">Med den här principinställningen kan du konfigurera randomiseringen av starttiden för den schemalagda genomsökningen och starttiden för den schemalagda definitionsuppdateringen.
 
-Om du inaktiverar eller låter bli att konfigurera den här inställningen startar schemalagda aktiviteter vid en slumpmässig tid inom 4 timmar efter den angivna tiden i Schemaläggaren.
-    Om du aktiverar den här inställningen kan du bredda eller minska den slumpmässiga perioden. Ange ett slumpmässigt fönster mellan 1 och 23 timmar.</string>
+Om du aktiverar eller låter bli att konfigurera den här principinställningen och inte har angett något slumpmässigt fönster i inställningen Konfigurera schemalagd aktivitetstid, läggs slumpmässigheten till mellan 0 och 4 timmar.
+        Om du aktiverar eller låter bli att konfigurera den här principinställningen och ställer in ett slumpmässigt fönster i inställningen Konfigurera slumpmässig aktivitetstid, används det konfigurerade slumpmässiga fönstret.
+        Om du inaktiverar den här principinställningen, men har konfigurerat randomiseringsfönstret för schemalagd aktivitetstid, utförs inte slumpmässigheten. 
+    </string>
     <string id="SchedulerRandomizationTime">Konfigurera randomiseringsfönstret för schemalagda aktivitetstider</string>
-    <string id="SchedulerRandomizationTime_Explain">Med den här principinställningen kan du konfigurera starttiden för schemalagda genomsökningar och det schemalagda starttidsfönstret för uppdatering av säkerhetsinsikter i timmar.
+    <string id="SchedulerRandomizationTime_Explain">Med den här principinställningen kan du konfigurera starttid för schemalagd aktivitetssökning och starttid i timmar för schemalagd säkerhetsinsiktsuppdatering. Den här inställningen påverkar konfigurationen för randomisering av schemalagda aktivitetstider.
 
-Om du inaktiverar eller låter bli att konfigurera den här inställningen startar schemalagda aktiviteter vid en slumpmässig tid inom ett intervall på 4 timmar efter den angivna starttiden.
-    Om du aktiverar den här inställningen måste du välja ett slumpmässigt fönster i timmar. Det möjliga intervallet för slumpmässigheten är mellan 1 och 23 timmar.</string>
+        Om du aktiverar den här inställningen måste du välja ett slumpmässigt fönster i timmar. Det möjliga intervallet för randomiseringsfönster är mellan 1 och 23 timmar. Det randomiseringsintervall som implementeras är mellan 0 och det konfigurerade värdet. 
+        När du aktiverar den här inställningen använder inställningarna för randomisering av schemalagda aktivitetstider det slumpmässiga fönster som anges i den här konfigurationsinställningen. 
+        Om du inaktiverar eller låter bli att konfigurera den här principinställningen slumpmässigt kommer inställningarna för randomisering av schemalagda aktivitetstider att randomisera schemalagda aktivitetstider mellan 0 och 4 timmar.</string>
+
     <string id="ServiceKeepAlive">Tillåt att tjänsten för program mot skadlig kod alltid körs</string>
     <string id="ServiceKeepAlive_Explain">Med den här principinställningen kan du ange om tjänsten för program mot skadlig kod ska fortsätta köra när säkerhetsinsikter för antivirus- och antispionprogram inaktiveras. Vi rekommenderar att du låter inställningen vara inaktiverad.
 
@@ -219,6 +248,22 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen behå
     Om du aktiverar eller låter bli att konfigurera den här inställningen aktiveras beteendeövervakning.
 
     Om du inaktiverar den här inställningen inaktiveras beteendeövervakningen.</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">Konfigurera realtidsskydd och uppdateringar av säkerhetsinsikter under välkomstprogrammet</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">Med den här principinställningen kan du konfigurera om realtidsskydd och Uppdateringar för säkerhetsinsikter ska aktiveras under välkomstprogrammet (Välkomstprogram).
+ 
+Om du aktiverar den här inställningen aktiveras realtidsskydd och Uppdateringar för säkerhetsinsikter under välkomstprogrammet.
+ 
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen aktiveras inte realtidsskydd och Uppdateringar under välkomstprogrammet.</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">Konfigurera status för prestandaläge</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">Den här principen styr Microsoft Defender Antivirus-prestandaläget för utvecklarenheter.
+
+    En utvecklarenhet är en diskenhet som är optimerad för högre prestanda i programvaruutvecklingsscenarier. När den här principen är aktiverad eller inte konfigurerad aktiveras prestandaläget för Microsoft Defender Antivirus. I prestandaläge utförs Microsoft Defender Antivirus-säkerhetskontroller av innehåll som lagras på utvecklarenheter asynkront för att förbättra prestanda. Prestandaläget kräver att följande principer också är aktiverade: ”Aktivera utvecklarenhet” och ”Tilläggsprincip för utvecklarenhetsfilter”
+
+    Om du aktiverar eller inte konfigurerar den här principinställningen aktiveras prestandaläget.
+
+    Om du inaktiverar den här principinställningen inaktiveras prestandaläget, vilket innebär att Microsoft Defender Antivirus skyddar utvecklarenheter på samma sätt som andra enheter.</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">Aktivera beteendeövervakning</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">Den här principinställningen används för att konfigurera beteendeövervakning.
@@ -359,6 +404,92 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen körs
 Om du aktiverar den här inställningen körs en schemalagd fullständig genomsökning för att slutföra reparation vid den angivna tiden på dagen.
 
 Om du inaktiverar eller låter bli att konfigurera den här inställningen körs en schemalagd fullständig genomsökning vid en standardtidpunkt för att slutföra reparation.</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">Konfigurera fjärrkrypteringsskyddsläge</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    Ange läget för fjärrkrypteringsskydd i Microsoft Defender Antivirus, som kan identifiera och blockera försök att ersätta lokala filer med krypterade versioner från en annan enhet. 
+
+Inställningar som stöds:
+    * 0 – Inte konfigurerat eller Standard: Använd standardvärden, vilket kan variera beroende på antivirusmotorns version och plattformen
+    * 1 – Blockera: Förhindra misstänkt och skadligt beteende
+    * 2 – Granskning: Generera EDR-identifieringar utan blockering
+    * 4 – Av: Funktionen är inaktiverad utan prestandapåverkan
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">Standard</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">Blockera</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">Granskning</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">Av</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">Konfigurera blockeringstid för fjärrkrypteringsskydd</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    Ange den längsta tid som en IP-adress blockeras av fjärrkrypteringsskydd. Efter den här tiden kan blockerade IP-adresser initiera anslutningar igen. 
+
+Inställningar som stöds:
+    * 0 – Ingen: Intern funktionslogik fastställer den faktiska blockeringstiden
+    * Ange andra tider i steg om 15 minuter
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">Konfigurera hur aggressivt Fjärrkrypteringsskydd blockerar hot</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    Ange villkor för när skydd mot fjärrkryptering blockerar IP-adresser.
+
+Inställningar som stöds:
+    *0 – Låg: Blockera endast när konfidensnivån är 100% (standard)
+    *1 – Medel: Använd molnaggregering och blockera när konfidensnivån är över 99%
+    *2 – Hög: Använd molninformation och kontext och blockera när konfidensnivån är över 90%
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">Låg</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">Mellan</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">Hög</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> Ange undantag från fjärrkrypteringsskydd</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    Ange IP-adresser, undernät och domännamn som ska undantas från fjärrkrypteringsskydd. Observera att angripare kan förfalska exkluderade adresser och namn för att kringgå skyddet.
+
+    Ange varje adress eller undernät på en ny rad som ett namn/värde-par:
+    – Namnkolumn: Ange en IP-adress eller ett undernätsnamn. Till exempel kommer ""1.1.127.0"" att undanta den här IP-adressen från att blockeras.
+    – Värdekolumn: Ange “”0”” för varje objekt
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">Konfigurera Brute-Force Protection-läge</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Ange läget för Brute-Force skydd i Microsoft Defender Antivirus, som kan identifiera och blockera försök att framtvinga inloggning och initiera sessioner.
+
+Inställningar som stöds:
+    * 0 – Inte konfigurerat eller Standard: Använd standardvärden, vilket kan variera beroende på antivirusmotorns version och plattformen
+    * 1 – Blockera: Förhindra misstänkt och skadligt beteende
+    * 2 – Granskning: Generera EDR-identifieringar utan blockering
+    * 4 – Av: Funktionen är inaktiverad utan prestandapåverkan
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">Standard</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">Blockera</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">Granskning</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">Av</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">Konfigurera blockeringstid för Brute-Force Protection</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    Ange den längsta tid som en IP-adress blockeras av Brute-Force Protection. Efter den här tiden kan blockerade IP-adresser logga in och initiera sessioner.
+
+Inställningar som stöds:
+    * 0 – Ingen: Intern funktionslogik fastställer den faktiska blockeringstiden
+    * Ange andra tider i steg om 15 minuter
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">Konfigurera Brute-Force Protection-aggressivitet</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    Ange villkor för när Brute-Force Protection blockerar IP-adresser.
+
+Inställningar som stöds:
+    *0 – Låg: Blockera endast när konfidensnivån är 100% (standard)
+    *1 – Medel: Använd molnaggregering och blockera när konfidensnivån är över 99%
+    *2 – Hög: Använd molninformation och kontext och blockera när konfidensnivån är över 90%
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">Låg</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">Mellan</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">Hög</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">Ange undantag från Brute-Force Protection</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    Ange IP-adresser, undernät eller arbetsstationsnamn som ska undantas från Brute-Force Protection. Undantagna IP-adresser kontrolleras inte för möjlig råstyrkeaktivitet.
+    
+    Observera att angripare kan förfalska exkluderade adresser och namn för att kringgå skyddet. Se till att namnen är unika och sannolikt inte gissas av angripare.
+
+    Ange varje adress eller undernät på en ny rad som ett namn/värde-par:
+    – Namnkolumn: Ange en IP-adress, ett undernätsnamn eller ett arbetsstationsnamn. Till exempel kommer ""1.1.127.0"" att undanta den här IP-adressen från att blockeras av BFP.
+    – Värdekolumn: Ange “”0”” för varje objekt
+    </string>
     <string id="Reporting_AdditionalActionTimeout">Konfigurera timeout för identifieringar som kräver ytterligare åtgärd</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">Den är principinställningen konfigurerar tiden i minuter innan en identifiering i läget "ytterligare åtgärd" flyttas till läget "åtgärdad".</string>
     <string id="Reporting_CriticalFailureTimeout">Konfigurera timeout för identifieringar i läget allvarligt fel</string>
@@ -398,6 +529,12 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen anvä
 Om du konfigurerar den här inställningen till 0 skickas inga hälsorapporter för tjänsten.
 
 Det högsta tillåtna värdet är 14400 minuter (10 dagar).</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">Konfigurera om dynamiska signaturer som utelämnats ska rapporteras</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">Den här principinställningen anger om händelser som utelämnats av dynamisk signatur ska rapporteras.
+
+Om du inte konfigurerar den här inställningen används standardvärdet. Standardvärdet är inaktiverat (sådana händelser rapporteras inte).
+    Om du konfigurerar den här inställningen till aktiverad rapporteras händelser som utelämnats av dynamisk signatur.
+    Om du konfigurerar den här inställningen till inaktiverad rapporteras inte händelser som utelämnats av dynamisk signatur.</string>
       <string id="Scan_AllowPause">Tillåt att användarna pausar genomsökningen</string>
     <string id="Scan_AllowPause_Explain">Med den här principinställningen kan du styra om slutanvändare kan pausa en pågående genomsökning.
 
@@ -456,6 +593,10 @@ Om du inaktiverar den här inställningen tillämpas processorbegränsning på s
 Om du aktiverar den här inställningen aktiveras komma ifatt-sökningar för schemalagda snabbsökningar. Om en dator är offline vid två efter varandra följande schemalagda genomsökningar startas en komma ifatt-sökning nästa gång någon loggar in på datorn.  Om ingen schemalagd genomsökning har konfigurerats körs ingen komma ifatt-sökning.
 
 Om du inaktiverar eller låter bli att konfigurera den här inställningen inaktiveras komma ifatt-sökningar för schemalagda snabbsökningar.</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">Utlös en snabbsökning efter X dagar utan genomsökningar</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">Den här principinställningen definierar antalet dagar som kan passera sedan den senaste genomsökningen innan en aggressiv komma ifatt-snabbsökning utlöses automatiskt. Värdet representerar antalet dagar som kan passera utan att några genomsökningar utförs innan en aggressiv snabbsökning utlöses.
+    
+Giltiga värden är mellan 7 och 60 dagar. Om det inte konfigureras inaktiveras aggressiva snabbsökningar. Som standard anges värdet till 25 dagar när det är aktiverat.</string>
     <string id="Scan_DisableEmailScanning">Aktivera genomsökning av e-post</string>
     <string id="Scan_DisableEmailScanning_Explain">Med den här principinställningen kan du konfigurera genomsökningen av e-post. När genomsökning av e-post är aktiverad parsar motorn inkorgen och e-postfilerna enligt deras specifika format för att analysera brödtexten och bilagorna. Flera e-postformat stöds för tillfället, till exempel pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac). E -postskanning stöds inte på moderna e-postklienter.
 
@@ -498,12 +639,12 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen skapa
 Om du aktiverar den här inställningen genomsöks mappade nätverksenheter.
 
 Om du inaktiverar eller låter bli att konfigurera den här inställningen genomsöks inte mappade nätverksenheter.</string>
-    <string id="Scan_DisableScanningNetworkFiles">Genomsök nätverksfiler</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">Med den här principinställningen kan du konfigurera genomsökning för nätverksfiler. Du rekommenderas att inte aktivera den här inställningen.
+    <string id="Scan_DisableScanningNetworkFiles">Konfigurera genomsökning av nätverksfiler</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">Med den här principinställningen kan du genomsöka nätverksfiler med hjälp av åtkomstskydd. Standardvärdet är aktiverat. Rekommenderas för att förbli aktiverad i de flesta fall.
 
-Om du aktiverar inställningen genomsöks nätverksfiler.
+Om du aktiverar eller låter bli att konfigurera den här inställningen genomsöks nätverksfiler.
 
-Om du inaktiverar eller låter bli att konfigurera den här inställningen genomsöks nätverksfiler inte.</string>
+Om du inaktiverar den här inställningen genomsöks inte nätverksfiler.</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">Konfigurera lokal åsidosättningsinställning för maximal procentandel av processoranvändning</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">Den här principinställningen konfigurerar en lokal åsidosättning för konfigurationen av maximal procentandel av processoranvändning vid genomsökning. Inställningen kan bara göras av grupprincip.
 
@@ -615,6 +756,18 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen körs
 
         Om du inaktiverar eller låter bli att konfigurera inställningen görs ingen ändring av CPU-prioriteten för schemalagda sökningar.
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">Skanna undantagna filer och kataloger under snabbskanningar.</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        Med den här principinställningen kan du söka igenom undantagna filer och kataloger under snabbsökningar.
+
+Om du ställer in den här principinställningen på 1 genomsöks alla filer och kataloger som undantas från realtidsskydd med sammanhangsbaserade undantag under en snabbsökning.
+
+Om du ställer in den här principen på 0 eller låter bli att konfigurera den genomsöks inte undantag under snabbsökningar.
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">Definiera antalet dagar innan säkerhetsinsikter för spionprogram anses vara inaktuella</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">Med den här princip inställningen kan du definiera antalet dagar som måste passera innan säkerhets information för spionprogram anses vara inaktuell. Om säkerhets insikten anses vara inaktuell kan det här tillståndet utlösa flera ytterligare åtgärder, till exempel att återgå till en alternativ uppdaterings källa eller att visa en varnings ikon i användar gränssnittet. Som standard anges värdet till 7 dagar.
 
@@ -637,6 +790,13 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen anses
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">Med den här principinställningen kan du definiera platsen för säkerhetsinsikter för VDI-konfigurerade datorer. 
 
     Om du inaktiverar eller låter bli att konfigurera den här inställningen används säkerhetsinsikter från den lokala standardkällan.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">Konfigurera uppdateringar av säkerhetsinsikter enligt schemaläggaren för VDI-klienter.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">Med den här principinställningen kan du konfigurera uppdateringar av säkerhetsinsikter enligt schemaläggaren för VDI-konfigurerade datorer. Den används tillsammans med den delade platsen för säkerhetsinsikter (SharedSignaturesLocation).
+
+    Om du aktiverar den här principinställningen och konfigurerar SharedSignaturesLocation sker uppdateringar från den konfigurerade platsen endast vid den tidigare konfigurerade schemalagda uppdateringstiden.
+
+    Om du inaktiverar eller inte konfigurerar den här principinställningen sker uppdateringar när en ny uppdatering av säkerhetsinsikter identifieras på den plats som anges av SharedSignaturesLocation.
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">Aktivera genomsökning efter uppdatering av säkerhetsinsikter</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">Med den här principinställningen kan du konfigurera den automatiska genomsökning som startar när en uppdatering av säkerhetsinsikter har gjorts.
 
@@ -829,12 +989,6 @@ Giltiga värden för reparationsåtgärder är:
 
       Om du aktiverar inställningen visas inte Microsoft Defender Antivirus-meddelanden på klienter.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Visa ytterligare text för klienter när de måste vidta en åtgärd</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">Med den här principinställningen kan du konfigurera om ytterligare text ska visas för klienter när de måste vidta en åtgärd. Texten som visas är en anpassad administratörsdefinierad sträng. Exempelvis telefonnumret till företagets supportavdelning. Klientgränssnittet visar maximalt 1 024 tecken. Längre strängar trunkeras före visning.
-
-Om du aktiverar den här inställningen visas den ytterligare text som har angetts.
-
-Om du inaktiverar eller låter bli att konfigurera den här inställningen visas ingen ytterligare text.</string>
     <string id="MpCloudBlockLevel">Välj molnskyddsnivå</string>
     <string id="MpCloudBlockLevel_Explain">
       Den här principinställningen bestämmer hur aggressivt Microsoft Defender Antivirus blockerar och söker igenom misstänkta filer.
@@ -912,6 +1066,17 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen visas
     Samma som Inaktiverad.
 
     Du kan konfigurera ASR-regler i grupprincipinställningen Konfigurera regler för minskning av attackytan.
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Använda en lista över undantag för specifika regler för minskning av attackytan (ASR)</string>d
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    Med den här principen kan en administratör ange en lista över undantag för specifika ASR-regler.
+    Varje post är ett namn/värde-par. Nyckeln anger regelns GUID och värdet är en uppsättning fullständiga sökvägar avgränsade med &gt; tecknet, vilket anger undantagen för den specifika ASR-regeln.
+
+    OBS! GUID är en NYCKEL, inte ett värde.
+
+    Exempel:
+ NYCKEL: {75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}
+ VÄRDE: "C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe"
     </string>
     <string id="ExploitGuard_ASR_Rules">Konfigurera regler för minskning av attackytan</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1118,13 +1283,66 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen visas
     <string id="DeviceControl_DefaultEnforcement_DefaultDeny">Standardnekande</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation">Definiera fjärrplats för bevisdata för enhetskontroll</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
-        Definiera fjärrplats för bevisfil, där device control-tjänsten flyttar bevisdata som samlas in.
+        Definiera fjärrplats för bevisfilen, där Device Control-tjänsten flyttar bevisdata som registrerats.
+
+När du konfigurerar den här inställningen kontrollerar du att Enhetskontroll är aktiverat och att den angivna sökvägen är en fjärrsökväg som användaren har åtkomst till.
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">Ange kvarhållningsperioden för filer i det lokala cacheminnet för enhetskontroll</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        Den här principinställningen avgör hur länge enhetskontrollen lagrar filer som bevis i enhetens lokala cacheminne. Enhetskontrollen lagrar bara en fil i det lokala cacheminnet om filen inte kan laddas upp till en utsedd nätverksresurs eller Azure Storage. 
+
+        Som standard lagrar enhetskontrollen filer i det lokala cacheminnet i 60 dagar.
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">Aktivera enhetskontroll för specifika enhetstyper</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        Den här principinställningen styr vilka enhetstyper som identifieras av deras PrimaryIds och som har aktiverat skydd för enhetskontroll. Om du aktiverar den här inställningen för vissa enhetstyper regleras åtkomsten till enheterna enligt motsvarande anpassade princip. Enhetskontroll inaktiveras för alla andra typer av enheter som stöds, även om anpassade skyddsprinciper har konfigurerats för de enheterna.
+ 
+Den här inställningen stöder för närvarande följande enhetstyper: RemovableMediaDevices, CdRomDevices, WpdDevices och PrinterDevices. 
+ 
+Om du aktiverar den här principinställningen men inte anger några PrimaryIds inaktiveras enhetskontroll för alla enhetstyper som stöds.
+ 
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen tillämpas enhetskontroll på alla enheter som stöds baserat på motsvarande anpassade principer.
+    </string>
+	<string id="DeviceControl_CustomSupportLink">Skapa en supportlänk för aviseringar om enhetskontroll</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        Med den här inställningen kan din organisation ange länken Få support i meddelanden om enhetskontroll. 
+		
+När det är konfigurerat navigerar knappen Hämta support automatiskt till den angivna länken.
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">Ange uppdateringsintervall för principen</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        Den här inställningen definierar med vilket intervall i minuter som enheten försöker läsa in principkonfigurationen igen om ett fel har inträffat och principen inte kunde läsas in.
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">Ange uppdateringsintervall för Azure AD</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        Den här inställningen definierar med vilket intervall i minuter som enheten frågar Azure AD om att uppdatera relaterade inställningar, konfigurationer och gruppmedlemskap.
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">Ange datadupliceringsgräns (MB)</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        Den här inställningen definierar den maximala mängden data som kan dupliceras för enhetskontroll. 
+		
+		När gränsen uppnås dupliceras inte filer som kopieras till flyttbara lagringsmedia på datorn.
+	</string>
     <string id="Features_DeviceControlEnabled">Enhetskontroll</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         Aktivera eller inaktivera Defender-enhetskontroll på den här datorn.
  Obs! Du måste vara registrerad som E3 eller E5 för att enhetskontrollen ska kunna aktiveras.
     </string>
+    <string id="Features_TDTFeatureEnabled">Intel TDT-integreringsnivå</string>
+    <string id="Features_TDTFeatureEnabled_Explain">Den här principinställningen konfigurerar Intel TDT-integreringsnivån för Intel TDT-kompatibla enheter.
+
+        Om du inte konfigurerar den här inställningen används standardvärdet. Standardvärdet styrs i uppdateringar av Microsofts säkerhetsinsikter. Microsoft aktiverar Intel TDT om det finns ett känt hot.
+        Intel TDT-integrering aktiveras om du konfigurerar den här inställningen som aktiverad.
+        Intel TDT-integrering inaktiveras om du konfigurerar den här inställningen som inaktiverad.</string>
+    <string id="Features_PassiveRemediation">Aktivera EDR i blockeringsläge</string>
+    <string id="Features_PassiveRemediation_Explain">Den här principinställningen aktiverar eller inaktiverar EDR i blockeringsläge (kallas även passiv reparation). EDR i blockeringsläge rekommenderas för enheter som kör Microsoft Defender Antivirus i passivt läge. Tillgängligt med plattformsversion: 4.18.2202.X
+
+        Datatypen är heltal
+
+        Värden som stöds:
+
+        1: Aktivera EDR i blockeringsläge
+        0: Inaktivera EDR i blockeringsläge</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1389,38 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen visas
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">Konfigurera övervakning för inkommande och utgående fil- och programaktivitet</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">Ange tillståndet för fjärrkrypteringsskydd</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">Ange hur länge identifieringar ska blockeras i minuter</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">Ange hur aggressivt Fjärrkrypteringsskydd blockerar hot</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">Undantag för fjärrkrypteringsskydd</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">Ange status för Brute-Force Protection</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">Ange hur länge identifieringar ska blockeras i minuter</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">Ange hur aggressivt Brute-Force Protection blockerar hot</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Undantag för Brute-Force Protection</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">Ange den veckodag då en schemalagd fullständig genomsökning ska köras för att slutföra reparation</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">Ange den tid på dagen då en schemalagd fullständig genomsökning ska köras för att slutföra reparation</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">Ange hur många dagar utan genomsökningar som ska passera innan en aggressiv snabbsökning utlöses</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">Ange antalet schemalagda genomsökningar som kan missas innan en komma ifatt-sökning framtvingas</decimalTextBox>
@@ -1273,11 +1518,6 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen visas
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Ange hotvarningsnivåer som standardåtgärder inte ska vidtas för när de identifieras</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Visa ytterligare text för klienter när de måste vidta en åtgärd</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">Ange intervall för förfallomeddelanden</decimalTextBox>
     </presentation>
@@ -1293,6 +1533,9 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen visas
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">Undantag från ASR-regler:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Undantag för varje ASR-regel:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">Ange tillstånd för varje ASR-regel:</listBox>
     </presentation>
@@ -1307,6 +1550,9 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen visas
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1584,34 @@ Om du inaktiverar eller låter bli att konfigurera den här inställningen visas
         <label>Definiera fjärrplatsen för enhetskontrolldataduplicering.</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">Ange kvarhållningsperioden för filer i det lokala cacheminnet för enhetskontroll</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>Aktivera enhetskontroll för specifika enhetstyper</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>Skapa en supportlänk för aviseringar om enhetskontroll</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>Ange uppdateringsintervall för principen</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>Ange uppdateringsintervall för Azure AD</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>Ange datadupliceringsgräns (MB)</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

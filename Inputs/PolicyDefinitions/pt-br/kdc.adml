@@ -115,6 +115,25 @@ Eventos gerados por essa configuração: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Suportado</string>
       <string id="PKINITHashAlgorithm_Audited">Auditado</string>
       <string id="PKINITHashAlgorithm_NotSupported">Sem Suporte</string>
+      <string id="StrongNameMatches">Permitir mapeamentos fortes baseados em nome para certificados</string>
+      <string id="StrongNameMatches_explain">Essa configuração de política permite o uso de identificadores alternativos baseados em nome para mapear fortemente certificados emitidos para contas de usuário do Active Directory e especifica quais certificados são mapeados para quais contas. Sem essa configuração habilitada, os certificados devem atender aos critérios de “mapeamento forte” especificados em aka.ms/StrongCertMapKB, que geralmente não permitem identificadores baseados em nome.
+
+Cada mapeamento especificado nessa política deve incluir um OID de política junto com um IssuerSubject e/ou um sufixo UPN usando a sintaxe especificada abaixo. Se um mapeamento válido para um determinado certificado não puder ser encontrado nesta política, o Active Directory tentará encontrar uma correspondência usando os critérios de mapeamento forte existentes especificados em KB5014754. Os mapeamentos de certificados que não estiverem em conformidade com os critérios de “mapeamento de nomes fortes” (essa política) ou com os critérios de “mapeamento forte” existentes serão considerados inválidos para autenticação.
+
+O formato geral da política e alguns exemplos estão listados abaixo. Essa política se aplica apenas a contas de usuário do Active Directory.
+
+Sintaxe geral
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+Exemplos
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+A política deve conter exatamente uma impressão digital de certificado por regra, com cada regra representada como uma tupla. As impressões digitais devem ser exclusivas e não podem ser repetidas em várias regras. As seções de cada tupla separadas por ponto e vírgula devem estar na ordem indicada, enquanto os campos separados por vírgulas podem estar em qualquer ordem. As próprias regras são separadas por novas linhas.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Eventos gerados por essa configuração: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Regras de Correspondência de Nome Forte:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

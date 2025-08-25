@@ -3,7 +3,6 @@
     This script manages the SMBv1 protocol on Windows systems, allowing granular control over the SMB client and server settings.
 .DESCRIPTION
     This script allows granular management of SMBv1. It supports OS starting from Windows Vista / Server 2008.
-    It includes rollback mechanisms for certain critical operations.
     It is crucial to test this script in a non-production environment before deploying it.
     A reboot may be required for all changes to take effect.
 
@@ -33,10 +32,11 @@
 
 .NOTES
     Author: Hugo Sanchez
-    Date: 06/06/2025
-    Version: 2.2
+    Date: 08/22/2025
+    Version: 2.3
 
     History of changes:
+    - 2.3 (08/22/2025): Added DISM fallback feature for Get-WindowsOptionalFeature cmdLet.
     - 2.2 (06/06/2025): Added log rotation and error handling.
     - 2.1 (05/16/2025): Added rollback logic for Set-LanmanWorkstationSMB1ClientState and stopping MrxSmb10.
     - 2.0 (05/23/2025): Major overhaul for clarity, robustness, OS handling, and extended modes.
@@ -534,25 +534,63 @@ function Configure-SMB1Feature {
     Write-Log -Message "$fullAction Windows feature '$FeatureName'..."
     if ($PSCmdlet.ShouldProcess($FeatureName, "$fullAction Windows feature")) {
         try {
-            if ($Script:OSCaption -match "2012 R2") {
-                # --- WORKAROUND for 2012 R2 GPO Bug: Use dism.exe directly (SYSTEM IS NOT ABLE TO USE DISM THROUGH A COM Call with System Account) ---
+            try {
+                # --- ATTEMPT 1: Use PowerShell Cmdlets (Preferred) ---
+                $cmdletExists = Get-Command Get-WindowsOptionalFeature -ErrorAction SilentlyContinue
+                if (-not $cmdletExists -and ($Script:OSCaption -match "Server")) {
+                    Import-Module ServerManager -ErrorAction SilentlyContinue
+                    $cmdletExists = Get-Command Get-WindowsOptionalFeature -ErrorAction SilentlyContinue
+                }
+                if (-not $cmdletExists) { throw "Cmdlet Get/Enable/Disable-WindowsOptionalFeature not found. Cannot proceed with this method." }
 
-                Write-Log -Message "Info: Using dism.exe for Windows Server 2012 R2 compatibility."
+                $feature = Get-WindowsOptionalFeature -Online -FeatureName $FeatureName -ErrorAction Stop # Use Stop to trigger catch
+                if ($null -eq $feature) {
+                    Write-Log -Message "Feature '$FeatureName' not found. It may not be applicable or was already removed."
+                    return 
+                }
 
-                # 1. Get current state using dism.exe
+                $isCurrentlyEnabled = ($feature.State -eq "Enabled")
+                
+                if ($EnableFeature) {
+                    if (-not $isCurrentlyEnabled) {
+                        Write-Log -Message "Enabling '$FeatureName' via PowerShell cmdlet..."
+                        Enable-WindowsOptionalFeature -Online -FeatureName $FeatureName -NoRestart -All -ErrorAction Stop 
+                        Write-Log -Message "--> Feature '$FeatureName' enabled. A reboot may be required."
+                    } else {
+                        Write-Log -Message "--> Feature '$FeatureName' is already enabled."
+                    }
+                } else { # Disabling feature
+                    if ($isCurrentlyEnabled) {
+                        Write-Log -Message "Disabling '$FeatureName' via PowerShell cmdlet..."
+                        $disableParams = @{ Online = $true; FeatureName = $FeatureName; NoRestart = $true; ErrorAction = 'Stop' }
+                        if ($RemoveFeatureOnDisable) {
+                             Write-Log -Message "Attempting to completely remove feature '$FeatureName'."
+                             $disableParams.Add("Remove", $true)
+                        }
+                        Disable-WindowsOptionalFeature @disableParams
+                        Write-Log -Message "--> Feature '$FeatureName' disabled. A reboot may be required."
+                    } else {
+                        Write-Log -Message "--> Feature '$FeatureName' is already disabled or in a non-enabled state (e.g., DisablePending, Removed)."
+                    }
+                }
+            }
+            catch [System.Runtime.InteropServices.COMException] {
+                Write-Log -Message "Warning: PowerShell cmdlet failed with COMException. Falling back to dism.exe for '$FeatureName'." -IsError
+                
+                # --- ATTEMPT 2: Fallback to dism.exe ---
                 $dismOutput = dism.exe /Online /Get-FeatureInfo /FeatureName:$FeatureName
                 $stateLine = $dismOutput | Select-String -Pattern "State :"
-                $currentState = ($stateLine -split ":")[1].Trim()
-
-                # 2. Perform action if needed
+                $currentState = if ($stateLine) { ($stateLine -split ":")[1].Trim() } else { "Not Found" }
+                
                 if ($EnableFeature) {
                     if ($currentState -ne "Enabled") {
                         Write-Log -Message "Enabling '$FeatureName' via dism.exe..."
-                        dism.exe /Online /Enable-Feature /FeatureName:$FeatureName /All /NoRestart
-                        if ($LASTEXITCODE -ne 0) { throw "dism.exe failed to enable feature '$FeatureName' with exit code $LASTEXITCODE." }
+                        $dismArgs = "/Online /Enable-Feature /FeatureName:$FeatureName /All /NoRestart"
+                        $process = Start-Process dism.exe -ArgumentList $dismArgs -Wait -NoNewWindow -PassThru
+                        if ($process.ExitCode -ne 0 -and $process.ExitCode -ne 3010) { throw "dism.exe failed to enable feature '$FeatureName' with exit code $($process.ExitCode)." }
                         Write-Log -Message "--> Feature '$FeatureName' enabled via dism.exe. A reboot may be required."
                     } else {
-                        Write-Log -Message "--> Feature '$FeatureName' is already enabled."
+                        Write-Log -Message "--> Feature '$FeatureName' is already enabled (checked via dism.exe)."
                     }
                 } else { # Disabling feature
                     if ($currentState -eq "Enabled") {
@@ -562,56 +600,15 @@ function Configure-SMB1Feature {
                             $dismArgs += " /Remove"
                             Write-Log -Message "Attempting to completely remove feature '$FeatureName' via dism.exe."
                         }
-                        # Start-Process is more robust for handling arguments with spaces and checking exit codes in PSv2
                         $process = Start-Process dism.exe -ArgumentList $dismArgs -Wait -NoNewWindow -PassThru
-                        if ($process.ExitCode -ne 0) { throw "dism.exe failed to disable feature '$FeatureName' with exit code $($process.ExitCode)." }
+                        if ($process.ExitCode -ne 0 -and $process.ExitCode -ne 3010) { throw "dism.exe failed to disable feature '$FeatureName' with exit code $($process.ExitCode)." }
                         Write-Log -Message "--> Feature '$FeatureName' disabled via dism.exe. A reboot may be required."
                     } else {
-                        Write-Log -Message "--> Feature '$FeatureName' is already disabled or in a non-enabled state."
-                    }
-                }
-            } else {
-                $cmdletExists = Get-Command Get-WindowsOptionalFeature -ErrorAction SilentlyContinue
-                if (-not $cmdletExists -and ($Script:OSCaption -match "Server")) {
-                    Import-Module ServerManager -ErrorAction SilentlyContinue
-                    $cmdletExists = Get-Command Get-WindowsOptionalFeature -ErrorAction SilentlyContinue
-                }
-                if (-not $cmdletExists) {
-                     Write-Log -Message "Cmdlet Get-WindowsOptionalFeature not found or ServerManager module could not provide it. This method is not applicable on this OS version."
-                     return
-                }
-
-                $feature = Get-WindowsOptionalFeature -Online -FeatureName $FeatureName -ErrorAction SilentlyContinue
-                if ($null -eq $feature) {
-                    Write-Log -Message "Feature '$FeatureName' not found. It may not be applicable to this OS or was already removed."
-                    return 
-                }
-
-                $isCurrentlyEnabled = ($feature.State -eq "Enabled")
-                
-                if ($EnableFeature) {
-                    if (-not $isCurrentlyEnabled) {
-                        Write-Log -Message "Enabling '$FeatureName'..."
-                        Enable-WindowsOptionalFeature -Online -FeatureName $FeatureName -NoRestart -All -ErrorAction Stop 
-                        Write-Log -Message "--> Feature '$FeatureName' enabled. A reboot may be required."
-                    } else {
-                        Write-Log -Message "--> Feature '$FeatureName' is already enabled."
-                    }
-                } else { # Disabling feature
-                    if ($isCurrentlyEnabled) {
-                        Write-Log -Message "Disabling '$FeatureName'..."
-                        if ($RemoveFeatureOnDisable) {
-                            Write-Log -Message "Attempting to completely remove feature '$FeatureName'."
-                            Disable-WindowsOptionalFeature -Online -FeatureName $FeatureName -Remove -NoRestart -ErrorAction Stop
-                        } else {
-                            Disable-WindowsOptionalFeature -Online -FeatureName $FeatureName -NoRestart -ErrorAction Stop
-                        }
-                        Write-Log -Message "--> Feature '$FeatureName' disabled. A reboot may be required."
-                    } else {
-                        Write-Log -Message "--> Feature '$FeatureName' is already disabled or in a non-enabled state (e.g., DisablePending, Removed)."
+                        Write-Log -Message "--> Feature '$FeatureName' is already disabled or in a non-enabled state (checked via dism.exe)."
                     }
                 }
             }
+            # Handles other errors from the primary try, or errors from the dism.exe fallback
         } catch {
             $errorMessage = $_.Exception.Message
             $isSourceMissingError = $false
@@ -646,7 +643,6 @@ function Capture-CurrentSMBStates {
 
     $StateContainer.Clear() 
     # --- Section 1 : Common configurations for all OS versions ---
-
     $lanmanServerParamsPath = "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters"
     if (Test-Path $lanmanServerParamsPath) {
         $regItem = Get-ItemProperty -Path $lanmanServerParamsPath -ErrorAction SilentlyContinue
@@ -667,44 +663,48 @@ function Capture-CurrentSMBStates {
     $StateContainer["LanmanServer_StartType"] = Get-ServiceOrDriverStartTypeFromRegistry -ServiceName "LanmanServer"
     $StateContainer["LanmanWorkstation_StartType"] = Get-ServiceOrDriverStartTypeFromRegistry -ServiceName "LanmanWorkstation"
 
+
     # --- Section 2: Specific configurations based on OS version ---
-
     if (($Script:OSMajor -eq 6 -and $Script:OSMinor -ge 2) -or $Script:OSMajor -gt 6) { # Win 8/2012 and newer
-        if ($Script:OSCaption -match "2012 R2") {
-            # WORKAROUND: Use dism.exe for Windows Server 2012 R2 compatibility (SYSTEM IS NOT ABLE TO USE DISM THROUGH A COM Call with System Account)
-            Write-Log -Message "Info (Capture States): Using dism.exe for Windows Server 2012 R2 compatibility."
-            foreach ($featureNameInLoop in @("SMB1Protocol", "SMB1Protocol-Client", "SMB1Protocol-Server")) {
-                try {
-                    $dismOutput = dism.exe /Online /Get-FeatureInfo /FeatureName:$featureNameInLoop
-                    $stateLine = $dismOutput | Select-String -Pattern "State :"
-                    if ($stateLine) {
-                        $StateContainer["Feature_$($featureNameInLoop)_State"] = ($stateLine -split ":")[1].Trim()
-                    } else {
-                        $StateContainer["Feature_$($featureNameInLoop)_State"] = "Not Found/Applicable"
-                    }
-                } catch {
-                    $StateContainer["Feature_$($featureNameInLoop)_State"] = "Error checking with DISM.exe"
-                }
-            }
-        } else {
-            $cmdletGetFeaturesExists = $false
+        
+        # Check for feature cmdlets availability
+        $cmdletGetFeaturesExists = $false
+        if (Get-Command Get-WindowsOptionalFeature -ErrorAction SilentlyContinue) { $cmdletGetFeaturesExists = $true }
+        elseif ($Script:OSCaption -match "Server") { 
+            Import-Module ServerManager -ErrorAction SilentlyContinue
             if (Get-Command Get-WindowsOptionalFeature -ErrorAction SilentlyContinue) { $cmdletGetFeaturesExists = $true }
-            elseif ($Script:OSCaption -match "Server") { 
-                Import-Module ServerManager -ErrorAction SilentlyContinue
-                if (Get-Command Get-WindowsOptionalFeature -ErrorAction SilentlyContinue) { $cmdletGetFeaturesExists = $true }
-            }
+        }
 
+        foreach ($featureNameInLoop in @("SMB1Protocol", "SMB1Protocol-Client", "SMB1Protocol-Server")) {
+            $featureState = "Cmdlet Not Available" # Default value
             if ($cmdletGetFeaturesExists) {
-                foreach ($featureNameInLoop in @("SMB1Protocol", "SMB1Protocol-Client", "SMB1Protocol-Server")) {
-                    $feature = Get-WindowsOptionalFeature -Online -FeatureName $featureNameInLoop -ErrorAction SilentlyContinue
-                    $StateContainer["Feature_$($featureNameInLoop)_State"] = if ($feature) { $feature.State.ToString() } else { "Not Found/Applicable" }
+                try {
+                    # Try preferred method (Get-WindowsOptionalFeature cmdlet)
+                    $feature = Get-WindowsOptionalFeature -Online -FeatureName $featureNameInLoop -ErrorAction Stop
+                    $featureState = if ($feature) { $feature.State.ToString() } else { "Not Found/Applicable" }
+                } 
+                catch [System.Runtime.InteropServices.COMException] {
+                    Write-Log -Message "Warning: Get-WindowsOptionalFeature failed with COMException for '$featureNameInLoop'. Falling back to dism.exe." -IsError
+                    try {
+                        $dismOutput = dism.exe /Online /Get-FeatureInfo /FeatureName:$featureNameInLoop
+                        $stateLine = $dismOutput | Select-String -Pattern "State :"
+                        if ($stateLine) {
+                            $featureState = ($stateLine -split ":")[1].Trim() + " (via dism.exe)"
+                        } else {
+                            $featureState = "Not Found (dism.exe)"
+                        }
+                    } catch {
+                        $featureState = "Error checking with DISM.exe after cmdlet failure."
+                        Write-Log -Message "Fallback to dism.exe for '$featureNameInLoop' also failed: $($_.Exception.Message)" -IsError
+                    }
                 }
-            } else {
-                # This case should not be reached on OS > 2012 R2, but for safety
-                $StateContainer["Feature_SMB1Protocol_State"] = "Cmdlet Not Available"
-                $StateContainer["Feature_SMB1Protocol-Client_State"] = "Cmdlet Not Available"
-                $StateContainer["Feature_SMB1Protocol-Server_State"] = "Cmdlet Not Available"
+                catch {
+                    # Catch other non-COM errors
+                    $featureState = "Error retrieving state: $($_.Exception.Message)"
+                    Write-Log -Message "Failed to get state for feature '$featureNameInLoop': $($_.Exception.Message)" -IsError
+                }
             }
+            $StateContainer["Feature_$($featureNameInLoop)_State"] = $featureState
         }
 
         if (Get-Command Get-SmbServerConfiguration -ErrorAction SilentlyContinue) {

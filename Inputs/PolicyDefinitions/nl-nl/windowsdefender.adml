@@ -17,6 +17,9 @@
     <string id="Quarantine">Quarantaine</string>
     <string id="RealtimeProtection">Realtime-beveiliging</string>
     <string id="Remediation">Herstel</string>
+    <string id="Remediation_BNB">Gedragsnetwerkblokken</string>
+    <string id="Remediation_BNB_REP">Beveiliging tegen externe versleuteling</string>
+    <string id="Remediation_BNB_BFP">Brute-Force-beveiliging</string>
     <string id="Reporting">Rapportage</string>
     <string id="Scan">Scannen</string>
     <string id="SignatureUpdate">Security Intelligence-updates</string>
@@ -38,7 +41,7 @@
 
     Ingeschakeld: 
     Toestaan dat beheerde apparaten worden bijgewerkt via verbindingen met een datalimiet. Er kunnen kosten in rekening worden gebracht.</string>
-    <string id="HideExclusionsFromLocalAdmins">Bepalen of uitsluitingen zichtbaar zijn voor lokale beheerders.</string>
+    <string id="HideExclusionsFromLocalAdmins">Bepalen of uitsluitingen zichtbaar zijn voor lokale beheerders</string>
     <string id="HideExclusionsFromLocalAdmins_Explain">
     Met deze beleidsinstelling bepaalt u of uitsluitingen zichtbaar zijn voor lokale beheerders.  Voor eindgebruikers (die geen lokale beheerders zijn) zijn uitsluitingen niet zichtbaar, ongeacht of deze instelling is ingeschakeld.
  Uitgeschakeld (standaard):
@@ -47,6 +50,10 @@
  Ingeschakeld: 
  Als u deze instelling inschakelt, kunnen lokale beheerders de uitsluitingslijst niet meer zien in Windows-beveiliging app of via PowerShell.
  Opmerking: als u deze instelling toepast, worden uitsluitingen niet verwijderd, maar worden ze alleen onzichtbaar voor lokale beheerders. Dit wordt weergegeven in Get-MpPreference.</string>
+    <string id="HideExclusionsFromLocalUsers">Bepalen of uitsluitingen zichtbaar zijn voor lokale gebruikers</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    Deze beleidsinstelling regelt of uitsluitingen zichtbaar zijn voor lokale gebruikers op het apparaat.
+    Gebruik de beleidsinstelling HideExclusionsFromLocalAdmins om uitsluitingen van zowel standaardgebruikers als lokale gebruikers met beheerdersrechten te verbergen.</string>
     <string id="AllowNetworkProtectionOnWinServer">Met deze instellingen wordt bepaald of Netwerkbeveiliging in Windows Server mag worden geconfigureerd in de blokkeringsmodus of de controlemodus.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     Uitgeschakeld (standaardinstelling): 
@@ -57,11 +64,29 @@ Ingeschakeld:
     Let op: deze configuratie is afhankelijk van de EnableNetworkProtection-configuratie. Als deze configuratie onwaar is, wordt EnableNetworkProtection genegeerd, anders wordt netwerkbeveiliging op Windows Server gestart, afhankelijk van de waarde van EnableNetworkProtection.</string>
     <string id="DisableDatagramProcessing">Met deze instelling wordt de verwerking van datagrammen beheerd voor netwerkbeveiliging.</string>
     <string id="DisableDatagramProcessing_Explain">
-    Ingeschakeld (standaardinstelling): 
-    Als dit niet is geconfigureerd of is uitgeschakeld, wordt verwerking van datagrammen ingeschakeld voor netwerkbeveiliging.
+    Uitgeschakeld (standaard): 
+    Als deze optie niet is geconfigureerd of uitgeschakeld, wordt de verwerking van datagrambestanden ingeschakeld voor netwerkbeveiliging.
 
-Mogelijkheid 
-    Als deze instelling is ingeschakeld, wordt verwerking van data grams uitgeschakeld voor netwerkbeveiliging.</string>
+Ingeschakeld: 
+    Als deze optie is ingeschakeld, wordt datagramverwerking uitgeschakeld voor netwerkbeveiliging.</string>
+    <string id="EnableConvertWarnToBlock">Waarschuwing oordeel converteren naar blokkeren</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    Met netwerkbeveiliging wordt netwerkverkeer gecontroleerd en wordt bepaald of verkeer wordt toegestaan of geblokkeerd of een waarschuwing wordt weergegeven.
+    
+Uitgeschakeld (standaard): 
+    Als deze optie niet is geconfigureerd of uitgeschakeld, wordt met netwerkbeveiliging een waarschuwing weergegeven voor waarschuwingsoorzaak.
+
+Ingeschakeld: 
+    Als deze instelling is ingeschakeld, blokkeert netwerkbeveiliging het netwerkverkeer in plaats van een waarschuwing weer te geven.</string>
+    <string id="AllowSwitchToAsyncInspection">Asynchrone inspectie inschakelen</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    Bepaal of netwerkbeveiliging de prestaties kan verbeteren door over te schakelen van realtime-inspectie naar asynchrone inspectie.
+
+    Uitgeschakeld (standaard): 
+    Als deze optie niet is geconfigureerd of uitgeschakeld, wordt asynchrone inspectie niet ingeschakeld voor netwerkbeveiliging.
+
+    Ingeschakeld: 
+    Als deze optie is ingeschakeld, is het overschakelen naar asynchrone inspectie toegestaan voor netwerkbeveiliging.</string>
     <string id="DisableAutoExclusions">Automatische uitsluitingen uitschakelen</string>
     <string id="DisableAutoExclusions_Explain">
         Hiermee kan een systeembeheerder opgeven of de functie Automatische uitsluitingen voor Server-SKU's moet worden uitgeschakeld.
@@ -142,15 +167,19 @@ Als u deze instelling inschakelt, worden alleen items die zijn gedefinieerd door
       Als u deze instelling uitschakelt of niet configureert, worden de stappen in de vermelde volgorde overgeslagen.
     </string>
     <string id="RandomizeScheduleTaskTimes">Geplande taaktijden randomiseren</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">Met deze beleidsinstelling kunt u de geplande scan en de geplande update van beveiligingsinformatie in uren configureren.
+    <string id="RandomizeScheduleTaskTimes_Explain">Met deze beleidsinstelling kunt u de willekeurige begintijd van de geplande scan en de begintijd van de geplande definitie-update configureren.
 
- Als u deze instelling uitschakelt of niet configureert, beginnen geplande taken op een willekeurig tijdstip binnen vier uur na de tijd die is opgegeven in Taakplanner.
- Als u deze instelling inschakelt, kunt u deze randomiseringsperiode verbreden of verkleinen. Specificeer een randomiseringsvenster tussen 1 en 23 uur.</string>
+Als u deze beleidsinstelling inschakelt of niet configureert en er geen randomiseringsvenster is ingesteld in de instelling Randomiseringsvenster geplande taaktijd configureren, wordt randomisering tussen 0 en 4 uur toegevoegd.
+        Als u deze beleidsinstelling inschakelt of niet configureert en een randomiseringsvenster instelt in de instelling Tijd randomiseringsvenster voor geplande taak configureren, wordt het geconfigureerde randomiseringsvenster gebruikt.
+        Als u deze beleidsinstelling uitschakelt, maar het venster voor willekeurige taaktijd configureert, wordt randomisering niet uitgevoerd. 
+    </string>
     <string id="SchedulerRandomizationTime">Venster voor willekeurig instellen van geplande taaktijden configureren</string>
-    <string id="SchedulerRandomizationTime_Explain">Met deze beleidsinstelling kunt u de geplande starttijd van de scan en de geplande starttijd van de update van beveiligingsinformatie in uren configureren.
+    <string id="SchedulerRandomizationTime_Explain">Met deze beleidsinstelling kunt u een venster voor de begintijd van de geplande taakscan en de begintijd van de geplande update van de beveiligingsinformatie in uren configureren. Deze instelling is van invloed op de configuratie van Geplande taaktijden randomiseren.
 
-    Als u deze instelling uitschakelt of niet configureert, beginnen geplande taken op een willekeurig tijdstip binnen een interval van 4 uur na de opgegeven starttijd.
-    Als u deze instelling inschakelt, moet u een randomisatievenster in uren kiezen. Het mogelijke interval van het randomiseringsvenster ligt tussen 1 en 23 uur.</string>
+Als u deze instelling inschakelt, moet u een willekeurig venster in uren kiezen. Het mogelijke vensterinterval voor randomisatie ligt tussen 1 en 23 uur. Het geïmplementeerde randomiseringsinterval ligt tussen 0 en de geconfigureerde waarde. 
+        Als u deze instelling inschakelt, wordt het randomiseringsvenster gebruikt dat is opgegeven in deze configuratie-instelling. 
+        Als u deze beleidsinstelling uitschakelt of niet configureert, worden de geplande taaktijden willekeurig ingesteld tussen 0 en 4 uur.</string>
+
     <string id="ServiceKeepAlive">Toestaan dat de antimalwareservice altijd actief blijft</string>
     <string id="ServiceKeepAlive_Explain">Met deze beleidsinstelling u instellen of de antimalware-service actief blijft wanneer Security Intelligence voor antivirus en antispyware is uitgeschakeld. Het wordt aanbevolen om deze instelling uitgeschakeld te laten.
 
@@ -219,6 +248,22 @@ Als u deze instelling uitschakelt, wordt protocolherkenning uitgeschakeld.</stri
 Als u deze instelling inschakelt of niet configureert, wordt het scannen van scripts ingeschakeld.
 
 Als u deze instelling uitschakelt, wordt het scannen van scripts uitgeschakeld.</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">Realtime-beveiliging en Security Intelligence-updates configureren tijdens OOBE</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">Met deze beleidsinstelling kunt u configureren of realtime-beveiliging en updates van beveiligingsinformatie zijn ingeschakeld tijdens OOBE (Out Of Box Experience).
+ 
+    Als u deze instelling inschakelt, worden realtime-beveiliging en Security Intelligence-updates ingeschakeld tijdens OOBE.
+ 
+    Als u deze beleidsinstelling uitschakelt of niet configureert, worden realtime-beveiliging en updates van beveiligingsinformatie tijdens OOBE niet ingeschakeld.</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">Status van prestatiemodus configureren</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">Dit beleid beheert de prestatiemodus van Microsoft Defender Antivirus voor Dev-stations.
+
+    Een Dev-station is een schijfstation dat is geoptimaliseerd voor betere prestaties in scenario's voor softwareontwikkeling. Wanneer dit beleid is ingeschakeld of niet is geconfigureerd, wordt de prestatiemodus ingeschakeld voor Microsoft Defender Antivirus. In de prestatiemodus worden Microsoft Defender Antivirus-beveiligingscontroles van inhoud die is opgeslagen op Dev-stations asynchroon uitgevoerd om de prestaties te verbeteren. Voor de prestatiemodus moeten ook de volgende beleidsregels zijn ingeschakeld: 'Dev-station inschakelen' en 'Beleid voor het koppelen van filters voor Dev-stations'.
+
+    Als u deze beleidsinstelling inschakelt of niet configureert, wordt de prestatiemodus ingeschakeld.
+
+    Als u deze beleidsinstelling uitschakelt, wordt de Prestatiemodus uitgeschakeld en beschermt Microsoft Defender Antivirus een Dev-station op dezelfde manier als andere schijven.</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">Gedragbewaking inschakelen</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">Met deze beleidsinstelling kunt u gedragbewaking configureren.
@@ -359,6 +404,92 @@ Let op: deze configuratie is alleen mogelijk bij NTFS-volumes. Bij andere bestan
     Als u deze instelling inschakelt, wordt er op het opgegeven tijdstip van de dag een geplande volledige scan uitgevoerd om de herstelactie te voltooien.
 
     Als u deze beleidsinstelling uitschakelt of niet configureert, wordt er een geplande volledige scan uitgevoerd op een standaardtijdstip om de herstelactie te voltooien.</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">Beveiligingsmodus voor externe versleuteling configureren</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    Stel de modus in voor Externe versleutelingsbeveiliging in Microsoft Defender Antivirus, waarmee pogingen om lokale bestanden te vervangen door versleutelde versies van een ander apparaat, kunnen worden gedetecteerd en geblokkeerd. 
+
+Ondersteunde instellingen:
+    * 0 - Niet geconfigureerd of standaard: standaardwaarden toepassen, die kunnen variëren, afhankelijk van de versie van de antivirus-engine en het platform
+    * 1 - Blokkeren: verdacht en schadelijk gedrag voorkomen
+    * 2 - Controle: EDR-detecties genereren zonder te blokkeren
+    * 4 - Uit: functie is uitgeschakeld zonder invloed op prestaties
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">Standaard</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">Blokkeren</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">Controleren</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">Uit</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">Blokkeringstijd voor Externe versleutelingsbeveiliging configureren</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    Stel de maximale tijd in dat een IP-adres wordt geblokkeerd door Externe versleutelingsbeveiliging. Na deze tijd kunnen geblokkeerde IP-adressen verbindingen opnieuw initialiseren. 
+
+Ondersteunde instellingen:
+    * 0 - Geen: interne functielogica bepaalt de werkelijke blokkeringstijd
+    * Geef andere tijden op in stappen van 15 minuten
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">Configureren hoe agressief Externe versleutelingsbeveiliging bedreigingen blokkeert</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    De criteria instellen voor het blokkeren van IP-adressen door preventie van externe versleuteling.
+
+Ondersteunde instellingen:
+    *0 - Laag: alleen blokkeren als het betrouwbaarheidsniveau 100% is (standaard)
+    *1 - Gemiddeld: cloudaggregatie en -blok gebruiken wanneer het betrouwbaarheidsniveau hoger is dan 99%
+    *2 - Hoog: cloud intel en context gebruiken en blokkeren wanneer het betrouwbaarheidsniveau hoger is dan 90%
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">Laag</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">Gemiddeld</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">Hoog</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> Uitsluitingen van externe versleutelingsbeveiliging instellen</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    Geef IP-adressen, subnetten en domeinnamen op die moeten worden uitgesloten van Externe versleutelingsbeveiliging. Houd er rekening mee dat aanvallers uitgesloten adressen en namen kunnen vervalsen om de beveiliging te omzeilen.
+
+    Voer elk adres of subnet op een nieuwe regel in als een naam-waardepaar:
+    - Naamkolom: voer een IP-adres of subnetnaam in. Met '1.1.127.0' wordt bijvoorbeeld voorkomen dat dit IP-adres wordt geblokkeerd.
+    - Waardekolom: voer '0' in voor elk item
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">Modus Brute-Force-beveiliging configureren</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Stel de modus in voor Brute-Force-beveiliging in Microsoft Defender Antivirus, waarmee pogingen om aanmelding te starten en sessies te starten, kunnen worden gedetecteerd en geblokkeerd.
+
+Ondersteunde instellingen:
+    * 0 - Niet geconfigureerd of standaard: standaardwaarden toepassen, die kunnen variëren, afhankelijk van de versie van de antivirus-engine en het platform
+    * 1 - Blokkeren: verdacht en schadelijk gedrag voorkomen
+    * 2 - Controle: EDR-detecties genereren zonder te blokkeren
+    * 4 - Uit: functie is uitgeschakeld zonder invloed op prestaties
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">Standaard</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">Blokkeren</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">Controleren</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">Uit</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">Blokkeringstijd van Brute-Force-beveiliging configureren</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    Stel de maximale tijd in dat een IP-adres wordt geblokkeerd door Brute-Force-beveiliging. Na deze tijd kunnen geblokkeerde IP-adressen zich aanmelden en sessies starten.
+
+Ondersteunde instellingen:
+    * 0 - Geen: interne functielogica bepaalt de werkelijke blokkeringstijd
+    * Geef andere tijden op in stappen van 15 minuten
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">Agressiviteit van Brute-Force-beveiliging configureren</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    De criteria instellen voor het blokkeren van IP-adressen door Brute-Force Protection.
+
+Ondersteunde instellingen:
+    *0 - Laag: alleen blokkeren als het betrouwbaarheidsniveau 100% is (standaard)
+    *1 - Gemiddeld: cloudaggregatie en -blok gebruiken wanneer het betrouwbaarheidsniveau hoger is dan 99%
+    *2 - Hoog: cloud intel en context gebruiken en blokkeren wanneer het betrouwbaarheidsniveau hoger is dan 90%
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">Laag</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">Gemiddeld</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">Hoog</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">Uitsluitingen van Brute-Force-beveiliging instellen</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    Geef IP-adressen, subnetten of werkstationnamen op die moeten worden uitgesloten van Brute-Force-beveiliging. Uitgesloten IP-adressen worden niet gecontroleerd op mogelijke beveiligingsaanvallen.
+    
+    Houd er rekening mee dat aanvallers uitgesloten adressen en namen kunnen vervalsen om de beveiliging te omzeilen. Zorg ervoor dat de namen uniek zijn en waarschijnlijk niet worden geraden door aanvallers.
+
+    Voer elk adres of subnet op een nieuwe regel in als een naam-waardepaar:
+    - Naamkolom: voer een IP-adres, subnetnaam of werkstationnaam in. Met '1.1.127.0' wordt bijvoorbeeld voorkomen dat dit IP-adres wordt geblokkeerd door BFP.
+    - Waardekolom: voer '0' in voor elk item
+    </string>
     <string id="Reporting_AdditionalActionTimeout">Tijdstip instellen voor detecties die extra actie vereisen</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">Met deze beleidsinstelling kunt u het tijdstip in minuten instellen voordat een detectie met de status de "extra actie" overgaat in de status "gewist".</string>
     <string id="Reporting_CriticalFailureTimeout">Time-out configureren voor detecties met een kritieke foutstatus</string>
@@ -398,6 +529,12 @@ Let op: deze configuratie is alleen mogelijk bij NTFS-volumes. Bij andere bestan
 Als u deze instelling configureert op 0, worden er geen servicestatusrapporten verzonden.
 
 De maximaal toegestane waarde die kan worden ingesteld, is 14400 minuten (10 dagen).</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">Configureren of verwijderde gebeurtenissen van dynamische handtekening moeten worden gerapporteerd</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">Met deze beleidsinstelling configureert u of verloren gegane gebeurtenissen van dynamische handtekeningen moeten worden gerapporteerd.
+
+Als u deze instelling niet configureert, wordt de standaardwaarde toegepast. De standaardwaarde is ingesteld op Uitgeschakeld (dergelijke gebeurtenissen worden niet gerapporteerd).
+    Als u deze instelling configureert om in te schakelen, worden verwijderde gebeurtenissen van dynamische handtekening gerapporteerd.
+    Als u deze instelling instelt op Uitgeschakeld, worden verwijderde gebeurtenissen van dynamische handtekening niet gerapporteerd.</string>
       <string id="Scan_AllowPause">Gebruikers toestaan een scan te pauzeren</string>
     <string id="Scan_AllowPause_Explain">Met deze beleidsinstelling kunt u bepalen of eindgebruikers een in voortgang zijnde scan al dan niet kunnen pauzeren.
 
@@ -456,6 +593,10 @@ Als u deze instelling uitschakelt, is CPU-beperking van toepassing op geplande e
     Als u deze instelling inschakelt, worden inhaalscans voor geplande snelle scans ingeschakeld. Als een computer gedurende twee achtereenvolgende geplande scans offline was, wordt er een inhaalscan gestart zodra een gebruiker zich de volgende keer bij de computer aanmeldt.  Als er geen geplande scan is geconfigureerd, wordt er geen inhaalscan uitgevoerd.
 
     Als u deze instelling uitschakelt of niet configureert, worden inhaalscans voor geplande snelle scans uitgeschakeld.</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">Een snelle scan activeren na X dagen zonder scans</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">Met deze beleidsinstelling wordt het aantal dagen gedefinieerd dat kan worden verstreken sinds de laatste scan voordat een agressieve snelle inhaalscan automatisch wordt geactiveerd. De waarde vertegenwoordigt het aantal dagen dat kan worden uitgevoerd zonder dat scans worden uitgevoerd voordat een agressieve snelle scan wordt geactiveerd.
+    
+Geldige waarden liggen tussen 7 en 60 dagen. Als deze optie niet is geconfigureerd, worden agressieve snelle scans uitgeschakeld. Standaard wordt de waarde ingesteld op 25 dagen wanneer deze is ingeschakeld.</string>
     <string id="Scan_DisableEmailScanning">Scannen van e-mail inschakelen</string>
     <string id="Scan_DisableEmailScanning_Explain">Met deze beleidsinstelling kunt u het scannen van e-mail configureren. Wanneer het scannen van e-mail is ingeschakeld, parseert de engine het postvak en de e-mailbestanden, op basis van hun specifieke indeling, om de inhoud van de e-mail en bijlagen te analyseren. Verschillende e-mailindelingen worden momenteel ondersteund, bijvoorbeeld: pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac). Scannen van e-mail wordt niet ondersteund op moderne e-mailclients.
     
@@ -498,12 +639,12 @@ Als u deze instelling uitschakelt of niet configureert, wordt het scannen van e-
     Als u deze instelling inschakelt, worden toegewezen netwerkstations gescand.
 
     Als u deze instelling uitschakelt of niet configureert, worden toegewezen netwerkstations niet gescand.</string>
-    <string id="Scan_DisableScanningNetworkFiles">Netwerkbestanden scannen</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">Met deze beleidsinstelling kunt u het scannen van netwerkbestanden configureren. Aanbevolen wordt om deze instelling niet in te schakelen.
+    <string id="Scan_DisableScanningNetworkFiles">Scannen van netwerkbestanden configureren</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">Met deze beleidsinstelling kunt u netwerkbestanden scannen met behulp van toegangsbeveiliging. De standaardwaarde is ingeschakeld. Aanbevolen om in de meeste gevallen ingeschakeld te blijven.
 
-    Als u deze instelling inschakelt, worden netwerkbestanden gescand.
+Als u deze instelling inschakelt of niet configureert, worden netwerkbestanden gescand.
 
-    Als u deze instelling uitschakelt of niet configureert, worden netwerkbestanden niet gescand.</string>
+Als u deze instelling uitschakelt, worden netwerkbestanden niet gescand.</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">Tijdelijke opheffing configureren van de lokale instelling voor het maximale percentage CPU-gebruik</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">Met deze beleidsinstelling stelt u lokaal een tijdelijke opheffing in voor de configuratie van het maximale percentage CPU-gebruik tijdens een scan. Deze instelling kan alleen worden geconfigureerd met Groepsbeleid.
 
@@ -615,6 +756,18 @@ Als u deze instelling uitschakelt of niet configureert, wordt het scannen van e-
 
         Als u deze instelling uitschakelt of niet configureert, worden er geen wijzigingen gemaakt in de CPU-prioriteit voor geplande scans.
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">Uitgesloten bestanden en mappen scannen tijdens snelle scans</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        Met deze beleidsinstelling kunt u uitgesloten bestanden en mappen scannen tijdens snelle scans.
+
+        Als u deze beleidsinstelling instelt op 1, worden alle bestanden en mappen die zijn uitgesloten van realtime-beveiliging met contextuele uitsluitingen gescand tijdens een snelle scan. 
+
+        Als u dit beleid instelt op 0 of niet configureert, worden uitsluitingen niet gescand tijdens snelle scans.
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">Het aantal dagen bepalen voordat Security Intelligence voor spyware wordt beschouwd als verouderd</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">Met deze beleidsinstelling kunt u het aantal dagen definiëren dat moet verstrijken voordat spyware Security Intelligence als verouderd wordt aangemerkt. Als Security Intelligence wordt vastgesteld als verouderd, kan deze status verschillende aanvullende acties veroorzaken, zoals het terugvallen op een alternatieve updatebron of het weergeven van een waarschuwingspictogram in de gebruikersinterface. Standaard is deze waarde ingesteld op 7 dagen.
 
@@ -637,6 +790,13 @@ Als u deze instelling uitschakelt of niet configureert, wordt de beveiliging van
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">Met deze beleidsinstelling u de Security Intelligence-locatie voor VDI-geconfigureerde computers definiëren. 
 
     Als u deze instelling uitschakelt of niet configureert, wordt Security Intelligence naar de lokale standaardbron verwezen.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">Updates voor beveiligingsinformatie configureren volgens de planner voor VDI-clients.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">Met deze beleidsinstelling kunt u updates voor beveiligingsinformatie configureren volgens de planner voor door VDI geconfigureerde computers. Het wordt samen gebruikt met de gedeelde locatie voor beveiligingsinformatie (SharedSignaturesLocation).
+
+Als u deze beleidsinstelling inschakelt en SharedSignaturesLocation configureert, worden updates vanaf de geconfigureerde locatie alleen uitgevoerd op de eerder geconfigureerde geplande updatetijd.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, worden updates uitgevoerd wanneer er een nieuwe update voor beveiligingsinformatie wordt gedetecteerd op de locatie die is opgegeven door SharedSignaturesLocation.
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">Scan inschakelen na update van Security Intelligence</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">Met deze beleidsinstelling kunt u de automatische scan configureren die begint nadat een update van Security Intelligence is opgetreden.
 
@@ -829,12 +989,6 @@ Geldige waarden voor herstelacties zijn:
 
       Als u deze instelling inschakelt, worden er geen uitgebreide meldingen van Microsoft Defender Antivirus weergegeven op clients.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Extra tekst aan clients weergeven wanneer deze actie moeten ondernemen</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">Met deze beleidsinstelling kunt u bepalen of er extra tekst aan clients moet worden weergegeven wanneer deze actie moeten ondernemen. De weergegeven tekst is een aangepaste tekenreeks die door de beheerder wordt gedefinieerd. Dit kan bijvoorbeeld het telefoonnummer van de helpdesk van het bedrijf zijn. De clientinterface kan maximaal 1024 tekens weergeven. Langere reeksen worden voor weergave ingekort.
-
-Als u deze instelling inschakelt, wordt de opgegeven extra tekst weergegeven.
-
-Als u deze instelling uitschakelt of niet configureert, wordt er geen extra tekst weergegeven.</string>
     <string id="MpCloudBlockLevel">Cloudbeveiligingsniveau selecteren</string>
     <string id="MpCloudBlockLevel_Explain">
       Deze beleidsinstelling bepaalt hoe agressief Microsoft Defender Antivirus verdachte bestanden blokkeert en scant.
@@ -912,6 +1066,17 @@ Als u deze instelling uitschakelt of niet configureert, wordt er geen extra teks
     Hetzelfde als Uitgeschakeld.
 
     U kunt ASR-regels configureren bij de groepsbeleidsinstelling Regels voor beperking van beveiligingsrisico voor aanvallen configureren.
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Een lijst met uitsluitingen toepassen op specifieke ASR-regels (Attack Surface Reduction)</string>d
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    Met dit beleid kan een beheerder een lijst met uitsluitingen opgeven voor specifieke ASR-regels.
+    Elke vermelding is een naam-waardepaar. De sleutel geeft de regel-GUID aan en de waarde is een set volledige paden, gescheiden door het teken &gt;, waarmee de uitsluitingen voor die specifieke ASR-regel worden aangegeven.
+
+    OPMERKING: de GUID is een SLEUTEL, geen waarde.
+
+    Voorbeeld:
+    SLEUTEL: "{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}"
+    WAARDE: "C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe"
     </string>
     <string id="ExploitGuard_ASR_Rules">Regels om beveiligingsrisico voor aanvallen te beperken</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1118,13 +1283,66 @@ Met Standaard afdwinging wordt bepaald welke beslissing moet worden genomen tijd
     <string id="DeviceControl_DefaultEnforcement_DefaultDeny">Standaard weigeren</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation">Externe locatie van bewijsgegevens voor apparaatbeheer definiëren</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
-        Definieer de externe locatie van het bewijsbestand, waar de apparaatbeheerservice de vastgelegde bewijsgegevens naartoe verplaatst.
+        Definieer de externe locatie van het bewijsbestand, waar de Device Control-service de vastgelegde bewijsgegevens verplaatst.
+
+Controleer bij het configureren van deze instelling of Apparaatbeheer is ingeschakeld en of het opgegeven pad een extern pad is waartoe de gebruiker toegang heeft.
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">De bewaarperiode instellen voor bestanden in de lokale cache voor apparaatbeheer</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        Met deze beleidsinstelling wordt bepaald hoe lang het apparaatbeheer bestanden bewaart voor bewijs in de lokale cache op het apparaat. Apparaatbeheer bewaart een bestand alleen in de lokale cache als het bestand niet kan worden geüpload naar een aangewezen netwerkshare of Azure-opslag. 
+
+        Het apparaatbeheer bewaart bestanden standaard 60 dagen in de lokale cache.
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">Apparaatbeheer inschakelen voor specifieke apparaattypen</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        Met deze beleidsinstelling bepaalt u welke apparaattypen, geïdentificeerd door hun PrimaryIds, apparaatbesturingsbeveiliging inschakelen. Als u deze instelling inschakelt voor bepaalde apparaattypen, regelen apparaatbeheer de toegang tot deze apparaten op basis van het bijbehorende aangepaste beleid. Apparaatbesturing wordt uitgeschakeld voor alle andere typen ondersteunde apparaten, zelfs als er aangepast beveiligingsbeleid is geconfigureerd voor deze apparaten.
+ 
+Deze instelling ondersteunt momenteel deze apparaattypen: RemovableMediaDevices, CdRomDevices, WpdDevices en PrinterDevices. 
+ 
+Als u deze beleidsinstelling inschakelt, maar geen PrimaryId's opgeeft, wordt apparaatbesturing uitgeschakeld voor alle ondersteunde apparaattypen.
+ 
+Als u deze beleidsinstelling uitschakelt of niet configureert, wordt apparaatbesturing afgedwongen op alle ondersteunde apparaten die zijn gebaseerd op het bijbehorende aangepaste beleid.
+    </string>
+	<string id="DeviceControl_CustomSupportLink">Een ondersteuningskoppeling instellen voor meldingen over apparaatbeheer</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        Met deze instelling kan uw organisatie de koppeling Ondersteuning ophalen opgeven in meldingen voor apparaatbeheer. 
+		
+Wanneer deze optie is geconfigureerd, navigeert de knop Ondersteuning ophalen automatisch naar de opgegeven koppeling.
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">De vernieuwingsfrequentie voor beleid instellen</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        Met deze instelling wordt het interval in minuten gedefinieerd waarmee het apparaat opnieuw probeert de beleidsconfiguratie te laden als er een fout is opgetreden en het beleid niet kan worden geladen.
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">De vernieuwingsfrequentie van Azure AD instellen</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        Met deze instelling definieert u het interval in minuten waarmee het apparaat een query uitvoert op Azure AD om gerelateerde instellingen, configuratie en groepslidmaatschappen bij te werken.
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">De limiet voor gegevensduplicatie (MB) instellen</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        Met deze instelling definieert u de maximale hoeveelheid gegevens die kan worden gedupliceerd voor apparaatbeheer. 
+		
+		Wanneer de limiet is bereikt, worden bestanden die naar verwisselbare opslag worden gekopieerd, niet gedupliceerd op de computer.
+	</string>
     <string id="Features_DeviceControlEnabled">Apparaatbesturing</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         Schakel Defender-apparaatbesturing in of uit op deze computer.
         Opmerking: u moet zijn ingeschreven als E3 of E5 om Apparaatbesturing in te schakelen.
     </string>
+    <string id="Features_TDTFeatureEnabled">Intel TDT-integratieniveau</string>
+    <string id="Features_TDTFeatureEnabled_Explain">Met deze beleidsinstelling configureert u het Intel TDT-integratieniveau voor apparaten met Intel TDT-ondersteuning.
+
+        Als u deze instelling niet configureert, wordt de standaardwaarde toegepast. De standaardwaarde wordt gecontroleerd door updates van Microsoft-beveiligingsinformatie. Microsoft schakelt Intel TDT in als er een bekende bedreiging is.
+        Als u deze instelling configureert om in te schakelen, wordt Intel TDT-integratie ingeschakeld.
+        Als u deze instelling configureert om uit te schakelen, wordt Intel TDT-integratie uitgeschakeld.</string>
+    <string id="Features_PassiveRemediation">EDR inschakelen in de blokkeringsmodus</string>
+    <string id="Features_PassiveRemediation_Explain">Met deze beleidsinstelling wordt EDR in- of uitgeschakeld in de blokkeringsmodus (ook wel passief herstel genoemd). EDR in blokkeringsmodus wordt aanbevolen voor apparaten waarop Microsoft Defender Antivirus wordt uitgevoerd in de passieve modus. Beschikbaar met platformrelease: 4.18.2202.X
+
+Het gegevenstype is een geheel getal
+
+Ondersteunde waarden:
+
+1: EDR in blokkeringsmodus inschakelen
+        0: EDR in blokkeringsmodus uitschakelen</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1389,38 @@ Met Standaard afdwinging wordt bepaald welke beslissing moet worden genomen tijd
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">Bewaking configureren voor inkomende en uitgaande activiteit van bestanden en programma's</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">Geef de status van Remote Encryption Protection op.</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">Opgeven hoe lang detecties moeten worden geblokkeerd, in minuten</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">Opgeven hoe agressief Externe versleutelingsbeveiliging bedreigingen blokkeert</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">Uitsluitingen voor externe versleutelingsbeveiliging</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">Geef de status van Brute-Force-beveiliging op</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">Opgeven hoe lang detecties moeten worden geblokkeerd, in minuten</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">Opgeven hoe agressief Brute-Force-beveiliging bedreigingen blokkeert</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Brute-Force-beveiliging uitsluitingen</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">De dag van de week opgeven waarop een geplande volledige scan moet worden uitgevoerd om de herstelactie te voltooien</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">Het tijdstip van de dag opgeven waarop een geplande volledige scan moet worden uitgevoerd om de herstelactie te voltooien</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">Opgeven hoeveel dagen zonder scans moeten worden doorgegeven voordat een agressieve snelle scan wordt geactiveerd</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">Geef op hoeveel geplande scans er mogen worden overgeslagen voordat een inhaalscan wordt geforceerd</decimalTextBox>
@@ -1273,11 +1518,6 @@ Met Standaard afdwinging wordt bepaald welke beslissing moet worden genomen tijd
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Waarschuwingsniveaus voor bedreigingen opgeven waarop geen standaardactie moet worden ondernomen als ze wordt gedetecteerd</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Extra tekst aan clients weergeven wanneer deze actie moeten ondernemen</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">Geef het interval voor verloopmeldingen op</decimalTextBox>
     </presentation>
@@ -1293,6 +1533,9 @@ Met Standaard afdwinging wordt bepaald welke beslissing moet worden genomen tijd
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">Uitsluitingen van ASR-regels:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Uitsluitingen voor elke ASR-regels:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">Stel de status voor elke ASR-regel in:</listBox>
     </presentation>
@@ -1307,6 +1550,9 @@ Met Standaard afdwinging wordt bepaald welke beslissing moet worden genomen tijd
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1584,34 @@ Met Standaard afdwinging wordt bepaald welke beslissing moet worden genomen tijd
         <label>Definieer de externe locatie voor gegevensduplicatie van apparaatbeheer.</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">De bewaarperiode instellen voor bestanden in de lokale cache voor apparaatbeheer</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>Apparaatbeheer inschakelen voor specifieke apparaattypen</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>Een ondersteuningskoppeling instellen voor meldingen over apparaatbeheer</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>De vernieuwingsfrequentie voor beleid instellen</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>De vernieuwingsfrequentie van Azure AD instellen</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>De limiet voor gegevensduplicatie (MB) instellen</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

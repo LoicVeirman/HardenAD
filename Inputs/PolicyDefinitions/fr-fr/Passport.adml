@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">Utiliser le certificat pour l’authentification locale</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">Utiliser l’approbation cloud pour l’authentification locale</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">Désactiver la mise en cache des informations d’identification Windows Hello Entreprise après la connexion</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello Entreprise est une autre méthode permettant de se connecter à Windows à l’aide de votre compte Active Directory ou Azure Active Directory qui peut remplacer les mots de passe, les cartes à puce et les cartes à puce virtuelles.
 
@@ -111,16 +113,17 @@ Si vous désactivez ce paramètre de stratégie, Windows Hello Entreprise empêc
 REMARQUE : la désactivation de cette stratégie empêche l’utilisateur d’utiliser des données biométriques sur l’appareil pour tous les types de compte.
         </string>
         <string id="MSPassport_EnableEnhancedSignInSecurity">Activer ESS avec les périphériques pris en charge</string>
-        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">La sécurité de connexion renforcée (ESS) isole les données biométriques Windows Hello (visage et empreinte digitale) et les opérations de correspondantes avec du matériel approuvé ou des régions de mémoire spécifiées, ce qui signifie que le reste du système d’exploitation ne peut pas y accéder ou les falsifier. Étant donné que le canal de communication entre les capteurs et l’algorithme est également sécurisé, il est impossible pour les programmes malveillants d’injecter ou de relire des données afin de simuler la connexion d’un utilisateur ou de verrouiller un utilisateur hors de son ordinateur.
+        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">La sécurité de connexion renforcée (ESS) isole Windows Hello données de modèle biométriques (visage et empreinte digitale) et les opérations de correspondance avec du matériel approuvé ou des régions de mémoire spécifiées, ce qui signifie que le reste du système d’exploitation ne peut pas y accéder ou les falsifier. Étant donné que le canal de communication entre les capteurs et l’algorithme est également sécurisé, il est impossible pour les programmes malveillants d’injecter ou de relire des données afin de simuler la connexion d’un utilisateur ou de verrouiller un utilisateur hors de son ordinateur.
 Si vous activez cette stratégie, elle peut avoir les valeurs possibles suivantes :
 
-0 Sécurité de connexion renforcée activée avec des capteurs périphériques et intégrés non ESS
-La sécurité de connexion renforcée sera activée sur les systèmes dotés de logiciels et de matériels compatibles, en suivant le comportement par défaut existant dans Windows. Les opérations d’authentification des périphériques Windows Hello compatibles seront autorisées, sous réserve des limitations actuelles des fonctionnalités. De plus, avec ce paramètre, ESS est activé sur les appareils avec un mélange de périphériques biométriques, tels qu’un FPR compatible ESS et une caméra non compatible ESS.
+0 - Sécurité de connexion renforcée désactivée avec des capteurs périphériques
+ESS sera désactivé sur les systèmes dotés de logiciels et de matériel compatibles. Les opérations d’authentification des périphériques Windows Hello des appareils compatibles seront autorisées, sous réserve des limitations de fonctionnalités actuelles. 
 
-1 Sécurité de connexion renforcée activée sans capteurs périphériques ou intégrés non ESS (par défaut et recommandé pour une sécurité maximale)
-La sécurité de connexion renforcée sera activée sur les systèmes dotés de logiciels et de matériels compatibles, en suivant le comportement par défaut existant dans Windows. Les opérations d’authentification de tout périphérique biométrique périphérique seront bloquées et ne seront pas disponibles pour Windows Hello.
+1 : sécurité de connexion renforcée activée sans capteurs périphériques (par défaut et recommandé)
+ESS sera activé sur les systèmes dotés de logiciels et de matériel compatibles, en suivant le comportement par défaut existant dans Windows. Les opérations d’authentification de tout périphérique biométrique sont bloquées et ne sont pas disponibles pour Windows Hello.
 
-Si vous désactivez ou ne configurez pas cette stratégie, les capteurs non ESS sont bloqués sur l’appareil ESS.
+Si vous désactivez ou ne configurez pas cette stratégie, les capteurs non ESS seront bloqués sur l’appareil ESS.
+
         </string>
         <string id="MSPassport_EnablePinRecovery">Utiliser la récupération du code PIN</string>
         <string id="MSPassport_EnablePinRecoveryExplain">La récupération du code PIN permet à un utilisateur de modifier un code PIN oublié à l'aide du service de récupération de code PIN de Windows Hello Entreprise sans perdre aucune information d'identification associée ni aucun certificat, notamment les clés associées aux comptes personnels de l'utilisateur sur l'appareil. Pour ce faire, le service de récupération du code PIN Azure chiffre un secret de récupération, qui est stocké sur l'appareil et nécessite à la fois le service de récupération du code PIN et l'appareil pour le déchiffrement. Pour récupérer le code PIN, l'utilisateur doit procéder à une authentification multi-facteur Azure Active Directory.
@@ -149,6 +152,8 @@ Si vous désactivez ce paramètre de stratégie ou si vous ne le configurez pas,
  
 Remarque : un environnement qui active à la fois ce paramètre de stratégie et le paramètre de stratégie « utiliser Windows Hello entreprise » nécessite un ou plusieurs contrôleurs de domaine Windows Server 2016. Sinon, l’authentification Windows Hello entreprise échouera.
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">Les informations d’identification Windows Hello Entreprise sont mises en cache après la connexion pour permettre à certaines applications liées à la sécurité de les utiliser silencieusement pour ne pas perturber l’expérience utilisateur. Activez cette politique pour désactiver cette option. En supprimant le cache, l’entrée utilisateur est explicitement nécessaire.</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">Configurer les facteurs de déverrouillage de l’appareil</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">Configurez une liste séparée par des virgules des GUID des fournisseurs d’informations d’identification, par exemple des GUID de fournisseur de type visage et empreinte digitale, à utiliser comme premier et deuxième facteurs de déverrouillage. Si le fournisseur de signal de confiance est indiqué comme l’un des facteurs de déverrouillage, vous devez également configurer une liste séparée par des virgules des règles de signal au format xml pour chaque type de signal à vérifier.

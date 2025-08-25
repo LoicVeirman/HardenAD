@@ -115,6 +115,25 @@ Pour plus d’informations sur les algorithmes de hachage et de somme de contrô
       <string id="PKINITHashAlgorithm_Supported">Pris en charge</string>
       <string id="PKINITHashAlgorithm_Audited">Audité</string>
       <string id="PKINITHashAlgorithm_NotSupported">Non pris en charge</string>
+      <string id="StrongNameMatches">Autoriser les mappages forts basés sur un nom pour les certificats</string>
+      <string id="StrongNameMatches_explain">Ce paramètre de stratégie permet l’utilisation d’identifiants alternatifs basés sur le nom pour mapper fortement les certificats émis aux comptes d’utilisateurs Active Directory et spécifie quels certificats sont mappés à quels comptes. Sans ce paramètre activé, les certificats doivent répondre aux critères de « mappage fort » spécifiés dans aka.ms/StrongCertMapKB, qui interdisent généralement les identifiants basés sur le nom.
+
+Chaque mappage spécifié dans cette politique doit inclure un OID de politique ainsi qu'un IssuerSubject et/ou un suffixe UPN en utilisant la syntaxe spécifiée ci-dessous. Si un mappage valide pour un certificat donné est introuvable dans cette stratégie, Active Directory tentera de trouver une correspondance à l'aide des critères de mappage forts existants spécifiés dans KB5014754. Les mappages de certificats qui ne sont pas conformes aux critères de « mappage de nom fort » (cette politique) ou aux critères de « mappage fort » existants seront considérés comme invalides pour l'authentification.
+
+Le format général de la politique et quelques exemples sont répertoriés ci-dessous. Cette politique s'applique uniquement aux comptes d'utilisateurs Active Directory.
+
+Syntaxe générale
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+Exemples
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+La stratégie doit contenir exactement une empreinte de certificat par règle, chaque règle étant représentée sous forme de tuple. Les empreintes digitales doivent être uniques et ne peuvent pas être répétées dans plusieurs règles. Les sections de chaque tuple séparées par des points-virgules doivent être dans l'ordre indiqué, tandis que les champs séparés par des virgules peuvent être dans n'importe quel ordre. Les règles elles-mêmes sont séparées par des nouvelles lignes.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Pour plus d’informations sur les algorithmes de hachage et de somme de contrô
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Règles de correspondance de nom fort :</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

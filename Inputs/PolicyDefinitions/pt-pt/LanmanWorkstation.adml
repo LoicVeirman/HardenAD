@@ -30,13 +30,15 @@ Organize os conjuntos de cifras desejados na caixa de edição, um conjunto de c
 
 Nota: ao configurar esta definição de segurança, as alterações só entrarão em vigor quando reiniciar o Windows.</string>
       <string id="Pol_EnableInsecureGuestLogons_Name">Permitir inícios de sessão de convidados não seguros</string>
-      <string id="Pol_EnableInsecureGuestLogons_Help">Esta definição de política determina se o cliente SMB irá permitir que convidados não seguros iniciem sessão num servidor SMB.
+      <string id="Pol_EnableInsecureGuestLogons_Help">Esta definição de política determina se o cliente SMB permitirá inícios de sessão convidados não seguros num servidor SMB.
 
-Se ativar esta definição de política ou se não a configurar, o cliente SMB irá permitir inícios de sessão de convidados não seguros.
+Se ativar esta definição de política ou não a configurar, o cliente SMB permitirá inícios de sessão convidados não seguros.
 
-Se desativar esta definição de política, o cliente SMB irá rejeitar inícios de sessão de convidados não seguros.
+Se desativar esta definição de política, o cliente SMB rejeitará inícios de sessão convidados não seguros.
 
-Os inícios de sessão de convidados não seguros são utilizados por servidores de ficheiros para permitir o acesso não autenticado a pastas partilhadas. Apesar de não serem comuns num ambiente empresarial, os inícios de sessão de convidados não seguros são frequentemente utilizados por equipamentos de Armazenamento Ligados à Rede (NAS) de consumidor a funcionar como servidores de ficheiros. Por predefinição, os servidores de ficheiros do Windows necessitam de autenticação e não utilizam inícios de sessão de convidados não seguros. Uma vez que os inícios de sessão de convidados não seguros não são autenticados, funcionalidades de segurança importantes como a Assinatura SMB e Encriptação SMB estão desativadas. Como resultado, os clientes que permitam inícios de sessão de convidados não seguros estão vulneráveis a uma variedade de ataques man-in-the-middle que podem resultar em perda de dados, corrupção de dados e exposição a software maligno. Adicionalmente, quaisquer dados introduzidos num servidor de ficheiros utilizando um início de sessão de convidado não seguro são potencialmente acessíveis a qualquer pessoa na rede. A Microsoft recomenda a desativação de inícios de sessão de convidados não seguros e a configuração dos servidores de ficheiros de forma a ser necessário acesso autenticado."
+Se ativar a assinatura, o cliente SMB rejeitará inícios de sessão convidados não seguros.
+
+Os inícios de sessão convidados não seguros são utilizados por servidores de ficheiros para permitir o acesso não autenticado a pastas partilhadas. Embora sejam incomuns num ambiente empresarial, os inícios de sessão convidados não seguros são frequentemente utilizados por aplicações de Armazenamento Ligado à Rede (NAS) de consumidor a funcionar como servidores de ficheiros. Por predefinição, os servidores de ficheiros do Windows requerem autenticação e não utilizam inícios de sessão convidados não seguros. Uma vez que os inícios de sessão convidados não seguros não são autenticados, funcionalidades de segurança importantes como a Assinatura SMB e a Encriptação SMB estão desativadas. Como resultado, os clientes que permitam inícios de sessão convidados não seguros estão vulneráveis a uma variedade de ataques man-in-the-middle que podem resultar em perda de dados, danos em dados e exposição a software malicioso. Adicionalmente, quaisquer dados escritos num servidor de ficheiros utilizando um início de sessão convidado não seguro são potencialmente acessíveis por qualquer pessoa na rede. A Microsoft recomenda a desativação dos inícios de sessão convidados não seguros e a configuração dos servidores de ficheiros para requerer acesso autenticado.”
       </string>
 
       <string id="Pol_EnableCSCforCAShares_Name">Disponibilidade de Ficheiros Offline em Partilhas de Disponibilidade Contínua</string>
@@ -55,6 +57,7 @@ Os inícios de sessão de convidados não seguros são utilizados por servidores
         Esta definição de política determina o comportamento de colocação em cache do identificador do SMB para clientes com ligação a uma partilha de SMB em que o sinalizador de Disponibilidade Contínua (CA - Continuous Availability) está ativado. Se ativar esta definição de política, o cliente do SMB permitirá identificadores em cache para ficheiros em partilhas de CA. Isto pode proporcionar um melhor desempenho ao aceder repetidamente a um grande número de ficheiros de dados não estruturados em partilhas de CA em execução em Ficheiros do Microsoft Azure. Se desativar ou não configurar esta definição de política, o Windows impedirá a utilização de identificadores em cache para ficheiros abertos através de partilhas de CA. Nota: Esta política não tem efeito ao estabelecer ligação a partilhas de Servidor de Ficheiros de Escalamento Horizontal fornecidas por um Windows Server. A Microsoft não recomenda a ativação desta política para clientes que costumem estabelecer ligação a ficheiros alojados num Cluster de Ativação Pós-falha do Windows com o Servidor de Ficheiros para a função de Utilização Geral, uma vez que pode levar a tempos para a ativação pós-falha adversos e maior utilização de memória e CPU.
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Pelo menos Windows Server 2022, Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Pelo menos, Windows Server 2025, Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">Utilizar compressão SMB por predefinição</string>
       <string id="Pol_EnableCompressedTraffic_Help">Esta política decide se o cliente SMB utiliza compressão de tráfego por predefinição.
 
@@ -71,11 +74,129 @@ Se ativar esta definição da política, o cliente SMB nunca irá comprimir dado
 
 Se desativar ou não configurar esta definição de política, o cliente SMB poderá comprimir o tráfego (dependendo de uma combinação de outras políticas e condições).
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">Exigir a versão máxima do SMB</string>
+      <string id="Pol_MaxSmb2Dialect_Help">Esta política controla a versão máxima do protocolo SMB
+
+Nota: esta política de grupo não impede a utilização de SMB 1 se esse componente ainda estiver instalado e ativado.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">Exigir a versão mínima do SMB</string>
+      <string id="Pol_MinSmb2Dialect_Help">Esta política controla a versão mínima do protocolo SMB
+
+Nota: esta política de grupo não impede a utilização de SMB 1 se esse componente ainda estiver instalado e ativado.
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">Bloquear NTLM (LM, NTLM, NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">Esta política controla se o cliente SMB bloqueará o NTLM para autenticação de ligação remota.
+
+Se ativar esta definição de política, o cliente SMB não utilizará o NTLM para autenticação de ligação remota.
+
+Se desativar ou não configurar esta definição de política, o cliente SMB poderá continuar a utilizar o NTLM.
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">Bloquear Lista de Exceções do Servidor NTLM</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">Esta definição de política determina se o NTLM pode ser utilizado para aceder a servidores especificados.
+
+Se ativar esta definição de política (válido apenas se a política Bloquear NTLM (LM, NTLM, NTLMv2) estiver ativada), o NTLM poderá ser utilizado para aceder aos servidores especificados. Introduza os servidores desejados (nome DNS, endereço IP ou nome NetBIOS) na caixa de edição, um nome de servidor por linha.
+
+Se desativar ou não configurar esta definição de política, o acesso NTLM aos servidores será determinado por outras definições.
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">Ativar portas de E/S remotas</string>
+      <string id="Pol_EnableRemoteMailslots_Help">Esta política especifica se o cliente SMB ativará ou desativará as portas de E/S através de MUP.
+
+Se desativar esta definição de política, as portas de E/S remotas não funcionarão através de MUP, pelo que não passarão pelo redirecionador de cliente SMB.
+
+Se não configurar esta definição de política, as portas de E/S remotas poderão ser permitidas através de MUP.
+      </string>
+      <string id="Pol_RequireEncryption_Name">Exigir Encriptação</string>
+      <string id="Pol_RequireEncryption_Help">Esta política especifica se o cliente SMB irá necessitar de encriptação.
+
+Se ativar esta definição de política, o cliente SMB irá exigir que o servidor SMB suporte encriptação e que encripte os dados.
+
+Se desativar ou não configurar esta definição de política, o cliente SMB não exigirá encriptação. No entanto, a encriptação SMB poderá continuar a ser exigida; consulte as notas abaixo.
+
+Nota: Esta política é combinada com propriedades de ligação por partilha, por servidor e por unidade mapeada, através das quais poderá ser exigida encriptação SMB. O servidor SMB tem de suportar e ativar a encriptação SMB. Por exemplo, se esta política estiver desativada (ou não configurada), o cliente SMB poderá continuar a executar a encriptação se uma partilha de servidor SMB tiver exigido a encriptação.
+
+Importante: A encriptação SMB requer SMB 3.0 ou posterior
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">Ativar Portas Alternativas</string>
+      <string id="Pol_EnableAlternativePorts_Help">Esta política controla se o cliente SMB ativará ou desativará portas alternativas.
+
+Se desativar esta definição de política, as portas alternativas não serão utilizadas pelo cliente SMB.
+
+Se não configurar esta definição de política, as portas alternativas poderão ser utilizadas pelo cliente SMB.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">O servidor de auditoria não suporta a encriptação</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">Esta política controla se o cliente SMB ativará o evento de auditoria quando o servidor SMB não suportar encriptação.
+
+Se ativar esta definição de política, o cliente SMB registará o evento quando o servidor SMB não suportar encriptação.
+
+Se desativar ou não configurar esta definição de política, o cliente SMB não registará o evento.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">O servidor de auditoria não suporta a assinatura</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">Esta política controla se o cliente SMB ativará o evento de auditoria quando o servidor SMB não suportar a assinatura.
+
+Se ativar esta definição de política, o cliente SMB irá registar o evento quando o servidor SMB não suportar a assinatura.
+
+Se desativar ou não configurar esta definição de política, o cliente SMB não registará o evento.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Auditar início de sessão de convidado não seguro</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">Esta política controla se o cliente SMB ativará o evento de auditoria quando o cliente tiver sessão iniciada como conta de convidado.
+
+Se ativar esta definição de política, o cliente SMB irá registar o evento quando o cliente tiver sessão iniciada como conta de convidado.
+
+Se desativar ou não configurar esta definição de política, o cliente SMB não registará o evento.
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">Mapeamentos de Portas Alternativas</string>
+      <string id="Pol_AlternativePortMappings_Help">Esta definição de política determina os mapeamentos de registo de portas alternativos utilizados pelo cliente SMB.
+
+Se ativar esta definição de política, será utilizado o primeiro mapeamento válido se o nome do servidor do mapeamento corresponder ao nome do servidor de destino para conectividade.
+
+Se ativar esta definição de política e não especificar, pelo menos, um mapeamento válido ou se desativar ou não configurar esta definição de política, o cliente SMB referir-se-á a outros métodos de determinação da utilização de portas alternativas, tais como com os comandos NET USE ou New-SmbMapping.
+
+Exemplos:
+
+contososa.file.core.windows.net:tcp:448
+edgesrv1.corp.contoso.com:quic:450
+
+Como modificar esta definição:
+
+Disponha os mapeamentos de portas alternativos pretendidos na caixa de edição com uma entrada de mapeamento por linha.
+
+O formato de cada entrada de mapeamento especifica um nome de servidor, tipo de transporte e número de porta separados por dois pontos, tal como o fez no exemplo acima.
+
+Nota: esta política não requer um reinício do Windows para entrar em vigor.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>Conjuntos de cifras:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>Selecionar versão SMB:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Versão:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>Selecionar versão SMB:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Versão:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>Bloquear Lista de Exceções do Servidor NTLM:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>Mapeamentos de Registo de Portas Alternativas:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

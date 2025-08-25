@@ -115,6 +115,25 @@ Eventos generados por esta configuración: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Compatible</string>
       <string id="PKINITHashAlgorithm_Audited">Auditado</string>
       <string id="PKINITHashAlgorithm_NotSupported">No compatible</string>
+      <string id="StrongNameMatches">Permitir asignaciones seguras basadas en nombres para certificados</string>
+      <string id="StrongNameMatches_explain">Esta configuración de directiva permite el uso de identificadores alternativos basados en nombres para asignar certificados de forma segura a cuentas de Active Directory y especifica qué certificados se asignan a las cuentas. Sin esta configuración habilitada, los certificados deben cumplir los criterios de "asignación segura" especificados en aka.ms/StrongCertMapKB, que generalmente no permiten identificadores basados en nombres.
+
+Cada asignación especificada en esta directiva debe incluir un OID de directiva junto con IssuerSubject o un sufijo UPN con la sintaxis especificada a continuación. Si no se encuentra una asignación válida para un certificado determinado en esta directiva, Active Directory intentará encontrar una coincidencia con los criterios de asignación segura existentes especificados en KB5014754. Las asignaciones de certificados que no cumplan los criterios de "asignación de nombres seguros" (esta directiva) o los criterios de "asignación segura" existentes no se considerarán válidas para la autenticación.
+
+A continuación se enumeran el formato de directiva general y algunos ejemplos. Esta directiva solo se aplica a Active Directory cuentas de usuario.
+
+Sintaxis general
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+Ejemplos
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+La directiva debe contener exactamente una huella digital de certificado por regla, con cada regla representada como una tupla. Las huellas digitales deben ser únicas y no se pueden repetir en varias reglas. Las secciones de cada tupla separadas por punto y coma deben estar en el orden indicado, mientras que los campos separados por comas pueden estar en cualquier orden. Las propias reglas están separadas por líneas nuevas.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Eventos generados por esta configuración: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Reglas de coincidencia de nombre seguro:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

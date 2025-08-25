@@ -36,6 +36,8 @@ Als u deze beleidsinstelling inschakelt of als u deze beleidsinstelling niet con
 
 Als u deze beleidsinstelling uitschakelt, worden onveilige gastaanmeldingen door de SMB-client geweigerd.
 
+Als u ondertekening inschakelt, zal de SMB-client onveilige aanmeldingen van gasten weigeren.
+
 Onveilige gastaanmeldingen worden door bestandsservers gebruikt om niet-geverifieerde toegang tot gedeelde mappen toe te staan. Hoewel onveilige gastaanmeldingen weinig worden gebruikt in bedrijfsomgevingen, worden deze wel regelmatig gebruikt door NAS-apparaten (Network Attached Storage) van consumenten die als bestandsservers fungeren. Voor Windows-bestandsservers is verificatie nodig en hierbij wordt nooit gebruik gemaakt van onveilige gastaanmeldingen. Aangezien onveilige gastaanmeldingen niet-geverifieerd zijn, zijn belangrijke beveiligingsfuncties zoals SMB-ondertekening en SMB-versleuteling uitgeschakeld. Clients waarop onveilige gastaanmeldingen zijn toegestaan staan bijgevolg bloot aan een breed scala aan man-in-the-middle-aanvallen, die kunnen leiden tot gegevensverlies, gegevensbeschadiging en blootstelling aan malware. Bovendien zijn gegevens die via een onveilige gastaanmelding naar een bestandsserver worden geschreven, mogelijk toegankelijk voor iedereen op het netwerk. Microsoft raadt dan ook aan om onveilige gastaanmeldingen uit te schakelen en geverifieerde toegang verplicht te stellen.
       </string>
 
@@ -61,6 +63,7 @@ Onveilige gastaanmeldingen worden door bestandsservers gebruikt om niet-geverifi
         Opmerking: Dit beleid heeft geen invloed wanneer Scale-out bestandsservershares van een Windows-server worden verbonden. Microsoft raadt het inschakelen van dit beleid af voor clients die vaak verbinding maken met bestanden die worden gehost op een Windows Failover Cluster met de bestandsserver voor algemene gebruiksdoeleinden omdat het kan leiden tot ongunstige failovertijden en verhoogd geheugen- en CPU-gebruik.
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Minimaal Windows Server 2022, Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Ten minste Windows Server 2025, Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">Standaard SMB-compressie gebruiken</string>
       <string id="Pol_EnableCompressedTraffic_Help">Met dit beleid wordt bepaald of de SMB-client standaard verkeerscompressie gebruikt.
 
@@ -77,11 +80,129 @@ Als u deze beleidsinstelling inschakelt, zal de SMB-client nooit gegevens compri
 
 Als u deze beleidsinstelling uitschakelt of niet configureert, kan de SMB-client verkeer comprimeren (afhankelijk van een combinatie van andere beleidsregels en voorwaarden).
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">De maximale versie van SMB machtigen</string>
+      <string id="Pol_MaxSmb2Dialect_Help">Dit beleid bepaalt de maximale versie van het SMB-protocol
+
+Opmerking: dit groepsbeleid voorkomt het gebruik van SMB 1 niet als dat onderdeel nog steeds is geïnstalleerd en ingeschakeld.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">De minimale versie van SMB verplichten</string>
+      <string id="Pol_MinSmb2Dialect_Help">Dit beleid bepaalt de minimale versie van het SMB-protocol
+
+Opmerking: dit groepsbeleid voorkomt het gebruik van SMB 1 niet als dat onderdeel nog steeds is geïnstalleerd en ingeschakeld.
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">Block NTLM (LM, NTLM, NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">Met dit beleid wordt bepaald of de SMB-client NTLM blokkeert voor verificatie van externe verbindingen.
+
+Als u deze beleidsinstelling inschakelt, gebruikt de SMB-client NTLM niet voor verificatie van externe verbindingen.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, kan de SMB-client nog steeds NTLM gebruiken.
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">Lijst met uitzonderingen voor NTLM-server blokkeren</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">Met deze beleidsinstelling wordt bepaald of NTLM kan worden gebruikt voor toegang tot opgegeven servers.
+
+Als u deze beleidsinstelling inschakelt (alleen toegestaan als het beleid NTLM blokkeren (LM, NTLM, NTLMv2) is ingeschakeld), kan NTLM worden gebruikt voor toegang tot opgegeven servers. Voer de gewenste servers (DNS-naam, IP-adres of NetBIOS-naam) in het bewerkingsvak in, één servernaam per regel.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, wordt de NTLM-toegang tot servers bepaald door andere instellingen.
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">Externe mailslots inschakelen</string>
+      <string id="Pol_EnableRemoteMailslots_Help">Met dit beleid bepaalt u of de SMB-client externe mailslots via MUP in- of uitschakelt.
+
+Als u deze beleidsinstelling uitschakelt, werken externe mailslots niet via MUP, waardoor ze niet via de SMB-clientomleiding gaan.
+
+Als u deze beleidsinstelling niet configureert, zijn externe mailslots mogelijk toegestaan via MUP.
+      </string>
+      <string id="Pol_RequireEncryption_Name">Versleuteling vereisen</string>
+      <string id="Pol_RequireEncryption_Help">Met dit beleid wordt bepaald of versleuteling is vereist voor de SMB-client.
+
+Als u deze beleidsinstelling inschakelt, vereist de SMB-client dat de SMB-server versleuteling ondersteunt en de gegevens versleutelt.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, vereist de SMB-client geen versleuteling. SMB-versleuteling is echter mogelijk nog steeds vereist; zie de notities hieronder.
+
+Opmerking: dit beleid wordt gecombineerd met eigenschappen per share, per server en per toegewezen stationsverbinding, waardoor SMB-versleuteling mogelijk vereist is. De SMB-server moet SMB-versleuteling ondersteunen en inschakelen. Als dit beleid bijvoorbeeld is uitgeschakeld (of niet is geconfigureerd), kan de SMB-client nog steeds versleuteling uitvoeren als voor een SMB-servershare versleuteling is vereist.
+
+Belangrijk: SMB-versleuteling vereist SMB 3.0 of hoger
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">Alternatieve poorten inschakelen</string>
+      <string id="Pol_EnableAlternativePorts_Help">Dit beleid bepaalt of de SMB-client alternatieve poorten in- of uitschakelt.
+
+Als u deze beleidsinstelling uitschakelt, worden alternatieve poorten niet gebruikt door de SMB-client.
+
+Als u deze beleidsinstelling niet configureert, kunnen alternatieve poorten worden gebruikt door de SMB-client.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">Controleserver biedt geen ondersteuning voor versleuteling</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">Met dit beleid wordt bepaald of de controlegebeurtenis door de SMB-client wordt ingeschakeld wanneer de SMB-server geen versleuteling ondersteunt.
+
+Als u deze beleidsinstelling inschakelt, registreert de SMB-client de gebeurtenis wanneer de SMB-server geen versleuteling ondersteunt.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, wordt de gebeurtenis niet geregistreerd door de SMB-client.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">Controleserver biedt geen ondersteuning voor ondertekening</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">Dit beleid bepaalt of de SMB-client de auditgebeurtenis zal inschakelen wanneer de SMB-server geen ondersteuning biedt voor ondertekening.
+
+Als u deze beleidsinstelling inschakelt, registreert de SMB-client de gebeurtenis wanneer de SMB-server geen ondersteuning biedt voor ondertekening.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, registreert de SMB-client de gebeurtenis niet.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Onveilige gastaanmelding controleren</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">Met dit beleid wordt bepaald of de SMB-client de controlegebeurtenis inschakelt wanneer de client is aangemeld als gastaccount.
+
+Als u deze beleidsinstelling inschakelt, registreert de SMB-client de gebeurtenis wanneer de client is aangemeld als gastaccount.
+
+Als u deze beleidsinstelling uitschakelt of niet configureert, wordt de gebeurtenis niet geregistreerd door de SMB-client.
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">Alternatieve poorttoewijzingen</string>
+      <string id="Pol_AlternativePortMappings_Help">Met deze beleidsinstelling worden de alternatieve poortregistertoewijzingen bepaald die door de SMB-client worden gebruikt.
+
+Als u deze beleidsinstelling inschakelt, wordt de eerste geldige toewijzing gebruikt als de servernaam van de toewijzing overeenkomt met de naam van de doelserver voor connectiviteit.
+
+Als u deze beleidsinstelling inschakelt en niet ten minste één geldige toewijzing opgeeft of als u deze beleidsinstelling uitschakelt of niet configureert, verwijst de SMB-client naar andere methoden voor het bepalen van alternatief poortgebruik, zoals bij NET USE of New-SmbMapping opdrachten.
+
+Voorbeelden:
+
+contososa.file.core.windows.net:tcp:448
+edgesrv1.corp.contoso.com:quic:450
+
+Deze instelling wijzigen:
+
+Rangschik de gewenste alternatieve poorttoewijzingen in het invoervak met één toewijzingsvermelding per regel.
+
+De indeling van elke toewijzingsvermelding geeft een servernaam, transporttype en poortnummer op, gescheiden door dubbele punten zoals in het bovenstaande voorbeeld.
+
+Opmerking: voor dit beleid is het niet vereist dat Windows opnieuw wordt opgestart.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>Coderingssuites:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>SMB-versie selecteren:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Versie:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>SMB-versie selecteren:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Versie:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>Lijst met uitzonderingen voor NTLM-server blokkeren:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>Alternatieve poortregistertoewijzingen:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

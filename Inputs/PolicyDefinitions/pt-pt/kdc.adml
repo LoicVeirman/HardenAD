@@ -115,6 +115,25 @@ Eventos gerados por esta configuração: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Suportado</string>
       <string id="PKINITHashAlgorithm_Audited">Auditado</string>
       <string id="PKINITHashAlgorithm_NotSupported">Não Suportado</string>
+      <string id="StrongNameMatches">Permitir mapeamentos seguros baseados em nomes para certificados</string>
+      <string id="StrongNameMatches_explain">Esta definição de política permite a utilização de identificadores alternativos baseados em nomes para mapear fortemente certificados emitidos para contas de utilizador do Active Directory de forma rigorosa e especifica que certificados mapeiam para que contas. Sem esta definição ativada, os certificados têm de cumprir os critérios de "mapeamento forte" especificados em aka.ms/StrongCertMapKB, que geralmente não permitem identificadores baseados em nomes.
+
+Cada mapeamento especificado nesta política tem de incluir um OID de política juntamente com um IssuerSubject e/ou um Sufixo UPN de acordo com a sintaxe especificada abaixo. Se não for possível encontrar um mapeamento válido para um determinado certificado nesta política, o Active Directory tentará localizar uma correspondência com base os critérios de mapeamento forte existentes especificados em KB5014754. Os mapeamentos de certificados que não estejam em conformidade com os critérios de "mapeamento forte de nomes" (esta política) ou com os critérios de "mapeamento forte" existentes serão considerados inválidos para autenticação.
+
+O formato geral da política e alguns exemplos encontram-se listados abaixo. Esta política aplica-se apenas a contas de utilizador do Active Directory.
+
+Sintaxe geral
+==============
+&lt;thumbprint&gt;; &lt;lista de oids&gt;; &lt;métodos de correspondência de nomes&gt;
+
+Exemplos
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+A política tem de conter exatamente um thumbprint de certificado por regra, sendo que cada regra deverá ser representada como uma cadeia de identificação. Os thumbprints têm de ser exclusivos e não podem ser repetidos em várias regras. As secções de cada cadeia de identificação separadas por ponto e vírgula têm de estar na ordem indicada, ao passo que os campos separados por vírgulas podem estar por qualquer ordem. As próprias regras estão separadas por novas linhas.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Eventos gerados por esta configuração: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Regras Rigorosas de Correspondência de Nomes:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

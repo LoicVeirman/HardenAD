@@ -520,19 +520,27 @@ Si habilita esta configuración de directiva, los iconos de accesos directos de 
 Si deshabilita o no define esta configuración de directiva, los iconos de accesos directos de archivos que usan rutas de acceso remotas no pueden mostrarse.
 
 Nota: permitir el uso de rutas de acceso remotas en iconos de accesos directos de archivos puede exponer los equipos de los usuarios a riesgos de seguridad.</string>
+      <string id="DisableMotWOnInsecurePathCopy_DisplayName">Do not apply the Mark of the Web tag to files copied from insecure sources</string>
+      <string id="DisableMotWOnInsecurePathCopy_Help">This policy setting determines the application of the Mark of the Web tag to files sourced from insecure locations.
+
+If you enable this policy setting, files copied from unsecure sources will not be tagged with the Mark of the Web.
+
+If you disable or do not configure this policy setting, files copied from unsecure sources will be tagged with the appropriate Mark of the Web.
+
+Note: Failure to tag files from unsecure sources with the Mark of the Web can expose users’ computers to security risks.</string>
       <string id="DefaultAssociationsConfiguration">Definir un archivo de configuración de asociaciones predeterminadas</string>
-      <string id="DefaultAssociationsConfiguration_Help">Esta directiva especifica la ruta de acceso a un archivo (por ejemplo, almacenado de manera local o en una ubicación de red) que contiene asociaciones de aplicaciones predeterminadas de tipo de archivo y protocolo. Este archivo puede crearse usando la herramienta DISM.
+      <string id="DefaultAssociationsConfiguration_Help">Esta directiva especifica la ruta a un archivo (almacenado localmente o en una ubicación de red) que contiene asociaciones de aplicación predeterminadas de tipo de archivo y protocolo. Este archivo se puede crear mediante la herramienta DISM.
+      
+Por ejemplo:
+Dism.exe /Online /Export-DefaultAppAssociations:C:\AppAssoc.txt
 
-Por ejemplo
-:Dism.exe /Online /Export-DefaultAppAssociations:C:\AppAssoc.txt
+Para obtener más información, consulte la documentación de DISM.
 
-Para obtener más información, consulte la documentación sobre DISM en TechNet.
+El archivo se puede ser editado después de crearlo para cambiar la frecuencia con la que se aplican las asociaciones de directiva. Se puede agregar un atributo "Version" al elemento "DefaultAssociations". El valor debe ser un entero. Se puede agregar un atributo "Suggested" a cualquier elemento "Association". El valor debe ser un booleano y el valor predeterminado es "false". Cuando la directiva se aplica a un usuario, cualquier asociación que tenga Suggested="true" solo se aplicará una vez. Si el valor de Versión se incrementa alguna vez, se volverán a aplicar las asociaciones con Suggested="true".
 
-Si esta directiva de grupo está habilitada y el equipo cliente está unido a un dominio, el archivo se procesará y se aplicarán asociaciones predeterminadas en el momento del inicio de sesión.
+Si esta directiva de grupo está habilitada y el equipo cliente está unido a un dominio, el archivo se procesará y las asociaciones predeterminadas se aplicarán en el momento del inicio de sesión.
 
-Si la configuración de directiva no está definida o está deshabilitada, o si el equipo cliente no está unido a un dominio, no se aplicarán asociaciones predeterminadas en el momento del inicio de sesión.
-
-Si la directiva está habilitada, deshabilitada o no está configurada, los usuarios podrán aún invalidar las asociaciones predeterminadas de tipo de archivo y protocolo.</string>
+Si la directiva está habilitada, los usuarios podrán invalidar el tipo de archivo predeterminado y las asociaciones de protocolo, pero en el siguiente inicio de sesión se volverá a aplicar el archivo.</string>
     </stringTable>
     <presentationTable>
       <presentation id="MaxRecentDocs">
@@ -596,7 +604,7 @@ Si la directiva está habilitada, deshabilitada o no está configurada, los usua
         <dropdownList refId="NoDrivesDropdown" noSort="true" defaultItem="5">Elegir una de las siguientes combinaciones</dropdownList>
       </presentation>
       <presentation id="PlacesBar">
-        <text>Lugares para mostrar:":</text>
+        <text>Lugares para mostrar:</text>
         <textBox refId="Places0">
           <label>Elemento 1</label>
         </textBox>

@@ -34,7 +34,7 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obtener más infor
       <string id="LAPS_PasswordSettings_Help">Configura parámetros de contraseña
 
 Complejidad de la contraseña: los caracteres que se usan al generar una nueva contraseña
-  Valor predeterminado: letras mayúsculas + letras minúsculas + números + caracteres especiales
+  Valor predeterminado: letras grandes + letras minúsculas + números + caracteres especiales
 
 Longitud de la contraseña
   Mínimo: 8 caracteres
@@ -46,12 +46,23 @@ Antigüedad de la contraseña en días
   Máximo: 365 días
   Valor predeterminado: 30 días
 
+Longitud de frase de contraseña
+  Mínimo: 3 palabras
+  Máximo: 10 palabras
+  Valor predeterminado: 6 palabras
+
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obtener más información.
+
+Lista de frases de contraseña tomada de "Deep Dive: New Wordlists for Random Passphrases" de Electronic Frontier Foundation, y se usa bajo una licencia de atribución de CC-BY-3.0. Consulte https://go.microsoft.com/fwlink/?linkid=2255471 para obtener más información.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Letras mayúsculas</string>
       <string id="LAPS_PwdComplexity_Item_2">Letras mayúsculas y minúsculas</string>
       <string id="LAPS_PwdComplexity_Item_3">Letras mayúsculas + letras minúsculas + números</string>
       <string id="LAPS_PwdComplexity_Item_4">Letras mayúsculas + letras minúsculas + números + caracteres especiales</string>
+      <string id="LAPS_PwdComplexity_Item_5">Letras mayúsculas + letras minúsculas + números + caracteres especiales (legibilidad mejorada)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Frase de contraseña (palabras largas)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Frase de contraseña (palabras cortas)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Frase de contraseña (palabras cortas con prefijos únicos)</string>
       <string id="LAPS_AdminName">Nombre de la cuenta de administrador que se va a administrar</string>
       <string id="LAPS_AdminName_Help">Esta configuración de directiva especifica un nombre de cuenta de administrador personalizado para el que administrar la contraseña.
 
@@ -64,9 +75,9 @@ NO habilite esta configuración de directiva para administrar la cuenta de admin
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obtener más información.
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">No permitir que el tiempo de expiración de la contraseña sea superior al requerido por la directiva</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Si esta configuración está habilitada o no está configurada, la expiración de la contraseña planeada supera la antigüedad de la contraseña dictada por la directiva "Configuración de contraseña" NO se permite. Cuando se detecta dicha expiración, la contraseña se cambia inmediatamente y se establece de acuerdo con la directiva.
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Si esta configuración está habilitada o no se ha configurado, la expiración de la contraseña planeada supera la antigüedad de la contraseña dictada por la directiva "Contraseña Configuración" NO se permite. Cuando se detecta dicha expiración, la contraseña se cambia inmediatamente y se establece de acuerdo con la directiva.
 
-Si se deshabilita esta configuración, la hora de expiración de la contraseña puede ser superior a la requerida por la directiva "Configuración de contraseña".
+Si se deshabilita esta configuración, la fecha de expiración de la contraseña puede ser superior a la requerida por la directiva "Contraseña Configuración".
 
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obtener más información.
       </string>
@@ -86,17 +97,29 @@ Esta configuración se habilitará de forma predeterminada si no se configura.
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obtener más información.
       </string>
       <string id="LAPS_ADPasswordEncryptionPrincipal">Configurar descifradores de contraseñas autorizados</string>
-      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Configura esta opción para controlar el usuario o grupo específico autorizado para descifrar contraseñas cifradas.
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Configure esta opción para controlar el usuario o grupo específico que está autorizado a descifrar contraseñas cifradas.
 
-La configuración de esta opción no tiene efecto a menos que se haya habilitado el cifrado de contraseña.
+Configurar esta opción no tiene ningún efecto a menos que se haya habilitado el cifrado de contraseña.
 
-Si esta configuración está habilitada, el grupo especificado podrá descifrar las contraseñas cifradas.
+Si esta configuración está habilitada, las contraseñas cifradas podrán ser descifradas por el grupo especificado.
 
-Si esta opción está deshabilitada o no está configurada, el grupo Administradores de dominio podrá descifrar las contraseñas cifradas.
+Si esta configuración está deshabilitada o no configurada, las contraseñas cifradas podrán descifradas por el grupo Administradores de dominio.
 
-Esta opción debe configurarse con un SID en formato de cadena ("S-1-5-21-2127521184-1604012920-1887927527-35197") o con el nombre de un grupo o usuario con el formato "dominio\(grupo o usuario)". El dispositivo administrado debe poder resolver el usuario o grupo especificado; de lo contrario, no se realizará una copia de seguridad de las contraseñas.
+Esta configuración debe configurarse con un nombre completo de dominio de un grupo o usuario, o con un SID en formato de cadena. Algunos ejemplos válidos son: 
 
-Consulta https://go.microsoft.com/fwlink/?linkid=2188435 para obtener más información.
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+No incluya el nombre de usuario o grupo ni el SID entre comillas o paréntesis.
+
+El dispositivo administrado debe poder resolver el usuario o grupo especificado; de lo contrario, no se realizará una copia de seguridad de las contraseñas.
+
+NOTA: esta configuración se omite cuando se realiza una copia de seguridad de las contraseñas de cuenta del Modo de reparación de servicios de directorio (DSRM) en un controlador de dominio. En ese escenario, esta configuración siempre tiene como valor predeterminado el grupo Administradores de dominio del dominio del controlador de dominio.
+
+Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obtener más información.
       </string>
       <string id="LAPS_ADEncryptedPasswordHistorySize">Configurar el tamaño del historial de contraseñas cifradas</string>
       <string id="LAPS_ADEncryptedPasswordHistorySize_Help">Use esta opción para configurar cuántas contraseñas cifradas anteriores se almacenarán en Active Directory.
@@ -125,36 +148,76 @@ Si esta opción está deshabilitada o no está configurada, no se realizará una
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obtener más información.
       </string>
       <string id="LAPS_PostAuthenticationActions">Acciones posteriores a la autenticación</string>
-      <string id="LAPS_PostAuthenticationActions_Help">Esta directiva configura acciones posteriores a la autenticación que se ejecutarán después de detectar una autenticación por parte de la cuenta administrada.
+      <string id="LAPS_PostAuthenticationActions_Help">Esta directiva configura las acciones posteriores a la autenticación que se ejecutarán después de detectar una autenticación por parte de la cuenta administrada.
 
 Período de gracia: especifica la cantidad de tiempo (en horas) que se esperará después de una autenticación antes de ejecutar las acciones posteriores a la autenticación especificadas.
 
 Si esta configuración está habilitada y es mayor que cero, las acciones posteriores a la autenticación especificadas se ejecutarán al expirar el período de gracia.
 
-Si esta opción está deshabilitada o no está configurada, las acciones posteriores a la autenticación especificadas se ejecutarán después de un período de gracia predeterminado de 24 horas.
+Si esta configuración está deshabilitada o no está configurada, las acciones posteriores a la autenticación especificadas se ejecutarán después de un período de gracia predeterminado de 24 horas.
 
 Si esta configuración es igual a cero, no se ejecutará ninguna acción posterior a la autenticación.
 
 Acciones: especifica las acciones que se realizarán al expirar el período de gracia.
 
-Restablecer contraseña: cuando expire el período de gracia, se restablecerá la contraseña de la cuenta administrada.
+Restablecer contraseña: al expirar el período de gracia, se restablece la contraseña de la cuenta administrada.
 
-Restablecer la contraseña y cerrar la sesión de la cuenta administrada: una vez expirado el período de gracia, se restablecerá la contraseña de la cuenta administrada y finalizarán las sesiones interactivas que usen la cuenta administrada.
+Restablezca la contraseña y cierre la sesión de la cuenta administrada: al expirar el período de gracia, se restablecerá la contraseña de la cuenta administrada y se cerrarán las sesiones de inicio de sesión interactivas que usen la cuenta administrada.
 
-(NOTA: una vez finalizadas las sesiones interactivas, es posible que la cuenta administrada siga usando otras sesiones autenticadas. La única forma sólida de asegurarse de que la contraseña anterior ya está en uso es reiniciar el dispositivo).
+Restablecer la contraseña y reiniciar: al expirar el período de gracia, se restablece la contraseña de la cuenta administrada y se reinicia el dispositivo administrado.
 
-Restablecer la contraseña y reiniciar: una vez expirado el período de gracia, se restablecerá la contraseña de la cuenta administrada y el dispositivo administrado se reiniciará inmediatamente.
+Restablezca la contraseña, cierre la sesión de la cuenta administrada y finalice los procesos restantes: al expirar el período de gracia, se restablece la contraseña de la cuenta administrada, se cierran todas las sesiones de inicio de sesión interactivas que usan la cuenta administrada y se finalizan los procesos restantes.
+
+(NOTA: Una vez finalizadas las sesiones de inicio de sesión interactivas, es posible que la cuenta administrada siga usando otras sesiones autenticadas. La única manera sólida de asegurarse de que la contraseña anterior está más en uso es reiniciar el dispositivo).
 
 Si esta opción está deshabilitada o no está configurada, las acciones posteriores a la autenticación se establecerán de forma predeterminada en "Restablecer la contraseña y cerrar la sesión de la cuenta administrada".
 
-Nota: no se puede configurar la cuenta DSRM en controladores de dominio para acciones posteriores a la autenticación. Esta directiva no tiene efecto en los controladores de dominio y se omitirá incluso si está configurada para un controlador de dominio.
+Nota: la cuenta DSRM de los controladores de dominio no se puede configurar para las acciones posteriores a la autenticación. Esta directiva no tiene ningún efecto en los controladores de dominio y se omitirá incluso si está configurada para un controlador de dominio.
 
-Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para más información.
+Vea https://go.microsoft.com/fwlink/?linkid=2188435 para obtener más información.
       </string>
       <string id="PostAuthenticationActions_Item0">Deshabilitado: no realizar ninguna acción</string>
       <string id="PostAuthenticationActions_Item1">Restablecer la contraseña</string>
       <string id="PostAuthenticationActions_Item3">Restablecer la contraseña y cerrar la sesión de la cuenta administrada</string>
       <string id="PostAuthenticationActions_Item5">Restablecer la contraseña y reiniciar el dispositivo</string>
+      <string id="PostAuthenticationActions_Item11">Restablecer la contraseña, cerrar la sesión de la cuenta administrada y finalizar los procesos restantes</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Configurar la administración automática de cuentas</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Esta directiva configura las opciones de la directiva de administración automática de cuentas.
+
+Especifica la cuenta de destino que se va a administrar: especifica si se debe administrar la cuenta de administrador integrada o una cuenta personalizada.
+
+Nombre de cuenta automático (o prefijo de nombre): especifica el nombre, o prefijo de nombre, que se utilizará para la cuenta gestionada.
+
+Si se configura esta configuración de directiva, Windows LAPS la usará como nombre de cuenta o prefijo de nombre para la cuenta de destino.
+
+Si esta configuración de directiva no está establecida, Windows LAPS utilizará "WLapsAdmin" como nombre de cuenta o prefijo de nombre.
+
+Nota: este nombre se trata como un prefijo cuando se configura la distribución aleatoria de nombres de cuenta, véanse los comentarios más abajo.
+
+Habilitar la cuenta administrada: especifica si la cuenta administrada debe habilitarse o no.
+
+Si se establece esta configuración de directiva, Windows LAPS habilitará la cuenta administrada especificada.
+
+Si esta configuración de directiva no está establecida, Windows LAPS deshabilitará la cuenta administrada especificada.
+
+Nota: Windows LAPS mantendrá y rotará regularmente la contraseña de la cuenta administrada independientemente de si la cuenta se mantiene en estado habilitado o deshabilitado.
+
+Aleatorizar el nombre de la cuenta administrada: especifica si se debe distribuir aleatoriamente el nombre de la cuenta administrada con un sufijo numérico aleatorio.
+
+Si se establece esta configuración de directiva, Windows LAPS agregará un sufijo numérico aleatorio de ocho dígitos al nombre de la cuenta automática administrada y volverá a distribuir aleatoriamente el nombre de la cuenta administrada cada vez que se rote la contraseña.
+
+Si esta configuración de directiva no está establecida, Windows LAPS utilizará el nombre de cuenta automático administrado tal como está configurado.
+
+Si se configura el prefijo del nombre de la cuenta automática administrada, Windows LAPS utilizará hasta los doce (12) primeros caracteres de ese nombre como prefijo para el nombre aleatorio. Si no se configura el nombre de la cuenta automática administrada, Windows LAPS utilizará "WLapsAdmin" como prefijo del nombre.
+
+Nota: la cuenta DSRM en los controladores de dominio no puede configurarse para la administración automática de cuentas. Esta directiva no tiene efecto en los controladores de dominio y se ignorará aunque esté configurada para un DC.
+
+Para más información, consulte https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Administración de la cuenta de administrador integrada</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Administrar una cuenta de administrador personalizada</string>
+      <string id="AutomaticAccountName_Help">Especifique el nombre de la cuenta o el prefijo del nombre</string>
+      <string id="AutomaticAccountNameRandomization_Help">Especifica si el nombre de cuenta automático debe ser aleatorio.</string>
       <string id="SUPPORTED_Windows10">Como mínimo, Microsoft Windows 10 o versiones posteriores</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para más información.
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Complejidad de la contraseña</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Longitud de la contraseña</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Antigüedad de la contraseña (días)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Longitud de la frase de contraseña (palabras)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para más información.
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Período de gracia (horas):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Acciones:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Acciones:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Especifica la cuenta de destino que se va a administrar:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Nombre automático de la cuenta (o prefijo del nombre):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Habilitar la cuenta administrada</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Distribuir aleatoriamente el nombre de la cuenta administrada</checkBox>
       </presentation>
     </presentationTable>
   </resources>

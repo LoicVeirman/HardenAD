@@ -36,7 +36,9 @@ AES_128_CCM
 
 若停用此原則設定，SMB 用戶端將拒絕不安全的來賓登入。
 
-檔案伺服器使用不安全的來賓登入來允許共用資料夾的未經驗證存取。雖然在企業環境中不常見，做為檔案伺服器的消費性「網路連接儲存裝置」(NAS) 設備經常使用不安全的來賓登入。Windows 檔案伺服器需要驗證，而且預設不會使用不安全的來賓登入。因為不安全的來賓登入未經驗證，重要安全性功能 (例如「SMB 簽署」與「SMB 加密」) 會被停用。因此，允許不安全的來賓登入的用戶端容易遭受各種攔截式攻擊，進而導致資料遺失、資料損毀與暴露於惡意程式碼。此外，使用不安全的來賓登入方式寫入到檔案伺服器的所有資料可能可供網路上的任何人存取。Microsoft 建議您停用不安全的來賓登入，並將檔案伺服器設定為要求驗證的存取。"
+如果您啟用簽署， SMB 用戶端會拒絕不安全的來賓登入。
+
+檔案伺服器使用不安全的來賓登入來允許共用資料夾的未經驗證存取。雖然在企業環境中不常見，做為檔案伺服器的消費者「網路連接儲存裝置」(NAS) 設備經常使用不安全的來賓登入。Windows 檔案伺服器需要驗證，而且預設不會使用不安全的來賓登入。因為不安全的來賓登入未經驗證，重要安全性功能 (例如「SMB 簽署」與「SMB 加密」) 會被停用。因此，允許不安全的來賓登入的用戶端容易遭受各種攔截式攻擊，進而導致資料遺失、資料損毀與暴露於惡意程式碼。此外，使用不安全的來賓登入方式寫入到檔案伺服器的所有資料可能可供網路上的任何人存取。Microsoft 建議您停用不安全的來賓登入，並將檔案伺服器設定為要求驗證的存取。」
       </string>
 
       <string id="Pol_EnableCSCforCAShares_Name">持續可用性共用上的離線檔案可用性</string>
@@ -61,6 +63,7 @@ AES_128_CCM
         注意: 連線到由 Windows Server 提供的「向外延展檔案伺服器」共用時，此原則沒有任何效果。若用戶端會定期連線到具有「一般用途的檔案伺服器」角色之「Windows 容錯移轉叢集」上裝載的檔案，Microsoft 建議您不要為該用戶端啟用此原則，因為這樣可能會導致容錯移轉時間變長以及記憶體與 CPU 使用量變高。
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">至少需要 Windows Server 2022、Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">至少需要 Windows Server 2025、Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">預設使用 SMB 壓縮</string>
       <string id="Pol_EnableCompressedTraffic_Help">此原則控制 SMB 用戶端是否預設使用流量壓縮。
 
@@ -77,11 +80,129 @@ AES_128_CCM
 
 如果停用或未設定此原則設定，SMB 用戶端可能會壓縮流量 (取決於其他原則和條件的組合)。
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">授權 SMB 的最大版本</string>
+      <string id="Pol_MaxSmb2Dialect_Help">此原則控制 SMB 通訊協定的最大版本
+
+注意: 如果元件仍已安裝並啟用，則此群組原則不會禁止使用 SMB 1。
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">授權 SMB 的最小版本</string>
+      <string id="Pol_MinSmb2Dialect_Help">此原則控制 SMB 通訊協定的最小版本
+
+注意： 如果仍然安裝並啟用該元件，此群組原則不會禁止使用 SMB 1。
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">封鎖 NTLM (LM, NTLM, NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">此原則控制 SMB 用戶端是否會封鎖 NTLM 以進行遠端連線驗證。
+
+如果您啟用這個原則設定，SMB 用戶端將不會使用 NTLM 進行遠端連線驗證。
+
+如果您停用或未設定這個原則設定，SMB 用戶端仍然可以使用 NTLM。
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">封鎖 NTLM 伺服器例外清單</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">這個原則設定決定是否可以使用 NTLM 來存取指定的伺服器。
+
+如果您啟用這個原則設定 (只有在已啟用區塊 NTLM (LM、NTLM、NTLMv2) 原則) 時，才能使用 NTLM 存取指定的伺服器。請在編輯方塊) 輸入所需的伺服器 (DNS 名稱、IP 位址或 NetBIOS 名稱，每行一個伺服器名稱。
+
+如果您停用或未設定這個原則設定，NTLM 對伺服器的存取將由其他設定決定。
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">啟用遠端郵件槽</string>
+      <string id="Pol_EnableRemoteMailslots_Help">此原則可控制 SMB 用戶端透過 MUP 啟用或停用遠端郵件槽。
+
+如果您停用這個原則設定，遠端郵件槽將無法透過 MUP 運作，因此不會經過 SMB 用戶端重新導向器。
+
+如果您未設定這個原則設定，則可透過 MUP 允許遠端郵件槽。
+      </string>
+      <string id="Pol_RequireEncryption_Name">需要加密</string>
+      <string id="Pol_RequireEncryption_Help">此原則可控制 SMB 用戶端是否需要加密。
+
+如果您啟用這個原則設定，SMB 用戶端會要求 SMB 伺服器支援加密及加密資料。
+
+如果您停用或未設定這個原則設定，SMB 用戶端將不需要加密。不過，可能仍需要 SMB 加密;請參閱下方的筆記。
+
+注意： 此原則會結合每個共用、每一伺服器以及每個對應的磁片磁碟機連線屬性，其中可能需要 SMB 加密。SMB 伺服器必須支援並啟用 SMB 加密。例如，若停用此原則 (或未設定)，如果 SMB 伺服器共用具有必要的加密，SMB 用戶端仍可執行加密。
+
+重要： SMB 加密需要 SMB 3.0 或更新版本
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">啟用替代埠</string>
+      <string id="Pol_EnableAlternativePorts_Help">此原則可控制 SMB 用戶端是否要啟用或停用替代埠。
+
+如果您停用這個原則設定，SMB 用戶端將不會使用替代埠。
+
+如果您未設定這個原則設定，SMB 用戶端可能會使用替代埠。
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">稽核伺服器不支援加密</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">此原則可控制 SMB 用戶端是否會在 SMB 伺服器不支援加密時啟用稽核事件。
+
+如果您啟用這個原則設定，SMB 用戶端會在 SMB 伺服器不支援加密時記錄事件。
+
+如果您停用或未設定這個原則設定，SMB 用戶端將不會記錄事件。
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">稽核伺服器不支援簽署</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">此原則控制 SMB 用戶端是否將在 SMB 伺服器不支援簽署時啟用稽核事件。
+
+如果您啟用此原則設定，則 SMB 用戶端將在 SMB 伺服器不支援簽署時記錄事件。
+
+如果您停用或不設定此原則設定，SMB 用戶端將不會記錄事件。
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">稽核不安全的來賓登入</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">此原則可控制當用戶端以來賓帳戶登入時，SMB 用戶端是否會啟用稽核事件。
+
+如果您啟用這個原則設定，SMB 用戶端會在用戶端以來賓帳戶登入時記錄事件。
+
+如果您停用或未設定這個原則設定，SMB 用戶端將不會記錄事件。
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">替代連接埠對應</string>
+      <string id="Pol_AlternativePortMappings_Help">這個原則設定決定 SMB 用戶端使用的替代埠登錄對應。
+
+如果您啟用這個原則設定，如果對應的伺服器名稱符合連線的目標伺服器名稱，則會使用第一個有效的對應。
+
+如果您啟用這個原則設定，且未指定至少一個有效的對應，或是您停用或未設定這個原則設定，則 SMB 用戶端會參考其他方法來決定替代埠使用方式，例如 NET USE 或 New-SmbMapping 命令。
+
+例子：
+
+contososa.file.core.windows.net：tcp：448
+edgesrv1.corp.contoso.com：quic：450
+
+如何修改此設定：
+
+在編輯方塊中排列想要的替代埠對應，每行一個對應專案。
+
+每個對應專案的格式，在上述範例中指定以冒號分隔的伺服器名稱、傳輸類型及埠號碼。
+
+注意： 這個原則不需要 Windows 重新開機才會生效。
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>加密套件:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>選取 SMB 版本:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">版本:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>選取 SMB 版本:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">版本:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>封鎖 NTLM 伺服器例外清單:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>替代連接埠登錄對應:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

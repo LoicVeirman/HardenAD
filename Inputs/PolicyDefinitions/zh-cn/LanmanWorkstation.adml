@@ -36,7 +36,9 @@ AES_128_CCM
 
 如果你禁用此策略设置，SMB 客户端将拒绝不安全的来宾登录。
 
-文件服务器使用不安全的来宾登录来允许对共享文件夹进行未经身份验证的访问。尽管在企业环境中不太常见，但充当文件服务器的消费型网络附加存储(NAS)设备经常使用不安全的来宾登录。默认情况下，Windows 文件服务器要求身份验证并且不会使用不安全的来宾登录。由于不安全的来宾登录未经过身份验证，重要的安全功能(例如 SMB 签名和 SMB 加密)将被禁用。因此，允许不安全的来宾登录的客户端很容易受到各种中间人攻击，从而导致数据丢失、数据损坏和遭受恶意软件的攻击。此外，可能网络上的任何人都可以访问写入到使用不安全来宾登录的文件服务器中的任何数据。Microsoft 建议禁用不安全的来宾登录，并将文件服务器配置为要求经过身份验证的访问。
+如果启用登录，SMB 客户端将拒绝不安全的访客登录。
+
+文件服务器使用不安全的来宾登录来允许对共享文件夹进行未经身份验证的访问。尽管在企业环境中不太常见，但充当文件服务器的消费型网络附加存储 (NAS) 设备经常使用不安全的来宾登录。默认情况下，Windows 文件服务器要求身份验证并且不会使用不安全的来宾登录。由于不安全的来宾登录未经过身份验证，重要的安全功能 (例如 SMB 签名和 SMB 加密) 将被禁用。因此，允许不安全的来宾登录的客户端很容易受到各种中间人攻击，从而导致数据丢失、数据损坏和遭受恶意软件的攻击。此外，可能网络上的任何人都可以访问写入到使用不安全来宾登录的文件服务器中的任何数据。Microsoft 建议禁用不安全的来宾登录，并将文件服务器配置为要求经过身份验证的访问。
       </string>
 
       <string id="Pol_EnableCSCforCAShares_Name">脱机文件在连续可用性共享中的可用性</string>
@@ -61,6 +63,7 @@ AES_128_CCM
         注意: 在连接 Windows Server 提供的横向扩展文件服务器共享时，此策略不会生效。如果客户端定期连接到 Windows 故障转移群集中托管的文件，并使用文件服务器完成一般用途任务，Microsoft 建议不要为这样的客户端启用此策略，因为这可能导致故障转移时间变长，并会增加内存使用量和 CPU 使用率。
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">至少为 Windows Server 2022、Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">至少为 Windows Server 2025、Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">默认情况下使用 SMB 压缩</string>
       <string id="Pol_EnableCompressedTraffic_Help">此策略控制 SMB 客户端是否默认使用流量压缩。
 
@@ -77,11 +80,129 @@ AES_128_CCM
 
 如果禁用或未配置此策略设置，则 SMB 客户端可能会根据)的其他策略和条件组合(压缩流量。
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">强制实施 SMB 的最大版本</string>
+      <string id="Pol_MaxSmb2Dialect_Help">此策略控制 SMB 协议的最大版本
+
+注意: 如果仍安装并启用该组件，此组策略不会阻止使用 SMB 1。
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">强制实施 SMB 的最低版本</string>
+      <string id="Pol_MinSmb2Dialect_Help">此策略控制 SMB 协议的最低版本
+
+注意: 如果仍安装并启用该组件，则此组策略不会阻止使用 SMB 1。
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">阻止 NTLM (LM、NTLM、NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">此策略控制 SMB 客户端是否将阻止 NTLM 进行远程连接身份验证。
+
+如果启用此策略设置，则 SMB 客户端不会使用 NTLM 进行远程连接身份验证。
+
+如果禁用或未配置此策略设置，则 SMB 客户端仍然可以使用 NTLM。
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">阻止 NTLM 服务器例外列表</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">此策略设置确定是否可使用 NTLM 访问指定的服务器。
+
+如果启用此策略设置(仅当启用阻止 NTLM [LM、NTLM、NTLMv2]策略后有效)，NTLM 可用于访问指定的服务器。请在编辑框中输入所需的服务器(DNS 名称、IP 地址或 NetBIOS 名称)，每行输入一个服务器名称。
+
+如果禁用或未配置此策略设置，NTLM 对服务器的访问权限将由其他设置决定。
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">启用远程邮筒</string>
+      <string id="Pol_EnableRemoteMailslots_Help">此策略控制 SMB 客户端是启用还是禁用通过 MUP 的远程邮槽。
+
+如果禁用此策略设置，远程邮件槽将无法通过 MUP 运行，因此它们将不会通过 SMB 客户端重定向程序。
+
+如果未配置此策略设置，则可以通过 MUP 允许远程 mailslots。
+      </string>
+      <string id="Pol_RequireEncryption_Name">需要加密</string>
+      <string id="Pol_RequireEncryption_Help">此策略控制 SMB 客户端是否需要加密。
+
+如果启用此策略设置，则 SMB 客户端将要求 SMB 服务器支持加密和加密数据。
+
+如果禁用或未配置此策略设置，则 SMB 客户端将不需要加密。但是，可能仍需要 SMB 加密;请参阅下面的备注。
+
+注意： 此策略与每共享、每服务器和每个映射驱动器连接属性结合使用，通过这些属性可能需要 SMB 加密。SMB 服务器必须支持并启用 SMB 加密。例如，如果 (或未配置此策略)，如果 SMB 服务器共享具有所需的加密，则 SMB 客户端仍可执行加密。
+
+重要提示： SMB 加密需要 SMB 3.0 或更高版本
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">启用备用端口</string>
+      <string id="Pol_EnableAlternativePorts_Help">此策略控制 SMB 客户端是启用还是禁用备用端口。
+
+如果禁用此策略设置，则 SMB 客户端将不使用备用端口。
+
+如果未配置此策略设置，则 SMB 客户端可以使用备用端口。
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">审核服务器不支持加密</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">此策略控制 SMB 客户端在 SMB 服务器不支持加密时是否启用审核事件。
+
+如果启用此策略设置，则 SMB 客户端将在 SMB 服务器不支持加密时记录事件。
+
+如果禁用或未配置此策略设置，则 SMB 客户端不会记录事件。
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">审核服务器不支持签名</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">此策略控制当 SMB 服务器不支持签名时，SMB 客户端是否启用审核事件。
+
+如果启用此策略设置，则当 SMB 服务器不支持签名时，SMB 客户端将记录事件。
+
+如果禁用或未配置此策略设置，SMB 客户端不会记录事件。
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">审核不安全的来宾登录</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">此策略控制当客户端作为来宾帐户登录时，SMB 客户端是否启用审核事件。
+
+如果启用此策略设置，则当客户端作为来宾帐户登录时，SMB 客户端将记录事件。
+
+如果禁用或未配置此策略设置，则 SMB 客户端不会记录事件。
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">备用端口映射</string>
+      <string id="Pol_AlternativePortMappings_Help">此策略设置确定 SMB 客户端使用的备用端口注册表映射。
+
+如果启用此策略设置，则在映射的服务器名称与连接的目标服务器名称匹配时，将使用第一个有效映射。
+
+如果启用此策略设置并且未指定至少一个有效映射，或者如果禁用或未配置此策略设置，则 SMB 客户端将引用确定备用端口使用情况的其他方法，例如 NET USE 或 New-SmbMapping 命令。
+
+例子：
+
+contososa.file.core.windows.net：tcp：448
+edgesrv1.corp.contoso.com：quic：450
+
+如何修改此设置：
+
+在编辑框中排列所需的备用端口映射，每行有一个映射条目。
+
+每个映射项的格式指定服务器名称、传输类型和端口号，用冒号分隔，如上所示。
+
+注意： 此策略不需要 Windows 重新启动才能生效。
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>密码套件:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>选择 SMB 版本:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">版本:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>选择 SMB 版本:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">版本:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>阻止 NTLM 服务器例外列表:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>备用端口注册表映射:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

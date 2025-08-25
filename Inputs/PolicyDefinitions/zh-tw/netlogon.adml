@@ -298,16 +298,28 @@ DC 定位程式 API 預設可傳回 IPv4/IPv6 DC 位址。但如果部分應用�
 如果您啟用這個原則設定，這部 DC 不會處理根據 NetBIOS 網域名稱之 DC 位置的傳入郵件槽訊息。
 
 如果您停用或未設定這個原則設定，這部 DC 就會處理傳入的郵件槽訊息。這是 DC 定位程式的預設行為。</string>
+
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery">當 DNS 探索失敗時，請勿在網域控制站位置使用 NetBIOS 探索</string>
-      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">這個原則設定可讓您控制網域控制站 (DC) 位置演算法。根據預設，如果已知 DNS 網域名稱，DC 位置演算法會選擇 DNS 探索。如果 DNS 探索失敗，且已知 NetBIOS 網域名稱，則演算法會使用 NetBIOS 探索做為遞補機制。
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">這個原則設定可讓您控制網域控制站 (DC) 位置演算法。根據預設，如果已知 DNS 網域名稱，DC 位置演算法會選擇 DNS 型探索。如果 DNS 探索失敗，且已知 NetBIOS 網域名稱，則演算法會使用 NetBIOS 型探索做為後援機制。
 
-NetBIOS 探索會使用 WINS 伺服器和郵件槽訊息，但不會使用站台資訊。因此，它無法確保用戶端會探索最近的 DC。即使分支站台 DC 只登錄站台特定 DNS 記錄 (建議做法)，它還是可以允許中樞站台用戶端探索分支站台 DC。因為這些原因，所以不建議使用 NetBIOS 探索。
+NetBIOS 型探索會使用 WINS 伺服器和郵件槽訊息，但不會使用網站資訊。因此，它無法確保用戶端會探索最近的 DC。即使分支網站 DC 只登錄網站特定 DNS 記錄 (建議做法)，它還是可以允許中樞網站用戶端探索分支站台 DC。因為這些原因，所以不建議使用 NetBIOS 型探索。
 
-請注意，如果只知道 NetBIOS 網域名稱，則這個原則設定不會影響 DC 位置的 NetBIOS 探索。
+請注意，如果只知道 NetBIOS 網域名稱，則這個原則設定不會影響 DC 位置的 NetBIOS 型探索。
 
-如果您啟用或未設定這個原則設定，當 DNS 探索失敗時，DC 位置演算法不會使用 NetBIOS 探索做為遞補機制。這是預設的行為。
+如果您啟用或未設定這個原則設定，當 DNS 型探索失敗時，DC 位置演算法不會使用 NetBIOS 探索做為後援機制。這是預設的行為。
 
-如果您停用這個原則設定，當 DNS 探索失敗時，DC 位置演算法可以使用 NetBIOS 探索做為遞補機制。</string>
+如果您停用這個原則設定，當 DNS 型探索失敗時，DC 位置演算法可以使用 NetBIOS 型探索做為後援機制。
+
+除非停用 BlockNetbiosDiscovery 設定，否則此設定沒有作用。NetBIOS 型探索被視為不安全、有許多限制，而且將會在未來版本中淘汰。基於這些原因，不建議使用 NetBIOS 型探索。如需詳細資訊，請參閱 https://aka.ms/dclocatornetbiosdeprecation。</string>
+
+      <string id="Netlogon_BlockNetbiosDiscovery">封鎖網域控制站位置的 NetBIOS 型探索</string>
+      <string id="Netlogon_BlockNetbiosDiscovery_Help">這個原則設定可讓您控制網域控制站 (DC) 位置演算法是否針對網域控制站位置使用 NetBIOS_based 型探索。
+
+如果您啟用或未設定這個原則設定，DC 位置演算法將永遠不會使用 NetBIOS 型探索。這是預設行為。
+
+如果您停用這個原則設定，必要時 DC 位置演算法可能會使用 NetBIOS 型探索。最終行為進一步受到 AvoidFallbackNetbiosDiscovery 設定的規範。
+
+NetBIOS 型探索被視為不安全、具有多項限制，且將在未來的版本中淘汰。基於這些原因，不建議使用 NetBIOS 型探索。如需詳細資訊，請參閱https://aka.ms/dclocatornetbiosdeprecation。</string>
 
       <string id="Netlogon_AddressLookupOnPingBehavior">指定 DC 定位程式 Ping 的位址查詢行為</string>
       <string id="Netlogon_AddressLookupOnPingBehavior_Help">這個原則設定可設定如果用戶端的 IP 位址無法對應到任何設定的站台，當網域控制站 (DC) 回應該用戶端時該如何反應。

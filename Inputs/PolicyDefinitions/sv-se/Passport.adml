@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">Använd certifikat för lokal autentisering</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">Använd moln förtroende för lokal autentisering</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">Inaktivera cachelagring av Windows Hello för företag autentiseringsuppgifter efter inloggning</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello för företag är ett alternativt sätt att logga in i Windows med ditt Active Directory- eller Azure Active Directory-konto i stället för att använda lösenord, smartkort och virtuella smartkort.
 
@@ -111,16 +113,17 @@ Om du inaktiverar principinställningen tillåter Windows Hello för företag in
 OBS! Om du inaktiverar principen kan användarna inte använda biometrisk inloggning för någon typ av konto på enheten.
         </string>
         <string id="MSPassport_EnableEnhancedSignInSecurity">Aktivera ESS med kringutrustning som stöds</string>
-        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Förbättrad inloggningssäkerhet (ESS) isolerar Windows Hello biometriska malldata (ansikts- och fingeravtryck) och matchningsåtgärder till betrodd maskinvara eller angivna minnesregioner, vilket innebär att resten av operativsystemet inte kan komma åt eller manipulera dem. Eftersom kommunikationskanalen mellan sensorerna och algoritmen också är skyddad är det omöjligt för skadlig kod att mata in eller spela upp data för att simulera en användare som loggar in eller låsa ut en användare från datorn.
+        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Förbättrad inloggningssäkerhet (ESS) isolerar biometriska malldata (ansikte och fingeravtryck) i Windows Hello och matchningsåtgärder mot betrodd maskinvara eller angivna minnesregioner, vilket innebär att resten av operativsystemet inte kan komma åt eller manipulera dem. Eftersom kommunikationskanalen mellan sensorerna och algoritmen också skyddas är det omöjligt för skadlig kod att mata in eller spela upp data för att simulera en användare som loggar in eller låsa en användare från sin dator. 
 Om du aktiverar den här principen kan den ha följande möjliga värden:
 
-0 – Förbättrad inloggningssäkerhet aktiverad med kringutrustning och inbyggda icke-ESS-sensorer
-Förbättrad inloggningssäkerhet kommer att aktiveras på system med kompatibel programvara och maskinvara, enligt det befintliga standardbeteendet i Windows. Autentiseringsåtgärder för kringutrustning Windows Hello kompatibla enheter kommer att tillåtas, beroende på aktuella funktionsbegränsningar. Med den här inställningen aktiveras dessutom ESS på enheter med en blandning av biometriska enheter, t.ex. en ESS-kompatibel FPR och en kamera som inte stöder ESS.
+0 – Förbättrad inloggningssäkerhet inaktiverad med kringutrustningssensorer
+ESS inaktiveras på system med kompatibel programvara och maskinvara. Autentiseringsåtgärder för Windows Hello kompatibla kringutrustningsenheter kommer att tillåtas, med förbehåll för aktuella funktionsbegränsningar.
 
-1 – Förbättrad inloggningssäkerhet aktiverad utan kringutrustning eller inbyggda icke-ESS-sensorer (standard och rekommenderas för högsta säkerhet)
-Förbättrad inloggningssäkerhet kommer att aktiveras på system med kompatibel programvara och maskinvara, enligt det befintliga standardbeteendet i Windows. Autentiseringsåtgärder för all biometrisk kringutrustning blockeras och är inte tillgängligt för Windows Hello.
+1 – Förbättrad inloggningssäkerhet aktiverad utan kringutrustningssensorer (standard och rekommenderas)
+ESS aktiveras på system med kompatibel programvara och maskinvara, enligt det befintliga standardbeteendet i Windows. Autentiseringsåtgärder för biometriska kringutrustningsenheter blockeras och är inte tillgängliga för Windows Hello.
 
-Om du inaktiverar eller låter bli att konfigurera den här principen blockeras icke-ESS-sensorer på ESS-enheten.
+Om du inaktiverar eller inte konfigurerar den här principen blockeras icke-ESS-sensorer på ESS-enheten.
+
         </string>
         <string id="MSPassport_EnablePinRecovery">Använd PIN-återställning</string>
         <string id="MSPassport_EnablePinRecoveryExplain">Med PIN-återställning kan en användare ändra en PIN som denne glömt genom att använda PIN-återställningstjänsten för Windows Hello för företag utan att förlora tillhörande autentiseringsuppgifter eller certifikat, inklusive eventuella nycklar som är kopplade till användarens personliga konton på enheten. För att göra detta krypterar den Azure-baserade PIN-återställningstjänsten en återställningshemlighet som lagras på enheten och som kräver både PIN-återställningstjänsten och enheten för att dekryptera den. PIN-återställningstjänsten kräver att användaren utför multifaktorautentisering i Azure Active Directory.
@@ -149,6 +152,8 @@ Om du inaktiverar eller låter bli att konfigurera den här princip inställning
  
 Obs! en miljö som aktiverar både den här princip inställningen och princip inställningen Använd Windows Hello för företag kräver en eller flera Windows Server 2016-domänkontrollanter. Annars kommer Windows Hello för företag-autentisering att Miss lyckas.
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">Autentiseringsuppgiften för Windows Hello för företag cachelagras efter inloggningen så att vissa säkerhetsrelaterade program kan använda autentiseringsuppgifterna tyst för att inte störa användarupplevelsen. Aktivera den här principen om du vill inaktivera detta och ta bort cachen så att användarindata uttryckligen behövs.</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">Konfigurera enhetsupplåsningsfaktorer</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">Skapa en kommaavgränsad lista med GUID:n för providers för autentiseringsuppgifter, till exempel ansikts- och fingeravtrycksproviders, som ska användas som första och andra upplåsningsfaktor. Om den betrodda signalprovidern anges som en av upplåsningsfaktorerna ska du också skapa en kommaavgränsad lista med signalregler i XML-format för varje signaltyp som ska verifieras.

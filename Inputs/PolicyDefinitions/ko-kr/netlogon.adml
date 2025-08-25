@@ -299,16 +299,28 @@ DC 로케이터(도메인 컨트롤러 로케이터) 서비스는 클라이언�
 이 정책 설정을 사용하면 이 DC는 DC 위치를 기반으로 하는 NetBIOS 도메인 이름에 사용된 들어오는 메일 슬롯 메시지를 처리하지 않습니다.
 
 이 정책 설정을 사용하지 않거나 구성하지 않으면 이 DC는 들어오는 메일 슬롯 메시지를 처리합니다. 이것이 DC 로케이터의 기본 동작입니다.</string>
+
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery">DNS 기반 검색이 실패할 때 NetBIOS 기반 도메인 컨트롤러 위치 검색 사용 안 함</string>
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">이 정책 설정을 사용하면 DC(도메인 컨트롤러) 위치 알고리즘을 제어할 수 있습니다. 기본적으로 DC 위치 알고리즘은 DNS 도메인 이름을 알고 있는 경우 DNS 기반 검색을 선호합니다. DNS 기반 검색이 실패하고 NetBIOS 도메인 이름을 알고 있는 경우 이 알고리즘은 NetBIOS 기반 검색을 대체 메커니즘으로 사용합니다.
 
-NetBIOS 기반 검색에서는 WINS 서버 및 메일 슬롯 메시지를 사용하고 사이트 정보는 사용하지 않습니다. 따라서 클라이언트가 가장 가까운 DC를 검색한다는 보장이 없습니다. 뿐만 아니라 분기 사이트 DC가 사이트별 DNS 레코드만 등록하더라도(권장) 허브 사이트 클라이언트에서 분기 사이트 DC를 검색할 수 있습니다. 이러한 이유로 NetBIOS 기반 검색은 권장되지 않습니다.
+NetBIOS 기반 검색에서는 WINS 서버 및 메일 슬롯 메시지를 사용하고 사이트 정보는 사용하지 않습니다. 따라서 클라이언트가 가장 가까운 DC를 검색한다는 보장이 없습니다. 더불어 분기 사이트 DC가 사이트별 DNS 레코드만 등록하더라도(권장) 허브 사이트 클라이언트에서 분기 사이트 DC를 검색할 수 있습니다. 이러한 이유로 NetBIOS 기반 검색은 사용하지 않는 것이 좋습니다.
 
 NetBIOS 도메인 이름만 알려진 경우 이 정책 설정은 NetBIOS 기반 DC 위치 검색에 영향을 미치지 않습니다.
 
 이 정책 설정을 사용하거나 구성하지 않으면 DC 위치 알고리즘에서는 DNS 기반 검색이 실패할 때 NetBIOS 기반 검색을 대체 알고리즘으로 사용하지 않습니다. 이것은 기본 동작입니다.
 
-이 정책 설정을 사용하지 않으면 DC 위치 알고리즘에서는 DNS 기반 검색이 실패할 때 NetBIOS 기반 검색을 대체 알고리즘으로 사용할 수 있습니다.</string>
+이 정책 설정을 사용하지 않으면 DC 위치 알고리즘에서는 DNS 기반 검색이 실패할 때 NetBIOS 기반 검색을 대체 알고리즘으로 사용할 수 있습니다.
+
+이 설정은 BlockNetbiosDiscovery 설정을 사용하지 않는 경우에만 영향을 미칩니다. NetBIOS 기반 검색은 안전하지 않고, 제한이 많아 향후 릴리스에서 사용이 중단됩니다. 이러한 이유로 NetBIOS 기반 검색은 사용하지 않는 것이 좋습니다. 자세한 내용은 https://aka.ms/dclocatornetbiosdeprecation을 참조하세요.</string>
+
+      <string id="Netlogon_BlockNetbiosDiscovery">도메인 컨트롤러 위치에 대한 NetBIOS 기반 검색 차단</string>
+      <string id="Netlogon_BlockNetbiosDiscovery_Help">이 정책 설정을 통해 DC(도메인 컨트롤러) 위치 알고리즘에서 도메인 컨트롤러 위치에 대한 NetBIOS_based 검색을 사용할지 여부를 제어할 수 있습니다.
+
+이 정책 설정을 사용하거나 구성하지 않으면 DC 위치 알고리즘에서 NetBIOS 기반 검색을 사용하지 않습니다. 기본 동작입니다.
+
+이 정책 설정을 사용하지 않으면 DC 위치 알고리즘에서 필요한 경우 NetBIOS 기반 검색을 사용할 수 있습니다. 최종 동작에는 AvoidFallbackNetbiosDiscovery 설정이 추가로 적용됩니다.
+
+NetBIOS 기반 검색은 안전하지 않은 것으로 간주되며 많은 제한 사항을 포함하며 향후 릴리스에서 사용되지 않습니다. 이러한 이유로 NetBIOS 기반 검색은 권장되지 않습니다. 자세한 내용은 https://aka.ms/dclocatornetbiosdeprecation 참조하세요.</string>
 
       <string id="Netlogon_AddressLookupOnPingBehavior">DC 로케이터 Ping의 주소 조회 동작 지정</string>
       <string id="Netlogon_AddressLookupOnPingBehavior_Help">이 정책 설정은 IP 주소가 구성된 사이트에 매핑되지 않는 클라이언트에 응답할 때의 도메인 컨트롤러(DC) 동작을 구성합니다.

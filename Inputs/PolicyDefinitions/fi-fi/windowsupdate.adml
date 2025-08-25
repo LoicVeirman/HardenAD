@@ -21,6 +21,7 @@ Asetusta 7 tuetaan vain palvelimissa, joissa on vähintään versio Windows Serv
       <string id="WU_SUPPORTED_Server2016_Through_Server2022_Or_Windows10">Windows Server 2016–Windows Server 2022 tai Windows 10​</string>
       <string id="WU_SUPPORTED_Windows_Server_2019_Windows_10_0_1809">Vähintään Windows Server 2019 tai Windows 10 versio 1809​</string>
       <string id="WU_SUPPORTED_Windows_Server_2022_Windows_10_0_2004">Vähintään Windows Server 2022 tai Windows 10 versio 2004​</string>
+      <string id="WU_SUPPORTED_WinServer2025_Win1021H2_Win1122H2">Vähintään Windows Server 2025, Windows 10 versio 21H2 tai Windows 11 versio 22H2</string>
       <string id="AUDontShowUasHelp">Tällä käytäntöasetuksella määritetään, näytetäänkö Asenna päivitykset ja sammuta -vaihtoehto Sammuta Windows -valintaikkunassa.
 
 Jos tämä käytäntöasetus otetaan käyttöön, Asenna päivitykset ja sammuta ei näy vaihtoehtona Sammuta Windows -valintaikkunassa, vaikka asennettavia päivityksiä olisi käytettävissä, kun käyttäjä valitsee Sammuta-vaihtoehdon Käynnistä-valikossa.
@@ -165,13 +166,13 @@ Jos tilana on Ei määritetty, automaattisten päivitysten käyttöä ei ole mä
       <string id="OnlyUseSystemProxyForUpdateDetection">Käytä päivitysten tunnistamiseen vain järjestelmän välityspalvelinta (oletus)</string>
       <string id="AllowUserProxyAsFallbackForUpdateDetection">Salli käyttäjän välityspalvelimen käyttö varalla, jos tunnistus epäonnistuu järjestelmän välityspalvelimella</string>
       <string id="UpdateClassPolicySource_Title">Määritä lähdepalvelu tiettyjen Windows-päivitysten luokille</string>
-      <string id="UpdateClassPolicySource_Help">When this policy is enabled, devices will receive Windows updates for the classes listed from the specified update source: either Windows Update or Windows Server Update Service.
+      <string id="UpdateClassPolicySource_Help">Kun tämä käytäntö on käytössä, laitteet saavat Windows-päivitykset määritetystä päivityslähteestä lueteltuihin luokkiin: joko Windows Update tai Windows Server Update -palveluun.
 
-        Note: To receive any updates from the Windows Server Update Service you must have properly configured an intranet Microsoft update service location via the “Specify intranet Microsoft update service location” policy.
+Huomautus: Jos haluat vastaanottaa päivityksiä Windows Server Update -palvelusta, sinun on määritettävä intranetin Microsoft Update -palvelun sijainti Määritä Microsoft Update -palvelun sijainti intranetissä -käytännön avulla.
 
-        If this policy is not configured or is disabled, the device will continue to detect updates per your other policy configurations.
+Jos tätä käytäntöasetusta ei määritetä tai se poistetaan käytöstä, laite havaitsee edelleen muiden käytäntömääritystesi päivitykset.
 
-        Note: If you are using “Do not allow deferral policies to cause scans against Windows Update” currently to ensure devices only scan against your specified server, we recommend configuring this policy instead or in addition to such.</string>
+Huomautus: Jos käytät Älä salli lykkäyskäytäntöjen aiheuttaa Windows Update vastaisia skannauksia tällä hetkellä varmistaaksesi, että laitteet skannaavat vain määritettyä palvelinta vasten, suosittelemme määrittämään tämän käytännön sen sijaan tai sen lisäksi.</string>
       <string id="UpdateClassPolicySourceSelectionWU">Windows Update</string>
       <string id="UpdateClassPolicySourceSelectionWSUS">Windows Server Update Services</string>
       <string id="DetectionFrequency_Help">Määrittää, montako tuntia Windows odottaa ennen saatavina olevien päivitysten tarkistamista. Tarkka odotusaika on tietyn arvon sekä 0 ja 4 tunnin välisen satunnaisen muuttujan summa.
@@ -628,22 +629,39 @@ Jos valitset Käytä vain aktiivisena aikana yhdessä vaihtoehdon 1 tai 2 kanssa
       <string id="DefaultNotification">0 (oletus) – Käyttöjärjestelmän Windows Updaten oletusilmoitukset</string>
       <string id="ExcludingRebootWarnings">1 – Poista käytöstä kaikki ilmoitukset, uudelleenkäynnistyksen varoituksia lukuun ottamatta</string>
       <string id="IncludingRebootWarnings">2 – Poista käytöstä kaikki ilmoitukset, uudelleenkäynnistyksen varoitukset mukaan lukien</string>
-      <string id="ComplianceDeadline_Title">Määritä automaattisten päivitysten ja uudelleenkäynnistysten määräajat</string>
-      <string id="ComplianceDeadline_Help">Tällä käytännöllä voit määrittää, kuinka monta päivää aiemmin laatu- ja ominaisuuspäivitykset asennetaan laitteellesi automaattisesti, sekä lisäajan, jonka jälkeen pakolliset uudelleenkäynnistykset suoritetaan automaattisesti.
+      <string id="ComplianceDeadlineForFU_Title">Specify deadline for automatic updates and restarts for feature update</string>
+      <string id="ComplianceDeadlineForFU_Help">This policy lets you specify the number of days before feature updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
 
-Määritä vaatimustenmukaisuustavoitteitasi vastaavat määräajat ominaisuus- ja laatupäivityksille. Päivitykset ladataan ja asennetaan heti, kun niitä tarjotaan, ja automaattisia uudelleenkäynnistyksiä yritetään aktiivisen ajan ulkopuolella. Määräajan jälkeen uudelleenkäynnistykset suoritetaan aktiivisista ajoista riippumatta ja käyttäjä ei voi siirtää niitä. Jos määräaika on määritetty 0 päivään, päivitys asennetaan heti, kun sitä tarjotaan, mutta sitä ei välttämättä suoriteta loppuun kyseisen päivän aikana laitteen käytettävyyden ja verkkoyhteyden vuoksi.
+Set deadlines for feature updates and quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
 
-Määritä lisäaika ominaisuus- ja laatupäivityksille taataksesi käyttäjille vähimmäisajan uudelleenkäynnistysten hallitsemiseen päivitysten asennuksen jälkeen. Käyttäjät voivat siirtää uudelleenkäynnistyksiä lisäajan aikana ja Windows voi silti käynnistyä uudelleen aktiivisen ajan ulkopuolella, jos käyttäjä päättää olla siirtämättä uudelleenkäynnistyksiä. Lisäaika ei välttämättä tule voimaan, jos käyttäjille on jo määritetty määräaikamäärityksissä lisäajaksi enemmän päiviä uudelleenkäynnistyksen hallitsemiseen.
+Set a grace period for feature updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
 
-Voit määrittää laitteen lykkäämään uudelleenkäynnistystä määräajan ja lisäajan päättymiseen saakka.
+You can set the device to delay restarting until both the deadline and grace period have expired.
 
-Jos poistat tämän käytännön käytöstä tai et määritä sitä, päivitykset asennetaan laitteille ja laitteet uudelleenkäynnistyvät oletusaikataulun mukaisesti.
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
 
-Tämä käytäntö korvaa seuraavat käytännöt:
-1.  Määritä päivityksen asentamisen määräaika ennen automaattista uudelleenkäynnistystä
-2.  Määritä päivityksille itsenäinen uudelleenkäynnistyssiirtymä ja ilmoitusaikataulu
-3.  Käynnistä aina automaattisesti uudelleen ajoitettuna aikana
-4.  Määritä automaattiset päivitykset
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
+      </string>
+      <string id="ComplianceDeadlineForQU_Title">Specify deadline for automatic updates and restarts for quality update</string>
+      <string id="ComplianceDeadlineForQU_Help">This policy lets you specify the number of days before quality updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
+
+Set deadlines for quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
+
+Set a grace period for quality updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
+
+You can set the device to delay restarting until both the deadline and grace period have expired.
+
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
+
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
       </string>
       <string id="ComplianceDeadlineDay0">0</string>
       <string id="ComplianceDeadlineDay1">1</string>
@@ -677,15 +695,30 @@ Tämä käytäntö korvaa seuraavat käytännöt:
       <string id="ComplianceDeadlineDay29">29</string>
       <string id="ComplianceDeadlineDay30">30</string>
 
-      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Enable features introduced via servicing that are off by default</string>
-      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Features introduced via servicing (outside of the annual feature update) are off by default for devices that have their Windows updates managed*.
+      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Ota käyttöön ylläpidon kautta käyttöön ottavia ominaisuuksia, jotka ovat oletusarvoisesti poissa käytöstä</string>
+      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Ylläpidon kautta esitellyt ominaisuudet (vuosittaisen ominaisuuspäivityksen ulkopuolella) ovat oletusarvoisesti poissa käytöstä laitteissa, joiden Windows-päivityksiä hallitaan*.
 
-If this policy is configured to “Enabled”, then all features available in the latest monthly quality update installed will be on.
+Jos tämä käytäntö on käytössä“”, kaikki uusimman kuukausittaisen laatupäivityksen käytettävissä olevat ominaisuudet ovat käytössä.
 
-If this policy is set to “Not Configured” or “Disabled” then features that are shipped via a monthly quality update (servicing) will remain off until the feature update that includes these features is installed.
+Jos tämän käytännön asetus on " Ei määritetty" tai "Poistettu käytöstä" sen jälkeen ominaisuudet, jotka toimitetaan kuukausittaisen laatupäivityksen (ylläpidon) kautta, pysyvät poissa käytöstä, kunnes ominaisuuspäivitys, joka sisältää nämä ominaisuudet, on asennettu.
 
- *Windows update managed devices are those that have their Windows updates managed via policy; whether via the cloud using Windows Update for Business or on-premises with Windows Server Update Services (WSUS).
+*Windows Updaten hallitut laitteet ovat niitä, joiden Windows-päivityksiä hallitaan käytännön kautta; joko pilvipalvelun kautta käyttämällä Windows Update yrityksille tai paikallisesti Windows Server Update Services (WSUS) kanssa.
       </string>
+      <string id="AllowOptionalContent_Title">Ota valinnaiset päivitykset käyttöön</string>
+      <string id="AllowOptionalContent_Help">Tämän käytännön avulla laitteet voivat saada valinnaisia päivityksiä (mukaan lukien vaiheittaiset ominaisuuksien käyttöönotot (CFR:t) – saat lisätietoja käymällä osoitteessa aka.ms/AllowOptionalContent)
+
+Kun käytäntö on määritetty
+
+• Jos "Vastaanota valinnaiset päivitykset automaattisesti (mukaan lukien CFR:t)" on valittuna, laite saa uusimmat valinnaiset päivitykset automaattisesti määritettyjen laatupäivitysten lykkäysten mukaisesti. Tämä sisältää valinnaiset kumulatiiviset päivitykset ja vaiheittaiset ominaisuuksien käyttöönotot.
+
+• Jos "Vastaanota valinnaiset päivitykset automaattisesti" on valittuna, laite saa valinnaiset kumulatiiviset päivitykset vain automaattisesti laatupäivityksen lykkäysten mukaisesti.
+
+• Jos "Käyttäjät voivat valita, mitkä valinnaiset päivitykset vastaanotetaan" on valittuna, käyttäjät voivat valita, mitä valinnaisia päivityksiä he saavat valitsemalla Asetukset &gt; Windows Update &gt; Lisäasetukset &gt; Valinnaiset päivitykset. Käyttäjät voivat myös ottaa käyttöön "Hanki uusimmat päivitykset heti, kun ne ovat saatavilla", jotta he saavat automaattisesti valinnaisia päivityksiä ja toimintojen vaiheittaisia käyttöönottoja.
+      </string>
+      <string id="DonotReceiveOptionalContent">Älä vastaanota valinnaisia päivityksiä</string>
+      <string id="ReceiveOptionalContentWithAutoApproval">Vastaanota valinnaiset päivitykset automaattisesti (CFR-päivitykset mukaan lukien)</string>
+      <string id="ReceiveOptionalLCUWithAutoApproval">Vastaanota valinnaiset päivitykset automaattisesti</string>
+      <string id="ReceiveOptionalContentNeedUserApproval">Käyttäjät voivat valita vastaanotettavat valinnaiset päivitykset</string>
     </stringTable>
 
     <presentationTable>
@@ -827,16 +860,20 @@ If this policy is set to “Not Configured” or “Disabled” then features th
         <text></text>
         <checkBox refId="NoUpdateNotificationsDuringActiveHours" defaultChecked="false">Käytä vain aktiivisena aikana</checkBox>
       </presentation>
-      <presentation id="ComplianceDeadline_Title">
-        <text>Laatupäivitykset</text>
+       <presentation id="ComplianceDeadlineForFU_Title">
+        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="2">Määräaika (päivinä):</dropdownList>
+        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="7">Lisäaika (päivää):</dropdownList>
+        <text></text>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForFeatureUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="ComplianceDeadlineForQU_Title">
         <dropdownList refId="ConfigureDeadlineForQualityUpdates" noSort="true" defaultItem="7">Määräaika (päivinä):</dropdownList>
         <dropdownList refId="ConfigureDeadlineGracePeriod" noSort="true" defaultItem="2">Lisäaika (päivää):</dropdownList>
         <text></text>
-        <text>Ominaisuuspäivitykset</text>
-        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="7">Määräaika (päivinä):</dropdownList>
-        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="2">Lisäaika (päivää):</dropdownList>
-        <text></text>
-        <checkBox refId="ConfigureDeadlineNoAutoReboot" defaultChecked="false">Älä käynnistä automaattisesti uudelleen ennen lisäajan päättymistä</checkBox>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForQualityUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="AllowOptionalContent_Title">
+        <dropdownList refId="AllowOptionalContent" noSort="true" defaultItem="0">Valitse tapa, jolla käyttäjät vastaanottavat valinnaisia päivityksiä:</dropdownList>
       </presentation>
     </presentationTable>
   </resources>

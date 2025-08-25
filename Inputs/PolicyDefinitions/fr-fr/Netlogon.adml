@@ -298,16 +298,28 @@ Ce paramètre de stratégie est recommandé pour réduire la surface d’attaque
 Si vous activez ce paramètre de stratégie, ce contrôleur de domaine ne traite pas les messages mailslot entrants utilisés pour la localisation des contrôleurs de domaine basée sur le nom de domaine NetBIOS.
 
 Si vous désactivez ce paramètre de stratégie ou ne le configurez pas, ce contrôleur de domaine traite les messages mailslot entrants. Il s’agit du comportement par défaut du localisateur de contrôleurs de domaine.</string>
+
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery">Ne pas utiliser la découverte NetBIOS pour l’emplacement des contrôleurs de domaine en cas d’échec de la découverte DNS</string>
-      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Ce paramètre de stratégie vous permet de contrôler l’algorithme d’emplacement du contrôleur de domaine. Par défaut, l’algorithme d’emplacement du contrôleur de domaine préfère utiliser la découverte DNS si le nom de domaine DNS est connu. En cas d’échec de la découverte DNS et si le nom de domaine NetBIOS est connu, l’algorithme a recours à la découverte NetBIOS.
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Ce paramètre de stratégie vous permet de contrôler l’algorithme d’emplacement du contrôleur de domaine. Par défaut, l’algorithme d’emplacement du contrôleur de domaine préfère la découverte DNS si le nom de domaine DNS est connu. Si la découverte basée sur DNS échoue et que le nom de domaine NetBIOS est connu, l’algorithme utilise ensuite la découverte basée sur NetBIOS comme mécanisme de secours.
 
-La découverte NetBIOS utilise un serveur WINS et des messages mailslot mais pas les informations de site. Par conséquent, elle ne vérifie pas si les clients découvrent le contrôleur de domaine le plus proche. Elle permet également au client d’un site hub de découvrir le contrôleur de domaine d’un site de succursale même si le contrôleur de domaine du site de succursale n’inscrit que les enregistrements DNS spécifiques au site (conformément aux recommandations). Pour toutes ces raisons, la découverte NetBIOS n’est pas recommandée.
+La découverte basée sur NetBIOS utilise un serveur WINS et des messages mailslot, mais n’utilise pas d’informations de site. Par conséquent, il ne garantit pas que les clients découvriront le contrôleur de domaine le plus proche. Il permet également à un client de site hub de découvrir un contrôleur de domaine de site de branche, même si le contrôleur de domaine de site de branche inscrit uniquement les enregistrements DNS spécifiques au site (comme recommandé). Pour ces raisons, la découverte basée sur NetBIOS n’est pas recommandée. 
 
-Notez que ce paramètre de stratégie n’affecte pas la découverte NetBIOS pour la localisation du contrôleur de domaine si seul le nom de domaine NetBIOS est connu.
+Notez que ce paramètre de stratégie n’affecte pas la découverte basée sur NetBIOS pour l’emplacement du contrôleur de domaine si seul le nom de domaine NetBIOS est connu.
 
-Si vous désactivez ce paramètre de stratégie ou si vous ne le configurez pas, l’algorithme d’emplacement du contrôleur de domaine n’a pas recours à la découverte NetBIOS en cas d’échec de la découverte DNS. Il s’agit du comportement par défaut.
+Si vous activez ou ne configurez pas ce paramètre de stratégie, l’algorithme d’emplacement du contrôleur de domaine n’utilise pas la découverte basée sur NetBIOS comme mécanisme de secours en cas d’échec de la découverte basée sur DNS. Il s’agit du comportement par défaut. 
 
-Si vous désactivez ce paramètre de stratégie, l’algorithme d’emplacement du contrôleur de domaine peut recourir à la découverte NetBIOS en cas d’échec de la découverte DNS.</string>
+Si vous désactivez ce paramètre de stratégie, l’algorithme d’emplacement du contrôleur de domaine peut utiliser la découverte basée sur NetBIOS comme mécanisme de secours en cas d’échec de la découverte basée sur DNS.
+
+Ce paramètre n’a aucun effet, sauf si le paramètre BlockNetbiosDiscovery est désactivé. La découverte basée sur NetBIOS est considérée comme non sécurisée, présente de nombreuses limitations et sera déconseillée dans une version ultérieure. Pour ces raisons, la découverte basée sur NetBIOS n’est pas recommandée. Pour plus d’informations, consultez https://aka.ms/dclocatornetbiosdeprecation.</string>
+
+      <string id="Netlogon_BlockNetbiosDiscovery">Bloquer la découverte NetBIOS pour l’emplacement du contrôleur de domaine</string>
+      <string id="Netlogon_BlockNetbiosDiscovery_Help">Ce paramètre de stratégie vous permet de contrôler si l’algorithme d’emplacement du contrôleur de domaine utilise NetBIOS_based découverte pour l’emplacement du contrôleur de domaine.
+
+Si vous activez ou ne configurez pas ce paramètre de stratégie, l’algorithme d’emplacement du contrôleur de domaine n’utilise jamais la découverte NetBIOS. Il s’agit du comportement par défaut.
+
+Si vous désactivez ce paramètre de stratégie, l’algorithme d’emplacement du contrôleur de domaine peut utiliser la découverte NetBIOS si nécessaire. Le comportement final est davantage régi par le paramètre AvoidFallbackNetbiosDiscovery.
+
+La découverte NetBIOS est considérée comme non sécurisée, présente de nombreuses limitations et sera dépréciée dans une prochaine version. Pour ces raisons, la découverte NetBIOS n’est pas recommandée. Pour plus d’informations, consultez https://aka.ms/dclocatornetbiosdeprecation.</string>
 
       <string id="Netlogon_AddressLookupOnPingBehavior">Spécifier le type de recherche d’adresse pour la requête Ping du localisateur de contrôleurs de domaine</string>
       <string id="Netlogon_AddressLookupOnPingBehavior_Help">Ce paramètre de stratégie configure le comportement d’un contrôleur de domaine lors de la réponse à un client dont l’adresse IP ne correspond à aucun site configuré.

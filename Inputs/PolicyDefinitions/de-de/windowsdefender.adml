@@ -17,6 +17,9 @@
     <string id="Quarantine">Quarantäne</string>
     <string id="RealtimeProtection">Echtzeitschutz</string>
     <string id="Remediation">Wartung</string>
+    <string id="Remediation_BNB">Verhaltensnetzwerkblöcke</string>
+    <string id="Remediation_BNB_REP">Remoteverschlüsselungsschutz</string>
+    <string id="Remediation_BNB_BFP">Brute-Force-Schutz</string>
     <string id="Reporting">Berichte</string>
     <string id="Scan">Scan</string>
     <string id="SignatureUpdate">Aktualisierung der Sicherheitsinformationen</string>
@@ -47,6 +50,10 @@ Aktiviert
 Aktiviert: 
         Wenn Sie diese Einstellung aktivieren, können lokale Administratoren die Ausschlussliste nicht mehr in Windows-Sicherheit App oder über PowerShell anzeigen.
         Hinweis: Durch das Anwenden dieser Einstellung werden keine Ausschlüsse entfernt. Sie verhindert nur, dass sie für lokale Administratoren sichtbar sind. Dies spiegelt sich in  Get-MpPreference wider.</string>
+    <string id="HideExclusionsFromLocalUsers">Steuern, ob Ausschlüsse für lokale Benutzer sichtbar sind</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    Diese Richtlinieneinstellung steuert, ob Ausschlüsse für lokale Benutzer auf dem Gerät sichtbar sind.
+    Verwenden Sie die Richtlinieneinstellung HideExclusionsFromLocalAdmins, um Ausschlüsse sowohl für lokale Standardbenutzer als auch für lokale Administratoren auszublenden.</string>
     <string id="AllowNetworkProtectionOnWinServer">Mit diesen Einstellungen wird gesteuert, ob der Netzwerkschutz für den Block-oder Überwachungsmodus unter Windows Server konfiguriert werden darf.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     Deaktiviert (Standard): 
@@ -57,11 +64,29 @@ Aktiviert
     Hinweis, dass diese Konfiguration von der EnableNetworkProtection-Konfiguration abhängig ist. Wenn diese Konfiguration falsch ist, wird EnableNetworkProtection ignoriert. andernfalls wird der Netzwerk Schutz auf Windows Server abhängig von dem Wert "EnableNetworkProtection" gestartet.</string>
     <string id="DisableDatagramProcessing">Mit dieser Einstellung wird die Datagramm-Verarbeitung für den Netzwerk Schutz gesteuert.</string>
     <string id="DisableDatagramProcessing_Explain">
-    Aktiviert (Standard): 
-    Wenn diese Einstellung nicht konfiguriert oder deaktiviert ist, wird die datagrammverarbeitung für den Netzwerk Schutz aktiviert.
+    Deaktiviert (Standard): 
+    Wenn diese Option nicht konfiguriert oder deaktiviert ist, wird die Datagrammverarbeitung für den Netzwerkschutz aktiviert.
 
-Aktiviert 
-    Wenn diese Option aktiviert ist, wird die datagrammverarbeitung für den Netzwerk Schutz deaktiviert.</string>
+Aktiviert: 
+    Wenn diese Option aktiviert ist, wird die Datagrammverarbeitung für den Netzwerkschutz deaktiviert.</string>
+    <string id="EnableConvertWarnToBlock">Warnbewertung in Block konvertieren</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    Der Netzwerkschutz überprüft den Netzwerkdatenverkehr und bestimmt, ob der Datenverkehr zulässig oder blockiert wird oder ob eine Warnung angezeigt wird.
+    
+Deaktiviert (Standard): 
+    Wenn diese Option nicht konfiguriert oder deaktiviert ist, zeigt der Netzwerkschutz eine Warnung für Warnungen an.
+
+Aktiviert: 
+    Wenn diese Einstellung aktiviert ist, blockiert der Netzwerkschutz den Netzwerkdatenverkehr, anstatt eine Warnung anzuzeigen.</string>
+    <string id="AllowSwitchToAsyncInspection">Asynchrone Überprüfung aktivieren</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    Steuern Sie, ob der Netzwerkschutz die Leistung verbessern kann, indem Sie von der Echtzeitüberprüfung zur asynchronen Überprüfung wechseln.
+
+    Deaktiviert (Standard): 
+    Wenn nicht konfiguriert oder deaktiviert, wird die asynchrone Überprüfung für den Netzwerkschutz nicht aktiviert.
+
+    Aktiviert: 
+ Wenn aktiviert, wird der Wechsel zur asynchronen Überprüfung für den Netzwerkschutz zugelassen.</string>
     <string id="DisableAutoExclusions">Automatische Ausschlüsse deaktivieren</string>
     <string id="DisableAutoExclusions_Explain">
         Ermöglicht einem Administrator, anzugeben, ob das Feature "Automatische Ausschlüsse" für Server-SKUs deaktiviert werden soll.
@@ -142,15 +167,19 @@ Wenn diese Einstellung deaktiviert oder nicht konfiguriert wird, wird der Proxys
       Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, überspringt der Proxy diesen Fallbackschritt (gemäß der oben angegebenen Reihenfolge).
     </string>
     <string id="RandomizeScheduleTaskTimes">Zufälliges Festlegen von Zeiten für geplante Aufgaben</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">Diese Richtlinieneinstellung ermöglicht es Ihnen, die planmäßige Überprüfung und das Startzeitfenster in Stunden des geplanten Security Intelligence-Updates zu konfigurieren.
+    <string id="RandomizeScheduleTaskTimes_Explain">Mit dieser Richtlinieneinstellung können Sie die Randomisierung der geplanten Startzeit für den Scan und die Startzeit für geplante Definitionsupdates konfigurieren.
 
-    Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, beginnen geplante Vorgänge zu einem zufälligen Zeitpunkt innerhalb von 4 Stunden nach der in der Aufgabenplanung angegebenen Zeit.
-    Wenn Sie diese Einstellung aktivieren, können Sie den Randomisierungszeitraum verlängern oder verkürzen. Geben Sie ein Randomisierungsfenster zwischen 1 und 23 Stunden an.</string>
+        Wenn Sie diese Richtlinieneinstellung aktivieren oder nicht konfigurieren und kein Randomisierungsfenster in der Einstellung „Geplantes Zeitfenster für die Randomisierung von Aufgaben konfigurieren“ festgelegt haben, wird die Randomisierung zwischen 0 und 4 Stunden hinzugefügt.
+        Wenn Sie diese Richtlinieneinstellung aktivieren oder nicht konfigurieren und in der Einstellung „Geplantes Zeitfenster für die Randomisierung von Aufgaben konfigurieren“ ein Fenster für die Randomisierung festlegen, wird das konfigurierte Randomisierungsfenster verwendet.
+        Wenn Sie diese Richtlinieneinstellung deaktivieren, aber das Zeitfenster für die Randomisierung der geplanten Aufgabe konfiguriert haben, erfolgt keine Randomisierung. 
+    </string>
     <string id="SchedulerRandomizationTime">Konfigurieren des zufälligen Zeitfensters für geplante Aufgaben</string>
-    <string id="SchedulerRandomizationTime_Explain">Diese Richtlinieneinstellung ermöglicht es Ihnen, die Startzeit für die planmäßige Überprüfung und das Startzeitfenster in Stunden des geplanten Security Intelligence-Updates zu konfigurieren.
+    <string id="SchedulerRandomizationTime_Explain">Mit dieser Richtlinieneinstellung können Sie die Startzeit der geplanten Aufgabenüberprüfung und das geplante Startzeitfenster für das Update von Sicherheitsinformationen in Stunden konfigurieren. Diese Einstellung wirkt sich auf die Konfiguration „Geplante Aufgabenzeiten randomisieren“ aus.
 
-    Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, beginnen geplante Vorgänge zu einem zufälligen Zeitpunkt innerhalb eines Intervalls von 4 Stunden nach der angegebenen Startzeit.
-    Wenn Sie diese Einstellung aktivieren, müssen Sie ein Randomisierungsfenster in Stunden auswählen. Das mögliche Intervall für das Randomisierungsfenster liegt zwischen 1 und 23 Stunden.</string>
+        Wenn Sie diese Einstellung aktivieren, müssen Sie ein Randomisierungsfenster in Stunden auswählen. Das mögliche Randomisierungsfensterintervall liegt zwischen 1 und 23 Stunden. Das implementierte Randomisierungsintervall liegt zwischen 0 und dem konfigurierten Wert. 
+        Wenn Sie diese Einstellung aktivieren, verwendet die Einstellung „Geplante Aufgabenzeiten randomisieren“ das in dieser Konfigurationseinstellung angegebene Randomisierungsfenster. 
+        Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden die Einstellungen für „Geplante Aufgabenzeiten zufällig festlegen“ die geplanten Aufgabenzeiten zwischen 0 und 4 Stunden zufällig anordnen.</string>
+
     <string id="ServiceKeepAlive">Zulassen der ständigen Ausführung von AntiMalware-Diensten</string>
     <string id="ServiceKeepAlive_Explain">Mit dieser Richtlinieneinstellung kann konfiguriert werden, ob der Antimalware-Dienst weiterhin ausgeführt werden soll, wenn Antiviren- und Antispyware-Sicherheitsinformationen deaktiviert werden. Es wird empfohlen, dass diese Einstellung deaktiviert bleibt.
 
@@ -219,6 +248,22 @@ Wenn diese Einstellung deaktiviert oder nicht konfiguriert wird, verbleiben die 
 Wenn Sie diese Einstellung aktivieren oder nicht konfigurieren, wird die Skript Überprüfung aktiviert.
 
 Wenn Sie diese Einstellung deaktivieren, wird die Skript Überprüfung deaktiviert.</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">Konfigurieren Sie Echtzeitschutz und Security Intelligence Updates während OOBE</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">Mit dieser Richtlinieneinstellung können Sie konfigurieren, ob der Echtzeitschutz und die Security Intelligence Updates während OOBE (Out of Box experience) aktiviert sind.
+ 
+    Wenn Sie diese Einstellung aktivieren, werden der Echtzeitschutz und die Security Intelligence Updates während OOBE aktiviert..
+ 
+    Wenn Sie diese Richtlinieneinstellung entweder deaktivieren oder nicht konfigurieren, sind der Echtzeitschutz und die Security Intelligence Updates während OOBE nicht aktiviert.</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">Konfigurieren des Leistungsmodusstatus</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">Diese Richtlinie steuert Microsoft Defender Antivirenleistungsmodus für Dev Drives.
+
+    Ein Dev Drive ist ein für eine höhere Leistung in Softwareentwicklungsszenarien optimiertes Laufwerk. Wenn diese Richtlinie aktiviert oder nicht konfiguriert ist, wird der Leistungsmodus für Microsoft Defender Antivirus aktiviert. Im Leistungsmodus werden Sicherheitsprüfungen der auf Dev Drives gespeicherten Inhalte von Microsoft Defender Antivirus asynchron ausgeführt, um die Leistung zu verbessern. Für den Leistungsmodus müssen auch die folgenden Richtlinien aktiviert sein: „Dev Drive aktivieren“ und „Richtlinie zum Anfügen von Dev Drive-Filtern“.
+
+    Wenn Sie diese Richtlinieneinstellung aktivieren oder nicht konfigurieren, wird der Leistungsmodus aktiviert.
+
+    Wenn Sie diese Richtlinieneinstellung deaktivieren, wird der Leistungsmodus deaktiviert, und Microsoft Defender Antivirus schützt ein Dev Drive auf dieselbe Weise wie andere Laufwerke.</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">Aktivieren der Verhaltensüberwachung</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">Mit dieser Richtlinieneinstellung kann die Verhaltensüberwachung konfiguriert werden.
@@ -359,6 +404,92 @@ Wenn diese Einstellung deaktiviert oder nicht konfiguriert wird, wird mit einer 
 Wenn diese Einstellung aktiviert wird, wird zur angegebenen Tageszeit ein geplanter vollständiger Scan ausgeführt, um die Wartung abzuschließen.
 
 Wenn diese Einstellung deaktiviert oder nicht konfiguriert wird, wird mit einer Standardzeit ein geplanter vollständiger Scan zum Abschließen der Wartung ausgeführt.</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">Konfigurieren des Remoteverschlüsselungsschutzmodus</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    Legen Sie den Modus für den Remoteverschlüsselungsschutz in Microsoft Defender Antivirus fest, der Versuche erkennen und blockieren kann, lokale Dateien durch verschlüsselte Versionen von einem anderen Gerät zu ersetzen. 
+
+Unterstützte Einstellungen:
+    * 0 – Nicht konfiguriert oder Standard: Standardwerte anwenden, die je nach Version des Antivirusmoduls und plattformabhängig variieren können.
+    * 1 – Blockieren: Verdächtiges und bösartiges Verhalten verhindern
+    * 2 – Überwachung: EDR-Erkennungen ohne Blockierung generieren
+    * 4 – Aus: Das Feature ist ohne Leistungseinbußen deaktiviert.
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">Standard</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">Blockieren</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">Überwachung</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">Aus</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">Konfigurieren der Sperrzeit des Remoteverschlüsselungsschutzes</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    Legen Sie die maximale Zeit fest, die eine IP-Adresse durch den Remoteverschlüsselungsschutz blockiert wird. Nach ablaufend können blockierte IP-Adressen wieder Verbindungen initialisieren. 
+
+Unterstützte Einstellungen:
+    * 0 - Keine: Die interne Funktionslogik bestimmt die tatsächliche Blockierungszeit.
+    * Andere Zeiten in 15-Minuten-Schritten angeben
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">Konfigurieren, wie aggressiver Remoteverschlüsselungsschutz Bedrohungen blockiert</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    Legen Sie die Kriterien für die Blockierung von IP-Adressen durch den Schutz der Remoteverschlüsselungsverhütung fest.
+
+Unterstützte Einstellungen:
+    *0 - Niedrig: Nur blockieren, wenn das Konfidenzniveau 100% ist (Standard)
+    *1 – Mittel: Cloudaggregation und -block verwenden, wenn das Konfidenzniveau über 99%
+    *2 – Hoch: Cloudint intel und Kontext verwenden und blockieren, wenn das Konfidenzniveau über 90%
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">Niedrig</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">Mittel</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">Hoch</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> Festlegen von Ausschlüssen vom Remoteverschlüsselungsschutz</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    Geben Sie IP-Adressen, Subnetze und Domänennamen an, die vom Remoteverschlüsselungsschutz ausgeschlossen werden sollen. Beachten Sie, dass Angreifer ausgeschlossene Adressen und Namen spoofen können, um den Schutz zu umgehen.
+
+    Geben Sie jede Adresse oder jedes Subnetz in einer neuen Zeile als Name-Wert-Paar ein:
+    - Namensspalte: Geben Sie eine IP-Adresse oder einen Subnetznamen ein. Beispielsweise schließt ""1.1.127.0" diese IP-Adresse von der Blockierung aus.
+    - Wertspalte: Geben Sie ""0" für jedes Element ein.
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">Konfigurieren des Brute-Force-Schutzmodus</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Legen Sie den Modus für Brute-Force Protection in Microsoft Defender Antivirus fest, der Versuche zum Initiieren der Anmeldung und zum Initiieren von Sitzungen erkennen und blockieren kann.
+
+Unterstützte Einstellungen:
+    * 0 – Nicht konfiguriert oder Standard: Standardwerte anwenden, die je nach Version des Antivirusmoduls und plattformabhängig variieren können.
+    * 1 – Blockieren: Verdächtiges und bösartiges Verhalten verhindern
+    * 2 – Überwachung: EDR-Erkennungen ohne Blockierung generieren
+    * 4 – Aus: Das Feature ist ohne Leistungseinbußen deaktiviert.
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">Standard</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">Blockieren</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">Überwachung</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">Aus</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">Blockierungszeit für Brute-Force-Schutz konfigurieren</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    Legen Sie die maximale Zeit fest, die eine IP-Adresse durch Brute-Force Schutz blockiert wird. Nach Ablauf dieses Zeitraums können blockierte IP-Adressen sich anmelden und Sitzungen initiieren.
+
+Unterstützte Einstellungen:
+    * 0 - Keine: Die interne Funktionslogik bestimmt die tatsächliche Blockierungszeit.
+    * Andere Zeiten in 15-Minuten-Schritten angeben
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">Konfigurieren der Brute-Force-Schutzaggressivität</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    Legen Sie die Kriterien fest, wann Brute-Force Schutz IP-Adressen blockiert.
+
+Unterstützte Einstellungen:
+    *0 - Niedrig: Nur blockieren, wenn das Konfidenzniveau 100% ist (Standard)
+    *1 – Mittel: Cloudaggregation und -block verwenden, wenn das Konfidenzniveau über 99%
+    *2 – Hoch: Cloud intel und context verwenden und blockieren, wenn das Konfidenzniveau über 90%
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">Niedrig</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">Mittel</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">Hoch</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">Festlegen von Ausschlüssen vom Brute-Force-Schutz</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    Geben Sie IP-Adressen, Subnetze oder Arbeitsstationsnamen an, die vom Brute-Force-Schutz ausgeschlossen werden sollen. Ausgeschlossene IP-Adressen werden nicht auf mögliche Brute-Force-Aktivitäten überprüft.
+    
+    Beachten Sie, dass Angreifer ausgeschlossene Adressen und Namen spoofen können, um den Schutz zu umgehen. Stellen Sie sicher, dass die Namen eindeutig sind und von Angreifern wahrscheinlich nicht erraten werden.
+
+    Geben Sie jede Adresse oder jedes Subnetz in einer neuen Zeile als Name-Wert-Paar ein:
+    - Namensspalte: Geben Sie eine IP-Adresse, einen Subnetznamen oder einen Arbeitsstationsnamen ein. Beispielsweise schließt "1.1.127.0" diese IP-Adresse von der Blockierung durch BFP aus.
+    - Wertspalte: Geben Sie für jedes Element "0" ein.
+    </string>
     <string id="Reporting_AdditionalActionTimeout">Konfigurieren eines Timeouts für Erkennungen, die weitere Aktionen erfordern</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">Mit dieser Richtlinieneinstellung wird die Dauer in Minuten konfiguriert, bevor eine Erkennung, die sich im Zustand "Zusätzliche Aktion" befindet, in den Zustand "Gelöscht" wechselt.</string>
     <string id="Reporting_CriticalFailureTimeout">Konfigurieren des Timeouts für Erkennungen im Zustand "Schwerwiegender Fehler"</string>
@@ -398,6 +529,12 @@ Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, wird der Stand
 Wenn Sie diese Einstellung auf 0 konfigurieren, werden keine Dienststatusberichte gesendet.
 
 Der maximal zulässige Wert ist 14400 Minuten (10 Tage).</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">Konfigurieren, ob Ereignisse vom Typ „Dynamische Signatur verworfen“ gemeldet werden sollen</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">Mit dieser Richtlinieneinstellung wird konfiguriert, ob gelöschte Ereignisse der dynamischen Signatur gemeldet werden.
+
+Wenn Sie diese Einstellung nicht konfigurieren, wird der Standardwert angewendet. Der Standardwert ist auf "Deaktiviert" festgelegt (solche Ereignisse werden nicht gemeldet).
+    Wenn Sie diese Einstellung für "Aktiviert" konfigurieren, werden gelöschte Ereignisse für die dynamische Signatur gemeldet.
+    Wenn Sie diese Einstellung auf "Deaktiviert" konfigurieren, werden gelöschte Ereignisse der dynamischen Signatur nicht gemeldet.</string>
       <string id="Scan_AllowPause">Benutzern das Anhalten von Scans gestatten</string>
     <string id="Scan_AllowPause_Explain">Mit dieser Richtlinieneinstellung wird verwaltet, ob Endbenutzer einen laufenden Scanvorgang anhalten können.
 
@@ -456,6 +593,10 @@ Wenn Sie diese Einstellung deaktivieren, gilt die CPU-Drosselung für geplante u
 Wenn diese Einstellung aktiviert wird, werden Nachholscans für geplante Schnellscans aktiviert. Wenn ein Computer bei zwei aufeinander folgenden Scans offline ist, wird bei der nächsten Anmeldung an diesem Computer ein Nachholscan gestartet.  Wenn kein geplanter Scan konfiguriert wurde, wird kein Nachholscan ausgeführt.
 
 Wenn diese Einstellung deaktiviert oder nicht konfiguriert wird, werden Nachholscans für geplante Schnellscans deaktiviert.</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">Schnellüberprüfung nach X Tagen ohne Überprüfung auslösen</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">Mit dieser Richtlinieneinstellung wird die Anzahl von Tagen definiert, die seit der letzten Überprüfung verstreichen können, bevor automatisch eine aggressive Schnellüberprüfung für Catchups ausgelöst wird. Der Wert stellt die Anzahl der Tage dar, die verstreichen können, ohne dass Überprüfungen durchgeführt werden, bevor eine aggressive Schnellüberprüfung ausgelöst wird.
+    
+Gültige Werte liegen zwischen 7 und 60 Tagen. Wenn diese Option nicht konfiguriert ist, werden aggressive Schnellüberprüfungen deaktiviert. Standardmäßig wird der Wert bei Aktivierung auf 25 Tage festgelegt.</string>
     <string id="Scan_DisableEmailScanning">Aktivieren von E-Mail-Scans</string>
     <string id="Scan_DisableEmailScanning_Explain">Mit dieser Richtlinieneinstellung können Sie die E-Mail-Überprüfung konfigurieren. Wenn die E-Mail-Überprüfung aktiviert ist, analysiert das Modul das Postfach und die E-Mail-Dateien gemäß ihrem spezifischen Format, um die E-Mail-Textkörper und -Anlagen zu analysieren. Derzeit werden mehrere E-Mail-Formate unterstützt, z. B. pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac). Die E-Mail-Überprüfung wird auf modernen E-Mail-Clients nicht unterstützt.
     
@@ -498,12 +639,12 @@ Wenn diese Einstellung deaktiviert oder nicht konfiguriert wird, wird kein Syste
 Wenn diese Einstellung aktiviert wird, werden zugeordnete Netzwerklaufwerke gescannt.
 
 Wenn diese Einstellung deaktiviert oder nicht konfiguriert wird, werden zugeordnete Netzwerklaufwerken nicht gescannt.</string>
-    <string id="Scan_DisableScanningNetworkFiles">Scannen von Netzwerkdateien</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">Mit dieser Richtlinieneinstellung kann das Scannen für Netzwerkdateien konfiguriert werden. Es wird empfohlen, diese Einstellung nicht zu aktivieren.
+    <string id="Scan_DisableScanningNetworkFiles">Überprüfung von Netzwerkdateien konfigurieren</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">Mit dieser Richtlinieneinstellung können Netzwerkdateien beim Zugriffsschutz überprüft werden. Der Standardwert ist aktiviert. Es wird empfohlen, in den meisten Fällen aktiviert zu bleiben.
 
-Wenn diese Einstellung aktiviert wird, werden Netzwerkdateien gescannt.
+Wenn Sie diese Einstellung aktivieren oder nicht konfigurieren, werden Netzwerkdateien überprüft.
 
-Wenn diese Einstellung deaktiviert oder nicht konfiguriert wird, werden keine Netzwerkdateien gescannt.</string>
+Wenn Sie diese Einstellung deaktivieren, werden Netzwerkdateien nicht überprüft.</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">Konfigurieren der Außerkraftsetzung von lokalen Einstellungen für den maximalen Prozentsatz der CPU-Auslastung</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">Mit dieser Richtlinieneinstellung wird eine lokale Außerkraftsetzung für die Konfiguration des maximalen Prozentsatzes der CPU-Auslastung während eines Scanvorgangs konfiguriert. Diese Einstellung kann nur mithilfe der Gruppenrichtlinie festgelegt werden.
 
@@ -615,6 +756,18 @@ Wenn diese Einstellung deaktiviert oder nicht konfiguriert wird, wird zu einer S
 
         Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, werden für geplante Scans keine Änderungen an der CPU-Priorität vorgenommen.
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">Scannen ausgeschlossener Dateien und Verzeichnisse während Schnellscans</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        Mit dieser Richtlinieneinstellung können Sie ausgeschlossene Dateien und Verzeichnisse bei Schnellüberprüfungen überprüfen.
+
+Wenn Sie diese Richtlinieneinstellung auf 1 festlegen, werden alle Dateien und Verzeichnisse, die durch kontextbezogene Ausschlüsse vom Echtzeitschutz ausgeschlossen sind, während einer Schnellüberprüfung überprüft.
+
+Wenn Sie diese Richtlinie auf "0" festlegen oder nicht konfigurieren, werden Ausschlüsse bei Schnellüberprüfungen nicht überprüft.
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">Festlegen, nach welcher Anzahl von Tagen Spyware-Sicherheitsinformationen als veraltet gelten</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">Mithilfe dieser Richtlinieneinstellung können Sie die Anzahl der Tage festlegen, die vergehen müssen, bevor die Sicherheitsintelligenz von Spyware als veraltet angesehen wird. Wenn die Sicherheitsintelligenz als veraltet gilt, kann dieser Zustand mehrere zusätzliche Aktionen auslösen, z. B. das Fallback auf eine alternative Aktualisierungsquelle oder das Anzeigen eines Warnsymbols auf der Benutzeroberfläche. Standardmäßig ist dieser Wert auf 7 Tage festgelegt.
 
@@ -637,6 +790,13 @@ Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, wird die Viren
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">Mit dieser Richtlinieneinstellung können Sie den Speicherort für Sicherheitsinformationen für VDI-konfigurierte Computer definieren.
 
     Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, werden Sicherheitsinformationen aus der lokalen Standardquelle abgerufen.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">Konfigurieren Sie Updates der Sicherheitsinformationen gemäß dem Planer für VDI-Clients.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">Mit dieser Richtlinieneinstellung können Sie Updates für Sicherheitsinformationen gemäß dem Scheduler für VDI-konfigurierte Computer konfigurieren. Sie wird zusammen mit dem freigegebenen Speicherort für Sicherheitsinformationen (SharedSignaturesLocation) verwendet.
+
+    Wenn Sie diese Richtlinieneinstellung aktivieren und SharedSignaturesLocation konfigurieren, erfolgen Updates vom konfigurierten Speicherort nur zur zuvor konfigurierten geplanten Updatezeit.
+
+    Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, werden Updates immer dann durchgeführt, wenn ein neues Update der Sicherheitsinformationen an dem von SharedSignaturesLocation angegebenen Speicherort erkannt wird.
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">Scan nach Update der Sicherheitsinformationen aktivieren</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">Mit dieser Richtlinieneinstellung kann der automatische Scan konfiguriert werden, der nach einem Update der Sicherheitsinformationen gestartet wird.
 
@@ -829,12 +989,6 @@ Gültige Werte für Wartungsaktionen:
 
       Wenn Sie die Einstellung aktivieren, werden keine Microsoft Defender Antivirus-Benachrichtigungen auf Clients angezeigt.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Anzeigen von zusätzlichem Text für Clients, wenn eine Aktion ausgeführt werden muss</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">Mit dieser Richtlinieneinstellung können Sie konfigurieren, ob zusätzlicher Text für Clients angezeigt wird, wenn eine Aktion ausgeführt werden muss Der angezeigte Test ist eine vom Administrator benutzerdefinierte Zeichenfolge. Beispielsweise kann es sich dabei um die Helpdesk-Telefonnummer des Unternehmens handeln. Die Clientschnittstelle zeigt höchstens 1024 Zeichen an. Längere Zeichenfolgen werden vor dem Anzeigen gekürzt.
-
-Wenn Sie diese Einstellung aktivieren, wird der angegebene zusätzliche Text angezeigt.
-
-Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, wird kein zusätzlicher Text angezeigt.</string>
     <string id="MpCloudBlockLevel">Cloudschutzebene auswählen</string>
     <string id="MpCloudBlockLevel_Explain">
       Diese Richtlinieneinstellung legt fest, wie aggressiv verdächtige Dateien von Microsoft Defender Antivirus blockiert und überprüft werden.
@@ -912,6 +1066,17 @@ Wenn Sie diese Einstellung deaktivieren oder nicht konfigurieren, wird kein zus�
     Identisch mit "Deaktiviert".
 
     Sie können ASR-Regeln in der Gruppenrichtlinieneinstellung unter "Regeln zur Verringerung der Angriffsfläche konfigurieren" festlegen.
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Anwenden einer Liste von Ausschlüssen auf bestimmte Regeln zur Verringerung der Angriffsfläche (Attack Surface Reduction, ASR)</string>T
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    Mit dieser Richtlinie kann ein Administrator eine Liste von Ausschlüssen für bestimmte ASR-Regeln angeben.
+    Jeder Eintrag ist ein Name-Wert-Paar. Der Schlüssel gibt die Regel-GUID an, und der Wert ist ein Satz vollständiger Pfade, die durch das Zeichen &gt; getrennt sind und die Ausschlüsse für diese bestimmte ASR-Regel angeben.
+
+    HINWEIS: Die GUID ist ein SCHLÜSSEL, kein Wert.
+
+    Beispiel:
+    KEY: „{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}“
+    WERT: "C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe"
     </string>
     <string id="ExploitGuard_ASR_Rules">Regeln zur Verringerung der Angriffsfläche konfigurieren</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1118,13 +1283,66 @@ Durch die Standarderzwingung wird festgelegt, welche Entscheidung während der Z
     <string id="DeviceControl_DefaultEnforcement_DefaultDeny">Standard „Ablehnen“</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation">Definieren des Remotespeicherorts für Beweisdaten der Gerätesteuerung</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
-        Definieren Sie den Remotespeicherort der Beweisdatei, an den der Gerätesteuerungsdienst erfasste Beweisdaten verschiebt.
+        Definieren Sie den Remotespeicherort der Beweisdatei, an den der Gerätesteuerungsdienst erfasste Beweisdaten verschieben soll.
+
+Stellen Sie beim Konfigurieren dieser Einstellung sicher, dass die Gerätesteuerung aktiviert ist und dass der angegebene Pfad ein Remotepfad ist, auf den der Benutzer zugreifen kann.
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">Aufbewahrungsdauer für Dateien im lokalen Gerätesteuerungscache festlegen</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        Diese Richtlinieneinstellung legt fest, wie lange die Gerätesteuerung Dateien für Nachweise im lokalen Cache auf dem Gerät aufbewahrt. Die Gerätesteuerung behält eine Datei nur dann im lokalen Cache bei, wenn sie nicht in eine festgelegte Netzwerkfreigabe oder in Azure Storage hochgeladen werden kann. 
+
+Standardmäßig behält die Gerätesteuerung Dateien für 60 Tage im lokalen Cache bei.
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">Gerätesteuerung für bestimmte Gerätetypen aktivieren</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        Diese Richtlinieneinstellung steuert, welche Gerätetypen, die durch ihre PrimaryIds identifiziert werden, den Schutz der Gerätesteuerung aktiviert haben. Wenn Sie diese Einstellung für bestimmte Gerätetypen aktivieren, wird der Zugriff auf diese Geräte von der Gerätesteuerung basierend auf der entsprechenden benutzerdefinierten Richtlinie gesteuert. Die Gerätesteuerung wird für alle anderen Arten unterstützter Geräte deaktiviert, auch wenn für diese Geräte benutzerdefinierte Schutzrichtlinien konfiguriert sind.
+ 
+Diese Einstellung unterstützt zurzeit folgende Gerätetypen: RemovableMediaDevices, CdRomDevices, WpdDevices und PrinterDevices. 
+ 
+Wenn Sie diese Richtlinieneinstellung aktivieren, aber keine PrimaryIds angeben, wird die Gerätesteuerung für alle unterstützten Gerätetypen deaktiviert.
+ 
+Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, wird die Gerätesteuerung auf allen unterstützten Geräten erzwungen, basierend auf den entsprechenden benutzerdefinierten Richtlinien.
+    </string>
+	<string id="DeviceControl_CustomSupportLink">Supportlink für Gerätesteuerungsbenachrichtigungen einrichten</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        Mit dieser Einstellung können Ihre organization den Link "Support anfordern" in Benachrichtigungen zur Gerätesteuerung angeben. 
+		
+Wenn diese Option konfiguriert ist, navigiert die Schaltfläche "Support abrufen" automatisch zum angegebenen Link.
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">Richtlinienaktualisierungsrate festlegen</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        Mit dieser Einstellung wird das Intervall in Minuten definiert, in dem das Gerät erneut versucht, die Richtlinienkonfiguration zu laden, falls ein Fehler aufgetreten ist und die Richtlinie nicht geladen werden konnte.
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">Azure AD Aktualisierungsrate festlegen</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        Mit dieser Einstellung wird das Intervall in Minuten definiert, in dem das Gerät Azure AD zum Aktualisieren zugehöriger Einstellungen, Konfiguration und Gruppenmitgliedschaften abfragt.
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">Datenduplizierungslimit (MB) festlegen</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        Mit dieser Einstellung wird die maximale Datenmenge definiert, die für die Gerätesteuerung dupliziert werden kann. 
+		
+Wenn das Limit erreicht ist, werden Dateien, die in den Wechseldatenträger kopiert werden, nicht auf dem Computer dupliziert.
+	</string>
     <string id="Features_DeviceControlEnabled">Gerätesteuerung</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         Aktivieren oder deaktivieren Sie die Defender-Gerätesteuerung auf diesem Computer.
         Hinweis: Sie müssen als E3 oder E5 registriert sein, damit die Gerätesteuerung aktiviert werden kann.
     </string>
+    <string id="Features_TDTFeatureEnabled">Intel TDT-Integrationsstufe</string>
+    <string id="Features_TDTFeatureEnabled_Explain">Diese Richtlinieneinstellung konfiguriert die Intel TDT-Integrationsebene für Intel TDT-fähige Geräte.
+
+        Wenn Sie diese Einstellung nicht konfigurieren, wird der Standardwert angewendet. Der Standardwert wird durch Microsoft Security Intelligence-Updates gesteuert. Microsoft aktiviert Intel TDT, wenn eine bekannte Bedrohung vorliegt.
+        Wenn Sie diese Einstellung auf „Aktiviert“ konfigurieren, wird die Intel TDT-Integration aktiviert.
+        Wenn Sie diese Einstellung auf „Deaktiviert“ konfigurieren, wird die Intel TDT-Integration deaktiviert.</string>
+    <string id="Features_PassiveRemediation">EDR im Sperrmodus aktivieren</string>
+    <string id="Features_PassiveRemediation_Explain">Diese Richtlinieneinstellung aktiviert oder deaktiviert EDR im Blockmodus (auch als "passive Wartung" bezeichnet). EDR im Blockmodus wird für Geräte empfohlen, die Microsoft Defender Antivirus im passiven Modus ausführen. Verfügbar mit Plattformrelease: 4.18.2202.X
+
+Der Datentyp ist eine ganze Zahl.
+
+Unterstützte Werte:
+
+1: EDR im Blockmodus aktivieren
+        0: EDR im Blockmodus deaktivieren</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1389,38 @@ Durch die Standarderzwingung wird festgelegt, welche Entscheidung während der Z
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">Konfigurieren der Überwachung für eingehende und ausgehende Datei- und Programmaktivitäten</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">Angeben des Status des Remoteverschlüsselungsschutzes</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">Geben Sie an, wie lange Erkennungen blockiert werden sollen (in Minuten).</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">Angeben, wie aggressiv der Remoteverschlüsselungsschutz Bedrohungen blockiert</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">Remoteverschlüsselungsschutz-Ausschlüsse</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">Angeben des Status des Brute-Force-Schutzes</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">Geben Sie an, wie lange Erkennungen blockiert werden sollen (in Minuten).</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">Angeben, wie aggressiver Brute-Force-Schutz Bedrohungen blockiert</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Brute-Force-Schutzausschlüsse</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">Angeben des Wochentags, an dem ein geplanter vollständiger Scan zur Vervollständigung der Wartung ausgeführt werden soll</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">Angeben der Tageszeit, zu der ein geplanter vollständiger Scan zur Vervollständigung der Wartung ausgeführt werden soll</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">Geben Sie an, wie viele Tage ohne Überprüfungen verstreichen sollen, bevor eine aggressive Schnellüberprüfung ausgelöst wird</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">Anzahl von geplanten Scans definieren, die ausgelassen werden können, und nach denen ein Nachholscan erzwungen wird</decimalTextBox>
@@ -1273,11 +1518,6 @@ Durch die Standarderzwingung wird festgelegt, welche Entscheidung während der Z
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Angeben von Bedrohungswarnungsebenen, auf denen bei Erkennung der Bedrohungen keine Standardaktion ausgeführt werden soll</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Anzeigen von zusätzlichem Text für Clients, wenn eine Aktion ausgeführt werden muss</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">Intervall für die Ablaufbenachrichtigung angeben</decimalTextBox>
     </presentation>
@@ -1293,6 +1533,9 @@ Durch die Standarderzwingung wird festgelegt, welche Entscheidung während der Z
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">Ausschlüsse von ASR-Regeln:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Ausschlüsse für jede ASR-Regel:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">Zustand für jede ASR-Regel festlegen:</listBox>
     </presentation>
@@ -1307,6 +1550,9 @@ Durch die Standarderzwingung wird festgelegt, welche Entscheidung während der Z
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1584,34 @@ Durch die Standarderzwingung wird festgelegt, welche Entscheidung während der Z
         <label>Definieren Sie den Remotespeicherort für die Datenduplizierung der Gerätesteuerung.</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">Aufbewahrungsdauer für Dateien im lokalen Gerätesteuerungscache festlegen</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>Gerätesteuerung für bestimmte Gerätetypen aktivieren</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>Supportlink für Gerätesteuerungsbenachrichtigungen einrichten</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>Richtlinienaktualisierungsrate festlegen</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>Azure AD Aktualisierungsrate festlegen</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>Datenduplizierungslimit (MB) festlegen</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

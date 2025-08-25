@@ -17,6 +17,9 @@
     <string id="Quarantine">Карантин</string>
     <string id="RealtimeProtection">Защита в реальном времени</string>
     <string id="Remediation">Исправление</string>
+    <string id="Remediation_BNB">Блоки реакций на события сети</string>
+    <string id="Remediation_BNB_REP">Удаленная защита от шифрования</string>
+    <string id="Remediation_BNB_BFP">Защита от атаки методом "грубой силы"</string>
     <string id="Reporting">Отчеты</string>
     <string id="Scan">Проверка</string>
     <string id="SignatureUpdate">Обновления службы безопасности</string>
@@ -47,6 +50,10 @@
     Включено. 
         Если включить этот параметр, локальные администраторы не смогут видеть список исключений в приложении "Безопасность Windows" или с помощью PowerShell.
         Примечание. При применении этого параметра исключения не будут удалены, они лишь станут невидимыми для локальных администраторов. Это состояние указывается в Get-MpPreference.</string>
+    <string id="HideExclusionsFromLocalUsers">Управление видимостью исключений для локальных пользователей</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    Этот параметр политики определяет, видны ли исключения локальным пользователям на устройстве.
+    Используйте параметр политики HideExclusionsFromLocalAdmins, чтобы скрыть исключения от обычных и административных локальных пользователей.</string>
     <string id="AllowNetworkProtectionOnWinServer">Этот параметр определяет, разрешена ли настройка защиты сети в режиме блокировки или аудита в Windows Server.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     Отключено (по умолчанию): 
@@ -57,11 +64,29 @@
     Обратите внимание, что эта конфигурация зависит от конфигурации Енабленетворкпротектион. Если эта конфигурация имеет значение false, Енабленетворкпротектион будет пропущена, иначе защита сети будет запущена в Windows Server в зависимости от значения Енабленетворкпротектион.</string>
     <string id="DisableDatagramProcessing">Этот параметр управляет обработкой датаграммы для защиты сети.</string>
     <string id="DisableDatagramProcessing_Explain">
-    Включено (по умолчанию): 
+    Отключено (по умолчанию): 
     Если эта функция не настроена или отключена, обработка датаграмм для защиты сети будет включена.
 
 Включено 
     Если эта функция включена, обработка датаграмм для защиты сети будет отключена.</string>
+    <string id="EnableConvertWarnToBlock">Преобразовать решение предупреждения в блок</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    Защита сети проверяет сетевой трафик и определяет, разрешает ли он или блокирует трафик, или отображает предупреждение.
+    
+    Отключено (по умолчанию): 
+    Если не настроено или отключено, защита сети будет отображать предупреждение для решений предупреждения.
+
+    Включено:
+    Если этот параметр включен, защита сети блокирует сетевой трафик вместо отображения предупреждения.</string>
+    <string id="AllowSwitchToAsyncInspection">Включить асинхронную проверку</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    Управление возможностью повышения производительности защиты сети путем переключения с проверки в реальном времени на асинхронную проверку.
+
+    Отключено (по умолчанию): 
+    Если не настроено или отключено, асинхронная проверка не будет включена для защиты сети.
+
+    Включено: 
+    Если включено, переключение на асинхронную проверку будет разрешено для защиты сети.</string>
     <string id="DisableAutoExclusions">Отключить автоматическую обработку исключений</string>
     <string id="DisableAutoExclusions_Explain">
         Разрешите администратору, указать, следует ли выключать функцию "Автоматические исключения" для SKU сервера.
@@ -142,15 +167,19 @@
       Если отключить или не настроить этот параметр, прокси-сервер будет пропускать этот резервный шаг в порядке, указанном выше.
     </string>
     <string id="RandomizeScheduleTaskTimes">Задать случайное время выполнения запланированных заданий</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">Этот параметр политики позволяет настроить планируемое сканирование и планируемый временной интервал времени начала обновления службы анализа безопасности в часах.
+    <string id="RandomizeScheduleTaskTimes_Explain">С помощью этого параметра политики можно настроить случайный выбор запланированного времени начала сканирования и запланированного времени начала обновления определений.
 
-    Если этот параметр отключен или не настроен, запланированные задания запускаются в случайное время в течение 4 часов после времени, указанного в планировщике заданий.
-    Если этот параметр включен, период случайного выбора можно расширить или сузить. Допустимое окно случайного выбора составляет от 1 до 23 часов.</string>
+        Если включить или не настраивать этот параметр политики и не настраивать окно случайного выбора с помощью параметра "Настройка окна для случайного выбора времени запланированных задач", то случайный выбор будет добавлен в диапазоне от 0 до 4 часов.
+        Если включить или не настраивать этот параметр политики и настроить окно случайного выбора с помощью параметра "Настройка окна для случайного выбора времени запланированных задач", будет использовано настроенное окно случайного выбора.
+        Если отключить этот параметр политики, но настроить окно для случайного выбора времени запланированных задач, случайный выбор не будет производиться. 
+    </string>
     <string id="SchedulerRandomizationTime">Настроить окно случайного выбора времени выполнения запланированных задач</string>
-    <string id="SchedulerRandomizationTime_Explain">Этот параметр политики позволяет настроить планируемое время начала и планируемый временной интервал времени начала обновления службы анализа безопасности в часах.
+    <string id="SchedulerRandomizationTime_Explain">Этот параметр политики позволяет настроить время начала сканирования запланированных задач и время начала обновления запланированного анализа безопасности в часах. Этот параметр влияет на конфигурацию случайного времени выполнения запланированных задач.
 
-    Если этот параметр отключен или не настроен, запланированные задания запускаются в случайное время в интервале 4 часов после указанного времени начала.
-    Если этот параметр включен, необходимо выбрать окно случайного выбора в часах. Допустимый интервал окна случайного выбора составляет от 1 до 23 часов.</string>
+        Если этот параметр включен, необходимо указать окно случайного выбора в часах. Возможный интервал случайного выбора находится в диапазоне от 1 до 23 часов. Реализованный интервал случайного выбора находится в диапазоне от 0 до настроенного значения. 
+        Если этот параметр включен, параметры случайного времени выполнения запланированных задач будут использовать окно случайного выбора, указанное в этом параметре конфигурации. 
+        Если этот параметр политики отключен или не настроен, параметры случайного времени выполнения запланированных задач будут случайно выбирать время выполнения запланированных задач в диапазоне от 0 до 4 часов.</string>
+
     <string id="ServiceKeepAlive">Разрешить постоянную работу службы защиты от вредоносных программ</string>
     <string id="ServiceKeepAlive_Explain">Этот параметр политики определяет, должна ли служба защиты от вредоносных программ продолжать работу, когда анализ безопасности антивирусных и антишпионских программ отключен. Рекомендуется отключать этот параметр политики.
 
@@ -219,6 +248,22 @@
 Если вы включаете или не настраиваете этот параметр политики, проверка сценариев включена.
 
 Если этот параметр отключен, проверка сценариев отключена.</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">Настройка защиты в реальном времени и обновлений механизма обнаружения угроз при первом включении компьютера</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">С помощью этого параметра политики можно настраивать включение защиты в реальном времени и обновлений механизма обнаружения угроз во время запуска при первом включении компьютера.
+ 
+    Если включить этот параметр, защита в реальном времени и обновления механизма обнаружения угроз будут включены во время запуска при первом включении компьютера.
+ 
+    Если отключить или не настраивать этот параметр политики, защита в реальном времени и обновления механизма обнаружения угроз не будут включены во время запуска при первом включении компьютера.</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">Настройка состояния режима производительности</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">Эта политика управляет режимом производительности антивирусной программы в Microsoft Defender для дисков разработчика.
+
+    Диск разработчика — это диск, оптимизированный для повышения производительности в сценариях разработки программного обеспечения. Если эта политика включена или не настроена, режим производительности включается для антивирусной программы в Microsoft Defender. В режиме производительности проверки безопасности антивирусной программы в Microsoft Defender для содержимого, хранящегося на дисках разработчика, выполняются асинхронно для повышения производительности. Для режима производительности также должны быть включены следующие политики: "Включить диск разработчика" и "Политика вложения фильтра диска разработчика".
+
+    Если этот параметр политики включен или не настроен, режим производительности включен.
+
+    Если этот параметр политики отключен, режим производительности отключен и антивирусная программа в Microsoft Defender защитит диск разработчика так же, как и другие диски.</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">Включить наблюдение за поведением</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">Этот параметр политики позволяет настроить контроль поведения.
@@ -360,6 +405,92 @@ Endpoint Protection предупредит вас, если вредоносна
 Если вы включаете этот параметр политики, запланированная полная проверка для выполнения исправления запускается в указанное время дня.
 
 Если вы отключаете или не настраиваете этот параметр политики, запланированная полная проверка для выполнения исправления запускается в заданное по умолчанию время.</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">Настройка режима удаленной защиты от шифрования</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    Установите режим удаленной защиты от шифрования в антивирусной программе в Microsoft Defender, который может обнаруживать и блокировать попытки замены локальных файлов зашифрованными версиями с другого устройства. 
+
+    Поддерживаемые параметры:
+    * 0 — не настроено или по умолчанию: применить значения по умолчанию, которые могут различаться в зависимости от версии антивирусного ядра и платформы
+    * 1 — блокировка: предотвращение подозрительных и вредоносных реакций на события
+    * 2 — аудит: создание обнаружений EDR без блокировки
+    * 4 — отключено: функция отключена без влияния на производительность
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">По умолчанию</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">Блокировать</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">Аудит</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">Выключить</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">Настройка времени блокировки удаленной защиты от шифрования</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    Задайте максимальное время блокировки IP-адреса защитой удаленного шифрования. По истечении этого времени заблокированные IP-адреса смогут повторно инициализировать подключения. 
+
+Поддерживаемые параметры:
+    * 0 — нет: логика внутренних функций определяет фактическое время блокировки
+    * Укажите другое время с 15-минутным увеличением
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">Настройка того, насколько активно удаленная защита от шифрования блокирует угрозы</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    Задайте условия, когда защита от удаленного шифрования блокирует IP-адреса.
+
+Поддерживаемые параметры:
+    *0 — низкий: блокировать, только если доверительный уровень 100% (по умолчанию)
+    *1 — средний: использовать агрегирование и блокирование облака, если доверительный уровень выше 99%
+    *2 — высокий: используйте облачный intel и контекст, а также блок, если доверительный уровень выше 90%
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">Низкий</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">Средний</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">Высокий</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> Настройка исключений из удаленной защиты от шифрования</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    Укажите IP-адреса, подсети и имена доменов, которые необходимо исключить из удаленной защиты от шифрования. Обратите внимание, что злоумышленники могут подделать исключенные адреса и имена, чтобы обойти защиту.
+
+    Введите каждый адрес или подсеть в новой строке в виде пары "имя-значение":
+    - Столбец имени: введите IP-адрес или имя подсети. Например, ""1.1.127.0"" исключит блокировку этого IP-адреса.
+    - Столбец значений: введите ""0"" для каждого элемента.
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">Настройка режима защиты от атаки методом "грубой силы"</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Установите режим защиты от атаки методом "грубой силы" в антивирусной программе в Microsoft Defender, который может обнаруживать и блокировать попытки принудительного входа в систему и запуска сеансов.
+
+    Поддерживаемые параметры:
+    * 0 — не настроено или по умолчанию: применить значения по умолчанию, которые могут различаться в зависимости от версии антивирусного ядра и платформы
+    * 1 — блокировка: предотвращение подозрительных и вредоносных реакций на события
+    * 2 — аудит: создание обнаружений EDR без блокировки
+    * 4 — отключено: функция отключена без влияния на производительность
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">По умолчанию</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">Блокировать</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">Аудит</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">Выключить</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">Настройка времени блокировки защиты от атаки методом "грубой силы"</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    Задайте максимальное время блокировки IP-адреса Brute-Force Защиты. По истечении этого времени заблокированные IP-адреса смогут входить в систему и инициировать сеансы.
+
+Поддерживаемые параметры:
+    * 0 — нет: логика внутренних функций определяет фактическое время блокировки
+    * Укажите другое время с 15-минутным увеличением
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">Настройка агрессивности защиты от атаки методом "грубой силы"</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    Задайте условия, по Brute-Force блокировки IP-адресов.
+
+Поддерживаемые параметры:
+    *0 — низкий: блокировать, только если доверительный уровень 100% (по умолчанию)
+    *1 — средний: использовать агрегирование и блокирование облака, если доверительный уровень выше 99%
+    *2 — высокий: используйте облачный intel и контекст, а также блок, если доверительный уровень выше 90%
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">Низкий</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">Средний</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">Высокий</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">Установить исключения из защиты от атаки методом "грубой силы"</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    Укажите IP-адреса, подсети или имена рабочих станций, которые необходимо исключить из защиты от атаки методом "грубой силы". Исключенные IP-адреса не будут проверяться на предмет возможной атаки методом "грубой силы".
+    
+    Обратите внимание, что злоумышленники могут подделать исключенные адреса и имена, чтобы обойти защиту. Убедитесь, что имена уникальны и злоумышленники вряд ли смогут их угадать.
+
+    Введите каждый адрес или подсеть в новой строке в виде пары "имя-значение":
+    - Столбец имени: введите IP-адрес, имя подсети или имя рабочей станции. Например, "1.1.127.0" исключит блокировку этого IP-адреса BFP.
+    - Столбец значений: введите "0" для каждого элемента
+    </string>
     <string id="Reporting_AdditionalActionTimeout">Настроить время ожидания для обнаружений, требующих дополнительного действия</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">Этот параметр политики позволяет настроить период в минутах, по истечении которого обнаружение переходит из состояния «дополнительное действие» в состояние «очищено».</string>
     <string id="Reporting_CriticalFailureTimeout">Настроить время ожидания для обнаружений в состоянии критического сбоя</string>
@@ -399,6 +530,12 @@ Endpoint Protection предупредит вас, если вредоносна
 Если задать для этого параметра значение 0, отчеты о работоспособности служб не будут отправляться.
 
 Максимальное допустимое значение — 14400 минут (10 дней).</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">Укажите, следует ли сообщать о событиях удаления динамической подписи</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">Этот параметр политики определяет, следует ли сообщать о событиях удаления динамической подписи.
+
+Если этот параметр не настроен, будет применено значение по умолчанию. По умолчанию параметр отключен (о таких событиях не сообщается).
+    Если этот параметр включен, вам будут сообщать о событиях удаления динамической подписи.
+    Если этот параметр отключен, вам не будут сообщать о событиях удаления динамической подписи.</string>
       <string id="Scan_AllowPause">Разрешать пользователям приостанавливать проверку</string>
     <string id="Scan_AllowPause_Explain">Этот параметр политики позволяет разрешить или запретить конечным пользователям приостанавливать выполняемую проверку.
 
@@ -457,6 +594,10 @@ Endpoint Protection предупредит вас, если вредоносна
 Если вы включаете этот параметр политики, то дополнительные проверки для запланированных быстрых проверок включены. Если во время двух последовательных запланированных проверок компьютер был отключен от сети, дополнительная проверка запускается, когда пользователь в следующий раз входит в систему.  Если запланированные проверки не настроены, дополнительная проверка не выполняется.
 
 Если вы отключаете или не настраиваете этот параметр политики, то дополнительные проверки для запланированных быстрых проверок отключены.</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">Запуск быстрой проверки через X дней без проверок</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">Этот параметр политики определяет количество дней, которое может пройти с момента последней проверки до автоматического активации агрессивной быстрой проверки. Значение представляет число дней, которое может пройти без выполнения проверок до активации агрессивной быстрой проверки.
+    
+Допустимые значения: от 7 до 60 дней. Если этот параметр не настроен, агрессивные быстрые проверки будут отключены. По умолчанию для параметра задано значение 25 дней при включении.</string>
     <string id="Scan_DisableEmailScanning">Включить проверку электронной почты</string>
     <string id="Scan_DisableEmailScanning_Explain">Этот параметр политики позволяет настроить сканирование электронной почты. Если включено сканирование электронной почты, модуль анализирует почтовый ящик и почтовые файлы в соответствии с их форматом, чтобы проанализировать тела и вложения почты. Сейчас поддерживается несколько форматов электронной почты, например pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac). Сканирование электронной почты не поддерживается в современных клиентах электронной почты.
     
@@ -499,12 +640,12 @@ Endpoint Protection предупредит вас, если вредоносна
 Если вы включаете этот параметр политики, подключенные сетевые диски проверяются.
 
 Если вы отключаете или не настраиваете этот параметр политики, подключенные сетевые диски не проверяются.</string>
-    <string id="Scan_DisableScanningNetworkFiles">Проверять сетевые файлы</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">Этот параметр политики позволяет настроить проверку сетевых файлов. Рекомендуется не включать его.
+    <string id="Scan_DisableScanningNetworkFiles">Настройка сканирования сетевых файлов</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">Этот параметр политики позволяет сканировать сетевые файлы с использованием защиты доступа. По умолчанию включено. Рекомендуется оставить этот параметр включенным в большинстве случаев.
 
-Если вы включаете этот параметр политики, сетевые файлы проверяются.
+    Если включить или не настроить этот параметр, сетевые файлы будут сканироваться.
 
-Если вы отключаете или не настраиваете этот параметр политики, сетевые файлы не проверяются.</string>
+    Если вы отключаете этот параметр, сетевые файлы не будут сканироваться.</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">Настроить локальное переопределение максимального процента использования ЦП</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">Этот параметр политики позволяет настроить локальное переопределение максимального процента использования ЦП во время проверки. Этот параметр политики можно настроить только при помощи групповой политики.
 
@@ -616,6 +757,18 @@ Endpoint Protection предупредит вас, если вредоносна
 
         Если отключить или не настроить этот параметр, изменения не будут внесены в приоритет ЦП для запланированных проверок.
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">Проверять исключенные файлы и каталоги во время быстрых проверок.</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        Этот параметр политики позволяет проверять исключенные файлы и каталоги во время быстрых проверок.
+
+        Если для этого параметра политики установлено значение 1, все файлы и каталоги, исключенные из защиты в реальном времени с помощью контекстно-зависимых исключений, проверяются во время быстрых проверок.
+
+        Если для этой политики установлено значение "0" или она не настроена, исключения не проверяются во время быстрых проверок.
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">Определить период в днях, по истечении которого анализ безопасности программ-шпионов считается устаревшим</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">Этот параметр политики позволяет задать число дней, по прошествии которых механизм обнаружения угроз шпионского ПО считается устаревшим. Если установлено, что механизм обнаружения угроз устарел, могут инициироваться дополнительные действия, в том числе переключение на альтернативный источник обновлений или отображение значка предупреждения в пользовательском интерфейсе. Значение по умолчанию — 7 дней.
 
@@ -638,6 +791,13 @@ Endpoint Protection предупредит вас, если вредоносна
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">Этот параметр политики позволяет задать расположение анализа безопасности для компьютеров, с настроенным в VDI. 
 
     Если этот параметр политики отключен или не настроен, анализ безопасности будет браться из локального источника по умолчанию.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">Настройте обновления анализа безопасности в соответствии с планировщиком для клиентов VDI.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">Этот параметр политики позволяет настраивать обновления системы безопасности в соответствии с планировщиком для компьютеров с конфигурацией VDI. Он используется вместе с общим местоположением аналитики безопасности (SharedSignaturesLocation).
+
+    Если вы включите этот параметр политики и настроите SharedSignaturesLocation, обновления из настроенного расположения будут выполняться только в ранее настроенное запланированное время обновления.
+
+    Если вы отключите или не настроите этот параметр политики, обновления будут происходить всякий раз, когда будет обнаружено новое обновление системы безопасности в расположении, указанном параметром SharedSignaturesLocation.
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">Включить проверку после обновления службы анализа безопасности</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">Этот параметр политики позволяет настроить автоматический запуск проверки после обновления анализа безопасности.
 
@@ -830,12 +990,6 @@ Endpoint Protection предупредит вас, если вредоносна
 
       Если этот параметр включен, уведомления антивирусной программы Microsoft Defender не будут отображаться на клиентских компьютерах.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Отображать дополнительный текст для клиентов, когда им требуется выполнить действие</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">Этот параметр политики определяет, нужно ли отображать дополнительный текст для клиентов, когда им требуется выполнить действие. Текст отображается в виде строки, настраиваемой администратором. Например, это может быть номер телефона службы технической поддержки компании. В клиентском интерфейсе отображается не более 1024 символов. Более длинные строки перед выводом усекаются.
-
-Если вы включаете этот параметр политики, отображается указанный дополнительный текст.
-
-Если вы отключаете или не настраиваете этот параметр политики, дополнительный текст не отображается.</string>
     <string id="MpCloudBlockLevel">Выберите уровень защиты в облаке</string>
     <string id="MpCloudBlockLevel_Explain">
       Этот параметр политики определяет, насколько агрессивной будет антивирусная программа Microsoft Defender при блокировании и сканировании подозрительных файлов.
@@ -913,6 +1067,17 @@ Endpoint Protection предупредит вас, если вредоносна
         то же, что и "Выкл.".
 
         Вы можете настроить правила ASR в параметре групповой политики "Настройка правил Attack Surface Reduction".
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Применить список исключений к определенным правилам сокращения направлений атак (ASR)</string>d
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    Эта политика позволяет администратору указать список исключений для определенных правил ASR.
+    Каждая запись представляет собой пару имя-значение. Ключ указывает GUID правила, а значение представляет собой набор полных путей, разделенных символом &gt;, указывающим на исключения для данного конкретного правила ASR.
+
+    ЗАМЕТКА. GUID — это КЛЮЧ, а не значение.
+
+    Пример:
+    КЛЮЧ: "{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}"
+    ЗНАЧЕНИЕ: "C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe"
     </string>
     <string id="ExploitGuard_ASR_Rules">Настроить правила сокращения возможных направлений атак</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1119,13 +1284,66 @@ Current Channel (Broad): устройства, использующие этот
     <string id="DeviceControl_DefaultEnforcement_DefaultDeny">Запрет по умолчанию</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation">Определение удаленного расположения данных свидетельства управления устройствами</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
-        Определите удаленное расположение файла свидетельства, куда служба управления устройствами будет перемещать записанные данные свидетельств.
+        Определите удаленное расположение файла свидетельств, в которое служба управления устройствами будет перемещать записанные данные свидетельств.
+
+При настройке этого параметра убедитесь, что включено управление устройством и что указанный путь является удаленным путем, к которым у пользователя есть доступ.
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">Настройка срока хранения файлов в локальном кэше управления устройствами</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        Этот параметр политики определяет, как долго элемент управления устройством сохраняет файлы для свидетельства в локальном кэше на устройстве. Управление устройствами хранит файл в локальном кэше только в том случае, если ему не удается отправить файл в назначенную сетевую папку или хранилище Azure. 
+
+        По умолчанию управление устройствами сохраняет файлы в локальном кэше в течение 60 дней.
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">Включение управления устройствами для определенных типов устройств</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        Этот параметр политики определяет, какие типы устройств, определяемые их PrimaryId, будут иметь включенную защиту от управления устройствами. Если этот параметр включен для определенных типов устройств, управление устройствами будет регулировать доступ к этим устройствам на основе соответствующей пользовательской политики. Управление устройствами будет отключено для всех остальных типов поддерживаемых устройств, даже если для них настроены настраиваемые политики защиты.
+ 
+Этот параметр сейчас поддерживает следующие типы устройств: RemovableMediaDevices, CdRomDevices, WpdDevices и PrinterDevices. 
+ 
+Если этот параметр политики включен, но не указаны идентификаторы PrimaryId, управление устройствами будет отключено для всех поддерживаемых типов устройств.
+ 
+Если этот параметр политики отключен или не настроен, управление устройствами будет применяться на всех поддерживаемых устройствах на основе соответствующих пользовательских политик.
+    </string>
+	<string id="DeviceControl_CustomSupportLink">Настройка ссылки службы поддержки для уведомлений управления устройством</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        Этот параметр позволяет организации указывать ссылку "Получить поддержку" в уведомлениях управления устройством. 
+		
+		В случае настройки кнопка "Получить поддержку" автоматически выполняет переход по указанной ссылке.
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">Настройка частоты обновления политики</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        Этот параметр определяет интервал (в минутах), с которым устройство будет повторять попытку загрузки конфигурации политики в случае ошибки и невозможности загрузки политики.
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">Настройка частоты обновления Azure AD</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        Этот параметр определяет интервал (в минутах), с которым устройство будет запрашивать у Azure AD обновление связанных параметров, конфигурации и участия в группах.
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">Настройка ограничения на дублирование данных (МБ)</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        Этот параметр определяет максимальный объем данных, которые могут дублироваться для управления устройством. 
+		
+		При достижения ограничения файлы, копируемые на съемные носители, не будут дублироваться на компьютере.
+	</string>
     <string id="Features_DeviceControlEnabled">Управление устройством</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         Включение или отключение управления устройствами Defender на этом компьютере.
         Примечание. Чтобы включить управление устройством, необходимо зарегистрироваться как E3 или E5.
     </string>
+    <string id="Features_TDTFeatureEnabled">Уровень интеграции Intel TDT</string>
+    <string id="Features_TDTFeatureEnabled_Explain">Этот параметр политики определяет уровень интеграции Intel TDT для устройств, поддерживающих Intel TDT.
+
+        Если этот параметр не настроен, будет использоваться значение по умолчанию. Значение по умолчанию управляется обновлениями портала для обнаружения угроз (Microsoft). Корпорация Майкрософт включит Intel TDT при наличии известных угроз..
+        Если этот параметр включен, интеграция Intel TDT будет включена.
+        Если этот параметр выключен, интеграция Intel TDT будет отключена.</string>
+    <string id="Features_PassiveRemediation">Включить EDR в режиме блокировки</string>
+    <string id="Features_PassiveRemediation_Explain">Этот параметр политики включает или отключает EDR в режиме блокировки (также известном как "пассивное исправление"). EDR в режиме блокировки рекомендуется для устройств, работающих с антивирусной программой в Microsoft Defender в пассивном режиме. Доступно с выпуском платформы: 4.18.2202.X
+
+        Тип данных является целым числом
+
+        Поддерживаемые значения:
+
+        1. Включение EDR в режиме блокировки
+        0: Отключение EDR в режиме блокировки</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1172,11 +1390,38 @@ Current Channel (Broad): устройства, использующие этот
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">Настроить отслеживание активности входящих и исходящих файлов и программ</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">Укажите состояние удаленной защиты от шифрования</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">Укажите время блокировки обнаружений в минутах</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">Укажите, насколько активно удаленная защита от шифрования блокирует угрозы</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">Исключения удаленной защиты от шифрования</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">Укажите состояние от атаки методом "грубой силы"</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">Укажите время блокировки обнаружений в минутах</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">Укажите, насколько агрессивно защита от атаки методом "грубой силы" блокирует угрозы.</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Исключения защиты от атаки методом "грубой силы"</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">Задать день недели, когда нужно запускать запланированную полную проверку для выполнения исправления</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">Задать время дня, когда нужно запускать запланированную полную проверку для выполнения исправления</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">Укажите, сколько дней должно пройти без проверки перед запуском агрессивной быстрой проверки</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">Определить количество запланированных проверок, после которого принудительно выполняется дополнительная проверка</decimalTextBox>
@@ -1274,11 +1519,6 @@ Current Channel (Broad): устройства, использующие этот
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Задать уровни оповещения об обнаруженных угрозах, при которых не нужно выполнять действие по умолчанию</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Отображать дополнительный текст для клиентов, когда им требуется выполнить действие</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">Задать интервал для уведомления об истечении срока действия</decimalTextBox>
     </presentation>
@@ -1294,6 +1534,9 @@ Current Channel (Broad): устройства, использующие этот
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">Исключения из правил ASR:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Исключения для каждого правила ASR:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">Установите состояние для каждого правила ASR:</listBox>
     </presentation>
@@ -1308,6 +1551,9 @@ Current Channel (Broad): устройства, использующие этот
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1339,6 +1585,34 @@ Current Channel (Broad): устройства, использующие этот
         <label>Определите удаленное расположение для дублирования данных управления устройством.</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">Настройка срока хранения файлов в локальном кэше управления устройствами</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>Включение управления устройствами для определенных типов устройств</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>Настройка ссылки службы поддержки для уведомлений управления устройством</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>Настройка частоты обновления политики</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>Настройка частоты обновления Azure AD</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>Настройка ограничения на дублирование данных (МБ)</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

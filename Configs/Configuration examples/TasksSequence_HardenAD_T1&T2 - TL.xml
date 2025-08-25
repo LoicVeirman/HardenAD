@@ -187,8 +187,8 @@
 		<!-- 
 			Delegation for L-S-T2-DELEG_Group - Manage  BitlockerKey
 		-->
-		<ACL Trustee="L-S-T2-DELEG_Group - Manage BitlockerKey (administration)" Right="GenericAll" RightType="Allow" Inheritance="All" InheritedObjects="msFVE-RecoveryInformation" ObjectType="" TargetDN="OU=Workstations,OU=Harden_T2,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_Group - Manage BitlockerKey (administration)" Right="GenericAll" RightType="Allow" Inheritance="All" InheritedObjects="msFVE-RecoveryInformation" ObjectType="" TargetDN="OU=Servers,OU=Harden_T1,ROOTDN" />
+		<ACL Trustee="L-S-T2-DELEG_Group - Manage BitlockerKey" Right="GenericAll" RightType="Allow" Inheritance="All" InheritedObjects="msFVE-RecoveryInformation" ObjectType="" TargetDN="OU=Workstations,OU=Harden_T2,ROOTDN" />
+		<ACL Trustee="L-S-T1-DELEG_Group - Manage BitlockerKey" Right="GenericAll" RightType="Allow" Inheritance="All" InheritedObjects="msFVE-RecoveryInformation" ObjectType="" TargetDN="OU=Servers,OU=Harden_T1,ROOTDN" />
 		
 		
 		<!-- Production ==========
@@ -226,7 +226,7 @@
 		<ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="group" TargetDN="OU=Groups,OU=Harden_TL,ROOTDN" />
 		<ACL Trustee="L-S-T1-DELEG_Group - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden_TL,ROOTDN" />
 		<!-- 
-			Delegation for L-S-T1-DELEG_Group - Create and Delete (T2) 
+			Delegation for L-S-T2-DELEG_Group - Create and Delete (T2) 
 		-->
 		<ACL Trustee="L-S-T2-DELEG_Group - Create and Delete" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="group" TargetDN="OU=Groups,OU=Harden_T2,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_Group - Create and Delete" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden_T2,ROOTDN" />
@@ -259,6 +259,7 @@
 			Custom Access Rule: allow domain join only
 		-->
 		<SDDL Trustee="L-S-T0-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Workstations,OU=Harden_T0,ROOTDN" />
+		<SDDL Trustee="L-S-T0-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Servers,OU=Harden_T0,ROOTDN" />
 		<SDDL Trustee="L-S-T1-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Servers,OU=Harden_T1,ROOTDN" />
 		<SDDL Trustee="L-S-T1-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Computers,OU=Provisioning,ROOTDN" />
 		<SDDL Trustee="L-S-T2-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Workstations,OU=Harden_T2,ROOTDN" />
@@ -1082,7 +1083,8 @@
 		</GPO>
 		<GPO BackupID="{C1703AE2-DA27-4E5A-A593-BB20736AC05E}" Validation="Yes" Name="HAD-LSASS-Config" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Harden_T2,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoFilter WMI="Windows-OS-Clients" />
 		</GPO>
 		<GPO BackupID="{F72EB12F-47A6-4359-A1D7-4D60D6F86FA1}" Validation="Yes" Name="HAD-mDNS-Disabled" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -1320,11 +1322,11 @@
 			<Member samAccountName="G-S-T2_Managers" />
 		</Group>
 
-		<Group name="L-S-T1-DELEG_Group - Manage BitlockerKey (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT1,OU=_Administration,ROOTDN">
+		<Group name="L-S-T1-DELEG_Group - Manage BitlockerKey" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT1,OU=_Administration,ROOTDN">
 			<Member samAccountName="G-S-T1_Managers" />
 			<Member samAccountName="G-S-T1_Administrators" />
 		</Group>
-		<Group name="L-S-T2-DELEG_Group - Manage BitlockerKey (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
+		<Group name="L-S-T2-DELEG_Group - Manage BitlockerKey" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
 			<Member samAccountName="G-S-T2_Managers" />
 			<Member samAccountName="G-S-T2_Administrators" />
 		</Group>
@@ -1504,23 +1506,23 @@
 		<AdmPwdSelfPermission Target="OU=PawT0,OU=_Administration,%DN%" />
 		<AdmPwdSelfPermission Target="OU=PawT12L,OU=_Administration,%DN%" />
 		<AdmPwdSelfPermission Target="OU=PawAccess,OU=_Administration,%DN%" />
-		<AdmPwdSelfPermission Target="OU=Servers,OU=Harden_T1L,%DN%" />
+		<AdmPwdSelfPermission Target="OU=Servers,OU=Harden_TL,%DN%" />
 		<AdmPwdSelfPermission Target="OU=Servers,OU=Harden_T1,%DN%" />
-		<AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_T2L,%DN%" />
+		<AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_TL,%DN%" />
 		<AdmPwdSelfPermission Target="OU=Workstations,OU=Harden_T2,%DN%" />
 		<!--
 			Password Reader Permissions
 		-->
-		<AdmPwdPasswordReader Target="OU=Servers,OU=Harden_T1L,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReader%" />
+		<AdmPwdPasswordReader Target="OU=Servers,OU=Harden_TL,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReader%" />
 		<AdmPwdPasswordReader Target="OU=Servers,OU=Harden_T1,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReader%" />
-		<AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_T2L,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReader%" />
+		<AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_TL,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReader%" />
 		<AdmPwdPasswordReader Target="OU=Workstations,OU=Harden_T2,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReader%" />
 		<!-- 
 			Password Reset Permissions
 		-->
-		<AdmPwdPasswordReset Target="OU=Servers,OU=Harden_T1L,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReset%" />
+		<AdmPwdPasswordReset Target="OU=Servers,OU=Harden_TL,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReset%" />
 		<AdmPwdPasswordReset Target="OU=Servers,OU=Harden_T1,%DN%" Id="%NetBios%\%T1-LAPS-PasswordReset%" />
-		<AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_T2L,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReset%" />
+		<AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_TL,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReset%" />
 		<AdmPwdPasswordReset Target="OU=Workstations,OU=Harden_T2,%DN%" Id="%NetBios%\%T2-LAPS-PasswordReset%" />
 	</LocalAdminPasswordSolution>
 	<Sequence>

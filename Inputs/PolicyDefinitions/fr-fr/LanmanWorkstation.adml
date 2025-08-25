@@ -30,13 +30,15 @@ Réorganiser les suites de chiffrement souhaité dans la zone d'édition, d'une 
 
 Remarque : lorsque vous configurez ce paramètre de sécurité, les modifications ne prendront effet qu'après le redémarrage de Windows.</string>
       <string id="Pol_EnableInsecureGuestLogons_Name">Activer les ouvertures de session invité non sécurisées</string>
-      <string id="Pol_EnableInsecureGuestLogons_Help">Ce paramètre de stratégie détermine si le client SMB n'autorise pas les ouvertures de session invité non sécurisées à un serveur SMB.
+      <string id="Pol_EnableInsecureGuestLogons_Help">Ce paramètre de stratégie détermine si le client SMB autorise les connexions d'invités non sécurisées à un serveur SMB.
 
-Si vous activez ce paramètre de stratégie ou si vous ne configurez pas ce paramètre de stratégie, le client SMB va autoriser les ouvertures de session invité non sécurisées.
+Si vous activez ce paramètre de stratégie ou si vous ne le configurez pas, le client SMB autorisera les connexions d'invités non sécurisées.
 
-Si vous désactivez ce paramètre de stratégie, le client SMB rejette les ouvertures de session invité non sécurisées.
+Si vous désactivez ce paramètre de stratégie, le client SMB rejettera les connexions d'invités non sécurisées.
 
-Les ouvertures de session invité non sécurisées sont utilisées par les serveurs de fichiers pour autoriser l'accès non authentifié aux dossiers partagés. Bien qu'inhabituelles dans un environnement d'entreprise, les ouvertures de session invité non sécurisées sont fréquemment utilisées par les appareils de stockage NAS agissant en tant que serveurs de fichiers. Les serveurs de fichiers Windows requièrent une authentification et n'utilisent pas les ouvertures de session invité non sécurisées par défaut. Étant donné que les ouvertures de session invité non sécurisées ne sont pas authentifiées, des fonctionnalités de sécurité importantes telles que la signature SMB et le chiffrement SMB sont désactivées. Par conséquent, les clients qui autorisent les ouvertures de session invité non sécurisées peuvent être vulnérables à diverses attaques intermédiaires qui peuvent entraîner une perte de données, la corruption de données et l'exposition à des logiciels malveillants. En outre, les données écrites dans un serveur de fichiers à l'aide d'une ouverture de session invité non sécurisée sont potentiellement accessibles à toute personne sur le réseau. Microsoft recommande de désactiver les ouvertures de session invité non sécurisées et de configurer des serveurs de fichiers pour demander un accès authentifié.
+Si vous activez la signature, le client SMB rejettera les connexions d'invités non sécurisées.
+
+Les serveurs de fichiers utilisent des logons invités non sécurisés pour permettre un accès non authentifié aux dossiers partagés. Bien qu'elles soient peu courantes dans un environnement d'entreprise, les connexions d'invités non sécurisées sont fréquemment utilisées par les appareils de stockage en réseau (NAS) grand public qui font office de serveurs de fichiers. Les serveurs de fichiers Windows requièrent une authentification et n'utilisent pas par défaut les connexions d'invités non sécurisées. Étant donné que les connexions d'invités non sécurisées ne sont pas authentifiées, d'importantes fonctions de sécurité telles que la signature SMB et le cryptage SMB sont désactivées. Par conséquent, les clients qui autorisent les connexions d'invités non sécurisées sont vulnérables à diverses attaques de type "man-in-the-middle« qui peuvent entraîner la perte ou l'altération de données et l'exposition à des logiciels malveillants. En outre, toutes les données écrites sur un serveur de fichiers à l'aide d'une connexion d'invité non sécurisée sont potentiellement accessibles à n'importe qui sur le réseau. Microsoft recommande de désactiver les connexions d'invités non sécurisées et de configurer les serveurs de fichiers de manière à ce qu'ils exigent un accès authentifié».
       </string>
 
       <string id="Pol_EnableCSCforCAShares_Name">Disponibilité de Fichiers hors connexion sur des partages avec Disponibilité continue</string>
@@ -61,6 +63,7 @@ Les ouvertures de session invité non sécurisées sont utilisées par les serve
         Remarque : cette stratégie n’a aucun effet lorsque vous vous connectez à des partages de serveur de fichiers avec montée en puissance parallèle. Microsoft recommande de ne pas activer cette stratégie pour des clients se connectant régulièrement à des fichiers hébergés sur un cluster de basculement Windows avec le rôle Serveur de fichiers pour une utilisation générale, car ceci peut affecter le temps basculement et augmenter l’utilisation de la mémoire et de l’UC.
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Au minimum Windows Server 2022, Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Au moins Windows Server 2025, Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">Utiliser la compression SMB par défaut</string>
       <string id="Pol_EnableCompressedTraffic_Help">Cette stratégie contrôle si le client SMB utilise la compression du trafic par défaut.
 
@@ -77,11 +80,129 @@ Si vous activez ce paramètre de stratégie, le client SMB ne compresse jamais l
 
 Si vous désactivez ou ne configurez pas ce paramètre de stratégie, le client SMB peut compresser le trafic (en fonction d’une combinaison d’autres stratégies et conditions).
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">Mandater la version maximale de SMB</string>
+      <string id="Pol_MaxSmb2Dialect_Help">Cette stratégie contrôle la version maximale du protocole SMB
+
+Remarque : cette stratégie de groupe n’empêche pas l’utilisation de SMB 1 si ce composant est toujours installé et activé.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">Mandater la version minimale de SMB</string>
+      <string id="Pol_MinSmb2Dialect_Help">Cette stratégie contrôle la version minimale du protocole SMB
+
+Remarque : cette stratégie de groupe n’empêche pas l’utilisation de SMB 1 si ce composant est toujours installé et activé.
+      </string>
+      <string id="Dialect_0x202">PME 2.0.2</string>
+      <string id="Dialect_0x210">PME 2.1.0</string>
+      <string id="Dialect_0x300">PME 3.0.0</string>
+      <string id="Dialect_0x302">PME 3.0.2</string>
+      <string id="Dialect_0x311">PME 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">Bloquer NTLM (LM, NTLM, NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">Cette stratégie contrôle si le client SMB bloque NTLM pour l’authentification de connexion à distance.
+
+Si vous activez ce paramètre de stratégie, le client SMB n’utilise pas NTLM pour l’authentification de connexion à distance.
+
+Si vous désactivez ou ne configurez pas ce paramètre de stratégie, le client SMB peut toujours utiliser NTLM.
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">Bloquer la liste des exceptions de serveur NTLM</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">Ce paramètre de stratégie détermine si NTLM peut être utilisé pour accéder aux serveurs spécifiés.
+
+Si vous activez ce paramètre de stratégie (valide uniquement si la stratégie Bloquer NTLM (LM, NTLM, NTLMv2) est activée), NTLM peut être utilisé pour accéder aux serveurs spécifiés. Entrez les serveurs souhaités (nom DNS, adresse IP ou nom NetBIOS) dans la zone d’édition, un nom de serveur par ligne.
+
+Si vous désactivez ou ne configurez pas ce paramètre de stratégie, l’accès NTLM aux serveurs est déterminé par d’autres paramètres.
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">Activer les mailslots distants</string>
+      <string id="Pol_EnableRemoteMailslots_Help">Cette stratégie contrôle si le client SMB active ou désactive les mailslots distants sur MUP.
+
+Si vous désactivez ce paramètre de stratégie, les mailslots distants ne fonctionnent pas sur MUP. Ils ne passent donc pas par le redirecteur client SMB.
+
+Si vous ne configurez pas ce paramètre de stratégie, les mailslots distants peuvent être autorisés via MUP.
+      </string>
+      <string id="Pol_RequireEncryption_Name">Exiger un chiffrement</string>
+      <string id="Pol_RequireEncryption_Help">Cette stratégie contrôle si le client SMB nécessite un chiffrement.
+
+Si vous activez ce paramètre de stratégie, le client SMB exige que le serveur SMB prenne en charge le chiffrement et chiffre les données.
+
+Si vous désactivez ou ne configurez pas ce paramètre de stratégie, le client SMB ne nécessite pas de chiffrement. Toutefois, le chiffrement SMB peut toujours être requis ; consultez les notes ci-dessous.
+
+Remarque : cette stratégie est combinée avec les propriétés de connexion par partage, par serveur et par lecteur mappé, par le biais desquels le chiffrement SMB peut être requis. Le serveur SMB doit assurer la prise en charge et l’activation du chiffrement SMB. Par exemple, si cette stratégie est désactivée (ou n’est pas configurée), le client SMB peut toujours effectuer le chiffrement si un partage de serveur SMB nécessite un chiffrement.
+
+Important : le chiffrement SMB nécessite SMB 3.0 ou version ultérieure
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">Activer les autres ports</string>
+      <string id="Pol_EnableAlternativePorts_Help">Cette stratégie contrôle si le client SMB active ou désactive d’autres ports.
+
+Si vous désactivez ce paramètre de stratégie, les autres ports ne sont pas utilisés par le client SMB.
+
+Si vous ne configurez pas ce paramètre de stratégie, d’autres ports peuvent être utilisés par le client SMB.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">Le serveur d’audit ne prend pas en charge le chiffrement</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">Cette stratégie contrôle si le client SMB active l’événement d’audit lorsque le serveur SMB ne prend pas en charge le chiffrement.
+
+Si vous activez ce paramètre de stratégie, le client SMB enregistre l’événement lorsque le serveur SMB ne prend pas en charge le chiffrement.
+
+Si vous désactivez ou ne configurez pas ce paramètre de stratégie, le client SMB ne consigne pas l’événement.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">Le serveur d’Audit ne prend pas en charge la signature</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">Cette stratégie détermine si le client SMB activera l’événement d’audit lorsque le serveur SMB ne prend pas en charge la signature.
+
+Si vous activez ce paramètre de stratégie, le client SMB enregistrera l’événement lorsque le serveur SMB ne prend pas en charge la signature.
+
+Si vous désactivez ou ne configurez pas ce paramètre de stratégie, le client SMB n’enregistrera pas l’événement.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Vérifier les connexions d'invités non sécurisées</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">Cette stratégie contrôle si le client SMB active l’événement d’audit lorsque le client est connecté en tant que compte invité.
+
+Si vous activez ce paramètre de stratégie, le client SMB enregistre l’événement lorsque le client est connecté en tant que compte invité.
+
+Si vous désactivez ou ne configurez pas ce paramètre de stratégie, le client SMB ne consigne pas l’événement.
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">Mappages de ports de remplacement</string>
+      <string id="Pol_AlternativePortMappings_Help">Ce paramètre de stratégie détermine les mappages de Registre de port alternatifs utilisés par le client SMB.
+
+Si vous activez ce paramètre de stratégie, le premier mappage valide est utilisé si le nom du serveur du mappage correspond au nom du serveur ciblé pour la connectivité.
+
+Si vous activez ce paramètre de stratégie et ne spécifiez pas au moins un mappage valide, ou si vous désactivez ou ne configurez pas ce paramètre de stratégie, le client SMB fait référence à d’autres méthodes de détermination de l’utilisation d’autres ports, telles que les commandes NET USE ou New-SmbMapping.
+
+Exemples:
+
+contososa.file.core.windows.net :tcp :448
+edgesrv1.corp.contoso.com :quic :450
+
+Comment modifier ce paramètre :
+
+Organisez les mappages de port de remplacement souhaités dans la zone d’édition avec une entrée de mappage par ligne.
+
+Le format de chaque entrée de mappage spécifie un nom de serveur, un type de transport et un numéro de port séparés par deux-points comme indiqué dans l’exemple ci-dessus.
+
+Remarque : cette stratégie ne nécessite pas de redémarrage de Windows pour prendre effet.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>Suites de chiffrement :</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>Sélectionnez la version PME :</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Version :</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>Sélectionnez la version PME :</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Version :</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>Bloquer la liste des exceptions de serveur NTLM :</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>Mappages du Registre des ports de remplacement :</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

@@ -115,6 +115,25 @@ Bu yapılandırma tarafından oluşturulan olaylar: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Destekleniyor</string>
       <string id="PKINITHashAlgorithm_Audited">Denetlendi</string>
       <string id="PKINITHashAlgorithm_NotSupported">Desteklenmiyor</string>
+      <string id="StrongNameMatches">Sertifikalar için ad tabanlı tanımlayıcı ad eşlemelerine izin ver</string>
+      <string id="StrongNameMatches_explain">Bu ilke ayarı, Active Directory kullanıcı hesaplarına verilen sertifikaların güvenli eşlemesi için alternatif, ad tabanlı tanımlayıcıların kullanılmasına olanak sağlar ve hangi sertifikaların hangi hesaplarla eşlendiğini belirtir. Bu ayar etkinleştirilmediğinde sertifikalar genellikle ad tabanlı tanımlayıcılara izin verilmeyen aka.ms/StrongCertMapKB içinde belirtilen “güvenli eşleme” ölçütlerini karşılamalıdır.
+
+Bu ilkede belirtilen her eşleme, aşağıda belirtilen söz dizimini kullanarak IssuerSubject ve/veya UPN Soneki ile birlikte bir ilke OID'si içermelidir. Belirli bir sertifika için bu ilkede geçerli bir eşleme bulunamadığında Active Directory, KB5014754 içinde belirtilen mevcut tanımlayıcı eşleme ölçütlerini kullanarak bir eşleşme bulmaya çalışır. ”Güvenli ad eşleme” veya mevcut ”güvenli eşleme” (bu ilke) ölçütlerine uymayan sertifika eşlemeleri kimlik doğrulaması için geçersiz kabul edilir.
+
+Genel ilke biçimi ve bazı örnekler aşağıda listelenir. Bu ilke yalnızca Active Directory kullanıcı hesapları için geçerlidir.
+
+Genel söz dizimi
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+Örnekler
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+İlke, her kuralın demet olarak gösterildiği, kural başına tam olarak bir sertifika parmak izi içermelidir. Parmak izi benzersiz olmalıdır ve birden çok kuralda yinelenemez. Noktalı virgülle ayrılmış her demetin bölümleri belirtilen sırada olmalıdır ancak virgülle ayrılmış alanlar herhangi bir sırada olabilir. Kurallar da yeni satırlarla ayrılır.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Bu yapılandırma tarafından oluşturulan olaylar: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Tanımlayıcı Ad Eşleme Kuralları:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

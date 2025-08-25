@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">Käytä paikallisen todentamisen varmennetta</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">Käytä pilvipalvelun luottamusta paikallisessa todennuksessa</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">Poista Windows Hello yrityksille -tunnistetietojen tallentaminen välimuistiin sisäänkirjautumisen jälkeen</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello yrityksille on vaihtoehtoinen tapa kirjautua sisään Windowsiin käyttäen Active Directory- tai Azure Active Directory -tiliä. Se voi korvata salasanat, älykortit ja virtuaaliälykortit.
 
@@ -111,16 +113,17 @@ Jos poistat tämän käytäntöasetuksen käytöstä, Windows Hello yrityksille 
 HUOMAUTUS: tämän käytännön poistamisen käytöstä estää biometristen liikkeiden käyttämisen laitteessa kaikkien tilityyppien kohdalla.
         </string>
         <string id="MSPassport_EnableEnhancedSignInSecurity">Ota käyttöön ESS ja tuetut oheislaitteet</string>
-        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Laajennettu kirjautumissuojaus (ESS) eristää Windows Hellon biometriset (kasvot ja sormenjäljet) mallitiedot ja vastaavuustoiminnot luotettuihin laitteistoihin tai määritettyihin muistialueisiin, mikä tarkoittaa, että muut käyttöjärjestelmän osat eivät voi käyttää tai käsitellä niitä. Koska tunnistimien ja algoritmin välinen viestintäkanava on myös suojattu, haittaohjelmien on mahdotonta lisätä tai toistaa tietoja simuloidakseen sisäänkirjautumista tai lukitakseen käyttäjän ulos laitteestaan.
+        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Laajennettu kirjautumissuojaus (ESS) eristää Windows Hellon biometriset (kasvot ja sormenjäljet) mallitiedot ja vastaavat toiminnot luotettuihin laitteistoihin tai määritettyihin muistialueisiin, mikä tarkoittaa, että muut käyttöjärjestelmän osat eivät voi käyttää niitä tai käsitellä niitä. Koska tunnistimien ja algoritmin välinen viestintäkanava on myös suojattu, haittaohjelmien on mahdotonta lisätä tai toistaa tietoja simuloidakseen sisäänkirjautumista tai lukitakseen käyttäjän ulos laitteestaan.
 Jos otat tämän käytännön käyttöön, sillä voi olla seuraavat mahdolliset arvot:
 
-0 – Laajennettu kirjautumissuojaus on käytössä oheislaitteissa ja valmiissa, muissa kuin ESS-tunnistimissa
-Laajennettu kirjautumissuojaus otetaan käyttöön järjestelmissä, joissa on yhteensopiva ohjelmisto ja laitteisto, Windowsin nykyisen oletustoiminnan mukaisesti. Windows Helloa tukevien oheislaitteiden todentamistoiminnot sallitaan nykyisten ominaisuusrajoitusten mukaisesti. Lisäksi tämän asetuksen avulla ESS otetaan käyttöön laitteissa, joissa on erilaisia biometriikkaa käyttäviä sovelluksia, kuten ESS-yhteensopiva FPR ja ESS-yhteensopimaton kamera.
+0 - Laajennettu kirjautumissuojaus poistettu käytöstä oheisantureilla
+ESS otetaan pois käytöstä järjestelmissä, joissa on yhteensopiva ohjelmisto ja laitteisto. Windows Helloa tukevien oheislaitteiden todentamistoiminnot sallitaan nykyisten ominaisuusrajoitusten mukaisesti. 
 
-1 – Laajennettu kirjautumissuojaus on käytössä ilman oheislaitteita tai valmiita, muita kuin ESS-tunnistimia (oletusarvo ja suositeltu korkeimman suojauksen varmistamiseksi)
-Laajennettu kirjautumissuojaus otetaan käyttöön järjestelmissä, joissa on yhteensopiva ohjelmisto ja laitteisto, Windowsin nykyisen oletustoiminnan mukaisesti. Minkä tahansa biometriikkaa käyttävän oheislaitteen todentamistoiminnot estetään, eikä niitä voi käyttää Windows Hellossa.
+1 - Laajennettu kirjautumissuojaus on käytössä ilman oheisantureita (oletus ja suositeltu)
+ESS otetaan käyttöön järjestelmissä, joissa on yhteensopiva ohjelmisto ja laitteisto, Windowsin nykyisen oletustoiminnan mukaisesti. Minkä tahansa oheislaitteen biometriikkaa käyttävän sovelluksen todentamistoiminnot estetään, eikä niitä voi käyttää Windows Hellossa.
 
- Jos poistat tämän käytännön käytöstä tai et määritä sitä, muut kuin ESS-tunnistimet estetään ESS-laitteessa.
+ Jos poistat tämän käytännön käytöstä tai et määritä sitä, ei-ESS-sensorit estetään ESS-laitteessa.
+
         </string>
         <string id="MSPassport_EnablePinRecovery">Käytä PIN-koodin palautusta</string>
         <string id="MSPassport_EnablePinRecoveryExplain">PIN-koodin palautuksen avulla käyttäjä voi vaihtaa unohtuneen PIN-koodin käyttämällä Windows Hello yrityksille -ominaisuuden PIN-koodin palautuspalvelua PIN-koodiin liittyviä tunnistetietoja tai varmenteita menettämättä, käyttäjän laitteessa oleviin henkilökohtaisiin tileihin liittyvät avaimet mukaan lukien. Azure-pohjainen PIN-koodin palautuspalvelu salaa laitteeseen tallennetun palautussalaisuuden, ja salauksen purkamisen tarvitaan sekä PIN-koodin palautuspalvelua että laitetta. PIN-koodin palautus edellyttää, että käyttäjä suorittaa monimenetelmäisen todentamisen Azure Active Directoryssa.
@@ -149,6 +152,8 @@ Jos poistat tämän käytäntö asetuksen käytöstä tai et määritä sitä, W
  
 Huomautus: ympäristö, joka ottaa sekä tämän käytäntö asetuksen käyttöön, ja käytä Windows Hello yrityksille-käytäntö asetusta, jos käytössä on vähintään yksi Windows Server 2016-toimi alueen ohjaus kone. Muussa tapa uksessa Windows Hello yrityksille-todennus epäonnistuu.
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">Windows Hello yrityksille tunnistetiedot tallennetaan välimuistiin sisäänkirjautumisen jälkeen, jotta tietyt suojaukseen liittyvät sovellukset voivat käyttää tunnistetietoja hiljaisesti, jotta ne eivät häiritse käyttökokemusta. Ota tämä käytäntö käyttöön, jos haluat poistaa tämän käytöstä poistamalla välimuistin, jotta käyttäjän syöte on eksplisiittisesti tarpeen.</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">Määritä laitteen avaamistekijät</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">Määritä pilkuin erotettu luettelo valtakirjan antajien GUID-tunnuksista, kuten kasvojen ja sormenjälkien antajien GUID-tunnuksista, joita käytetään ensi- ja toissijaisina avaamistekijöinä. Jos luotettu signaalintarjoaja määritellään yhdeksi avaamistekijöistä, sinun on myös määritettävä pilkuin erotettu luettelo signaalisäännöistä xml-muodossa jokaiselle signaalityypille, jotka pitää vahvistaa.

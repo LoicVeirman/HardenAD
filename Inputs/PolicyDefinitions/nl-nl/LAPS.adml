@@ -7,21 +7,21 @@
     <stringTable>
       <string id="LAPS">LAPS</string>
       <string id="LAPS_BackupDirectory">Map voor wachtwoordback-up configureren</string>
-      <string id="LAPS_BackupDirectory_Help">Gebruik deze instelling om te configureren in welke map het wachtwoord van de lokale beheerdersaccount wordt opgeslagen.
+      <string id="LAPS_BackupDirectory_Help">Gebruik deze instelling om te configureren naar welke map een back-up wordt gemaakt van het wachtwoord van het lokale beheerdersaccount.
 
 De toegestane instellingen zijn:
 
-0 = uitgeschakeld (er wordt geen back-up gemaakt van het wachtwoord)
+0=Uitgeschakeld (er wordt geen back-up gemaakt van het wachtwoord)
 
-1 = back-up maken van het wachtwoord naar Azure Active Directory
+1=Backup het wachtwoord om te Azure Active Directory
 
-2 = back-up maken van het wachtwoord naar Active Directory
+2=Backup het wachtwoord aan Active Directory
 
-Als u deze instelling niet opgeeft, wordt de standaardwaarde 0 (uitgeschakeld) ingesteld.
+Als u niets opgeeft, wordt deze instelling standaard ingesteld op 0 (uitgeschakeld).
 
-Als deze instelling is ingesteld op 1 en het beheerde apparaat niet wordt toegevoegd aan Azure Active Directory, wordt het lokale beheerderswachtwoord niet beheerd.
+Als deze instelling is geconfigureerd op 1 en het beheerde apparaat niet is gekoppeld aan Azure Active Directory, wordt het lokale beheerderswachtwoord niet beheerd.
 
-Als deze instelling is ingesteld op 2 en het beheerde apparaat is niet toegevoegd aan Active Directory, wordt het lokale beheerderswachtwoord niet beheerd.
+Als deze instelling is geconfigureerd op 2 en het beheerde apparaat niet is toegevoegd aan Active Directory, wordt het lokale beheerderswachtwoord niet beheerd.
 
 Als deze instelling is uitgeschakeld of niet is geconfigureerd, wordt het lokale beheerderswachtwoord niet beheerd.
 
@@ -46,27 +46,38 @@ Wachtwoordduur in dagen
   Maximum: 365 dagen
   Standaard: 30 dagen
 
+Lengte van wachtwoordzin
+  Minimum: 3 woorden
+  Maximum: 10 woorden
+  Standaardwaarde: 6 woorden
+
 Zie https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
+
+De wachtwoordzinlijst die is gemaakt uit Deep Dive: New Wordlists for Random Passphrases van EFF door Electronic Frontier Foundation en wordt gebruikt onder een CC-BY-3.0 Attribution-licentie. Zie https://go.microsoft.com/fwlink/?linkid=2255471 voor meer informatie.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Grote letters</string>
       <string id="LAPS_PwdComplexity_Item_2">Grote letters + kleine letters</string>
       <string id="LAPS_PwdComplexity_Item_3">Grote letters + kleine letters + cijfers</string>
       <string id="LAPS_PwdComplexity_Item_4">Grote letters + kleine letters + cijfers + speciale tekens</string>
+      <string id="LAPS_PwdComplexity_Item_5">Grote letters + kleine letters + cijfers + speciale tekens (verbeterde leesbaarheid)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Wachtwoordzin (lange woorden)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Wachtwoordzin (korte woorden)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Wachtwoordzin (korte woorden met unieke voorvoegsels)</string>
       <string id="LAPS_AdminName">Naam van het beheerdersaccount dat moet worden beheerd</string>
-      <string id="LAPS_AdminName_Help">Met deze beleidsinstelling geeft u de naam op van een aangepaste Administrator-account voor het beheren van het wachtwoord.
+      <string id="LAPS_AdminName_Help">Met deze beleidsinstelling wordt een aangepaste administratoraccountnaam opgegeven voor het beheren van het wachtwoord.
 
-Als deze beleidsinstelling is ingeschakeld, wordt het wachtwoord voor een lokaal account met deze naam door verval beheerd.
+Als deze beleidsinstelling is ingeschakeld, beheert LAPS het wachtwoord voor een lokaal account met deze naam.
 
-Als u deze beleidsinstelling uitschakelt of niet configureert, wordt het wachtwoord voor het bekende beheerdersaccount door het verval beheerd.
+Als deze beleidsinstelling is uitgeschakeld of niet is geconfigureerd, beheert LAPS het wachtwoord voor het bekende administratoraccount.
 
-Schakel deze beleidsinstelling niet in om het ingebouwde administratoraccount te beheren. Het ingebouwde administratoraccount wordt automatisch gedetecteerd op basis van een bekende SID en is niet afhankelijk van de accountnaam.
+Schakel deze beleidsinstelling NIET in om het ingebouwde administratoraccount te beheren. Het ingebouwde administratoraccount wordt automatisch gedetecteerd door bekende SID's en is niet afhankelijk van de accountnaam.
 
 Zie https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">Verlooptijd van wachtwoorden niet langer toestaan dan vereist door beleid</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Als deze instelling is ingeschakeld of niet is geconfigureerd, is het verlopen van het geplande wachtwoord langer dan de wachtwoordduur die is bepaald door het beleid wachtwoordinstellingen, NIET toegestaan. Wanneer een dergelijke vervaldatum wordt gedetecteerd, wordt het wachtwoord onmiddellijk gewijzigd en wordt het wachtwoord op basis van het beleid ingesteld.
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Als deze instelling is ingeschakeld of niet is geconfigureerd, is geplande wachtwoordverval langer dan de wachtwoordduur die wordt bepaald door het beleid 'Wachtwoord Instellingen' NIET toegestaan. Wanneer een dergelijke vervaldatum wordt gedetecteerd, wordt het wachtwoord onmiddellijk gewijzigd en wordt de vervaldatum ingesteld volgens het beleid.
 
-Als deze instelling is uitgeschakeld, is het mogelijk dat de vervaltijd van het wachtwoord langer is dan vereist is voor het beleid wachtwoordinstellingen.
+Als deze instelling is uitgeschakeld, kan de vervaltijd van het wachtwoord langer zijn dan is vereist volgens het beleid voor wachtwoord Instellingen.
 
 Zie https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
       </string>
@@ -88,15 +99,27 @@ Zie https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
       <string id="LAPS_ADPasswordEncryptionPrincipal">Geautoriseerde wachtwoorddecoderingen configureren</string>
       <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Configureer deze instelling om de specifieke gebruiker of groep te beheren die gemachtigd is om versleutelde wachtwoorden te ontsleutelen.
 
-Het configureren van deze instelling heeft geen effect tenzij wachtwoordversleuteling is ingeschakeld.
+Configureer deze instelling om de specifieke gebruiker of groep te beheren die gemachtigd is om versleutelde wachtwoorden te ontsleutelen.
 
 Als deze instelling is ingeschakeld, kunnen versleutelde wachtwoorden worden ontsleuteld door de opgegeven groep.
 
-Als deze instelling is uitgeschakeld of niet is geconfigureerd, kunnen versleutelde wachtwoorden worden ontsleuteld door de groep Domeinadministrators.
+Configureer deze instelling om de specifieke gebruiker of groep te beheren die gemachtigd is om versleutelde wachtwoorden te ontsleutelen.
 
-Deze instelling moet worden geconfigureerd met een SID in tekenreeksindeling ('S-1-5-21-2127521184-1604012920-1887927527-35197') of de naam van een groep of gebruiker in de indeling 'domein\(groep of gebruiker)'. De opgegeven gebruiker of groep moet kunnen worden omgezet door het beheerde apparaat, anders wordt er geen back-up gemaakt van wachtwoorden.
+Deze instelling moet worden geconfigureerd met een door het domein gekwalificeerde naam van een groep of gebruiker, of een SID in tekenreeksindeling. Geldige voorbeelden zijn:
 
-Zie https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Plaats de naam of SID van de gebruiker/groep niet tussen aanhalingstekens of haakjes.
+
+De opgegeven gebruiker of groep moet kunnen worden omgezet door het beheerde apparaat, anders wordt er geen back-up gemaakt van wachtwoorden.
+
+OPMERKING: deze instelling wordt genegeerd wanneer back-ups worden gemaakt van DSRM-accountwachtwoorden (Directory Services Repair Mode) op een domeincontroller. In dat scenario wordt deze instelling altijd standaard ingesteld op de groep Domeinadministrators van het domein van de domeincontroller.
+
+Ga naar https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
       </string>
       <string id="LAPS_ADEncryptedPasswordHistorySize">Grootte van versleutelde wachtwoordgeschiedenis configureren</string>
       <string id="LAPS_ADEncryptedPasswordHistorySize_Help">Gebruik deze instelling om te configureren hoeveel eerder versleutelde wachtwoorden worden opgeslagen in Active Directory.
@@ -114,36 +137,38 @@ Deze instelling heeft een maximaal toegestane waarde van 12 wachtwoorden.
 Zie https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
       </string>
       <string id="LAPS_ADBackupDSRMPassword">Wachtwoordback-up inschakelen voor DSRM-accounts</string>
-      <string id="LAPS_ADBackupDSRMPassword_Help">Als u deze instelling inschakelt, wordt het wachtwoord van de DSRM-administratoraccount beheerd en opgeslagen in Active Directory.
+      <string id="LAPS_ADBackupDSRMPassword_Help">Als u deze instelling inschakelt, wordt het wachtwoord van het DSRM-administratoraccount beheerd en wordt er een back-up gemaakt naar Active Directory.
 
 Het inschakelen van deze instelling heeft geen effect tenzij het beheerde apparaat een domeincontroller is en wachtwoordversleuteling ook is ingeschakeld.
 
-Als deze instelling is ingeschakeld, wordt er in Active Directory een back-up gemaakt van het wachtwoord voor het Administrator-account van de DSRM-beheerder op de domeincontroller.
+Als deze instelling is ingeschakeld, wordt er een back-up gemaakt van het wachtwoord voor het DSRM-administratoraccount op de domeincontroller.
 
-Als deze instelling is uitgeschakeld of niet is geconfigureerd, wordt er geen back-up gemaakt van het wachtwoord voor het administratoraccount van de DSRM-beheerder op de domeincontroller.
+Als deze instelling is uitgeschakeld of niet is geconfigureerd, wordt er geen back-up gemaakt van het wachtwoord voor het DSRM-administratoraccount op de domeincontroller.
 
 Zie https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
       </string>
       <string id="LAPS_PostAuthenticationActions">Acties na verificatie</string>
-      <string id="LAPS_PostAuthenticationActions_Help">Met dit beleid worden acties na verificatie geconfigureerd die worden uitgevoerd nadat een verificatie door het beheerde account is gedetecteerd.
+      <string id="LAPS_PostAuthenticationActions_Help">Dit beleid configureert acties na verificatie die worden uitgevoerd nadat een verificatie door het beheerde account is gedetecteerd.
 
-Respijtperiode: geeft de hoeveelheid tijd (in uren) aan die moet worden gewacht na een verificatie voordat de opgegeven acties na verificatie worden uitgevoerd.
+respijtperiode: hiermee geeft u de tijdsduur (in uren) op die moet worden gewacht na een verificatie voordat de opgegeven acties na verificatie worden uitgevoerd.
 
 Als deze instelling is ingeschakeld en groter is dan nul, worden de opgegeven acties na verificatie uitgevoerd na het verlopen van de respijtperiode.
 
 Als deze instelling is uitgeschakeld of niet is geconfigureerd, worden de opgegeven acties na verificatie uitgevoerd na een standaard respijtperiode van 24 uur.
 
-Als deze instelling gelijk is aan nul, worden er geen acties uitgevoerd na verificatie.
+Als deze instelling gelijk is aan nul, worden er geen acties na verificatie uitgevoerd.
 
 Acties: hiermee geeft u de acties op die moeten worden uitgevoerd na het verlopen van de respijtperiode.
 
-Wachtwoord opnieuw instellen: na het verlopen van de respijtperiode wordt het wachtwoord voor het beheerde account opnieuw ingesteld.
+Wachtwoord opnieuw instellen: na het verlopen van de respijtperiode wordt het wachtwoord van het beheerde account opnieuw ingesteld.
 
-Het wachtwoord opnieuw instellen en het beheerde account afmelden: na het verlopen van de respijtperiode wordt het wachtwoord van het beheerde account opnieuw ingesteld en worden alle interactieve aanmeldingssessies met het beheerde account beëindigd.
+Stel het wachtwoord opnieuw in en meld het beheerde account af: na het verlopen van de respijtperiode wordt het wachtwoord van het beheerde account opnieuw ingesteld en worden interactieve aanmeldingssessies met het beheerde account afgemeld.
+
+Het wachtwoord opnieuw instellen en opnieuw opstarten: na het verlopen van de respijtperiode wordt het wachtwoord van het beheerde account opnieuw ingesteld en wordt het beheerde apparaat opnieuw opgestart.
+
+Stel het wachtwoord opnieuw in, meld het beheerde account af en beëindig alle resterende processen: na het verlopen van de respijtperiode wordt het wachtwoord van het beheerde account opnieuw ingesteld, worden interactieve aanmeldingssessies met het beheerde account afgemeld en worden alle resterende processen beëindigd.
 
 (OPMERKING: nadat interactieve aanmeldingssessies zijn beëindigd, kunnen er nog andere geverifieerde sessies worden gebruikt door het beheerde account. De enige robuuste manier om ervoor te zorgen dat het vorige wachtwoord langer in gebruik is, is door het apparaat opnieuw op te starten.)
-
-Het wachtwoord opnieuw instellen en opnieuw opstarten: na het verlopen van de respijtperiode wordt het wachtwoord voor het beheerde account opnieuw ingesteld en wordt het beheerde apparaat onmiddellijk opnieuw opgestart.
 
 Als deze instelling is uitgeschakeld of niet is geconfigureerd, worden acties na verificatie standaard ingesteld op 'Het wachtwoord opnieuw instellen en het beheerde account afmelden'.
 
@@ -155,6 +180,44 @@ Zie https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
       <string id="PostAuthenticationActions_Item1">Het wachtwoord opnieuw instellen</string>
       <string id="PostAuthenticationActions_Item3">Het wachtwoord opnieuw instellen en het beheerde account afmelden</string>
       <string id="PostAuthenticationActions_Item5">Het wachtwoord opnieuw instellen en het apparaat opnieuw opstarten</string>
+      <string id="PostAuthenticationActions_Item11">Het wachtwoord opnieuw instellen, het beheerde account afmelden en alle resterende processen beëindigen</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Automatisch accountbeheer configureren</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Met dit beleid worden beleidsopties voor automatisch accountbeheer geconfigureerd.
+
+Geef het doelaccount op dat moet worden beheerd: hiermee geeft u op of het ingebouwde beheerdersaccount of een aangepast account moet worden beheerd.
+
+Automatische accountnaam (of naamvoorvoegsel): hiermee geeft u de naam of het naamvoorvoegsel op die voor het beheerde account moet worden gebruikt.
+
+Als deze beleidsinstelling is geconfigureerd, gebruikt Windows LAPS deze als accountnaam of naamvoorvoegsel voor het doelaccount.
+
+Als deze beleidsinstelling niet is geconfigureerd, gebruikt Windows LAPS WLapsAdmin als accountnaam of naamvoorvoegsel.
+
+Opmerking: deze naam wordt behandeld als een voorvoegsel wanneer willekeurige accountnamen worden geconfigureerd. Zie de opmerkingen hieronder.
+
+Het beheerde account inschakelen: hiermee geeft u op of het beheerde account moet worden ingeschakeld of niet.
+
+Als deze beleidsinstelling is geconfigureerd, schakelt Windows LAPS het opgegeven beheerde account in.
+
+Als deze beleidsinstelling niet is geconfigureerd, schakelt Windows LAPS het opgegeven beheerde account uit.
+
+Opmerking: Windows LAPS onderhoudt en rouleert regelmatig het wachtwoord van het beheerde account, ongeacht of het account wordt onderhouden met de status ingeschakeld\uitgeschakeld.
+
+De naam van het beheerde account willekeurig maken: hiermee geeft u op of de naam van het beheerde account moet worden gerandomiseerd met een willekeurig numeriek achtervoegsel.
+
+Als deze beleidsinstelling is geconfigureerd, voegt Windows LAPS een willekeurig numeriek achtervoegsel van acht cijfers toe aan de naam van het beheerde automatische account en wordt de naam van het beheerde account opnieuw willekeurig weergegeven telkens wanneer het wachtwoord wordt geroteerd.
+
+Als deze beleidsinstelling niet is geconfigureerd, gebruikt Windows LAPS de naam van het beheerde automatische account zoals geconfigureerd.
+
+Als het voorvoegsel voor de beheerde automatische accountnaam is geconfigureerd, gebruikt Windows LAPS maximaal de eerste twaalf (12) tekens van die naam als voorvoegsel voor de willekeurige naam. Als deze beleidsinstelling niet is geconfigureerd, gebruikt Windows LAPS 'WLapsAdmin' als accountnaam of naamvoorvoegsel.
+
+Opmerking: het DSRM-account op domeincontrollers kan niet worden geconfigureerd voor automatisch accountbeheer. Dit beleid heeft geen effect op domeincontrollers en wordt genegeerd, zelfs als het is geconfigureerd voor een domeincontroller.
+
+Ga naar https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Het ingebouwde beheerdersaccount beheren</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Een aangepast beheerdersaccount beheren</string>
+      <string id="AutomaticAccountName_Help">Geef de accountnaam of het naamvoorvoegsel op</string>
+      <string id="AutomaticAccountNameRandomization_Help">Hiermee geeft u op of de automatische accountnaam willekeurig moet worden gedefinieerd.</string>
       <string id="SUPPORTED_Windows10">Ten minste Microsoft Windows 10 of hoger</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ Zie https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Wachtwoordcomplexiteit</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Wachtwoordlengte</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Wachtwoordduur (dagen)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Wachtwoordzinlengte (woorden)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ Zie https://go.microsoft.com/fwlink/?linkid=2188435 voor meer informatie.
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Respijtperiode (uren):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Acties:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Acties:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Geef het doelaccount op dat moet worden beheerd:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Automatische accountnaam (of naamvoorvoegsel):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Het beheerde account inschakelen</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">De naam van het beheerde account willekeurig maken</checkBox>
       </presentation>
     </presentationTable>
   </resources>

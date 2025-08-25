@@ -17,6 +17,9 @@
     <string id="Quarantine">Quarantaine</string>
     <string id="RealtimeProtection">Protection en temps réel</string>
     <string id="Remediation">Mise à jour</string>
+    <string id="Remediation_BNB">Blocs réseau comportementaux</string>
+    <string id="Remediation_BNB_REP">Protection contre le chiffrement à distance</string>
+    <string id="Remediation_BNB_BFP">protection Brute-Force</string>
     <string id="Reporting">Création d’un rapport</string>
     <string id="Scan">Analyse</string>
     <string id="SignatureUpdate">Mises à jour de la veille de sécurité</string>
@@ -38,7 +41,7 @@ Si vous désactivez ce paramètre, le service anti-programme malveillant est cha
 
 Actives 
     Autoriser la mise à jour des appareils gérés via des connexions limitées. Des frais de données peuvent s’appliquer.</string>
-    <string id="HideExclusionsFromLocalAdmins">Contrôlez si les exclusions sont visibles ou non par les administrateurs locaux.</string>
+    <string id="HideExclusionsFromLocalAdmins">Contrôler si les exclusions sont visibles ou non par les administrateurs locaux</string>
     <string id="HideExclusionsFromLocalAdmins_Explain">
     Ce paramètre de stratégie contrôle si les exclusions sont visibles ou non par les administrateurs locaux.  Pour les utilisateurs finaux (qui ne sont pas des administrateurs locaux), les exclusions ne sont pas visibles, que ce paramètre soit activé ou non.
     Désactivé (par défaut) :
@@ -47,6 +50,10 @@ Actives
 Activé: 
         Si vous activez ce paramètre, les administrateurs locaux ne peuvent plus voir la liste d’exclusion dans Sécurité Windows Application ou via PowerShell.
         Remarque : l’application de ce paramètre ne supprime pas les exclusions, elle empêche uniquement leur affichage par les administrateurs locaux. Cela est reflété dans  Get-MpPreference.</string>
+    <string id="HideExclusionsFromLocalUsers">Contrôler si les exclusions sont visibles par les utilisateurs locaux</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    Ce paramètre de stratégie contrôle si les exclusions sont visibles par les utilisateurs locaux sur l’appareil.
+    Utilisez le paramètre de stratégie HideExclusionsFromLocalAdmins pour masquer les exclusions des utilisateurs locaux standard et administratifs.</string>
     <string id="AllowNetworkProtectionOnWinServer">Ces paramètres contrôlent si la protection du réseau est autorisée à être configurée en mode de blocage ou d’audit sur Windows Server.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     Désactivé (par défaut) : 
@@ -57,11 +64,29 @@ Actives
     Notez que cette configuration dépend de la configuration de EnableNetworkProtection. Si cette configuration est fausse, EnableNetworkProtection sera ignoré, sinon la protection du réseau démarrera sur Windows Server en fonction de la valeur de EnableNetworkProtection.</string>
     <string id="DisableDatagramProcessing">Ce paramètre contrôle le traitement du datagramme pour la protection du réseau.</string>
     <string id="DisableDatagramProcessing_Explain">
-    Activé (par défaut) : 
-    Si elle n’est pas configurée ou est désactivée, le traitement des datagrammes est activé pour la protection du réseau.
+    Désactivé (par défaut) : 
+    Si cette option n’est pas configurée ou désactivée, le traitement des datagrammes est activé pour la protection réseau.
 
-Actives 
+Activé: 
     Si cette option est activée, le traitement des datagrammes est désactivé pour la protection du réseau.</string>
+    <string id="EnableConvertWarnToBlock">Convertir le verdict d’avertissement en bloc</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    La protection réseau inspecte le trafic réseau et détermine si elle autorise ou bloque le trafic ou affiche un avertissement.
+   
+    Désactivée (par défaut) : 
+    Si elle est réglée sur Non configurée ou Désactivée, la protection réseau affiche un avertissement pour les avertissements.
+
+    Activée : 
+   Si ce paramètre est Activée, la protection réseau bloque le trafic réseau au lieu d’afficher un avertissement.</string>
+    <string id="AllowSwitchToAsyncInspection">Activer l’inspection asynchrone</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    Contrôlez si la protection du réseau peut améliorer les performances en passant de l’inspection en temps réel à l’inspection asynchrone.
+
+    Désactivé (par défaut) : 
+    Si elle n’est pas configurée ou désactivée, l’inspection asynchrone n’est pas activée pour la protection réseau.
+
+    Activé : 
+    Si cette option est activée, le passage à l’inspection asynchrone est autorisé pour la protection réseau.</string>
     <string id="DisableAutoExclusions">Désactiver les exclusions automatiques</string>
     <string id="DisableAutoExclusions_Explain">
         Autorise un administrateur à spécifier si la fonctionnalité Exclusions automatiques pour les serveurs SKU doit être désactivée.
@@ -142,15 +167,19 @@ Si vous désactivez ou ne configurez pas ce paramètre, le serveur proxy n’est
       Si vous désactivez ce paramètre ou que vous ne le configurez pas, le proxy ignore cette étape de remplacement en respectant l’ordre spécifié ci-dessus.
     </string>
     <string id="RandomizeScheduleTaskTimes">Rendre aléatoires les heures des tâches planifiées</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">Ce paramètre de stratégie vous permet de configurer l’analyse prévue et la mise à jour prévue du service d’informations de sécurité, dont la fenêtre d’heure de début est en heures.
+    <string id="RandomizeScheduleTaskTimes_Explain">Ce paramètre de stratégie vous permet de configurer la randomisation de l’heure de début de l’analyse planifiée et de l’heure de début de la mise à jour de définition planifiée.
 
-    Si vous désactivez ou ne configurez pas ce paramètre, les tâches programmées commencent à un horaire aléatoire dans un délai de 4 heures après l’heure spécifiée dans le Planificateur de tâches.
-    Si vous activez ce paramètre, vous pouvez élargir ou affiner cette période de randomisation. Spécifier une fenêtre de randomisation de 1 à 23 heures.</string>
+Si vous activez ou ne configurez pas ce paramètre de stratégie, et si vous n’avez pas défini de fenêtre de randomisation dans le paramètre Configurer la randomisation de l’heure planifiée des tâches, la randomisation est ajoutée entre 0 et 4 heures.
+        Si vous activez ce paramètre de stratégie ou si vous ne le configurez pas, et si vous définissez une fenêtre de randomisation dans le paramètre Configurer la randomisation de l’heure planifiée des tâches, la fenêtre de randomisation configurée est utilisée.
+        Si vous désactivez ce paramètre de stratégie, mais que vous avez configuré la fenêtre de randomisation de l’heure planifiée des tâches, la randomisation n’est pas effectuée. 
+    </string>
     <string id="SchedulerRandomizationTime">Fenêtre Configurer la randomisation des heures des tâches planifiées</string>
-    <string id="SchedulerRandomizationTime_Explain">Ce paramètre de stratégie vous permet de configurer l’heure de début de l’analyse prévue et la fenêtre de démarrage de la mise à jour prévue du service d’informations de sécurité en heures.
+    <string id="SchedulerRandomizationTime_Explain">Ce paramètre de stratégie vous permet de configurer l’heure de début de l’analyse des tâches planifiées et la fenêtre d’heure de début de la mise à jour planifiée de renseignements de sécurité en heures. Ce paramètre affecte la configuration des heures de tâches planifiées aléatoires.
 
-    Si vous désactivez ou ne configurez pas ce paramètre, les tâches programmées commencent à un intervalle aléatoire de 4 heures après l’heure de début spécifiée.
-    Si vous activez ce paramètre, vous devez sélectionner une fenêtre de randomisation en quelques heures. L’intervalle de fenêtre de randomisation possible est entre 1 et 23 heures.</string>
+        Si vous activez ce paramètre, vous devez choisir une fenêtre de randomisation en heures. L’intervalle de fenêtre de randomisation possible est compris entre 1 et 23 heures. L’intervalle de randomisation implémenté est compris entre 0 et la valeur configurée. 
+        Lorsque vous activez ce paramètre, les paramètres d’heures de tâche planifiée aléatoire utilisent la fenêtre de randomisation spécifiée dans ce paramètre de configuration. 
+        Si vous désactivez ce paramètre de stratégie ou si vous ne le configurez pas, les paramètres d’heures de tâches planifiées aléatoires sont rendues aléatoires entre 0 et 4 heures.</string>
+
     <string id="ServiceKeepAlive">Autoriser le service anti-programme malveillant à rester constamment actif</string>
     <string id="ServiceKeepAlive_Explain">Ce paramètre de stratégie vous permet de configurer si le service anti-programme malveillant reste ou non actif lorsque la veille de sécurité anti-espions et la veille de sécurité antivirus sont désactivées. Il est recommandé que ce paramètre reste désactivé.
 
@@ -219,6 +248,22 @@ Si vous désactivez ou ne configurez pas ce paramètre, les éléments sont cons
 Si vous activez ou ne configurez pas ce paramètre, l’analyse des scripts est activée.
 
 Si vous désactivez ce paramètre, l’analyse des scripts est désactivée.</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">Configurer la protection en temps réel et les mises à jour des informations de sécurité pendant OOBE</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">Ce paramètre de stratégie vous permet de configurer l’activation de la protection en temps réel et des mises à jour des renseignements de sécurité sont activées pendant la phase OOBE (expérience out of box).
+ 
+    Si vous activez ce paramètre, la protection en temps réel et les mises à jour du renseignements de sécurité sont activées pendant la phase OOBE.
+ 
+    Si vous désactivez ou ne configurez pas ce paramètre de stratégie, la protection en temps réel et les mises à jour des renseignements de sécurité pendant la phase OOBE ne sont pas activées.</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">Configurer l’état du mode performance</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">Cette stratégie contrôle le mode de performance de Microsoft Defender Antivirus pour les lecteurs Dev.
+
+    Un Dev Drive est un lecteur de disque optimisé pour des performances accrues dans des scénarios de développement de logiciels. Lorsque cette stratégie est activée ou n'est pas configurée, le mode Performance est activé pour Microsoft Defender Antivirus. En mode Performance, les contrôles de sécurité de Microsoft Defender Antivirus sur le contenu stocké sur les disques durs sont effectués de manière asynchrone pour améliorer les performances. Le mode performance exige que les stratégies suivantes soient également activées : « Activer le lecteur de périphériques » et « Stratégie d'attachement du filtre du lecteur de périphériques »
+
+    Si vous activez ou ne configurez pas ce paramètre de stratégie, le mode Performance est activé.
+
+    Si vous désactivez ce paramètre de stratégie, le mode Performance est désactivé et Microsoft Defender Antivirus protégera un lecteur Dev de la même manière que les autres lecteurs.</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">Activer l’analyse du comportement</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">Ce paramètre de stratégie vous permet de configurer l’analyse du comportement.
@@ -359,6 +404,92 @@ Si vous désactivez ou ne configurez pas ce paramètre, une analyse complète pl
 Si vous activez ce paramètre, une analyse complète planifiée pour terminer la mise à jour est exécutée à l’heure de la journée spécifiée.
 
 Si vous désactivez ou ne configurez pas ce paramètre, une analyse complète planifiée pour terminer la mise à jour est exécutée à une heure par défaut.</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">Configurer le mode de protection contre le chiffrement à distance</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    Définissez le mode de protection contre le chiffrement à distance dans Microsoft Defender Antivirus, qui peut détecter et bloquer les tentatives de remplacement des fichiers locaux par des versions chiffrées d’un autre appareil. 
+
+Paramètres pris en charge :
+    * 0 - Non configuré ou par défaut : appliquer les valeurs par défaut, qui peuvent varier en fonction de la version du moteur antivirus et de la plateforme
+    * 1 - Bloquer : empêcher les comportements suspects et malveillants
+    * 2 - Audit : Générer les détections EDR sans blocage
+    * 4 - Désactivé : la fonctionnalité est désactivée sans impact sur les performances
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">Par défaut</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">Refuser</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">Audit</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">Désactivé</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">Configurer le temps de blocage de la protection contre le chiffrement à distance</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    Définissez la durée maximale pendant laquelle une adresse IP est bloquée par la protection de chiffrement à distance. Après cette période, les adresses IP bloquées pourront relancer les connexions. 
+
+Paramètres pris en charge :
+    * 0 - Aucun : la logique de fonctionnalité interne détermine le temps de blocage réel
+    * Spécifiez d’autres heures par incréments de 15 minutes
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">Configurer la manière dont la Protection contre le chiffrement à distance bloque les menaces</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    Définissez les critères pour lesquels la protection du chiffrement à distance bloque les adresses IP.
+
+Paramètres pris en charge :
+    *0 - Faible : bloquer uniquement lorsque le niveau de confiance est 100% (par défaut)
+    *1 - Moyen : utiliser l’agrégation cloud et bloquer lorsque le niveau de confiance est supérieur 99%
+    *2 - Élevé : utilisez les informations et le contexte cloud, et bloquez lorsque le niveau de confiance est supérieur 90%
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">Faible</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">Moyen</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">Élevée</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> Définir les exclusions de la protection de chiffrement à distance</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    Spécifiez les adresses IP, les sous-réseaux et les noms de domaine à exclure de la protection de chiffrement à distance. Notez que les attaquants peuvent usurper des adresses et des noms exclus pour contourner la protection.
+
+    Entrez chaque adresse ou sous-réseau sur une nouvelle ligne en tant que paire nom-valeur :
+    - Colonne Nom : entrez une adresse IP ou un nom de sous-réseau. Par exemple, « 1.1.127.0 » exclut cette adresse IP du blocage.
+    - Colonne valeur : entrez « 0 » pour chaque élément
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">Configurer le mode de protection Brute-Force</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Définissez le mode de protection Brute-Force dans Microsoft Defender Antivirus, qui peut détecter et bloquer les tentatives d’initialisation forcée de la connexion et de lancement de sessions.
+
+Paramètres pris en charge :
+    * 0 - Non configuré ou par défaut : appliquer les valeurs par défaut, qui peuvent varier en fonction de la version du moteur antivirus et de la plateforme
+    * 1 - Bloquer : empêcher les comportements suspects et malveillants
+    * 2 - Audit : Générer les détections EDR sans blocage
+    * 4 - Désactivé : la fonctionnalité est désactivée sans impact sur les performances
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">Par défaut</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">Refuser</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">Audit</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">Désactivé</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">Configurer le temps de blocage de la protection par force brute</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    Définissez la durée maximale pendant laquelle une adresse IP est bloquée par Brute-Force Protection. Après cette période, les adresses IP bloquées pourront se connecter et lancer des sessions.
+
+Paramètres pris en charge :
+    * 0 - Aucun : la logique de fonctionnalité interne détermine le temps de blocage réel
+    * Spécifiez d’autres heures par incréments de 15 minutes
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">Configurer l’agressif de la protection Brute-Force</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    Définissez les critères pour lesquels Brute-Force Protection bloque les adresses IP.
+
+Paramètres pris en charge :
+    *0 - Faible : bloquer uniquement lorsque le niveau de confiance est 100% (par défaut)
+    *1 - Moyen : utiliser l’agrégation cloud et bloquer lorsque le niveau de confiance est supérieur 99%
+    *2 - Élevé : utilisez les informations et le contexte cloud, et bloquez lorsque le niveau de confiance est supérieur 90%
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">Faible</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">Moyen</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">Élevée</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">Définir les exclusions de Brute-Force Protection</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    Spécifiez les adresses IP, les sous-réseaux ou les noms de station de travail à exclure de Brute-Force Protection. Les adresses IP exclues ne sont pas vérifiées pour une activité de force brute possible.
+    
+    Notez que les attaquants peuvent usurper des adresses et des noms exclus pour contourner la protection. Vérifiez que les noms sont uniques et peu susceptibles d’être devinés par les attaquants.
+
+    Entrez chaque adresse ou sous-réseau sur une nouvelle ligne en tant que paire nom-valeur :
+    - Colonne Nom : entrez une adresse IP, un nom de sous-réseau ou un nom de station de travail. Par exemple, « 1.1.127.0 » empêche cette adresse IP d’être bloquée par BFP.
+    - Colonne valeur : entrez « 0 » pour chaque élément
+    </string>
     <string id="Reporting_AdditionalActionTimeout">Configurer le délai pour les détections nécessitant une action supplémentaire</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">Ce paramètre de stratégie configure le délai en minutes avant qu’une détection dans l’état « action supplémentaire » ne passe à l’état « nettoyée ».</string>
     <string id="Reporting_CriticalFailureTimeout">Configurer le délai pour les détections dans un état d’échec critique</string>
@@ -398,6 +529,12 @@ Si vous désactivez ou ne configurez pas ce paramètre, la valeur par défaut es
 Si vous configurez ce paramètre sur 0, aucun rapport d’intégrité du service n’est envoyé.
 
 La valeur maximale autorisée est 14 400 minutes (10 jours).</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">Configurer s’il faut signaler les événements de suppression de signature dynamique</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">Ce paramètre de stratégie configure s’il faut signaler les événements de suppression de signature dynamique.
+
+Si vous ne configurez pas ce paramètre, la valeur par défaut est appliquée. La valeur par défaut est désactivée (de tels événements ne sont pas signalés).
+    Si vous configurez ce paramètre sur Activé, les événements de suppression de signature dynamique sont signalés.
+    Si vous configurez ce paramètre sur Désactivé, les événements de suppression de signature dynamique ne sont pas signalés.</string>
       <string id="Scan_AllowPause">Autoriser les utilisateurs à suspendre l’analyse</string>
     <string id="Scan_AllowPause_Explain">Ce paramètre de stratégie vous permet de définir si les utilisateurs finaux peuvent ou non suspendre une analyse en cours.
 
@@ -456,6 +593,10 @@ Si vous désactivez ce paramètre, la limitation de l’UC s’applique aux anal
 Si vous activez ce paramètre, les analyses de rattrapage pour les analyses rapides planifiées sont activées. Si un ordinateur est hors connexion lors de deux analyses planifiées consécutives, une analyse de rattrapage est démarrée la prochaine fois que quelqu’un se connecte à l’ordinateur.  Si aucune analyse planifiée n’est configurée, aucune analyse de rattrapage n’est exécutée.
 
 Si vous désactivez ou ne configurez pas ce paramètre, les analyses de rattrapage pour les analyses rapides planifiées sont désactivées.</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">Déclencher une analyse rapide après X jours sans aucune analyse</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">Ce paramètre de stratégie définit le nombre de jours qui peuvent s'écouler depuis la dernière analyse avant qu'une analyse rapide de rattrapage agressive ne soit automatiquement déclenchée. La valeur représente le nombre de jours qui peuvent s'écouler sans qu'aucune analyse ne soit effectuée avant qu'une analyse rapide agressive ne soit déclenchée.
+    
+    Les valeurs valides vont de 7 à 60 jours. S'il n'est pas configuré, les analyses rapides agressives seront désactivées. Par défaut, la valeur est définie sur 25 jours lorsqu'elle est activée.</string>
     <string id="Scan_DisableEmailScanning">Activer l’analyse du courrier électronique</string>
     <string id="Scan_DisableEmailScanning_Explain">Ce paramètre de stratégie vous permet de configurer l’analyse du courrier. Lorsque l’analyse du courrier est activée, le moteur analyse la boîte aux lettres et les fichiers de courrier, en fonction de leur format spécifique, afin d’analyser les corps et pièces jointes du courrier. Plusieurs formats de courrier sont actuellement pris en charge, par exemple : pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac). L’analyse des e-mails n’est pas prise en charge sur les clients de courrier modernes.
     
@@ -498,12 +639,12 @@ Si vous désactivez ou ne configurez pas ce paramètre, aucun point de restaurat
 Si vous activez ce paramètre, les lecteurs réseau mappés sont analysés.
 
 Si vous désactivez ou ne configurez pas ce paramètre, les lecteurs réseau mappés ne sont pas analysés.</string>
-    <string id="Scan_DisableScanningNetworkFiles">Analyser les fichiers réseau</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">Ce paramètre de stratégie vous permet de configurer l’analyse des fichiers réseau. Il est recommandé de ne pas activer ce paramètre.
+    <string id="Scan_DisableScanningNetworkFiles">Configurer l’analyse des fichiers réseau</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">Ce paramètre de stratégie permet l’analyse des fichiers réseau à l’aide de la protection d’accès. La valeur par défaut est activée. Il est recommandé de rester activé dans la plupart des cas.
 
-Si vous activez ce paramètre, les fichiers réseau sont analysés.
+Si vous activez ou ne configurez pas ce paramètre, les fichiers réseau sont analysés.
 
-Si vous désactivez ou ne configurez pas ce paramètre, les fichiers réseau ne sont pas analysés.</string>
+Si vous désactivez ce paramètre, les fichiers réseau ne sont pas analysés.</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">Configurer une valeur de remplacement de paramètre locale pour le pourcentage maximal d’utilisation processeur</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">Ce paramètre de stratégie configure une valeur de remplacement locale pour la configuration du pourcentage maximal d’utilisation processeur au cours d’une analyse. Ce paramètre peut uniquement être défini par une stratégie de groupe.
 
@@ -615,6 +756,18 @@ Si vous désactivez ou ne configurez pas ce paramètre, une analyse planifiée e
 
         Si vous désactivez ou ne configurez pas ce paramètre, aucune modification n'est apportée à la priorité de l'UC pour les analyses planifiées.
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">Analyser les fichiers et répertoires exclus pendant les analyses rapides</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        Ce paramètre de stratégie vous permet d’analyser les fichiers et répertoires exclus pendant les analyses rapides.
+
+Si vous définissez ce paramètre de stratégie sur 1, tous les fichiers et répertoires exclus de la protection en temps réel à l’aide d’exclusions contextuelles sont analysés lors d’une analyse rapide.
+
+Si vous définissez cette stratégie sur 0 ou si vous ne la configurez pas, les exclusions ne sont pas analysées pendant les analyses rapides.
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">Définir le nombre de jours avant que la veille de sécurité des logiciels espions soit considérée comme périmée</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">Ce paramètre de stratégie vous permet de définir le nombre de jours qui doivent s’écouler avant que la veille de sécurité des logiciels espions soit considérée comme obsolète. Si la veille de sécurité est considérée comme obsolète, cet état peut déclencher plusieurs actions supplémentaires, notamment le rétablissement d’une autre source de mise à jour ou l’affichage d’une icône d’avertissement dans l’interface utilisateur. Par défaut, cette valeur est égale à 7 jours.
 
@@ -637,6 +790,13 @@ Si vous désactivez ce paramètre ou que vous ne le configurez pas, la liste res
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">Ce paramètre de stratégie vous permet de définir l’emplacement de la veille de sécurité pour les ordinateurs configurés pour VDI.
 
     Si vous désactivez ce paramètre ou que vous ne le configurez pas, la source locale par défaut fera référence à la veille de sécurité.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">Configurez les mises à jour de veille de sécurité en fonction du planificateur pour les clients VDI.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">Ce paramètre de stratégie vous permet de configurer les mises à jour de renseignements de sécurité en fonction du planificateur d'ordinateurs configurés par VDI. Il est utilisé avec l’emplacement d’intelligence de sécurité partagé (SharedSignaturesLocation).
+
+    Si vous activez ce paramètre de stratégie et configurez SharedSignaturesLocation, les mises à jour de l’emplacement configuré se produisent uniquement à l’heure de mise à jour planifiée précédemment configurée.
+
+    Si vous désactivez ou ne configurez pas ce paramètre de stratégie, des mises à jour se produisent chaque fois qu’une nouvelle mise à jour de renseignements de sécurité est détectée à l’emplacement spécifié par SharedSignaturesLocation.
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">Activer l’analyse après la mise à jour de l’emplacement de la veille de sécurité</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">Ce paramètre de stratégie vous permet de configurer l’analyse automatique qui démarre après une mise à jour de la veille de sécurité.
 
@@ -829,12 +989,6 @@ Les valeurs de l’action de mise à jour valides sont les suivantes :
 
       Si vous activez ce paramètre, les notifications de l’antivirus Microsoft Defender ne s’affichent pas sur les clients.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Afficher du texte supplémentaire pour les clients lorsqu’ils doivent effectuer une action</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">Ce paramètre de stratégie vous permet de configurer s’il convient ou non d’afficher du texte supplémentaire pour les clients lorsqu’ils doivent effectuer une action. Le texte affiché est une chaîne définie par l’administrateur personnalisée. Il peut s’agir, par exemple, du numéro de téléphone pour appeler l’assistance de la société. L’interface client affiche uniquement un maximum de 1 024 caractères. Les chaînes plus longues sont tronquées avant d’être affichées.
-
-Si vous activez ce paramètre, le texte supplémentaire spécifié est affiché.
-
-Si vous désactivez ou ne configurez pas ce paramètre, aucun texte supplémentaire n’est affiché.</string>
     <string id="MpCloudBlockLevel">Sélectionner un niveau de protection du cloud</string>
     <string id="MpCloudBlockLevel_Explain">
       Ce paramètre de stratégie détermine combien l'antivirus Microsoft Defender peut se montrer agressif pour ce qui est de bloquer et d'analyser les fichiers suspects.
@@ -912,6 +1066,17 @@ Si vous désactivez ou ne configurez pas ce paramètre, aucun texte supplémenta
         Identique à Désactivé.
 
         Vous pouvez configurer des règles de réduction de la vulnérabilité aux attaques dans le paramètre de stratégie de groupe Configurer les règles de réduction de la vulnérabilité aux attaques.
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Appliquer une liste d’exclusions à des règles de réduction de la surface d’attaque (RSA) spécifiques</string>j
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    Cette stratégie permet à un administrateur de spécifier une liste d’exclusions pour des règles RSA spécifiques.
+    Chaque entrée est une paire nom-valeur. La clé indique le GUID de la règle, et la valeur est un ensemble de chemins d’accès complets séparés par le caractère &gt; indiquant les exclusions de cette règle RSA particulière.
+
+    REMARQUE : le GUID est une clé, et non une valeur.
+
+    Exemple :
+    CLÉ : « {75668C1F-73B5-4CF0-BB93-3ECF5DB7C484} »
+    VALEUR : « C:\Notepad.exe&gt;c:\regedit.exe&gt; C:\SomeFolder\test.exe »
     </string>
     <string id="ExploitGuard_ASR_Rules">Configurer les règles de réduction de la vulnérabilité aux attaques</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1118,13 +1283,66 @@ Si vous désactivez ou ne configurez pas cette stratégie, l’appareil reste da
     <string id="DeviceControl_DefaultEnforcement_DefaultDeny">Refuser par défaut</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation">Définir l’emplacement distant des données de preuve de contrôle de périphérique</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
-        Définissez l’emplacement distant du fichier de preuves, où le service de Contrôle de périphérique déplacera les données de preuve capturées.
+        Définissez l’emplacement distant du fichier de preuves, où le service De contrôle de périphérique déplacera les données de preuve capturées.
+
+Lors de la configuration de ce paramètre, vérifiez que le contrôle de périphérique est activé et que le chemin d’accès fourni est un chemin d’accès distant auquel l’utilisateur peut accéder.
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">Définir la période de rétention des fichiers dans le cache de contrôle de l’appareil local</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        Ce paramètre de stratégie détermine la durée pendant laquelle le contrôle de périphérique conserve les fichiers à des fins de preuve dans son cache local sur l’appareil. Le contrôle d’appareil conserve un fichier dans son cache local uniquement s’il ne peut pas charger le fichier vers un partage réseau ou un stockage Azure désigné. 
+
+Par défaut, le contrôle de périphérique conserve les fichiers dans son cache local pendant 60 jours.
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">Activer le contrôle d’appareil pour des types d’appareils spécifiques</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        Ce paramètre de stratégie contrôle les types d’appareils, identifiés par leurs PrimaryIds, pour lesquels la protection du contrôle d’appareil est activée. Si vous activez ce paramètre pour certains types d’appareils, le contrôle d’appareil réécrit l’accès à ces appareils en fonction de la stratégie personnalisée correspondante. Le contrôle d’appareil sera désactivé pour tous les autres types d’appareils pris en charge, même si des stratégies de protection personnalisées sont configurées pour ces appareils.
+ 
+Ce paramètre prend actuellement en charge ces types d’appareils : RemovableMediaDevices, CdRomDevices, WpdDevices et PrinterDevices. 
+ 
+Si vous activez ce paramètre de stratégie sans spécifier de PrimaryIds, le contrôle de l’appareil est désactivé sur tous les types d’appareils pris en charge.
+ 
+Si vous désactivez ou ne configurez pas ce paramètre de stratégie, le contrôle de l’appareil est appliqué sur tous les appareils pris en charge basés sur leurs stratégies personnalisées correspondantes.
+    </string>
+	<string id="DeviceControl_CustomSupportLink">Configurer un lien de support pour les notifications de contrôle d’appareil</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        Ce paramètre permet à votre organization de spécifier le lien « Obtenir le support » dans les notifications de contrôle d’appareil. 
+		
+Lorsqu’il est configuré, le bouton « Obtenir le support » accède automatiquement au lien spécifié.
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">Définir le taux d’actualisation de la stratégie</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        Ce paramètre définit l’intervalle, en minutes, auquel l’appareil réessaiera de charger la configuration de la stratégie en cas d’erreur et si la stratégie n’a pas pu se charger.
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">Définir la fréquence d’actualisation Azure AD</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        Ce paramètre définit l’intervalle, en minutes, auquel l’appareil interrogera Azure AD pour mettre à jour les paramètres, la configuration et les appartenances aux groupes associés.
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">Définir la limite de duplication des données (Mo)</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        Ce paramètre définit la quantité maximale de données pouvant être dupliquées pour le contrôle de l’appareil. 
+		
+Lorsque la limite est atteinte, les fichiers copiés dans le stockage amovible ne sont pas dupliqués sur l’ordinateur.
+	</string>
     <string id="Features_DeviceControlEnabled">Contrôle de périphérique</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         Activez ou désactivez le Contrôle de périphérique Defender sur cet ordinateur.
         Remarque : vous devez être inscrit en tant que E3 ou E5 pour que le Contrôle de périphérique soit activé.
     </string>
+    <string id="Features_TDTFeatureEnabled">Niveau d’intégration Intel TDT</string>
+    <string id="Features_TDTFeatureEnabled_Explain">Ce paramètre de stratégie configure le niveau d’intégration Intel TDT pour les appareils compatibles Avec Intel TDT.
+
+          Si vous ne configurez pas ce paramètre, la valeur par défaut est appliquée. La valeur par défaut est contrôlée par les mises à jour du renseignement de sécurité Microsoft. Microsoft active Intel TDT s’il existe une menace connue. 
+           Si vous configurez ce paramètre pour l’activer, l’intégration Intel TDT s’active.
+           Si vous configurez ce paramètre sur désactivé, l’intégration Intel TDT sera désactivée.</string>
+    <string id="Features_PassiveRemediation">Activer EDR en mode blocage</string>
+    <string id="Features_PassiveRemediation_Explain">Ce paramètre de stratégie active ou désactive EDR en mode de blocage (également appelé « correction passive »). EDR en mode blocage est recommandé pour les appareils exécutant Microsoft Defender Antivirus en mode passif. Disponible avec la version de plateforme : 4.18.2202.X
+
+Le type de données est un entier
+
+Valeurs prises en charge :
+
+1 : Activer EDR en mode blocage
+        0 : Désactiver EDR en mode blocage</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1389,38 @@ Si vous désactivez ou ne configurez pas cette stratégie, l’appareil reste da
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">Configurer l’analyse de l’activité des fichiers et programmes entrants et sortants</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">Spécifier l’état de la protection de chiffrement à distance</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">Spécifiez la durée de blocage des détections, en minutes</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">Spécifier la manière dont la Protection contre le chiffrement à distance bloque les menaces</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">Exclusions de la protection de chiffrement à distance</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">Spécifier l’état de la protection par force brute</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">Spécifiez la durée de blocage des détections, en minutes</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">Spécifier la manière dont la protection Brute-Force bloque les menaces</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Exclusions de protection Brute-Force</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">Spécifier le jour de la semaine pour exécuter une analyse complète planifiée afin de terminer la mise à jour</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">Spécifier l’heure de la journée à laquelle exécuter une analyse complète planifiée afin de terminer la mise à jour</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">Spécifiez le nombre de jours sans analyse avant le déclenchement d’une analyse rapide ne soit déclenchée.</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">Définir le nombre d'analyses planifiées pouvant être manquées et après lequel une analyse de rattrapage est forcée</decimalTextBox>
@@ -1273,11 +1518,6 @@ Si vous désactivez ou ne configurez pas cette stratégie, l’appareil reste da
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Spécifier les niveaux d’alerte des menaces auxquels aucune action par défaut ne doit être entreprise lors de la détection</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Afficher du texte supplémentaire pour les clients lorsqu’ils doivent effectuer une action</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">Spécifier l'intervalle de notification d'expiration</decimalTextBox>
     </presentation>
@@ -1293,6 +1533,9 @@ Si vous désactivez ou ne configurez pas cette stratégie, l’appareil reste da
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">Exclusions de règles de récupération automatique du système (ASR) :</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Exclusions pour chaque règle RSA :</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">Configurez le mode pour chaque règle de récupération automatique du système (ASR) :</listBox>
     </presentation>
@@ -1307,6 +1550,9 @@ Si vous désactivez ou ne configurez pas cette stratégie, l’appareil reste da
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1584,34 @@ Si vous désactivez ou ne configurez pas cette stratégie, l’appareil reste da
         <label>Définissez l’emplacement distant de duplication des données de contrôle de périphérique.</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">Définir la période de rétention des fichiers dans le cache de contrôle de l’appareil local</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>Activer le contrôle d’appareil pour des types d’appareils spécifiques</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>Configurer un lien de support pour les notifications de contrôle d’appareil</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>Définir le taux d’actualisation de la stratégie</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>Définir la fréquence d’actualisation Azure AD</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>Définir la limite de duplication des données (Mo)</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

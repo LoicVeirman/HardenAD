@@ -298,16 +298,28 @@ Wir empfehlen diese Richtlinieneinstellung, um die Angriffsfläche auf einem DC 
 Wenn Sie diese Richtlinieneinstellung aktivieren, verarbeitet dieser DC keine eingehenden Mailslotnachrichten, die für DC-Suchen auf Grundlage von NetBIOS-Domänennamen verwendet werden.
 
 Wenn Sie diese Richtlinieneinstellung deaktivieren oder nicht konfigurieren, verarbeitet dieser DC eingehende Mailslotnachrichten. Dies ist das Standardverhalten des DC-Locators.</string>
+
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery">Keine NetBIOS-basierte Suche bei DC-Suchen verwenden, wenn die DNS-basierte Suche fehlschlägt</string>
-      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Mit dieser Richtlinieneinstellung können Sie die den Suchalgorithmus des Domänencontrollers steuern. Standardmäßig bevorzugt der Suchalgorithmus des Domänencontrollers die DNS-basierte Suche, wenn der DNS-Domänenname bekannt ist. Schlägt die DNS-basierte Suche fehl und der NetBIOS-Domänenname ist bekannt, verwendet der Algorithmus die NetBIOS-basierte Suche als Fallbackmechanismus.
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Mit dieser Richtlinieneinstellung können Sie den Domänencontroller-Positionsalgorithmus (DC) steuern. Standardmäßig bevorzugt der DC-Standortalgorithmus die DNS-basierte Ermittlung, wenn der DNS-Domänenname bekannt ist. Wenn bei der DNS-basierten Ermittlung ein Fehler auftritt und der NetBIOS-Domänenname bekannt ist, verwendet der Algorithmus die NetBIOS-basierte Ermittlung als Fallbackmechanismus.
 
-Die NetBIOS-basierte Suche verwendet zwar einen WINS-Server und Mailslotnachrichten, aber keine Standortinformationen. Daher ist nicht sichergestellt, dass Clients den nächstgelegenen  Domänencontroller ermitteln. Außerdem kann ein Nabenstandort-Client auf diese Weise einen Zweigniederlassungs-Domänencontroller ermitteln, selbst wenn letzterer nur standortspezifische DNS-Einträge registriert (wie empfohlen). Aus diesen Gründen empfehlen wir die NetBIOS-basierte Suche nicht.
+NetBIOS-basierte Ermittlung verwendet einen WINS-Server und E-Mail-Nachrichten, aber keine Standortinformationen. Daher wird nicht sichergestellt, dass Clients den nächstgelegenen DC-Controller ermitteln. Außerdem kann ein Hub-Site-Client einen Branch-Site-DC ermitteln, auch wenn der Branch-Site-DC nur standortspezifische DNS-Einträge registriert (wie empfohlen). Aus diesen Gründen wird die NetBIOS-basierte Ermittlung nicht empfohlen.
 
-Hinweis: Diese Richtlinieneinstellung wirkt sich nicht auf die NetBIOS-basierte Suche bei der DC-Suche aus, wenn nur der NetBIOS-Domänenname bekannt ist.
+Beachten Sie, dass sich diese Richtlinieneinstellung nicht auf die NetBIOS-basierte Ermittlung des DC-Speicherorts auswirkt, wenn nur der NetBIOS-Domänenname bekannt ist.
 
-Wenn Sie diese Richtlinieneinstellung aktivieren oder nicht konfigurieren, verwendet der Suchalgorithmus des Domänencontrollers die NetBIOS-basierte Suche nicht als Fallbackmechanismus, wenn die DNS-basierte Suche fehlschlägt. Dies ist das Standardverhalten.
+Wenn Sie diese Richtlinieneinstellung aktivieren oder nicht konfigurieren, verwendet der DC-Speicherortalgorithmus keine NetBIOS-basierte Ermittlung als Fallbackmechanismus, wenn bei der DNS-basierten Ermittlung ein Fehler auftritt. Dies ist das Standardverhalten.
 
-Wenn Sie diese Richtlinieneinstellung deaktivieren, kann der Suchalgorithmus des Domänencontrollers die NetBIOS-basierte Suche als Fallbackmechanismus verwenden, wenn die DNS-basierte Suche fehlschlägt.</string>
+Wenn Sie diese Richtlinieneinstellung deaktivieren, kann der DC-Positionsalgorithmus die NetBIOS-basierte Ermittlung als Fallbackmechanismus verwenden, wenn bei der DNS-basierten Ermittlung ein Fehler auftritt.
+
+Diese Einstellung hat keine Auswirkungen, es sei denn, die BlockNetbiosDiscovery-Einstellung ist deaktiviert. Die NetBIOS-basierte Ermittlung gilt als unsicher, weist viele Einschränkungen auf und wird in einer zukünftigen Version als veraltet markiert. Aus diesen Gründen wird die NetBIOS-basierte Ermittlung nicht empfohlen. Weitere Informationen finden Sie unter https://aka.ms/dclocatornetbiosdeprecation.</string>
+
+      <string id="Netlogon_BlockNetbiosDiscovery">NetBIOS-basierte Ermittlung für DC-Controllerspeicherort blockieren</string>
+      <string id="Netlogon_BlockNetbiosDiscovery_Help">Mit dieser Richtlinieneinstellung können Sie steuern, ob der DC-Controllerspeicherortalgorithmus NetBIOS_based Ermittlung für den DC-Controllerspeicherort verwendet.
+
+Wenn Sie diese Richtlinieneinstellung aktivieren oder nicht konfigurieren, verwendet der DC-Controllerspeicherortalgorithmus niemals die NetBIOS-basierte Ermittlung. Dies ist das Standardverhalten.
+
+Wenn Sie diese Richtlinieneinstellung deaktivieren, verwendet der DC-Speicherortalgorithmus ggf. die NetBIOS-basierte Ermittlung. Das endgültige Verhalten wird weiter durch die Einstellung "AvoidFallbackNetbiosDiscovery" gesteuert.
+
+Die NetBIOS-basierte Ermittlung wird als unsicher betrachtet, weist viele Einschränkungen auf und wird in einem zukünftigen Release eingestellt. Aus diesen Gründen wird die NetBIOS-basierte Ermittlung nicht empfohlen. Weitere Informationen finden Sie unter https://aka.ms/dclocatornetbiosdeprecation.</string>
 
       <string id="Netlogon_AddressLookupOnPingBehavior">Adressensuchverhalten für DC-Locatorping angeben</string>
       <string id="Netlogon_AddressLookupOnPingBehavior_Help">Mit dieser Richtlinieneinstellung konfigurieren Sie, wie sich ein Domänencontroller (DC) verhält, wenn er einem Client antwortet, dessen IP-Adresse keinem konfigurierten Standort zugeordnet ist.

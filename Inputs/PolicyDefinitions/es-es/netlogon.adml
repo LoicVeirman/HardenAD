@@ -298,16 +298,29 @@ Se recomienda usar esta configuración de directiva para reducir la superficie e
 Si habilita esta configuración de directiva, este DC no procesará los mensajes de buzón interproceso entrantes que se usan para el nombre de dominio de NetBIOS–según la ubicación de DC.
 
 Si deshabilita o no establece esta configuración de directiva, este DC procesará los mensajes de buzón interproceso entrantes. Éste es el comportamiento predeterminado del servicio de ubicación de DC.</string>
+
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery">No usar la detección basada en NetBIOS para la ubicación de controladores de dominio cuando se produce un error en la detección basada en DNS</string>
-      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Esta configuración de directiva le permite controlar el algoritmo de ubicación de controladores de dominio (DC). De manera predeterminada, el algoritmo de ubicación de DC prefiere la detección basada en DNS si se conoce el nombre de dominio DNS. Si se produce un error en la detección basada en DNS y se conoce el nombre de dominio NetBIOS, entonces el algoritmo usará la detección basada en NetBIOS como mecanismo de reserva.
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Esta configuración de directiva permite controlar el algoritmo de ubicación del controlador de dominio (DC). De forma predeterminada, el algoritmo de ubicación del controlador de dominio prefiere la detección basada en DNS si se conoce el nombre de dominio DNS. Si se produce un error en la detección basada en DNS y se conoce el nombre de dominio NetBIOS, el algoritmo usa la detección basada en NetBIOS como mecanismo de reserva. 
 
-La detección basada en NetBIOS usa un servidor WINS y mensajes de buzón interproceso, pero no usa la información del sitio. Por lo tanto, no garantiza que los clientes detectarán el DC más cercano. También permite a un cliente del sitio del concentrador detectar un DC del sitio de sucursal, incluso si este último solo crea registros DNS específicos del sitio (como se recomienda). Por estos motivos, no se recomienda la detección basada en NetBIOS.
 
-Tenga en cuenta que esta configuración de directiva no afecta a la detección basada en NetBIOS para la ubicación de DC si solo se conoce el nombre de dominio NetBIOS.
+La detección basada en NetBIOS usa un servidor WINS y mensajes de buzón de correo, pero no usa información del sitio. Por lo tanto, no garantiza que los clientes detecten el controlador de dominio más cercano. También permite que un cliente de sitio central detecte un DC de sitio de sucursal incluso si el dc de sitio de sucursal solo registra registros DNS específicos del sitio (como se recomienda). Por estos motivos, no se recomienda la detección basada en NetBIOS.
 
-Si habilita o no establece esta configuración de directiva, el algoritmo de ubicación de DC no usará la detección basada en NetBIOS como mecanismo de reserva cuando se produce un error en la detección basada en DNS. Éste es el comportamiento predeterminado.
+Tenga en cuenta que esta configuración de directiva no afecta a la detección basada en NetBIOS para la ubicación del controlador de dominio si solo se conoce el nombre de dominio NetBIOS.
 
-Si deshabilita esta configuración de directiva, el algoritmo de ubicación de DC puede usar la detección basada en NetBIOS como mecanismo de reserva cuando se produce un error en la detección basada en DNS.</string>
+Si habilita o no establece esta configuración de directiva, el algoritmo de ubicación del controlador de dominio no usa la detección basada en NetBIOS como mecanismo de reserva cuando se produce un error en la detección basada en DNS. Este es el comportamiento predeterminado.
+
+Si deshabilita esta configuración de directiva, el algoritmo de ubicación del controlador de dominio puede usar la detección basada en NetBIOS como mecanismo de reserva cuando se produce un error en la detección basada en DNS.
+
+Esta configuración no tiene ningún efecto a menos que la configuración blockNetbiosDiscovery esté deshabilitada. La detección basada en NetBIOS se considera no segura, tiene muchas limitaciones y quedará en desuso en una versión futura. Por estos motivos, no se recomienda la detección basada en NetBIOS. Consulte https://aka.ms/dclocatornetbiosdeprecation para obtener más información.</string>
+
+      <string id="Netlogon_BlockNetbiosDiscovery">Bloquear la detección basada en NetBIOS para la ubicación del controlador de dominio</string>
+      <string id="Netlogon_BlockNetbiosDiscovery_Help">Esta configuración de directiva permite controlar si el algoritmo de ubicación del controlador de dominio (DC) usa NetBIOS_based detección para la ubicación del controlador de dominio.
+
+Si habilita o no establece esta configuración de directiva, el algoritmo de ubicación de DC nunca usará la detección basada en NetBIOS. Este es el comportamiento predeterminado.
+
+Si deshabilita esta configuración de directiva, el algoritmo de ubicación de DC puede usar la detección basada en NetBIOS cuando sea necesario. El comportamiento final se rige aún más por la configuración de AvoidFallbackNetbiosDiscovery.
+
+La detección basada en NetBIOS se considera no segura, tiene muchas limitaciones y quedará en desuso en una versión futura. Por estos motivos, no se recomienda la detección basada en NetBIOS. Consulte https://aka.ms/dclocatornetbiosdeprecation para obtener más información.</string>
 
       <string id="Netlogon_AddressLookupOnPingBehavior">Especificar el comportamiento de la búsqueda de direcciones para el ping del servicio de ubicación de controladores de dominio</string>
       <string id="Netlogon_AddressLookupOnPingBehavior_Help">Esta configuración de directiva establece cómo se comportará un controlador de dominio al responder a un cliente cuya dirección IP no está asignada a ningún sitio configurado.

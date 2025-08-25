@@ -17,6 +17,9 @@
     <string id="Quarantine">Kwarantanna</string>
     <string id="RealtimeProtection">Ochrona w czasie rzeczywistym</string>
     <string id="Remediation">Korygowanie</string>
+    <string id="Remediation_BNB">Blokowanie sieci na podstawie zachowania</string>
+    <string id="Remediation_BNB_REP">Ochrona przed atakami szyfrowania zdalnego</string>
+    <string id="Remediation_BNB_BFP">Ochrona przed atakami typu Brute-Force</string>
     <string id="Reporting">Raportowanie</string>
     <string id="Scan">Skanowanie</string>
     <string id="SignatureUpdate">Aktualizacje analiz zabezpieczeń</string>
@@ -47,6 +50,10 @@
     Włączone: 
         Jeśli włączysz to ustawienie, administratorzy lokalni nie będą już mogli wyświetlać listy wykluczeń w aplikacji Zabezpieczenia Windows ani za pośrednictwem programu PowerShell.
         Uwaga: Zastosowanie tego ustawienia nie spowoduje usunięcia wykluczeń, uniemożliwi jedynie administratorom lokalnym wyświetlanie ich. Jest to odzwierciedlone w elemencie Get-MpPreference.</string>
+    <string id="HideExclusionsFromLocalUsers">Kontroluje, czy wykluczenia są widoczne dla użytkowników lokalnych</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    To ustawienie zasad kontroluje, czy wykluczenia są widoczne dla użytkowników lokalnych na urządzeniu.
+    Użyj ustawienia zasad HideExclusionsFromLocalAdmins, aby ukryć wykluczenia zarówno przed standardowymi, jak i administracyjnymi użytkownikami lokalnymi.</string>
     <string id="AllowNetworkProtectionOnWinServer">To ustawienie określa, czy ochrona sieci może być skonfigurowana w trybie blokowania lub inspekcji w systemie Windows Server.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     Wyłączone (wartość domyślna): 
@@ -57,11 +64,29 @@ Włączonego
     Zauważ, że ta konfiguracja jest zależna od konfiguracji EnableNetworkProtection. Jeśli ta konfiguracja ma wartość false, EnableNetworkProtection będzie ignorowane, w przeciwnym razie ochrona sieci będzie rozpoczynać się w systemie Windows Server w zależności od wartości EnableNetworkProtection.</string>
     <string id="DisableDatagramProcessing">To ustawienie kontroluje przetwarzanie datagramów w celu zapewnienia ochrony sieci.</string>
     <string id="DisableDatagramProcessing_Explain">
-    Włączone (domyślnie): 
-    Jeśli to ustawienie nie jest skonfigurowane lub wyłączone, przetwarzanie datagramów zostanie włączone w celu zapewnienia ochrony sieci.
+    Wyłączone (domyślnie): 
+    Jeśli ustawienie nie zostanie skonfigurowane lub wyłączone, przetwarzanie datagramów zostanie włączone na potrzeby ochrony sieci.
+
+Włączone: 
+    Jeśli ta opcja jest włączona, przetwarzanie datagramów zostanie wyłączone na potrzeby ochrony sieci.</string>
+    <string id="EnableConvertWarnToBlock">Konwertuj werdykt ostrzeżenia do blokady</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    Ochrona sieci sprawdza ruch sieciowy i określa, czy zezwala lub blokuje ruch, czy wyświetla ostrzeżenie.
+    
+Wyłączone (domyślnie): 
+    W przypadku nieskonfigurowania lub wyłączenia ochrona sieci wyświetli ostrzeżenie dla werdyktów ostrzegawczych.
+
+Włączone: 
+    Jeśli to ustawienie jest włączone, ochrona sieci blokuje ruch sieciowy zamiast wyświetlania ostrzeżenia.</string>
+    <string id="AllowSwitchToAsyncInspection">Włącz inspekcję asynchroniczną</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    Kontroluj, czy ochrona sieci może poprawić wydajność, przełączając się z inspekcji w czasie rzeczywistym na inspekcję asynchroniczną.
+
+    Wyłączone (domyślnie): 
+    Jeśli nie skonfigurowano lub wyłączono, inspekcja asynchroniczna nie zostanie włączona w celu ochrony sieci.
 
     Włączone: 
-    Jeśli jest włączone, przetwarzanie datagramów zostanie wyłączone w celu zapewnienia ochrony sieci.</string>
+    Jeśli opcja ta jest włączona, przełączenie na inspekcję asynchroniczną będzie dozwolone w celu ochrony sieci.</string>
     <string id="DisableAutoExclusions">Wyłącz automatyczne wykluczenia</string>
     <string id="DisableAutoExclusions_Explain">
         Umożliwia administratorowi określenie, czy należy wyłączyć funkcję automatycznych wykluczeń dla wersji serwera.
@@ -142,15 +167,19 @@ Jeśli to ustawienie zostanie włączone, w wynikających z niej zasadach będą
       Jeśli wyłączysz to ustawienie albo go nie skonfigurujesz, serwer proxy pominie ten krok rezerwowy zgodnie z określoną powyżej kolejnością.
     </string>
     <string id="RandomizeScheduleTaskTimes">Losowy czas zaplanowanych zadań</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">To ustawienie zasad umożliwia skonfigurowanie zaplanowanego skanowania i zaplanowanej aktualizacji analizy zabezpieczeń (okno czasu rozpoczęcia w godzinach).
+    <string id="RandomizeScheduleTaskTimes_Explain">To ustawienie zasad umożliwia skonfigurowanie losowej godziny rozpoczęcia zaplanowanego skanowania i zaplanowanej godziny rozpoczęcia aktualizacji definicji.
 
-    Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, zaplanowane zadania będą rozpoczynać się w losowym czasie w ciągu 4 godzin po upływie czasu określonego w harmonogramie zadań.
-    Jeśli to ustawienie zostanie włączone, będzie można rozszerzyć lub zawęzić ten okres randomizacji. Należy określić okno randomizacji z przedziału od 1 do 23 godzin.</string>
+        Jeśli włączysz lub nie skonfigurujesz tego ustawienia zasad i nie ustawisz okna losowości w ustawieniu Konfiguruj okno losowości godziny zaplanowanego zadania, wówczas losowość zostanie dodana w zakresie od 0 do 4 godzin.
+        Jeśli włączysz lub nie skonfigurujesz tego ustawienia zasad i ustawisz okno losowości w ustawieniu Konfiguruj okno losowości godziny zaplanowanego zadania, zostanie użyte skonfigurowane okno losowości.
+        Jeśli wyłączysz to ustawienie zasad, ale skonfigurujesz okno losowości godziny zaplanowanego zadania, losowość nie zostanie wykonana. 
+    </string>
     <string id="SchedulerRandomizationTime">Skonfiguruj okno randomizacji czasu zaplanowanych zadań</string>
-    <string id="SchedulerRandomizationTime_Explain">To ustawienie zasad umożliwia skonfigurowanie czasu rozpoczęcia zaplanowanego skanowania oraz okna czasu rozpoczęcia zaplanowanej aktualizacji analizy zabezpieczeń (w godzinach).
+    <string id="SchedulerRandomizationTime_Explain">To ustawienie zasad umożliwia skonfigurowanie godziny rozpoczęcia zaplanowanego skanowania zadań i przedziału czasu rozpoczęcia zaplanowanej aktualizacji analiz zabezpieczeń (w godzinach). To ustawienie ma wpływ na konfigurację losowego ustawiania godzin zaplanowanych zadań.
 
-    Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, zaplanowane zadania będą rozpoczynać się w losowym czasie w ciągu 4 godzin po upływie określonego czasu rozpoczęcia.
-    Jeśli to ustawienie zostanie włączone, należy wybrać okno randomizacji (w godzinach). Interwał okna randomizacji może należeć do przedziału od 1 do 23 godzin.</string>
+        Jeśli to ustawienie zostanie włączone, należy wybrać okno randomizacji w godzinach. Możliwy interwał okna losowego wynosi od 1 do 23 godzin. Zaimplementowany interwał randomizacji należy do przedziału od 0 do skonfigurowanych wartości. 
+        Jeśli to ustawienie zostanie włączone, ustawienia losowego ustawiania godzin zaplanowanych zadań będą używać okna losowego określonego w tym ustawieniu konfiguracji. 
+        Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, ustawienia losowego ustawiania godzin zaplanowanych zadań będą losowe w zakresie od 0 do 4 godzin.</string>
+
     <string id="ServiceKeepAlive">Zawsze zezwalaj na działanie usługi ochrony przed złośliwym kodem</string>
     <string id="ServiceKeepAlive_Explain">To ustawienie zasad umożliwia określenie, czy usługa ochrony przed złośliwym kodem ma pozostać uruchomiona, gdy analizy zabezpieczeń oprogramowania antywirusowego i antyszpiegowskiego są wyłączone. Zalecane jest pozostawienie tego ustawienia wyłączonego.
 
@@ -219,6 +248,22 @@ Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, pliki
 Jeśli włączysz to ustawienie lub go nie skonfigurujesz, skanowanie skryptów będzie włączone.
 
 Jeśli wyłączysz to ustawienie, skanowanie skryptów będzie wyłączone.</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">Skonfiguruj ochronę w czasie rzeczywistym i aktualizacje analizy zabezpieczeń podczas pierwszego uruchomienia</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">To ustawienie zasad umożliwia określenie, czy ochrona w czasie rzeczywistym i Aktualizacje analizy zabezpieczeń są włączone podczas OOBE (pierwszego uruchomienia).
+ 
+Jeśli to ustawienie zostanie włączone, podczas OOBE będą włączone ochrona w czasie rzeczywistym i Aktualizacje analizy zabezpieczeń.
+ 
+Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, ochrona w czasie rzeczywistym i Aktualizacje analiz zabezpieczeń nie będą włączone podczas OOBE.</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">Konfigurowanie stanu trybu wydajności</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">Ta zasada kontroluje tryb wydajności programu antywirusowego Microsoft Defender dla dysków deweloperskich.
+
+    Dysk deweloperski to dysk zoptymalizowany pod kątem wyższej wydajności w scenariuszach tworzenia oprogramowania. Jeśli ta zasada jest włączona lub nie jest skonfigurowana, tryb wydajności jest włączony dla programu antywirusowego Microsoft Defender. W trybie wydajności testy zabezpieczeń programu antywirusowego Microsoft Defender dotyczące zawartości przechowywanej na dyskach deweloperskich są przeprowadzane asynchronicznie w celu zwiększenia wydajności. Tryb wydajności wymaga również włączenia następujących zasad: „Włącz dysk deweloperski” i „Zasady dołączania filtru dysku deweloperskiego”.
+
+    Jeśli to ustawienie zasad zostanie włączone lub nie zostanie skonfigurowane, tryb wydajności będzie włączony.
+
+    Jeśli to ustawienie zasad zostanie wyłączone, tryb wydajności będzie wyłączony i program antywirusowy Microsoft Defender będzie chronić dysk deweloperski w taki sam sposób jak inne dyski.</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">Włącz monitorowanie zachowania</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">To ustawienie zasad umożliwia skonfigurowanie monitorowania zachowania.
@@ -359,6 +404,92 @@ Jeśli wyłączysz to ustawienie lub go nie skonfigurujesz, zaplanowane pełne s
 Jeśli włączysz to ustawienie, zaplanowane pełne skanowanie będzie przeprowadzane w celu ukończenia korygowania o określonej godzinie.
 
 Jeśli wyłączysz to ustawienie lub go nie skonfigurujesz, zaplanowane pełne skanowanie będzie przeprowadzane w celu ukończenia korygowania o domyślnej godzinie.</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">Konfiguruj tryb ochrony przed atakami szyfrowania zdalnego</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    Ustaw tryb ochrony przed atakami szyfrowania zdalnego w programie antywirusowym Microsoft Defender, który może wykrywać i blokować próby zastąpienia lokalnych plików zaszyfrowanymi wersjami z innego urządzenia. 
+
+    Obsługiwane ustawienia:
+    * 0 — Nieskonfigurowane lub domyślne: Zastosuj wartości domyślne, które mogą się różnić w zależności od wersji aparatu antywirusowego i platformy
+    * 1 — Blokuj: Zapobieganie podejrzanym i złośliwym zachowaniom
+    * 2 — Inspekcja: Generowanie wykryć EDR bez blokowania
+    * 4 — Wyłączone: Funkcja jest wyłączona i nie ma wpływu na wydajność
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">Domyślny</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">Zablokuj</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">Inspekcja</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">Wyłączone</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">Konfiguruj czas blokowania ochrony przed atakami szyfrowania zdalnego</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    Ustaw maksymalny czas blokowania adresu IP przez zdalną ochronę szyfrowania. Po tym czasie zablokowane adresy IP będą mogły ponownie inicjować połączenia. 
+
+Obsługiwane ustawienia:
+    * 0 — Brak: wewnętrzna logika funkcji określi rzeczywisty czas blokowania
+    * Określ inne godziny w 15-minutowych przyrostach
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">Konfiguruj, jak agresywnie ochrona przed atakami szyfrowania zdalnego blokuje zagrożenia</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    Ustaw kryteria blokowania adresów IP przez ochronę przed atakami szyfrowania zdalnego.
+
+    Obsługiwane ustawienia:
+    *0 — Niski: Blokuj tylko wtedy, gdy poziom ufności wynosi 100% (Domyślnie)
+    *1 — Średni: Użyj agregacji i bloku w chmurze, gdy poziom ufności przekracza 99%
+    *2 — Wysoki: Używaj informacji z chmury i kontekstu oraz blokuj, gdy poziom ufności przekracza 90%
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">Niski</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">Średnia</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">Wysoki</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> Ustaw wykluczenia z ochrony przed atakami szyfrowania zdalnego</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    Określ adresy IP, podsieci i nazwy domen do wykluczenia ochrony przed atakami szyfrowania zdalnego. Pamiętaj, że atakujący mogą podszywać się pod wykluczone adresy i nazwy, aby obejść ochronę.
+
+    Wprowadź każdy adres lub podsieć w nowym wierszu jako parę nazwa-wartość:
+    — Kolumna nazwy: Wprowadź adres IP lub nazwę podsieci. Na przykład ""1.1.127.0"" wykluczy ten adres IP z blokowania.
+    — Kolumna wartości: Wprowadź wartość ""0"" dla każdego elementu
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">Konfiguruj tryb ochrony przed atakami typu Brute-Force</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Ustaw tryb ochrony przed atakami typu Brute-Force w programie antywirusowym Microsoft Defender, który może wykrywać i blokować próby przymusowego inicjowania logowania oraz inicjowania sesji.
+
+    Obsługiwane ustawienia:
+    * 0 — Nieskonfigurowane lub domyślne: Zastosuj wartości domyślne, które mogą się różnić w zależności od wersji aparatu antywirusowego i platformy
+    * 1 — Blokuj: Zapobieganie podejrzanym i złośliwym zachowaniom
+    * 2 — Inspekcja: Generowanie wykryć EDR bez blokowania
+    * 4 — Wyłączone: Funkcja jest wyłączona i nie ma wpływu na wydajność
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">Domyślny</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">Zablokuj</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">Inspekcja</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">Wyłączone</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">Konfiguruj czas blokowania ochrony przed atakami typu Brute-Force</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    Ustaw maksymalny czas blokowania adresu IP przez ochronę Brute-Force. Po tym czasie zablokowane adresy IP będą mogły logować się i inicjować sesje.
+
+Obsługiwane ustawienia:
+    * 0 — Brak: wewnętrzna logika funkcji określi rzeczywisty czas blokowania
+    * Określ inne godziny w 15-minutowych przyrostach
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">Konfiguruj agresywność ochrony przed atakami typu Brute-Force</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    Ustaw kryteria określające, kiedy Brute-Force Protection blokuje adresy IP.
+
+Obsługiwane ustawienia:
+    *0 — Niski: blokuj tylko wtedy, gdy poziom ufności jest 100% (domyślnie)
+    *1 — Średni: użyj agregacji chmury i blokuj, gdy poziom ufności jest wyższy niż 99%
+    *2 — Wysoki: używaj funkcji Intel i context w chmurze oraz blokuj, gdy poziom ufności jest wyższy niż 90%
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">Niski</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">Średnia</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">Wysoki</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">Ustaw wykluczenia z ochrony przed atakami typu Brute-Force</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    Określ adresy IP, podsieci lub nazwy stacji roboczych do wykluczenia z ochrony przed atakami typu Brute-Force. Wykluczone adresy IP nie będą sprawdzane pod kątem możliwych ataków typu Brute-Force.
+    
+    Pamiętaj, że atakujący mogą podszywać się pod wykluczone adresy i nazwy, aby obejść ochronę. Upewnij się, że nazwy są unikatowe i mało prawdopodobne, aby zostały odgadnięte przez atakujących.
+
+    Wprowadź każdy adres lub podsieć w nowym wierszu jako parę nazwa-wartość:
+    — Kolumna nazwy: Wprowadź adres IP, nazwę podsieci lub nazwę stacji roboczej. Na przykład ""1.1.127.0"" wykluczy ten adres IP z blokowania przez usługę BFP.
+    — Kolumna wartości: Wprowadź wartość „0” dla każdego elementu
+    </string>
     <string id="Reporting_AdditionalActionTimeout">Skonfiguruj limit czasu wykryć wymagających dodatkowego działania</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">To ustawienie zasad umożliwia skonfigurowanie czasu (w minutach), po upływie którego wykrycie ma przejść ze stanu wymagającego dodatkowego działania w stan „wyczyszczono”.</string>
     <string id="Reporting_CriticalFailureTimeout">Skonfiguruj limit czasu wykryć w stanie błędu krytycznego</string>
@@ -398,6 +529,12 @@ Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, zosta
 Jeśli to ustawienie zostanie skonfigurowane na wartość 0, nie będą wysyłane żadne raporty dotyczące kondycji usługi.
 
 Maksymalna dozwolona wartość to 14400 minut (10 dni).</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">Skonfiguruj, czy raportować zdarzenia poruszenia sygnatury dynamicznej</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">To ustawienie zasad określa, czy mają być raportowane zdarzenia usunięcia podpisu dynamicznego.
+
+Jeśli to ustawienie nie zostanie skonfigurowane, zostanie zastosowana wartość domyślna. Wartość domyślna jest ustawiona na wyłączone (takie zdarzenia nie są raportowane).
+    Jeśli to ustawienie zostanie włączone, zdarzenia porzuconego podpisu dynamicznego będą raportowane.
+    Jeśli to ustawienie zostanie wyłączone, zdarzenia porzuconego podpisu dynamicznego nie będą raportowane.</string>
       <string id="Scan_AllowPause">Zezwalaj użytkownikom na wstrzymywanie skanowania</string>
     <string id="Scan_AllowPause_Explain">To ustawienie zasad umożliwia określenie, czy użytkownicy końcowi mogą wstrzymywać trwające skanowanie.
 
@@ -456,6 +593,10 @@ Jeśli to ustawienie zostanie wyłączone, ograniczanie procesora będzie stosow
 Jeśli włączysz to ustawienie, skanowanie uzupełniające dla zaplanowanego szybkiego skanowania zostanie włączone. Jeśli komputer będzie w trybie offline w czasie dwóch kolejnych zaplanowanych skanowań, skanowanie uzupełniające zostanie przeprowadzone po następnym zalogowaniu się na komputerze.  Jeśli nie skonfigurowano zaplanowanego skanowania, skanowanie uzupełniające nie zostanie przeprowadzone.
 
 Jeśli wyłączysz to ustawienie lub go nie skonfigurujesz, skanowanie uzupełniające dla zaplanowanego szybkiego skanowania zostanie wyłączone.</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">Wyzwól szybkie skanowanie po X dniach bez żadnych skanowań</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">To ustawienie zasad definiuje liczbę dni, które mogą upłynąć od ostatniego skanowania przed automatycznym wyzwoleniem agresywnego szybkiego skanowania uzupełniającego. Wartość reprezentuje liczbę dni, które mogą upłynąć bez wykonywania żadnych skanowań, zanim zostanie wyzwolone agresywne szybkie skanowanie.
+    
+    Prawidłowe wartości mieszczą się w zakresie od 7 do 60 dni. Jeśli wartość nie zostanie skonfigurowana, agresywne szybkie skanowanie zostanie wyłączone. Domyślnie wartość jest ustawiona na 25 dni po włączeniu.</string>
     <string id="Scan_DisableEmailScanning">Włącz skanowanie poczty e-mail</string>
     <string id="Scan_DisableEmailScanning_Explain">To ustawienie zasad umożliwia skonfigurowanie skanowania poczty e-mail. Gdy skanowanie poczty e-mail jest włączone, aparat będzie analizował skrzynki pocztowe i pliki poczty zgodnie z ich określonym formatem w celu analizy treści i załączników poczty. Obecnie jest obsługiwanych kilka formatów poczty e-mail, na przykład: pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac). Skanowanie poczty e-mail nie jest obsługiwane na nowoczesnych klientach poczty e-mail.
     
@@ -498,12 +639,12 @@ Jeśli wyłączysz to ustawienie lub go nie skonfigurujesz, punkt przywracania s
 Jeśli włączysz to ustawienie, mapowane dyski sieciowe będą skanowane.
 
 Jeśli wyłączysz to ustawienie lub go nie skonfigurujesz, mapowane dyski sieciowe nie będą skanowane.</string>
-    <string id="Scan_DisableScanningNetworkFiles">Skanuj pliki sieciowe</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">To ustawienie zasad umożliwia skonfigurowanie skanowania plików sieciowych. Zaleca się wyłączenie tego ustawienia.
+    <string id="Scan_DisableScanningNetworkFiles">Konfigurowanie skanowania plików sieciowych</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">To ustawienie zasad pozwala na skanowanie plików sieciowych z wykorzystaniem ochrony dostępu. Ustawienie jest domyślnie włączone. Zaleca się pozostawienie włączonego ustawienia w większości przypadków.
 
-Jeśli włączysz to ustawienie, pliki sieciowe będą skanowane.
+    Jeśli włączysz lub nie skonfigurujesz tego ustawienia, pliki sieciowe będą skanowane.
 
-Jeśli wyłączysz to ustawienie lub go nie skonfigurujesz, pliki sieciowe nie będą skanowane.</string>
+    Jeśli wyłączysz to ustawienie, pliki sieciowe nie będą skanowane.</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">Skonfiguruj zastępowanie lokalne ustawień dotyczące maksymalnego procentowego użycia procesora</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">To ustawienie zasad umożliwia skonfigurowanie zastępowania lokalnego konfiguracji maksymalnego procentowego użycia procesora podczas skanowania. To ustawienie można skonfigurować tylko jako zasady grupy.
 
@@ -615,6 +756,18 @@ Jeśli wyłączysz to ustawienie lub go nie skonfigurujesz, zaplanowane skanowan
 
         Jeśli wyłączysz to ustawienie albo go nie skonfigurujesz, nie zostaną wprowadzone zmiany priorytetu procesora CPU dla zaplanowanych skanowań.
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">Skanuj wykluczone pliki i katalogi podczas szybkiego skanowania</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        To ustawienie zasad umożliwia skanowanie wykluczonych plików i katalogów podczas szybkiego skanowania.
+
+        Jeśli ustawisz to ustawienie zasad na wartość 1, wszystkie pliki i katalogi wykluczone z ochrony w czasie rzeczywistym za pomocą wykluczeń kontekstowych będą skanowane podczas szybkiego skanowania.
+
+        Jeśli ustawisz te zasady na wartość 0 lub nie skonfigurujesz ich, wykluczenia nie będą skanowane podczas szybkiego skanowania.
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">Zdefiniuj liczbę dni, po upływie której analizy zabezpieczeń dotyczące programów szpiegujących będą uznawane za nieaktualne</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">To ustawienie zasad umożliwia zdefiniowanie liczby dni, po upływie której analizy zabezpieczeń dotyczące programów szpiegujących będą uznawane za nieaktualne. Uznanie analizy zabezpieczeń za nieaktualną może wyzwolić kilka dodatkowych akcji, w tym powrót do alternatywnego źródła aktualizacji lub wyświetlenie ikony ostrzeżenia w interfejsie użytkownika. Domyślna wartość tego ustawienia to 7 dni.
 
@@ -637,6 +790,13 @@ Jeśli wyłączysz to ustawienie lub go nie skonfigurujesz, zaplanowane skanowan
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">To ustawienie zasad umożliwia zdefiniowanie lokalizacji analiz zabezpieczeń dla komputerów skonfigurowanych do korzystania z infrastruktury VDI. 
 
     Jeśli wyłączysz to ustawienie albo go nie skonfigurujesz, analizy zabezpieczeń będą pobierane z domyślnego źródła lokalnego.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">Skonfiguruj aktualizacje analizy zabezpieczeń zgodnie z harmonogramem dla klientów VDI.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">To ustawienie zasad umożliwia skonfigurowanie aktualizacji analiz zabezpieczeń zgodnie z harmonogramem dla komputerów skonfigurowanych przez interfejs VDI. Jest ono używane razem z lokalizacją udostępnionej analizy zabezpieczeń (SharedSignaturesLocation).
+
+    Jeśli to ustawienie zasad zostanie włączone i zostanie skonfigurowane ustawienie SharedSignaturesLocation, aktualizacje ze skonfigurowanych lokalizacji będą wykonywane tylko o wcześniej skonfigurowanym czasie zaplanowanej aktualizacji.
+
+    Jeśli to ustawienie zasad zostanie wyłączone lub nie zostanie skonfigurowane, aktualizacje będą aktualizowane za każdym razem, gdy w lokalizacji określonej przez element SharedSignaturesLocation zostanie wykryta nowa aktualizacja analiz zabezpieczeń.
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">Włącz skanowanie po aktualizacji analiz zabezpieczeń</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">To ustawienie zasad umożliwia skonfigurowanie automatycznego skanowania, które będzie rozpoczynać się po zaktualizowaniu analiz zabezpieczeń.
 
@@ -829,12 +989,6 @@ Oto prawidłowe wartości akcji korygowania:
 
       Jeśli włączysz to ustawienie, powiadomienia Programu antywirusowego Microsoft Defender nie będą wyświetlane na klientach.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Wyświetlaj dodatkowy tekst, gdy klienci muszą wykonać akcję</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">To ustawienie zasad umożliwia określenie, czy ma być wyświetlany dodatkowy tekst, gdy klienci muszą wykonać akcję. Wyświetlany tekst ma postać niestandardowego ciągu zdefiniowanego przez administratora. Może to być na przykład numer telefonu pomocy technicznej firmy. W interfejsie klienta może być wyświetlany tekst o maksymalnej długości 1024 znaków. Dłuższe ciągi są obcinane przed wyświetleniem.
-
-Jeśli włączysz to ustawienie, będzie wyświetlany określony dodatkowy tekst.
-
-Jeśli wyłączysz to ustawienie lub go nie skonfigurujesz, dodatkowy tekst nie będzie wyświetlany.</string>
     <string id="MpCloudBlockLevel">Wybierz poziom ochrony w chmurze</string>
     <string id="MpCloudBlockLevel_Explain">
       To ustawienie zasad umożliwia określenie, jak agresywnie Program antywirusowy Microsoft Defender będzie blokować i skanować podejrzane pliki.
@@ -912,6 +1066,17 @@ Jeśli wyłączysz to ustawienie lub go nie skonfigurujesz, dodatkowy tekst nie 
         Takie samo działanie jak w przypadku wartości Wyłączone.
 
         Reguły funkcji ASR można skonfigurować w ustawieniu zasad grupy Konfiguruj reguły zmniejszania obszaru ataków.
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Zastosuj listę wykluczeń do określonych reguł zmniejszania obszaru ataków (ASR)</string>d
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    Ta zasada pozwala administratorowi określić listę wykluczeń dla określonych reguł automatycznego odzyskiwania systemu.
+    Każdy wpis jest parą nazwa-wartość. Klucz wskazuje identyfikator GUID reguły, a wartość jest zestawem pełnych ścieżek oddzielonych znakiem &gt;, wskazując wykluczenia dla tej konkretnej reguły automatycznego odzyskiwania systemu.
+
+    UWAGA: GUID jest KLUCZEM, a nie wartością.
+
+    Przykład:
+    KLUCZ: „{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}”
+    WARTOŚĆ: „C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe”
     </string>
     <string id="ExploitGuard_ASR_Rules">Konfiguruj reguły funkcji Zmniejszanie obszaru ataków</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1118,13 +1283,66 @@ W przypadku reguł funkcji ASR z wartością Nieskonfigurowana gromadzona jest p
     <string id="DeviceControl_DefaultEnforcement_DefaultDeny">Odmów domyślnie</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation">Zdefiniuj zdalną lokalizację danych dowodów Sterowania urządzeniami</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
-        Zdefiniuj zdalną lokalizację pliku dowodów, w którym usługa Sterowania urządzeniami będzie przenosić przechwycone dane dowodów.
+        Zdefiniuj zdalną lokalizację pliku dowodów, w której usługa sterowania urządzeniami będzie przenosić przechwycone dane dowodów.
+
+Podczas konfigurowania tego ustawienia upewnij się, że kontrolka urządzenia jest włączona i że podana ścieżka jest ścieżką zdalną, do których użytkownik może uzyskać dostęp.
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">Ustaw okres przechowywania plików w lokalnej pamięci podręcznej sterowania urządzeniami</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        To ustawienie zasad określa, jak długo kontrola urządzenia zachowuje pliki na potrzeby materiału dowodowego w lokalnej pamięci podręcznej na urządzeniu. Kontrola urządzenia zachowuje plik w lokalnej pamięci podręcznej tylko wtedy, gdy nie jest w stanie przekazać pliku do wyznaczonego udziału sieciowego lub magazynu platformy Azure. 
+
+        Domyślnie kontrola urządzenia zachowuje pliki w lokalnej pamięci podręcznej przez 60 dni.
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">Włącz kontrolę urządzeń dla określonych typów urządzeń</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        To ustawienie zasad określa, które typy urządzeń, identyfikowane przez ich identyfikatory PrimaryId, będą miały włączoną ochronę sterowania urządzeniami. Jeśli to ustawienie zostanie włączone dla określonych typów urządzeń, kontrola urządzeń będzie regulować dostęp do tych urządzeń na podstawie odpowiednich zasad niestandardowych. Kontrola urządzeń zostanie wyłączona dla wszystkich innych typów obsługiwanych urządzeń, nawet jeśli dla tych urządzeń zostaną skonfigurowane niestandardowe zasady ochrony.
+ 
+To ustawienie obecnie obsługuje następujące typy urządzeń: RemovableMediaDevices, CdRomDevices, WpdDevices i PrinterDevices. 
+ 
+Jeśli to ustawienie zasad zostanie włączone, ale nie zostanie określone żadne podstawowe identyfikatory, kontrolka urządzeń będzie wyłączona dla wszystkich obsługiwanych typów urządzeń.
+ 
+Jeśli wyłączysz to ustawienie zasad albo go nie skonfigurujesz, kontrolka urządzeń będzie wymuszana na wszystkich obsługiwanych urządzeniach w oparciu o odpowiednie zasady niestandardowe.
+    </string>
+	<string id="DeviceControl_CustomSupportLink">Konfigurowanie linku pomocy technicznej dla powiadomień dotyczących sterowania urządzeniami</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        To ustawienie umożliwia organizacji określenie linku "Uzyskaj pomoc techniczną" w powiadomieniach sterowania urządzeniami. 
+		
+Po skonfigurowaniu przycisk "Uzyskaj pomoc techniczną" automatycznie przechodzi do określonego linku.
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">Ustawianie częstotliwości odświeżania zasad</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        To ustawienie definiuje interwał (w minutach), z jakim urządzenie będzie ponawiać próbę załadowania konfiguracji zasad w przypadku wystąpienia błędu i nie można załadować zasad.
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">Ustawianie częstotliwości odświeżania w usłudze Azure AD</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        To ustawienie określa interwał w minutach, w którym urządzenie będzie wysyłać zapytania do usługi Azure AD w celu zaktualizowania powiązanych ustawień, konfiguracji i członkostwa w grupach.
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">Ustawianie limitu duplikacji danych (MB)</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        To ustawienie określa maksymalną ilość danych, które mogą być duplikowane na potrzeby sterowania urządzeniem. 
+		
+		Po osiągnięciu limitu pliki skopiowane do pamięci wymiennej nie będą duplikowane na komputerze.
+	</string>
     <string id="Features_DeviceControlEnabled">Sterowanie urządzeniami</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         Włącz lub wyłącz Sterowanie urządzeniami usługi Defender na tym komputerze.
         Uwaga: aby Sterowanie urządzeniami było włączone, musisz zarejestrować się jako E3 lub E5.
     </string>
+    <string id="Features_TDTFeatureEnabled">Poziom integracji z technologią Intel TDT</string>
+    <string id="Features_TDTFeatureEnabled_Explain">To ustawienie zasad konfiguruje poziom integracji Intel TDT dla urządzeń obsługujących technologię Intel TDT.
+
+        Jeśli to ustawienie nie zostanie skonfigurowane, zostanie zastosowana wartość domyślna. Wartość domyślna jest kontrolowana przez aktualizacje analizy zabezpieczeń firmy Microsoft. Firma Microsoft włączy technologię Intel TDT, jeśli istnieje znane zagrożenie.
+        Jeśli to ustawienie zostanie skonfigurowane jako włączone, integracja z technologią Intel TDT zostanie włączona.
+        Jeśli to ustawienie zostanie skonfigurowane jako wyłączone, integracja z narzędziem Intel TDT zostanie wyłączona.</string>
+    <string id="Features_PassiveRemediation">Włącz funkcję EDR w trybie blokowania</string>
+    <string id="Features_PassiveRemediation_Explain">To ustawienie zasad włącza lub wyłącza funkcję EDR w trybie blokownia (nazywaną również „korygowaniem pasywnym”). Funkcja EDR w trybie blokowania jest zalecana dla urządzeń z programem antywirusowym Microsoft Defender w trybie pasywnym. Dostępna w wersji platformy: 4.18.2202.X
+
+        Typ danych jest liczbą całkowitą
+
+        Obsługiwane wartości:
+
+        1: Włącz funkcję EDR w trybie blokowania
+ 0:  Wyłącz funkcję EDR w trybie blokowania</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1389,38 @@ W przypadku reguł funkcji ASR z wartością Nieskonfigurowana gromadzona jest p
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">Skonfiguruj monitorowanie aktywności przychodzących oraz wychodzących plików i programów</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">Określ stan ochrony przed atakami szyfrowania zdalnego</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">Określ, jak długo mają być blokowane wykrycia (w minutach)</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">Określa, jak agresywnie ochrona przed atakami szyfrowania zdalnego blokuje zagrożenia</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">Wykluczenia ochrony przed atakami szyfrowania zdalnego</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">Określ stan ochrony przed atakami typu Brute-Force</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">Określ, jak długo mają być blokowane wykrycia (w minutach)</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">Określa, jak agresywnie ochrona przed atakami typu Brute-Force blokuje zagrożenia</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Wykluczenia ochrony przed atakami typu Brute-Force</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">Określ dzień tygodnia, w którym ma być przeprowadzane zaplanowane pełne skanowanie w celu ukończenia korygowania</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">Określ godzinę, o której ma być przeprowadzane zaplanowane pełne skanowanie w celu ukończenia korygowania</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">Określ, ile dni bez skanowania powinno upłynąć przed wyzwoleniem agresywnego szybkiego skanowania</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">Zdefiniuj liczbę zaplanowanych skanowań, które mogą zostać pominięte, przed wymuszeniem skanowania uzupełniającego</decimalTextBox>
@@ -1273,11 +1518,6 @@ W przypadku reguł funkcji ASR z wartością Nieskonfigurowana gromadzona jest p
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Określ poziom alertów dotyczących zagrożeń, po wykryciu których nie ma być wykonywana akcja domyślna</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Wyświetlaj dodatkowy tekst, gdy klienci muszą wykonać akcję</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">Określ interwał powiadomień o wygaśnięciu</decimalTextBox>
     </presentation>
@@ -1293,6 +1533,9 @@ W przypadku reguł funkcji ASR z wartością Nieskonfigurowana gromadzona jest p
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">Wykluczenia z reguł funkcji ASR:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Wykluczenia dla każdej reguły automatycznego odzyskiwania systemu:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">Ustaw stan każdej reguły funkcji ASR:</listBox>
     </presentation>
@@ -1307,6 +1550,9 @@ W przypadku reguł funkcji ASR z wartością Nieskonfigurowana gromadzona jest p
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1584,34 @@ W przypadku reguł funkcji ASR z wartością Nieskonfigurowana gromadzona jest p
         <label>Zdefiniuj zdalną lokalizację duplikowania danych Sterowania urządzeniami.</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">Ustaw okres przechowywania plików w lokalnej pamięci podręcznej sterowania urządzeniami</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>Włącz kontrolę urządzeń dla określonych typów urządzeń</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>Konfigurowanie linku pomocy technicznej dla powiadomień dotyczących sterowania urządzeniami</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>Ustawianie częstotliwości odświeżania zasad</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>Ustawianie częstotliwości odświeżania w usłudze Azure AD</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>Ustawianie limitu duplikacji danych (MB)</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

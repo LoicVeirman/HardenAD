@@ -70,7 +70,7 @@ Function Set-HardenACL {
         $InheritedObjects,
     
         [Parameter(Position = 7  , Mandatory = $false, HelpMessage = "To which type of object the acl will apply")]
-        [ValidateSet("group", "user", "computer", "contact", "member", "msFVE-RecoveryInformation")]
+        [ValidateSet("", "group", "user", "computer", "contact", "member", "msFVE-RecoveryInformation")]
         [string]
         $ObjectType,
         [Parameter(Position = 8, Mandatory = $false, HelpMessage = "Audit ACL")]
@@ -79,6 +79,7 @@ Function Set-HardenACL {
     )
     #.Move location to AD to simplify AD manipulation
     Push-Location AD:
+    $Trustee = $Trustee.Trim()
     try {            
         if ($inheritedObjects -ne "" -and $Null -ne $inheritedObjects) {
             switch ($inheritedObjects) {
@@ -101,22 +102,28 @@ Function Set-HardenACL {
                 "computer" { $Objectguid = New-Object Guid bf967a86-0de6-11d0-a285-00aa003049e2 }
                 "contact"  { $Objectguid = New-Object Guid 5cb41ed0-0e4c-11d0-a286-00aa003049e2 }
                 "member"   { $Objectguid = New-Object Guid bf9679c0-0de6-11d0-a285-00aa003049e2 }
-                "msFVE-RecoveryInformation"   { $inheritanceguid = New-Object Guid ea715d30-8f53-40d0-bd1e-6109186d782c }
+                "msFVE-RecoveryInformation"   { $Objectguid = New-Object Guid ea715d30-8f53-40d0-bd1e-6109186d782c }
             }
         }
         else {
             $Objectguid = New-Object Guid 00000000-0000-0000-0000-000000000000
         }
 
-        switch ($Trustee) {
-            ("Authenticated Users" -or "Utilisateurs authentifiés") 
-            { 
-                $SID = New-Object System.Security.Principal.SecurityIdentifier("S-1-5-11")
+        if ($Trustee -eq "Authenticated Users" -or $Trustee -eq "Utilisateurs authentifiés") {
+            $SID = New-Object System.Security.Principal.SecurityIdentifier("S-1-5-11")
+        }
+        elseif ($Trustee -eq "Domain Users" -or $Trustee -eq "Utilisateurs du domaine") {
+            $domainSid = (Get-ADDomain).DomainSID.Value
+            $SID = New-Object System.Security.Principal.SecurityIdentifier("$domainSid-513")
+        }
+        else {
+            try {
+                $group = Get-ADGroup $Trustee -ErrorAction Stop
+                $SID = New-Object System.Security.Principal.SecurityIdentifier($group.SID)
             }
-            Default 
-            {
-                $group = Get-ADGroup $trustee
-                $SID = New-Object System.Security.Principal.SecurityIdentifier $($group.SID)
+            catch {
+                Write-Warning "Le groupe '$Trustee' est introuvable. L'ACE sera ignorée."
+                throw
             }
         }
         
@@ -150,10 +157,12 @@ Function Set-HardenACL {
     catch {
         $Result = $False
     }
+
     #.Reset location 
     Pop-Location
     #.Return result
     Return $Result
+
 }
 
 ##################################################################
@@ -250,45 +259,58 @@ Function Push-DelegationModel {
                 
                 #.Begin object creation loop
                 foreach ($HADacl in $xmlData) {
-                    Switch ($HADacl.InheritedObjects) {
-                        "" {
-                            if ($HADacl.Audit) {
-                                Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
-                                    -Trustee          $HADacl.Trustee `
-                                    -Right            $HADacl.Right`
-                                    -RightType        $HADacl.RightType`
-                                    -Inheritance      $HADacl.Inheritance`
-                                    -ObjectType       $HADacl.ObjectType `
-                                    -AuditSwitch
+                    $result = $false
+                    try {
+                        Switch ($HADacl.InheritedObjects) {
+                            "" {
+                                if ($HADacl.Audit) {
+                                    $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                        -Trustee          $HADacl.Trustee `
+                                        -Right            $HADacl.Right`
+                                        -RightType        $HADacl.RightType`
+                                        -Inheritance      $HADacl.Inheritance`
+                                        -ObjectType       $HADacl.ObjectType `
+                                        -AuditSwitch
+                                }
+                                else {
+                                    $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                        -Trustee          $HADacl.Trustee `
+                                        -Right            $HADacl.Right`
+                                        -RightType        $HADacl.RightType`
+                                        -Inheritance      $HADacl.Inheritance`
+                                        -ObjectType       $HADacl.ObjectType
+                                }
                             }
-                            else {
-                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
-                                    -Trustee          $HADacl.Trustee `
-                                    -Right            $HADacl.Right`
-                                    -RightType        $HADacl.RightType`
-                                    -Inheritance      $HADacl.Inheritance`
-                                    -ObjectType       $HADacl.ObjectType
+                            Default {
+                                if ($HADacl.Audit) {
+                                    $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                        -Trustee          $HADacl.Trustee `
+                                        -Right            $HADacl.Right `
+                                        -RightType        $HADacl.RightType `
+                                        -Inheritance      $HADacl.Inheritance `
+                                        -InheritedObjects $HADacl.InheritedObjects `
+                                        -ObjectType       $HADacl.ObjectType`
+                                        -AuditSwitch
+                                }
+                                else {
+                                    $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
+                                        -Trustee          $HADacl.Trustee `
+                                        -Right            $HADacl.Right`
+                                        -RightType        $HADacl.RightType`
+                                        -Inheritance      $HADacl.Inheritance`
+                                        -ObjectType       $HADacl.ObjectType`
+                                        -InheritedObjects $HADacl.InheritedObjects
+                                        
+                                }
                             }
                         }
-                        Default {
-                            if ($HADacl.Audit) {
-                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
-                                    -Trustee          $HADacl.Trustee `
-                                    -Right            $HADacl.Right `
-                                    -RightType        $HADacl.RightType `
-                                    -Inheritance      $HADacl.Inheritance `
-                                    -InheritedObjects $HADacl.InheritedObjects `
-                                    -AuditSwitch
-                            }
-                            else {
-                                $result = Set-HardenACL -TargetDN        ($HADacl.TargetDN -replace "RootDN", $DomainRootDN) `
-                                    -Trustee          $HADacl.Trustee `
-                                    -Right            $HADacl.Right`
-                                    -RightType        $HADacl.RightType`
-                                    -Inheritance      $HADacl.Inheritance`
-                                    -InheritedObjects $HADacl.InheritedObjects
-                            }
-                        }
+                    }
+
+                    catch {
+
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! !!! FATAL ACL ERROR on Trustee '$($HADacl.Trustee)'"
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Exception: $($_.Exception.Message.Trim())"
+                        $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---! Script will continue with the next ACL."
                     }
                     if ($result) {
                         $dbgMess += (Get-Date -UFormat "%Y-%m-%d %T ") + "---> +++ ACL added: TargetDN= " + ($HADacl.TargetDN -replace "RootDN", $DomainRootDN)

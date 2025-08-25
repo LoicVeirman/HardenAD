@@ -13,9 +13,9 @@ Le impostazioni consentite sono:
 
 0=Disabilitato (non verrà eseguito il backup della password)
 
-1=Eseguire il backup della password per Azure Active Directory
+1=Backup la password da Azure Active Directory
 
-2=Eseguire il backup della password in Active Directory
+2=Backup la password ad Active Directory
 
 Se non è specificata, l'impostazione predefinita sarà 0 (Disabilitato).
 
@@ -46,12 +46,23 @@ Validità password in giorni
   Massimo: 365 giorni
   Impostazione predefinita: 30 giorni
 
+Lunghezza passphrase
+  Minimo: 3 parole
+  Massimo: 10 parole
+  Impostazione predefinita: 6 parole
+
 Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+
+Elenco di passphrase tratto da "Deep Dive: EFF's New Wordlists for Random Passphrases" di Electronic Frontier Foundation e viene usato in una licenza di attribuzione CC-BY-3.0. Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2255471.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Lettere grandi</string>
       <string id="LAPS_PwdComplexity_Item_2">Lettere grandi e lettere piccole</string>
       <string id="LAPS_PwdComplexity_Item_3">Lettere grandi, lettere piccole e numeri</string>
       <string id="LAPS_PwdComplexity_Item_4">Lettere grandi, lettere piccole, numeri e caratteri speciali</string>
+      <string id="LAPS_PwdComplexity_Item_5">Lettere grandi + lettere piccole + numeri + speciali (leggibilità migliorata)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Passphrase (parole lunghe)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Passphrase (parole brevi)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Passphrase (parole brevi con prefissi univoci)</string>
       <string id="LAPS_AdminName">Nome dell'account amministratore da gestire</string>
       <string id="LAPS_AdminName_Help">Questa impostazione dei criteri specifica un nome di account amministratore personalizzato per cui gestire la password.
 
@@ -64,9 +75,9 @@ NON abilitare questa impostazione dei criteri per gestire l'account amministrato
 Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">Non consentire la scadenza della password per un periodo di tempo superiore a quello richiesto dai criteri</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Se questa impostazione è abilitata o non configurata, la scadenza pianificata della password più lunga della validità della password dettata dal criterio "Impostazioni password" NON è consentita. Quando viene rilevata tale scadenza, la password viene modificata immediatamente e la scadenza della password viene impostata in base ai criteri.
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Se questa impostazione è abilitata o non configurata, la scadenza pianificata della password più lunga della validità della password dettata dal criterio "Password Impostazioni" NON è consentita. Quando viene rilevata tale scadenza, la password viene modificata immediatamente e la scadenza della password viene impostata in base ai criteri.
 
-Se questa impostazione è disabilitata, la scadenza della password potrebbe essere più lunga di quanto richiesto dal criterio "Impostazioni password".
+Se questa impostazione è disabilitata, la scadenza della password potrebbe essere più lunga di quanto richiesto dal criterio "Password Impostazioni".
 
 Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
@@ -86,17 +97,29 @@ Se non è configurata, questa impostazione verrà abilitata per impostazione pre
 Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_ADPasswordEncryptionPrincipal">Configurare coloro che sono autorizzati a decrittografare le password</string>
-      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Configurare questa impostazione per controllare l'utente o il gruppo specifico autorizzato a decrittografare le password crittografate.
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Configurare questa impostazione per controllare l'utente o il gruppo specifico autorizzato a decifrare le password criptate.
 
-La configurazione di questa impostazione non ha alcun effetto a meno che la crittografia delle password non sia stata abilitata.
+La configurazione di questa impostazione non ha effetto se non è stata attivata la crittografia della password.
 
-Se questa impostazione è abilitata, le password crittografate potranno essere decrittografate dal gruppo specificato.
+Se questa impostazione è attivata, le password crittografate saranno decifrabili dal gruppo specificato.
 
-Se questa impostazione è disabilitata o non configurata, le password crittografate potranno essere decrittografate dal gruppo Domain Admins.
+Se questa impostazione è disattivata o non configurata, le password crittografate potranno essere decifrate dal gruppo Domain Admins.
 
-Questa impostazione deve essere configurata con un SID in formato stringa ("S-1-5-21-2127521184-1604012920-1887927527-35197") o con il nome di un gruppo o di un utente in formato "dominio\(gruppo o utente)". L'utente o il gruppo specificato deve essere risolvibile dal dispositivo gestito. In caso contrario, non verrà eseguito il backup delle password.
+Questa impostazione deve essere configurata con un nome qualificato dal dominio di un gruppo o di un utente, oppure con un SID in formato stringa. Esempi validi includono:
 
-Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Non racchiudere il nome dell'utente o il SID tra virgolette o parentesi.
+
+L'utente o il gruppo specificato deve essere risolvibile dal dispositivo gestito, altrimenti non verrà eseguito il backup delle password.
+
+NOTA: questa impostazione viene ignorata quando si esegue il backup delle password degli account Directory Services Repair Mode (DSRM) su un controller di dominio. In questo scenario, l'impostazione predefinita è sempre il gruppo Domain Admins del dominio del controller di dominio.
+
+Per ulteriori informazioni, consultare il sito https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_ADEncryptedPasswordHistorySize">Configurare le dimensioni della cronologia delle password crittografate</string>
       <string id="LAPS_ADEncryptedPasswordHistorySize_Help">Utilizzare questa impostazione per configurare il numero di password crittografate precedenti che verranno archiviate in Active Directory.
@@ -125,36 +148,76 @@ Se si disabilita o non si configura questa impostazione, non verrà eseguito il 
 Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_PostAuthenticationActions">Azioni post-autenticazione</string>
-      <string id="LAPS_PostAuthenticationActions_Help">Questo criterio configura le azioni post-autenticazione che verranno eseguite dopo il rilevamento di un'autenticazione da parte dell'account gestito.
+      <string id="LAPS_PostAuthenticationActions_Help">Questo criterio configura azioni post-autenticazione che saranno eseguite dopo il rilevamento di un’autenticazione da parte dell’account gestito.
 
-Periodo di prova: specifica il periodo di tempo (in ore) di attesa dopo l'autenticazione prima di poter eseguire le azioni post-autenticazione specificate.
+Periodo di grazia: specifica il periodo di tempo (in ore) da attendere dopo un’autenticazione prima di eseguire le azioni post-autenticazione specificate.
 
-Se tale impostazione è abilitata ed è maggiore di zero, le azioni post-autenticazione specificate verranno eseguite alla scadenza del periodo di prova.
+Se questa configurazione è abilitata e maggiore a zero, le azioni post-autenticazione specificate saranno eseguite allo scadere del periodo di grazia.
 
-Se l’impostazione è disabilitata o non configurata, le azioni post-autenticazione specificate verranno eseguite dopo un periodo di prova predefinito di 24 ore.
+Se questa configurazione non è abilitata o non è configurata, le azioni post-autenticazione specificate saranno eseguite dopo un periodo di grazia di default di 24 ore.
 
-Se l’impostazione è uguale a zero, non verrà eseguita alcuna azione di post-autenticazione.
+Se questa impostazione è uguale a zero, non sarà eseguita nessuna azione post-autenticazione.
 
-Azioni: specifica le azioni da eseguire alla scadenza del periodo di prova.
+Azioni: specifica le azioni da intraprendere allo scadere del periodo di grazia.
 
-Reimposta password: alla scadenza del periodo di prova, la password dell'account gestito verrà reimpostata.
+Reimposta password: allo scadere del periodo di grazia, la password dell’account gestito è reimpostata.
 
-Reimposta password e disattiva l'account gestito: allo scadere del periodo di prova, la password dell'account gestito verrà reimpostata e tutte le sessioni di accesso interattivo che usano l'account gestito verranno annullate.
+Reimposta la password e disattiva l’account gestito: allo scadere del periodo di grazia, la passowrd dell’account gestito è reimpostata e tutte le sessioni interattive che usino l’account gestito sono disattivate.
 
-(NOTA: dopo l’annullamento delle sessioni di accesso interattive, potrebbero essere ancora in uso altre sessioni autenticate dall'account gestito. L'unico modo efficace per assicurarsi che la password precedente non sia più in uso è quello di riavviare il dispositivo.)
+Reimposta la password e riavvia: allo scadere del periodo di grazia, la password dell’account gestito è reimpostata e il dispositivo gestito è riavviato.
 
-Reimposta password e riavvia: alla scadenza del periodo di prova, la password dell'account gestito verrà reimpostata e il dispositivo gestito verrà immediatamente riavviato.
+Reimposta la password, disattiva l’account gestito, e termina i processi rimanenti: allo scadere del periodo di grazia, la password dell’account gestito è reimpostata, tutte le sessioni interattive che usino l’account gestito sono disattivate e i processi rimanenti terminati.
 
-Se questa impostazione è disabilitata o non configurata, le azioni post-autenticazione verranno impostate su "Reimposta la password e disconnetti l'account gestito".
+(NOTA: dopo che le sessioni interattive sono terminate potrebbero ancora esserci sessioni autenticate in uso da parte dell’account gestito. L’unico modo sicuro per assicurarsi che la password precedente non sia più in uso è riavviare il dispositivo.)
 
-Nota: non è possibile configurare l'account DSRM nei controller di dominio per le azioni post-autenticazione. Questo criterio non ha effetto sui controller di dominio e verrà ignorato anche se configurato per il controller di dominio.
+Se questa impostazione è disattivata o non configurata, le azioni post-autenticazione saranno di default su “reimposta la password e disattiva l’account gestito”.
 
-Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
+Nota: l’account DSRM sui controller di dominio non può essere configurato per le azioni post-autenticazione. Questo criterio non ha effetto sui controller di dominio e sarà ignorato anche se configurato per un controller di dominio.
+
+Per altre informazioni, vedi: https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="PostAuthenticationActions_Item0">Disabilitato - Non eseguire alcuna azione</string>
       <string id="PostAuthenticationActions_Item1">Reimposta la password</string>
       <string id="PostAuthenticationActions_Item3">Reimpostare la password e disconnettere l'account gestito</string>
       <string id="PostAuthenticationActions_Item5">Reimpostare la password e riavviare il dispositivo</string>
+      <string id="PostAuthenticationActions_Item11">Reimposta la password, disconnetti l'account gestito e termina tutti i processi rimanenti</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Configura la gestione automatica degli account</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Questo criterio configura le opzioni dei criteri di gestione automatica degli account.
+
+Specifica l'account di destinazione da gestire: specifica se l'account amministratore predefinito o un account personalizzato deve essere gestito.
+
+Nome account automatico (o prefisso del nome): specifica il nome o il prefisso del nome da usare per l'account gestito.
+
+Se questa impostazione dei criteri è configurata, Windows LAPS la userà come nome dell'account o prefisso del nome per l'account di destinazione.
+
+Se questa impostazione dei criteri non è configurata, Windows LAPS userà "WLapsAdmin" come nome dell'account o prefisso del nome.
+
+Nota: questo nome viene considerato come prefisso quando viene configurata la randomizzazione del nome dell'account. Vedi i commenti seguenti.
+
+Abilita l'account gestito: specifica se l'account gestito deve essere abilitato o meno.
+
+Se questa impostazione dei criteri è configurata, Windows LAPS abiliterà l'account gestito specificato.
+
+Se questa impostazione dei criteri non è configurata, Windows LAPS disabiliterà l'account gestito specificato.
+
+Nota: Windows LAPS gestisce e ruota regolarmente la password dell'account gestito indipendentemente dal fatto che l'account venga mantenuto in uno stato abilitato o disabilitato.
+
+Consente di specificare in modo casuale il nome dell'account gestito: specifica se il nome dell'account gestito deve essere casuale con un suffisso numerico casuale.
+
+Se questa impostazione dei criteri è configurata, Windows LAPS aggiungerà un suffisso numerico casuale a otto cifre al nome dell'account automatico gestito e riattiva il nome dell'account gestito ogni volta che viene ruotata la password.
+
+Se questa impostazione dei criteri non è configurata, Windows LAPS userà il nome dell'account automatico gestito come configurato.
+
+Se il prefisso del nome account automatico gestito è configurato, Windows LAPS userà fino ai primi dodici (12) caratteri di tale nome come prefisso per il nome casuale. Se il nome dell'account automatico gestito non è configurato, Windows LAPS userà "WLapsAdmin" come prefisso del nome.
+
+Nota: non è possibile configurare l'account DSRM nei controller di dominio per la gestione automatica degli account. Questo criterio non ha alcun effetto sui controller di dominio e verrà ignorato anche se configurato per un controller di dominio.
+
+Per ulteriori informazioni, consultare il sito https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Gestisci l'account amministratore predefinito</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Gestisci un account amministratore personalizzato</string>
+      <string id="AutomaticAccountName_Help">Specifica il nome dell'account o il prefisso del nome</string>
+      <string id="AutomaticAccountNameRandomization_Help">Specifica se il nome dell'account automatico deve essere casuale.</string>
       <string id="SUPPORTED_Windows10">Almeno Microsoft Windows 10 o versione successiva</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Complessità password</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Lunghezza password</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Validità password (Giorni)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Lunghezza passphrase (parole)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ Per altre informazioni, vedere https://go.microsoft.com/fwlink/?linkid=2188435.
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Periodo di prova (ore):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Azioni:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Azioni:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Specifica l'account di destinazione da gestire:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Nome account automatico (o prefisso del nome):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Abilita l'account gestito</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Scegli in modo casuale il nome dell'account gestito</checkBox>
       </presentation>
     </presentationTable>
   </resources>

@@ -209,7 +209,7 @@ Standardværdien for denne indstilling er 30 minutter (1800). Maksimumværdien f
 
 - På den primære domænecontroller (PDC) forsøges det at tilføje et &lt;Domænenavn&gt; [1B] NetBIOS-navn, hvis det ikke allerede er tilføjet.
 
-Ingen af disse handlinger er kritiske. 15 minutter er optimalt i langt de fleste tilfælde bortset fra ekstreme situationer. Hvis en domænecontroller f.eks. er adskilt fra et domæne, som domænet har tillid til, med en kostbar linje (f.eks. ISDN, kan denne parameter justeres opad for at undgå hyppig automatisk søgning efter domænecontrollere på et domæne, som dit domæne har tillid til.
+Ingen af disse handlinger er kritiske. 15 minutter er optimalt i langt de fleste tilfælde bortset fra ekstreme situationer. Hvis en domænecontroller f.eks. er adskilt fra et domæne, som domænet har tillid til, med en kostbar linje (f.eks. ISDN), kan denne parameter justeres opad for at undgå hyppig automatisk søgning efter domænecontrollere på et domæne, som dit domæne har tillid til.
 
 Klik på Aktiveret for at aktivere indstillingen, og angiv derefter intervallet i sekunder.</string>
       <string id="Netlogon_SiteCoverage">Angiv områder dækket af DNS SRV-poster til domænecontrollersøgning</string>
@@ -298,6 +298,7 @@ Denne politikindstilling anbefales for at mindske angrebsoverfladen på en domæ
 Hvis du aktiverer denne politikindstilling, behandler denne domænecontroller ikke indgående mailslot-meddelelser, som bruges til domænecontroller søgning baseret på NetBIOS-domænenavn.
 
 Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, behandler denne domænecontroller indgående mailslot-meddelelser. Dette er domænecontrollersøgningens standardfunktion.</string>
+
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery">Undlad at bruge registrering baseret på NetBIOS til domænecontrollerplacering, når registrering baseret på DNS mislykkes</string>
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Du kan bruge denne politikindstilling til at styre domænecontrollerens placeringsalgoritme. Som standard foretrækker domænecontrollerens placeringsalgoritme registrering baseret på DNS, hvis DNS-domænenavnet er kendt. Hvis registrering baseret på DNS mislykkes, og NetBIOS-domænenavnet er kendt, bruger algoritmen registrering baseret på NetBIOS som fallback-funktion.
 
@@ -307,7 +308,18 @@ Bemærk, at denne politikindstilling ikke påvirker registrering baseret på Net
 
 Hvis du aktiverer eller undlader at konfigurere denne politikindstilling, bruger domænecontrollerens placeringsalgoritme ikke registrering baseret på NetBIOS som fallback-funktion, når registrering baseret på DNS mislykkes. Det er standardfunktionsmåden.
 
-Hvis du deaktiverer denne politikindstilling, kan domænecontrollerens placeringsalgoritme bruge registrering baseret på NetBIOS som fallback-funktion, når registrering baseret på DNS mislykkes.</string>
+Hvis du deaktiverer denne politikindstilling, kan domænecontrollerens placeringsalgoritme bruge registrering baseret på NetBIOS som fallback-funktion, når registrering baseret på DNS mislykkes.
+
+Denne indstilling har ingen effekt, medmindre indstillingen BlockNetbiosDiscovery er deaktiveret. NetBIOS-baseret opdagelse anses for at være usikker, har mange begrænsninger og vil blive udfaset i en fremtidig udgave. Af disse grunde anbefales NetBIOS-baseret opdagelse ikke. Se https://aka.ms/dclocatornetbiosdeprecation for at få flere oplysninger.</string>
+
+      <string id="Netlogon_BlockNetbiosDiscovery">Bloker NetBIOS-baseret registrering af placering af domænecontroller</string>
+      <string id="Netlogon_BlockNetbiosDiscovery_Help">Med denne politikindstilling kan du styre, om domænecontrollerens (DC) placeringsalgoritme bruger NetBIOS_based registrering til placering af domænecontroller.
+
+Hvis du aktiverer eller undlader at konfigurere denne politikindstilling, bruger domænecontrollerens placeringsalgoritme aldrig registrering baseret på NetBIOS. Dette er standardfunktionsmåden.
+
+Hvis du deaktiverer denne politikindstilling, kan domænecontrollerens placeringsalgoritme bruge registrering baseret på NetBIOS, når det er nødvendigt. Den endelige funktionsmåde styres yderligere af indstillingen AvoidFallbackNetbiosDiscovery.
+
+Registrering baseret på NetBIOS betragtes som usikker, har mange begrænsninger og vil blive udfaset i en fremtidig version. Af disse årsager anbefales registrering baseret på NetBIOS ikke. Se https://aka.ms/dclocatornetbiosdeprecation for at få flere oplysninger.</string>
 
       <string id="Netlogon_AddressLookupOnPingBehavior">Angiv funktionsmåden ved adresseopslag for ping til domænecontrollersøgning</string>
       <string id="Netlogon_AddressLookupOnPingBehavior_Help">Denne politikindstilling konfigurerer, hvordan en domænecontroller skal reagere på en klient, hvis IP-adresse ikke er knyttet til et konfigureret område.

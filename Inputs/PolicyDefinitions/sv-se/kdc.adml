@@ -115,6 +115,25 @@ Händelser som genererats av denna konfiguration: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Stöds</string>
       <string id="PKINITHashAlgorithm_Audited">Granskade</string>
       <string id="PKINITHashAlgorithm_NotSupported">Stöds inte</string>
+      <string id="StrongNameMatches">Tillåt namnbaserade starka mappningar för certifikat</string>
+      <string id="StrongNameMatches_explain">Med den här principinställningen kan du använda alternativa, namnbaserade identifierare för att starkt mappa certifikat som utfärdats till Active Directory-användarkonton och anger vilka certifikat som mappas till vilka konton. Utan den här inställningen aktiverad måste certifikaten uppfylla kriterierna för stark mappning som anges i aka.ms/StrongCertMapKB, vilket vanligtvis inte tillåter namnbaserade identifierare.
+
+Varje mappning som anges i den här principen måste innehålla ett princip-OID tillsammans med ett IssuerSubject och/eller ett UPN-suffix med den syntax som anges nedan. Om det inte går att hitta en giltig mappning för ett visst certifikat i den här principen försöker Active Directory hitta en matchning med hjälp av de befintliga kriterierna för stark mappning som anges i KB5014754. Certifikatmappningar som inte överensstämmer med antingen kriterier för ”stark namnmappning” (den här principen) eller befintliga kriterier för ”stark mappning” som anses vara ogiltiga för autentisering.
+
+Det allmänna principformatet och några exempel visas nedan. Den här principen gäller endast för Active Directory-användarkonton.
+
+Allmän syntax
+==============
+&lt;tumavtryck&gt;; &lt;lista med oider&gt;; &lt;namnmatchningsmetoder&gt;
+
+Exempel
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+Principen måste innehålla exakt ett certifikattumavtryck per regel, där varje regel representeras som en tuple. Tumavtryck måste vara unika och kan inte upprepas i flera regler. Avsnitten i varje tuple som avgränsas med semikolon måste vara i angiven ordning, medan fälten som avgränsas med kommatecken kan vara i valfri ordning. Själva reglerna avgränsas med ny rad.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Händelser som genererats av denna konfiguration: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Matchningsregler för starkt namn:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

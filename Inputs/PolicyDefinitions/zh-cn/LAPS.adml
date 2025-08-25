@@ -13,9 +13,9 @@
 
 0=禁用(密码将不会备份)
 
-1=将密码备份到Azure Active Directory
+1=备份要Azure Active Directory的密码
 
-2=将密码备份到 Active Directory
+2=备份到 Active Directory 的密码
 
 如果未指定，则此设置将默认为 0 (禁用)。
 
@@ -33,25 +33,36 @@
       <string id="LAPS_PasswordSettings">密码设置</string>
       <string id="LAPS_PasswordSettings_Help">配置密码参数
 
-密码复杂性: 生成新密码时使用哪些字符
-  默认值: 大写字母 + 小写字母 + 数字 + 特殊字符
+密码复杂性： 生成新密码时使用哪些字符
+  默认值： 大写字母 + 小写字母 + 数字 + 特殊字符
 
 密码长度
-最小值: 8 个字符
-  最大值: 64 个字符
-  默认值: 14个字符
+  最少： 8 个字符
+  最多： 64 个字符
+  默认值： 14 个字符
 
-密码期限(天)
-  最小值: 1 天(将备份目录配置为 Azure AD 时为 7 天)
- 最大值: 365 天
-  默认值: 30 天
+以天为单位的密码期限
+  最小值： 将备份目录配置为Azure AD)时 1 天 (7 天
+  最长： 365 天
+  默认值： 30 天
 
-请参阅 https://go.microsoft.com/fwlink/?linkid=2188435 以了解详细信息。
+密码长度
+  最小值： 3 个字
+  最多： 10 个字
+  默认值： 6 个字
+
+有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2188435。
+
+密码列表由电子边界基础从“Deep Dive： EFF 的随机密码新单词表”中获取，并用于 CC-BY-3.0 归属许可证下。有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2255471。
       </string>
       <string id="LAPS_PwdComplexity_Item_1">大写字母</string>
       <string id="LAPS_PwdComplexity_Item_2">大写字母 + 小写字母</string>
       <string id="LAPS_PwdComplexity_Item_3">大字母 + 小写字母 + 数字</string>
       <string id="LAPS_PwdComplexity_Item_4">大写字母 + 小写字母 + 数字 + 特殊字符</string>
+      <string id="LAPS_PwdComplexity_Item_5">大写字母 + 小写字母 + 数字 + 特殊字符(提高可读性)</string>
+      <string id="LAPS_PwdComplexity_Item_6">密码(长词)</string>
+      <string id="LAPS_PwdComplexity_Item_7">密码(短词)</string>
+      <string id="LAPS_PwdComplexity_Item_8">密码(具有唯一前缀的短词)</string>
       <string id="LAPS_AdminName">要管理的管理员帐户名称</string>
       <string id="LAPS_AdminName_Help">此策略设置指定用于管理其密码的自定义管理员帐户名。
 
@@ -64,9 +75,9 @@
 有关详细信息，请参阅https://go.microsoft.com/fwlink/?linkid=2188435。
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">不允许密码过期时间长于策略要求的时间</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">如果启用或未配置此设置，则不允许将计划密码过期时间设置为超过由“密码设置”策略规定的密码期限。检测到此类过期设置时，将立即更改密码，并根据策略设置密码过期时间。
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">如果启用或未配置此设置，则不允许使用超过“密码设置”策略规定密码期限的计划密码过期时间。检测到此类过期设置时，将立即更改密码，并根据策略设置密码过期时间。
 
-如果禁用此设置，则密码过期时间可能超过“密码设置”策略的要求。
+如果禁用此设置，则密码过期时间可能超过“密码设置”策略要求的时间长度。
 
 请参阅 https://go.microsoft.com/fwlink/?linkid=2188435 以了解详细信息。
       </string>
@@ -88,13 +99,25 @@
       <string id="LAPS_ADPasswordEncryptionPrincipal">配置授权密码解密器</string>
       <string id="LAPS_ADPasswordEncryptionPrincipal_Help">配置此设置以控制有权解密加密密码的特定用户或组。
 
-除非已启用密码加密，否则配置此设置将不起作用。
+除非已启用密码加密，否则配置此设置不起作用。
 
-如果启用此设置，则指定组将可以解密加密的密码。
+如果启用此设置，则指定组将解密加密的密码。
 
-如果禁用或未配置此设置，则域管理员组将可以解密加密的密码。
+如果禁用或未配置此设置，则域管理员组将解密加密的密码。
 
-必须使用字符串格式的 SID (“S-1-5-21-2127521184-1604012920-1887927527-35197”)或“域\(组或用户)”格式的组或用户名称来配置此设置。指定的用户或组必须可由托管设备解析，否则将不会备份密码。
+必须使用组或用户的域限定名称或字符串格式的 SID 配置此设置。有效示例包括: 
+
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+请勿对用户\组名称或 SID 使用引号或括号。
+
+指定的用户或组必须可由托管设备解析，否则不会备份密码。
+
+注意: 在域控制器上备份目录服务修复模式 (DSRM) 帐户密码时，将忽略此设置。在这种情况下，此设置始终默认为域控制器域的域管理员组。
 
 有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2188435。
       </string>
@@ -139,11 +162,13 @@
 
 重置密码: 宽限期到期后，将重置托管帐户密码。
 
-重置密码并注销托管帐户: 宽限期到期后，将重置托管帐户密码，并且将终止使用托管帐户的任何交互式登录会话。
-
-(注意: 在终止任何交互式登录会话后，托管帐户可能仍会使用其他经过身份验证的会话。确保之前的密码使用时间更长的唯一可靠方法是重新启动设备。)
+重置密码并注销托管帐户: 宽限期到期后，将重置托管帐户密码，并且将注销使用托管帐户的任何交互式登录会话。
 
 重置密码并重新启动: 宽限期到期后，将重置托管帐户密码，并将立即重新启动托管设备。
+
+重置密码，注销托管帐户，并终止任何剩余进程: 宽限期到期后，将重置托管帐户密码，注销任何使用托管帐户的交互式登录会话，并终止任何剩余进程。
+
+(注意: 在终止任何交互式登录会话后，托管帐户可能仍会使用其他经过身份验证的会话。确保之前的密码使用时间更长的唯一可靠方法是重新启动设备。)
 
 如果禁用或未配置此设置，则身份验证后操作将默认为“重置密码并注销托管帐户”。
 
@@ -155,6 +180,44 @@
       <string id="PostAuthenticationActions_Item1">重置密码</string>
       <string id="PostAuthenticationActions_Item3">重置密码并注销托管帐户</string>
       <string id="PostAuthenticationActions_Item5">重置密码并重新启动设备</string>
+      <string id="PostAuthenticationActions_Item11">重置密码、注销托管帐户并终止任何剩余进程</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">配置自动帐户管理</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">此策略配置自动帐户管理策略选项。
+
+指定要管理的目标帐户: 指定是应管理内置管理员帐户还是自定义帐户。
+
+自动帐户名(或名称前缀): 指定要用于托管帐户的名称或名称前缀。
+
+如果配置了此策略设置，Windows LAPS 会将其用作目标帐户的帐户名或名称前缀。
+
+如果未配置此策略设置，Windows LAPS 将使用“WLapsAdmin”作为帐户名或名称前缀。
+
+注意: 随机配置帐户名时，此名称被视为前缀，请参阅下面的注释。
+
+启用托管帐户:指定是否应启用托管帐户。
+
+如果配置此策略设置，Windows LAPS 将启用指定的托管帐户。
+
+如果未配置此策略设置，Windows LAPS 将禁用指定的托管帐户。
+
+注意: Windows LAPS 将定期维护和轮换托管帐户的密码，而不考虑帐户是否保持为已启用\禁用状态。
+
+随机托管帐户的名称: 指定是否应使用随机数值后缀随机托管帐户的名称。
+
+如果配置此策略设置，Windows LAPS 会向托管自动帐户名称添加一个八位数的随机数字后缀，并在每次轮换密码时重新随机托管帐户的名称。
+
+如果未配置此策略设置，Windows LAPS 将使用配置的托管自动帐户名称。
+
+如果配置了托管的自动帐户名前缀，则 Windows LAPS 最多使用该名称的前十二 (12) 个字符作为随机名称的前缀。如果未配置托管的自动帐户名称，Windows LAPS 将使用“WLapsAdmin”作为名称前缀。
+
+注意: 无法为域控制器上的 DSRM 帐户配置自动帐户管理。此策略对域控制器没有影响，即使为 DC 配置，也会忽略此策略。
+
+有关详细信息，请参阅 https://go.microsoft.com/fwlink/?linkid=2188435。
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">管理内置管理员帐户</string>
+      <string id="AutomaticAccountManagementTarget_Item1">管理自定义管理员帐户</string>
+      <string id="AutomaticAccountName_Help">指定帐户名称或名称前缀</string>
+      <string id="AutomaticAccountNameRandomization_Help">指定是否应随机化自动帐户名。</string>
       <string id="SUPPORTED_Windows10">至少 Microsoft Windows 10 或更高版本</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">密码复杂性</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">密码长度</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">密码期限(天)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">密码长度(词)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">宽限期(天):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">操作:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">操作:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">指定要管理的目标帐户:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>自动帐户名(或名称前缀):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">启用托管帐户</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">随机化托管帐户的名称</checkBox>
       </presentation>
     </presentationTable>
   </resources>

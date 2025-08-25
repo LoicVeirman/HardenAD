@@ -115,6 +115,25 @@
       <string id="PKINITHashAlgorithm_Supported">Поддерживается</string>
       <string id="PKINITHashAlgorithm_Audited">Проверено</string>
       <string id="PKINITHashAlgorithm_NotSupported">Не поддерживается</string>
+      <string id="StrongNameMatches">Разрешить строгое сопоставление на основе имен для сертификатов</string>
+      <string id="StrongNameMatches_explain">Этот параметр политики позволяет использовать альтернативные идентификаторы на основе имен для строгого сопоставления сертификатов, выданных учетным записям пользователей Active Directory, и определяет, какие сертификаты сопоставляются с какими учетными записями. Если этот параметр не включен, сертификаты должны соответствовать условиям "строгого сопоставления", описанным на странице aka.ms/StrongCertMapKB. Эти условия в целом запрещают использовать идентификаторы на основе имен.
+
+Каждое сопоставление, указанное в этой политике, должно включать идентификатор OID политики, а также значение IssuerSubject и/или суффикс UPN. Необходимо использовать синтаксис, описанный ниже. Если в этой политике не удается найти допустимое сопоставление для указанного сертификата, то служба Active Directory попытается найти соответствие, используя условия строгого сопоставления, указанные в KB5014754. Сопоставления сертификатов, которые не соответствуют ни условиям "строгого сопоставления имен" (этой политике), ни существующим условиям "строгого сопоставления", будут считаться недопустимыми для проверки подлинности.
+
+Ниже приведен общий формат этой политики с несколькими примерами. Эта политика применяется только к учетным записям пользователей Active Directory.
+
+Общий синтаксис
+==============
+&lt;отпечаирк&gt;; &lt;список идентификаторов OPID&gt;; &lt;методы сопоставления имен&gt;
+
+Примеры
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+Политика должна содержать только один отпечаток сертификата в каждом правиле. Каждое правило должно быть представлено в виде кортежа. Отпечатки должны быть уникальными и не могут повторяться в нескольких правилах. Разделы каждого кортежа, разделенные точками с запятой, должны быть в заданном порядке. Поля, разделенные запятыми, могут быть в любом порядке. Сами правила разделяются символами новой строки.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Правила строгого сопоставления имен</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">使用证书进行本地身份验证</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">使用云信任进行本地身份验证</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">在登录后禁用缓存 Windows Hello 企业版凭据</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello 企业版是使用 Active Directory 或 Azure Active Directory 帐户登录到 Windows 的替代方法，可以取代密码、智能卡和虚拟智能卡。
 
@@ -114,13 +116,14 @@
         <string id="MSPassport_EnableEnhancedSignInSecurityExplain">增强的登录安全性(ESS)将 Windows Hello 生物识别(面部和指纹)模板数据和匹配操作隔离到受信任的硬件或指定的内存区域，这意味着操作系统的其余部分无法访问或篡改它们。由于传感器和算法之间的通信通道也是安全的，因此恶意软件无法注入或重播数据来模拟用户登录或将用户锁定在其计算机之外。
 如果启用此策略，则它可能具有以下可能值:
 
-0 - 使用外围设备和内置非 ESS 传感器启用增强的登录安全性
-按照 Windows 中现有的默认行为，将在具有受支持的软件和硬件的系统上启用增强的登录安全性。允许支持 Windows Hello 的外围设备的身份验证操作，但受当前功能限制。此外，通过此设置，将在混合使用生物识别设备(例如支持 ESS 的 FPR 和不支持 ESS 的摄像头)的设备上启用 ESS。
+0 - 使用外围传感器禁用增强的登录安全性
+将在具有功能强大的软件和硬件的系统上禁用 ESS。允许支持 Windows Hello 的外围设备的身份验证操作，但受当前功能限制。
 
-1 - 启用增强的登录安全性，不使用外围设备或内置非 ESS 传感器(默认并推荐，可提供最高安全性)
-按照 Windows 中现有的默认行为，将在具有受支持的软件和硬件的系统上启用增强的登录安全性。任何外围生物识别设备的身份验证操作都将被阻止，并且不适用于 Windows Hello。
+1 - 启用增强的登录安全性，不使用外围传感器(默认并推荐)
+按照 Windows 中现有的默认行为，将在具有功能的软件和硬件的系统上启用 ESS。任何外围生物识别设备的身份验证操作都将被阻止，并且不适用于 Windows Hello。
 
-如果禁用或未配置此策略，则 ESS 设备上将阻止非 ESS 传感器。
+如果禁用或未配置此策略，则非 ESS 传感器将在 ESS 设备上被阻止。
+
         </string>
         <string id="MSPassport_EnablePinRecovery">使用PIN恢复</string>
         <string id="MSPassport_EnablePinRecoveryExplain">PIN 恢复允许用户在忘记 PIN 时，使用 Windows Hello 企业版 PIN 恢复服务更换一个新的 PIN，而不会丢失任何相关凭据或证书，包括设备上与用户个人帐户相关联的任何密钥。为达到这一目的，基于 Azure 的 PIN 恢复服务将存储在设备上的恢复机密加密，要求 PIN 恢复服务和设备均解密。PIN 恢复要求用户对 Azure Active Directory 进行多重身份验证。
@@ -149,6 +152,8 @@
  
 注意：启用此策略设置和 "使用 Windows Hello 企业版" 策略设置的环境需要一个或多个 Windows Server 2016 域控制器。否则，Windows Hello 企业版身份验证将失败。
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">Windows Hello 企业版凭据在登录后缓存，以便某些安全相关应用程序无提示地使用凭据，从而不中断用户体验。启用此策略可关闭此功能，移除缓存，因此明确需要用户输入。</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">配置设备解锁凭据</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">配置要用作第一和第二解锁因子的凭据提供商 GUID （例如面部和指纹提供商 GUID）的逗号分隔列表。如果将受信任的信号提供商指定为解锁因子之一，则还应以 xml 的形式为要验证的每种信号类型配置信号规则的逗号分隔列表。

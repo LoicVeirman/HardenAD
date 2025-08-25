@@ -115,6 +115,25 @@ Zdarzenia generowane przez tę konfigurację: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Obsługiwany</string>
       <string id="PKINITHashAlgorithm_Audited">Poddane inspekcji</string>
       <string id="PKINITHashAlgorithm_NotSupported">Nieobsługiwany</string>
+      <string id="StrongNameMatches">Zezwalaj na silne mapowania certyfikatów oparte na nazwach</string>
+      <string id="StrongNameMatches_explain">To ustawienie zasad umożliwia użycie alternatywnych identyfikatorów opartych na nazwach do silnego mapowania certyfikatów wydanych dla kont użytkowników usługi Active Directory i określa, które certyfikaty mapują się na poszczególne konta. Jeśli to ustawienie nie jest włączone, certyfikaty muszą spełniać kryteria „silnego mapowania” określone w witrynie aka.ms/StrongCertMapKB, co zazwyczaj nie zezwala na identyfikatory oparte na nazwach.
+
+Każde mapowanie określone w tych zasadach musi zawierać identyfikator OID zasad wraz z elementem IssuerSubject i/lub sufiksem głównej nazwy użytkownika przy użyciu składni określonej poniżej. Jeśli w tych zasadach nie można odnaleźć prawidłowego mapowania dla danego certyfikatu, usługa Active Directory podejmie próbę znalezienia dopasowania przy użyciu istniejących kryteriów silnego mapowania określonych w KB5014754. Mapowania certyfikatów niezgodne z kryteriami „mapowania silnych nazw” (te zasady) lub istniejącymi kryteriami „silnego mapowania” zostaną uznane za nieprawidłowe na potrzeby uwierzytelniania.
+
+Ogólny format zasad i kilka przykładów wymieniono poniżej. Te zasady dotyczą tylko kont użytkowników usługi Active Directory.
+
+Składnia ogólna
+==============
+&lt;thumbprint&gt;; &lt;lista identyfikatorów OID&gt;; &lt;metody dopasowywania nazw&gt;
+
+Przykłady
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+Zasady muszą zawierać dokładnie jeden odcisk palca certyfikatu na regułę, a każda reguła jest reprezentowana jako krotka. Odciski palców muszą być unikatowe i nie mogą być powtarzane w wielu regułach. Sekcje każdej krotki rozdzielone średnikami muszą mieć określoną kolejność, natomiast pola rozdzielone przecinkami mogą być uporządkowane w dowolnej kolejności. Same reguły są rozdzielone znakami nowego wiersza.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Zdarzenia generowane przez tę konfigurację: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Reguły dopasowania silnej nazwy:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

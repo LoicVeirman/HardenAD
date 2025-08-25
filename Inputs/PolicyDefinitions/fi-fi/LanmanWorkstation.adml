@@ -36,6 +36,8 @@ Jos otat tämän käytäntöasetuksen käyttöön tai ei määritä sitä, SMB-a
 
 Jos poistat tämän käytäntöasetuksen käytöstä, SMB-asiakas ei salli suojaamattomia vieraskirjautumisia.
 
+Jos otat kirjautumisen käyttöön, SMB-asiakas hylkää epävarmat vieraskirjautumiset.
+
 Suojaamattomien vieraskirjautumisten avulla tiedostopalvelimet sallivat jaettujen kansioiden käytön ilman todennusta. Vaikka ne ovat epätavallisia yritysympäristössä, niitä käytetään usein kuluttajien verkkoon liitetyissä tallennuslaitteissa (NAS), jotka toimivat tiedostopalvelimina. Oletusarvon mukaan Windows-tiedostopalvelimet edellyttävät todennusta eivätkä salli suojaamattomia vieraskirjautumisia. Koska suojaamattomat vieraskirjautumiset ovat todentamattomia, SMB-allekirjoittamisen ja SMB-salauksen kaltaiset tärkeät tietoturvaominaisuudet eivät ole käytössä. Tämän vuoksi asiakkaat, jotka sallivat suojaamattomat vieraskirjautumiset, ovat alttiina monenlaisille välistävetohyökkäyksille, jotka voivat aiheuttaa tietojen menettämistä ja vioittumista sekä altistaa haittaohjelmille. Lisäksi tiedostopalvelimeen suojaamattoman vieraskirjautumisen aikana kirjoitetut tiedot voivat olla kenen tahansa kyseisessä verkossa olevan käytettävissä. Microsoft suosittelee suojaamattomien vieraskirjautumisten poistamista käytöstä ja määrittämään tiedostopalvelimet niin, että ne edellyttävät todennettua käyttöä.
       </string>
 
@@ -61,6 +63,7 @@ Suojaamattomien vieraskirjautumisten avulla tiedostopalvelimet sallivat jaettuje
         Huomautus: Tämä käytäntöasetus ei vaikuta tilanteisiin, joissa ollaan yhteydessä Windows Serverin tarjoamiin skaalauksen tiedostopalvelimien jaettuihin resursseihin. Microsoft ei suosittele tämän käytännön käyttöönottoa niitä asiakkaita varten, jotka rutiininomaisesti käsittelevät yleiskäyttöroolin avulla Windowsin vikasietoklusterin tiedostopalvelimessa isännöityjä tiedostoja, koska vikasietotoiminnot voivat hidastua sekä muistin ja suorittimen kuormitus lisääntyä.
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Vähintään Windows Server 2022, Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Vähintään Windows Server 2025, Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">Käytä SMB-pakkausta oletusarvoisesti</string>
       <string id="Pol_EnableCompressedTraffic_Help">Tämä käytäntö määrittää, käyttääkö SMB-asiakas liikenteen pakkaamista oletusarvoisesti.
 
@@ -77,11 +80,129 @@ Jos otat tämän käytäntöasetuksen käyttöön, SMB-asiakas ei koskaan pakkaa
 
 Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, SMB-asiakas voi pakata liikennettä (muiden käytäntöjen ja ehtojen yhdistelmän mukaan).
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">Valtuuta SMB:n enimmäisversio</string>
+      <string id="Pol_MaxSmb2Dialect_Help">Tämä käytäntö ohjaa SMB-protokollan enimmäisversiota
+
+Huomautus: Tämä ryhmäkäytäntö ei estä SMB 1 -komponenttia, jos kyseinen osa on yhä asennettuna ja käytössä.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">Valtuuta SMB:n vähimmäisversio</string>
+      <string id="Pol_MinSmb2Dialect_Help">Tämä käytäntö ohjaa SMB-protokollan vähimmäisversiota
+
+Huomautus: Tämä ryhmäkäytäntö ei estä SMB 1 -komponenttia, jos kyseinen osa on yhä asennettuna ja käytössä.
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">Estä NTLM (LM, NTLM, NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">Tämä käytäntö määrittää, estääkö SMB-asiakas NTLM:n etäyhteyden todentamisen.
+
+Jos otat tämän käytäntöasetuksen käyttöön, SMB-asiakas ei käytä NTLM:ää etäyhteyden todentamiseen.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, SMB-asiakas voi edelleen käyttää NTLM:ää.
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">Estä NTLM-palvelimen poikkeusluettelo</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">Tämä käytäntöasetus määrittää, voidaanko NTLM:ää käyttää määritettyjen palvelimien käyttämiseen.
+
+Jos otat tämän käytäntöasetuksen käyttöön (toimii vain, jos Estä NTLM (LM, NTLM, NTLMv2) -käytäntö on käytössä), NTLM:ää voidaan käyttää määritettyjen palvelimien käyttämiseen. Kirjoita haluamasi palvelimet (DNS-nimi, IP-osoite tai NetBIOS-nimi) muokkausruutuun, yksi palvelimen nimi riviä kohden.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, muut asetukset määrittävät palvelimien NTLM-käytön.
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">Ota etäpostiviestit käyttöön</string>
+      <string id="Pol_EnableRemoteMailslots_Help">Tämä käytäntö määrittää, ottaako SMB-asiakas etäpostiviestit käyttöön vai poistaako se ne käytöstä MUP:n kautta.
+
+Jos poistat tämän käytäntöasetuksen käytöstä, etäpostiviestit ei toimi MUP:n kautta, joten ne eivät siirry SMB-asiakkaan uudelleenohjauksen kautta.
+
+Jos et määritä tätä käytäntöasetusta, etäpostiviestit voidaan sallia MUP:n kautta.
+      </string>
+      <string id="Pol_RequireEncryption_Name">Vaadi salaus</string>
+      <string id="Pol_RequireEncryption_Help">Tämä käytäntö määrittää, edellyttääkö SMB-asiakas salausta.
+
+Jos otat tämän käytäntöasetuksen käyttöön, SMB-asiakas edellyttää, että SMB-palvelin tukee salausta ja salaa tiedot.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, SMB-asiakas ei vaadi salausta. SMB-salaus saattaa kuitenkin olla edelleen pakollinen; katso huomautukset alla.
+
+Huomautus: Tämä käytäntö yhdistetään resurssikohtaiseen, palvelinkohtaiseen ja yhdistettyyn asemayhteyteen, jonka kautta SMB-salaus saatetaan edellyttää. SMB-palvelimen on tuettava ja otettava käyttöön SMB-salaus. Jos esimerkiksi tämä käytäntö poistetaan käytöstä (tai sitä ei määritetä), SMB-asiakas voi silti suorittaa salauksen, jos SMB-palvelimen jaetulla resurssilla on pakollinen salaus.
+
+Tärkeää: SMB-salaus vaatii SMB 3.0:n tai uudemman
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">Ota vaihtoehtoiset portit käyttöön</string>
+      <string id="Pol_EnableAlternativePorts_Help">Tämä käytäntö määrittää, ottaako SMB-asiakas käyttöön tai poistaako se käytöstä vaihtoehtoisia portteja.
+
+Jos poistat tämän käytäntöasetuksen käytöstä, SMB-asiakas ei käytä vaihtoehtoisia portteja.
+
+Jos et määritä tätä käytäntöasetusta, SMB-asiakas saattaa käyttää vaihtoehtoisia portteja.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">Valvontapalvelin ei tue salausta</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">Tämä käytäntö määrittää, ottaako SMB-asiakas valvontatapahtuman käyttöön, kun SMB-palvelin ei tue salausta.
+
+Jos otat tämän käytäntöasetuksen käyttöön, SMB-asiakas kirjaa tapahtuman, kun SMB-palvelin ei tue salausta.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, SMB-asiakas ei kirjaa tapahtumaa lokiin.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">Valvontapalvelin ei tue allekirjoittamista</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">Tämä käytäntö määrittää, ottaako SMB-asiakas valvontatapahtuman käyttöön, kun SMB-palvelin ei tue allekirjoittamista.
+
+Jos otat tämän käytäntöasetuksen käyttöön, SMB-asiakas kirjaa tapahtuman, kun SMB-palvelin ei tue allekirjoittamista.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, SMB-asiakas ei kirjaa tapahtumaa.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Valvo suojaamatonta vieraskirjautumista</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">Tämä käytäntö määrittää, ottaako SMB-asiakas valvontatapahtuman käyttöön, kun asiakas on kirjautuneena vierastilinä.
+
+Jos otat tämän käytäntöasetuksen käyttöön, SMB-asiakas kirjaa tapahtuman, kun asiakas on kirjautuneena vierastilinä.
+
+Jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, SMB-asiakas ei kirjaa tapahtumaa lokiin.
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">Vaihtoehtoiset porttimääritykset</string>
+      <string id="Pol_AlternativePortMappings_Help">Tämä käytäntöasetus määrittää SMB-asiakkaan käyttämät vaihtoehtoiset porttirekisterimääritykset.
+
+Jos otat tämän käytäntöasetuksen käyttöön, ensimmäistä kelvollista yhdistämismääritystä käytetään, jos yhdistämisen palvelimen nimi vastaa yhteyden kohteena olevan palvelimen nimeä.
+
+Jos otat tämän käytäntöasetuksen käyttöön etkä määritä vähintään yhtä kelvollista yhdistämismääritystä tai jos poistat tämän käytäntöasetuksen käytöstä tai et määritä sitä, SMB-asiakas viittaa muihin vaihtoehtoisten porttien käytön määritysmenetelmiin, kuten NET USE- tai New-SmbMapping-komentoihin.
+
+Esimerkkejä:
+
+contososa.file.core.windows.net:tcp:448
+edgesrv1.corp.contoso.com:quic:450
+
+Tämän asetuksen muokkaaminen:
+
+Järjestä halutut vaihtoehtoiset porttimääritykset muokkausruudussa niin, että yksi yhdistämismääritysmerkintä riviä kohden.
+
+Kunkin yhdistämismäärityksen muoto määrittää palvelimen nimen, siirtotyypin ja portin numeron erotettuna kaksoispisteillä kuten yllä olevassa esimerkissä.
+
+Huomautus: Tämä käytäntö ei edellytä Windowsin uudelleenkäynnistystä, jotta se tulee voimaan.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>Salausohjelmistot:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>Valitse SMB-versio:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Versio:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>Valitse SMB-versio:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Versio:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>NTLM-palvelimen eston poikkeusluettelo:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>Vaihtoehtoiset porttirekisterimääritykset:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

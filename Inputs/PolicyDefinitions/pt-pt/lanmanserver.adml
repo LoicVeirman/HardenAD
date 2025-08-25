@@ -98,6 +98,8 @@ Se desativar ou não configurar esta definição de política, o servidor SMB ir
 
 Nota: ao configurar esta definição de segurança, as alterações só entrarão em vigor quando reiniciar o Windows.</string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Pelo menos Windows Server 2022, Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Pelo menos, Windows Server 2025, Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0_24H2">At least Windows Server 2025, Windows 11 24H2</string>
       <string id="Pol_EnableCompressedTraffic_Name">Pedir compressão de tráfego para todas as partilhas</string>
       <string id="Pol_EnableCompressedTraffic_Help">Esta política decide se o servidor SMB pede ao cliente SMB para utilizar a compressão de tráfego para todas as partilhas SMB.
 
@@ -115,6 +117,72 @@ Nota: A compressão de tráfego só pode ser utilizada quando o cliente SMB e o 
 Se ativar esta definição da política, o servidor SMB nunca irá comprimir dados, independentemente de outras políticas (como a política "Utilizar a compressão SMB por predefinição" ou a propriedade por partilha).
 
 Se desativar ou não configurar esta definição de política, o servidor SMB poderá comprimir o tráfego (dependendo de uma combinação de outras políticas e condições).
+      </string>
+      <string id="Pol_MaxSmb2Dialect_Name">Exigir a versão máxima do SMB</string>
+      <string id="Pol_MaxSmb2Dialect_Help">Esta política controla a versão máxima do protocolo SMB
+
+Nota: esta política de grupo não impede a utilização de SMB 1 se esse componente ainda estiver instalado e ativado.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">Exigir a versão mínima do SMB</string>
+      <string id="Pol_MinSmb2Dialect_Help">Esta política controla a versão mínima do protocolo SMB
+
+Nota: esta política de grupo não impede a utilização de SMB 1 se esse componente ainda estiver instalado e ativado.
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+
+      <string id="Pol_EnableRemoteMailslots_Name">Ativar portas de E/S remotas</string>
+      <string id="Pol_EnableRemoteMailslots_Help">Esta política controla se o servidor SMB ativará ou desativará os processadores de mensagens remotos através do serviço de browser do computador.
+
+Se desativar esta definição de política, o serviço de browser do computador deixará de funcionar como esperado.
+
+Se não configurar esta definição de política, o browser do computador poderá ainda estar a trabalhar com os processadores de mensagens remotos ativados.
+
+Nota: esta política requer um reinício do Windows para entrar em vigor.
+      </string>
+
+      <string id="Pol_EnableAuthRateLimiter_Name">Ativar o limitador de taxa de autenticação</string>
+      <string id="Pol_EnableAuthRateLimiter_Help">Esta política controla se o servidor SMB ativará ou desativará o limitador de taxa de autenticação.
+
+Se desativar esta definição de política, o limitador de taxa de autenticação não será ativado.
+
+Se não configurar esta definição de política, o limitador de taxa de autenticação ainda poderá estar a funcionar dependendo das definições de atraso (o valor de atraso recomendado é de 2000ms).
+      </string>
+      <string id="Pol_AuditClientDoesNotSupportEncryption_Name">Auditar cliente que não suporta encriptação</string>
+      <string id="Pol_AuditClientDoesNotSupportEncryption_Help">Esta política controla se o servidor SMB irá registar o evento quando o cliente SMB não suportar encriptação.
+
+Se ativar esta definição de política, o servidor SMB registará o evento quando o cliente SMB não suportar encriptação.
+
+Se desativar ou não configurar esta definição de política, o servidor SMB não registará o evento.
+      </string>
+      <string id="Pol_AuditClientDoesNotSupportSigning_Name">O cliente de auditoria não suporta a assinatura</string>
+      <string id="Pol_AuditClientDoesNotSupportSigning_Help">Esta política controla se o servidor SMB irá registar o evento quando o cliente SMB não suportar a assinatura.
+
+Se ativar esta definição de política, o servidor SMB irá registar o evento quando o cliente SMB não suportar a assinatura.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Auditar início de sessão de convidado não seguro</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">Esta política controla se o servidor SMB ativará o evento de auditoria quando o cliente tiver sessão iniciada como conta de convidado.
+
+Se ativar esta definição de política, o servidor SMB irá registar o evento quando o cliente tiver sessão iniciada como conta de convidado.
+
+Se desativar ou não configurar esta definição de política, o servidor SMB não registará o evento.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Ativar o SMB através do QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">Esta definição de política controla se o servidor SMB ativará o SMB através do QUIC.
+
+Se desativar esta definição de política, o servidor SMB não aceitará ligações através do QUIC.
+
+Se não configurar esta definição de política, o servidor SMB poderá aceitar ligações através do QUIC.
+      </string>
+      <string id="Pol_AuthRateLimiterDelayInMs_Name">Definir atraso do limitador da taxa de autenticação (milissegundos)</string>
+      <string id="Pol_AuthRateLimiterDelayInMs_Help">This policy controls whether the SMB server will use a default value in milliseconds for the invalid authentication delay.
+
+If you configure this policy setting, the authentication rate limiter will use the specified value for delaying invalid authentication attempts.
+
+If you do not configure this policy setting, the authentication rate limiter will use the default value or the value from local registry under HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters.
       </string>
       </stringTable>
     <presentationTable>
@@ -137,6 +205,17 @@ Se desativar ou não configurar esta definição de política, o servidor SMB po
       <presentation id="Pol_CipherSuiteOrder">
         <text>Conjuntos de cifras:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>Selecionar versão SMB:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Versão:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>Selecionar versão SMB:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Versão:</dropdownList>
+      </presentation>
+      <presentation id="Pol_AuthRateLimiterDelayInMs">
+        <decimalTextBox refId="DecimalTextBox_AuthRateLimiterDelayInMs" defaultValue="0" spinStep="1">Valor (milissegundos): </decimalTextBox>
       </presentation>
     </presentationTable>
   </resources>

@@ -36,6 +36,8 @@ Pokud nastavení této zásady povolíte nebo nenakonfigurujete, klient SMB bude
 
 Pokud nastavení této zásady zakážete, bude klient SMB nezabezpečená přihlášení hostů odmítat.
 
+Pokud povolíte podepisování, bude klient SMB nezabezpečená přihlášení hostů odmítat.
+
 Nezabezpečená přihlášení hostů využívají souborové servery k umožnění neověřeného přístupu ke sdíleným složkám. Tento typ přihlášení sice není běžný v podnikovém prostředí, ale často se používá ve spotřebitelských zařízeních NAS (Network Attached Storage), která působí jako souborové servery. Souborové servery s Windows vyžadují ověření a ve výchozím nastavení nezabezpečená přihlášení hostů nepoužívají. Vzhledem k tomu, že tato přihlášení nejsou ověřená, deaktivují se důležité funkce zabezpečení, jako je podepisování a šifrování paketů SMB. V důsledku toho jsou klienti, kteří nezabezpečená přihlášení hostů povolují, zranitelní vůči různým útokům prostředníkem (man-in-the-middle), které můžou vést ke ztrátě nebo poškození dat a ohrožení malwarem. Kromě toho jsou všechna data zapsaná na souborový server při nezabezpečeném přihlášení hosta potenciálně přístupná pro všechny uživatele v síti. Microsoft doporučuje, abyste nezabezpečená přihlášení hostů zakázali a nakonfigurovali souborové servery tak, aby vyžadovaly ověřený přístup.
       </string>
 
@@ -61,6 +63,7 @@ Nezabezpečená přihlášení hostů využívají souborové servery k umožně
         Poznámka: Tato zásada nemá žádný vliv při připojování ke sdíleným složkám na souborovém serveru se škálováním na více systémů založeným na systému Windows Server. Microsoft nedoporučuje povolovat tuto zásadu pro klienty, kteří se často připojují k souborům v clusteru Windows s podporou převzetí služeb při selhání s rolí Souborový server pro obecné použití, protože by to mohlo vést k pomalejšímu přebírání služeb při selhání a zvýšenému využití paměti a procesoru.
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Minimálně Windows Server 2022, Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Minimálně Windows Server 2025, Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">Ve výchozím nastavení použít kompresi SMB</string>
       <string id="Pol_EnableCompressedTraffic_Help">Tato zásada určuje, jestli klient SMB ve výchozím nastavení používá kompresi provozu.
 
@@ -77,11 +80,129 @@ Pokud toto nastavení zásad povolíte, nebude klient SMB nikdy komprimovat data
 
 Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, klient SMB může komprimovat provoz (v závislosti na kombinaci jiných zásad a podmínek).
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">Nařídit maximální verzi protokolu SMB</string>
+      <string id="Pol_MaxSmb2Dialect_Help">Tato zásada řídí maximální verzi protokolu SMB
+
+Poznámka: Tyto zásady skupiny nezabrání použití protokolu SMB 1, pokud je daná součást stále nainstalovaná a povolená.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">Nařídit minimální verzi protokolu SMB</string>
+      <string id="Pol_MinSmb2Dialect_Help">Tato zásada řídí minimální verzi protokolu SMB
+
+Poznámka: Tyto zásady skupiny nezabrání použití protokolu SMB 1, pokud je daná součást stále nainstalovaná a povolená.
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">Blokovat NTLM (LM, NTLM, NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">Tato zásada řídí, jestli klient SMB zablokuje protokol NTLM pro ověřování vzdáleného připojení.
+
+Pokud toto nastavení zásad povolíte, klient SMB nebude k ověřování vzdáleného připojení používat protokol NTLM.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, klient SMB bude moct protokol NTLM používat i nadále.
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">Blokovat seznam výjimek serveru NTLM</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">Toto nastavení zásad určuje, zda lze pro přístup k zadaným serverům použít protokol NTLM.
+
+Pokud toto nastavení zásad povolíte (platí pouze v případě, že je povolena zásada Blokovat NTLM (LM, NTLM, NTLMv2)), lze použít protokol NTLM pro přístup k zadaným serverům. Do textového pole zadejte požadované servery (název DNS, IP adresu nebo název NetBIOS) a na každý řádek jeden název serveru.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, bude přístup NTLM k serverům určen jinými nastaveními.
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">Povolit vzdálené poštovní sloty</string>
+      <string id="Pol_EnableRemoteMailslots_Help">Tato zásada určuje, jestli klient SMB povolí nebo zakáže vzdálené poštovní sloty přes MUP.
+
+Pokud toto nastavení zásad zakážete, nebudou přes MUP fungovat vzdálené poštovní sloty, takže neprojdou přesměrovačem klienta SMB.
+
+Pokud toto nastavení zásad nenakonfigurujete, mohou být prostřednictvím MUP povoleny vzdálené poštovní sloty.
+      </string>
+      <string id="Pol_RequireEncryption_Name">Vyžadovat šifrování</string>
+      <string id="Pol_RequireEncryption_Help">Tato zásada určuje, jestli bude klient SMB vyžadovat šifrování.
+
+Pokud toto nastavení zásad povolíte, bude klient SMB vyžadovat, aby server SMB podporoval šifrování a šifrování dat.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude klient SMB vyžadovat šifrování. Šifrování SMB však může být i nadále vyžadováno. viz poznámky níže.
+
+Poznámka: Tyto zásady jsou kombinovány s vlastnostmi připojení pro jednotlivé sdílené složky, jednotlivé servery a jednotlivé namapované jednotky, pomocí kterých může být vyžadováno šifrování SMB. Server SMB musí podporovat a povolit šifrování SMB. Pokud je například tato zásada zakázaná (nebo není nakonfigurovaná), může klient SMB nadále provádět šifrování, pokud sdílená složka serveru SMB vyžaduje šifrování.
+
+Důležité: Šifrování SMB vyžaduje protokol SMB 3.0 nebo novější.
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">Povolit alternativní porty</string>
+      <string id="Pol_EnableAlternativePorts_Help">Tato zásada řídí, jestli klient SMB povolí nebo zakáže alternativní porty.
+
+Pokud toto nastavení zásad zakážete, nebude klient SMB používat alternativní porty.
+
+Pokud toto nastavení zásad nenakonfigurujete, klient SMB může používat alternativní porty.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">Server auditování nepodporuje šifrování</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">Tato zásada řídí, jestli klient SMB povolí událost auditování, když server SMB nepodporuje šifrování.
+
+Pokud toto nastavení zásad povolíte, bude klient SMB protokolovat událost, když server SMB nepodporuje šifrování.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, klient SMB nebude událost protokolovat.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">Auditovací server nepodporuje podepisování.</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">Tato zásada určuje, jestli klient SMB povolí událost auditu, když server SMB nepodporuje podepisování.
+
+Pokud toto nastavení zásad povolíte, klient SMB bude protokolovat událost, když server SMB nepodporuje podepisování.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, nebude klient SMB protokolovat událost.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Auditovat nezabezpečené přihlášení hosta</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">Tato zásada řídí, jestli klient SMB povolí událost auditování, když se klient přihlásí jako účet guest.
+
+Pokud toto nastavení zásad povolíte, bude klient SMB protokolovat událost, když je klient přihlášen jako účet Guest.
+
+Pokud toto nastavení zásad zakážete nebo nenakonfigurujete, klient SMB nebude událost protokolovat.
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">Alternativní mapování portů</string>
+      <string id="Pol_AlternativePortMappings_Help">Toto nastavení zásad určuje mapování registru alternativních portů používaných klientem SMB.
+
+Pokud toto nastavení zásad povolíte, použije se první platné mapování, pokud název serveru mapování odpovídá názvu cílového serveru pro připojení.
+
+Pokud toto nastavení zásad povolíte a nezadáte alespoň jedno platné mapování nebo pokud toto nastavení zásad zakážete nebo nenakonfigurujete, bude klient SMB odkazovat na jiné metody určení použití alternativního portu, například pomocí příkazů NET USE nebo New-SmbMapping.
+
+Příklady:
+
+contososa.file.core.windows.net:tcp:448
+edgesrv1.corp.contoso.com:quic:450
+
+Jak změnit toto nastavení:
+
+Uspořádá požadovaná alternativní mapování portů do textového pole s jednou položkou mapování na řádek.
+
+Formát jednotlivých položek mapování určuje název serveru, typ přenosu a číslo portu oddělené dvojtečkami tak, jak je to provedeno v příkladu výše.
+
+Poznámka: Tato zásada nevyžaduje restartování systému Windows, aby se projevilo.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>Sady šifer:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>Vyberte verzi protokolu SMB:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Verze:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>Vyberte verzi protokolu SMB:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Verze:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>Blokovat seznam výjimek serveru NTLM:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>Alternativní mapování registru portů:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

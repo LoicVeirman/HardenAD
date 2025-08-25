@@ -13,9 +13,9 @@
 
 0=無効 (パスワードはバックアップされません)
 
-1=パスワードをAzure Active Directoryにバックアップする
+1=パスワードをAzure Active DirectoryにBackupする
 
-2=Active Directory にパスワードをバックアップする
+2=パスワードを Active Directory にBackupする
 
 指定しない場合、この設定の既定値は 0 (無効) になります。
 
@@ -34,7 +34,7 @@
       <string id="LAPS_PasswordSettings_Help">パスワード パラメーターを構成します
 
 パスワードの複雑さ: 新しいパスワードを生成するときに使用される文字
-  既定値: 大文字 + 小文字 + 数字 + 特殊文字
+  既定値: 大きい文字 + 小文字 + 数字 + 特殊文字
 
 パスワードの長さ
   最小: 8 文字
@@ -42,16 +42,27 @@
   既定値: 14 文字
 
 パスワードの有効期間 (日数)
-  最小: 1 日 (バックアップ ディレクトリが Azure AD に構成されている場合は 7 日間)
+  最小: 1 日 (バックアップ ディレクトリがAzure ADするように構成されている場合は 7 日間)
   最大: 365 日
   既定値: 30 日
 
+パスフレーズの長さ
+  最小: 3 単語
+  最大: 10 語
+  既定値: 6 単語
+
 詳細については、https://go.microsoft.com/fwlink/?linkid=2188435 を参照してください。
+
+Electronic Benchmark Foundation の "Deep Dive: EFF のランダム パスフレーズの新しいワードリスト" から取得したパスフレーズの一覧。CC-BY-3.0 属性ライセンスで使用されます。詳細については、https://go.microsoft.com/fwlink/?linkid=2255471 を参照してください。
       </string>
       <string id="LAPS_PwdComplexity_Item_1">大文字</string>
       <string id="LAPS_PwdComplexity_Item_2">大文字 + 小文字</string>
       <string id="LAPS_PwdComplexity_Item_3">大文字 + 小文字 + 数字</string>
       <string id="LAPS_PwdComplexity_Item_4">大文字 + 小文字 + 数字 + 特殊文字</string>
+      <string id="LAPS_PwdComplexity_Item_5">大文字 + 小文字 + 数字 + 特殊文字 (読みやすさの向上)</string>
+      <string id="LAPS_PwdComplexity_Item_6">パスフレーズ (長い単語)</string>
+      <string id="LAPS_PwdComplexity_Item_7">パスフレーズ (短い単語)</string>
+      <string id="LAPS_PwdComplexity_Item_8">パスフレーズ (一意のプレフィックスを含む短い単語)</string>
       <string id="LAPS_AdminName">管理する管理者アカウントの名前</string>
       <string id="LAPS_AdminName_Help">このポリシー設定では、パスワードを管理するカスタム管理者アカウント名を指定します。
 
@@ -86,15 +97,27 @@
 詳細については、https://go.microsoft.com/fwlink/?linkid=2188435を参照してください。
       </string>
       <string id="LAPS_ADPasswordEncryptionPrincipal">承認されたパスワード復号化機能の構成</string>
-      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">暗号化されたパスワードの復号化が許可されている特定のユーザーまたはグループを制御するには、この設定を構成します。
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">この設定は、暗号化されたパスワードの暗号化解除権限を持つ特定のユーザーまたはグループに対する制御の目的で構成されます。
 
-パスワードの暗号化が有効になっていない限り、この設定を構成しても効果はありません。
+パスワードの暗号化が有効になっていない場合は、この設定を構成しても効果がありません。
 
-この設定を有効にした場合、指定されたグループは暗号化されたパスワードを復号化できます。
+この設定を有効にすると、指定したグループは、暗号化されたパスワードの暗号化解除を実行できます。
 
-この設定を無効にした場合、または構成しなかった場合、暗号化されたパスワードは Domain Admins グループによって復号化できます。
+この設定が無効または未構成の場合、暗号化されたパスワードの暗号化解除を実行できるのはドメイン管理者グループのみです。
 
-この設定は、文字列形式 ("S-1-5-21-2127521184-1604012920-1887927527-35197") または "domain\(group or user)" 形式のグループまたはユーザーの名前で構成する必要があります。指定されたユーザーまたはグループは、マネージド デバイスで解決できる必要があります。解決できない場合、パスワードはバックアップされません。
+この設定を構成する際は、グループまたはユーザーのドメイン修飾名、または文字列形式の SID を設定する必要があります。有効な設定の例:
+
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+ユーザー名、グループ名、SID は、引用符やカッコで囲まないでください。
+
+指定されたユーザーまたはグループは、管理対象デバイスで解決可能になっている必要があります。そうでない場合、パスワードはバックアップされません。
+
+注: ディレクトリ サービス修復モード (DSRM) アカウントのパスワードがドメイン コントローラ上にバックアップされている場合、この設定は無視されます。そのようなシナリオでは、この設定にはドメイン コントローラーのドメインの Domain Admins グループが指定されていると見なされます。
 
 詳細については、https://go.microsoft.com/fwlink/?linkid=2188435 を参照してください。
       </string>
@@ -127,27 +150,29 @@
       <string id="LAPS_PostAuthenticationActions">認証後アクション</string>
       <string id="LAPS_PostAuthenticationActions_Help">このポリシーは、マネージド アカウントによる認証の検出後に実行される認証後アクションを構成します。
 
-猶予期間: 指定された認証後のアクションを実行するまでの認証後の待機時間 (時間単位) を指定します。
+支払猶予期間: 指定された認証後のアクションを実行するまでの認証後の待機時間 (時間単位) を指定します。
 
-この設定が有効であり、0 より大きい場合、指定された認証後アクションは、猶予期間の有効期限終了時点で実行されます。
+この設定が有効であり、0 より大きい場合、指定された認証後のアクションは、支払猶予期間の満了時点で実行されます。
 
-この設定を無効にした場合、または構成しなかった場合は、既定の 24 時間の猶予期間後に、指定された認証後アクションが実行されます。
+この設定を無効にした場合、または構成しなかった場合は、既定の 24 時間の支払猶予期間後に、指定された認証後アクションが実行されます。
 
 この設定が 0 の場合、認証後アクションは実行されません。
 
-アクション: 猶予期間の有効期限終了時に実行するアクションを指定します。
+アクション: 支払猶予期間の満了時に実行するアクションを指定します。
 
-パスワードのリセット: 猶予期間が終了すると、マネージド アカウントのパスワードがリセットされます。
+パスワードのリセット: 支払猶予期間が満了すると、マネージド アカウントのパスワードがリセットされます。
 
-パスワードをリセットし、マネージド アカウントをログオフします。猶予期間が終了すると、マネージド アカウントのパスワードがリセットされ、マネージド アカウントを使用しているすべての対話型ログオン セッションが終了します。
+パスワードをリセットし、マネージド アカウントをログオフします。支払猶予期間が満了すると、マネージド アカウントのパスワードがリセットされ、マネージド アカウントを使用しているすべての対話型ログオン セッションはログオフされます。
+
+パスワードをリセットして再起動します。支払猶予期間が満了すると、マネージド アカウントのパスワードがリセットされ、マネージド デバイスが再起動されます。
+
+パスワードをリセットし、マネージド アカウントをログオフし、残りのプロセスを終了します。支払猶予期間が満了すると、マネージド アカウントのパスワードがリセットされ、マネージド アカウントを使用するすべての対話型ログオン セッションがログオフされ、残りのプロセスがすべて終了します。
 
 (注: 対話型ログオン セッションの終了後も、マネージド アカウントで他の認証セッションが使用される場合があります。以前のパスワードの使用を長くするための唯一の堅牢な方法は、デバイスを再起動することです。)
 
-パスワードをリセットして再起動する: 猶予期間を終了すると、マネージド アカウントのパスワードがリセットされ、マネージド デバイスが直ちに再起動されます。
-
 この設定を無効にした場合、または構成しなかった場合、認証後アクションの既定値は "パスワードをリセットしてマネージド アカウントをログオフする" になります。
 
-注: ドメイン コントローラー上の DSRM アカウントは、認証後操作向けに構成できません。このポリシーはドメイン コントローラーに影響せず、DC 向けに構成されている場合でも無視されます。
+注: ドメイン コントローラー上の DSRM アカウントは、認証後のアクション向けに構成できません。このポリシーはドメイン コントローラーに影響せず、DC 向けに構成されている場合でも無視されます。
 
 詳細については、https://go.microsoft.com/fwlink/?linkid=2188435 を参照してください。
       </string>
@@ -155,6 +180,44 @@
       <string id="PostAuthenticationActions_Item1">パスワードをリセット</string>
       <string id="PostAuthenticationActions_Item3">パスワードをリセットし、マネージド アカウントをログオフする</string>
       <string id="PostAuthenticationActions_Item5">パスワードをリセットしてデバイスを再起動する</string>
+      <string id="PostAuthenticationActions_Item11">パスワードをリセットし、マネージド アカウントからログオフし、残りのプロセスをすべて終了します</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">自動アカウント管理を構成する</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">このポリシーは、自動アカウント管理のポリシー オプションを構成します。
+
+管理するターゲット アカウントを指定する: 組み込みの管理者アカウントまたはカスタム アカウントのどちらを管理するかを指定します。
+
+自動アカウント名 (または名前のプレフィックス): 管理アカウントに使用する名前または名前のプレフィックスを指定します。
+
+このポリシー設定が構成されている場合、Windows LAPS はターゲット アカウントのアカウント名または名前のプレフィックスとして使用します。
+
+このポリシー設定が構成されていない場合、Windows LAPS は "WLapsAdmin"をアカウント名または名前のプレフィックスとして使用します。
+
+注: アカウント名のランダム化が構成されている場合、この名前はプレフィックスとして処理されます。以下のコメントを参照してください。
+
+管理アカウントを有効にする: 管理アカウントを有効にするかどうかを指定します。
+
+このポリシー設定が構成されている場合、Windows LAPS は指定された管理アカウントを有効にします。
+
+このポリシー設定が構成されていない場合、Windows LAPS は指定された管理アカウントを無効にします。
+
+注: Windows LAPS は、アカウントが有効または無効の状態で維持されているかどうかに関係なく、管理アカウントのパスワードを定期的に保持およびローテーションします。
+
+管理アカウントの名前をランダム化する: 管理アカウントの名前をランダムな数値サフィックスでランダム化するかどうかを指定します。
+
+このポリシー設定が構成されている場合、Windows LAPS は管理対象の自動アカウント名に 8 桁のランダムな数値サフィックスを追加し、パスワードがローテーションされるたびに管理アカウントの名前を再ランダム化します。
+
+このポリシー設定が構成されていない場合、Windows LAPS は、構成済みの管理対象の自動アカウント名を使用します。
+
+管理対象の自動アカウント名のプレフィックスが構成されている場合、Windows LAPS では、その名前の最初の 12 文字までがランダムな名前のプレフィックスとして使用されます。管理対象の自動アカウント名が構成されていない場合、Windows LAPS は "WLapsAdmin"を名前のプレフィックスとして使用します。
+
+注: ドメイン コントローラーの DSRM アカウントを自動アカウント管理用に構成することはできません。このポリシーはドメイン コントローラーには影響しません。DC 用に構成されている場合でも無視されます。
+
+詳細については、https://go.microsoft.com/fwlink/?linkid=2188435 を参照してください。
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">組み込みの管理者アカウントを管理する</string>
+      <string id="AutomaticAccountManagementTarget_Item1">カスタム管理者アカウントを管理する</string>
+      <string id="AutomaticAccountName_Help">アカウント名または名前のプレフィックスを指定する</string>
+      <string id="AutomaticAccountNameRandomization_Help">自動アカウント名をランダム化するかどうかを指定します。</string>
       <string id="SUPPORTED_Windows10">少なくとも Microsoft Windows 10 以降</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">パスワードの複雑さ</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">パスワードの長さ</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">パスワードの有効期間 (日数)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">パスフレーズの長さ (単語数)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">猶予期間 (時間):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">操作:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">操作:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">管理するターゲット アカウントを指定する:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>自動アカウント名 (または名前のプレフィックス):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">管理アカウントを有効にする</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">管理アカウントの名前をランダム化する</checkBox>
       </presentation>
     </presentationTable>
   </resources>

@@ -115,6 +115,25 @@ Von dieser Konfiguration generierte Ereignisse: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Unterstützt</string>
       <string id="PKINITHashAlgorithm_Audited">Überwacht</string>
       <string id="PKINITHashAlgorithm_NotSupported">Nicht unterstützt</string>
+      <string id="StrongNameMatches">Namensbasierte starke Zuordnungen für Zertifikate zulassen</string>
+      <string id="StrongNameMatches_explain">Diese Richtlinieneinstellung ermöglicht die Verwendung alternativer, namensbasierter Bezeichner, um Zertifikate fest zuzuordnen, die für Active Directory-Benutzerkonten ausgestellt wurden, und legt fest, welche Zertifikate welchen Konten zugeordnet werden. Wenn diese Einstellung nicht aktiviert ist, müssen Zertifikate die in aka.ms/StrongCertMapKB angegebenen Kriterien für die „starke Zuordnung“ erfüllen, die im Allgemeinen keine namensbasierten Identifikatoren zulassen.
+
+Jede in dieser Richtlinie angegebene Zuordnung muss eine Richtlinien-OID zusammen mit einem IssuerSubject und/oder einem UPN-Suffix in der unten angegebenen Syntax enthalten. Wenn in dieser Richtlinie keine gültige Zuordnung für ein bestimmtes Zertifikat gefunden wird, versucht Active Directory, anhand der vorhandenen starken Zuordnungskriterien, die in KB5014754 angegeben sind, eine Übereinstimmung zu finden. Zertifikatszuordnungen, die weder den Kriterien der „starken Namenszuordnung“ (diese Richtlinie) noch den bestehenden Kriterien der „starken Zuordnung“ entsprechen, werden für die Authentifizierung als ungültig betrachtet.
+
+Das allgemeine Richtlinienformat und einige Beispiele sind unten aufgeführt. Diese Richtlinie gilt nur für Active Directory-Benutzerkonten.
+
+Allgemeine Syntax
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+Beispiele
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+Die Richtlinie muss genau einen Zertifikatfingerabdruck pro Regel enthalten, wobei jede Regel als Tupel dargestellt wird. Fingerabdrücke müssen eindeutig sein und dürfen nicht in mehreren Regeln wiederholt werden. Die Abschnitte jedes Tupels, die durch Semikolons getrennt sind, müssen in der angegebenen Reihenfolge stehen, während die durch Kommas getrennten Felder in beliebiger Reihenfolge stehen können. Die Regeln selbst werden durch Zeilenumbrüche getrennt.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Von dieser Konfiguration generierte Ereignisse: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Übereinstimmungsregeln für starke Namen:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

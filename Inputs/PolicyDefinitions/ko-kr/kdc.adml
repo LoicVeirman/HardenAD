@@ -115,6 +115,25 @@ Windows Kerberos 클라이언트에서 지원하는 해시 및 체크섬 알고�
       <string id="PKINITHashAlgorithm_Supported">지원됨</string>
       <string id="PKINITHashAlgorithm_Audited">감사됨</string>
       <string id="PKINITHashAlgorithm_NotSupported">지원하지 않음</string>
+      <string id="StrongNameMatches">인증서에 이름 기반 강력 매핑 허용</string>
+      <string id="StrongNameMatches_explain">이 정책 설정을 사용하면 대체 이름 기반 식별자를 사용하여 발급된 인증서를 Active Directory 사용자 계정에 강력하게 매핑하고 어떤 인증서가 어떤 계정에 매핑될지 지정할 수 있습니다. 이 설정을 사용하지 않도록 설정하면 인증서가 일반적으로 이름 기반 식별자를 허용하지 않는 aka.ms/StrongCertMapKB 지정된 “강력한 매핑” 조건을 충족 해야 합니다.
+
+이 정책에 지정된 각 매핑은 아래에 지정된 구문을 사용하여 IssuerSubject 및/또는 UPN 접미사와 함께 정책 OID를 포함해야 합니다. 이 정책에서 지정된 인증서에 대한 유효한 매핑을 찾을 수 없는 경우 Active Directory는 KB5014754에 지정된 기존 강력한 매핑 조건을 사용하여 일치 항목을 찾으려고 시도합니다. “강력한 이름 매핑” 조건(이 정책) 또는 기존 “강력한 매핑” 조건을 준수하지 않는 인증서 매핑은 인증하기에 유효하지 않은 것으로 간주됩니다.
+
+일반 정책 형식 및 몇 가지 예제는 아래에 나열되어 있습니다. 이 정책은 Active Directory 사용자 계정에만 적용됩니다.
+
+일반 구문
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+예제
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+정책에는 규칙당 인증서 지문이 하나만 포함되어야 하며 각 규칙은 튜플로 표시됩니다. 지문은 고유해야 하며 여러 규칙에서 반복할 수 없습니다. 세미콜론으로 구분된 각 튜플의 섹션은 지정된 순서를 따라야 하며 쉼표로 구분된 필드는 순서에 관계없이 지정할 수 있습니다. 규칙 자체는 줄 바꿈으로 구분됩니다.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Windows Kerberos 클라이언트에서 지원하는 해시 및 체크섬 알고�
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">강력한 이름 일치 규칙:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

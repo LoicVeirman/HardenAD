@@ -13,9 +13,9 @@ De tilladte indstillinger er:
 
 0=Deaktiveret (adgangskoden sikkerhedskopieres ikke)
 
-1=Sikkerhedskopiér adgangskoden for at Azure Active Directory
+1=Backup adgangskoden til Azure Active Directory
 
-2=Sikkerhedskopiér adgangskoden til Active Directory
+2=Backup adgangskoden til Active Directory
 
 Hvis det ikke er angivet, vil denne indstilling som standard være 0 (deaktiveret).
 
@@ -33,25 +33,36 @@ Se https://go.microsoft.com/fwlink/?linkid=2188435 for at få flere oplysninger.
       <string id="LAPS_PasswordSettings">Adgangskodeindstillinger</string>
       <string id="LAPS_PasswordSettings_Help">Konfigurerer adgangskodeparametre
 
-Adgangskodekompleksitet: Hvilke tegn der bruges, når der oprettes en ny adgangskode
+Adgangskodekompleksitet: hvilke tegn der bruges, når der oprettes en ny adgangskode
   Standard: Store bogstaver + små bogstaver + tal + specialtegn
 
-Adgangskodens længde
+Adgangskodelængde
   Minimum: 8 tegn
   Maksimum: 64 tegn
   Standard: 14 tegn
 
-Adgangskodens alder i dage
-  Minimum: 1 dag (7 dage, når sikkerhedskopimappen er konfigureret til at være Azure AD)
-  Maksimum:  365 dage
+Adgangskodealder i dage
+  Minimum: 1 dag (7 dage, hvor sikkerhedskopimappen er konfigureret til at blive Azure AD)
+  Maksimum: 365 dage
   Standard: 30 dage
 
+Længde på adgangsudtryk
+  Minimum: 3 ord
+  Maksimum: 10 ord
+  Standard: 6 ord
+
 Se https://go.microsoft.com/fwlink/?linkid=2188435 for at få flere oplysninger.
+
+Adgangsudtryksliste, der er taget fra "Deep Dive: EFF's nye ordlister for tilfældige adgangsudtryk" af Electronic Frontier Foundation og bruges under en CC-BY-3.0 Attribution-licens. Se https://go.microsoft.com/fwlink/?linkid=2255471 for at få flere oplysninger.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Store bogstaver</string>
       <string id="LAPS_PwdComplexity_Item_2">Store bogstaver + små bogstaver</string>
       <string id="LAPS_PwdComplexity_Item_3">Store bogstaver + små bogstaver + tal</string>
       <string id="LAPS_PwdComplexity_Item_4">Store bogstaver + små bogstaver + tal + specialtegn</string>
+      <string id="LAPS_PwdComplexity_Item_5">Store bogstaver + små bogstaver + tal + specialtegn (forbedret læsbarhed)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Adgangsudtryk (lange ord)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Adgangsudtryk (korte ord)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Adgangsudtryk (korte ord med entydige præfikser)</string>
       <string id="LAPS_AdminName">Navnet på den administratorkonto, der skal administreres</string>
       <string id="LAPS_AdminName_Help">Denne politikindstilling angiver et brugerdefineret administratorkontonavn, der skal administrere adgangskoden for.
 
@@ -64,9 +75,9 @@ AKTIVÉR IKKE denne politikindstilling for at administrere den indbyggede admini
 Se https://go.microsoft.com/fwlink/?linkid=2188435 for at få flere oplysninger.
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">Tillad ikke udløbstid for adgangskode, der er længere end krævet af politikken</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Hvis denne indstilling er aktiveret eller ikke er konfigureret, er planlagt udløb af adgangskode, der er længere end adgangskodens alder dikteret af politikken "Adgangskodeindstillinger", IKKE tilladt. Når en sådan udløb registreres, ændres adgangskoden med det samme, og udløb af adgangskode angives i henhold til politikken.
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Hvis denne indstilling er aktiveret eller ikke konfigureret, udløber den planlagte adgangskode længere end den adgangskodealder, der er defineret af politikken "Adgangskode Indstillinger". Når et sådant udløb registreres, ændres adgangskoden med det samme, og adgangskoden udløber i henhold til politikken.
 
-Hvis denne indstilling er deaktiveret, kan udløbstiden for adgangskoden være længere end påkrævet af politikken "Adgangskodeindstillinger".
+Hvis denne indstilling er deaktiveret, kan udløbstiden for adgangskoden være længere end det, der kræves af politikken "Adgangskode Indstillinger".
 
 Se https://go.microsoft.com/fwlink/?linkid=2188435 for at få flere oplysninger.
       </string>
@@ -92,9 +103,21 @@ Konfiguration af denne indstilling har ingen effekt, medmindre adgangskodekrypte
 
 Hvis denne indstilling er aktiveret, dekrypteres krypterede adgangskoder af den angivne gruppe.
 
-Hvis denne indstilling er deaktiveret eller ikke konfigureret, dekrypteres krypterede adgangskoder af gruppen Domæneadministratorer.
+Hvis denne indstilling er deaktiveret eller ikke er konfigureret, kan krypterede adgangskoder dekrypteres af gruppen Domæneadministratorer.
 
-Denne indstilling skal konfigureres med enten et SID i strengformat ("S-1-5-21-2127521184-1604012920-1887927527-35197") eller navnet på en gruppe eller bruger i formatet "domæne\(gruppe eller bruger)". Den angivne bruger eller gruppe skal kunne løses af den administrerede enhed, ellers sikkerhedskopieres adgangskoder ikke.
+Denne indstilling skal konfigureres med enten et domænekvalificeret navn på en gruppe eller bruger eller et SID i strengformat. Gyldige eksempler inkluderer:
+
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Omslut ikke bruger-\gruppenavnet eller SID'et i omsluttende anførselstegn eller parenteser.
+
+Den angivne bruger eller gruppe skal kunne løses af den administrerede enhed, ellers sikkerhedskopieres adgangskoder ikke.
+
+BEMÆRK! Denne indstilling ignoreres, når adgangskoder til DSRM-konti (Directory Services Repair Mode) sikkerhedskopieres på en domænecontroller. I dette scenarie er denne indstilling altid som standard for gruppen Domæneadministratorer for domænecontrollerens domæne.
 
 Se https://go.microsoft.com/fwlink/?linkid=2188435 for at få flere oplysninger.
       </string>
@@ -109,7 +132,7 @@ Hvis denne indstilling er deaktiveret eller ikke er konfigureret, gemmes der ing
 
 Denne indstilling har en tilladt minimumværdi på 0 adgangskoder.
 
-Denne indstilling har en tilladt maksimumværdi på 12 adgangskoder.
+Denne indstilling har en maksimalt tilladt værdi på 12 adgangskoder.
 
 Se https://go.microsoft.com/fwlink/?linkid=2188435 for at få flere oplysninger.
       </string>
@@ -127,34 +150,74 @@ Se https://go.microsoft.com/fwlink/?linkid=2188435 for at få flere oplysninger.
       <string id="LAPS_PostAuthenticationActions">Handlinger efter godkendelse</string>
       <string id="LAPS_PostAuthenticationActions_Help">Denne politik konfigurerer handlinger efter godkendelse, som vil blive udført efter at have fundet en godkendelse af den administrerede konto.
 
-Udvidet periode: angiver mængden af tid (i timer), der skal ventes efter en godkendelse, før de angivne handlinger efter godkendelse udføres.
+Aktiveringsperiode: angiver mængden af tid (i timer), der skal ventes efter en godkendelse, før de angivne handlinger efter godkendelse udføres.
 
-Hvis denne indstilling er aktiveret og større end nul, vil de angivne handlinger efter godkendelse blive udført ved udløbet af den udvidede periode.
+Hvis denne indstilling er aktiveret og større end nul, vil de angivne handlinger efter godkendelse blive udført ved udløbet af aktiveringsperioden.
 
-Hvis denne indstilling er deaktiveret eller ikke konfigureret, vil de angivne handlinger efter godkendelse blive udført efter en standard 24 timers udvidet periode.
+Hvis denne indstilling er deaktiveret eller ikke konfigureret, vil de angivne handlinger efter godkendelse blive udført efter en standard 24 timers aktiveringsperiode.
 
 Hvis denne indstilling er lig med nul, udføres ingen handlinger efter godkendelse.
 
-Handlinger: specificerer de handlinger, der skal udføres ved udløbet af henstandsperioden.
+Handlinger: specificerer de handlinger, der skal udføres ved udløbet af aktiveringsperiode.
 
-Nulstil adgangskode: Ved udløbet af den udvidede periode vil adgangskoden til den administrerede konto blive nulstillet.
+Nulstil adgangskode: Ved udløbet af aktiveringsperioden vil adgangskoden til den administrerede konto blive nulstillet.
 
-Nulstil adgangskoden og log af den administrerede konto: Ved udløbet af den udvidede periode nulstilles adgangskoden til den administrerede konto, og alle interaktive logon-sessioner, der bruger den administrerede konto, afsluttes.
+Nulstil adgangskoden og log af den administrerede konto: Ved udløbet af aktiveringsperioden nulstilles adgangskoden til den administrerede konto blive nulstillet, og alle interaktive logonsessioner, der bruger den administrerede konto, logges af.
 
-(BEMÆRK! efter at alle interaktive logon-sessioner er afsluttet, kan der stadig være andre godkendte sessioner i brug af den administrerede konto. Den eneste sikre måde at sikre, at den tidligere adgangskode er længere i brug, er at genstarte enheden).
+Nulstil adgangskoden og genstart: Efter udløbet af aktiveringsperioden nulstilles adgangskoden til den administrerede konto, og den administrerede enhed genstartes.
 
-Nulstil adgangskoden og genstart: Ved udløbet af den udvidede periode nulstilles adgangskoden til den administrerede konto, og den administrerede enhed genstartes med det samme.
+Nulstil adgangskoden, log af den administrerede konto, og afslut eventuelle resterende processer: Efter udløbet af aktiveringsperioden nulstilles adgangskoden til den administrerede konto, alle interaktive logonsessioner, der bruger den administrerede konto, logges af, og eventuelle resterende processer afsluttes.
+
+(BEMÆRK: efter at alle interaktive logon-sessioner er afsluttet, kan der stadig være andre godkendte sessioner i brug af den administrerede konto. Den eneste sikre måde at sikre, at den tidligere adgangskode er længere i brug, er at genstarte enheden)
 
 Hvis denne indstilling er deaktiveret eller ikke konfigureret, vil handlinger efter godkendelse som standard være "Nulstil adgangskoden og log af den administrerede konto".
 
 Bemærk: DSRM-kontoen på domænecontrollere kan ikke konfigureres til handlinger efter godkendelse. Denne politik har ingen effekt på domænecontrollere og vil blive ignoreret, selvom den er konfigureret til en DC.
 
-Se https://go.microsoft.com/fwlink/?linkid=2188435 for flere oplysninger.
+Se https://go.microsoft.com/fwlink/?linkid=2188435 for at få flere oplysninger.
       </string>
       <string id="PostAuthenticationActions_Item0">Deaktiveret – foretag dig ikke noget</string>
       <string id="PostAuthenticationActions_Item1">Nulstil adgangskoden</string>
       <string id="PostAuthenticationActions_Item3">Nulstil adgangskoden, og log af den administrerede konto</string>
       <string id="PostAuthenticationActions_Item5">Nulstil adgangskoden, og genstart enheden</string>
+      <string id="PostAuthenticationActions_Item11">Nulstil adgangskoden, log af den administrerede konto, og afslut alle resterende processer</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Konfigurer automatisk kontostyring</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Denne politik konfigurerer politikindstillinger for automatisk kontostyring.
+
+Angiv den destinationskonto, der skal administreres: som angiver, om den indbyggede administratorkonto eller en brugerdefineret konto skal administreres.
+
+Automatisk kontonavn (eller navnepræfiks): angiver det navn eller navnepræfiks, der skal bruges til den administrerede konto.
+
+Hvis denne politikindstilling er konfigureret, bruger Windows LAPS den som kontonavn eller navnepræfiks for destinationskontoen.
+
+Hvis denne politikindstilling ikke er konfigureret, bruger Windows LAPS "WLapsAdmin", som kontonavn eller navnepræfiks.
+
+Bemærk! Dette navn behandles som et præfiks, når randomisering af kontonavn er konfigureret. Se kommentarer nedenfor.
+
+Aktivér den administrerede konto: angiver, om den administrerede konto skal aktiveres eller ej.
+
+Hvis denne politikindstilling er konfigureret, aktiverer Windows LAPS den angivne administrerede konto.
+
+Hvis denne politikindstilling ikke er konfigureret, aktiverer Windows LAPS den angivne administrerede konto.
+
+Bemærk! Windows LAPS vedligeholder og roterer regelmæssigt adgangskoden for den administrerede konto, uanset om kontoen vedligeholdes med en aktiveret\deaktiveret status.
+
+Randomiser navnet på den administrerede konto: angiver, om navnet på den administrerede konto skal randomiseres med et tilfældigt numerisk suffiks.
+
+Hvis denne politikindstilling er konfigureret, føjer Windows LAPS et ottecifret tilfældigt numerisk suffiks automatisk det administrerede kontonavn og randomiserer navnet på den administrerede konto igen, hver gang adgangskoden roteres.
+
+Hvis denne politikindstilling ikke er konfigureret, bruger Windows automatisk det administrerede kontonavn, som konfigureret.
+
+Hvis præfikset for det automatisk administrerede kontonavn er konfigureret, bruger Windows LAPS op til de første tolv (12) tegn i det pågældende navn som præfiks for det tilfældige navn. Hvis det automatisk administrerede kontonavn ikke er konfigureret, bruger Windows LAPS "WLapsAdmin", som navnepræfiks.
+
+Bemærk! DSRM-kontoen på domænecontrollere kan ikke konfigureres til automatisk kontoadministration. Denne politik har ingen indflydelse på domænecontrollere og ignoreres, selvom den er konfigureret til en domænecontroller.
+
+Se https://go.microsoft.com/fwlink/?linkid=2188435 for at få flere oplysninger.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Administrer den indbyggede administratorkonto</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Administrer en brugerdefineret administratorkonto</string>
+      <string id="AutomaticAccountName_Help">Angiv kontonavn eller navnepræfiks</string>
+      <string id="AutomaticAccountNameRandomization_Help">Angiver, om det automatiske kontonavn skal randomiseres.</string>
       <string id="SUPPORTED_Windows10">Mindst Microsoft Windows 10 eller nyere</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ Se https://go.microsoft.com/fwlink/?linkid=2188435 for flere oplysninger.
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Adgangskodekompleksitet</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Adgangskodelængde</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Adgangskodens udløbsdato (dage)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Længde på adgangsudtryk (ord)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ Se https://go.microsoft.com/fwlink/?linkid=2188435 for flere oplysninger.
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Udvidet periode (timer):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Handlinger:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Handlinger:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Angiv den destinationskonto, der skal administreres:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Automatisk kontonavn (eller navnepræfiks):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Aktivér den administrerede konto</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Tilfældig navnet på den administrerede konto</checkBox>
       </presentation>
     </presentationTable>
   </resources>

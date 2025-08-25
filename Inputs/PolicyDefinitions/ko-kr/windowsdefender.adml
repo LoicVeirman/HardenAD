@@ -17,6 +17,9 @@
     <string id="Quarantine">격리</string>
     <string id="RealtimeProtection">실시간 보호 기능</string>
     <string id="Remediation">수정</string>
+    <string id="Remediation_BNB">동작 네트워크 차단</string>
+    <string id="Remediation_BNB_REP">원격 암호화 보호</string>
+    <string id="Remediation_BNB_BFP">무차별 암호 대입 공격 보호</string>
     <string id="Reporting">보고</string>
     <string id="Scan">스캔</string>
     <string id="SignatureUpdate">보안 인텔리전스 업데이트</string>
@@ -47,6 +50,10 @@
  사용: 
      이 설정을 사용하면 로컬 관리자는 더 이상 Windows 보안 앱 또는 PowerShell을 통해 제외 목록을 확인하세요.
      참고: 이 설정을 적용해도 제외가 제거되지 않고 로컬 관리자에게만 표시되지 않습니다. 이는 Get-MpPreference에 반영됩니다.</string>
+    <string id="HideExclusionsFromLocalUsers">로컬 사용자에게 제외를 표시할지 여부를 제어합니다.</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    이 정책 설정은 디바이스의 로컬 사용자에게 제외를 표시할지 여부를 제어합니다.
+    정책 설정 HideExclusionsFromLocalAdmins를 사용하여 표준 및 관리 로컬 사용자 모두의 제외를 숨깁니다.</string>
     <string id="AllowNetworkProtectionOnWinServer">이 설정은 Windows Server의 차단 또는 감사 모드로 네트워크 보호를 구성할 수 있는지 여부를 제어합니다.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     사용 안 함(기본값): 
@@ -57,11 +64,29 @@
     이 구성은 EnableNetworkProtection 구성에 종속되므로 참고합니다. 이 구성이 false이면 EnableNetworkProtection을 무시하고, 그렇지 않으면 EnableNetworkProtection 값에 따라 Windows Server에서 네트워크 보호를 시작합니다.</string>
     <string id="DisableDatagramProcessing">이 설정은 네트워크 보호를 위한 데이터그램 처리를 제어합니다.</string>
     <string id="DisableDatagramProcessing_Explain">
-    사용(기본값) 
-    구성 이렇게 구성하지 않거나 사용하지 않으면 네트워크 보호에 데이터그램 처리가 사용됩니다.
+    사용 안 함(기본값): 
+    [구성되지 않음] 또는 [사용 안 함]으로 설정하면 네트워크 보호를 위해 데이터그램 처리를 사용할 수 있습니다.
 
 사용: 
-    이 정책을 사용하면 네트워크 보호를 위해 데이터그램 처리를 사용하지 않도록 설정됩니다.</string>
+    사용하도록 설정하면 네트워크 보호를 위해 데이터그램 처리를 사용할 수 없습니다.</string>
+    <string id="EnableConvertWarnToBlock">경고 평가 결과를 차단으로 변환</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    네트워크 보호는 네트워크 트래픽을 검사하고 트래픽을 허용하거나 차단할지 또는 경고를 표시할지 결정합니다.
+    
+사용 안 함(기본값): 
+    [구성되지 않음] 또는 [사용 안 함]으로 설정하면 네트워크 보호에서 경고 결과 경고가 표시됩니다.
+
+사용: 
+    이 설정을 사용하도록 설정하면 네트워크 보호에서 경고를 표시하는 대신 네트워크 트래픽을 차단합니다.</string>
+    <string id="AllowSwitchToAsyncInspection">비동기 검사 켜기</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    실시간 검사에서 비동기 검사로 전환하여 네트워크 보호가 성능을 향상시킬 수 있는지 여부를 제어합니다.
+
+사용 안 함(기본값): 
+    구성되지 않거나 사용하지 않도록 설정하면 비동기 검사가 네트워크 보호를 위해 사용하도록 설정되지 않습니다.
+
+사용: 
+    사용하도록 설정하면 네트워크 보호를 위해 비동기 검사로 전환할 수 있습니다.</string>
     <string id="DisableAutoExclusions">자동 제외 끄기</string>
     <string id="DisableAutoExclusions_Explain">
         관리자가 서버 SKU에 대한 자동 제외 기능을 꺼야 하는지 여부를 지정하도록 허용합니다.
@@ -142,15 +167,19 @@
       이 설정을 사용하지 않거나 구성하지 않으면 프록시가 위에서 지정된 순서에 따라 이 대체 단계를 건너뜁니다.
     </string>
     <string id="RandomizeScheduleTaskTimes">Randomize scheduled task times(예약된 작업 시간 임의대로)</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">이 정책 설정을 사용하면 예약 검사를 구성하고 예약 보안 인텔리전스 업데이트, 시작 시간 창을 시간 단위로 구성할 수 있습니다.
+    <string id="RandomizeScheduleTaskTimes_Explain">이 정책 설정을 사용하면 예약 검사 시작 시간과 예약 정의 업데이트 시작 시간의 임의 지정을 구성할 수 있습니다.
 
-    이 설정을 사용하지 않거나 구성하지 않으면 예약된 작업이 작업 스케줄러에서 지정된 시간 이후 4시간 이내 임의 시간에 시작됩니다.
-    이 설정을 사용하여 이 임의 지정 기간을 넓히거나 좁힐 수 있습니다. 1시간에서 23시간 사이의 임의 지정 창을 지정하세요.</string>
+        이 정책 설정을 활성화하거나 따로 구성하지 않고 예약된 작업 시간 임의 지정 기간 구성 설정에서 임의 지정 기간을 설정하지 않은 경우 임의 지정이 0~4시간 사이에 추가됩니다.
+        이 정책 설정을 활성화하거나 따로 구성하지 않고 예약된 작업 시간 임의 지정 기간 구성 설정에서 임의 지정 기간을 설정한 경우 구성된 임의 지정 기간이 사용됩니다.
+        이 정책 설정을 비활성화하고 예약된 작업 시간 임의 지정 기간을 구성한 경우 임의 지정이 수행되지 않습니다. 
+    </string>
     <string id="SchedulerRandomizationTime">예약된 작업 시간 임의화 창 구성</string>
-    <string id="SchedulerRandomizationTime_Explain">이 정책 설정을 사용하면 예약 검사 시작 시간과 예약 보안 인텔리전스 업데이트 시작 시간 창을 시간 단위로 구성할 수 있습니다.
+    <string id="SchedulerRandomizationTime_Explain">이 정책을 설정하면 예약된 작업 검사 시작 시간과 예약된 보안 인텔리전스 업데이트 시작 시간을 시간 단위로 구성할 수 있습니다. 이 설정은 예약된 작업 시간 임의 지정 구성에 영향을  미칩니다.
 
-    이 설정을 사용하지 않거나 구성하지 않으면 예약된 작업이 지정된 시간 이후 4시간 이내로 임의 시간에 시작됩니다.
-    이 설정을 사용하려면 임의 지정 창(시간)을 선택해야 합니다. 임의 지정 창 간격(시간)은 1시간에서 23시간까지 선택 가능합니다.</string>
+        이 설정을 사용하면 임의 지정 시간을 선택해야 합니다. 가능한 임의 지정 시간 간격은 1~23시간입니다. 구현된 임의 지정 간격은 0과 구성된 값 사이입니다. 
+        이 설정을 사용하면 예약된 작업 시간 임의 지정 설정에서 이 구성 설정에 지정된 임의 지정 시간을 사용합니다. 
+        이 정책 설정을 사용하지 않거나 구성하지 않으면 예약된 작업 시간 임의 지정 설정이 예약된 작업 시간을 0~4시간 사이에서 임의로 지정합니다.</string>
+
     <string id="ServiceKeepAlive">Allow antimalware service to remain running always(맬웨어 방지 서비스가 항상 실행되도록 허용)</string>
     <string id="ServiceKeepAlive_Explain">이 정책 설정을 사용하면 바이러스 백신 및 스파이웨어 방지 보안 인텔리전스를 사용하지 않을 때 맬웨어 방지 서비스를 계속 실행하는지 여부를 구성할 수 있습니다. 이 설정은 사용 안 함 상태로 유지하는 것이 좋습니다.
 
@@ -219,6 +248,22 @@
 이 설정을 사용 하거나 구성 하지 않으면 스크립트 검색이 사용 됩니다.
 
 이 설정을 사용 하지 않으면 스크립트 검색이 사용 되지 않습니다.</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">OOBE 중에 실시간 보호 및 보안 인텔리전스 업데이트 구성</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">이 정책 설정을 통해 OOBE(첫 실행 경험) 중에 실시간 보호 및 보안 인텔리전스 업데이트를 사용하도록 설정할지 여부를 구성할 수 있습니다.
+ 
+    이 설정을 사용하면 OOBE 중에 실시간 보호 및 보안 인텔리전스 업데이트를 사용하도록 설정됩니다.
+ 
+    이 정책 설정을 사용하지 않거나 구성하지 않으면 OOBE 중에 실시간 보호 및 보안 인텔리전스 업데이트를 사용할 수 없습니다.</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">성능 모드 상태 구성</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">이 정책은 Dev Drives의 Microsoft Defender 바이러스 백신 성능 모드를 제어합니다.
+
+    개발자 드라이브는 소프트웨어 개발 시나리오에서 더 높은 성능을 위해 최적화된 디스크 드라이브입니다. 이 정책을 사용하거나 구성하지 않으면 Microsoft Defender 바이러스 백신에 대해 성능 모드가 설정됩니다. 성능 모드에서는 성능을 향상시키기 위해 Dev Drives에 저장된 콘텐츠에 대한 Microsoft Defender 바이러스 백신 보안 검사가 비동기적으로 수행됩니다. 성능 모드에서는 "개발 드라이브 사용" 및 "개발자 드라이브 필터 연결 정책"과 같은 정책도 사용하도록 설정해야 합니다.
+
+    이 정책 설정을 사용하거나 구성하지 않으면 성능 모드가 켜집니다.
+
+    이 정책 설정을 사용하지 않으면 성능 모드가 꺼지고 Microsoft Defender 바이러스 백신이 다른 드라이브와 동일한 방법으로 개발자 드라이브를 보호합니다.</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">Turn on behavior monitoring(동작 모니터링 켜기)</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">이 정책 설정을 사용하면 동작 모니터링을 구성할 수 있습니다.
@@ -359,6 +404,92 @@
 이 설정을 사용하면 수정을 완료하기 위한 예약된 전체 검사가 지정된 시간에 실행됩니다.
 
 이 설정을 사용하지 않거나 구성하지 않으면 수정을 완료하기 위한 예약된 전체 검사가 기본 시간에 실행됩니다.</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">원격 암호화 보호 모드 구성</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    로컬 파일을 다른 장치의 암호화된 버전으로 바꾸려는 시도를 검색하고 차단할 수 있는 Microsoft Defender 바이러스 백신에서 원격 암호화 보호 모드를 설정합니다. 
+
+지원되는 설정:
+    * 0 - 구성되지 않음 또는 기본값: 바이러스 백신 엔진 버전 및 플랫폼에 따라 다를 수 있는 기본값 적용
+    * 1 - 차단: 의심스럽고 악의적인 행동 방지
+    * 2 - 감사: 차단하지 않고 EDR 검색 생성
+    * 4 - 해제: 성능에 영향을 주지 않고 기능이 꺼져 있습니다.
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">기본값</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">차단</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">감사</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">끄기</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">원격 암호화 보호 차단 시간 구성</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    원격 암호화 보호에 의해 IP 주소가 차단되는 최대 시간을 설정합니다. 이 시간 후에는 차단된 IP 주소가 연결을 다시 시작할 수 있습니다. 
+
+지원되는 설정:
+    * 0 - 없음: 내부 기능 논리에 따라 실제 차단 시간이 결정됩니다.
+    * 15분 단위로 다른 시간 지정
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">원격 암호화 보호가 위협을 얼마나 적극적으로 차단하는지 구성</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    원격 암호화 방지 보호가 IP 주소를 차단하는 경우에 대한 조건을 설정합니다.
+
+지원되는 설정:
+    *0 - 낮음: 신뢰 수준이 100% 경우에만 차단(기본값)
+    *1 - 보통: 신뢰 수준이 99% 이상일 때 클라우드 집계를 사용하고 차단합니다.
+    *2 - 높음: 클라우드 Intel 및 컨텍스트를 사용하고 신뢰 수준이 90% 이상일 때 차단
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">낮음</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">보통</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">높음</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> 원격 암호화 보호의 제외 설정</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    원격 암호화 보호에서 제외할 IP 주소, 서브넷, 도메인 이름을 지정합니다. 공격자가 제외된 주소와 이름을 스푸핑하여 보호를 우회할 수 있습니다.
+
+    새 줄에 각 주소 또는 서브넷을 이름/값 쌍으로 입력합니다.
+    - 이름 열: IP 주소 또는 서브넷 이름을 입력합니다. 예를 들어 ""1.1.127.0""이라고 입력하면 이 IP 주소가 차단되지 않도록 제외됩니다.
+    - 값 열: 각 항목에 ""0""을 입력합니다.
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">무차별 암호 대입 공격 보호 모드 구성</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Microsoft Defender 바이러스 백신에서 Brute-Force 보호 모드를 설정합니다. 이 모드는 로그인을 강제로 시작하고 세션을 시작하려는 시도를 감지하고 차단할 수 있습니다.
+
+지원되는 설정:
+    * 0 - 구성되지 않음 또는 기본값: 바이러스 백신 엔진 버전 및 플랫폼에 따라 다를 수 있는 기본값 적용
+    * 1 - 차단: 의심스럽고 악의적인 행동 방지
+    * 2 - 감사: 차단하지 않고 EDR 검색 생성
+    * 4 - 해제: 성능에 영향을 주지 않고 기능이 꺼져 있습니다.
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">기본값</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">차단</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">감사</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">끄기</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">무차별 암호 대입 공격 보호 차단 시간 구성</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    ip 주소가 Brute-Force 보호에 의해 차단되는 최대 시간을 설정합니다. 이 시간 후에는 차단된 IP 주소가 로그인하여 세션을 시작할 수 있습니다.
+
+지원되는 설정:
+    * 0 - 없음: 내부 기능 논리에 따라 실제 차단 시간이 결정됩니다.
+    * 15분 단위로 다른 시간 지정
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">무차별 암호 대입 공격 보호 강도 구성</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    Brute-Force 보호가 IP 주소를 차단하는 경우에 대한 조건을 설정합니다.
+
+지원되는 설정:
+    *0 - 낮음: 신뢰 수준이 100% 경우에만 차단(기본값)
+    *1 - 보통: 신뢰 수준이 99% 이상일 때 클라우드 집계를 사용하고 차단합니다.
+    *2 - 높음: 클라우드 Intel 및 컨텍스트를 사용하고 신뢰 수준이 90% 이상일 때 차단
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">낮음</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">보통</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">높음</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">무차별 암호 대입 공격 보호의 제외 설정</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    무차별 암호 대입 공격 보호에서 제외할 IP 주소, 서브넷 또는 워크스테이션 이름을 지정합니다. 제외된 IP 주소는 무차별 암호 대입 공격 가능성이 확인되지 않습니다.
+    
+    공격자가 제외된 주소와 이름을 스푸핑하여 보호를 우회할 수 있습니다. 이름이 고유한지, 공격자가 추측할 가능성이 낮은지 확인하세요.
+
+    새 줄에 각 주소 또는 서브넷을 이름/값 쌍으로 입력합니다.
+    - 이름 열: IP 주소, 서브넷 이름 또는 워크스테이션 이름을 입력합니다. 예를 들어 "1.1.127.0"이라고 입력하면 이 IP 주소가 BFP에 의해 차단되지 않도록 제외됩니다.
+    - 값 열: 각 항목에 "0"을 입력합니다.
+    </string>
     <string id="Reporting_AdditionalActionTimeout">Configure time out for detections requiring additional action(추가 작업이 필요한 검색에 대한 시간 제한 구성)</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">이 정책 설정은 "추가 작업" 상태의 검색이 "지워짐" 상태로 전환되기 전의 시간을 분 단위로 구성합니다.</string>
     <string id="Reporting_CriticalFailureTimeout">Configure time out for detections in critically failed state(심각하게 실패함 상태의 검색에 대한 시간 제한 구성)</string>
@@ -398,6 +529,12 @@
 이 설정을 0으로 구성하면 서비스 상태 보고서가 전송되지 않습니다.
 
 설정할 수 있는 최대값은 14400분(10일)입니다.</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">동적 서명 손실된 이벤트를 보고할지 여부를 구성합니다.</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">이 정책 설정은 동적 서명 삭제 이벤트를 보고할지 여부를 구성합니다.
+
+이 설정을 구성하지 않으면 기본값이 적용됩니다. 기본값이 사용 안 함으로 설정되어 있습니다(이러한 이벤트는 보고되지 않음).
+    이 설정을 사용하도록 구성하면 동적 서명 삭제된 이벤트가 보고됩니다.
+    이 설정을 사용하지 않도록 구성하면 동적 서명 삭제된 이벤트가 보고되지 않습니다.</string>
       <string id="Scan_AllowPause">Allow users to pause scan(사용자가 검사를 일시 중지할 수 있도록 허용)</string>
     <string id="Scan_AllowPause_Explain">이 정책 설정을 사용하면 최종 사용자가 진행 중인 검사를 일시 중지할 수 있는지 여부를 관리할 수 있습니다.
 
@@ -456,6 +593,10 @@
 이 설정을 사용하면 예약된 빠른 검사에 대한 보완 검사가 켜집니다. 예약된 검사에 대해 컴퓨터가 연속 2회로 오프라인이면 다음에 누군가가 컴퓨터에 로그온할 때 보완 검사가 시작됩니다.  예약된 검사를 구성하지 않으면 보완 검사가 실행되지 않습니다.
 
 이 설정을 사용하지 않거나 구성하지 않으면 예약된 빠른 검사에 대한 보완 검사가 꺼집니다.</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">검사 없이 X일 후 빠른 검사 트리거</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">이 정책 설정은 적극적인 만회 빠른 검사가 자동으로 트리거되기 전에 마지막 검사 이후 경과할 수 있는 일 수를 정의합니다. 이 값은 적극적인 빠른 검사가 실행되기 전에 수행되는 검사 없이 경과할 수 있는 일 수를 나타냅니다.
+     
+     유효한 값의 범위는 7~60일입니다. 구성하지 않으면 적극적인 빠른 검사가 비활성화됩니다. 기본적으로 이 값은 활성화된 경우 25일로 설정됩니다.</string>
     <string id="Scan_DisableEmailScanning">Turn on e-mail scanning(전자 메일 검사 켜기)</string>
     <string id="Scan_DisableEmailScanning_Explain">이 정책 설정을 사용하면 전자 메일 검사를 구성할 수 있습니다. 전자 메일 검사를 사용하면 엔진에서 메일 본문 및 첨부 파일을 분석하기 위해 사서함 및 특정 형식에 따른 사서함과 메일 파일을 구문 분석합니다. 현재 pst(Outlook), dbx, mbx, mime(Outlook Express), binhex(Mac)와 같은 다수의 전자 메일 형식이 지원됩니다. 최신 전자 메일 클라이언트에서는 전자 메일 검사가 지원되지 않습니다.
 
@@ -498,12 +639,12 @@
 이 설정을 사용하면 매핑된 네트워크 드라이브가 검사됩니다.
 
 이 설정을 사용하지 않거나 구성하지 않으면 매핑된 네트워크 드라이브가 검사되지 않습니다.</string>
-    <string id="Scan_DisableScanningNetworkFiles">Scan network files(네트워크 파일 검사)</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">이 정책 설정을 사용하면 네트워크 파일에 대한 검사를 구성할 수 있습니다. 이 설정을 사용하지 않는 것이 좋습니다.
+    <string id="Scan_DisableScanningNetworkFiles">네트워크 파일 검색 구성</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">이 정책 설정을 통해 액세스 보호를 사용하여 네트워크 파일을 검색할 수 있습니다. 기본값을 사용합니다. 대부분의 경우 사용하도록 설정된 상태로 유지하는 것이 좋습니다.
 
-이 설정을 사용하면 네트워크 파일이 검사됩니다.
+이 설정을 사용하거나 구성하지 않으면 네트워크 파일이 검색됩니다.
 
-이 설정을 사용하지 않거나 구성하지 않으면 네트워크 파일이 검사되지 않습니다.</string>
+이 설정을 사용하지 않으면 네트워크 파일을 검사하지 않습니다.</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">Configure local setting override for maximum percentage of CPU utilization(최대 CPU 사용률에 대한 로컬 설정 재정의 구성)</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">이 정책 설정은 검사 도중의 최대 CPU 사용률 구성에 대한 로컬 재정의를 구성합니다. 이러한 설정은 그룹 정책에서만 설정할 수 있습니다.
 
@@ -615,6 +756,18 @@
 
         이 설정을 사용하지 않거나 구성하지 않으면 예약 검사에 대한 CPU 우선 순위가 변경되지 않습니다.
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">빠른 검사 중에 제외된 파일 및 디렉터리 검사</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        이 정책 설정을 사용하면 빠른 검사 중에 제외된 파일 및 디렉터리를 검사할 수 있습니다.
+
+        이 정책 설정을 1로 설정하면 상황별 제외를 사용하여 실시간 보호에서 제외된 모든 파일 및 디렉터리가 빠른 검사 중에 검사됩니다.
+
+        이 정책을 0으로 설정하거나 구성하지 않으면 빠른 검사 중에 제외 항목이 검사되지 않습니다.
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">스파이웨어 보안 인텔리전스가 최신 상태가 아니라고 생각하는 기간(일)을 정의합니다.</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">이 정책 설정을 사용하면 스파이웨어 보안 인텔리전스가 최신 상태가 아니라고 간주되기 전에 지나야 하는 일수를 정의할 수 있습니다. 보안 인텔리전스가 최신 상태가 아니라고 확인되면 이 상태로 인해 대체 업데이트 원본으로 변경 또는 사용자 인터페이스에서 경고 아이콘 표시 등을 포함한 다수의 추가 작업이 트리거될 수 있습니다. 기본적으로 이 값은 7일로 설정됩니다.
 
@@ -637,6 +790,13 @@
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">이 정책 설정을 사용하면 VDI로 구성된 컴퓨터에 대한 보안 인텔리전스 위치를 정의할 수 있습니다. 
 
     이 설정을 사용하지 않거나 구성하지 않으면 보안 인텔리전스가 기본 로컬 원본에서 참조됩니다.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">VDI 클라이언트의 스케줄러에 따라 보안 인텔리전스 업데이트를 구성합니다.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">이 정책 설정을 사용하면 VDI 구성 컴퓨터의 스케줄러에 따라 보안 인텔리전스 업데이트를 구성할 수 있습니다. 공유 보안 인텔리전스 위치(SharedSignaturesLocation)와 함께 사용됩니다.
+
+    이 정책 설정을 사용하도록 설정하고 SharedSignaturesLocation을 구성하면 구성된 위치의 업데이트는 이전에 구성된 예약 업데이트 시간에만 발생합니다.
+
+    이 정책 설정을 사용하지 않거나 구성하지 않으면 SharedSignaturesLocation에서 지정한 위치에서 새 보안 인텔리전스 업데이트가 검색될 때마다 업데이트가 발생합니다.
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">보안 인텔리전스 업데이트 후 검사 켜기</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">이 정책 설정을 사용하면 보안 인텔리전스 업데이트가 이루어진 후에 시작되는 자동 검사를 구성할 수 있습니다.
 
@@ -829,12 +989,6 @@
 
       이 설정을 사용하면 Microsoft Defender 바이러스 백신 알림이 클라이언트에 표시되지 않습니다.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Display additional text to clients when they need to perform an action(작업을 수행해야 할 때 클라이언트에 추가 텍스트 표시)</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">이 정책 설정을 사용하면 작업을 수행해야 할 때 클라이언트에 추가 텍스트를 표시하는지 여부를 구성할 수 있습니다. 표시되는 텍스트는 관리자가 정의하는 사용자 지정 문자열입니다. 예를 들어 회사 지원 센터에 전화할 수 있는 전화 번호를 사용할 수 있습니다. 클라이언트 인터페이스에는 최대 1024자만 표시됩니다. 이보다 긴 문자열은 표시되기 전에 잘립니다.
-
-이 설정을 사용하면 지정된 추가 텍스트가 표시됩니다.
-
-이 설정을 사용하지 않거나 구성하지 않으면 추가 텍스트가 표시되지 않습니다.</string>
     <string id="MpCloudBlockLevel">클라우드 보호 수준 선택</string>
     <string id="MpCloudBlockLevel_Explain">
       이 정책 설정은 Microsoft Defender 바이러스 백신 프로그램이 의심스러운 파일을 얼마나 적극적으로 차단하고 검사할지 결정합니다.
@@ -912,6 +1066,17 @@
     사용 안 함과 동일
 
     Attack Surface Reduction 규칙 구성 GP 설정에서 ASR 규칙을 구성할 수 있습니다.
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">특정 ASR(공격 표면 감소) 규칙에 제외 목록 적용</string>d
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    이 정책을 사용하면 관리자가 특정 ASR 규칙에 대한 제외 목록을 지정할 수 있습니다.
+    각 항목은 이름-값 쌍입니다. 키는 규칙 GUID를 나타내며, 값은 특정 ASR 규칙에 대한 제외를 나타내는 &gt; 문자로 구분된 전체 경로 집합입니다.
+
+    참고: GUID는 값이 아니라 키입니다.
+
+    예:
+    키: "{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}"
+    값: "C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe"
     </string>
     <string id="ExploitGuard_ASR_Rules">공격에 대한 취약성 감소 규칙 구성</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1118,13 +1283,66 @@
     <string id="DeviceControl_DefaultEnforcement_DefaultDeny">기본 거부</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation">디바이스 제어 증명 정보 데이터 원격 위치 정의</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
-        디바이스 제어 서비스가 캡처된 증거 데이터를 이동하는 증거 파일 원격 위치를 정의합니다.
+        장치 제어 서비스에서 캡처된 증거 데이터를 이동할 증거 파일 원격 위치를 정의합니다.
+
+이 설정을 구성할 때 장치 제어가 사용하도록 설정되어 있고 제공된 경로가 사용자가 액세스할 수 있는 원격 경로인지 확인합니다.
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">로컬 장치 제어 캐시에 있는 파일의 보존 기간 설정</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        이 정책 설정은 장치 제어가 장치의 로컬 캐시에 증거 파일을 보관하는 기간을 결정합니다. 장치 제어는 지정된 네트워크 공유 또는 Azure 스토리지에 파일을 업로드할 수 없는 경우에만 파일을 로컬 캐시에 보관합니다. 
+
+        기본적으로 장치 제어는 60일 동안 로컬 캐시에 파일을 보관합니다.
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">특정 장치 유형에 대한 장치 제어 켜기</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        이 정책 설정은 PrimaryId로 식별되는 장치 유형을 제어하여 장치 제어 보호가 켜지는 것을 제어합니다. 특정 장치 유형에 대해 이 설정을 사용하도록 설정하면 장치 제어가 해당 사용자 지정 정책에 따라 해당 장치에 대한 액세스를 규제합니다. 지원되는 다른 모든 유형의 장치에 대해 사용자 지정 보호 정책이 구성된 경우에도 장치 제어가 해제됩니다.
+ 
+        현재 지원되는 장치 유형: RemovableMediaDevices, CdRomDevices, WpdDevices, PrinterDevices. 
+ 
+        이 정책 설정을 사용하도록 설정했지만 PrimaryId를 지정하지 않으면 지원되는 모든 장치 유형에서 장치 제어가 해제됩니다.
+ 
+        이 정책 설정을 사용하지 않거나 구성하지 않으면 해당 사용자 지정 정책에 따라 지원되는 모든 장치에서 장치 제어가 적용됩니다.
+    </string>
+	<string id="DeviceControl_CustomSupportLink">장치 제어 알림 관련 지원 링크 설정</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        이 설정을 사용하면 organization 장치 제어 알림에서 '지원 받기' 링크를 지정할 수 있습니다. 
+		
+구성되면 '지원 받기' 단추가 지정된 링크로 자동으로 이동합니다.
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">정책 새로 고침 빈도 설정</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        이 설정은 오류가 발생하여 정책을 로드할 수 없는 경우 장치에서 정책 구성 로드를 다시 시도하는 간격(분)을 정의합니다.
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">Azure AD 새로 고침 빈도 설정</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        이 설정은 장치에서 관련 설정, 구성 및 그룹 멤버 자격을 업데이트하기 위해 Azure AD 쿼리하는 간격(분)을 정의합니다.
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">데이터 중복 제한 설정(MB)</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        이 설정은 장치 제어에 대해 중복될 수 있는 최대 데이터 양을 정의합니다. 
+		
+제한에 도달하면 이동식 저장소에 복사된 파일이 컴퓨터에서 복제되지 않습니다.
+	</string>
     <string id="Features_DeviceControlEnabled">장치 제어</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         이 컴퓨터에서 Defender 장치 제어를 사용하거나 사용하지 않도록 설정합니다.
         참고: 장치 제어를 사용하도록 설정하려면 E3 또는 E5로 등록해야 합니다.
     </string>
+    <string id="Features_TDTFeatureEnabled">Intel TDT 통합 수준</string>
+    <string id="Features_TDTFeatureEnabled_Explain">이 정책 설정은 Intel TDT 지원 장치에 대한 Intel TDT 통합 수준을 구성합니다.
+
+        이 설정을 구성하지 않으면 기본값이 적용됩니다. 기본값은 Microsoft 보안 인텔리전스 업데이트에 의해 제어됩니다. 알려진 위협이 있는 경우 Microsoft에서 Intel TDT를 사용하도록 설정합니다.
+        이 설정을 사용하도록 구성하면 Intel TDT 통합이 켜집니다.
+        이 설정을 사용하지 않도록 구성하면 Intel TDT 통합이 꺼집니다.</string>
+    <string id="Features_PassiveRemediation">차단 모드에서 EDR 사용</string>
+    <string id="Features_PassiveRemediation_Explain">이 정책 설정은 차단 모드("수동 수정"라고도 함)에서 EDR을 사용하거나 사용하지 않도록 설정합니다. 차단 모드의 EDR은 수동 모드에서 Microsoft Defender 바이러스 백신을 실행하는 디바이스에 권장됩니다. 플랫폼 릴리스에서 사용 가능: 4.18.2202.X
+
+데이터 형식이 정수입니다.
+
+지원되는 값:
+
+1: 블록 모드에서 EDR 켜기
+        0: 블록 모드에서 EDR 끄기</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1389,38 @@
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">Configure monitoring for incoming and outgoing file and program activity(들어오는/나가는 파일 및 프로그램 작업에 대한 모니터링 구성)</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">원격 암호화 보호의 상태 지정</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">검색을 차단할 시간(분)을 지정합니다.</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">원격 암호화 보호가 위협을 얼마나 적극적으로 차단하는지 지정</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">원격 암호화 보호 제외</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">무차별 암호 대입 공격 보호의 상태 지정</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">검색을 차단할 시간(분)을 지정합니다.</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">무차별 암호 대입 공격 보호가 위협을 얼마나 적극적으로 차단할지 지정</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">무차별 암호 대입 공격 보호 제외</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">Specify the day of the week to run a scheduled full scan to complete remediation(수정을 완료하기 위해 예약된 전체 검사를 실행하는 요일 지정)</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">Specify the time of day to run a scheduled full scan to complete remediation(수정을 완료하기 위해 예약된 전체 검사를 실행하는 시간 지정)</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">적극적인 빠른 검사가 트리거되기 전에 검사 없이 경과해야 하는 일수 지정</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">보완 검색을 실행한 이후 누락할 수 있는 예약 검색의 수 정의</decimalTextBox>
@@ -1273,11 +1518,6 @@
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Specify threat alert levels at which default action should not be taken when detected(검색 시 기본 작업을 수행하면 안 되는 위협 경고 수준 지정)</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Display additional text to clients when they need to perform an action(작업을 수행해야 할 때 클라이언트에 추가 텍스트 표시)</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">만료 알림 간격 지정</decimalTextBox>
     </presentation>
@@ -1293,6 +1533,9 @@
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">ASR 규칙의 제외 사항:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">각 ASR 규칙의 제외:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">각 ASR 규칙의 상태 설정:</listBox>
     </presentation>
@@ -1307,6 +1550,9 @@
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1584,34 @@
         <label>디바이스 제어 데이터 중복 원격 위치를 정의합니다.</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">로컬 장치 제어 캐시에 있는 파일의 보존 기간 설정</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>특정 장치 유형에 대한 장치 제어 켜기</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>장치 제어 알림 관련 지원 링크 설정</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>정책 새로 고침 빈도 설정</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>Azure AD 새로 고침 빈도 설정</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>데이터 중복 제한 설정(MB)</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

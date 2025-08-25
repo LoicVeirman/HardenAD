@@ -21,6 +21,7 @@ Alternativ 7 støttes bare på servere med minst Windows Server 2016-utgaven</st
       <string id="WU_SUPPORTED_Server2016_Through_Server2022_Or_Windows10">Windows Server 2016 til Windows Server 2022 eller Windows 10</string>
       <string id="WU_SUPPORTED_Windows_Server_2019_Windows_10_0_1809">Minst Windows Server 2019 eller Windows 10 versjon 1809</string>
       <string id="WU_SUPPORTED_Windows_Server_2022_Windows_10_0_2004">Minst Windows Server 2022 eller Windows 10 versjon 2004</string>
+      <string id="WU_SUPPORTED_WinServer2025_Win1021H2_Win1122H2">Minst Windows Server 2025, Windows 10 versjon 21H2 eller Windows 11 versjon 22H2</string>
       <string id="AUDontShowUasHelp">Denne policyen tillater at du kan velge om alternativet Installer oppdateringer og avslutt skal vises i dialogboksen Avslutt Windows.
 
 Hvis du aktiverer denne policyinnstillingen, vil ikke Installer oppdateringer og avslutt vises som et valg i dialogboksen Avslutt Windows, selv om oppdateringer er tilgjengelige for installasjon når brukeren velger alternativet Avslutt i Start-menyen.
@@ -165,13 +166,13 @@ Hvis statusen er satt til ikke konfigurert, er ikke bruk av automatiske oppdater
       <string id="OnlyUseSystemProxyForUpdateDetection">Bruk bare system-proxy for å oppdage oppdateringer (standard)</string>
       <string id="AllowUserProxyAsFallbackForUpdateDetection">Tillat at bruker-proxy brukes som reserve hvis gjenkjenning av system-proxy mislykkes</string>
       <string id="UpdateClassPolicySource_Title">Angi kildetjeneste for bestemte klasser av Windows Updates</string>
-      <string id="UpdateClassPolicySource_Help">When this policy is enabled, devices will receive Windows updates for the classes listed from the specified update source: either Windows Update or Windows Server Update Service.
+      <string id="UpdateClassPolicySource_Help">Når denne policyen er aktivert, vil enheter motta Windows-oppdateringer for klassene som er oppført fra den angitte oppdateringskilden: enten Windows Update eller Windows Server Update Service.
 
-        Note: To receive any updates from the Windows Server Update Service you must have properly configured an intranet Microsoft update service location via the “Specify intranet Microsoft update service location” policy.
+Obs! Hvis du vil motta oppdateringer fra Windows Server Update Service, må du ha riktig konfigurert en Microsoft-oppdateringstjenesteplassering på intranettet via policyinnstillingen Angi plassering av Microsoft-oppdateringstjeneste på intranettet.
 
-        If this policy is not configured or is disabled, the device will continue to detect updates per your other policy configurations.
+Hvis denne policyen ikke er konfigurert eller er deaktivert, fortsetter enheten å oppdage oppdateringer i henhold til andre policykonfigurasjoner.
 
-        Note: If you are using “Do not allow deferral policies to cause scans against Windows Update” currently to ensure devices only scan against your specified server, we recommend configuring this policy instead or in addition to such.</string>
+Obs! Hvis du bruker Ikke tillat at utsettelsespolicyer forårsaker skanninger mot Windows Update for øyeblikket for å sikre at enheter bare skannes mot den angitte serveren, anbefaler vi at du konfigurerer denne policyen i stedet eller i tillegg til slike.</string>
       <string id="UpdateClassPolicySourceSelectionWU">Windows Update</string>
       <string id="UpdateClassPolicySourceSelectionWSUS">Windows Server Update Services</string>
       <string id="DetectionFrequency_Help">Angir antallet timer det tar å avgjøre hvor lenge det skal ventes før det søkes etter tilgjengelige oppdateringer. Den nøyaktige ventetiden er en sum av den bestemte verdien og en tilfeldig variant av 0-4 timer.
@@ -628,22 +629,39 @@ Hvis du velger «Gjelder bare i aktivitetsperiode» i forbindelse med alternativ
       <string id="DefaultNotification">0 (standard) – Standard oppdateringsvarslinger for Windows-operativsystemet</string>
       <string id="ExcludingRebootWarnings">1 – Deaktiver alle varslinger, unntatt advarsler om omstart</string>
       <string id="IncludingRebootWarnings">2 – Deaktiver alle varslinger, inkludert advarsler om omstart</string>
-      <string id="ComplianceDeadline_Title">Angi tidsfrister for automatiske oppdateringer og omstarter</string>
-      <string id="ComplianceDeadline_Help">Med denne policyen kan du angi hvor mange dager før kvaliteten og funksjons oppdateringene er installert på enhetene automatisk, og en løpe periode etter at de nødvendige omstartene oppstår automatisk.
+      <string id="ComplianceDeadlineForFU_Title">Specify deadline for automatic updates and restarts for feature update</string>
+      <string id="ComplianceDeadlineForFU_Help">This policy lets you specify the number of days before feature updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
 
-angi tids frister for funksjons oppdateringer og kvalitets oppdateringer for å oppfylle samsvars målene. Oppdateringer lastes ned og installeres så snart de er tilbudt og automatisk omstarter vil bli forsøkt utenfor aktivitets periodene. Når tids fristen er bestått, skjer omstartene uansett aktivitets periode, og brukere kan ikke planlegge på nytt. Hvis tids fristen er satt til 0 dager, vil oppdateringen bli installert umiddelbart etter at tilbudet er fullført, men det er ikke sikkert at innen dagen på grunn av tilgjengelighet for enheten og nettverks tilkoblingen.
+Set deadlines for feature updates and quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
 
-angi en løpe periode for funksjons oppdateringer og kvalitets oppdateringer for å få brukerne til å administrere sine omstarter når oppdateringene er installert. Brukere kan planlegge omstarter under gyldighetsperioden, og Windows kan fremdeles starte på nytt utenfor aktive timer hvis brukerne velger ikke å planlegge omstarter på nytt. Det kan hende at gyldighetsperioden ikke trer i kraft hvis brukerne allerede har mer enn antall dager angitt som respittperiode for å administrere omstarten, basert på tids frist konfigurasjoner.
+Set a grace period for feature updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
 
-kan du angi at enheten skal starte på nytt helt til tids fristen og gyldighetsperioden er utløpt.
+You can set the device to delay restarting until both the deadline and grace period have expired.
 
-hvis du deaktiverer eller ikke konfigurerer denne policyen, vil enhetene motta oppdateringer og startes på nytt i henhold til standard planen.
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
 
-denne policyen overstyrer følgende policyer:
-1.  Angi tids fristen før den automatiske omstarten for oppdaterings installasjon
-2.  Angi overgang til oppstarten og varslings planen for oppdateringer
-3.  Start alltid på nytt automatisk til planlagt tidspunkt
-4.  Konfigurere automatiske oppdateringer
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
+      </string>
+      <string id="ComplianceDeadlineForQU_Title">Specify deadline for automatic updates and restarts for quality update</string>
+      <string id="ComplianceDeadlineForQU_Help">This policy lets you specify the number of days before quality updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
+
+Set deadlines for quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
+
+Set a grace period for quality updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
+
+You can set the device to delay restarting until both the deadline and grace period have expired.
+
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
+
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
       </string>
       <string id="ComplianceDeadlineDay0">0</string>
       <string id="ComplianceDeadlineDay1">1</string>
@@ -677,15 +695,30 @@ denne policyen overstyrer følgende policyer:
       <string id="ComplianceDeadlineDay29">29</string>
       <string id="ComplianceDeadlineDay30">30</string>
 
-      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Enable features introduced via servicing that are off by default</string>
-      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Features introduced via servicing (outside of the annual feature update) are off by default for devices that have their Windows updates managed*.
+      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Aktiver funksjoner introdusert via betjening som er deaktivert som standard</string>
+      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Funksjoner som innføres via betjening (utenfor den årlige funksjonsoppdateringen) er deaktivert som standard for enheter som har Windows-oppdateringer administrert*.
 
-If this policy is configured to “Enabled”, then all features available in the latest monthly quality update installed will be on.
+Hvis denne policyen er konfigurert til «Aktivert», vil alle funksjoner som er tilgjengelige i den siste månedlige kvalitetsoppdateringen som er installert, være aktivert.
 
-If this policy is set to “Not Configured” or “Disabled” then features that are shipped via a monthly quality update (servicing) will remain off until the feature update that includes these features is installed.
+Hvis denne policyen er satt til «Ikke konfigurert» eller «Deaktivert», forblir funksjoner som leveres via en månedlig kvalitetsoppdatering (betjening) avslått til funksjonsoppdateringen som inkluderer disse funksjonene, er installert.
 
- *Windows update managed devices are those that have their Windows updates managed via policy; whether via the cloud using Windows Update for Business or on-premises with Windows Server Update Services (WSUS).
+*Windows Update-administrerte enheter er de som får Windows-oppdateringene sine administrert via policy, enten via skyen ved hjelp av Windows Update for Business eller lokalt med Windows Server Update Services (WSUS).
       </string>
+      <string id="AllowOptionalContent_Title">Aktiver valgfrie oppdateringer</string>
+      <string id="AllowOptionalContent_Help">Denne policyen gjør det mulig for enheter å få valgfrie oppdateringer (inkludert gradvise funksjonsutrullinger (CFR-er) – finn ut mer ved å gå til aka.ms/AllowOptionalContent)
+
+Når policyen er konfigurert
+
+• Hvis «Motta valgfrie oppdateringer automatisk (inkludert CFR-er)» er valgt, får enheten de nyeste valgfrie oppdateringene automatisk i tråd med de konfigurerte utsettelsene av kvalitetsoppdateringer. Dette inkluderer valgfrie kumulative oppdateringer og gradvis utrulling av funksjoner (CFR-er).
+
+• Hvis «Motta valgfrie oppdateringer automatisk» er valgt, får enheten bare valgfrie kumulative oppdateringer automatisk, i tråd med utsettelsene av kvalitetsoppdateringer.
+
+• Hvis «Brukere kan velge hvilke oppdateringer som skal mottas» er valgt, kan brukere velge hvilke valgfrie oppdateringer som skal installeres, ved å gå til Innstillinger &gt; Windows Update &gt; Avanserte alternativer &gt; Valgfrie oppdateringer. Brukere kan også aktivere veksleknappen «Få de nyeste oppdateringene så snart de er tilgjengelige» for automatisk å motta valgfrie oppdateringer og gradvise funksjonsutrullinger.
+      </string>
+      <string id="DonotReceiveOptionalContent">Ikke motta valgfrie oppdateringer</string>
+      <string id="ReceiveOptionalContentWithAutoApproval">Motta valgfrie oppdateringer automatisk (inkludert CFR-er)</string>
+      <string id="ReceiveOptionalLCUWithAutoApproval">Motta valgfrie oppdateringer automatisk</string>
+      <string id="ReceiveOptionalContentNeedUserApproval">Brukere kan velge hvilke valgfrie oppdateringer de vil motta</string>
     </stringTable>
 
     <presentationTable>
@@ -827,16 +860,20 @@ If this policy is set to “Not Configured” or “Disabled” then features th
         <text></text>
         <checkBox refId="NoUpdateNotificationsDuringActiveHours" defaultChecked="false">Bruk bare i aktivitetsperiode</checkBox>
       </presentation>
-      <presentation id="ComplianceDeadline_Title">
-        <text>Kvalitetsoppdateringer</text>
+       <presentation id="ComplianceDeadlineForFU_Title">
+        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="2">Tidsfrist (dager):</dropdownList>
+        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="7">Løpeperiode (dager):</dropdownList>
+        <text></text>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForFeatureUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="ComplianceDeadlineForQU_Title">
         <dropdownList refId="ConfigureDeadlineForQualityUpdates" noSort="true" defaultItem="7">Tidsfrist (dager):</dropdownList>
         <dropdownList refId="ConfigureDeadlineGracePeriod" noSort="true" defaultItem="2">Løpeperiode (dager):</dropdownList>
         <text></text>
-        <text>Funksjonsoppdateringer</text>
-        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="7">Tidsfrist (dager):</dropdownList>
-        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="2">Løpeperiode (dager):</dropdownList>
-        <text></text>
-        <checkBox refId="ConfigureDeadlineNoAutoReboot" defaultChecked="false">Ikke automatisk omstart før løpeperioden slutter</checkBox>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForQualityUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="AllowOptionalContent_Title">
+        <dropdownList refId="AllowOptionalContent" noSort="true" defaultItem="0">Merk av for hvordan brukere skal motta valgfrie oppdateringer:</dropdownList>
       </presentation>
     </presentationTable>
   </resources>

@@ -34,9 +34,11 @@ Obs! Ändringen av den här säkerhetsinställningen börjar inte gälla förrä
 
 Om du aktiverar den här principinställningen eller om du låter bli att konfigurera den tillåts oskyddade gästinloggningar av SMB-klienten.
 
-Om du inaktiverar den här principinställningen avvisas alla oskyddade gästinloggningar av SMB-klienten.
+Om du inaktiverar den här principinställningen avvisas oskyddade gästinloggningar av SMB-klienten.
 
-Oskyddade gästinloggningar kan användas på filservrar för att tillåta oautentiserad åtkomst till delade mappar. Oskyddade gästinloggningar tillåts oftast inte i företagsmiljöer, men de används flitigt av privatpersoner som använder nätverksanslutna lagringsenheter (NAS) som filservrar. På Windows-filservrar krävs autentisering och oskyddade gästinloggningar tillåts som standard inte. Eftersom oskyddade gästinloggningar är oautentiserade inaktiveras viktiga säkerhetsfunktioner som SMB-signering och SMB-kryptering. Det innebär att de klienter där oskyddade inloggningar tillåts blir sårbara för många olika typer av MITM-angrepp (man-in-the-middle) som kan leda till att data går förlorade eller skadas, samt för skadlig kod. Dessutom kan alla i nätverket potentiellt få tillgång till de data som skrivs till en filserver via en oskyddad gästinloggning. Microsoft rekommenderar att du inaktiverar oskyddade gästinloggningar och konfigurerar alla filservrar så att autentisering krävs för åtkomst."
+Om du tillåter signering avvisas oskyddade gästinloggningar av SMB-klienten.
+
+Oskyddade gästinloggningar kan användas på filservrar för att tillåta oautentiserad åtkomst till delade mappar. Oskyddade gästinloggningar tillåts oftast inte i företagsmiljöer, men de används flitigt av privatpersoner som använder nätverksanslutna lagringsenheter (NAS) som filservrar. På Windows-filservrar krävs autentisering och oskyddade gästinloggningar tillåts inte som standard. Eftersom oskyddade gästinloggningar är oautentiserade inaktiveras viktiga säkerhetsfunktioner som SMB-signering och SMB-kryptering. Det innebär att de klienter där oskyddade inloggningar tillåts blir sårbara för många olika typer av MITM-angrepp (man-in-the-middle) som kan leda till att data går förlorade eller skadas samt ökar risken för skadlig kod. Dessutom kan alla i nätverket potentiellt få tillgång till de data som skrivs till en filserver via en oskyddad gästinloggning. Microsoft rekommenderar att du inaktiverar oskyddade gästinloggningar och konfigurerar alla filservrar så att autentisering krävs för åtkomst."
       </string>
 
       <string id="Pol_EnableCSCforCAShares_Name">Tillgänglighet av Offlinefiler i resurser med kontinuerlig tillgänglighet</string>
@@ -61,6 +63,7 @@ Oskyddade gästinloggningar kan användas på filservrar för att tillåta oaute
         Obs! Principen har ingen effekt när resurser för skalbara filservrar ansluts från en Windows Server. Microsoft rekommenderar inte att du aktiverar den här principen för klienter som rutinmässigt ansluter till filer på ett Windows-redundanskluster med rollen Filserver för allmän användning, eftersom det kan leda till försämrad redundans och ökad minnes- och CPU-förbrukning.
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Minst Windows Server 2022, Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Minst Windows Server 2025, Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">Använd SMB-komprimering som standard</string>
       <string id="Pol_EnableCompressedTraffic_Help">Den här principen styr om SMB-klienten använder trafikkomprimering som standard.
 
@@ -77,11 +80,129 @@ Om du aktiverar den här principinställningen komprimerar SMB-klienten aldrig d
 
 Om du inaktiverar eller inte konfigurerar den här principinställningen kan SMB-klienten komprimera trafiken (beroende på en kombination av andra principer och villkor).
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">Kräva den maximala versionen av SMB</string>
+      <string id="Pol_MaxSmb2Dialect_Help">Den här principen styr den maximala versionen av SMB-protokollet
+
+Obs! Den här grupprincipen förhindrar inte användning av SMB 1 om den komponenten fortfarande är installerad och aktiverad.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">Kräva den lägsta versionen av SMB</string>
+      <string id="Pol_MinSmb2Dialect_Help">Den här principen styr minimiversionen av SMB-protokollet
+
+Obs! Den här grupprincipen förhindrar inte användning av SMB 1 om den komponenten fortfarande är installerad och aktiverad.
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">Blockera NTLM (LM, NTLM, NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">Den här principen styr om SMB-klienten blockerar NTLM för fjärranslutningsautentisering.
+
+Om du aktiverar den här principinställningen använder SMB-klienten inte NTLM för fjärranslutningsautentisering.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen kan SMB-klienten fortfarande använda NTLM.
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">Undantagslista för blockera NTLM-server</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">Den här principinställningen avgör om NTLM kan användas för åtkomst till angivna servrar.
+
+Om du aktiverar den här principinställningen (endast giltig om principen Blockera NTLM (LM, NTLM, NTLMv2) är aktiverad), kan NTLM användas för att komma åt angivna servrar. Ange önskade servrar (DNS-namn, IP-adress eller NetBIOS-namn) i redigeringsrutan, ett servernamn per rad.
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen bestäms NTLM-åtkomsten till servrar av andra inställningar.
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">Aktivera fjärr-mailslots</string>
+      <string id="Pol_EnableRemoteMailslots_Help">Den här principen styr om SMB-klienten ska aktivera eller inaktivera fjärr-mailslots via MUP.
+
+Om du inaktiverar den här principinställningen kommer fjärr-mailslots inte att fungera via MUP, vilket innebär att de inte går via SMB-klientomdirigeraren.
+
+Om du inte konfigurerar den här principinställningen kan fjärr-mailslots tillåtas via MUP.
+      </string>
+      <string id="Pol_RequireEncryption_Name">Kräv kryptering</string>
+      <string id="Pol_RequireEncryption_Help">Den här principen styr om SMB-klienten kommer att kräva kryptering.
+
+Om du aktiverar den här principinställningen kräver SMB-klienten att SMB-servern stöder kryptering och krypterar data.
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen kräver SMB-klienten inte kryptering. SMB-kryptering kan dock fortfarande krävas; se anteckningar nedan.
+
+Obs! Den här principen kombineras med anslutningsegenskaper per resurs, per server och per mappad enhet, genom vilka SMB-kryptering kan krävas. SMB-servern måste ha stöd för och aktivera SMB-kryptering. Om den här principen till exempel är inaktiverad (eller inte konfigurerad) kan SMB-klienten fortfarande utföra kryptering om en SMB-serverresurs har nödvändig kryptering.
+
+Viktigt: SMB-kryptering kräver SMB 3.0 eller senare
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">Aktivera alternativa portar</string>
+      <string id="Pol_EnableAlternativePorts_Help">Den här principen styr om SMB-klienten ska aktivera eller inaktivera alternativa portar.
+
+Om du inaktiverar den här principinställningen används inte alternativa portar av SMB-klienten.
+
+Om du inte konfigurerar den här principinställningen kan alternativa portar användas av SMB-klienten.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">Granskningsservern stöder inte kryptering</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">Den här principen styr huruvida SMB-klienten ska aktivera granskningshändelsen när SMB-servern inte stöder kryptering.
+
+Om du aktiverar den här principinställningen loggar SMB-klienten händelsen när SMB-servern inte stöder kryptering.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen loggar inte SMB-klienten händelsen.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">Granskningsservern stöder inte inloggning</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">Den här principen styr om SMB-klienten ska aktivera granskningshändelsen när SMB-servern inte stöder signering.
+
+Den här principen styr om SMB-klienten ska aktivera loggning av händelsen när SMB-servern inte stöder signering.
+
+Om du inaktiverar eller inte konfigurerar den här principinställningen loggar SMB-klienten inte händelsen.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Granska osäker gästinloggning</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">Den här principen styr om SMB-klienten ska aktivera granskningshändelsen när klienten är inloggad som gästkonto.
+
+Om du aktiverar den här principinställningen loggar SMB-klienten händelsen när klienten är inloggad som gästkonto.
+
+Om du inaktiverar eller låter bli att konfigurera den här principinställningen loggar inte SMB-klienten händelsen.
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">Alternativa portmappningar</string>
+      <string id="Pol_AlternativePortMappings_Help">Den här principinställningen bestämmer vilka alternativa portregistermappningar som används av SMB-klienten.
+
+Om du aktiverar den här principinställningen används den första giltiga mappningen om mappningens servernamn matchar målservernamnet för anslutning.
+
+Om du aktiverar den här principinställningen och inte anger minst en giltig mappning, eller om du inaktiverar eller låter bli att konfigurera den här principinställningen, refererar SMB-klienten till andra metoder för att bestämma alternativ portanvändning, t.ex. med kommandona NET USE eller New-SmbMapping.
+
+Exempel:
+
+contososa.file.core.windows.net:tcp:448
+edgesrv1.corp.contoso.com:quic:450
+
+Så här ändrar du den här inställningen:
+
+Ordna önskade alternativa portmappningar i redigeringsrutan med en mappningspost per rad.
+
+Formatet för varje mappningspost anger ett servernamn, transporttyp och portnummer avgränsade med kolon enligt ovanstående exempel.
+
+Obs! Den här principen kräver ingen windows-omstart för att börja gälla.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>Chiffersviter:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>Välj SMB-version:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Version:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>Välj SMB-version:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Version:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>Undantagslista för blockera NTLM-server:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>Alternativa portregistermappningar:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

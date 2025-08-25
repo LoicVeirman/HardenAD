@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">Zertifikat für die lokale Authentifizierung verwenden</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">Verwenden der Cloud-Vertrauensstellung für die lokale Authentifizierung</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">Zwischenspeichern der Windows Hello for Business Anmeldeinformationen nach der Anmeldung deaktivieren</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello for Business ist eine alternative Anmeldemethode für Windows, bei der Sie anstelle von Kennwörtern, Smartcards oder virtuellen Smartcards Ihr Active Directory- oder Azure Active Directory-Konto verwenden können.
 
@@ -111,16 +113,17 @@ Wenn Sie die Richtlinieneinstellung deaktivieren, verhindert Windows Hello for B
 HINWEIS: Durch das Deaktivieren dieser Richtlinie wird der Benutzer daran gehindert, die biometrische Erkennung auf dem Gerät zu verwenden; dies gilt für alle Kontotypen.
         </string>
         <string id="MSPassport_EnableEnhancedSignInSecurity">ESS mit unterstützten Peripheriegeräten aktivieren</string>
-        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Die erhöhte Anmeldesicherheit (Enhanced Sign-in Security, ESS) isoliert die biometrischen (Gesichts- und Fingerabdruck-) Vorlagedaten und Abgleichvorgänge von Windows Hello auf vertrauenswürdige Hardware oder bestimmte Speicherbereiche, so dass der Rest des Betriebssystems nicht darauf zugreifen oder sie manipulieren kann. Da der Kommunikationskanal zwischen den Sensoren und dem Algorithmus ebenfalls gesichert ist, ist es für Schadsoftware unmöglich, Daten zu injizieren oder wiederzugeben, um eine Benutzeranmeldung zu simulieren oder einen Benutzer von seinem Gerät auszuschließen.
+        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Die erweiterte Anmeldesicherheit (Enhanced Sign-in Security, ESS) isoliert die biometrischen (Gesichts- und Fingerabdruck-) Vorlagedaten und Abgleichvorgänge von Windows Hello auf vertrauenswürdige Hardware oder bestimmte Speicherbereiche, so dass der Rest des Betriebssystems nicht darauf zugreifen oder sie manipulieren kann. Da der Kommunikationskanal zwischen den Sensoren und dem Algorithmus ebenfalls gesichert ist, ist es für Schadsoftware unmöglich, Daten einzuschleusen oder wiederzugeben, um die Anmeldung eines Benutzers zu simulieren oder einen Benutzer von seinem Gerät auszuschließen.
 Wenn Sie diese Richtlinie aktivieren, kann sie die folgenden Werte annehmen:
 
-0 – Erhöhte Anmeldesicherheit aktiviert mit Peripherie- und integrierten Nicht-ESS-Sensoren
-Die erhöhte Anmeldesicherheit wird auf Systemen mit geeigneter Software und Hardware aktiviert, entsprechend dem bestehenden Standardverhalten in Windows. Authentifizierungsvorgänge von Windows Hello-fähigen Peripheriegeräten werden vorbehaltlich der aktuellen Funktionseinschränkungen zugelassen. Außerdem wird ESS mit dieser Einstellung auf Geräten mit einer Mischung aus biometrischen Systemen aktiviert, z. B. einem ESS-fähigen FPR und einer nicht ESS-fähigen Kamera.
+0 – Erweiterte Anmeldesicherheit mit peripheren Sensoren deaktiviert
+ESS wird auf Systemen mit geeigneter Software und Hardware deaktiviert. Authentifizierungsvorgänge von Windows Hello-fähigen Peripheriegeräten werden vorbehaltlich der aktuellen Funktionseinschränkungen zugelassen.
 
-1 – Erhöhte Anmeldesicherheit aktiviert ohne periphere oder integrierte Nicht-ESS-Sensoren (Standard und für höchste Sicherheit empfohlen)
-Die erhöhte Anmeldesicherheit wird auf Systemen mit geeigneter Software und Hardware aktiviert, entsprechend dem bestehenden Standardverhalten in Windows. Authentifizierungsvorgänge eines biometrischen Peripheriegeräts werden blockiert und stehen für Windows Hello nicht zur Verfügung.
+1 – Erhöhte Anmeldesicherheit ohne periphere Sensoren aktiviert (Standard und empfohlen)
+ESS wird auf Systemen mit geeigneter Software und Hardware aktiviert, entsprechend dem bestehenden Standardverhalten in Windows. Authentifizierungsvorgänge von biometrischen Peripheriegeräten werden blockiert und sind für Windows Hello nicht verfügbar.
 
 Wenn Sie diese Richtlinie deaktivieren oder nicht konfigurieren, werden Nicht-ESS-Sensoren auf dem ESS-Gerät blockiert.
+
         </string>
         <string id="MSPassport_EnablePinRecovery">PIN-Wiederherstellung verwenden</string>
         <string id="MSPassport_EnablePinRecoveryExplain">Die PIN-Wiederherstellung ermöglicht es einem Benutzer, eine vergessene PIN mithilfe des PIN-Wiederherstellungsdiensts von Windows Hello for Business zu ändern, ohne dass zugeordnete Anmeldeinformationen oder Zertifikate verloren gehen. Dies gilt ebenfalls für Schlüssel, die den persönlichen Konten des Benutzers auf dem Gerät zugeordnet sind. Zu diesem Zweck verschlüsselt der Azure-basierte PIN-Wiederherstellungsdienst einen geheimen Wiederherstellungsschlüssel, der auf dem Gerät gespeichert wird und sowohl vom PIN-Wiederherstellungsdienst als auch vom Gerät entschlüsselt werden muss. Bei der PIN-Wiederherstellung muss der Benutzer eine mehrstufige Authentifizierung bei Azure Active Directory ausführen.
@@ -149,6 +152,8 @@ Wenn Sie die Richtlinien Einstellung deaktivieren oder nicht konfigurieren, verw
  
 Hinweis: eine Umgebung, die sowohl diese Richtlinien Einstellung aktiviert, und die Richtlinien Einstellung "Windows Hello for Business verwenden" erfordert mindestens einen Windows Server 2016-Domänen Controller. Andernfalls schlägt Windows Hello for Business-Authentifizierung fehl.
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">Die Anmeldeinformationen für Windows Hello for Business werden nach der Anmeldung zwischengespeichert, damit bestimmte sicherheitsrelevante Anwendungen die Anmeldeinformationen im Hintergrund verwenden können, um die Benutzererfahrung nicht zu beeinträchtigen. Aktivieren Sie diese Richtlinie, um dies zu deaktivieren und den Cache zu entfernen, sodass Benutzereingaben ausdrücklich erforderlich sind.</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">Faktoren für die Geräteentsperrung konfigurieren</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">Konfigurieren Sie eine durch Trennzeichen getrennte Liste von Anmeldeinformationsanbieter-GUIDs, z. B. GUIDs von Anbietern für die Gesichts- oder Fingerabdruckerkennung, die als erster und zweiter Entsperrungsfaktor verwendet werden. Wenn der vertrauenswürdige Signalanbieter als einer der Entsperrungsfaktoren angegeben wird, sollten Sie für jeden zu überprüfenden Signaltyp auch eine durch Trennzeichen getrennte Liste der Signalregeln im XML-Format konfigurieren.

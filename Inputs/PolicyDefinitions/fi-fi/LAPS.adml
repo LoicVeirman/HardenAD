@@ -13,9 +13,9 @@ Sallittavat asetukset ovat seuraavat:
 
 0= Poistettu käytöstä (salasanaa ei varmuuskopioida)
 
-1=Varmuuskopioi salasana Azure Active Directory
+1=Varmuuskopiointi salasana Azure Active Directory
 
-2=Varmuuskopioi salasana Active Directory
+2=Varmuuskopiointi salasana Active Directory
 
 Jos tätä asetusta ei määritetä, oletusarvo on 0 (ei käytössä).
 
@@ -46,12 +46,23 @@ Salasanan ikä päivinä
   Enintään: 365 päivää
   Oletusarvo: 30 päivää
 
+Tunnuslauseen pituus
+  Vähintään: 3 sanaa
+  Enintään: 10 sanaa
+  Oletus: 6 sanaa
+
 Lisätietoja on https://go.microsoft.com/fwlink/?linkid=2188435.
+
+Tunnuslauseluettelo, jonka Electronic Frontier Foundation on ottanut kohteesta Deep Dive: EFF's New Wordlists for Random Passphrases, ja sitä käytetään CC-BY-3.0-attribution-käyttöoikeuden alaisuudessa. Lisätietoja on https://go.microsoft.com/fwlink/?linkid=2255471.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Isot kirjaimet</string>
       <string id="LAPS_PwdComplexity_Item_2">Isot kirjaimet + pienet kirjaimet</string>
       <string id="LAPS_PwdComplexity_Item_3">Isot kirjaimet + pienet kirjaimet + numerot</string>
       <string id="LAPS_PwdComplexity_Item_4">Isot kirjaimet + pienet kirjaimet + numerot + erikoismerkit</string>
+      <string id="LAPS_PwdComplexity_Item_5">Suuret kirjaimet + pienet kirjaimet + numerot + erikoismerkit (parannettu luettavuus)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Tunnuslause (pitkät sanat)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Tunnuslause (lyhyet sanat)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Tunnuslause (lyhyet sanat, joilla on yksilölliset etuliitteet)</string>
       <string id="LAPS_AdminName">Hallittavan järjestelmänvalvojatilin nimi</string>
       <string id="LAPS_AdminName_Help">Tämä käytäntöasetus määrittää mukautetun nimen järjestelmänvalvojatilille, jonka salasanaa hallitaan.
 
@@ -64,9 +75,9 @@ Jos tämä käytäntöasetus on poistettu käytöstä tai sitä ei ole määrite
 Lisätietoja on osoitteessa https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">Älä salli salasanojen vanhentumisaikaa, joka on käytännön edellyttämää pidempi</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Jos tämä asetus otetaan käyttöön tai sitä ei määritetä, suunniteltua salasanan vanhentumista, joka on pidempi kuin Salasana-asetukset-käytännön määrittämä salasanan ikä, EI sallita. Kun tällainen vanhentuminen havaitaan, salasana vaihdetaan heti ja salasanojen vanhentuminen määritetään käytännön mukaisesti.
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Jos tämä asetus otetaan käyttöön tai sitä ei määritetä, suunniteltua salasanan vanhentumista, joka on pidempi kuin Salasanan Asetukset -käytännön määrittämä salasanan ikä, EI sallita. Kun tällainen vanhentuminen havaitaan, salasana vaihdetaan heti ja salasanojen vanhentuminen määritetään käytännön mukaisesti.
 
-Jos tämä asetus poistetaan käytöstä, salasanojen vanhentumisaika voi olla pidempi kuin Salasana-asetukset-käytäntö edellyttää.
+Jos tämä asetus poistetaan käytöstä, salasanojen vanhentumisaika voi olla pidempi kuin Salasana Asetukset -käytäntöasetuksessa edellytetään.
 
 Lisätietoja on https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
@@ -88,13 +99,25 @@ Lisätietoja on https://go.microsoft.com/fwlink/?linkid=2188435.
       <string id="LAPS_ADPasswordEncryptionPrincipal">Määritä valtuutetut salasanojen salauksen purkajat</string>
       <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Määritä tämä asetus hallitsemaan tiettyä käyttäjää tai ryhmää, jolla on valtuudet salattujen salasanojen salauksen purkamiseen.
 
-Tämän asetuksen määrittämisellä ei ole vaikutusta, ellei salasanojen salausta ole otettu käyttöön.
+Tämän asetuksen määrittämisellä ei ole vaikutusta, ellei salasanan salausta ole otettu käyttöön.
 
-Jos tämä asetus on käytössä, määritetty ryhmä voi purkaa salattujen salasanojen salauksen.
+Jos tämä asetus on käytössä, määritetty ryhmä purkaa salattujen salasanojen salauksen.
 
-Jos tämä asetus on poistettu käytöstä tai sitä ei ole määritetty, toimialueen järjestelmänvalvojien ryhmä voi purkaa salattujen salasanojen salauksen.
+Jos tämä asetus on poistettu käytöstä tai sitä ei ole määritetty, toimialueen järjestelmänvalvojat -ryhmä purkaa salattujen salasanojen salauksen.
 
-Tämä asetus on määritettävä joko SID-tunnuksella merkkijonomuodossa ("S-1-5-21-2127521184-1604012920-1887927527-35197") tai ryhmän tai käyttäjän nimellä muodossa "toimialue\(ryhmä tai käyttäjä)". Hallitun laitteen on voitava ratkaista määritetty käyttäjä tai ryhmä, muuten salasanoja ei varmuuskopioida.
+Tämä asetus on määritettävä joko ryhmän tai käyttäjän toimialuekohtaisella nimellä tai SID-tunnuksella merkkijonomuodossa. Kelvollisia esimerkkejä ovat esimerkiksi seuraavat:
+
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Älä kirjoita käyttäjän\ryhmän nimeä tai SID-tunnusta lainausmerkeissä tai sulkeissa.
+
+Hallitun laitteen on ratkaistava määritetty käyttäjä tai ryhmä, muuten salasanoja ei varmuuskopioida.
+
+HUOMAUTUS: tämä asetus ohitetaan, kun hakemistopalvelujen korjaustila (DSRM) -tilin salasanat varmuuskopioidaan toimialueen ohjauskoneeseen. Tässä skenaariossa tämä asetus palaa aina oletusarvoiseen toimialueen ohjaajan toimialueen Toimialueen järjestelmänvalvojat -ryhmään.
 
 Lisätietoja on osoitteessa https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
@@ -125,36 +148,76 @@ Jos tämä asetus poistetaan käytöstä tai jätetään määrittämättä, toi
 Lisätietoja on https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_PostAuthenticationActions">Todennuksen jälkeiset toiminnot</string>
-      <string id="LAPS_PostAuthenticationActions_Help">Tämä käytäntö määrittää todentamisen jälkeiset toiminnot, jotka suoritetaan hallitun tilin todentamisen havaitsemisen jälkeen.
+      <string id="LAPS_PostAuthenticationActions_Help">Tämä käytäntö määrittää todennuksen jälkeiset toiminnot, jotka suoritetaan hallitun tilin todennuksen havaitsemisen jälkeen.
 
-Lisäaika: määrittää ajan (tunteina), joka odotetaan todentamisen jälkeen, ennen kuin määritetyt todentamisen jälkeiset toiminnot suoritetaan.
+Aktivointiaika: määrittää ajan (tunteina), joka odotetaan todennuksen jälkeen, ennen kuin määritetyt todennuksen jälkeiset toiminnot suoritetaan.
 
-Jos tämä asetus on käytössä ja suurempi kuin nolla, määritetyt todentamisen jälkeiset toiminnot suoritetaan lisäajan päätyttyä.
+Jos tämä asetus on käytössä ja suurempi kuin nolla, määritetyt todennuksen jälkeiset toiminnot suoritetaan aktivointiajan päätyttyä.
 
-Jos tämä asetus poistetaan käytöstä tai jätetään määrittämättä, määritetyt todentamisen jälkeiset toiminnot suoritetaan oletusarvon mukaisen 24 tunnin lisäajan jälkeen.
+Jos tämä asetus poistetaan käytöstä tai jätetään määrittämättä, määritetyt todennuksen jälkeiset toiminnot suoritetaan oletusarvon mukaisen 24 tunnin lisäajan jälkeen.
 
-Jos tämän asetuksen arvo on nolla, todentamisen jälkeisiä toimintoja ei suoriteta.
+Jos tämän asetuksen arvo on nolla, todennuksen jälkeisiä toimintoja ei suoriteta.
 
 Toiminnot: määrittää lisäajan umpeutuessa suoritettavat toiminnot.
 
-Palauta salasana: kun lisäaika päättyy, hallitun tilin salasana palautetaan.
+Vaihda salasana: kun aktivointiaika päättyy, hallitun tilin salasana palautetaan.
 
-Palauta salasana ja kirjaudu ulos hallitusta tilistä: lisäajan päätyttyä hallitun tilin salasana palautetaan ja kaikki hallittua tiliä käyttävät interaktiivisen kirjautumisen istunnot lopetetaan.
+Palauta salasana ja kirjaudu ulos hallinnoidusta tilistä: aktivointiajan päätyttyä hallitun tilin salasana palautetaan ja kaikki hallittua tiliä käyttävät vuorovaikutteiset kirjautumisistunnot lopetetaan.
 
-(HUOMAUTUS: kun interaktiivisen kirjautumisen istunnot lopetetaan, hallitun tilin käytössä voi edelleen olla muita todennettuja istuntoja. Ainoa luotettava tapa varmistaa, että edellinen salasana on käytössä, on käynnistää laite uudelleen.)
+Palauta salasana ja käynnistä uudelleen: kun aktivointiaika päättyy, hallitun tilin salasana palautetaan ja hallittu laite käynnistetään uudelleen heti.
 
-Palauta salasana ja käynnistä uudelleen: kun lisäaika päättyy, hallitun tilin salasana palautetaan ja hallittu laite käynnistetään uudelleen heti.
+Nollaa salasana, kirjaudu ulos hallitusta tilistä ja päätä kaikki käynnissä olevat toiminnot: aktivointiajan päättyessä, tilin salasana nollataan, kaikista interaktiivisista kirjautumisistunnoista, jotka käyttävät hallittua tiliä, kirjaudutaan ulos ja kaikki käynnissä olevat toiminnot päätetään.
 
-Jos tämä asetus poistetaan käytöstä tai jätetään määrittämättä, todentamisen jälkeinen toiminto on oletusarvoisesti "palauta salasana ja kirjaudu ulos hallitusta tilistä".
+(HUOMAUTUS: kun kaikki interaktiiviset kirjautumisistunnot on päätetty, jotkin todennetut istunnot saattavat vielä käyttää hallittua tiliä. Aino varma tapa varmistaa, ettei entistä salasanaa enää käytetä, on käynnistää laite uudelleen.)
+
+Jos tämä asetus poistetaan käytöstä tai jätetään määrittämättä, todennuksen jälkeiset toiminnot ovat oletusarvoisesti palauta salasana ja kirjaudu ulos hallinnoidusta tilistä.
 
 Huomautus: toimialueen ohjauskoneiden DSRM-tiliä ei voi määrittää todentamisen jälkeisiä toimintoja varten. Tällä käytännöllä ei ole vaikutusta toimialueen ohjauskoneisiin, ja se ohitetaan, vaikka se olisi määritetty toimialueen ohjauskonetta varten.
 
-Lisätietoja on osoitteessa https://go.microsoft.com/fwlink/?linkid=2188435.
+Lisätietoja on https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="PostAuthenticationActions_Item0">Poistettu käytöstä – älä tee mitään</string>
       <string id="PostAuthenticationActions_Item1">Salasanan palauttaminen</string>
       <string id="PostAuthenticationActions_Item3">Palauta salasana ja kirjaudu ulos hallinnoidusta tilistä</string>
       <string id="PostAuthenticationActions_Item5">Palauta salasana ja käynnistä laite uudelleen</string>
+      <string id="PostAuthenticationActions_Item11">Vaihda salasana, kirjaudu ulos hallinnoidusta tilistä ja lopeta jäljellä olevat prosessit</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Määritä automaattinen tilien hallinta</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Tämä käytäntö määrittää automaattisen tilinhallintakäytännön asetukset.
+
+Määritä hallittava kohdetili: määrittää, hallitaanko sisäistä järjestelmänvalvojatiliä vai mukautettua tiliä.
+
+Automaattinen tilin nimi (tai nimen etuliite): määrittää hallitun tilin nimen tai nimen etuliitteen.
+
+Jos tämä käytäntöasetus on määritetty, Windows LAPS käyttää sitä kohdetilin tilin nimenä tai etuliitteenä.
+
+Jos tätä käytäntöasetusta ei ole määritetty, Windows LAPS käyttää tilin nimenä tai nimen etuliitteenä WLapsAdmin.
+
+Huomautus: tätä nimeä käsitellään etuliitteenä, kun tilin nimen satunnaistaminen on määritetty, katso alla olevat kommentit.
+
+Ota hallittu tili käyttöön: määrittää, tuleeko hallittu tili ottaa käyttöön vai ei.
+
+Jos tämä käytäntöasetus on määritetty, Windows LAPS ottaa käyttöön määritetyn hallitun tilin.
+
+Jos tätä käytäntöasetusta ei ole määritetty, Windows LAPS poistaa määritetyn hallitun tilin käytöstä.
+
+Huomautus: Windows LAPS ylläpitää ja vaihtaa hallitun tilin salasanaa säännöllisesti riippumatta siitä, säilytetäänkö tiliä käytössä- vai poistettu käytöstä -tilassa.
+
+Satunnaista hallitun tilin nimi: määrittää, onko hallitun tilin nimi satunnaistettava satunnaisella numeerisella jälkiliitteellä.
+
+Jos tämä käytäntöasetus on määritetty, Windows LAPS lisää kahdeksannumeroisen satunnaistetun numeerisen päätteen hallitun automaattisen tilin nimeen ja satunnaistaa hallitun tilin nimen uudelleen aina, kun salasanaa vaihdetaan.
+
+Jos tätä käytäntöasetusta ei ole määritetty, Windows LAPS käyttää määritettyä hallitun automaattisen tilin nimeä.
+
+Jos hallitun automaattisen tilin nimen etuliite on määritetty, Windows LAPS käyttää enintään kahtatoista ensimmäistä (12) merkkiä kyseisen nimen etuliitteenä satunnaiselle nimelle. Jos hallitun automaattisen tilin nimeä ei ole määritetty, Windows LAPS käyttää nimen etuliitteenä WLapsAdmin.
+
+Huomautus: toimialueen ohjauskoneiden DSRM-tiliä ei voi määrittää automaattista tilinhallintaa varten. Tällä käytännöllä ei ole vaikutusta toimialueen ohjauskoneisiin, ja se ohitetaan, vaikka se olisi määritetty toimialueen ohjauskoneelle.
+
+Lisätietoja on osoitteessa https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Sisäisen järjestelmänvalvojatilin hallinta</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Mukautetun järjestelmänvalvojatilin hallinta</string>
+      <string id="AutomaticAccountName_Help">Määritä tilin nimi tai nimen etuliite</string>
+      <string id="AutomaticAccountNameRandomization_Help">Määrittää, tuleeko automaattinen tilin nimi satunnaistaa.</string>
       <string id="SUPPORTED_Windows10">Vähintään Microsoft Windows 10 tai uudempi</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ Lisätietoja on osoitteessa https://go.microsoft.com/fwlink/?linkid=2188435.
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Salasanan monimutkaisuus</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Salasanan pituus</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Salasanan ikä (päiviä)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Tunnuslauseen pituus (sanat)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ Lisätietoja on osoitteessa https://go.microsoft.com/fwlink/?linkid=2188435.
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Lisäaika (tuntia):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Toimet:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Toimet:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Määritä hallittava kohdetili:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Automaattinen tilin nimi (tai nimen etuliite):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Ota hallittu tili käyttöön</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Satunnaista hallitun tilin nimi</checkBox>
       </presentation>
     </presentationTable>
   </resources>

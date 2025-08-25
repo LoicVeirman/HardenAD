@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">Usar certificado para autenticação local</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">Use a confiança na nuvem para autenticações no local</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">Desabilitar o cache da credencial do Windows Hello para Empresas após entrar</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">O Windows Hello para Empresas é um método alternativo para entrar no Windows usando sua conta do Active Directory ou do Azure Active Directory que pode substituir senhas, Cartões Inteligentes e Cartões Inteligentes Virtuais.
 
@@ -111,16 +113,17 @@ Se você desabilitar essa configuração de política, o Windows Hello para Empr
 OBSERVAÇÃO: desabilitar essa política impede o uso de gestos biométricos no dispositivo para todos os tipos de conta.
         </string>
         <string id="MSPassport_EnableEnhancedSignInSecurity">Habilitar o ESS com periféricos com suporte</string>
-        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">A Segurança de Entrada Avançada (ESS) isola os dados do modelo biométrico do Windows Hello (face e impressão digital) e as operações correspondentes a hardware confiável ou regiões de memória especificadas, o que significa que o restante do sistema operacional não pode acessá-los ou adulterá-los. Como o canal de comunicação entre os sensores e o algoritmo também é protegido, é impossível que o malware injete ou reproduza dados para simular um usuário entrando ou para bloquear um usuário fora do seu computador.
+        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">A segurança de entrada avançada (ESS) isola os dados de modelo biométricos (detecção facial e impressão digital) e as operações correspondentes do Windows Hello a equipamentos de hardware confiáveis ou regiões de memória especificadas, o que significa que o restante do sistema operacional não pode acessá-los nem adulterá-los. Como o canal de comunicação entre os sensores e o algoritmo também é protegido, é impossível para o malware injetar ou reproduzir dados para simular um usuário entrando ou bloqueando um usuário fora do computador.
 Se você habilitar essa política, ela poderá ter os seguintes valores possíveis:
 
-0 - Segurança de Entrada Avançada Habilitada com sensores periféricos ou internos que não sejam ESS
-A segurança de entrada avançada será habilitada em sistemas com software e hardware compatíveis, seguindo o comportamento padrão existente no Windows. As operações de autenticação de dispositivos periféricos compatíveis com Windows Hello serão permitidas, sujeitas às limitações dos recursos atuais. Além disso, com essa configuração, a ESS será ativada em dispositivos com uma mistura de dispositivos biométricos, como um FPR compatível com ESS e uma câmera não compatível com ESS.
+ 0 - Segurança de entrada avançada desabilitada com sensores periféricos
+A ESS será desabilitada em sistemas com software e hardware compatíveis. As operações de autenticação de dispositivos periféricos compatíveis com o Windows Hello serão permitidas, sujeitas às limitações de recursos atuais.
 
-1 - Segurança de Entrada Avançada Habilitada sem sensores periféricos ou internos que não sejam ESS (padrão e recomendado para maior segurança)
-A segurança de entrada avançada será habilitada em sistemas com software e hardware compatíveis, seguindo o comportamento padrão existente no Windows. As operações de autenticação de qualquer dispositivo biométrico periférico serão bloqueadas e não estarão disponíveis para o Windows Hello.
+1 - Segurança de entrada avançada habilitada sem sensores periféricos (padrão e recomendado)
+A ESS será habilitada em sistemas com software e hardware compatíveis, seguindo o comportamento padrão existente no Windows. As operações de autenticação de qualquer dispositivo biométrico periférico serão bloqueadas e não estarão disponíveis para Windows Hello.
 
-Se você desabilitar ou não configurar essa política, os sensores que não sejam ESS serão bloqueados no dispositivo ESS.
+Se você desabilitar ou não configurar essa política, os sensores não ESS serão bloqueados no dispositivo ESS.
+
         </string>
         <string id="MSPassport_EnablePinRecovery">Usar Recuperação de PIN</string>
         <string id="MSPassport_EnablePinRecoveryExplain">A recuperação de PIN permite que o usuário altere um PIN esquecido usando o serviço de recuperação de PIN do Windows Hello para Empresas, sem perder quaisquer credenciais ou certificados associados, incluindo quaisquer chaves associadas às contas pessoais do usuário no dispositivo. Para conseguir isso, o serviço de recuperação de PIN baseado no Azure criptografa um segredo de recuperação, armazenado no dispositivo, e requer o serviço de recuperação de PIN e o dispositivo para descriptografar. A recuperação de PIN exige que o usuário faça a autenticação multifator no Azure Active Directory.
@@ -149,6 +152,8 @@ Se você desabilitar ou não definir essa configuração de política, o Windows
  
 Observação: um ambiente que habilita essa configuração de política e a configuração de política "usar o Windows Hello para empresas" requer um ou mais controladores de domínio do Windows Server 2016. Caso contrário, a autenticação do Windows Hello para empresas irá falhar.
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">A credencial do Windows Hello para Empresas é armazenada em cache após entrar para permitir que determinados aplicativos relacionados à segurança usem a credencial silenciosamente para não interromper a experiência do usuário. Habilite essa política para desativá-la, removendo o cache para que a entrada do usuário seja explicitamente necessária.</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">Configurar fatores de desbloqueio do dispositivo</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">Configure uma lista separada por vírgula de GUIDs do provedor de credenciais, como GUIDs de provedor de face e impressão digital, a ser usada como o primeiro e o segundo fatores de desbloqueio. Caso o provedor do sinal confiável seja especificado como um dos fatores de desbloqueio, você também deve configurar uma lista separada por vírgula de regras de sinal no formato xml para cada tipo de sinal a ser verificado.

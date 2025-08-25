@@ -21,6 +21,7 @@ Optie 7 alleen ondersteund op servers met minimaal Windows Server 2016 Edition</
       <string id="WU_SUPPORTED_Server2016_Through_Server2022_Or_Windows10">Windows Server 2016 tot en met Windows Server 2022 of Windows 10</string>
       <string id="WU_SUPPORTED_Windows_Server_2019_Windows_10_0_1809">Minimaal Windows Server 2019 of Windows 10 versie 1809</string>
       <string id="WU_SUPPORTED_Windows_Server_2022_Windows_10_0_2004">Minimaal Windows Server 2022 of Windows 10 versie 2004</string>
+      <string id="WU_SUPPORTED_WinServer2025_Win1021H2_Win1122H2">Minimaal Windows Server 2025, Windows 10 versie 21H2 of Windows 11 versie 22H2</string>
       <string id="AUDontShowUasHelp">Met deze beleidsinstelling kunt u aangeven of de optie Updates installeren en computer afsluiten moet worden weergegeven in het dialoogvenster Windows afsluiten.
 
 Als u deze beleidsinstelling inschakelt, wordt de optie Updates installeren en computer afsluiten niet weergegeven in het dialoogvenster Windows afsluiten, zelfs als er updates beschikbaar zijn voor installatie wanneer de gebruiker de optie Afsluiten in het Startmenu kiest.
@@ -165,13 +166,13 @@ Als de waarde is ingesteld op Niet-geconfigureerd, wordt het gebruik van Automat
       <string id="OnlyUseSystemProxyForUpdateDetection">Alleen systeemproxy gebruiken voor het detecteren van updates (standaard)</string>
       <string id="AllowUserProxyAsFallbackForUpdateDetection">Toestaan dat gebruikers proxy als terugval gebruiken als detectie met systeemproxy mislukt</string>
       <string id="UpdateClassPolicySource_Title">Bronservice opgeven voor specifieke klassen van Windows-updates</string>
-      <string id="UpdateClassPolicySource_Help">When this policy is enabled, devices will receive Windows updates for the classes listed from the specified update source: either Windows Update or Windows Server Update Service.
+      <string id="UpdateClassPolicySource_Help">Als dit beleid is ingeschakeld, ontvangen apparaten Windows-updates voor de klassen die worden vermeld uit de opgegeven updatebron: Windows Update of Windows Server Update Service.
 
-        Note: To receive any updates from the Windows Server Update Service you must have properly configured an intranet Microsoft update service location via the “Specify intranet Microsoft update service location” policy.
+Opmerking: als u updates wilt ontvangen van de Windows Server Update-service, moet u de locatie van een Microsoft-updateservice op het intranet correct hebben geconfigureerd via het beleid Locatie van Microsoft-updateservice voor intranet.
 
-        If this policy is not configured or is disabled, the device will continue to detect updates per your other policy configurations.
+Als dit beleid niet is geconfigureerd of is uitgeschakeld, blijft het apparaat updates detecteren volgens uw andere beleidsconfiguraties.
 
-        Note: If you are using “Do not allow deferral policies to cause scans against Windows Update” currently to ensure devices only scan against your specified server, we recommend configuring this policy instead or in addition to such.</string>
+Opmerking: als u momenteel 'Uitstelbeleid niet toestaan om scans op Windows Update te veroorzaken' gebruikt om ervoor te zorgen dat apparaten alleen worden gescand op de opgegeven server, raden we u aan dit beleid te configureren of naast dit beleid te configureren.</string>
       <string id="UpdateClassPolicySourceSelectionWU">Windows Update</string>
       <string id="UpdateClassPolicySourceSelectionWSUS">Windows Server Update Services</string>
       <string id="DetectionFrequency_Help">Hiermee geeft u het aantal uren op dat Windows wacht voordat wordt gezocht naar beschikbare updates. De exacte wachttijd is de som van de opgegeven waarde en een willekeurige periode van 0-4 uur.
@@ -628,22 +629,39 @@ Als u 'Alleen toepassen tijdens gebruikstijden selecteert' in combinatie met opt
       <string id="DefaultNotification">0 (standaard) – Standaardmeldingen van het besturingssysteem over Windows Update</string>
       <string id="ExcludingRebootWarnings">1 – Alle meldingen uitschakelen, uitgezonderd waarschuwingen over opnieuw opstarten</string>
       <string id="IncludingRebootWarnings">2 – Alle meldingen uitschakelen, inclusief waarschuwingen over opnieuw opstarten</string>
-      <string id="ComplianceDeadline_Title">Deadlines opgeven voor automatische updates en opnieuw opstarten</string>
-      <string id="ComplianceDeadline_Help">Met dit beleid kunt u het aantal dagen opgeven voordat kwaliteits- en onderdelenupdates automatisch op apparaten worden geïnstalleerd, en een respijtperiode waarna automatisch opstarten automatisch wordt uitgevoerd.
+      <string id="ComplianceDeadlineForFU_Title">Specify deadline for automatic updates and restarts for feature update</string>
+      <string id="ComplianceDeadlineForFU_Help">This policy lets you specify the number of days before feature updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
 
-Stel deadlines in voor onderdelenupdates en kwaliteitsupdates om te voldoen aan uw compatibiliteitsdoelen. Updates worden gedownload en geïnstalleerd zodra ze worden aangeboden en er wordt geprobeerd om opnieuw opstarten buiten de gebruikstijden uit te voeren. Nadat de deadline is verstreken, wordt er opnieuw opgestart ongeacht de gebruikstijden en kunnen gebruikers deze niet opnieuw plannen. Als de deadline is ingesteld op 0 dagen, wordt de update onmiddellijk na het aanbieden geïnstalleerd, maar deze wordt mogelijk niet dezelfde dag voltooid vanwege de beschikbaarheid van het apparaat en de netwerkverbinding.
+Set deadlines for feature updates and quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
 
-Stel een respijtperiode in voor onderdelen- en kwaliteitsupdates om gebruikers te garanderen dat ze het beheer van de opstarttijden tot een minimum kunnen beperken. Gebruikers kunnen het opnieuw opstarten plannen tijdens de respijtperiode en Windows kan nog steeds automatisch opnieuw opstarten buiten de gebruiksuren als gebruikers ervoor kiezen om het opnieuw opstarten niet te plannen. De respijtperiode is mogelijk niet van toepassing als al meer dagen zijn verstreken dan is ingesteld als respijtperiode voor het beheer van opnieuw opstarten op basis van de deadline-configuraties.
+Set a grace period for feature updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
 
-U kunt het apparaat zo instellen dat het opnieuw opstarten wordt uitgesteld totdat zowel de deadline als de respijtperiode zijn verstreken.
+You can set the device to delay restarting until both the deadline and grace period have expired.
 
-Als u dit beleid uitschakelt of niet configureert, ontvangen de apparaten updates en worden ze opnieuw opgestart volgens de standaardplanning.
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
 
-Dit beleid heeft voorrang op de volgende beleidsregels:
-1. Deadline vóór automatisch opnieuw opstarten opgeven voor installatie van updates
-2. De overgangs- en meldingsplanning voor updates opgeven nadat opnieuw opstarten is gepland door de gebruiker:
-3. Altijd automatisch opnieuw opstarten op het geplande tijdstip
-4. Automatische updates configureren
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
+      </string>
+      <string id="ComplianceDeadlineForQU_Title">Specify deadline for automatic updates and restarts for quality update</string>
+      <string id="ComplianceDeadlineForQU_Help">This policy lets you specify the number of days before quality updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
+
+Set deadlines for quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
+
+Set a grace period for quality updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
+
+You can set the device to delay restarting until both the deadline and grace period have expired.
+
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
+
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
       </string>
       <string id="ComplianceDeadlineDay0">0</string>
       <string id="ComplianceDeadlineDay1">1</string>
@@ -677,15 +695,30 @@ Dit beleid heeft voorrang op de volgende beleidsregels:
       <string id="ComplianceDeadlineDay29">29</string>
       <string id="ComplianceDeadlineDay30">30</string>
 
-      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Enable features introduced via servicing that are off by default</string>
-      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Features introduced via servicing (outside of the annual feature update) are off by default for devices that have their Windows updates managed*.
+      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Functies inschakelen die zijn geïntroduceerd via onderhoud die standaard zijn uitgeschakeld</string>
+      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Functies die worden geïntroduceerd via onderhoud (buiten de jaarlijkse onderdelenupdate) zijn standaard uitgeschakeld voor apparaten waarop hun Windows-updates worden beheerd*.
 
-If this policy is configured to “Enabled”, then all features available in the latest monthly quality update installed will be on.
+Als dit beleid is geconfigureerd voor 'Ingeschakeld', zijn alle functies die beschikbaar zijn in de nieuwste maandelijkse kwaliteitsupdate ingeschakeld.
 
-If this policy is set to “Not Configured” or “Disabled” then features that are shipped via a monthly quality update (servicing) will remain off until the feature update that includes these features is installed.
+Als dit beleid is ingesteld op 'Niet geconfigureerd' of 'Uitgeschakeld' vervolgens blijven functies die worden verzonden via een maandelijkse kwaliteitsupdate (onderhoud) uitgeschakeld totdat de onderdelenupdate met deze functies is geïnstalleerd.
 
- *Windows update managed devices are those that have their Windows updates managed via policy; whether via the cloud using Windows Update for Business or on-premises with Windows Server Update Services (WSUS).
+*Beheerde Windows-updateapparaten zijn apparaten waarop hun Windows-updates worden beheerd via beleid; of ze nu via de cloud Windows Update voor Bedrijven of on-premises met Windows Server Update Services (WSUS).
       </string>
+      <string id="AllowOptionalContent_Title">Optionele updates inschakelen</string>
+      <string id="AllowOptionalContent_Help">Met dit beleid kunnen apparaten optionele updates ontvangen (inclusief geleidelijke functie-implementaties (CFR's). Ga voor meer informatie naar aka.ms/AllowOptionalContent)
+
+Wanneer het beleid is geconfigureerd
+
+• Als Automatisch optionele updates ontvangen (inclusief CFR's) is geselecteerd, ontvangt het apparaat automatisch de nieuwste optionele updates, in overeenstemming met het geconfigureerde uitstel voor kwaliteitsupdates. Dit omvat optionele cumulatieve updates en geleidelijke functie-implementaties (CFR's).
+
+• Als Automatisch optionele updates ontvangen is geselecteerd, ontvangt het apparaat alleen automatisch optionele cumulatieve updates, in overeenstemming met het uitstel voor kwaliteitsupdates.
+
+• Als Gebruikers kunnen selecteren welke optionele updates worden ontvangen is geselecteerd, kunnen gebruikers selecteren welke optionele updates moeten worden opgehaald door naar Instellingen &gt; Windows Update &gt; Geavanceerde opties &gt; Optionele updates te gaan. Gebruikers kunnen ook de wisselknop De nieuwste updates ophalen zodra ze beschikbaar zijn inschakelen om automatisch optionele updates en geleidelijke functie-implementaties te ontvangen.
+      </string>
+      <string id="DonotReceiveOptionalContent">Geen optionele updates ontvangen</string>
+      <string id="ReceiveOptionalContentWithAutoApproval">Automatisch optionele updates ontvangen (inclusief CFR's)</string>
+      <string id="ReceiveOptionalLCUWithAutoApproval">Automatisch optionele updates ontvangen</string>
+      <string id="ReceiveOptionalContentNeedUserApproval">Gebruikers kunnen selecteren welke optionele updates moeten worden ontvangen</string>
     </stringTable>
 
     <presentationTable>
@@ -827,16 +860,20 @@ If this policy is set to “Not Configured” or “Disabled” then features th
         <text></text>
         <checkBox refId="NoUpdateNotificationsDuringActiveHours" defaultChecked="false">Alleen toepassen tijdens gebruikstijden</checkBox>
       </presentation>
-      <presentation id="ComplianceDeadline_Title">
-        <text>Kwaliteitsupdates</text>
+       <presentation id="ComplianceDeadlineForFU_Title">
+        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="2">Uiterlijke datum (dagen):</dropdownList>
+        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="7">Bedenktijd (dagen):</dropdownList>
+        <text></text>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForFeatureUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="ComplianceDeadlineForQU_Title">
         <dropdownList refId="ConfigureDeadlineForQualityUpdates" noSort="true" defaultItem="7">Uiterlijke datum (dagen):</dropdownList>
         <dropdownList refId="ConfigureDeadlineGracePeriod" noSort="true" defaultItem="2">Respijtperiode (dagen):</dropdownList>
         <text></text>
-        <text>Onderdelenupdates</text>
-        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="7">Uiterlijke datum (dagen):</dropdownList>
-        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="2">Bedenktijd (dagen):</dropdownList>
-        <text></text>
-        <checkBox refId="ConfigureDeadlineNoAutoReboot" defaultChecked="false">Niet automatisch opnieuw opstarten tot het einde van de respijtperiode</checkBox>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForQualityUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="AllowOptionalContent_Title">
+        <dropdownList refId="AllowOptionalContent" noSort="true" defaultItem="0">Selecteer hoe gebruikers optionele updates ontvangen:</dropdownList>
       </presentation>
     </presentationTable>
   </resources>

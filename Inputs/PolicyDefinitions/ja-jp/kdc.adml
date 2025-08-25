@@ -115,6 +115,25 @@ Windows Kerberos クライアントでサポートされているハッシュお
       <string id="PKINITHashAlgorithm_Supported">サポート</string>
       <string id="PKINITHashAlgorithm_Audited">監査対象</string>
       <string id="PKINITHashAlgorithm_NotSupported">サポートされていません</string>
+      <string id="StrongNameMatches">証明書に関して名前ベースの強力なマッピングを許可する</string>
+      <string id="StrongNameMatches_explain">このポリシー設定では、代替の名前ベースの識別子を使用して、Active Directory ユーザー アカウントに発行された証明書を厳密にマップし、どの証明書をどのアカウントにマップするかを指定できます。この設定を有効にしない場合、証明書は aka.ms/StrongCertMapKB で指定された "厳密なマッピング" 条件を満たす必要があります。これは通常、名前ベースの識別子を許可しません。
+
+このポリシーで指定する各マッピングには、次に示す構文を使用して、IssuerSubject や UPN サフィックスと共にポリシー OID を含める必要があります。指定された証明書の有効なマッピングがこのポリシーで見つからない場合、Active Directory は、 KB5014754 で指定された既存の強力なマッピング条件を使用して一致を検索しようとします。"厳密な名前マッピング" 条件 (このポリシー) または既存の "厳密なマッピング" 条件のいずれにも準拠していない証明書マッピングは、認証にには無効と見なされます。
+
+一般的なポリシー形式といくつかの例を以下に示します。このポリシーは、Active Directory ユーザー アカウントにのみ適用されます。
+
+一般的な構文
+==============
+&lt;拇印&gt;; &lt;OIDのリスト&gt;; &lt;名前一致メソッド&gt;
+
+例
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+ポリシーには、規則ごとに証明書の拇印が 1 つだけ含まれている必要があります。各規則はタプルとして表されます。拇印は一意である必要があり、複数のルールで繰り返すことはできません。セミコロンで区切られた各タプルのセクションは、指定された順序にする必要がありますが、コンマで区切られたフィールドは任意の順序で指定できます。ルール自体は改行で区切ります。
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Windows Kerberos クライアントでサポートされているハッシュお
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">強力な名前一致規則:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

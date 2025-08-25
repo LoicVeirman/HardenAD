@@ -17,6 +17,9 @@
     <string id="Quarantine">隔离</string>
     <string id="RealtimeProtection">实时保护</string>
     <string id="Remediation">修正</string>
+    <string id="Remediation_BNB">行为网络块</string>
+    <string id="Remediation_BNB_REP">远程加密保护</string>
+    <string id="Remediation_BNB_BFP">Brute-Force 保护</string>
     <string id="Reporting">报告</string>
     <string id="Scan">扫描</string>
     <string id="SignatureUpdate">安全情报更新</string>
@@ -38,7 +41,7 @@
 
  启用：
  允许受管理的设备通过按流量计费的连接进行更新。可能需要支付数据费用。</string>
-    <string id="HideExclusionsFromLocalAdmins">控制排除项是否对本地管理员可见。</string>
+    <string id="HideExclusionsFromLocalAdmins">控制排除项是否对本地管理员可见</string>
     <string id="HideExclusionsFromLocalAdmins_Explain">
     此策略设置控制排除项是否对本地管理员可见。无论是否启用此设置，对于最终用户(非本地管理员)排除项不可见。
     已禁用(默认)：
@@ -47,6 +50,10 @@
 启用：
         如果启用此设置，本地管理员将无法再在 Windows 安全应用中或通过 PowerShell 查看排除列表。
         注意： 应用此设置不会删除排除项，只会阻止本地管理员看到这些排除项。这反映在  Get-MpPreference 中。</string>
+    <string id="HideExclusionsFromLocalUsers">控制排除项是否对本地用户可见</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    此策略设置控制排除项是否对设备上的本地用户可见。
+    使用策略设置 HideExclusionsFromLocalAdmins 隐藏来自标准用户和管理本地用户的排除项。</string>
     <string id="AllowNetworkProtectionOnWinServer">此设置控制是否允许网络保护在 Windows Server 上配置成阻止或审核模式。</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     已禁用 (默认)：
@@ -57,11 +64,29 @@
     请注意，此配置依赖于 EnableNetworkProtection 配置。如果此配置为 false，则会忽略 EnableNetworkProtection，否则将根据 EnableNetworkProtection 的值在 Windows Server 上启动网络保护。</string>
     <string id="DisableDatagramProcessing">此设置控制用于网络保护的数据报处理。</string>
     <string id="DisableDatagramProcessing_Explain">
-    启用 (默认)：
+    禁用 (默认):
     如果未配置或已禁用，将为网络保护启用数据报处理。
 
-    启用：
-    如果启用，将禁用数据报处理以便进行网络保护。</string>
+    启用:
+    如果启用，将为网络保护禁用数据报处理。</string>
+    <string id="EnableConvertWarnToBlock">将警告裁定转换为阻止</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    网络保护检查网络流量，并确定是允许还是阻止流量，还是显示警告。
+    
+已禁用(默认)：
+    如果未配置或已禁用，则网络保护将对警告警告显示警告。
+
+启用：
+    如果启用此设置，则网络保护会阻止网络流量，而不是显示警告。</string>
+    <string id="AllowSwitchToAsyncInspection">启用异步检查</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    通过从实时检查切换到异步检查，控制网络保护是否可以提高性能。
+
+禁用(默认)：
+    如果未配置或已禁用，则不会为网络保护启用异步检查。
+
+启用：
+    如果启用，将允许为网络保护切换到异步检查。</string>
     <string id="DisableAutoExclusions">关闭自动排除项</string>
     <string id="DisableAutoExclusions_Explain">
         允许管理员指定是否应关闭服务器 SKU 的自动排除功能。
@@ -142,15 +167,19 @@
       如果禁用或未配置此设置，代理将按照上面指定的顺序跳过此回退步骤。
     </string>
     <string id="RandomizeScheduleTaskTimes">随机化计划任务时间</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">此策略设置允许你配置计划扫描以及计划的安全智能更新、开始时间段(以小时为单位)。
+    <string id="RandomizeScheduleTaskTimes_Explain">使用此策略设置，可以配置计划扫描开始时间和计划定义更新开始时间的随机化。
 
-    如果禁用或未配置此设置，则计划任务将在任务计划程序中指定的时间后 4 小时内随机开始。
-    如果启用此设置，则可以扩大或者缩小此随机时间段。请指定 1 到 23 小时之间的随机时间段。</string>
+如果启用或未配置此策略设置，并且未在“配置计划任务时间随机化”窗口设置中设置随机化窗口，则将添加 0-4 小时之间的随机化。
+        如果启用或未配置此策略设置，并在“配置计划任务时间随机化窗口”设置中设置随机化窗口，则将使用配置的随机化窗口。
+        如果禁用此策略设置，但配置了计划任务时间随机化窗口，则不会进行随机化。 
+    </string>
     <string id="SchedulerRandomizationTime">配置计划任务时间随机化窗口</string>
-    <string id="SchedulerRandomizationTime_Explain">此策略设置允许你配置计划扫描以及计划的安全智能更新开始时间段(以小时为单位)。
+    <string id="SchedulerRandomizationTime_Explain">此策略设置允许你配置计划任务扫描开始时间和计划安全智能更新开始时间窗口（以小时为单位）。此设置会影响随机计划任务时间配置。
 
-    如果禁用或未配置此设置，则计划任务将在指定的开始时间后的 4 小时间隔内随机开始。
-    如果启用此设置，则必须选择一个随机时间段(以小时为单位)。可能的随机时间段间隔为 1 至 23 小时。</string>
+        如果启用此设置，则必须选择一个随机窗口（以小时为单位）。可能的随机窗口间隔介于 1 到 23 小时之间。实施的随机间隔介于 0 和配置的值之间。 
+        启用此设置时，随机计划任务时间设置将使用此配置设置中指定的随机窗口。 
+        如果禁用或未配置此策略设置，则随机计划任务时间设置将在 0-4 小时之间随机选择计划任务时间。</string>
+
     <string id="ServiceKeepAlive">允许反恶意软件服务始终保持运行状态</string>
     <string id="ServiceKeepAlive_Explain">此策略设置允许你配置在禁用防病毒和反间谍软件安全智能时反恶意软件服务是否保持运行状态。建议此设置保持禁用状态。
 
@@ -219,6 +248,22 @@
 如果启用或未配置此设置，则将启用脚本扫描。
 
 如果禁用此设置，则将禁用脚本扫描。</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">在 OOBE 期间配置实时保护和安全智能更新</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">使用此策略设置时，可以配置在 OOBE (现成体验)期间是否启用实时保护和安全智能更新。
+ 
+    如果启用此设置，则会在 OOBE 期间启用实时保护和安全智能更新。
+ 
+    如果禁用或未配置此策略设置，则不会在 OOBE 期间启用实时保护和安全智能更新。</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">配置性能模式状态</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">此策略控制开发人员驱动器的 Microsoft Defender 防病毒性能模式。
+
+   开发人员驱动器是一个磁盘驱动器，经过优化，可在软件开发方案中提高性能。如果此策略已启用或未配置，则为防病毒 Microsoft Defender 启用性能模式。在性能模式下，Microsoft Defender Antivirus 对存储在开发人员驱动器上的内容进行异步安全检查以提高性能。性能模式要求还启用以下策略：“启用开发人员驱动器”和“开发人员驱动器筛选器附加策略”。
+
+   如果此策略设置已启用或未配置，则会打开性能模式。
+
+   如果禁用此策略设置，则性能模式关闭，Microsoft Defender Antivirus 将以与其他驱动器相同的方式保护开发人员驱动器。</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">打开行为监视</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">使用此策略设置可以配置行为监视。
@@ -359,6 +404,94 @@
     如果启用此设置，则会在每天指定的时间运行计划完整扫描以完成修正。
 
     如果禁用或未配置此设置，则会在默认时间运行计划完整扫描以完成修正。</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">配置远程加密保护模式</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    在 Microsoft Defender 防病毒中设置远程加密保护模式，该模式可以检测并阻止尝试将本地文件替换为来自其他设备的加密版本。
+
+   支持的设置:
+   * 0 - 未配置或默认: 应用默认值，这些默认值可能因防病毒引擎版本和平台而异
+   * 1 - 阻止: 防止可疑和恶意行为
+   * 2 - 审核: 在不阻止
+的情况下生成 EDR 检测
+   * 4 - 关闭: 功能已关闭，不会影响性能
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">默认值</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">阻止</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">审核</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">关</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">配置远程加密保护阻止时间</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    设置远程加密保护阻止 IP 地址的最长时间。在此时间后，被阻止的 IP 地址将能够重新启动连接。
+
+支持的设置：
+    * 0 - 无： 内部功能逻辑将确定实际阻塞时间
+    * 以 15 分钟的增量指定其他时间
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">配置远程加密保护阻止威胁的主动程度</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    设置远程加密防护保护何时阻止 IP 地址的条件。
+
+支持的设置：
+    *0 - 低： 仅在置信度 100% (默认) 时阻止
+    *1 - 中等： 在置信度高于 99% 时使用云聚合并阻止
+    *2 - 高： 使用云 intel 和上下文，并在置信度高于 90% 时阻止
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">低</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">中等</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">高</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> 从远程加密保护中设置排除项</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    指定要从远程加密保护中排除的 IP 地址、子网和域名。请注意，攻击者可以伪造被排除的地址和名称以绕过保护措施。
+
+   在新行上输入每个地址或子网作为名称值对:
+   - 名称列: 输入 IP 地址或子网名称。例如，“1.1.127.0”将排除此 IP 地址被阻止。
+   - 值列: 为每个项输入""0""
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">配置 Brute-Force 保护模式</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    在 Microsoft Defender 防病毒中设置 Brute-Force 保护模式，该模式可以检测并阻止强制启动登录和启动会话的尝试。
+
+   支持的设置:
+   * 0 - 未配置或默认: 应用默认值，这些默认值可能因防病毒引擎版本和平台而异
+   * 1 - 阻止: 防止可疑和恶意行为
+   * 2 - 审核: 在不阻止
+的情况下生成 EDR 检测
+   * 4 - 关闭: 功能已关闭，不会影响性能
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">默认值</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">阻止</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">审核</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">关</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">配置 Brute-Force 保护阻止时间</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    设置 Brute-Force 保护阻止 IP 地址的最长时间。在此时间之后，被阻止的 IP 地址将能够登录并启动会话。
+
+支持的设置：
+    * 0 - 无： 内部功能逻辑将确定实际阻塞时间
+    * 以 15 分钟的增量指定其他时间
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">配置 Brute-Force 保护攻击性</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    设置 Brute-Force 保护阻止 IP 地址的条件。
+
+支持的设置：
+    *0 - 低： 仅在置信度 100% (默认) 时阻止
+    *1 - 中等： 在置信度级别高于 99% 时使用云聚合并阻止
+    *2 - 高： 使用云 intel 和上下文，并在置信度高于 90% 时阻止
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">低</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">中等</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">高</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">从 Brute-Force 保护中设置排除项</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    指定要从 Brute-Force 保护中排除的 IP 地址、子网或工作站名称。将不会检查排除的 IP 地址是否存在可能的暴力活动。
+   
+   请注意，攻击者可以伪造被排除的地址和名称以绕过保护措施。确保名称是唯一的，并且不太可能被攻击者猜到。
+
+   在新行上输入每个地址或子网作为名称值对:
+   - 名称列: 输入 IP 地址、子网名称或工作站名称。例如，“1.1.127.0”将排除此 IP 地址被 BFP 阻止。
+   - 值列: 为每个项输入 "0"
+    </string>
     <string id="Reporting_AdditionalActionTimeout">为需要其他操作的检测配置超时</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">此策略设置配置检测操作从“其他操作”状态改为“清除”状态前的时间（以分钟为单位）。</string>
     <string id="Reporting_CriticalFailureTimeout">配置完全失败状态下检测操作的超时</string>
@@ -398,6 +531,12 @@
 如果将此设置配置为 0，则不会发送任何服务运行状况报告。
 
 允许设置的最大值为 14400 分钟(10 天)。</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">配置是否报告动态签名丢弃的事件</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">此策略设置配置是否报告动态签名丢弃的事件。
+
+如果未配置此设置，则应用默认值。默认值设置为已禁用(不报告此类事件)。
+如果将此设置配置为已启用，则报告动态签名丢弃事件。
+    如果将此设置配置为已禁用，则不会报告动态签名丢弃的事件。</string>
       <string id="Scan_AllowPause">允许用户暂停扫描</string>
     <string id="Scan_AllowPause_Explain">使用此策略设置，可以管理最终用户是否可以暂停进行中的扫描。
 
@@ -456,6 +595,10 @@
     如果启用此设置，则会打开计划快速扫描的弥补扫描。如果计算机在两个连续的计划扫描期间脱机，则下次用户登录计算机时会启动弥补扫描。 如果未配置计划扫描，则不会运行弥补扫描。
 
     如果禁用或未配置此设置，则会关闭计划快速扫描的弥补扫描。</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">在 X 天后触发快速扫描而不进行任何扫描</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">此策略设置定义自上次扫描后在自动触发主动捕获快速扫描之前可经过的天数。该值表示在触发主动快速扫描之前无需执行任何扫描即可经过的天数。
+    
+有效值范围为 7 到 60 天。如果未配置，将禁用高性能快速扫描。默认情况下，值在启用时设置为 25 天。</string>
     <string id="Scan_DisableEmailScanning">启用电子邮件扫描</string>
     <string id="Scan_DisableEmailScanning_Explain">使用此策略设置可以配置电子邮件扫描。启动电子邮件扫描时，引擎会根据邮箱和邮件文件的特定格式分析这些邮箱和邮件文件，以便分析邮件正文和附件。当前支持多个电子邮件格式，例如: pst (Outlook)、dbx、mbx、mime (Outlook Express)、binhex (Mac)。新式电子邮件客户端不支持电子邮件扫描。
     
@@ -498,12 +641,12 @@
     如果启用此设置，则会扫描映射的网络驱动器。
 
     如果禁用或未配置此设置，则不会扫描映射的网络驱动器。</string>
-    <string id="Scan_DisableScanningNetworkFiles">扫描网络文件</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">使用此策略设置，可以配置扫描网络文件。建议不要启用此设置。
+    <string id="Scan_DisableScanningNetworkFiles">配置网络文件扫描</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">此策略设置允许扫描使用访问保护的网络文件。默认值已启用。建议在大多数情况下保持启用状态。
 
-    如果启用此设置，则会扫描网络文件。
+    如果启用或未配置此设置，则将扫描网络文件。
 
-    如果禁用或未配置此设置，则不会扫描网络文件。</string>
+    如果禁用此设置，则不会扫描网络文件。</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">配置本地设置替换以获取 CPU 使用率最大百分比</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">此策略设置配置本地替换，用于配置扫描期间 CPU 使用率的最大百分比。此设置仅可由组策略设置。
 
@@ -615,6 +758,18 @@
 
         如果禁用或不配置此设置，则不会对定时扫描的 CPU 优先级进行更改。
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">在快速扫描期间扫描排除的文件和目录</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        此策略设置允许你在快速扫描期间扫描排除的文件和目录。
+
+       如果将此策略设置设为 1，则将在快速扫描期间扫描使用上下文排除从实时保护中排除的所有文件和目录。
+
+       如果将此策略设置为 0 或未配置，则在快速扫描期间不会扫描排除项。
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">定义间谍软件安全情报被视为过期之前的天数</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">此策略设置允许你定义在间谍软件安全智能视为过期之前必须经过的天数。如果确定安全智能已过期，此状态可能会触发多个其他操作，包括回退到备用更新源或在用户界面中显示警告图标。默认情况下，此值设置为 7 天。
 
@@ -637,6 +792,13 @@
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">此策略设置允许你为 VDI 配置的计算机定义安全智能位置。
 
     如果禁用或未配置此设置，将从默认的本地源引荐安全智能。</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">根据 VDI 客户端的计划程序配置安全智能更新。</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">使用此策略设置，可以根据 VDI 配置计算机的计划程序配置安全智能更新。它与共享安全智能位置 (SharedSignaturesLocation) 一起使用。
+
+    如果启用此策略设置并配置 SharedSignaturesLocation，则来自配置位置的更新仅在以前配置的计划更新时间进行。
+
+    如果禁用或未配置此策略设置，则每当在 SharedSignaturesLocation 指定的位置检测到新的安全智能更新时都会进行更新。
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">在安全智能更新后打开扫描</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">此策略设置允许你配置在进行安全智能更新后启动的自动扫描。
 
@@ -829,12 +991,6 @@
 
       如果启用此设置，Microsoft Defender 防病毒通知将不会显示在客户端上。
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">当客户端需要执行操作时向其显示附加文本</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">使用此策略设置，可以配置在客户端需要执行操作时是否向其显示附加文本。显示的文本为管理员定义的自定义字符串。例如，呼叫公司技术支持的电话号码。客户端界面仅会显示最多 1024 个字符。显示前会截断较长的字符串。
-
-    如果启用此设置，则会显示指定的附加文本。
-
-    如果禁用或未配置此设置，则不会显示附加文本。</string>
     <string id="MpCloudBlockLevel">选择云保护级别</string>
     <string id="MpCloudBlockLevel_Explain">
       此策略设置可以确定 Microsoft Defender 防病毒在阻止和扫描可疑文件时的严格程度。
@@ -912,6 +1068,17 @@
     与“禁用”相同。
 
     你可以在“配置攻击面减少规则”GP 设置中配置 ASR 规则。
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">将排除列表应用于特定攻击面减少(ASR)规则</string>d
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    此策略允许管理员为特定 ASR 规则指定排除项列表。
+    每个条目都是一个名称值对。键指示规则 GUID，而值是一组由&gt;字符分隔的完整路径，指示该特定 ASR 规则的排除项。
+
+注意： GUID 是一个键，而不是一个值。
+
+实例：
+    键: "{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}"
+    值: "C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe"
     </string>
     <string id="ExploitGuard_ASR_Rules">配置攻击面减少规则</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1119,12 +1286,65 @@
     <string id="DeviceControl_DataDuplicationRemoteLocation">定义设备控制证据数据远程位置</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
         定义证据文件远程位置，设备控制服务将在其中移动捕获证据数据。
+
+配置此设置时，请确保设备控制已启用，并且提供的路径是用户可以访问的远程路径。
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">设置本地设备控制缓存中文件的保持期</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        此策略设置确定设备控件在其设备上的本地缓存中保留文件证据的时间。设备控制仅在无法将文件上载到指定的网络共享或 Azure 存储时，才将文件保留在其本地缓存中。
+
+默认情况下，设备控件在其本地缓存中保留文件 60 天。
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">为特定设备类型启用设备控制</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        此策略设置控制哪些由其 PrimaryId 标识的设备类型将启用设备控制保护。如果为某些设备类型启用此设置，则设备控制将根据相应的自定义策略限制对这些设备的访问。将对所有其他类型的受支持设备关闭设备控制，即使为这些设备配置了自定义保护策略也是如此。
+ 
+此设置当前支持以下设备类型： RemovableMediaDevices、CdRomDevices、WpdDevices 和 PrinterDevices。
+ 
+如果启用此策略设置但未指定任何 PrimaryId，则将在所有受支持的设备类型中关闭设备控制。
+ 
+如果禁用或未配置此策略设置，则将在基于其相应自定义策略的所有受支持设备上强制执行设备控制。
+    </string>
+	<string id="DeviceControl_CustomSupportLink">为设备控制通知设置支持链接</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        此设置使你的组织能够在设备控制通知中指定“获取支持”链接。
+		
+配置后，“获取支持”按钮会自动导航到指定的链接。
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">设置策略刷新率</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        此设置定义在发生错误且策略无法加载的情况下设备将重试加载策略配置的时间间隔，以分钟为单位。
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">设置 Azure AD 刷新率</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        此设置定义设备查询Azure AD以更新相关设置、配置和组成员身份的时间间隔，以分钟为单位。
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">设置数据重复限制(MB)</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        此设置定义可为设备控制复制的最大数据量。
+		
+达到限制后，将不会在计算机上复制复制到可移动存储的文件。
+	</string>
     <string id="Features_DeviceControlEnabled">设备控制</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         在此计算机上启用或禁用 Defender 设备控制。
         注意： 你必须注册为 E3 或 E5 才能启用设备控制。
     </string>
+    <string id="Features_TDTFeatureEnabled">Intel TDT 集成级别</string>
+    <string id="Features_TDTFeatureEnabled_Explain">此策略设置会为支持 Intel TDT 的设备配置 Intel TDT 集成级别。
+
+        如果未配置此设置，将应用默认值。默认值由 Microsoft 安全智能更新控制。如果存在已知威胁，Microsoft 将启用 Intel TDT。
+        如果将此设置配置为“已启用”，则将启用 Intel TDT 集成。
+        如果将此设置配置为禁用，Intel TDT 集成将关闭。</string>
+    <string id="Features_PassiveRemediation">在阻止模式下启用 EDR</string>
+    <string id="Features_PassiveRemediation_Explain">此策略设置在阻止模式下启用或禁用 EDR (也称为“被动修正”)。对于在被动模式下运行 Microsoft Defender 防病毒的设备，建议使用块模式下的 EDR。适用于平台版本: 4.18.2202.X
+
+        数据类型为整数
+
+        支持的值:
+
+        1: 在
+上将 EDR 转换为块模式        0: 关闭阻止模式下的 EDR</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1391,38 @@
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">配置监视传入和传出文件和程序活动</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">指定远程加密保护的状态</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">指定阻止检测的时间，以分钟为单位</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">指定远程加密保护如何严格阻止威胁</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">远程加密保护排除</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">指定 Brute-Force 保护的状态</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">指定阻止检测的时间，以分钟为单位</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">指定 Brute-Force 保护如何阻止威胁</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Brute-Force 保护排除项</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">指定每周的不同天运行计划完整扫描以完成修正</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">指定每天的不同时间运行计划完整扫描以完成修正</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">指定在触发主动快速扫描之前应所需的无扫描天数</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">定义可以被强制更新扫描后丢失的计划扫描的次数</decimalTextBox>
@@ -1273,11 +1520,6 @@
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">指定检测到其后不应对其采取默认操作的威胁警报级别</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>当客户端需要执行操作时向其显示附加文本</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">指定到期通知的间隔</decimalTextBox>
     </presentation>
@@ -1293,6 +1535,9 @@
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">从 ASR 规则中排除:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">每个 ASR 规则的排除项：</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">为每个 ASR 规则设置状态:</listBox>
     </presentation>
@@ -1307,6 +1552,9 @@
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1586,34 @@
         <label>定义设备控制数据复制远程位置。</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">设置本地设备控制缓存中文件的保持期</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>为特定设备类型启用设备控制</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>为设备控制通知设置支持链接</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>设置策略刷新率</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>设置 Azure AD 刷新率</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>设置数据重复限制(MB)</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

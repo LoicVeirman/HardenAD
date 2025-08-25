@@ -21,6 +21,7 @@ Seçenek 7 yalnızca en az Windows Server 2016 sürümünü çalıştıran sunuc
       <string id="WU_SUPPORTED_Server2016_Through_Server2022_Or_Windows10">Windows Server 2016 ile Windows Server 2022 arasında veya Windows 10</string>
       <string id="WU_SUPPORTED_Windows_Server_2019_Windows_10_0_1809">En az Windows Server 2019 veya Windows 10 Sürüm 1809</string>
       <string id="WU_SUPPORTED_Windows_Server_2022_Windows_10_0_2004">En az Windows Server 2022 veya Windows 10 Sürüm 2004</string>
+      <string id="WU_SUPPORTED_WinServer2025_Win1021H2_Win1122H2">En az Windows Server 2025, Windows 10 Sürüm 21H2 veya Windows 11 Sürüm 22H2</string>
       <string id="AUDontShowUasHelp">Bu ilke ayarı sizin Windows Kapatma iletişim kutusunda "Güncelleştirmeleri Yükle ve Kapat" seçeneğinin gösterilip gösterilmemesini yönetmenizi sağlar.
 
 Bu ilke ayarını etkinleştirdiğiniz takdirde, kullanıcı Başlat menüsünden Kapat'ı seçtiğinde kurulum için güncelleştirmeler hazır olsa bile "Güncelleştirmeleri Yükle ve Kapat" Windows Kapatma iletişim kutusunda bir seçenek olarak görülmeyecektir.
@@ -159,13 +160,13 @@ Durum Yapılandırılmadı olarak ayarlanırsa Otomatik Güncelleştirmeler'in k
       <string id="OnlyUseSystemProxyForUpdateDetection">Yalnızca güncelleştirmeleri algılamak için sistem proxy 'sini kullan (varsayılan)</string>
       <string id="AllowUserProxyAsFallbackForUpdateDetection">Sistem ara sunucusu kullanılarak algılama başarısız olursa geri dönüş olarak kullanıcı ara sunucusunun kullanılmasına izin ver</string>
       <string id="UpdateClassPolicySource_Title">Windows Güncellemelerinin belirli sınıfları için kaynak hizmeti belirtin</string>
-      <string id="UpdateClassPolicySource_Help">When this policy is enabled, devices will receive Windows updates for the classes listed from the specified update source: either Windows Update or Windows Server Update Service.
+      <string id="UpdateClassPolicySource_Help">Bu ilke etkinleştirildiğinde, aygıtlar belirtilen güncelleştirme kaynağından listelenen sınıflar için Windows güncelleştirmelerini alır: Windows Update veya Windows Server Update Service. 
 
-        Note: To receive any updates from the Windows Server Update Service you must have properly configured an intranet Microsoft update service location via the “Specify intranet Microsoft update service location” policy.
+Not: Windows Server Update hizmetinden güncelleştirme almak Için "intranet Microsoft güncelleştirme hizmeti konumunu belirt" ilkesini kullanarak intranet Microsoft güncelleştirme hizmeti konumunu düzgün olarak yapılandırmış olmanız gerekir.
 
-        If this policy is not configured or is disabled, the device will continue to detect updates per your other policy configurations.
+Bu ilke yapılandırılmazsa veya devre dışı bırakılırsa, aygıt diğer ilke yapılandırmalarınız başına güncelleştirmeleri algılamaya devam edecektir. 
 
-        Note: If you are using “Do not allow deferral policies to cause scans against Windows Update” currently to ensure devices only scan against your specified server, we recommend configuring this policy instead or in addition to such.</string>
+Not: "Erteleme ilkelerinin Windows Update karşısında tarama yapmasına izin verme" yi kullanıyorsanız, şu anda yalnızca cihazların belirtilen sunucunuza taranmasını sağlamak için bu ilkeyi yapılandırmanız önerilir.</string>
       <string id="UpdateClassPolicySourceSelectionWU">Windows Update</string>
       <string id="UpdateClassPolicySourceSelectionWSUS">Windows Server Update Services</string>
       <string id="DetectionFrequency_Help">Windows'un kullanılabilir güncelleştirmeleri denetlemeden önce ne kadar süre bekleyeceğini belirlemek için kullanacağı saati belirtir. Tam bekleme süresi, belirli değerin ve 0-4 saatlik bir rastgele değişkenin toplamıdır.
@@ -622,21 +623,39 @@ Seçenek 1 veya 2 ile birlikte “Yalnızca etkin saatlerde uygula” seçeneği
       <string id="DefaultNotification">0 (varsayılan) – Varsayılan işletim sistemi Windows Update bildirimleri</string>
       <string id="ExcludingRebootWarnings">1 – Yeniden başlatma uyarıları hariç tüm bildirimleri devre dışı bırak</string>
       <string id="IncludingRebootWarnings">2 – Yeniden başlatma uyarıları dâhil tüm bildirimleri devre dışı bırak</string>
-      <string id="ComplianceDeadline_Title">Otomatik güncelleştirmeler ve yeniden başlatmalar için son tarihleri belirt</string>
-      <string id="ComplianceDeadline_Help">Bu ilke, kalite ve özellik güncelleştirmelerinin cihazlara otomatik olarak yüklenmeden önce kaç gün erteleneceğini ve gerekli yeniden başlatmanın otomatik olarak gerçekleşmesinden önce tanınan süreyi belirlemenizi sağlar.
+      <string id="ComplianceDeadlineForFU_Title">Specify deadline for automatic updates and restarts for feature update</string>
+      <string id="ComplianceDeadlineForFU_Help">This policy lets you specify the number of days before feature updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
 
-Özellik güncelleştirmeleri ve kalite güncelleştirmeleri için uyumluluk hedeflerinizi karşılayacak şekilde son tarihleri belirleyin. Güncelleştirmeler sunulduktan hemen sonra indirilir ve yüklenir. Otomatik yeniden başlatmalar aktif saatler dışında denenir. Son tarihler geçtiğinde yeniden başlatmalar aktif saatler dikkate alınmadan gerçekleştirilir ve kullanıcılar onları yeniden zamanlayamaz. Eğer son tarih 0 güne ayarlanırsa, güncelleştirme sunulur sunulmaz yüklenir; ama cihazın kullanılabilirliği ve ağ bağlantısına bağlı olarak aynı gün içinde tamamlanmayabilir.
+Set deadlines for feature updates and quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
 
-Özellik güncelleştirmeleri ve kalite güncelleştirmeleri için tanınan süreyi belirleyerek, güncelleştirmeler yüklendiğinde yeniden başlatma işlemini yönetmeleri için kullanıcılara asgari bir zaman güvencesi verin. Kullanıcılar tanınan süre içerisinde yeniden başlatmaları yeniden zamanlayabilir ve eğer kullanıcı yeniden başlatmaları yeniden zamanlamamayı seçerse, Windows yine aktif saatler dışında otomatik olarak yeniden başlayabilir. Son tarih ayarlarına göre eğer kullanıcıların yeniden başlatmayı yönetmek için tanınan süreden daha fazla günleri varsa, tanınan süre geçerli olmaz.
+Set a grace period for feature updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
 
-Hem son tarih hem de tanınan süre geçene kadar cihazı yeniden başlatmayı ertelemeye ayarlayabilirsiniz.
+You can set the device to delay restarting until both the deadline and grace period have expired.
 
-Bu ilkeyi devre dışı bırakır veya ayarlamazsanız, cihazlar varsayılan zamanlamaya göre güncelleştirmeleri alırlar ve yeniden başlarlar.
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
 
-1.  Güncelleştirmenin yüklenmesi için otomatik yeniden başlatma öncesi son tarih belirtin
-2.  Güncelleştirmeler için Bağlı yeniden başlatma geçişi ve bildirim zamanlamasını belirtin
-3.  Her zaman zamanlanmış zamanda otomatik olarak yeniden başlat
-4.  Otomatik Güncelleştirmeleri Ayarla
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
+      </string>
+      <string id="ComplianceDeadlineForQU_Title">Specify deadline for automatic updates and restarts for quality update</string>
+      <string id="ComplianceDeadlineForQU_Help">This policy lets you specify the number of days before quality updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
+
+Set deadlines for quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
+
+Set a grace period for quality updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
+
+You can set the device to delay restarting until both the deadline and grace period have expired.
+
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
+
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
       </string>
       <string id="ComplianceDeadlineDay0">0</string>
       <string id="ComplianceDeadlineDay1">1</string>
@@ -670,15 +689,30 @@ Bu ilkeyi devre dışı bırakır veya ayarlamazsanız, cihazlar varsayılan zam
       <string id="ComplianceDeadlineDay29">29</string>
       <string id="ComplianceDeadlineDay30">30</string>
 
-      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Enable features introduced via servicing that are off by default</string>
-      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Features introduced via servicing (outside of the annual feature update) are off by default for devices that have their Windows updates managed*.
+      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Varsayılan olarak kapalı olan bakım aracılığıyla sunulan özellikleri etkinleştir</string>
+      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Hizmet aracılığıyla sunulan özellikler (yıllık özellik güncelleştirmesi dışında), Windows güncelleştirmeleri yönetilen cihazlar için varsayılan olarak kapalıdır*.
 
-If this policy is configured to “Enabled”, then all features available in the latest monthly quality update installed will be on.
+Bu ilke “Etkin” olarak yapılandırılırsa, yüklenen en son aylık kalite güncelleştirmesinde bulunan tüm özellikler açık olur.
 
-If this policy is set to “Not Configured” or “Disabled” then features that are shipped via a monthly quality update (servicing) will remain off until the feature update that includes these features is installed.
+Bu ilke “Yapılandırılmadı” veya “Devre Dışı” olarak ayarlanırsa, aylık kalite güncelleştirmesi (hizmet) aracılığıyla gönderilen özellikler, bu özellikleri içeren özellik güncelleştirmesi yüklenene kadar kapalı kalır.
 
- *Windows update managed devices are those that have their Windows updates managed via policy; whether via the cloud using Windows Update for Business or on-premises with Windows Server Update Services (WSUS).
+ *Windows Update yönetimli cihazlar, Windows güncelleştirmelerinin ilke aracılığıyla yönetildiği cihazlardır; ister İş İçin Windows Update kullanılarak bulut üzerinden ister Windows Server Update Services (WSUS) ile şirket içinde.
       </string>
+      <string id="AllowOptionalContent_Title">İsteğe bağlı güncelleştirmeleri etkinleştir</string>
+      <string id="AllowOptionalContent_Help">Bu ilke, cihazların isteğe bağlı güncelleştirmeleri (aşamalı özellik dağıtımları (CFR'ler) dahil) almasını sağlar. Daha fazla bilgi için bkz. aka.ms/AllowOptionalContent
+
+İlke yapılandırıldığında
+
+• "İsteğe bağlı güncelleştirmeleri (CFR'ler dahil) otomatik olarak al" seçilirse cihaz, yapılandırılan kalite güncelleştirmesi ertelemeleri ile uyumlu şekilde, isteğe bağlı en yeni güncelleştirmeleri otomatik olarak alır. Buna isteğe bağlı toplu güncelleştirmeler ve aşamalı özellik dağıtımları (CFR'ler) dahildir.
+
+• "İsteğe bağlı güncelleştirmeleri otomatik olarak al" seçilirse cihaz, yalnızca kalite güncelleştirmesi ertelemeleri ile uyumlu şekilde, isteğe bağlı toplu güncelleştirmeleri otomatik olarak alır.
+
+• "Kullanıcılar güncelleştirmelerden almak istediklerini seçebilir" seçilirse kullanıcılar, Ayarlar &gt; Windows Update &gt; Gelişmiş ayarlar &gt; İsteğe bağlı güncelleştirmeler'i ziyaret ederek isteğe bağlı güncelleştirmelerden almayı dilediklerini seçebilir. Ayrıca kullanıcılar, isteğe bağlı güncelleştirmeleri ve aşamalı özellik dağıtımlarını otomatik olarak almak için "En son güncelleştirmeleri kullanıma hazır olur olmaz al" düğmesini açabilir.
+      </string>
+      <string id="DonotReceiveOptionalContent">İsteğe bağlı güncelleştirme alma</string>
+      <string id="ReceiveOptionalContentWithAutoApproval">İsteğe bağlı güncelleştirmeleri otomatik olarak al (CFR’ler dahil)</string>
+      <string id="ReceiveOptionalLCUWithAutoApproval">İsteğe bağlı güncelleştirmeleri otomatik olarak al</string>
+      <string id="ReceiveOptionalContentNeedUserApproval">Kullanıcılar alacakları isteğe bağlı güncelleştirmeleri seçebilir</string>
     </stringTable>
 
     <presentationTable>
@@ -820,16 +854,20 @@ If this policy is set to “Not Configured” or “Disabled” then features th
         <text></text>
         <checkBox refId="NoUpdateNotificationsDuringActiveHours" defaultChecked="false">Yalnızca etkin saatlerde uygula</checkBox>
       </presentation>
-      <presentation id="ComplianceDeadline_Title">
-        <text>Kalite Güncelleştirmeleri</text>
+       <presentation id="ComplianceDeadlineForFU_Title">
+        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="2">Son tarih (gün):</dropdownList>
+        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="7">Yetkisiz Kullanım Süresi (gün):</dropdownList>
+        <text></text>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForFeatureUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="ComplianceDeadlineForQU_Title">
         <dropdownList refId="ConfigureDeadlineForQualityUpdates" noSort="true" defaultItem="7">Son tarih (gün):</dropdownList>
         <dropdownList refId="ConfigureDeadlineGracePeriod" noSort="true" defaultItem="2">Yetkisiz kullanım süresi (gün):</dropdownList>
         <text></text>
-        <text>Özellik Güncelleştirmeleri</text>
-        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="7">Son tarih (gün):</dropdownList>
-        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="2">Yetkisiz Kullanım Süresi (gün):</dropdownList>
-        <text></text>
-        <checkBox refId="ConfigureDeadlineNoAutoReboot" defaultChecked="false">Yetkisiz kullanım süresinin sonuna kadar otomatik olarak yeniden başlatma</checkBox>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForQualityUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="AllowOptionalContent_Title">
+        <dropdownList refId="AllowOptionalContent" noSort="true" defaultItem="0">Kullanıcıların isteğe bağlı güncelleştirmeleri nasıl alacaklarını seçin:</dropdownList>
       </presentation>
     </presentationTable>
   </resources>

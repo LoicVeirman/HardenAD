@@ -33,25 +33,36 @@
       <string id="LAPS_PasswordSettings">密碼設定</string>
       <string id="LAPS_PasswordSettings_Help">設定密碼參數
 
-密碼複雜性: 產生新密碼時會使用哪些字元
-  預設值: 大寫字母 + 小寫字母 + 數位 + 特殊字元
+密碼複雜性： 產生新密碼時會使用哪些字元
+  預設值： 大寫字母 + 小寫字母 + 數位 + 特殊字元
 
 密碼長度
-  最少: 8 個字元
-  最大值: 64 個字元
-  預設值: 14 個字元
+  最少： 8 個字元
+  最大值： 64 個字元
+  預設值： 14 個字元
 
 密碼使用期限天數
-  最小值: 將備份目錄設定為 Azure AD) 1 天 (7 天
-  最大值: 365 天
-  預設值: 30 天
+  最小值： 將備份目錄設定為 Azure AD) 1 天 (7 天
+  最大值： 365 天
+  預設值： 30 天
 
-如需詳細資訊，請參閱https://go.microsoft.com/fwlink/?linkid=2188435。
+複雜密碼長度
+  最少： 3 個字
+  最大值： 10 個字
+  預設值： 6 個字
+
+如需詳細資訊，請參閱 https://go.microsoft.com/fwlink/?linkid=2188435。
+
+複雜密碼清單由電子前緣基礎從“Deep Dive： EFF's New Wordlists for Random Passphrases” 取得，並用於 CC-BY-3.0 屬性授權下。如需詳細資訊，請參閱 https://go.microsoft.com/fwlink/?linkid=2255471。
       </string>
       <string id="LAPS_PwdComplexity_Item_1">大寫字母</string>
       <string id="LAPS_PwdComplexity_Item_2">大寫字母 + 小寫字母</string>
       <string id="LAPS_PwdComplexity_Item_3">大寫字母 + 小寫字母 + 數字</string>
       <string id="LAPS_PwdComplexity_Item_4">大寫字母 + 小寫字母 + 數字 + 特殊符號</string>
+      <string id="LAPS_PwdComplexity_Item_5">大寫字母 + 小寫字母 + 數位 + 特殊 (提高可讀性)</string>
+      <string id="LAPS_PwdComplexity_Item_6">複雜密碼 (長文字)</string>
+      <string id="LAPS_PwdComplexity_Item_7">複雜密碼 (簡短文字)</string>
+      <string id="LAPS_PwdComplexity_Item_8">複雜密碼 (具有唯一前置詞的簡短文字)</string>
       <string id="LAPS_AdminName">要管理的系統管理員帳戶名稱</string>
       <string id="LAPS_AdminName_Help">這個原則設定指定要管理密碼的自訂系統管理員帳戶名稱。
 
@@ -86,15 +97,27 @@
 如需詳細資訊，請參閱https://go.microsoft.com/fwlink/?linkid=2188435。
       </string>
       <string id="LAPS_ADPasswordEncryptionPrincipal">設定授權的密碼解密程式</string>
-      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">設定此設定以控制授權解密加密密碼的特定使用者或群組。
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">設定此設定以控制有權解密加密密碼的特定使用者或群組。
 
-除非啟用密碼加密，否則設定此設定不會有作用。
+除非已啟用密碼加密，否則設定此設定沒有效果。
 
-如果啟用此設定，指定的群組將解密加密的密碼。
+如果啟用此設定，指定的群組將可解密加密的密碼。
 
-如果停用或未設定此設定，則網域系統管理員群組將可解密加密的密碼。
+如果停用或未設定此設定，[網域系統管理員] 群組將可解密加密的密碼。
 
-此設定必須使用字串格式 (「S-1-5-21-2127521184-1604012920-1887927527-35197」)的 SID，或是使用「網域\(群組或使用者)」 格式的群組或使用者名稱。指定的使用者或群組必須可由受管理的裝置解析，否則將不會備份密碼。
+此設定必須使用群組或使用者的網域限定名稱，或字串格式的 SID 來設定。有效的範例包括:
+
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+請勿以引號或括弧括住使用者\群組名稱或 SID。
+
+受管理的裝置必須可以解決指定的使用者或群組，否則系統將不會備份密碼。
+
+請注意: 在網域控制站上備份 [目錄服務修復模式 (DSRM)] 帳戶密碼時，會忽略此設定。在這種情況下，此設定一律會預設為網域控制站網域的 [網域系統管理員] 群組。
 
 如需詳細資訊，請參閱 https://go.microsoft.com/fwlink/?linkid=2188435。
       </string>
@@ -139,11 +162,13 @@
 
 重設密碼: 寬限期到期時，會重設受管理帳戶密碼。
 
-重設密碼並登出受管理帳戶: 寬限期到期時，將重設受管理帳戶密碼，並終止任何使用受管理帳戶的互動式登入工作階段。
+重設密碼並登出受管理帳戶: 寬限期到期時，會重設受管理帳戶密碼，並登出任何使用受管理帳戶的互動式登入工作階段。
+
+重設密碼並重新啟動: 寬限期到期時，會重設受管理的帳戶密碼，並重新啟動受管理的裝置。
+
+重設密碼，登出受管理的帳戶，並終止任何剩餘的程序: 寬限期到期時，會重設受管理的帳戶密碼，並將登出任何使用受管理的帳戶的互動式登入工作階段，且會中止任何剩餘的程序。
 
 (注意: 終止任何互動式登入工作階段之後，受管理帳戶可能仍有其他已驗證的工作階段在使用中。確保以前的密碼使用時間更長的唯一可靠方法是重新啟動裝置。)
-
-重設密碼並重新啟動: 寬限期到期時，將重設受管理帳戶密碼，且會立即重新啟動受管理的裝置。
 
 如果停用或未設定此設定，驗證後動作將預設為「重設密碼並登出受管理的帳戶」。
 
@@ -155,6 +180,44 @@
       <string id="PostAuthenticationActions_Item1">重設密碼</string>
       <string id="PostAuthenticationActions_Item3">重設密碼並登出受管理帳戶</string>
       <string id="PostAuthenticationActions_Item5">重設密碼並將重新啟動裝置</string>
+      <string id="PostAuthenticationActions_Item11">重設密碼、登出受管理帳戶，並終止所有剩餘的處理常式</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">設定自動帳戶管理</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">此原則會設定自動帳戶管理原則選項。
+
+指定要管理的目標帳戶: 指定要進行管理的內建管理帳戶或自定帳戶。
+
+自動帳戶名稱 (或名稱前置詞): 指定要用於受管理帳戶的名稱或名稱前置詞。
+
+如果已設定此原則設定，Windows LAPS 將會使用它做為目標帳戶的帳戶名稱或名稱前置詞。
+
+如果未設定此原則設定，Windows LAPS 將會使用 "WLapsAdmin" 做為帳戶名稱或名稱前置詞。
+
+注意: 設定帳戶名稱隨機化時，此名稱會被視為前置詞，請查看下方的註解。
+
+啟用受管理帳戶: 指定是否應該啟用受管理帳戶。
+
+如果已設定此原則設定，Windows LAPS 將啟用指定的受管理帳戶。
+
+如果未設定此原則設定，Windows LAPS 將停用指定的受管理帳戶。
+
+注意: Windows LAPS 會定期維護及輪換受管理帳戶的密碼，無論帳戶是否維持在已啟用\停用狀態。
+
+隨機化受管理帳戶的名稱: 指定受管理帳戶的名稱是否應該透過隨機數字尾碼進行隨機處理。
+
+如果已設定此原則設定，Windows LAPS 就會在受管理的自動帳戶名稱中新增八位數隨機數字尾碼，而且每次輪換密碼時，都會重新隨機化受管理帳戶的名稱。
+
+如果未設定此原則設定，Windows LAPS 將會使用設定的受管理自動帳戶名稱。
+
+如果已設定受管理的自動帳戶名稱前置詞，Windows LAPS 會使用該名稱的前十二 (12) 個字元 (最多) 做為隨機名稱的前置詞。如果未設定受管理自動帳戶名稱，Windows LAPS 將會使用 "WLapsAdmin" 做為名稱前置詞。
+
+注意: 網域控制站上的 DSRM 帳戶無法針對自動帳戶管理進行設定。此原則對網域控制站沒有任何影響，此原則即使設定為 DC 也會遭到忽略。
+
+如需詳細資訊，請參閱 https://go.microsoft.com/fwlink/?linkid=2188435。
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">管理內建管理帳戶</string>
+      <string id="AutomaticAccountManagementTarget_Item1">管理自訂系統管理員帳戶</string>
+      <string id="AutomaticAccountName_Help">指定帳戶名稱或名稱前置詞</string>
+      <string id="AutomaticAccountNameRandomization_Help">指定自動帳戶名稱是否應隨機化。</string>
       <string id="SUPPORTED_Windows10">至少為 Microsoft Windows 10 或更新版本</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">密碼複雜性</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">密碼長度</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">密碼使用期限 (天)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">複雜密碼長度 (文字)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">寬限期 (小時):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">動作:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">動作:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">指定要管理的目標帳戶:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>自動帳戶名稱 (或名稱前置詞):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">啟用受管理帳戶</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">隨機化受管理帳戶的名稱</checkBox>
       </presentation>
     </presentationTable>
   </resources>

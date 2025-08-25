@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">オンプレミスの認証に証明書を使用する</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">オンプレミス認証にクラウド トラストを使用する</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">サインイン後にWindows Hello for Business資格情報のキャッシュを無効にする</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello for Business は、Active Directory や Azure Active Directory アカウントを使った Windows へのサインイン方法として、パスワード、スマート カード、仮想スマート カードに代わる手段です。
 
@@ -114,13 +116,14 @@
         <string id="MSPassport_EnableEnhancedSignInSecurityExplain">サインイン セキュリティの強化 (ESS) により、Windows Hello の生体認証 (顔と指紋) テンプレートのデータと照合操作は信頼されるハードウェアまたは指定されたメモリ領域に分離され、オペレーティング システムの残りの部分からアクセスしたり、改ざんしたりできなくなります。センサーとアルゴリズムの間の通信チャネルもセキュリティで保護されているため、ユーザーのサインインをシミュレートしたり、ユーザーをコンピューターから締め出したりするためにマルウェアでデータの挿入や再現を行うことは不可能です。
 このポリシーを有効にした場合に指定できる値は次のとおりです。
 
-0 - 周辺機器および組み込みの非 ESS センサーを利用してサインイン セキュリティの強化を有効化
-Windows の既存の既定動作に従い、対応するソフトウェアとハードウェアを含むシステムでサインイン セキュリティの強化が有効になります。現在の機能の制限を条件に、Windows Hello 対応の周辺デバイスの認証操作が許可されます。さらに、この設定により、ESS 対応 FPR と非 ESS 対応カメラなど、生体認証デバイスが混在しているデバイスで ESS が有効になります。
+0 - 周辺機器センサーを使用してサインイン セキュリティの強化を無効化
+対応するソフトウェアとハードウェアを含むシステムで ESS が無効化されます。現在の機能の制限を条件に、Windows Hello 対応の周辺デバイスの認証操作が許可されます。
 
-1 - 周辺機器または組み込みの非 ESS センサーを利用せずにサインイン セキュリティの強化を有効化 (既定であり、セキュリティ向上のために推奨)
-Windows の既存の既定動作に従い、対応するソフトウェアとハードウェアを含むシステムでサインイン セキュリティの強化が有効になります。生体認証用周辺デバイスの認証操作はブロックされ、Windows Hello には使用できません。
+1 - 周辺機器センサーを使用せずにサインイン セキュリティの強化を有効化 (既定かつ推奨)
+Windows の既存の既定動作に従い、対応するソフトウェアとハードウェアを含むシステムで ESS が有効化されます。生体認証用周辺デバイスの認証操作はブロックされ、Windows Hello には使用できません。
 
 このポリシーが無効または未構成の場合、非 ESS センサーが ESS デバイスでブロックされます。
+
         </string>
         <string id="MSPassport_EnablePinRecovery">PIN 回復を使用する</string>
         <string id="MSPassport_EnablePinRecoveryExplain">PIN 回復を使用すると、ユーザーは Windows Hello for Business PIN 回復サービスを使って、忘れた PIN を変更することができます。このとき、デバイス上にあるユーザーの個人アカウントに関連付けられている任意のキーなど、関連付けられた資格情報や証明書が失われることはありません。この実現のために、Azure ベースの PIN 回復サービスによって回復シークレットが暗号化され、この回復シークレットがデバイスに保存されます。暗号化を解除するには、PIN 回復サービスとデバイスの両方が必要になります。PIN 回復では、ユーザーが Azure Active Directory の多要素認証を実行する必要があります。
@@ -149,6 +152,8 @@ Windows の既存の既定動作に従い、対応するソフトウェアとハ
  
 注: このポリシー設定と [Windows Hello for Business を使用する] ポリシー設定の両方を有効にする環境では、1つ以上の Windows Server 2016 ドメインコントローラーが必要です。そうしないと、Windows Hello for Business 認証は失敗します。
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">特定のセキュリティ関連アプリケーションが資格情報をユーザー入力なしで使用してユーザー エクスペリエンスを中断しないようにするために、サインイン後に Windows Hello for Business の資格情報がキャッシュされます。これをオフにして、ユーザー入力が明示的に必要になるようにキャッシュを削除する場合は、このポリシーを有効にします。</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">デバイスのロック解除要素を構成する</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">最初と 2 番目のロック解除要素として使用する資格情報プロバイダーの GUID (顔や指紋のプロバイダーの GUID など) のコンマ区切り一覧を構成します。ロック解除要素の 1 つとして信頼するシグナル プロバイダーを指定する場合は、検証するシグナルの種類ごとに、XML 形式でシグナル ルールのコンマ区切り一覧も構成してください。

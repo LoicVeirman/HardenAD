@@ -17,6 +17,9 @@
     <string id="Quarantine">検疫</string>
     <string id="RealtimeProtection">リアルタイム保護</string>
     <string id="Remediation">修復</string>
+    <string id="Remediation_BNB">動作ネットワーク ブロック</string>
+    <string id="Remediation_BNB_REP">リモート暗号化保護</string>
+    <string id="Remediation_BNB_BFP">Brute-Force 保護</string>
     <string id="Reporting">レポート</string>
     <string id="Scan">スキャン</string>
     <string id="SignatureUpdate">セキュリティ インテリジェンスの更新</string>
@@ -38,7 +41,7 @@
 
     有効: 
     管理対象デバイスで従量制課金接続を使用して更新できます。データ通信の料金が発生する場合があります。</string>
-    <string id="HideExclusionsFromLocalAdmins">除外をローカル管理者に表示するかどうかを制御します。</string>
+    <string id="HideExclusionsFromLocalAdmins">ローカル管理者が除外を表示できるかどうかを管理</string>
     <string id="HideExclusionsFromLocalAdmins_Explain">
     このポリシー設定では、除外をローカル管理者に表示するかどうかを制御します。 エンド ユーザー (ローカル管理者ではない) にとっては、この設定が有効になっているかどうか関わらず、除外は表示されません。
     無効 (既定):
@@ -47,6 +50,10 @@
 有効：
         この設定を有効にした場合、ローカル管理者は、Windows セキュリティ アプリで、または PowerShell 経由で除外リストを表示できなくなります。
         注: この設定を適用しても除外は削除されず、ローカル管理者にのみ表示されなくなるだけです。これは Get-MpPreference に反映されます。</string>
+    <string id="HideExclusionsFromLocalUsers">除外をローカル ユーザーに表示するかどうかを制御します</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    このポリシー設定では、除外をデバイス上のローカル ユーザーに表示するかどうかを制御します。
+    ポリシー設定 HideExclusionsFromLocalAdmins を使用して、標準ユーザーと管理ローカル ユーザーの両方から除外を非表示にします。</string>
     <string id="AllowNetworkProtectionOnWinServer">この設定では、Windows Server でネットワーク保護をブロックモードまたは監査モードに構成することを許可するかどうかを制御します。</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     無効 (既定):
@@ -57,11 +64,29 @@
     この構成は EnableNetworkProtection の構成に依存していることに注意してください。この構成が false の場合、EnableNetworkProtection は無視されます。それ以外の場合は、EnableNetworkProtection の値に応じて Windows Server でネットワーク保護が開始されます。</string>
     <string id="DisableDatagramProcessing">この設定は、ネットワーク保護のためのデータグラム処理を制御します。</string>
     <string id="DisableDatagramProcessing_Explain">
-    有効 (既定): 
-    未構成または無効の場合、データグラム処理はネットワーク保護に対して有効になります。
+    無効 (既定): 
+    未構成または無効の場合、ネットワーク保護に関するデータグラム処理が有効になります。
 
     有効: 
-    有効の場合、ネットワーク保護のため、データグラム処理は無効になります。</string>
+    有効の場合、ネットワーク保護に関するデータグラム処理は無効になります。</string>
+    <string id="EnableConvertWarnToBlock">警告判定をブロックに変換する</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    ネットワーク保護は、ネットワーク トラフィックを検査し、トラフィックを許可するかブロックするか、警告を表示するかを判断します。
+    
+    無効 (既定): 
+    未構成または無効の場合、ネットワーク保護は警告判定の警告を表示します。
+
+    有効: 
+    この設定を有効にすると、ネットワーク保護は警告を表示せずにネットワーク トラフィックをブロックします。</string>
+    <string id="AllowSwitchToAsyncInspection">非同期検査を有効にする</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    リアルタイム検査から非同期検査に切り替えて、ネットワーク保護でパフォーマンスを向上できるかどうかを制御します。
+
+    無効 (既定): 
+    未構成または無効の場合、非同期検査はネットワーク保護に対して有効になりません。
+
+    有効: 
+    有効の場合、非同期検査への切り替えがネットワーク保護に許可されます。</string>
     <string id="DisableAutoExclusions">自動除外を無効にする</string>
     <string id="DisableAutoExclusions_Explain">
         Server SKU に対して自動除外機能をオフにする必要があるかどうかを管理者が指定できます。
@@ -142,15 +167,19 @@
       この設定を無効にした場合、または構成しなかった場合、プロキシは上で示した順番に従ってこのフォールバック ステップをスキップします。
     </string>
     <string id="RandomizeScheduleTaskTimes">スケジュールされたタスクの時間をランダム化する</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">このポリシー設定を使用すると、スケジュールされたスキャンおよびスケジュールされたセキュリティ インテリジェンスの更新が開始される時刻の時間帯を時間単位で構成できます。
+    <string id="RandomizeScheduleTaskTimes_Explain">このポリシー設定を使用すると、スケジュールされたスキャンの開始時刻とスケジュールされた定義の更新開始時刻のランダム化を構成できます。
 
-    この設定を無効にした場合、または構成しなかった場合、スケジュールされたタスクは、タスク スケジューラで指定した時刻から 4 時間後までの間のランダムな時刻に開始されます。
-    この設定を有効にした場合は、このランダム化の期間を拡大または縮小できます。指定できるランダム化の時間帯は 1 時間から 23 時間です。</string>
+このポリシー設定を有効にした場合、または構成しなかった場合に、[スケジュールされたタスクの時間のランダム化を構成する] 設定でランダム化ウィンドウを設定しなかった場合、ランダム化は 0 から 4 時間の間に追加されます。
+        このポリシー設定を有効にした場合、または構成しなかった場合は、[スケジュールされたタスクの時間のランダム化を構成する] 設定でランダム化ウィンドウを設定すると、構成されたランダム化ウィンドウが使用されます。
+        このポリシー設定を無効にしても、スケジュールされたタスクの時間のランダム化期間を構成した場合、ランダム化は実行されません。 
+    </string>
     <string id="SchedulerRandomizationTime">スケジュールされたタスク時間のランダム化ウィンドウを構成する</string>
-    <string id="SchedulerRandomizationTime_Explain">このポリシー設定を使用すると、スケジュールされたスキャンの開始時刻およびスケジュールされたセキュリティ インテリジェンスの更新開始時刻の時間帯を時間単位で構成できます。
+    <string id="SchedulerRandomizationTime_Explain">このポリシー設定を使用すると、スケジュールされたタスクのスキャン開始時刻と、スケジュールされたセキュリティ インテリジェンス更新の開始時刻の時間帯を 1 時間単位で構成できます。この設定は、スケジュールされたタスク時間のランダム化の構成に影響します。
 
-    この設定を無効にした場合、または構成しなかった場合は、スケジュールされたタスクは、指定した開始時間から 4 時間の間のランダムな時間に開始されます。
-    この設定を有効にした場合は、時間単位でランダム化の時間帯を選択する必要があります。指定できるランダム化の時間帯の幅は 1 時間から 23 時間です。</string>
+        この設定を有効にした場合、ランダム化ウィンドウを 1 時間単位で選択する必要があります。使用可能なランダム化ウィンドウの間隔は、1 時間から 23 時間です。実装されるランダム化の間隔は、0 から構成された値の間です。
+        この設定を有効にすると、スケジュールされたタスク時間のランダム化の設定で、この構成設定で指定されたランダム化ウィンドウが使用されます。
+        このポリシー設定を無効にするか、未構成にした場合、スケジュールされたタスク時間のランダム化の設定によって、スケジュールされたタスクの時間が 0 時間から 4 時間の間でランダム化されます。</string>
+
     <string id="ServiceKeepAlive">マルウェア対策サービスの常時実行を許可する</string>
     <string id="ServiceKeepAlive_Explain">このポリシー設定を使用すると、ウイルス対策およびスパイウェア対策のセキュリティ インテリジェンスが無効の場合でもマルウェア対策サービスの実行を継続するかどうかを構成できます。この設定は無効のままにしておくことをお勧めします。
 
@@ -219,6 +248,22 @@
 この設定を有効にした場合、または構成しなかった場合、スクリプトのスキャンが有効になります。
 
 この設定を無効にした場合、スクリプトのスキャンは無効になります。</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">OOBE 中にリアルタイム保護とセキュリティ インテリジェンスの更新を構成する</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">このポリシー設定では、OOBE (最初の実行エクスペリエンス) 中にリアルタイム保護とセキュリティ インテリジェンスの更新を有効にするかどうかを構成できます。
+ 
+    この設定を有効にした場合、OOBE 中にリアルタイム保護とセキュリティ インテリジェンスの更新が有効になります。
+ 
+    このポリシー設定を無効にするか、構成しない場合、OOBE 中にリアルタイム保護とセキュリティ インテリジェンスの更新は有効になりません。</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">パフォーマンス モードの状態を構成する</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">このポリシーは、Microsoft Defender ウイルス対策の開発者ドライブ用パフォーマンス モードを制御します。
+
+   開発者ドライブは、ソフトウェア開発シナリオでパフォーマンスを向上させるために最適化されたディスク ドライブです。このポリシーを有効にした場合、または構成しなかった場合、Microsoft Defender ウイルス対策でパフォーマンス モードが有効になります。パフォーマンス モードでは、開発者ドライブに格納されているコンテンツの Microsoft Defender ウイルス対策セキュリティ チェックが非同期に実行され、パフォーマンスが向上します。パフォーマンス モードでは、次のポリシーも有効にする必要があります: "開発者ドライブを有効にする"、および "開発者ドライブ フィルターアタッチ ポリシー"。
+
+   このポリシー設定を有効にするか、未構成にした場合、パフォーマンス モードはオンになります。
+
+   このポリシー設定を無効にすると、パフォーマンス モードはオフになり、Microsoft Defender ウイルス対策は他のドライブと同じ方法で開発者ドライブを保護します。</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">動作の監視を有効にする</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">このポリシー設定を使用すると、動作の監視を構成できます。
@@ -359,6 +404,92 @@
 この設定を有効にした場合、修復を完了するためのスケジュールされたフル スキャンが、指定した時刻に実行されます。
 
 この設定を無効にした場合、または構成しなかった場合、修復を完了するためのスケジュールされたフル スキャンが既定の時刻に実行されます。</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">リモート暗号化保護モードを構成する</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    Microsoft Defender ウイルス対策でリモート暗号化保護のモードを設定します。このモードでは、ローカル ファイルを別のデバイスの暗号化されたバージョンに置き換える試みを検出してブロックできます。
+
+サポートされている設定:
+    * 0 - 未構成または既定: 既定値を適用します。これは、ウイルス対策エンジンのバージョンとプラットフォームによって異なる場合があります
+    * 1 - ブロック: 疑わしい動作や悪意のある動作を防止する
+    * 2 - 監査: ブロックせずに EDR 検出を生成する
+    * 4 - オフ: 機能はオフで、パフォーマンスに影響はありません
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">既定</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">ブロック</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">監査</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">オフ</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">リモート暗号化保護のブロック時間を構成する</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    IP アドレスがリモート暗号化保護によってブロックされる最長時間を設定します。この時間が経過すると、ブロックされた IP アドレスは接続を再開できるようになります。
+
+サポートされている設定:
+    * 0 - なし: 内部機能ロジックによって実際のブロック時間が決定されます
+    * その他の時間を 15 分単位で指定する
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">リモート暗号化保護が脅威をどの程度積極的にブロックするかを構成する</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    リモート暗号化防止保護が IP アドレスをブロックする条件を設定します。
+
+   サポートされている設定: 
+   *0 - 低: 信頼度レベルが 100% の場合にのみブロックする (既定)
+   *1 - 中: クラウド集計を使用し、信頼度レベルが 99% を超えるとブロックする
+   *2 - 高: クラウド Intel とコンテキストを使用し、信頼度レベルが 90% を超えるとブロックする
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">低</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">中</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">高</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> リモート暗号化保護からの除外を設定する</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    リモート暗号化保護から除外する IP アドレス、サブネット、ドメイン名を指定します。攻撃者は、除外されたアドレスと名前をスプーフィングして保護をバイパスできることに注意してください。
+
+   新しい行の各アドレスまたはサブネットを名前と値のペアとして入力します: 
+   - 名前列: IP アドレスまたはサブネット名を入力します。たとえば、"1.1.127.0" は、この IP アドレスがブロックされないように除外します。
+   - 値列: 各項目に「"0"」と入力します
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">Brute-Force 保護モードを構成する</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Microsoft Defender ウイルス対策で Brute-Force 保護のモードを設定します。これにより、強制的にサインインを開始してセッションを開始する試行を検出してブロックできます。
+
+サポートされている設定:
+    * 0 - 未構成または既定: 既定値を適用します。これは、ウイルス対策エンジンのバージョンとプラットフォームによって異なる場合があります
+    * 1 - ブロック: 疑わしい動作や悪意のある動作を防止する
+    * 2 - 監査: ブロックせずに EDR 検出を生成する
+    * 4 - オフ: 機能はオフで、パフォーマンスに影響はありません
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">既定</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">ブロック</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">監査</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">オフ</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">Brute-Force 保護のブロック時間を構成する</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    Brute-Force Protection によって IP アドレスがブロックされる最長時間を設定します。この時間が経過すると、ブロックされた IP アドレスはサインインしてセッションを開始できるようになります。
+
+サポートされている設定:
+    * 0 - なし: 内部機能ロジックによって実際のブロック時間が決定されます
+    * その他の時間を 15 分単位で指定する
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">Brute-Force 保護の強度を構成する</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    Brute-Force Protection が IP アドレスをブロックする条件を設定します。
+
+サポートされている設定:
+    *0 - 低: 信頼度が 100% の場合にのみブロックする (既定)
+    *1 - 中: 信頼度レベルが 99% を上回る場合は、クラウドの集計とブロックを使用します
+    *2 - 高: クラウド の情報とコンテキストを使用し、信頼度が 90% を上回る場合はブロックする
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">低</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">中</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">高</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">Brute-Force 保護からの除外を設定する</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    Brute-Force 保護から除外する IP アドレス、サブネット、またはワークステーション名を指定します。除外された IP アドレスでは、Brute-Force アクティビティの可能性はチェックされません。
+   
+   攻撃者は、除外されたアドレスと名前をスプーフィングして保護をバイパスできることに注意してください。名前が一意であり、攻撃者によって推測される可能性が低いことを確認してください。
+
+   新しい行の各アドレスまたはサブネットを名前と値のペアとして入力します: 
+   - 名前列: IP アドレス、サブネット名またはワークステーション名を入力します。たとえば、"1.1.127.0" は、この IP アドレスが BFP にブロックされないように除外します。
+   - 値列: 各項目に「0」と入力します
+    </string>
     <string id="Reporting_AdditionalActionTimeout">追加操作が必要な状態を検出する場合のタイムアウトを構成する</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">このポリシー設定では、検出された "追加操作" 状態が "クリア" 状態に移行するまでの時間を分単位で構成します。</string>
     <string id="Reporting_CriticalFailureTimeout">重大なエラー状態を検出する場合のタイムアウトを構成する</string>
@@ -398,6 +529,12 @@
 この設定を 0 に構成すると、サービス正常性レポートは送信されません。
 
 設定できる最大値は 14400 分 (10 日) です。</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">動的シグネチャの破棄されたイベントを報告するかどうかを構成する</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">このポリシー設定では、動的署名の破棄イベントを報告するかどうかを構成します。
+
+この設定を構成しない場合、既定値が適用されます。既定値は無効に設定されています (このようなイベントは報告されません)。
+    この設定を有効に構成すると、動的署名によって削除されたイベントが報告されます。
+    この設定を無効に構成すると、動的署名の破棄されたイベントは報告されません。</string>
       <string id="Scan_AllowPause">スキャンの一時停止をユーザーに許可する</string>
     <string id="Scan_AllowPause_Explain">このポリシー設定を使用すると、進行中のスキャンをエンド ユーザーが一時停止できるかどうかを管理できます。
 
@@ -456,6 +593,10 @@
 この設定を有効にした場合、スケジュールされたクイック スキャンのキャッチアップ スキャンが有効になります。2 回続けてスキャンの予定時刻にコンピューターがオフラインになっていた場合は、次回のコンピューターへのログオン時にキャッチアップ スキャンが開始されます。 スケジュールされたスキャンが構成されていない場合は、キャッチアップ スキャンは実行されません。
 
 この設定を無効にした場合、または構成しなかった場合、スケジュールされたクイック スキャンのキャッチアップ スキャンが無効になります。</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">スキャンなしで X 日後にクイック スキャンをトリガーする</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">このポリシー設定では、前回のスキャンから、積極的なキャッチアップ クイック スキャンが自動的にトリガーされるまでの経過日数を定義します。この値は、積極的なクイック スキャンがトリガーされるまでのスキャンを実行せずに経過できる日数を表します。
+    
+有効な値の範囲は 7 ~ 60 日です。未構成の場合、積極的なクイック スキャンは無効になります。既定では、値は有効な場合は 25 日に設定されます。</string>
     <string id="Scan_DisableEmailScanning">電子メールのスキャンを有効にする</string>
     <string id="Scan_DisableEmailScanning_Explain">このポリシー設定を使用すると、電子メールのスキャンを構成できます。電子メールのスキャンが有効な場合は、エンジンがメールボックスとメール ファイルを各ファイル固有の形式に従って解析し、メールの本文と添付ファイルを分析します。現在サポートされている電子メール形式は、pst (Outlook)、dbx、mbx、mime (Outlook Express)、binhex (Mac) など、いくつかあります。電子メール スキャンは、最新の電子メール クライアントではサポートされていません。
     
@@ -498,12 +639,12 @@
 この設定を有効にした場合、マップされたネットワーク ドライブがスキャンされます。
 
 この設定を無効にした場合、または構成しなかった場合、マップされたネットワーク ドライブがスキャンされません。</string>
-    <string id="Scan_DisableScanningNetworkFiles">ネットワーク ファイルをスキャンする</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">このポリシー設定を使用すると、ネットワーク ファイルのスキャンを構成できます。この設定は、有効にしないことをお勧めします。
+    <string id="Scan_DisableScanningNetworkFiles">ネットワーク ファイルのスキャンを構成する</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">このポリシー設定では、アクセス保護を使用したネットワーク ファイルのスキャンを許可します。既定値は有効です。ほとんどの場合、有効のままにしておくことをお勧めします。
 
-この設定を有効にした場合、ネットワーク ファイルがスキャンされます。
+    この設定を有効にした場合、または構成しなかった場合は、ネットワーク ファイルがスキャンされます。
 
-この設定を無効にした場合、または構成しなかった場合、ネットワーク ファイルがスキャンされません。</string>
+    この設定を無効にした場合、ネットワーク ファイルはスキャンされません。</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">最大 CPU 使用率に対してローカル設定の優先を構成する</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">このポリシー設定では、スキャン中の最大 CPU 使用率の構成について、ローカル設定を優先するように構成します。これは、グループ ポリシーでのみ設定できます。
 
@@ -615,6 +756,18 @@
 
 この設定を無効にするか、未構成にした場合、スケジュールされたスキャンの CPU の優先度は変更されません。
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">除外されたファイルとディレクトリをクイック スキャン中にスキャンします。</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        このポリシー設定を使用すると、クイック スキャン中に除外されたファイルとディレクトリをスキャンできます。
+
+このポリシー設定を 1 に設定すると、コンテキストの除外を使用してリアルタイム保護から除外されたすべてのファイルとディレクトリがクイック スキャン中にスキャンされます。
+
+このポリシーを 0 に設定した場合、または構成しなかった場合、クイック スキャン中に除外はスキャンされません。
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">スパイウェア対策セキュリティ インテリジェンスが期限切れと見なされるまでの日数を定義する</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">このポリシー設定を使用すると、スパイウェア対策セキュリティインテリジェンスが最新の状態でないと見なされるまでに必要な日数を定義できます。セキュリティインテリジェンスが最新でないと判定された場合、この状態になると、代替の更新ソースへのフォールバックや、ユーザーインターフェイスでの警告アイコンの表示など、いくつかの追加アクションが実行される可能性があります。既定では、この値は7日間に設定されています。
 
@@ -637,6 +790,13 @@
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">このポリシー設定を使用すると、VDI で構成されたコンピューターのセキュリティ インテリジェンスの場所を定義できます。
 
     この設定を無効にした場合、または構成しなかった場合は、既定のローカル ソースからセキュリティ インテリジェンスが参照されます。</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">VDI クライアントのスケジューラーに従ってセキュリティ インテリジェンスの更新を構成します。</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">このポリシー設定を使用すると、VDI で構成されたコンピューターのスケジューラーに従ってセキュリティ インテリジェンスの更新を構成できます。これは、共有されたセキュリティ インテリジェンスの場所 (SharedSignaturesLocation) と共に使用されます。
+
+    このポリシー設定を有効にして SharedSignaturesLocation を構成すると、構成された場所からの更新は、以前に構成された更新時刻にのみ行われます。
+
+    このポリシー設定を無効にするか、未構成にした場合、SharedSignaturesLocation で指定された場所で新しいセキュリティ インテリジェンスの更新が検出されるたびに更新が行われます。
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">セキュリティ インテリジェンスの更新後にスキャンを有効にする</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">このポリシー設定を使用すると、セキュリティ インテリジェンスの更新が行われた後に開始される自動スキャンを構成できます。
 
@@ -829,12 +989,6 @@
 
       この設定を有効にした場合、Microsoft Defender ウイルス対策の通知はクライアントに表示されません。
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">操作を実行する必要があるときにクライアントに追加のテキストを表示する</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">このポリシー設定を使用すると、クライアントが操作を実行する必要がある場合に、追加のテキストを表示するかどうかを構成できます。表示されるテキストは、管理者が定義したカスタムの文字列です。たとえば、会社のヘルプ デスクを呼び出すための電話番号などです。クライアント インターフェイスには、最大で 1,024 文字まで表示できます。これよりも長い文字列は切り捨てられてから表示されます。
-
-この設定を有効にした場合、指定した追加のテキストが表示されます。
-
-この設定を無効にした場合、または構成しなかった場合、追加のテキストは表示されません。</string>
     <string id="MpCloudBlockLevel">クラウドの保護レベルを選択します</string>
     <string id="MpCloudBlockLevel_Explain">
       このポリシー設定では、Microsoft Defender ウイルス対策でどの程度積極的に不審なファイルをブロックし、スキャンするかを設定します。
@@ -912,6 +1066,17 @@
     無効と同じです。
 
     [Attack Surface Reduction 規則の構成] の GP 設定で ASR 規則を構成できます。
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">特定の攻撃面の減少 (ASR) ルールに除外の一覧を適用する</string>d
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    このポリシーを使用すると、管理者は特定の ASR ルールの除外の一覧を指定できます。
+    各エントリは名前と値のペアです。キーは規則 GUID を示し、値は &gt; 文字で区切られた完全なパスのセットであり、その特定の ASR ルールの除外を示します。
+
+    注意: GUID は KEY であり、値ではありません。
+
+    例:
+    KEY: "{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}"
+    値: "C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe"
     </string>
     <string id="ExploitGuard_ASR_Rules">Attack Surface Reduction 規則の構成</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1127,13 +1292,66 @@
     <string id="DeviceControl_DefaultEnforcement_DefaultDeny">既定の拒否</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation">デバイス制御証拠データのリモートの場所を定義する</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
-        Device Control サービスがキャプチャした証拠データの移動先になる証拠ファイルのリモートの場所を定義します。
+        証拠ファイルのリモートの場所を定義します。デバイス制御サービスによってキャプチャされた証拠データが移動されます。
+
+この設定を構成する場合は、デバイス制御が有効で、指定されたパスがユーザーがアクセスできるリモート パスであることを確認してください。
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">ローカル デバイス コントロール キャッシュ内のファイルの保持期間を設定します</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        このポリシー設定は、デバイスコントロールがデバイス上のローカル キャッシュ内の証拠のファイルを保持する期間を決定します。デバイス コントロールは、指定されたネットワーク共有または Azure Storage にファイルをアップロードできない場合にのみ、ファイルをローカル キャッシュに保持します。
+
+既定では、デバイス コントロールはファイルをローカル キャッシュに 60 日間保持します。
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">特定のデバイスの種類に対してデバイス制御を有効にする</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        このポリシー設定では、PrimaryId で識別されるデバイスの種類でデバイス制御保護を有効にするデバイスを制御します。特定のデバイスの種類に対してこの設定を有効にした場合、デバイス制御は対応するカスタム ポリシーに基づいてそれらのデバイスへのアクセスを制限します。デバイスコントロールは、カスタム保護ポリシーがそれらのデバイスに対して構成されている場合でも、サポートされている他のすべての種類のデバイスに対して無効になります。
+ 
+この設定は現在、次のデバイスの種類をサポートしています: RemovableMediaDevices、CdRomDevices、WpdDevices、PrinterDevices。
+ 
+このポリシー設定を有効にしても PrimaryId を指定しない場合、サポートされているすべてのデバイスの種類でデバイス制御がオフになります。
+ 
+このポリシー設定を無効にするか、未構成にした場合、対応するカスタム ポリシーに基づいてサポートされているすべてのデバイスにデバイス制御が適用されます。
+    </string>
+	<string id="DeviceControl_CustomSupportLink">デバイス制御通知のサポート リンクを設定する</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        この設定を使用すると、organizationはデバイス制御通知で [サポートの取得] リンクを指定できます。
+		
+構成すると、[サポートの取得] ボタンは指定されたリンクに自動的に移動します。
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">ポリシーのリフレッシュ レートを設定する</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        この設定では、エラーが発生し、ポリシーを読み込めなかった場合に、デバイスがポリシー構成の読み込みを再試行する間隔を分単位で定義します。
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">Azure AD のリフレッシュ レートを設定する</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        この設定では、デバイスが関連する設定、構成、グループ メンバーシップを更新するためにAzure ADを照会する間隔を分単位で定義します。
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">データ重複の制限 (MB) を設定する</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        この設定では、デバイス制御用に複製できるデータの最大量を定義します。
+		
+制限に達すると、リムーバブル記憶域にコピーされるファイルはコンピューター上で複製されません。
+	</string>
     <string id="Features_DeviceControlEnabled">デバイス制御</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         このコンピューターで Defender デバイス制御を有効または無効にします。
         注: デバイスコントロールを有効にするには、E3 または E5 として登録する必要があります。
     </string>
+    <string id="Features_TDTFeatureEnabled">Intel TDT 統合レベル</string>
+    <string id="Features_TDTFeatureEnabled_Explain">このポリシー設定では、Intel TDT 対応デバイスの Intel TDT 統合レベルを構成します。
+
+        この設定を構成しない場合、既定値が適用されます。既定値は Microsoft セキュリティ インテリジェンスの更新によって制御されます。既知の脅威がある場合、Microsoft は Intel TDT を有効にします。
+        この設定を有効にして構成すると、Intel TDT 統合がオンになります。
+        この設定を無効にして構成すると、Intel TDT 統合がオフになります。</string>
+    <string id="Features_PassiveRemediation">ブロックモードで EDR を有効にする</string>
+    <string id="Features_PassiveRemediation_Explain">このポリシー設定は、ブロック モード ("パッシブ修復" とも呼ばれます) の EDR を有効または無効にします。パッシブ モードで Microsoft Defender ウイルス対策を実行しているデバイスでは、ブロック モードの EDR をお勧めします。プラットフォーム リリースで使用可能: 4.18.2202.X
+
+データ型が整数です
+
+サポートされている値:
+
+1: EDR をブロック モードでオンにする
+        0: EDR をブロック モードでオフにする</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1180,11 +1398,38 @@
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">受信ファイル、送信ファイルおよびプログラムの動作の監視を構成する</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">リモート暗号化保護の状態を構成指定する</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">検出をブロックする期間を分単位で指定します</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">リモート暗号化保護が脅威をどの程度積極的にブロックするかを指定する</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">リモート暗号化保護の除外</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">Brute-Force 保護の状態を指定する</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">検出をブロックする期間を分単位で指定します</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">Brute-Force 保護が脅威をどの程度積極的にブロックするかを指定する</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Brute-Force 保護の除外</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">修復を完了するためのスケジュールされたフル スキャンを実行する曜日を指定する</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">修復を完了するためのスケジュールされたフル スキャンを実行する時刻を指定する</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">積極的なクイック スキャンがトリガーされるまでのスキャンなしの日数を指定する</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">キャッチアップ スキャンが強制となるまでに実行されない、スケジュールされたスキャンの数を定義する</decimalTextBox>
@@ -1282,11 +1527,6 @@
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">検出時に既定の動作を実行しない脅威警告レベルを指定する</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>操作を実行する必要があるときにクライアントに追加のテキストを表示する</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">期限切れ通知の間隔を指定する</decimalTextBox>
     </presentation>
@@ -1302,6 +1542,9 @@
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">ASR 規則からの除外:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">各 ASR ルールの除外:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">各 ASR 規則の状態を設定します。</listBox>
     </presentation>
@@ -1316,6 +1559,9 @@
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1347,6 +1593,34 @@
         <label>デバイス制御データ重複のリモートの場所を定義します。</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">ローカル デバイス コントロール キャッシュ内のファイルの保持期間を設定します</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>特定のデバイスの種類に対してデバイス制御を有効にする</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>デバイス制御通知のサポート リンクを設定する</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>ポリシーのリフレッシュ レートを設定する</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>Azure AD のリフレッシュ レートを設定する</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>データ重複の制限 (MB) を設定する</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

@@ -115,6 +115,25 @@ Hendelser som genereres av denne konfigurasjonen: 309 og 310.
       <string id="PKINITHashAlgorithm_Supported">Støttes</string>
       <string id="PKINITHashAlgorithm_Audited">Revidert</string>
       <string id="PKINITHashAlgorithm_NotSupported">Støttes ikke</string>
+      <string id="StrongNameMatches">Tillat navnebaserte sterke tilordninger for sertifikater</string>
+      <string id="StrongNameMatches_explain">Denne policyinnstillingen aktiverer bruk av alternative, navnebaserte identifikatorer for å tilordne sertifikater som er utstedt til Active Directory-brukerkontoer, og angir hvilke sertifikater som tilordnes hvilke kontoer. Uten at denne innstillingen er aktivert, må sertifikater oppfylle kriteriene for «sterk tilordning» som er angitt i aka.ms/StrongCertMapKB, som vanligvis ikke tillater navnebaserte identifikatorer.
+
+Hver tilordning som er angitt i denne policyen, må inneholde en policy-OID sammen med en IssuerSubject og/eller et brukerhovednavn-suffiks ved hjelp av syntaksen som er angitt nedenfor. Hvis en gyldig tilordning for et gitt sertifikat ikke finnes i denne policyen, prøver Active Directory å finne et treff ved hjelp av de eksisterende kriteriene for sterk tilordning som er angitt i KB5014754. Sertifikattilordninger som ikke samsvarer med kriteriene for tilordning av sterkt navn (denne policyen), eller de eksisterende kriteriene for sterk tilordning, anses som ugyldige for godkjenning.
+
+Det generelle policyformatet og noen eksempler er oppført nedenfor. Denne policyen gjelder bare for Active Directory-brukerkontoer.
+
+Generell syntaks
+==============
+&lt;thumbprint&gt;; &lt;liste over oid-er&gt;; &lt;metode for navnesamsvar&gt;
+
+Eksempler
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+Policyen må inneholde nøyaktig ett sertifikatavtrykk per regel, der hver regel representeres som en tuppel. Avtrykk må være unike og kan ikke gjentas i flere regler. Delene i hver tuppel som er atskilt med semikolon, må være i angitt rekkefølge, mens feltene atskilt med komma, kan være i hvilken som helst rekkefølge. Selve reglene er atskilt med ny linje.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Hendelser som genereres av denne konfigurasjonen: 309 og 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Regler for sterkt navnesamsvar:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

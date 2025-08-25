@@ -34,11 +34,11 @@ Aby uzyskać więcej informacji, zobacz https://go.microsoft.com/fwlink/?linkid=
       <string id="LAPS_PasswordSettings_Help">Konfiguruje parametry hasła
 
 Złożoność hasła: które znaki są używane podczas generowania nowego hasła
-  Wartość domyślna: Wielkie litery + małe litery + cyfry + znaki specjalne
+  Wartość domyślna: duże litery + małe litery + cyfry + znaki specjalne
 
 Długość hasła
   Minimum: 8 znaków
-  Maksimum: 64 znaki
+  Maksymalnie: 64 znaki
   Wartość domyślna: 14 znaków
 
 Okres ważności hasła w dniach
@@ -46,12 +46,23 @@ Okres ważności hasła w dniach
   Wartość maksymalna: 365 dni
   Wartość domyślna: 30 dni
 
-Aby uzyskać więcej informacji, przejdź do strony https://go.microsoft.com/fwlink/?linkid=2188435.
+Długość hasła
+  Wartość minimalna: 3 wyrazy
+  Wartość maksymalna: 10 wyrazów
+  Wartość domyślna: 6 wyrazów
+
+Aby uzyskać więcej informacji, zobacz https://go.microsoft.com/fwlink/?linkid=2188435.
+
+Lista haseł pobrana z listy "Deep Dive: EFF's New Wordlists for Random Passphrases" firmy Electronic Border Foundation i jest używana w ramach licencji cc-BY-3.0 Attribution. Aby uzyskać więcej informacji, zobacz https://go.microsoft.com/fwlink/?linkid=2255471.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Wielkie litery</string>
       <string id="LAPS_PwdComplexity_Item_2">Wielkie i małe litery</string>
       <string id="LAPS_PwdComplexity_Item_3">Wielkie litery + małe litery + cyfry</string>
       <string id="LAPS_PwdComplexity_Item_4">Wielkie litery + małe litery + cyfry + znaki specjalne</string>
+      <string id="LAPS_PwdComplexity_Item_5">Duże litery + małe litery + cyfry + znaki specjalne (ulepszona czytelność)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Hasło (długie wyrazy)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Hasło (krótkie wyrazy)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Hasło (krótkie wyrazy z unikatowymi prefiksami)</string>
       <string id="LAPS_AdminName">Nazwa konta administratora do zarządzania</string>
       <string id="LAPS_AdminName_Help">To ustawienie zasad określa niestandardową nazwę konta administratora, dla którego ma być zarządzane hasło.
 
@@ -64,7 +75,7 @@ NIE WŁĄCZAJ tego ustawienia zasad w celu zarządzania wbudowanym kontem admini
 Aby uzyskać więcej informacji, zobacz https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">Nie zezwalaj na czas wygaśnięcia hasła dłuższy niż wymagany przez zasady</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Jeśli to ustawienie zostanie włączone lub nie zostanie skonfigurowane, planowane wygaśnięcie hasła dłuższe niż okres ważności hasła dyktowany przez zasady „Ustawienia hasła” NIE będzie dozwolone. Po wykryciu takiego wygaśnięcia hasło jest natychmiast zmieniane, a wygaśnięcie hasła jest ustawiane zgodnie z zasadami.
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Jeśli to ustawienie zostanie włączone lub nie zostanie konfigurowane, planowane wygaśnięcie hasła dłuższe niż okres ważności hasła dyktowany przez zasady „Ustawienia hasła” NIE będzie dozwolone. Po wykryciu takiego wygaśnięcia hasło jest natychmiast zmieniane, a wygaśnięcie hasła jest ustawiane zgodnie z zasadami.
 
 Jeśli to ustawienie zostanie wyłączone, czas wygaśnięcia hasła może być dłuższy niż wymagany przez zasady „Ustawienia hasła”.
 
@@ -86,17 +97,29 @@ To ustawienie będzie domyślnie włączone, jeśli nie zostanie skonfigurowane.
 Aby uzyskać więcej informacji, zobacz https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_ADPasswordEncryptionPrincipal">Konfigurowanie autoryzowanego odszyfrowywania haseł</string>
-      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Skonfiguruj to ustawienie, aby sterować określonym użytkownikiem lub grupą autoryzowaną do odszyfrowywania zaszyfrowanych haseł.
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Skonfiguruj to ustawienie, aby kontrolować określonego użytkownika lub grupę, która jest uprawniona do odszyfrowywania zaszyfrowanych haseł.
 
-Skonfigurowanie tego ustawienia nie będzie obowiązywać, jeśli nie włączono szyfrowania haseł.
+Skonfigurowanie tego ustawienia nie przynosi żadnego efektu, chyba że włączono szyfrowanie haseł.
 
-Jeśli to ustawienie zostanie włączone, zaszyfrowane hasła będą mogły być odszyfrowane przez określoną grupę.
+Jeśli to ustawienie jest włączone, zaszyfrowane hasła będą mogły być odszyfrowywane przez określoną grupę.
 
-Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, zaszyfrowane hasła będą mogły być odszyfrowane przez grupę administratorów domeny.
+Jeśli to ustawienie jest wyłączone lub nie zostało skonfigurowane, zaszyfrowane hasła będą mogły być odszyfrowywane przez grupę Administratorzy domeny.
 
-To ustawienie musi być skonfigurowane przy użyciu identyfikatora SID w formacie ciągu („S-1-5-21-2127521184-1604012920-1887927527-35197”) lub nazwy grupy albo użytkownika w formacie „domena\(grupa lub użytkownik)”. Określony użytkownik lub grupa muszą być rozpoznawani przez urządzenie zarządzane. W przeciwnym razie nie zostanie wykonana kopia zapasowa haseł.
+To ustawienie musi być skonfigurowane z nazwą grupy lub użytkownika kwalifikowaną do domeny lub identyfikatorem SID w formacie ciągu znaków. Prawidłowe przykłady to:
 
-Aby uzyskać więcej informacji, przejdź do https://go.microsoft.com/fwlink/?linkid=2188435.
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Nie umieszczaj nazwy użytkownika\grupy ani identyfikatora SID w cudzysłowach lub nawiasach.
+
+Określony użytkownik lub grupa musi być rozpoznawalna przez urządzenie zarządzane, w przeciwnym razie nie zostanie utworzona kopia zapasowa haseł.
+
+UWAGA: to ustawienie jest ignorowane, gdy kopie zapasowe haseł kont w trybie naprawy usług katalogowych (DSRM) są tworzone na kontrolerze domeny. W takim scenariuszu ustawienie to jest zawsze domyślnie przypisane do grupy Administratorzy domeny domeny kontrolera domeny.
+
+Aby uzyskać więcej informacji, zobacz: https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_ADEncryptedPasswordHistorySize">Konfigurowanie rozmiaru historii zaszyfrowanych haseł</string>
       <string id="LAPS_ADEncryptedPasswordHistorySize_Help">To ustawienie umożliwia skonfigurowanie liczby poprzednich zaszyfrowanych haseł przechowywanych w usłudze Active Directory.
@@ -111,7 +134,7 @@ To ustawienie ma minimalną dozwoloną wartość 0 haseł.
 
 To ustawienie ma maksymalną dozwoloną wartość wynoszącą 12 haseł.
 
-Aby uzyskać więcej informacji, przejdź strony do https://go.microsoft.com/fwlink/?linkid=2188435.
+Aby uzyskać więcej informacji, przejdź do https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_ADBackupDSRMPassword">Włącz tworzenie kopii zapasowej haseł dla kont DSRM</string>
       <string id="LAPS_ADBackupDSRMPassword_Help">Po włączeniu tego ustawienia hasło konta administratora DSRM będzie zarządzane i będzie kopią zapasową w usłudze Active Directory.
@@ -125,36 +148,76 @@ Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, nie z
 Aby uzyskać więcej informacji, zobacz https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_PostAuthenticationActions">Akcje po uwierzytelnieniu</string>
-      <string id="LAPS_PostAuthenticationActions_Help">Te zasady konfigurują działania po uwierzytelnianiu, które będą wykonywane po wykryciu uwierzytelniania przez konto zarządzane.
+      <string id="LAPS_PostAuthenticationActions_Help">Te zasady konfigurują akcje po uwierzytelnianiu, które będą wykonywane po wykryciu uwierzytelniania przez konto zarządzane.
 
-Okres prolongaty: określa ilość czasu (w godzinach) oczekiwania po uwierzytelnieniu przed wykonaniem określonych działań po uwierzytelnieniu.
+Okres prolongaty: określa ilość czasu (w godzinach) oczekiwania po uwierzytelnieniu przed wykonaniem określonych akcji po uwierzytelnieniu.
 
-Jeśli to ustawienie zostanie włączone i będzie większe niż zero, określone działania po uwierzytelnieniu zostaną wykonane po wygaśnięciu okresu prolongaty.
+Jeśli to ustawienie zostanie włączone i będzie większe od zera, określone akcje po uwierzytelnieniu zostaną wykonane po wygaśnięciu okresu prolongaty.
 
-Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, określone działania po uwierzytelnieniu będą wykonywane po domyślnym 24-godzinnym okresie prolongaty.
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, określone akcje po uwierzytelnieniu będą wykonywane po domyślnym 24-godzinnym okresie prolongaty.
 
-Jeśli to ustawienie jest równe zero, nie będą wykonywane żadne działania po uwierzytelnieniu.
+Jeśli to ustawienie jest równe zero, nie będą wykonywane żadne akcje po uwierzytelnieniu.
 
-Działania: określa działania do wykonania po wygaśnięciu okresu prolongaty.
+Akcje: określa akcje do wykonania po wygaśnięciu okresu prolongaty.
 
-Resetuj hasło: po upływie okresu prolongaty hasło konta zarządzanego zostanie zresetowane.
+Resetuj hasło: po wygaśnięciu okresu prolongaty hasło konta zarządzanego zostanie zresetowane.
 
-Zresetuj hasło i wyloguj konto zarządzane: po upływie okresu prolongaty hasło konta zarządzanego zostanie zresetowane, a wszystkie sesje logowania interaktywnego używające konta zarządzanego zostaną zakończone.
+Zresetuj hasło i wyloguj konto zarządzane: po wygaśnięciu okresu prolongaty hasło konta zarządzanego zostanie zresetowane, a wszystkie sesje logowania interaktywnego używające konta zarządzanego zostaną zakończone.
 
-(UWAGA: po zakończeniu sesji logowania interaktywnego mogą nadal istnieć inne uwierzytelnione sesje używane przez konto zarządzane. Jedynym niezawodnym sposobem zapewnienia, że poprzednie hasło nie będzie już używane, to ponowne uruchomienie urządzenia).
+Zresetuj hasło i ponownie uruchom: po wygaśnięciu okresu prolongaty następuje zresetowanie hasła konta zarządzanego i ponowne uruchomienie urządzenia zarządzanego.
 
-Zresetuj hasło i uruchom ponownie: po upływie okresu prolongaty hasło konta zarządzanego zostanie zresetowane, a urządzenie zarządzane zostanie natychmiast uruchomione ponownie.
+Zresetuj hasło, wyloguj konto zarządzane i zakończ pozostałe procesy: po wygaśnięciu okresu prolongaty hasło konta zarządzanego jest resetowane, interakcyjne sesje logowania korzystające z konta zarządzanego są wylogowywane, a pozostałe procesy są zakańczane.
 
-Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, działania po uwierzytelnieniu będą domyślnie ustawione na „Zresetuj hasło i wyloguj konto zarządzane”.
+(UWAGA: po zakończeniu interakcyjnych sesji logowania mogą nadal istnieć inne uwierzytelnione sesje używane przez konto zarządzane. Jedynym niezawodnym sposobem zapewnienia, że poprzednie hasło nie będzie już używane, to ponowne uruchomienie urządzenia).
 
-Uwaga: nie można skonfigurować konta DSRM w przypadku kontrolerów domeny na potrzeby działań po uwierzytelnianiu. Te zasady nie wpływają na kontrolery domeny i będą ignorowane, nawet jeśli zostaną skonfigurowane dla kontrolera domeny.
+Jeśli to ustawienie zostanie wyłączone lub nie zostanie skonfigurowane, akcje po uwierzytelnieniu będą domyślnie ustawione na „Zresetuj hasło i wyloguj konto zarządzane”.
 
-Aby uzyskać więcej informacji, przejdź do strony https://go.microsoft.com/fwlink/?linkid=2188435.
+Uwaga: nie można skonfigurować konta DSRM w przypadku kontrolerów domeny na potrzeby akcji po uwierzytelnianiu. Te zasady nie wpływają na kontrolery domeny i będą ignorowane, nawet jeśli zostaną skonfigurowane dla kontrolera domeny.
+
+Aby uzyskać więcej informacji, sprawdź stronę https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="PostAuthenticationActions_Item0">Wyłączone — nie podejmuj żadnych działań</string>
       <string id="PostAuthenticationActions_Item1">Zresetuj hasło</string>
       <string id="PostAuthenticationActions_Item3">Zresetuj hasło i wyloguj konto zarządzane</string>
       <string id="PostAuthenticationActions_Item5">Zresetuj hasło i uruchom ponownie urządzenie</string>
+      <string id="PostAuthenticationActions_Item11">Zresetuj hasło, wyloguj konto zarządzane i zakończ wszystkie pozostałe procesy</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Konfigurowanie automatycznego zarządzania kontami</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Te zasady konfigurują opcje zasad automatycznego zarządzania kontami.
+
+Określanie kont docelowych do zarządzania: określa, czy zarządzane ma być wbudowane konto administratora, czy konto niestandardowe.
+
+Automatyczna nazwa konta (lub prefiks nazwy): określa nazwę lub prefiks nazwy do użycia dla konta zarządzanego.
+
+Jeśli to ustawienie zasad jest skonfigurowane, usługa LAPS w systemie Windows będzie używać go jako nazwy konta lub prefiksu nazwy dla konta docelowego.
+
+Jeśli to ustawienie zasad nie zostanie skonfigurowane, usługa LAPS w systemie Windows będzie używać „WLapsAdmin” jako nazwy konta lub prefiksu nazwy.
+
+Uwaga: ta nazwa jest traktowana jako prefiks, gdy jest skonfigurowana losowa nazwa konta. Zobacz komentarze poniżej.
+
+Włączanie konta zarządzanego: określa, czy konto zarządzane powinno być włączone, czy nie.
+
+Jeśli to ustawienie zasad jest skonfigurowane, usługa LAPS w systemie Windows włączy określone konto zarządzane.
+
+Jeśli to ustawienie zasad nie zostanie skonfigurowane, usługa LAPS w systemie Windows wyłączy określone konto zarządzane.
+
+Uwaga: Usługa LAPS w systemie Windows będzie regularnie utrzymywać i zmieniać hasło konta zarządzanego niezależnie od tego, czy konto jest utrzymywane w stanie włączonym\wyłączonym.
+
+Losowe określanie nazwy konta zarządzanego: określa, czy nazwa zarządzanego konta powinna być losowa z losowym sufiksem liczbowym.
+
+Jeśli to ustawienie zasad zostanie skonfigurowane, Windows LAPS doda ośmiocyfrowy losowy sufiks liczbowy do nazwy zarządzanego konta automatycznego i będzie ponownie losować nazwę konta zarządzanego przy każdej zmianie hasła.
+
+Jeśli to ustawienie zasad nie zostanie skonfigurowane, Windows LAPS użyje skonfigurowanej nazwy zarządzanego konta automatycznego.
+
+Jeśli skonfigurowano prefiks nazwy zarządzanego konta automatycznego, system Windows LAPS użyje maksymalnie pierwszych dwunastu (12) znaków tej nazwy jako prefiksu nazwy losowej. Jeśli nazwa zarządzanego konta automatycznego nie zostanie skonfigurowana, Windows LAPS użyje „WLapsAdmin” jako prefiksu nazwy.
+
+Uwaga: Nie można skonfigurować konta DSRM na kontrolerach domeny do automatycznego zarządzania kontami. Te zasady nie mają wpływu na kontrolery domeny i będą ignorowane, nawet jeśli zostały skonfigurowane dla kontrolera domeny.
+
+Aby uzyskać więcej informacji, zobacz: https://go.microsoft.com/fwlink/?linkid=2188435.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Zarządzanie wbudowanym kontem administratora</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Zarządzanie niestandardowym kontem administratora</string>
+      <string id="AutomaticAccountName_Help">Określanie nazw kont lub prefiksów nazw</string>
+      <string id="AutomaticAccountNameRandomization_Help">Określa, czy automatyczna nazwa konta ma być losowa.</string>
       <string id="SUPPORTED_Windows10">Co najmniej system Microsoft Windows 10 lub nowszy</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ Aby uzyskać więcej informacji, przejdź do strony https://go.microsoft.com/fwl
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Złożoność hasła</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Długość hasła</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Wiek hasła (dni)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Długość hasła (wyrazy)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ Aby uzyskać więcej informacji, przejdź do strony https://go.microsoft.com/fwl
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Okres prolongaty (w godzinach):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Akcje:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Akcje:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Określanie kont docelowych do zarządzania:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Automatyczna nazwa konta (lub prefiks nazwy):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Włączanie konta zarządzanego</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Losowe określanie nazwy konta zarządzanego</checkBox>
       </presentation>
     </presentationTable>
   </resources>

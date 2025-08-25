@@ -21,6 +21,7 @@ A opção 7 é apenas suportada por servidores com edição do Windows Server 20
       <string id="WU_SUPPORTED_Server2016_Through_Server2022_Or_Windows10">Windows Server 2016 através do Windows Server 2022 ou Windows 10</string>
       <string id="WU_SUPPORTED_Windows_Server_2019_Windows_10_0_1809">Pelo menos, Windows Server 2019, ou Windows 10 versão 1809</string>
       <string id="WU_SUPPORTED_Windows_Server_2022_Windows_10_0_2004">Pelo menos, Windows Server 2022, ou Windows 10 versão 2004</string>
+      <string id="WU_SUPPORTED_WinServer2025_Win1021H2_Win1122H2">Pelo menos, Windows Server 2025, Windows 10 Versão 21H2 ou Windows 11 Versão 22H2</string>
       <string id="AUDontShowUasHelp">Esta definição de política permite-lhe gerir se a opção 'Instalar Atualizações e Encerrar' é apresentada na caixa de diálogo Encerrar o Windows.
 
 Se ativar esta definição de política, 'Instalar Atualizações e Encerrar' não irá aparecer como uma opção na caixa de diálogo Encerrar o Windows, mesmo que estejam disponíveis atualizações para instalação quando o utilizador selecionar a opção Encerrar no menu Iniciar.
@@ -165,13 +166,13 @@ Se o estado estiver definido como Não Configurado, a utilização das Atualiza�
       <string id="OnlyUseSystemProxyForUpdateDetection">Utilizar o proxy do sistema apenas para detetar atualizações (predefinição)</string>
       <string id="AllowUserProxyAsFallbackForUpdateDetection">Permitir que o proxy do utilizador seja utilizado como contingência se a deteção de proxy do sistema falhar</string>
       <string id="UpdateClassPolicySource_Title">Especificar o serviço de origem para classes específicas de atualizações do Windows Update</string>
-      <string id="UpdateClassPolicySource_Help">When this policy is enabled, devices will receive Windows updates for the classes listed from the specified update source: either Windows Update or Windows Server Update Service.
+      <string id="UpdateClassPolicySource_Help">Quando esta política está ativada, os dispositivos receberão atualizações do Windows para as classes listadas a partir da origem de atualização especificada: Windows Update ou o Serviço windows Server Update.
 
-        Note: To receive any updates from the Windows Server Update Service you must have properly configured an intranet Microsoft update service location via the “Specify intranet Microsoft update service location” policy.
+Nota: para receber quaisquer atualizações do Serviço windows Server Update, tem de ter configurado corretamente uma localização do serviço de atualização da Microsoft na intranet através da política "Especificar localização do serviço de atualização da Microsoft na intranet".
 
-        If this policy is not configured or is disabled, the device will continue to detect updates per your other policy configurations.
+Se esta política não estiver configurada ou estiver desativada, o dispositivo continuará a detetar atualizações de acordo com as suas outras configurações de política.
 
-        Note: If you are using “Do not allow deferral policies to cause scans against Windows Update” currently to ensure devices only scan against your specified server, we recommend configuring this policy instead or in addition to such.</string>
+Nota: se estiver a utilizar "Não permitir que as políticas de adiamento causem análises contra Windows Update" atualmente para garantir que os dispositivos apenas analisam o servidor especificado, recomendamos que configure esta política em vez disso ou para além disso.</string>
       <string id="UpdateClassPolicySourceSelectionWU">Windows Update</string>
       <string id="UpdateClassPolicySourceSelectionWSUS">Windows Server Update Services</string>
       <string id="DetectionFrequency_Help">Especifica as horas que o Windows vai utilizar para determinar quanto tempo deve aguardar antes de verificar a existência de atualizações disponíveis. O tempo de espera exato é a soma do valor específico e de uma variável aleatória de 0 a 4 horas.
@@ -628,22 +629,39 @@ Se selecionar "Aplicar apenas durante as horas de atividade" em conjunto com a O
       <string id="DefaultNotification">0 (predefinição) – Notificações Predefinidas do Windows Update do SO</string>
       <string id="ExcludingRebootWarnings">1 – Desativar todas as notificações, exceto avisos de reinício</string>
       <string id="IncludingRebootWarnings">2 – Desativar todas as notificações, incluindo avisos de reinício</string>
-      <string id="ComplianceDeadline_Title">Especificar prazos para reinícios e atualizações automáticos</string>
-      <string id="ComplianceDeadline_Help">Esta política permite-lhe especificar o número de dias antes das actualizações de qualidade e características serem instaladas automaticamente nos dispositivos, e um período de carência após o qual as reinicializações necessárias ocorrem automaticamente.
+      <string id="ComplianceDeadlineForFU_Title">Specify deadline for automatic updates and restarts for feature update</string>
+      <string id="ComplianceDeadlineForFU_Help">This policy lets you specify the number of days before feature updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
 
-Defina prazos para actualizações de características e actualizações de qualidade para cumprir os seus objectivos de conformidade. As actualizações serão descarregadas e instaladas logo que sejam oferecidas e os reinícios automáticos serão tentados fora do horário de funcionamento. Uma vez decorrido o prazo, os reinícios ocorrerão independentemente das horas activas, e os utilizadores não poderão reprogramar. Se o prazo for fixado em 0 dias, a actualização será instalada imediatamente após a oferta, mas poderá não terminar dentro do dia devido à disponibilidade do dispositivo e à conectividade de rede.
+Set deadlines for feature updates and quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
 
-Definir um período de carência para actualizações de características e actualizações de qualidade para garantir aos utilizadores um tempo mínimo para gerir os seus reinícios, uma vez instaladas as actualizações. Os utilizadores poderão agendar reinícios durante o período de carência e o Windows pode ainda reiniciar automaticamente fora das horas activas se os utilizadores optarem por não agendar os reinícios. O período de carência poderá não ter efeito se os utilizadores já tiverem mais do que o número de dias definido como período de carência para gerir o seu reinício, com base em configurações de prazos.
+Set a grace period for feature updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
 
-É possível definir o dispositivo para atrasar o reinício até que tanto o prazo como o período de carência tenham expirado.
+You can set the device to delay restarting until both the deadline and grace period have expired.
 
-Se desactivar ou não configurar esta política, os dispositivos receberão actualizações e serão reiniciados de acordo com o calendário padrão.
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
 
-Esta política anulará as seguintes políticas:
-1. Especificar o prazo antes do reinício automático para a instalação da actualização
-2. Especificar o calendário de transição e de notificação de reinício automático para as actualizações
-3. Reiniciar sempre automaticamente na hora programada
-4. Configurar as actualizações automáticas
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
+      </string>
+      <string id="ComplianceDeadlineForQU_Title">Specify deadline for automatic updates and restarts for quality update</string>
+      <string id="ComplianceDeadlineForQU_Help">This policy lets you specify the number of days before quality updates are installed on devices automatically, and a grace period after which required restarts occur automatically.
+
+Set deadlines for quality updates to meet your compliance goals. Updates will be downloaded and installed as soon as they are offered and automatic restarts will be attempted outside of active hours. Once the deadline has passed, restarts will occur regardless of active hours, and users will not be able to reschedule. If the deadline is set to 0 days, the update will be installed immediately upon offering, but might not finish within the day due to device availability and network connectivity.
+
+Set a grace period for quality updates to guarantee users a minimum time to manage their restarts once updates are installed. Users will be able to schedule restarts during the grace period and Windows can still automatically restart outside of active hours if users choose not to schedule restarts. The grace period might not take effect if users already have more than the number of days set as grace period to manage their restart, based on deadline configurations.
+
+You can set the device to delay restarting until both the deadline and grace period have expired.
+
+If you disable or do not configure this policy, devices will get updates and will restart according to the default schedule.
+
+This policy will override the following policies:
+1.  Specify deadline before auto restart for update installation
+2.  Specify Engaged restart transition and notification schedule for updates
+3.  Always automatically restart at the scheduled time
+4.  Configure Automatic Updates
       </string>
       <string id="ComplianceDeadlineDay0">0</string>
       <string id="ComplianceDeadlineDay1">1</string>
@@ -677,15 +695,30 @@ Esta política anulará as seguintes políticas:
       <string id="ComplianceDeadlineDay29">29</string>
       <string id="ComplianceDeadlineDay30">30</string>
 
-      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Enable features introduced via servicing that are off by default</string>
-      <string id="AllowTemporaryEnterpriseFeatureControl_Help">Features introduced via servicing (outside of the annual feature update) are off by default for devices that have their Windows updates managed*.
+      <string id="AllowTemporaryEnterpriseFeatureControl_Title">Ativar funcionalidades introduzidas através da manutenção que estão desativadas por predefinição</string>
+      <string id="AllowTemporaryEnterpriseFeatureControl_Help">As funcionalidades introduzidas através da manutenção (fora da atualização anual de funcionalidades) estão desativadas por predefinição para dispositivos que tenham as atualizações do Windows geridas*.
 
-If this policy is configured to “Enabled”, then all features available in the latest monthly quality update installed will be on.
+Se esta política estiver configurada como "Ativada", todas as funcionalidades disponíveis na atualização de qualidade mensal mais recente instalada estarão ativadas.
 
-If this policy is set to “Not Configured” or “Disabled” then features that are shipped via a monthly quality update (servicing) will remain off until the feature update that includes these features is installed.
+Se esta política estiver definida como "Não Configurada" ou "Desativada", as funcionalidades que são implementadas através de uma atualização de qualidade mensal (manutenção) permanecerão desativadas até que a atualização de funcionalidades que inclua estas funcionalidades seja instalada.
 
- *Windows update managed devices are those that have their Windows updates managed via policy; whether via the cloud using Windows Update for Business or on-premises with Windows Server Update Services (WSUS).
+*Os dispositivos geridos de atualizações do Windows são os que têm as atualizações do Windows geridas através da política; seja através da cloud com o Windows Update para Empresas ou no local com o Windows Server Update Services (WSUS).
       </string>
+      <string id="AllowOptionalContent_Title">Permitir atualizações opcionais</string>
+      <string id="AllowOptionalContent_Help">Esta política permite que os dispositivos obtenham atualizações opcionais (incluindo implementações graduais de funcionalidades (IGF); saiba mais ao visitar aka.ms/AllowOptionalContent)
+
+Quando a política é configurada
+
+• Se a opção “Receber automaticamente atualizações opcionais (incluindo IGF)” estiver selecionada, o dispositivo obterá automaticamente as atualizações opcionais mais recentes em conformidade com os adiamentos de atualização de qualidade configurados. Isto inclui atualizações cumulativas opcionais e implementações graduais de funcionalidades (IGF).
+
+• Se a opção “Receber automaticamente atualizações opcionais” estiver selecionada, só obterá automaticamente atualizações cumulativas opcionais, de acordo com os adiamentos de atualização de qualidade.
+
+• Se a opção “Os utilizadores podem selecionar as atualizações opcionais a receber” estiver selecionada, os utilizadores podem selecionar as atualizações opcionais a obter ao visitar Definições &gt; Windows Update &gt; Opções avançadas &gt; Atualizações opcionais. Os utilizadores também podem ativar o alternador “Obter as atualizações mais recentes assim que estiverem disponíveis” para receber automaticamente atualizações opcionais e implementações graduais de funcionalidades.
+      </string>
+      <string id="DonotReceiveOptionalContent">Não receber atualizações opcionais</string>
+      <string id="ReceiveOptionalContentWithAutoApproval">Receber automaticamente atualizações opcionais (incluindo CFRs)</string>
+      <string id="ReceiveOptionalLCUWithAutoApproval">Receber automaticamente atualizações opcionais</string>
+      <string id="ReceiveOptionalContentNeedUserApproval">Os utilizadores podem selecionar as atualizações opcionais a receber</string>
     </stringTable>
 
     <presentationTable>
@@ -827,16 +860,20 @@ If this policy is set to “Not Configured” or “Disabled” then features th
         <text></text>
         <checkBox refId="NoUpdateNotificationsDuringActiveHours" defaultChecked="false">Aplicar apenas durante as horas de atividade</checkBox>
       </presentation>
-      <presentation id="ComplianceDeadline_Title">
-        <text>Atualizações de Qualidade</text>
+       <presentation id="ComplianceDeadlineForFU_Title">
+        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="2">Prazo (dias):</dropdownList>
+        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="7">Período de Tolerância (dias):</dropdownList>
+        <text></text>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForFeatureUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="ComplianceDeadlineForQU_Title">
         <dropdownList refId="ConfigureDeadlineForQualityUpdates" noSort="true" defaultItem="7">Prazo (dias):</dropdownList>
         <dropdownList refId="ConfigureDeadlineGracePeriod" noSort="true" defaultItem="2">Período de tolerância (dias):</dropdownList>
         <text></text>
-        <text>Atualizações de Funcionalidades</text>
-        <dropdownList refId="ConfigureDeadlineForFeatureUpdates" noSort="true" defaultItem="7">Prazo (dias):</dropdownList>
-        <dropdownList refId="ConfigureDeadlineGracePeriodForFeatureUpdates" noSort="true" defaultItem="2">Período de Tolerância (dias):</dropdownList>
-        <text></text>
-        <checkBox refId="ConfigureDeadlineNoAutoReboot" defaultChecked="false">Não reiniciar automaticamente até ao final do período de tolerância</checkBox>
+        <checkBox refId="ConfigureDeadlineNoAutoRebootForQualityUpdates" defaultChecked="false">Don't auto-restart until end of grace period</checkBox>
+      </presentation>
+      <presentation id="AllowOptionalContent_Title">
+        <dropdownList refId="AllowOptionalContent" noSort="true" defaultItem="0">Selecione a forma como os utilizadores recebem atualizações opcionais:</dropdownList>
       </presentation>
     </presentationTable>
   </resources>

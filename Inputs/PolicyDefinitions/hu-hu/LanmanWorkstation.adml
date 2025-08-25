@@ -36,6 +36,8 @@ Ha engedélyezi vagy nem konfigurálja ezt a házirend-beállítást, az SMB-üg
 
 Ha letiltja ezt a házirend-beállítást, az SMB-ügyfél elutasítja az ilyen bejelentkezéseket.
 
+Ha engedélyezi az aláírást, az SMB ügyfél elutasítja a nem biztonságos vendégbejelentkezéseket.
+
 A fájlkiszolgálók a vendégek nem biztonságos bejelentkezésein keresztül biztosítanak hitelesítetlen hozzáférést a megosztott mappákhoz. Nagyvállalati környezetben ritkán használnak ilyen bejelentkezéseket, a nem vállalati környezetben fájlkiszolgálóként működő hálózati tárolóeszközökön (NAS) azonban gyakori megoldásnak számítanak. A windowsos fájlkiszolgálók alapértelmezés szerint hitelesítést követelnek meg, így a vendégek nem kaphatnak hozzáférést nem biztonságos bejelentkezésen keresztül. Mivel az ilyen bejelentkezések hitelesítés nélküliek, a fontos biztonsági funkciók (köztük az SMB-aláírás és az SMB-titkosítás) le vannak tiltva. Emiatt azok az ügyfelek, amelyeken engedélyezve van a vendégek nem biztonságos bejelentkezése, ki vannak téve a különféle közbeékelődéses támadásoknak. Az ilyen támadások adatvesztést, adatsérülést és kártevőfertőzéseket okozhatnak. Emellett a nem biztonságos bejelentkezést biztosító fájlkiszolgálókra írt adatokhoz lényegében bárki hozzáférhet a hálózaton. A Microsoft nem ajánlja az ilyen bejelentkezések engedélyezését, és javasolja, hogy a fájlkiszolgálókon legyen kötelező a hitelesített hozzáférés.
       </string>
 
@@ -61,6 +63,7 @@ Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, a Windows nem 
 Megjegyzés: Ennek a házirendnek nincs hatása Windows Server-alapú kibővíthető fájlkiszolgálói megosztások csatlakoztatásakor. A Microsoft nem javasolja a házirend engedélyezését azokhoz az ügyfelekhez, amelyek rendszeresen csatlakoznak a Fájlkiszolgáló általános célokra szerepkörrel ellátott windowsos feladatátvevő fürtökön tárolt fájlokhoz, mert ez hosszabb ideig tartó feladatátvételt, valamint fokozottabb memória- és processzorterhelést okoz.
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Legalább Windows Server 2022 vagy Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Legalább Windows Server 2025 vagy Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">SMB-tömörítés használata alapértelmezés szerint</string>
       <string id="Pol_EnableCompressedTraffic_Help">Ez a házirend szabályozza, hogy az SMB-ügyfél alapértelmezés szerint használ-e forgalomtömörítést.
 
@@ -77,11 +80,129 @@ Ha engedélyezi ezt a házirend-beállítást, az SMB-ügyfél soha nem tömör�
 
 Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, az SMB-ügyfél tömörítheti a forgalmat (más házirendek és feltételek kombinációjától függően).
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">Az SMB maximális verziójának felhatalmazása</string>
+      <string id="Pol_MaxSmb2Dialect_Help">Ez a házirend az SMB protokoll maximális verzióját szabályozza
+
+Megjegyzés: Ez a csoportházirend nem akadályozza meg az SMB 1 használatát, ha az összetevő még telepítve és engedélyezve van.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">Az SMB minimális verziójának felhatalmazása</string>
+      <string id="Pol_MinSmb2Dialect_Help">Ez a házirend az SMB protokoll minimális verzióját szabályozza
+
+Megjegyzés: Ez a csoportházirend nem akadályozza meg az SMB 1 használatát, ha az összetevő még telepítve és engedélyezve van.
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">NTLM (LM, NTLM, NTLMv2) letiltása</string>
+      <string id="Pol_BlockNTLM_Help">Ez a házirend szabályozza, hogy az SMB-ügyfél blokkolja-e az NTLM-et a távoli kapcsolat hitelesítéséhez.
+
+Ha engedélyezi ezt a házirend-beállítást, az SMB-ügyfél nem használja az NTLM-et a távoli kapcsolat hitelesítéséhez.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, az SMB-ügyfél továbbra is használhatja az NTLM-et.
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">Az NTLM-kiszolgáló letiltásának kivétellistája</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">Ez a házirend-beállítás határozza meg, hogy az NTLM használható-e a megadott kiszolgálók elérésére.
+
+Ha engedélyezi ezt a házirend-beállítást (csak akkor érvényes, ha az NTLM letiltása (LM, NTLM, NTLMv2) házirend engedélyezve van), az NTLM használható lesz a megadott kiszolgálók elérésére. Adja meg a szerkesztőmezőben a kívánt kiszolgálókat (DNS-név, IP-cím vagy NetBIOS-név), soronként egy kiszolgálónévvel.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, a kiszolgálókhoz való NTLM-hozzáférést más beállítások határozzák meg.
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">Távoli postafiókok engedélyezése</string>
+      <string id="Pol_EnableRemoteMailslots_Help">Ez a házirend vezérli, hogy az SMB-ügyfél engedélyezze vagy letiltsa-e a távoli postafiókokat az MUP-n keresztül.
+
+Ha letiltja ezt a házirend-beállítást, a távoli postafiókok nem fognak működni az MUP protokollon keresztül, ezért nem fognak keresztüljutni az SMB-ügyfél átirányítóján.
+
+Ha nem konfigurálja ezt a házirend-beállítást, a távoli postafiókok engedélyezhetők az MUP-n keresztül.
+      </string>
+      <string id="Pol_RequireEncryption_Name">Titkosítás megkövetelése</string>
+      <string id="Pol_RequireEncryption_Help">Ez a szabályzat azt vezérli, hogy az SMB-ügyfél megkövetelje-e a titkosítást.
+
+Ha engedélyezi ezt a házirend-beállítást, az SMB-ügyfél megköveteli, hogy az SMB-kiszolgáló támogassa a titkosítást és titkosítsa az adatokat.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, az SMB-ügyfél nem követeli meg a titkosítást. Azonban az SMB-titkosítás továbbra is kötelező lehet; lásd a lenti jegyzeteket.
+
+Megjegyzés: Ez a házirend a megosztásonkénti, a kiszolgálónkénti és a csatlakoztatott meghajtókkal létesített kapcsolatonkénti tulajdonságokkal együtt használható, amelyeken keresztül szintén kötelezővé tehető az SMB-titkosítás. Az SMB-kiszolgálónak támogatnia és engedélyeznie kell az SMB-titkosítást. Például ha ez a házirend le van tiltva (vagy nincs konfigurálja), az SMB-ügyfél akkor is végrehajthat titkosítást, ha egy SMB-kiszolgálómegosztás megköveteli a titkosítást.
+
+Fontos: Az SMB-titkosításhoz az SMB 3.0-s vagy újabb verziója szükséges
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">Alternatív portok engedélyezése</string>
+      <string id="Pol_EnableAlternativePorts_Help">Ez a házirend vezérli, hogy az SMB-ügyfél engedélyezze vagy letiltsa-e az alternatív portokat.
+
+Ha letiltja ezt a házirend-beállítást, az SMB-ügyfél nem használ majd alternatív portokat.
+
+Ha nem konfigurálja ezt a házirend-beállítást, lehetséges, hogy az SMB-ügyfél használ alternatív portokat.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">A naplózási kiszolgáló nem támogatja az aláírást</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">Ez a házirend szabályozza, hogy az SMB-ügyfél engedélyezi-e a naplózási eseményt, ha az SMB-kiszolgáló nem támogatja a titkosítást.
+
+Ha engedélyezi ezt a házirend-beállítást, az SMB-ügyfél naplózza az eseményt, ha az SMB-kiszolgáló nem támogatja a titkosítást.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, az SMB-ügyfél nem naplózza az eseményt.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">A naplózási kiszolgáló nem támogatja az aláírást</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">Ez a szabályzat szabályozza, hogy az SMB-ügyfél engedélyezi-e a naplózási eseményt, ha az SMB-kiszolgáló nem támogatja az aláírást.
+
+Ha engedélyezi ezt a szabályzat-beállítást, az SMB-ügyfél naplózza az eseményt, ha az SMB-kiszolgáló nem támogatja az aláírást.
+
+Ha letiltja vagy nem konfigurálja ezt a szabályzat-beállítást, az SMB-ügyfél nem naplózza az eseményt.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Vendégek nem biztonságos bejelentkezéseinek naplózása</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">Ez a házirend szabályozza, hogy az SMB-ügyfél engedélyezi-e a naplózási eseményt, ha az ügyfél vendégfiókként van bejelentkezve.
+
+Ha engedélyezi ezt a házirend-beállítást, az SMB-ügyfél naplózza az eseményt, ha az ügyfél vendégfiókként van bejelentkezve.
+
+Ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, az SMB-ügyfél nem naplózza az eseményt.
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">Alternatív portleképezések</string>
+      <string id="Pol_AlternativePortMappings_Help">Ez a házirend-beállítás határozza meg az SMB-ügyfél által használt alternatív portregisztrációs leképezéseket.
+
+Ha engedélyezi ezt a házirend-beállítást, a rendszer az első érvényes leképezést használja, ha a leképezés kiszolgálóneve megegyezik a kapcsolat célkiszolgálójának nevével.
+
+Ha engedélyezi ezt a házirend-beállítást, és nem ad meg legalább egy érvényes leképezést, vagy ha letiltja vagy nem konfigurálja ezt a házirend-beállítást, akkor az SMB-ügyfél más módszerekre fog hivatkozni az alternatív porthasználat meghatározásához, például a NET USE vagy a New-SmbMapping parancsokra.
+
+Példák:
+
+contososa.file.core.windows.net:tcp:448
+edgesrv1.corp.contoso.com:quic:450
+
+A beállítás módosítása:
+
+Rendezze át a kívánt alternatív portleképezéseket a szerkesztőmezőben, soronként egy leképezési bejegyzéssel.
+
+Az egyes leképezési bejegyzések formátuma egy kiszolgálónevet, átviteli típust és portszámot határoz meg kettőspontokkal elválasztva, a fenti példában látható módon.
+
+Megjegyzés: A házirend érvénybe lépéséhez nincs szükség a Windows újraindítására.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>Titkosítócsomagok:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>SMB-verzió kiválasztása:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Verzió:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>SMB-verzió kiválasztása:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Verzió:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>Az NTLM-kiszolgáló letiltásának kivétellistája:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>Másodlagos portregisztrációs leképezések:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

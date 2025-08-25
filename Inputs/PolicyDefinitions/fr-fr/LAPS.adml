@@ -33,25 +33,36 @@ Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=21
       <string id="LAPS_PasswordSettings">Paramètres du mot de passe</string>
       <string id="LAPS_PasswordSettings_Help">Configure les paramètres de mot de passe
 
- Complexité des mots de passe : quels caractères sont utilisés lors de la génération d’un nouveau mot de passe
- Par défaut : lettres majuscules + lettres minuscules + chiffres + caractères spéciaux
+Complexité du mot de passe : caractères utilisés lors de la génération d’un nouveau mot de passe
+  Valeur par défaut : grandes lettres + lettres minuscules + chiffres + caractères spéciaux
 
-Longueur du mot de passe :
- Minimum :  8 caractères
- Maximum : 64 caractères
-  Défaut : 14 caractères
+Longueur du mot de passe
+  Minimum : 8 caractères
+  Maximum : 64 caractères
+  Valeur par défaut : 14 caractères
 
 Âge du mot de passe en jours
   Minimum : 1 jour (7 jours lorsque le répertoire de sauvegarde est configuré pour être Azure AD)
   Maximum : 365 jours
-  Par défaut :  30 jours
+  Valeur par défaut : 30 jours
+
+Longueur de la phrase secrète
+  Minimum : 3 mots
+  Maximum : 10 mots
+  Valeur par défaut : 6 mots
 
 Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=2188435.
+
+Liste de phrases secrètes extraite de « Deep Dive : New Wordlists for Random Passphrases » par Electronic Border Foundation et utilisée sous une licence d’attribution CC-BY-3.0. Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=2255471.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Lettres majuscules</string>
       <string id="LAPS_PwdComplexity_Item_2">Lettres minuscules + lettres minuscules</string>
       <string id="LAPS_PwdComplexity_Item_3">Lettres majuscules + lettres minuscules + chiffres</string>
       <string id="LAPS_PwdComplexity_Item_4">Lettres majuscules + lettres minuscules + chiffres + spéciaux</string>
+      <string id="LAPS_PwdComplexity_Item_5">Lettres volumineuses + lettres minuscules + nombres + spéciaux (meilleure lisibilité)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Phrase secrète (mots longs)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Phrase secrète (mots courts)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Phrase secrète (mots courts avec des préfixes uniques)</string>
       <string id="LAPS_AdminName">Nom du compte administrateur à gérer</string>
       <string id="LAPS_AdminName_Help">Ce paramètre de stratégie spécifie un nom de compte Administrateur personnalisé pour lequel gérer le mot de passe.
 
@@ -64,9 +75,9 @@ NE PAS activer ce paramètre de stratégie pour gérer le compte administrateur 
 Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">N’autorisez pas le délai d’expiration du mot de passe plus longtemps que ce qui est requis par la stratégie</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Si ce paramètre est activé ou n’est pas configuré, l’expiration planifiée du mot de passe dépasse l’âge dicté par la stratégie « Paramètres de mot de passe » n’est PAS autorisée. Lorsqu’une telle expiration est détectée, le mot de passe est modifié immédiatement et l’expiration du mot de passe est définie conformément à la stratégie.
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Si ce paramètre est activé ou n’est pas configuré, l’expiration planifiée du mot de passe dépasse l’âge dicté par la stratégie « Mot de passe Paramètres » n’est PAS autorisée. Lorsqu’une telle expiration est détectée, le mot de passe est modifié immédiatement et l’expiration du mot de passe est définie conformément à la stratégie.
 
-Si ce paramètre est désactivé, le délai d’expiration du mot de passe peut être plus long que celui requis par la stratégie « Paramètres de mot de passe ».
+Si ce paramètre est désactivé, le délai d’expiration du mot de passe peut être plus long que celui requis par la stratégie « Mot de passe Paramètres ».
 
 Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
@@ -90,28 +101,40 @@ Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=21
 
 La configuration de ce paramètre n’a aucun effet, sauf si le chiffrement de mot de passe a été activé.
 
-Si ce paramètre est activé, les mots de passe chiffrés seront déchiffrables par le groupe spécifié.
+Si ce paramètre est activé, les mots de passe chiffrés sont déchiffrables par le groupe spécifié.
 
-Si ce paramètre est désactivé ou n’est pas configuré, les mots de passe chiffrés sont déchiffrables par le groupe d’administrateurs de domaine.
+Si ce paramètre est désactivé ou non configuré, les mots de passe chiffrés sont déchiffrables par le groupe Administrateurs du domaine.
 
-Ce paramètre doit être configuré avec un SID au format chaîne ( « S-1-5-212127521184-1604012920-1887927527-35197 ») ou le nom d’un groupe ou d’un utilisateur au format « domaine\(groupe ou utilisateur) ». L’utilisateur ou le groupe spécifié doit être résolu par l’appareil géré, sinon les mots de passe ne seront pas sauvegardés.
+Ce paramètre doit être configuré avec un nom qualifié de domaine d’un groupe ou d’un utilisateur, ou un SID au format de chaîne. Voici quelques exemples valides :
 
-Consultez https://go.microsoft.com/fwlink/?linkid=2188435 pour plus d’informations.
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Ne mettez pas le nom du groupe d'utilisateurs ou le SID entre guillemets ou entre parenthèses.
+
+L’utilisateur ou le groupe spécifié doit être résolu par l’appareil géré, sinon les mots de passe ne seront pas sauvegardés.
+
+REMARQUE : ce paramètre est ignoré lorsque les mots de passe du compte DSRM (Directory Services Repair Mode) sont sauvegardés sur un contrôleur de domaine. Dans ce scénario, ce paramètre est toujours défini par défaut sur le groupe Administrateurs du domaine du domaine du contrôleur de domaine.
+
+Voir « https://go.microsoft.com/fwlink/?linkid=2188435 » pour plus d'informations.
       </string>
       <string id="LAPS_ADEncryptedPasswordHistorySize">Configurer la taille de l’historique des mots de passe chiffrés</string>
-      <string id="LAPS_ADEncryptedPasswordHistorySize_Help">Utilisez ce paramètre pour configurer le nombre de mots de passe chiffrés précédents stockés dans Active Directory.
+      <string id="LAPS_ADEncryptedPasswordHistorySize_Help">Utilisez ce paramètre pour configurer le nombre de mots de passe chiffrés précédents stockés dans Active Directory.
 
-La configuration de ce paramètre n’a aucun effet sauf si 1) le mot de passe a été configuré pour être sauvegardé sur Active Directory et 2) le chiffrement de mot de passe a été activé.
+La configuration de ce paramètre n’a aucun effet sauf si 1) le mot de passe a été configuré pour être sauvegardé sur Active Directory et 2) le chiffrement de mot de passe a été activé.
 
-Si ce paramètre est activé, le nombre spécifié de mots de passe plus anciens sera stocké dans Active Directory.
+Si ce paramètre est activé, le nombre spécifié de mots de passe plus anciens sera stocké dans Active Directory.
 
-Si ce paramètre est désactivé ou n’est pas configuré, aucun mot de passe plus ancien ne sera stocké dans Active Directory.
+Si ce paramètre est désactivé ou n’est pas configuré, aucun mot de passe plus ancien ne sera stocké dans Active Directory.
 
-Ce paramètre a une valeur minimale autorisée de 0 mot de passe.
+Ce paramètre a une valeur minimale autorisée de zéro mot de passe.
 
-Ce paramètre a une valeur maximale autorisée de 12 mots de passe.
+Ce paramètre a une valeur maximale autorisée de 12 mots de passe.
 
-Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=2188435.
+Consultez https://go.microsoft.com/fwlink/?linkid=2188435 pour plus d’informations..
       </string>
       <string id="LAPS_ADBackupDSRMPassword">Activer la sauvegarde de mot de passe pour les comptes DSRM</string>
       <string id="LAPS_ADBackupDSRMPassword_Help">Lorsque vous activez ce paramètre, le mot de passe du compte administrateur DSRM est géré et sauvegardé dans Active Directory.
@@ -125,36 +148,89 @@ Si ce paramètre est désactivé ou s’il n’est pas configuré, le mot de pas
 Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_PostAuthenticationActions">Actions de post-authentification</string>
-      <string id="LAPS_PostAuthenticationActions_Help">Cette stratégie configure les actions de post-authentification qui seront exécutées après la détection d’une authentification par le compte géré.
+      <string id="LAPS_PostAuthenticationActions_Help">Cette politique configure les actions post-authentification qui seront exécutées après la détection d'une authentification par le compte géré.
 
-Période de grâce : spécifie la durée d’attente (en heures) après une authentification avant d’exécuter les actions de post-authentification spécifiées.
+ 
+Délai de grâce : spécifie le temps (en heures) à attendre après une authentification avant d'exécuter les actions de post-authentification spécifiées.
 
-Si ce paramètre est activé et supérieur à zéro, les actions de post-authentification spécifiées seront exécutées à l’expiration de la période de grâce.
+ 
+Si ce paramètre est activé et supérieur à zéro, les actions de post-authentification spécifiées seront exécutées à l'expiration du délai de grâce.
 
-Si ce paramètre est désactivé ou s’il n’est pas configuré, les actions de post-authentification spécifiées seront exécutées après une période de grâce de 24 heures par défaut.
+ 
+Si ce paramètre est désactivé ou n'est pas configuré, les actions de post-authentification spécifiées seront exécutées après un délai de grâce de 24 heures par défaut.
 
+ 
 Si ce paramètre est égal à zéro, aucune action de post-authentification ne sera exécutée.
+ 
 
-Actions : spécifie les actions à effectuer à l’expiration de la période de grâce.
+Actions : spécifie les actions à entreprendre à l'expiration du délai de grâce.
 
-Réinitialiser le mot de passe : à l’expiration de la période de grâce, le mot de passe du compte géré sera réinitialisé.
+ 
+Réinitialiser le mot de passe : à l'expiration du délai de grâce, le mot de passe du compte géré est réinitialisé.
 
-Réinitialiser le mot de passe et déconnecter le compte géré : à l’expiration de la période de grâce, le mot de passe du compte géré sera réinitialisé et toutes les sessions d’ouverture de session interactive utilisant le compte géré seront interrompues.
+ 
+Réinitialiser le mot de passe et déconnecter le compte géré : à l'expiration du délai de grâce, le mot de passe du compte géré est réinitialisé et toutes les sessions de connexion interactives utilisant le compte géré sont déconnectées.
 
-(REMARQUE : une fois toutes les sessions d’ouverture de session interactive sont interrompues, d’autres sessions authentifiées peuvent toujours être utilisées par le compte géré. La seule façon robuste de s’assurer que le mot de passe précédent n’est plus utilisé est de redémarrer l’appareil.)
+ 
+Réinitialiser le mot de passe et redémarrer : à l'expiration du délai de grâce, le mot de passe du compte géré est réinitialisé et l'appareil géré est redémarré.
 
-Réinitialiser le mot de passe et redémarrer : à l’expiration de la période de grâce, le mot de passe du compte géré est réinitialisé et l’appareil géré est immédiatement redémarré.
+ 
+Réinitialiser le mot de passe, déconnecter le compte géré et terminer tous les processus restants : à l'expiration du délai de grâce, le mot de passe du compte géré est réinitialisé, toutes les sessions de connexion interactives utilisant le compte géré sont déconnectées et tous les processus restants sont terminés.
 
-Si ce paramètre est désactivé ou s’il n’est pas configuré, les actions de post-authentification ont par défaut la valeur « Réinitialiser le mot de passe et fermer la session du compte géré ».
+ 
+(REMARQUE : une fois les sessions de connexion interactives terminées, il se peut que d'autres sessions authentifiées soient encore utilisées par le compte géré. La seule façon de s'assurer que le mot de passe précédent n'est plus utilisé est de redémarrer l'appareil).
 
-Remarque : le compte DSRM sur les contrôleurs de domaine ne peut pas être configuré pour les actions de post-authentification. Cette stratégie n’a aucun effet sur les contrôleurs de domaine et sera ignorée même si elle est configurée pour un contrôleur de domaine.
+ 
+Si ce paramètre est désactivé ou n'est pas configuré, les actions post-authentification seront par défaut "Réinitialiser le mot de passe et déconnecter le compte géré".
 
-Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=2188435.
+ 
+Remarque : le compte DSRM sur les contrôleurs de domaine ne peut pas être configuré pour les actions de post-authentification. Cette stratégie n'a aucun effet sur les contrôleurs de domaine et sera ignorée même si elle est configurée pour un DC.
+
+ 
+Voir https://go.microsoft.com/fwlink/?linkid=2188435 pour plus d'informations.
       </string>
       <string id="PostAuthenticationActions_Item0">Désactivé : aucune action n’est requise</string>
       <string id="PostAuthenticationActions_Item1">Réinitialiser le mot de passe</string>
       <string id="PostAuthenticationActions_Item3">Réinitialiser le mot de passe et fermer la session du compte géré</string>
       <string id="PostAuthenticationActions_Item5">Réinitialiser le mot de passe et redémarrer l’appareil</string>
+      <string id="PostAuthenticationActions_Item11">Réinitialiser le mot de passe, fermer la session du compte géré et mettre fin aux processus restants</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Configurer la gestion automatique des comptes</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Cette stratégie configure les options de stratégie de gestion automatique des comptes.
+
+Spécifiez le compte cible à gérer : spécifie si le compte d’administrateur intégré ou un compte personnalisé doit être géré.
+
+Nom du compte automatique (ou préfixe de nom) : spécifie le nom, ou le préfixe de nom, à utiliser pour le compte géré.
+
+Si ce paramètre de stratégie est configuré, Windows LAPS l'utilisera comme nom de compte ou préfixe de nom pour le compte cible.
+
+Si ce paramètre de stratégie n’est pas configuré, Windows LAPS utilise « WLapsAdmin » comme préfixe de nom ou de nom de compte.
+
+Remarque : ce nom est traité comme un préfixe lorsque le choix au hasard des noms de comptes est configurée, voir les commentaires ci-dessous.
+
+Activer le compte géré : spécifie si le compte géré doit être activé ou non.
+
+Si ce paramètre de stratégie est configuré, Windows LAPS active le compte géré spécifié.
+
+Si ce paramètre de stratégie n’est pas configuré, Windows LAPS désactive le compte géré spécifié.
+
+Remarque : Windows LAPS maintient et renouvelle régulièrement le code d'accès du compte géré, que le compte soit maintenu dans un état activé ou désactivé.
+
+Choisir au hasard le nom du compte géré : spécifie si le nom du compte géré doit être choisi au hasard avec un suffixe numérique aléatoire.
+
+Si ce paramètre de stratégie est configuré, Windows LAPS ajoute un suffixe numérique aléatoire à huit chiffres au nom du compte automatique managé et rend aléatoire à nouveau le nom du compte géré chaque fois que le code d'accès est renouvelé.
+
+Si ce paramètre de stratégie n’est pas configuré, Windows LAPS utilise le nom du compte automatique géré tel qu'il a été configuré.
+
+Si le préfixe du nom du compte automatique géré est configuré, Windows LAPS utilise jusqu'aux douze (12) premiers caractères de ce nom comme préfixe pour le nom aléatoire. Si ce paramètre de stratégie n’est pas configuré, Windows LAPS utilise « WLapsAdmin » comme préfixe de nom.
+
+Remarque : le compte DSRM sur les contrôleurs de domaine ne peut pas être configuré pour la gestion automatique des comptes. Cette stratégie n’a aucun effet sur les contrôleurs de domaine et sera ignorée même si elle est configurée pour un contrôleur de domaine.
+
+Voir « https://go.microsoft.com/fwlink/?linkid=2188435 » pour plus d'informations.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Gérer le compte d’administrateur intégré</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Gérer un compte d’administrateur personnalisé</string>
+      <string id="AutomaticAccountName_Help">Spécifier le nom du compte ou le préfixe du nom</string>
+      <string id="AutomaticAccountNameRandomization_Help">Spécifie si le nom de compte automatique doit être aléatoire.</string>
       <string id="SUPPORTED_Windows10">Au moins Microsoft Windows 10 ou version ultérieure</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +241,7 @@ Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=21
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Complexité du mot de passe</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Longueur du mot de passe</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Âge du mot de passe (jours)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Longueur de phrase secrète (mots)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +258,15 @@ Pour plus d’informations, consultez https://go.microsoft.com/fwlink/?linkid=21
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Période de grâce (jours) :</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Actions :</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Actions :</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Spécifiez le compte cible à gérer :</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Nom du compte automatique (ou préfixe du nom) :</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Activer le compte géré</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Choisir au hasard le nom du compte géré</checkBox>
       </presentation>
     </presentationTable>
   </resources>

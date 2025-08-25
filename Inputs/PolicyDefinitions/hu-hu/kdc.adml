@@ -115,6 +115,25 @@ A konfiguráció által generált események: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Támogatott</string>
       <string id="PKINITHashAlgorithm_Audited">Vizsgálva</string>
       <string id="PKINITHashAlgorithm_NotSupported">Nem támogatott</string>
+      <string id="StrongNameMatches">Névalapú erős leképezések engedélyezése tanúsítványokhoz</string>
+      <string id="StrongNameMatches_explain">Ez a házirend-beállítás lehetővé teszi alternatív névalapú azonosítók használatát az Active Directory felhasználói fiókokhoz kibocsátott tanúsítványok erős leképezéséhez, és megadja, hogy mely tanúsítványok vannak leképezve melyik fiókokra. Ha ez a beállítás nincs engedélyezve, a tanúsítványoknak meg kell felelniük az aka.ms/StrongCertMapKB oldalon megadott „erős leképezés” feltételeknek, amelyek általában nem engedélyezik a névalapú azonosítókat.
+
+Az ebben a házirendben megadott összes leképezésnek tartalmaznia kell egy házirend objektumazonosítóját az IssuerSubject és/vagy az UPN-utótag mellett az alábbi szintaxis használatával. Ha nem található érvényes leképezés egy adott tanúsítványhoz ebben a házirendben, az Active Directory megpróbál egyezést keresni az KB5014754 cikkben megadott létező, erős leképezési feltételek alapján. A rendszer érvénytelennek tekinti azokat a tanúsítványleképezéseket, amelyek nem felelnek meg az „erős névmegfeleltetési” feltételeknek (ez a házirend) vagy a meglévő „erős leképezés” feltételeknek.
+
+Az általános házirendformátum és néhány példa alább látható. Ez a szabályzat csak Active Directory felhasználói fiókokra vonatkozik.
+
+Általános szintaxis
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+Példák
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+A házirendnek szabályonként pontosan egy tanúsítvány-ujjlenyomatot kell tartalmaznia, amelyben minden szabály rekordként van megadva. Az ujjlenyomatoknak egyedinek kell lenniük, és nem ismétlődhetnek több szabályban. Minden rekord pontosvesszővel elválasztott szakaszainak a megadott sorrendben kell lenniük, míg a vesszővel elválasztott mezőknek tetszőleges sorrendben kell lenniük. Maguk a szabályok új sorokkal vannak elválasztva.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ A konfiguráció által generált események: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Erős névegyeztetés szabályai:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

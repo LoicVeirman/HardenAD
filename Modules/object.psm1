@@ -26,7 +26,6 @@ Function New-AdministrationAccounts {
          
          history: 
             01.00 -- Script creation
-            01.01 -- Added check against user creation
     #>
     param(
         [Parameter(mandatory = $false)]

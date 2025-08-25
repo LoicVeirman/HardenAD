@@ -115,6 +115,25 @@
       <string id="PKINITHashAlgorithm_Supported">Υποστηρίζεται</string>
       <string id="PKINITHashAlgorithm_Audited">Ελεγμένα</string>
       <string id="PKINITHashAlgorithm_NotSupported">Δεν υποστηρίζεται</string>
+      <string id="StrongNameMatches">Να επιτρέπονται ισχυρές αντιστοιχίσεις βάσει ονόματος για πιστοποιητικά</string>
+      <string id="StrongNameMatches_explain">Αυτή η ρύθμιση πολιτικής επιτρέπει τη χρήση εναλλακτικών αναγνωριστικών βάσει ονόματος για την ισχυρή αντιστοίχιση πιστοποιητικών που εκδίδονται σε λογαριασμούς χρηστών της υπηρεσίας καταλόγου Active Directory και καθορίζει ποια πιστοποιητικά αντιστοιχούν σε ποιους λογαριασμούς. Χωρίς την ενεργοποίηση αυτής της ρύθμισης, τα πιστοποιητικά πρέπει να πληρούν τα κριτήρια "ισχυρής αντιστοίχισης" που καθορίζονται στην ενότητα aka.ms/StrongCertMapKB, τα οποία γενικά δεν επιτρέπουν αναγνωριστικά που βασίζονται σε ονόματα.
+
+Κάθε αντιστοίχιση που καθορίζεται σε αυτήν την πολιτική πρέπει να περιλαμβάνει ένα OID πολιτικής μαζί με ένα επίθημα IssuerSubject ή/και ένα επίθημα UPN χρησιμοποιώντας τη σύνταξη που καθορίζεται παρακάτω. Αν δεν είναι δυνατή η εύρεση έγκυρης αντιστοίχισης για ένα δεδομένο πιστοποιητικό σε αυτήν την πολιτική, η υπηρεσία καταλόγου Active Directory θα επιχειρήσει να εντοπίσει μια αντιστοιχία χρησιμοποιώντας τα υπάρχοντα ισχυρά κριτήρια αντιστοίχισης που καθορίζονται στο KB5014754. Οι αντιστοιχίσεις πιστοποιητικών που δεν συμμορφώνονται είτε με τα κριτήρια "αντιστοίχισης ισχυρού ονόματος" (αυτή η πολιτική) είτε με τα υπάρχοντα κριτήρια "ισχυρής αντιστοίχισης" θα θεωρηθούν μη έγκυρα για τον έλεγχο ταυτότητας.
+
+Η γενική μορφή πολιτικής και ορισμένα παραδείγματα παρατίθενται παρακάτω. Αυτή η πολιτική ισχύει μόνο για λογαριασμούς χρηστών της υπηρεσίας καταλόγου Active Directory.
+
+Γενική σύνταξη
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+Παραδείγματα
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+Η πολιτική πρέπει να περιέχει ακριβώς ένα αποτύπωμα πιστοποιητικού ανά κανόνα, με κάθε κανόνα να αντιπροσωπεύεται ως πλειάδα. Τα αποτυπώματα πρέπει να είναι μοναδικά και δεν μπορούν να επαναληφθούν σε πολλαπλούς κανόνες. Οι ενότητες κάθε πλειάδας που διαχωρίζονται με ερωτηματικό πρέπει να είναι με τη δηλωμένη σειρά, ενώ τα πεδία που διαχωρίζονται με κόμματα μπορούν να είναι με οποιαδήποτε σειρά. Οι ίδιοι οι κανόνες διαχωρίζονται με νέες γραμμές.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Κανόνες αντιστοίχισης ισχυρού ονόματος:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

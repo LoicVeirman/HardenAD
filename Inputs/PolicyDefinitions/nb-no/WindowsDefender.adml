@@ -17,6 +17,9 @@
     <string id="Quarantine">Karantene</string>
     <string id="RealtimeProtection">Sanntidsbeskyttelse</string>
     <string id="Remediation">Utbedring</string>
+    <string id="Remediation_BNB">Atferdsbaserte nettverksblokkeringer</string>
+    <string id="Remediation_BNB_REP">Ekstern krypteringsbeskyttelse</string>
+    <string id="Remediation_BNB_BFP">Brute Force-beskyttelse</string>
     <string id="Reporting">Rapportering</string>
     <string id="Scan">Skanning</string>
     <string id="SignatureUpdate">Sikkerhetsintelligensoppdateringer</string>
@@ -38,7 +41,7 @@
 
 Angitt 
     Tillat administrerte enheter å oppdatere via forbruks målte tilkoblinger. Data kostnader kan påløpe.</string>
-    <string id="HideExclusionsFromLocalAdmins">Kontroller om utelatelser er synlige for lokale administratorer eller ikke.</string>
+    <string id="HideExclusionsFromLocalAdmins">Kontroller om utelatelser er synlige for lokale administratorer eller ikke</string>
     <string id="HideExclusionsFromLocalAdmins_Explain">
     Denne policyinnstillingen kontrollerer om utelatelser er synlige for lokale administratorer eller ikke. Utelatelser for sluttbrukere (som ikke er lokale administratorer) er ikke synlige, uansett om denne innstillingen er aktivert eller ikke.
     Deaktivert(standard):
@@ -47,6 +50,10 @@ Angitt
     Aktivert: 
         Hvis du aktiverer denne innstillingen, vil ikke lokale administratorer lenger kunne se utelatelseslisten i Windows Sikkerhet-appen eller gjennom PowerShell.
         Obs! Hvis du bruker denne innstillingen, fjernes ikke utelatelser. Den hindrer dem bare i å være synlige for lokale administratorer. Dette gjenspeiles i Get-MpPreference.</string>
+    <string id="HideExclusionsFromLocalUsers">Kontroller om utelatelser er synlige for lokale brukere</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    Denne policyinnstillingen styrer om utelatelser er synlige for lokale brukere på enheten.
+    Bruk policyinnstillingen HideExclusionsFromLocalAdmins til å skjule utelatelser fra både standard og administrative lokale brukere.</string>
     <string id="AllowNetworkProtectionOnWinServer">Denne innstillingen styrer om nettverks beskyttelse kan konfigureres til blokkerings-eller overvåkings modus på Windows Server.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     Deaktivert (standard): 
@@ -57,11 +64,29 @@ Angitt
     Vær oppmerksom på at denne konfigurasjonen er avhengig av EnableNetworkProtection-konfigurasjonen. Hvis denne konfigurasjonen er USANN, vil EnableNetworkProtection ignoreres, ellers starter nettverks beskyttelsen på Windows Server, avhengig av verdien av EnableNetworkProtection.</string>
     <string id="DisableDatagramProcessing">Denne innstillingen styrer data gram behandling for nettverks beskyttelse.</string>
     <string id="DisableDatagramProcessing_Explain">
-    Aktivert (standard): 
-    Hvis den ikke er konfigurert eller deaktivert, aktiveres datagram-behandling for nettverks beskyttelse.
+    Deaktivert (standard): 
+    Hvis Ikke konfigurert eller Deaktivert, aktiveres datagrambehandling for nettverksbeskyttelse.
 
-Angitt 
-    Hvis aktivert, blir datagram deaktivert for nettverks beskyttelse.</string>
+Aktivert: 
+    Hvis aktivert, deaktiveres datagrambehandling for nettverksbeskyttelse.</string>
+    <string id="EnableConvertWarnToBlock">Konvertere varsel til å blokkere</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    Nettverksbeskyttelse undersøker nettverkstrafikk og avgjør om trafikk skal tillates eller blokkeres, eller om det skal vises en advarsel.
+    
+    Deaktivert (standard): 
+    Hvis nettverksbeskyttelse ikke er konfigurert eller er deaktivert, vises det en advarsel i varsler.
+
+Aktivert: 
+    Hvis denne innstillingen er aktivert, blokkerer nettverksbeskyttelse nettverkstrafikk i stedet for å vise en advarsel.</string>
+    <string id="AllowSwitchToAsyncInspection">Aktivere asynkron inspeksjon</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    Kontroller om nettverksbeskyttelsen kan forbedre ytelsen ved å bytte fra sanntidsinspeksjon til asynkron inspeksjon.
+
+Deaktivert (standard): 
+    Hvis Ikke konfigurert eller Deaktivert, aktiveres ikke asynkron inspeksjon for nettverksbeskyttelse.
+
+Aktivert: 
+    Hvis dette er aktivert, er det tillatt å bytte til asynkron inspeksjon for nettverksbeskyttelse.</string>
     <string id="DisableAutoExclusions">Slå av automatiske utelatelser</string>
     <string id="DisableAutoExclusions_Explain">
         Lar en administrator angi om funksjonen for automatiske utelatelser for lagerstyringsenheter (SKU) for server skal deaktiveres.
@@ -142,15 +167,19 @@ Hvis du aktiverer denne policy innstillingen, brukes bare elementer som er defin
       Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, hopper proxyen over denne reserverekkefølgen i henhold til rekkefølgen som er angitt ovenfor.
     </string>
     <string id="RandomizeScheduleTaskTimes">Tilfeldig planlagte oppgavetidspunkter</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">Med denne policyinnstillingen kan du konfigurere den planlagte skanningen og den planlagte oppdateringen for sikkerhetsintelligens, starttidspunktvindu i timer.
+    <string id="RandomizeScheduleTaskTimes_Explain">Med denne policyinnstillingen kan du konfigurere randomiseringen av planlagt starttidspunkt for skanning og starttidspunktet for planlagt definisjonsoppdatering.
 
-    Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, begynner planlagte oppgaver på et tilfeldig tidspunkt innen fire timer etter tidspunktet som er angitt i Oppgaveplanlegging.
-    Hvis du aktiverer denne innstillingen, kan du gjøre denne randomiseringsperioden bredere eller smalere. Angi et randomiseringsvindu mellom 1 og 23 timer.</string>
+Hvis du aktiverer eller ikke konfigurerer denne policyinnstillingen og ikke angav et randomiseringsvindu i innstillingen Konfigurer randomiseringsvindu for planlagt oppgavetid, blir randomisering lagt til mellom 0 og 4 timer.
+        Hvis du aktiverer eller ikke konfigurerer denne policyinnstillingen og angir et randomiseringsvindu i innstillingen Konfigurer randomiseringsvindu for planlagt oppgavetid, brukes det konfigurerte randomiseringsvinduet.
+        Hvis du deaktiverer denne policyinnstillingen, men konfigurerte det planlagte vinduet for randomisering av oppgavetid, utføres ikke randomisering. 
+    </string>
     <string id="SchedulerRandomizationTime">Konfigurer planlagte oppgavetider for randomiseringsvindu</string>
-    <string id="SchedulerRandomizationTime_Explain">Med denne policyinnstillingen kan du konfigurere den planlagte skannestarttiden og den planlagte oppdateringen for sikkerhetsintelligens, starttidspunktvindu i timer.
+    <string id="SchedulerRandomizationTime_Explain">Med denne policyinnstillingen kan du konfigurere planlagt starttidspunkt for oppgaveskanning og det planlagte starttidsvinduet for oppdatering av sikkerhetsinformasjon, i timer. Denne innstillingen påvirker konfigurasjonen for tilfeldig planlagte oppgavetidspunkter.
 
-    Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, begynner planlagte oppgaver på et tilfeldig tidspunkt innen et intervall på fire timer etter angitt starttid.
-    Hvis du aktiverer denne innstillingen, må du velge et randomiseringsvindu i timer. Det mulige randomiseringsvinduintervallet er mellom 1 og 23 timer.</string>
+Hvis du aktiverer denne innstillingen, må du velge et tilfeldig vindu, i timer. Det mulige tilfeldighetsvinduet er mellom 1–23 timer. Tilfeldighetsintervallet som implementeres, er mellom 0 og den konfigurerte verdien. 
+        Når du aktiverer denne innstillingen, bruker innstillingene for tilfeldig planlagte oppgavetidspunkter tilfeldighetsvinduet som er angitt i denne konfigurasjonsinnstillingen. 
+        Hvis du enten deaktiverer eller ikke konfigurerer denne policyinnstillingen, vil innstillingene for tilfeldig planlagte oppgavetidspunkter gjøre planlagte oppgavetidspunkter tilfeldige mellom 0–4 timer.</string>
+
     <string id="ServiceKeepAlive">Tillate at tjenesten for beskyttelse mot skadelig programvare alltid kjører</string>
     <string id="ServiceKeepAlive_Explain">Med denne policyinnstillingen kan du konfigurere om tjenesten for beskyttelse mot skadelig programvare kjører eller ikke når sikkerhetsintelligensen for antivirus og antispionvare deaktiveres. Det anbefales at denne innstillingen forblir deaktivert.
 
@@ -219,6 +248,22 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, kopieres ikke f
 Hvis du aktiverer eller ikke konfigurerer denne innstillingen, blir skript skanning aktivert.
 
 Hvis du deaktiverer denne innstillingen, blir skript skanning deaktivert.</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">Konfigurere sanntidsbeskyttelse og sikkerhetsintelligensoppdateringer under OOBE</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">Med denne policyinnstillingen kan du konfigurere om sanntidsbeskyttelse og sikkerhetsintelligensoppdateringer er aktivert under OOBE (Out-of-Box Experience).
+ 
+    Hvis du aktiverer innstillingen, aktiveres sanntidsbeskyttelse og sikkerhetsintelligensoppdateringer under OOBE.
+ 
+    Hvis du enten deaktiverer eller ikke konfigurerer policyinnstillingen, aktiveres ikke sanntidsbeskyttelse og sikkerhetsintelligensoppdateringer under OOBE.</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">Konfigurer status for ytelsesmodus</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">Denne policyen kontrollerer Microsoft Defender Antivirus ytelsesmodus for utviklingsstasjoner.
+
+    En utviklingsstasjon er en diskstasjon som er optimalisert for høyere ytelse i scenarioer for programvareutvikling. Når denne policyen er aktivert eller ikke konfigurert, aktiveres ytelsesmodus for Microsoft Defender Antivirus. I ytelsesmodus utføres Microsoft Defender Antivirus sikkerhetskontroller av innhold som er lagret på utviklerstasjoner, asynkront for å forbedre ytelsen. Ytelsesmodus krever at følgende policyer også aktiveres: Aktiver utviklerstasjon og Policy for vedlegg av utviklerstasjonsfilter.
+
+    Hvis du enten aktiverer eller ikke konfigurerer denne policyinnstillingen, er ytelsesmodus aktivert.
+
+    Hvis du deaktiverer denne policyinnstillingen, deaktiveres ytelsesmodus, og Microsoft Defender Antivirus beskytter en utviklerstasjon på samme måte som andre stasjoner.</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">Aktivere overvåking av virkemåte</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">Denne policyinnstillingen tillater konfigurasjon av overvåking av virkemåte.
@@ -359,6 +404,92 @@ Hvis du enten deaktiverer eller ikke konfigurerer denne policyinnstillingen, akt
     Hvis du aktiverer denne innstillingen, kjører en planlagt fullstendig skanning for å fullføre utbedring på det angitte tidspunktet.
 
     Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, kjører en planlagt fullstendig skanning for å fullføre utbedring på et standardtidspunkt.</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">Konfigurer modus for Ekstern krypteringsbeskyttelse</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    Angi modusen for Ekstern krypteringsbeskyttelse i Microsoft Defender Antivirus, som kan oppdage og blokkere forsøk på å erstatte lokale filer med krypterte versjoner fra en annen enhet. 
+
+Støttede innstillinger:
+    * 0 – Ikke konfigurert eller Standard: Bruk standarder, som kan variere avhengig av antivirusmotorversjonen og plattformen
+    * 1 – Blokker: Forhindre mistenkelig og skadelig atferd
+    * 2 – Overvåk: Generer EDR-gjenkjenninger uten å blokkere
+    * 4 – Av: Funksjonen er deaktivert uten ytelsespåvirkning
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">Standard</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">Blokker</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">Overvåking</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">Av</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">Konfigurer blokkeringstid for Ekstern krypteringsbeskyttelse</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    Angi den maksimale tiden en IP-adresse blokkeres av ekstern krypteringsbeskyttelse. Etter dette tidspunktet kan blokkerte IP-adresser starte tilkoblinger på nytt. 
+
+Støttede innstillinger:
+    * 0 – Ingen: Intern funksjonslogikk bestemmer den faktiske blokkeringstiden
+    * Angi andre tidspunkter i intervaller på 15 minutter
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">Konfigurer hvor aggressivt Ekstern krypteringsbeskyttelse blokkerer trusler</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    Angi kriteriene for når ekstern krypteringsforhindring blokkerer IP-adresser.
+
+Støttede innstillinger:
+    *0 – Lav: Blokker bare når konfidensnivået er 100% (standard)
+    *1 – Middels: Bruk skyaggregasjon og blokker når konfidensnivået er over 99%
+    *2 – Høy: Bruk skyinformasjon og kontekst, og blokker når konfidensnivået er over 90%
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">Lav</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">Middels</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">Høy</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> Angi utelatelser fra Ekstern krypteringsbeskyttelse</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    Angi IP-adresser, delnett og domenenavn som skal utelates fra Ekstern krypteringsbeskyttelse. Vær oppmerksom på at angripere kan forfalske utelatte adresser og navn for å omgå beskyttelsen.
+
+    Skriv inn hver adresse eller hvert delnett på en ny linje som et navneverdipar:
+    – Navnekolonne: Skriv inn en IP-adresse eller et delnettnavn. ««1.1.127.0»» vil for eksempel utelate denne IP-adressen fra å bli blokkert.
+    – Verdikolonne: Skriv inn ««0»» for hvert element.
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">Konfigurer modus for Brute Force-beskyttelse</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Angi modusen for Brute-Force Protection i Microsoft Defender Antivirus, som kan oppdage og blokkere forsøk på å starte pålogging og starte økter.
+
+Støttede innstillinger:
+    * 0 – Ikke konfigurert eller Standard: Bruk standarder, som kan variere avhengig av antivirusmotorversjonen og plattformen
+    * 1 – Blokker: Forhindre mistenkelig og skadelig atferd
+    * 2 – Overvåk: Generer EDR-gjenkjenninger uten å blokkere
+    * 4 – Av: Funksjonen er deaktivert uten ytelsespåvirkning
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">Standard</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">Blokker</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">Overvåking</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">Av</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">Konfigurer blokkeringstid for Brute Force-beskyttelse</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    Angi den maksimale tiden en IP-adresse blokkeres av Brute-Force Protection. Etter dette tidspunktet kan blokkerte IP-adresser logge på og starte økter.
+
+Støttede innstillinger:
+    * 0 – Ingen: Intern funksjonslogikk bestemmer den faktiske blokkeringstiden
+    * Angi andre tidspunkter i intervaller på 15 minutter
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">Konfigurer aggressivitet for Brute Force-beskyttelse</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    Angi kriteriene for når Brute-Force Protection blokkerer IP-adresser.
+
+Støttede innstillinger:
+    *0 – Lav: Blokker bare når konfidensnivået er 100% (standard)
+    *1 – Middels: Bruk skyaggregasjon og blokker når konfidensnivået er over 99%
+    *2 – Høy: Bruk skyinformasjon og kontekst, og blokker når konfidensnivået er over 90%
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">Lav</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">Middels</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">Høy</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">Angi utelatelser fra Brute Force-beskyttelse</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    Angi IP-adresser, delnett eller navn på arbeidsstasjoner som skal utelates fra Brute Force-beskyttelse. Utelatte IP-adresser vil ikke bli kontrollert for mulig Brute Force-aktivitet.
+    
+    Vær oppmerksom på at angripere kan forfalske utelatte adresser og navn for å omgå beskyttelsen. Sørg for at navnene er unike og sannsynligvis ikke blir gjettet av angripere.
+
+    Skriv inn hver adresse eller hvert delnett på en ny linje som et navneverdipar:
+    – Navnekolonne: Skriv inn en IP-adresse, et delnettnavn eller navnet på en arbeidsstasjon. «1.1.127.0» vil for eksempel utelate denne IP-adressen fra å bli blokkert av BFP.
+    – Verdikolonne: Skriv inn «0» for hvert element.
+    </string>
     <string id="Reporting_AdditionalActionTimeout">Konfigurere tidsavbrudd for gjenkjenninger som krever flere handlinger</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">Denne policyinnstillingen konfigurerer tidspunktet i minutter før en gjenkjenning i tilstanden Flere handlinger flyttes til tilstanden Fjernet.</string>
     <string id="Reporting_CriticalFailureTimeout">Konfigurere tidsavbrudd for gjenkjenninger i tilstanden Kritisk mislykket</string>
@@ -398,6 +529,12 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, brukes standard
 Hvis du konfigurerer denne innstillingen til 0, sendes ingen tjenestetilstandsrapporter.
 
 Maksimumsverdien som kan angis, er 14 400 minutter (10 dager).</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">Konfigurer om du vil rapportere hendelser som er utelatt for dynamisk signatur</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">Denne policyinnstillingen konfigurerer om hendelser som skal rapporteres for dynamisk signatur, skal slettes.
+
+Hvis du ikke konfigurerer denne innstillingen, brukes standardverdien. Standardverdien er satt til deaktivert (slike hendelser rapporteres ikke).
+    Hvis du konfigurerer denne innstillingen til aktivert, rapporteres hendelser for sletting av dynamisk signatur.
+    Hvis du konfigurerer denne innstillingen til deaktivert, rapporteres ikke hendelser som er slettet av dynamisk signatur.</string>
       <string id="Scan_AllowPause">Tillat at brukere stopper skanning midlertidig</string>
     <string id="Scan_AllowPause_Explain">Med denne policyinnstillingen kan du angi om sluttbrukerne kan stoppe en skanning midlertidig eller ikke.
 
@@ -456,6 +593,10 @@ Hvis du deaktiverer denne innstillingen, gjelder prosessorbegrensning for planla
     Hvis du aktiverer denne innstillingen, aktiveres oppfølgingsskanninger for planlagte hurtigskanninger. Hvis en datamaskin er frakoblet i mer enn to påfølgende planlagte skanninger, startes det en oppfølgingsskanning neste gang noen logger på datamaskinen.  Hvis ingen planlagt skanning er konfigurert, kjøres det ingen oppfølgingsskanning.
 
     Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, deaktiveres oppfølgingsskanning for planlagte hurtigskanninger.</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">Utløs en hurtigskanning etter X dager uten skanninger</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">Denne policyinnstillingen definerer antallet dager som kan gå siden forrige skanning, før en aggressiv hurtigskanning for oppsamling utløses automatisk. Verdien representerer antallet dager som kan foregår uten at skanninger utføres før en aggressiv hurtigskanning utløses.
+    
+Gyldige verdier varierer fra 7 til 60 dager. Hvis dette ikke er konfigurert, deaktiveres aggressive hurtigskanninger. Verdien er som standard satt til 25 dager når den er aktivert.</string>
     <string id="Scan_DisableEmailScanning">Aktivere e-postskanning</string>
     <string id="Scan_DisableEmailScanning_Explain">Med denne policyinnstillingen kan du konfigurere e-postskanning. Når e-postskanning er aktivert, analyserer motoren postboksen og postfilene, i henhold til det bestemte formatet, for å analysere e-posttekster og vedlegg. Flere e-postformater støttes for øyeblikket, for eksempel pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac). E-postskanning støttes ikke på moderne e-postklienter.
     
@@ -498,12 +639,12 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, deaktiveres e-p
     Hvis du aktiverer denne innstillingen, skannes tilkoblede nettverksstasjoner.
 
     Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, skannes ikke tilkoblede nettverksstasjoner.</string>
-    <string id="Scan_DisableScanningNetworkFiles">Skanne nettverksfiler</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">Med denne policyinnstillingen kan du konfigurere skanning av nettverksfiler. Det anbefales at du ikke aktiverer denne innstillingen.
+    <string id="Scan_DisableScanningNetworkFiles">Konfigurer skanning av nettverksfiler</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">Denne policyinnstillingen tillater skanning av nettverksfiler ved bruk av tilgangsbeskyttelse. Standard er aktivert. Anbefales å forbli aktivert i de fleste tilfeller.
 
-    Hvis du aktiverer denne innstillingen, skannes nettverksfiler.
+Hvis du aktiverer eller ikke konfigurerer denne innstillingen, skannes nettverksfiler.
 
-    Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, skannes ikke nettverksfiler.</string>
+Hvis du deaktiverer denne innstillingen, skannes ikke nettverksfiler.</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">Konfigurere overstyring av lokal innstilling for maksimal prosentandel av prosessorbruk</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">Denne policyinnstillingen konfigurerer en lokal overstyring for konfigurasjon av maksimal prosentandel av prosessorbruk i løpet av en skanning. Denne innstillingen kan bare angis av Gruppepolicy.
 
@@ -589,7 +730,7 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, vil hurtig skan
     <string id="Scan_ScheduleDay_7">Fredag</string>
     <string id="Scan_ScheduleDay_8">Lørdag</string>
     <string id="Scan_ScheduleQuickScantime">Angi tidspunktet for en daglig hurtigskanning</string>
-    <string id="Scan_ScheduleQuickScantime_Explain">Med denne policy innstillingen kan du angi når på dagen en daglig hurtig skanning skal utføres. Tids verdien representeres som antallet minutter etter midnatt (00:00).  120 (0 x 78) tilsvarer for eksempel 02:00 AM. Som standard er denne innstillingen satt til deaktivert. Tids planen er basert på lokal tid på data maskinen der skanningen utføres.
+    <string id="Scan_ScheduleQuickScantime_Explain">Med denne policyinnstillingen kan du angi når på dagen en daglig hurtigskanning skal utføres. Tidsverdien representeres som antallet minutter etter midnatt (00:00).  120 (0 x 78) tilsvarer for eksempel 02:00 AM. Som standard er denne innstillingen satt til deaktivert. Tidsplanen er basert på lokal tid på datamaskinen der skanningen utføres.
 
 Hvis du aktiverer denne innstillingen, kjører en daglig hurtig skanning på det angitte tidspunktet.
 
@@ -615,6 +756,18 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, kjøres ikke da
 
         Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, blir det ikke gjort endringer i CPU-prioritet for planlagte søk.
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">Skann utelatte filer og mapper under hurtigskanninger</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        Denne policyinnstillingen lar deg skanne utelatte filer og mapper under hurtigskanninger.
+
+        Hvis du angir denne policyinnstillingen til 1, skannes alle filer og mapper som er utelatt fra sanntidsbeskyttelse med kontekstavhengige utelatelser, under en hurtigskanning.
+
+        Hvis du angir denne policyen til 0 eller ikke konfigurerer den, skannes ikke utelatelser under hurtigskanninger.
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">Definer antall dager før sikkerhetsintelligens for spionprogram anses som utdatert</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">Med denne policy innstillingen kan du definere antallet dager som må gå før sikkerhets intelligensen for spion programmer anses som utdatert. Hvis sikkerhets intelligensen er utdatert, kan denne tilstanden utløse flere handlinger, inkludert gå tilbake til en alternativ oppdaterings kilde eller visning av et advarsels ikon i bruker grensesnittet. Som standard er denne verdien satt til 7 dager.
 
@@ -637,6 +790,13 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, anses virus sik
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">Med denne policyinnstillingen kan du definere sikkerhetsintelligensplasseringen for VDI-konfigurerte datamaskiner. 
 
     Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, blir det referert til sikkerhetsintelligens fra standard lokal kilde.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">Konfigurere oppdateringer av sikkerhetsinformasjon etter planleggeren for VDI-klienter</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">Med denne policyinnstillingen kan du konfigurere oppdateringer av sikkerhetsinformasjon etter planleggeren for VDI-konfigurerte datamaskiner. Innstillingen brukes sammen med den delte plasseringen for sikkerhetsintelligens (SharedSignaturesLocation).
+
+    Hvis du aktiverer denne policyinnstillingen samt konfigurerer SharedSignaturesLocation, utføres oppdateringer fra den konfigurerte plasseringen bare på det tidligere konfigurerte planlagte oppdateringstidspunktet.
+
+    Hvis du enten deaktiverer eller ikke konfigurerer denne policyinnstillingen, utføres oppdateringer når en ny oppdatering av sikkerhetsinformasjon oppdages på plasseringen som er angitt av SharedSignaturesLocation.
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">Aktiver skanning etter sikkerhetsintelligensoppdatering</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">Med denne policyinnstillingen kan du konfigurere den automatiske skanningen som starter etter at en sikkerhetsintelligensoppdatering er gjennomført.
 
@@ -829,12 +989,6 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, anses virus sik
 
       Hvis du aktiverer denne innstillingen, vises ikke Microsoft Defender Antivirus-varsler på klienter.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Vise mer tekst til klienter når de må utføre en handling</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">Med denne policyinnstillingen kan du konfigurere om mer tekst skal vises til klienter eller ikke når de må utføre en handling. Teksten som vises, er en tilpasset administratordefinert streng. Et eksempel kan være telefonnummeret til selskapets kundeservice. Klientgrensesnittet viser bare maksimalt 1024 tegn. Lenger strenger trunkeres før visning.
-
-    Hvis du aktiverer denne innstillingen, vises mer tekst som er angitt.
-
-    Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, vises det ikke mer tekst.</string>
     <string id="MpCloudBlockLevel">Velg skybeskyttelsesnivå</string>
     <string id="MpCloudBlockLevel_Explain">
       Denne policyinnstillingen bestemmer hvor aggressiv Microsoft Defender Antivirus skal være ved blokkering og skanning av mistenkelige filer.
@@ -912,6 +1066,17 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, anses virus sik
         Samme som Deaktivert.
 
         Du kan konfigurere ASR-regler i gruppepolicyinnstillingen Konfigurer Attack Surface Reduction-regler.
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Bruk en liste over utelatelser på spesifikke asr-regler (Attack Surface Reduction)</string>d
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    Denne policyen lar en administrator angi en liste over utelatelser for bestemte ASR-regler.
+    Hver oppføring er et navneverdi-par. Nøkkelen angir regelens GUID, og verdien er et sett med fullstendige baner, atskilt med tegnet &gt;, som angir hvilke utelatelser som gjelder for den aktuelle ASR-regelen.
+
+Obs! GUID er en NØKKEL, ikke en verdi.
+
+Eksempel:
+    NØKKEL: "{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}"
+    VERDI: «C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\Mappe\test.exe»
     </string>
     <string id="ExploitGuard_ASR_Rules">Konfigurer Attack Surface Reduction-regler</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1119,12 +1284,65 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, anses virus sik
     <string id="DeviceControl_DataDuplicationRemoteLocation">Definer ekstern plassering av bevisdata for enhetskontroll</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
         Definer ekstern plassering av bevisfil, der enhetskontrolltjenesten flytter bevisdata som er registrert.
+
+Når du konfigurerer denne innstillingen, må du kontrollere at enhetskontroll er aktivert, og at den angitte banen er en ekstern bane som brukeren har tilgang til.
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">Angi oppbevaringsperioden for filer i kontrollbufferen for den lokale enheten</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        Denne policyinnstillingen bestemmer hvor lenge enhetskontrollen beholder filer for bevis i den lokale hurtigbufferen på enheten. Enhetskontroll beholder bare en fil i den lokale hurtigbufferen hvis den ikke kan laste opp filen til en bestemt delt nettverksressurs eller Azure-lagring. 
+
+Enhetskontroll beholder som standard filer i den lokale hurtigbufferen i 60 dager.
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">Aktiver enhetskontroll for bestemte enhetstyper</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        Denne policyinnstillingen kontrollerer hvilke enhetstyper, identifisert av PrimaryIds, som vil ha enhetskontrollbeskyttelse aktivert. Hvis du aktiverer denne innstillingen for bestemte enhetstyper, vil enhetskontrollen tilpasse tilgangen til disse enhetene basert på den tilsvarende egendefinerte policyen. Enhetskontroll deaktiveres for alle andre typer støttede enheter, selv om egendefinerte beskyttelsespolicyer er konfigurert for disse enhetene.
+ 
+Denne innstillingen støtter for øyeblikket disse enhetstypene: RemovableMediaDevices, CdRomDevices, WpdDevices og PrinterDevices. 
+ 
+Hvis du aktiverer denne policyinnstillingen, men ikke angir noen PrimaryIds, deaktiveres enhetskontroll på tvers av alle støttede enhetstyper.
+ 
+Hvis du deaktiverer eller ikke konfigurerer denne policyinnstillingen, håndheves enhetskontroll på alle støttede enheter som er basert på de tilsvarende egendefinerte policyene.
+    </string>
+	<string id="DeviceControl_CustomSupportLink">Konfigurer en støttekobling for enhetskontrollvarsler</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        Denne innstillingen gjør det mulig for organisasjonen å angi «Få støtte»-koblingen i varsler om enhetskontroll. 
+		
+Når den er konfigurert, navigerer knappen Få kundestøtte automatisk til den angitte koblingen.
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">Angi oppdateringsfrekvens for policy</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        Denne innstillingen definerer intervallet, i minutter, hvor enheten vil prøve å laste inn policykonfigurasjonen på nytt i tilfelle det har oppstått en feil, og policyen ikke kunne lastes inn.
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">Angi oppdateringsfrekvensen for Azure AD</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        Denne innstillingen definerer intervallet, i minutter, hvor enheten vil spørre Azure AD om å oppdatere relaterte innstillinger, konfigurasjon og gruppemedlemskap.
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">Angi grensen for dataduplisering (MB)</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        Denne innstillingen definerer den maksimale mengden data som kan dupliseres for enhetskontroll. 
+		
+Når grensen er nådd, blir ikke filer som kopieres til flyttbare lagringsmedier duplisert på maskinen.
+	</string>
     <string id="Features_DeviceControlEnabled">Enhetskontroll</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         Aktiver eller deaktiver Defender Enhetskontroll på denne maskinen.
         Obs! Du må være registrert som E3 eller E5 for at enhetskontroll skal aktiveres.
     </string>
+    <string id="Features_TDTFeatureEnabled">Intel TDT-integreringsnivå</string>
+    <string id="Features_TDTFeatureEnabled_Explain">Denne policyinnstillingen konfigurerer Intel TDT-integreringsnivået for Intel TDT-kompatible enheter.
+
+ Hvis du ikke konfigurerer denne innstillingen, brukes standardverdien. Standardverdien kontrolleres av Microsoft Sikkerhetsintelligens-oppdateringer. Microsoft aktiverer Intel TDT hvis det finnes en kjent trussel.
+        Hvis du konfigurerer denne innstillingen til aktivert, slås Intel TDT-integrasjon på.
+        Hvis du konfigurerer denne innstillingen til deaktivert, deaktiveres Intel TDT-integrering.</string>
+    <string id="Features_PassiveRemediation">Aktiver EDR i blokkeringsmodus</string>
+    <string id="Features_PassiveRemediation_Explain">Denne policyinnstillingen aktiverer eller deaktiverer EDR i blokkeringsmodus (også kalt passiv utbedring). EDR i blokkeringsmodus anbefales for enheter som kjører Microsoft Defender Antivirus i passiv modus. Tilgjengelig med plattformutgivelse: 4.18.2202.X
+
+Datatypen er et heltall
+
+Støttede verdier:
+
+1: Aktiver EDR i blokkeringsmodus
+        0: Slå av EDR i blokkeringsmodus</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1389,38 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, anses virus sik
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">Konfigurere overvåking av innkommende og utgående fil- og programaktivitet</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">Angi tilstanden til Ekstern krypteringsbeskyttelse</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">Angi hvor lenge gjenkjenninger skal blokkeres i minutter</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">Angi hvor aggressiv beskyttelse mot ekstern kryptering blokkerer trusler</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">Utelatelser fra Ekstern krypteringsbeskyttelse</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">Angi tilstanden til Brute Force-beskyttelse</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">Angi hvor lenge gjenkjenninger skal blokkeres i minutter</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">Angi hvor aggressivt Brute Force-beskyttelse blokkerer trusler</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Utelatelser for Brute Force-beskyttelse</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">Angi ukedagen da en planlagt fullstendig skanning skal kjøres for å fullføre utbedring</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">Angi når på dagen en planlagt fullstendig skanning skal kjøres for å fullføre utbedring</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">Angi hvor mange dager uten skanninger som skal gå før en aggressiv hurtigskanning utløses</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">Angi antall planlagte skanninger som kan utelates før en oppsamlingsskanning fremtvinges</decimalTextBox>
@@ -1273,11 +1518,6 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, anses virus sik
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Angi trusselvarslingsnivåer som standardhandlingen ikke skal utføres for når de oppdages</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Vise mer tekst til klienter når de må utføre en handling</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">Angi intervallet for varsel om utløp</decimalTextBox>
     </presentation>
@@ -1293,6 +1533,9 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, anses virus sik
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">Utelatelser fra ASR-regler:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Utelatelser for hver enkelt ASR-regel:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">Angi statusen for hver ASR-regel:</listBox>
     </presentation>
@@ -1307,6 +1550,9 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, anses virus sik
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1584,34 @@ Hvis du deaktiverer eller ikke konfigurerer denne innstillingen, anses virus sik
         <label>Definer den eksterne plasseringen for dataduplisering for enhetskontroll.</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">Angi oppbevaringsperioden for filer i kontrollbufferen for den lokale enheten</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>Aktiver enhetskontroll for bestemte enhetstyper</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>Konfigurer en støttekobling for enhetskontrollvarsler</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>Angi oppdateringsfrekvens for policy</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>Angi oppdateringsfrekvensen for Azure AD</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>Angi grensen for dataduplisering (MB)</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

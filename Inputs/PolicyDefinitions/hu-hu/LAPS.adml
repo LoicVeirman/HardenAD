@@ -31,27 +31,38 @@ További információért lásd: https://go.microsoft.com/fwlink/?linkid=2188435
       <string id="LAPS_BackupDirectoryAzure">Azure Active Directory</string>
       <string id="LAPS_BackupDirectoryAD">Active Directory</string>
       <string id="LAPS_PasswordSettings">Jelszóbeállítások</string>
-      <string id="LAPS_PasswordSettings_Help">A jelszóparamétereket konfigurálja
+      <string id="LAPS_PasswordSettings_Help">Jelszóparaméterek konfigurálása
 
-Jelszó összetettsége: mely karaktereket használja a rendszer új jelszó létrehozásakor
- Alapértelmezés: Nagy betűk + kisbetűk + számok + speciális karakterek
+Jelszó-összetettség: milyen karaktereket használ a rendszer egy új jelszó létrehozásakor
+  Alapértelmezett: Nagybetűk + kisbetűk + számok + speciális karakterek
 
 Jelszó hossza
- Minimális: 8 karakter
+  Minimum: 8 karakter
   Maximum: 64 karakter
- Alapértelmezés: 14 karakter
+  Alapértelmezett: 14 karakter
 
 Jelszó kora napokban
-  Minimum: 1 nap (7 nap, amikor a biztonsági mentési könyvtár Azure AD-ra van konfigurálva)
+  Minimum: 1 nap (7 nap, ha a biztonsági másolat könyvtár Azure AD-re van konfigurálva)
   Maximum: 365 nap
-  Alapértelmezés: 30 nap
+  Alapértelmezett: 30 nap
 
-További információért lásd: https://go.microsoft.com/fwlink/?linkid=2188435.
+Jelszó hossza
+  Minimum: 3 szó
+  Maximum: 10 szó
+  Alapértelmezett: 6 szó
+
+További információ: https://go.microsoft.com/fwlink/?linkid=2188435.
+
+Jelszavak listája a „Deep Dive: EFF's New Wordlists for Random Passphrases” című dokumentumból, amelyet az Electronic Frontier Foundation készített, és a CC-BY-3.0 Attribution licenc alapján kerül felhasználásra. További információ: https://go.microsoft.com/fwlink/?linkid=2255471.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Nagy betűk</string>
       <string id="LAPS_PwdComplexity_Item_2">Nagy betűk + kis betűk</string>
       <string id="LAPS_PwdComplexity_Item_3">Nagy betűk + kis betűk + számok</string>
       <string id="LAPS_PwdComplexity_Item_4">Nagy betűk + kis betűk + számok + különleges karakterek</string>
+      <string id="LAPS_PwdComplexity_Item_5">Nagy betűk + kis betűk + számok + különleges karakterek (jobb olvashatóság)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Jelszó (hosszú szavak)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Jelszó (rövid szavak)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Jelszó (rövid szavak egyedi előtagokkal)</string>
       <string id="LAPS_AdminName">A kezelendő adminisztrátori fiók neve</string>
       <string id="LAPS_AdminName_Help">Ez a házirend-beállítás egyéni adminisztrátori fióknevet ad meg a jelszó kezeléséhez.
 
@@ -86,17 +97,29 @@ Ha nincs konfigurálva, ez a beállítás alapértelmezés szerint engedélyezve
 További információért lásd: https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_ADPasswordEncryptionPrincipal">Engedélyezett jelszó-visszafejtők konfigurálása</string>
-      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">A beállítás konfigurálásával szabályozhatja azt a felhasználót vagy csoportot, aki vagy amely jogosult a titkosított jelszavak visszafejtésére.
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Ezzel a beállítással szabályozhatja azt az adott felhasználót vagy csoportot, amely jogosult a titkosított jelszavak visszafejtésére.
 
-A beállítás konfigurálása csak akkor lép érvénybe, ha engedélyezve van a jelszó-titkosítás.
+A beállítás konfigurálásának nincs hatása, amíg nincs engedélyezve a jelszótitkosítás.
 
-Ha ez a beállítás engedélyezve van, a titkosított jelszavakat a megadott csoport visszafejtheti.
+Ha ez a beállítás engedélyezve van, a titkosított jelszavakat az adott csoport visszafejtheti.
 
-Ha ez a beállítás le van tiltva vagy nincs konfigurálva, a titkosított jelszavakat a Tartománygazdák csoport fejtheti vissza.
+Ha ez a beállítás le van tiltva vagy nincs konfigurálva, a titkosított jelszavakat a Tartománygazdák csoportja fejtheti vissza.
 
-Ezt a beállítást sztring formátumú SID-vel („S-1-5-21-2127521184-1604012920-1887927527-35197“) vagy egy „tartomány\(csoport vagy felhasználó)“ formátumú csoport- vagy felhasználónévvel kell konfigurálni. A felügyelt eszköz számára feloldhatónak kell lennie a megadott felhasználónak vagy csoportnak, ellenkező esetben a jelszavakról nem készül biztonsági másolat.
+Ezt a beállítást egy csoport vagy felhasználó tartománynevével vagy sztringformátumú SID-vel kell konfigurálni. Az érvényes példák közé tartozik:
 
-További információért lásd: https://go.microsoft.com/fwlink/?linkid=2188435.
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Ne tegye idézőjelek vagy zárójelek közé a felhasználó vagy csoport nevét vagy SID-azonosítóját.
+
+A felügyelt eszköznek feloldhatónak kell lennie a megadott felhasználó vagy csoport számára, ellenkező esetben a jelszavakról nem készül biztonsági másolat.
+
+MEGJEGYZÉS: A rendszer figyelmen kívül hagyja ezt a beállítást, ha a címtárszolgáltatások helyreállítási módjának (DSRM) jelszavairól készít biztonsági másolatot egy tartományvezérlőn. Ebben a forgatókönyvben ez a beállítás mindig alapértelmezés szerint a tartományvezérlő tartományának Tartománygazdák csoportjára van beállítva.
+
+További információ: „https://go.microsoft.com/fwlink/?linkid=2188435”.
       </string>
       <string id="LAPS_ADEncryptedPasswordHistorySize">A titkosított jelszóelőzmények méretének konfigurálása</string>
       <string id="LAPS_ADEncryptedPasswordHistorySize_Help">Ezzel a beállítással konfigurálhatja, hogy hány korábbi titkosított jelszó legyen tárolva az Active Directory szolgáltatásban.
@@ -125,29 +148,31 @@ Ha a beállítás le van tiltva vagy nincs konfigurálva, a tartományvezérlőn
 További információ: https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
       <string id="LAPS_PostAuthenticationActions">Hitelesítés utáni műveletek</string>
-      <string id="LAPS_PostAuthenticationActions_Help">Ez a szabályzat azokat a hitelesítés utáni műveleteket konfigurálja, amelyeket a felügyelt fiók hitelesítésének észlelése után hajt végre a rendszer.
+      <string id="LAPS_PostAuthenticationActions_Help">Ez a szabályzat azokat a hitelesítés utáni műveleteket konfigurálja, amelyeket a felügyelt fiók általi hitelesítés észlelése után hajt végre a rendszer.
 
-Türelmi időszak: megadja azt az időt (órában), a amennyit a hitelesítés után várni kell a megadott hitelesítés utáni műveletek végrehajtása előtt.
+Türelmi időszak: megadja azt az időt (órában), amennyit a hitelesítés után várni kell a megadott, hitelesítés utáni műveletek végrehajtása előtt.
 
-Ha ez a beállítás engedélyezve van és nullánál nagyobb értékű, a megadott hitelesítés utáni műveletek a türelmi időszak lejártakor lesznek végrehajtva.
+Ha ez a beállítás engedélyezve van és nullánál nagyobb értékű, a megadott, hitelesítés utáni műveletek végrehajtása a türelmi időszak lejártakor történik meg.
 
-Ha ez a beállítás le van tiltva vagy nincs konfigurálva, a megadott utóhitelesítési műveletek az alapértelmezett 24 órás türelmi időszak után lesznek végrehajtva.
+Ha ez a beállítás le van tiltva vagy nincs konfigurálva, a megadott, hitelesítési utáni műveletek végrehajtása az alapértelmezett 24 órás türelmi időszak után történik meg.
 
-Ha ez a beállítás nulla értékű, a rendszer nem hajt végre utóhitelesítési műveleteket.
+Ha ez a beállítás nulla értékű, a rendszer nem hajt végre hitelesítési utáni műveleteket.
 
-Műveletek: a türelmi időszak lejártakor végrehajtandó műveletek.
+Műveletek: A türelmi időszak lejártakor végrehajtandó műveleteket adja meg.
 
-Jelszó alaphelyzetbe állítása: a türelmi időszak lejártakor a felügyelt fiók jelszava alaphelyzetbe lesz állítva.
+Új jelszó beállítása: A türelmi időszak lejártakor a rendszer új jelszót állít be a felügyelt fiók számára.
 
-A jelszó alaphelyzetbe állítása és a felügyelt fiók kijelentkezése: a türelmi időszak lejártakor a rendszer alaphelyzetbe állítja a felügyelt fiók jelszavát, és a felügyelt fiókot használó interaktív bejelentkezési munkamenetek befejeződnek.
+Új jelszó beállítása és a felügyelt fiók kijelentkezése: A türelmi időszak lejártakor a rendszer új jelszót állít be a felügyelt fiók számára, és a kijelentkezteti a felügyelt fiókot használó interaktív bejelentkezési munkameneteket.
 
-(MEGJEGYZÉS: Az interaktív bejelentkezési munkamenetek leállítása után előfordulhat, hogy a felügyelt fiók más hitelesített munkameneteket is használ. Az eszköz újraindítása az egyetlen robusztus megoldás arra, hogy az előző jelszó hosszabb ideig legyen használatban.)
+Új jelszó beállítása és újraindítás: A türelmi időszak lejártakor a rendszer új jelszót állít be a felügyelt fiók számára, és újraindítja a felügyelt eszközt.
 
-Jelszó alaphelyzetbe állítása és újraindítás: a türelmi időszak lejártakor a rendszer alaphelyzetbe állítja a felügyelt fiók jelszavát, és a felügyelt eszköz azonnal újraindul.
+Új jelszó beállítása, a felügyelt fiók kijelentkeztetése és a fennmaradó folyamatok leállítása: A türelmi időszak lejártakor a rendszer új jelszót állít be a felügyelt fiók számára, kijelentkezteti a felügyelt fiókot használó interaktív bejelentkezési munkameneteket, és leállítása a fennmaradó folyamatokat.
 
-Ha ez a beállítás le van tiltva vagy nincs konfigurálva, a hitelesítés utáni műveletek alapértelmezés szerint "A jelszó alaphelyzetbe állítása és a felügyelt fiók kijelentkezése" lesznek.
+(MEGJEGYZÉS: Az interaktív bejelentkezési munkamenetek leállítása után előfordulhat, hogy a felügyelt fiók használ még egyéb hitelesített munkameneteket. Az eszköz újraindítása az egyetlen hatékonya megoldás arra, hogy az előző jelszó hosszabb ideig legyen használatban.)
 
-Megjegyzés: a tartományvezérlők DSRM-fiókja nem konfigurálható hitelesítés utáni műveletekhez. Ez a házirend nincs hatással a tartományvezérlőkre, és akkor is figyelmen kívül lesz hagyva, ha tartományvezérlőre van konfigurálva.
+Ha ez a beállítás le van tiltva vagy nincs konfigurálva, a hitelesítés utáni műveletekre vonatkozó alapértelmezett beállítás az „Új jelszó beállítása és felügyelt fiók kijelentkeztetése” lesz.
+
+ Megjegyzés: A tartományvezérlőkön található DSRM-fiók nem konfigurálható hitelesítés utáni műveletekhez. Ez a szabályzat nincs hatással a tartományvezérlőkre, és akkor is figyelmen kívül hagyja a rendszer, ha tartományvezérlőre vonatkozóan konfigurálták.
 
 További információért lásd: https://go.microsoft.com/fwlink/?linkid=2188435.
       </string>
@@ -155,6 +180,44 @@ További információért lásd: https://go.microsoft.com/fwlink/?linkid=2188435
       <string id="PostAuthenticationActions_Item1">Jelszó alaphelyzetbe állítása</string>
       <string id="PostAuthenticationActions_Item3">A jelszó alaphelyzetbe állítása és a felügyelt fiók kijelentkeztetése</string>
       <string id="PostAuthenticationActions_Item5">A jelszó alaphelyzetbe állítása és az eszköz újraindítása</string>
+      <string id="PostAuthenticationActions_Item11">A jelszó alaphelyzetbe állítása, a felügyelt fiókból való kijelentkezés és a fennmaradó folyamatok leállítása</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Automatikus fiókkezelés konfigurálása</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Ez a házirend automatikus fiókkezelési házirend-beállításokat konfigurál.
+
+Adja meg a kezelni kívánt célfiókot: megadja, hogy a beépített rendszergazdai fiókot vagy egy egyéni fiókot kell kezelni.
+
+Automatikus fióknév (vagy névelőtag): megadja a felügyelt fiókhoz használandó nevet vagy névelőtagot.
+
+Ha ez a házirend-beállítás konfigurálva van, a Windows LAPS a célfiók fiókneveként vagy névelőtagjaként fogja használni.
+
+Ha ez a házirend-beállítás nincs konfigurálva, a Windows LAPS a „WLapsAdmin” kifejezést fogja használni a célfiók fiókneveként vagy névelőtagjaként.
+
+Megjegyzés: ezt a nevet a rendszer előtagként kezeli, ha a fióknév véletlenszerű generálása konfigurálva van. Lásd az alábbi megjegyzéseket.
+
+A felügyelt fiók engedélyezése: megadja, hogy a felügyelt fiók engedélyezve legyen-e.
+
+Ha ez a házirend-beállítás konfigurálva van, a Windows LAPS engedélyezi a megadott felügyelt fiókot.
+
+Ha ez a házirend-beállítás nincs konfigurálva, a Windows LAPS letiltja a megadott felügyelt fiókot.
+
+Megjegyzés: A Windows LAPS rendszeresen karbantartja és rotálja a felügyelt fiók jelszavát, függetlenül attól, hogy a fiók engedélyezett vagy letiltott állapotban van-e fenntartva.
+
+A felügyelt fiók nevének véletlenszerű generálása: meghatározza, hogy a felügyelt fiók nevét véletlenszerűen, véletlenszerű numerikus utótaggal kell-e generálni.
+
+Ha ez a házirend-beállítás konfigurálva van, a Windows LAPS egy nyolcjegyű véletlenszerű numerikus utótagot ad hozzá a felügyelt automatikus fiók nevéhez, és a minden jelszó-rotáláskor újragenerálja véletlenszerűen a felügyelt fiók nevét.
+
+Ha ez a házirend-beállítás nincs konfigurálva, a Windows LAPS a kezelt fiók automatikus fióknevét fogja használni a konfigurált módon.
+
+Ha a felügyelt automatikus fióknév előtagja konfigurálva van, a Windows LAPS a név első tizenkét (12) karakterét fogja használni a véletlenszerű név előtagjaként. Ha a felügyelt automatikus fióknév nincs konfigurálva, a Windows LAPS a „WLapsAdmin” nevet fogja használja a név előtagjaként.
+
+Megjegyzés: a tartományvezérlők DSRM-fiókja nem konfigurálható automatikus fiókkezelésre. Ez a házirend nincs hatással a tartományvezérlőkre, és akkor is figyelmen kívül hagyja a rendszer, ha konfigurálva van egy tartományvezérlőhöz.
+
+További információ: „https://go.microsoft.com/fwlink/?linkid=2188435”.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">A beépített rendszergazdai fiók kezelése</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Egyéni rendszergazdai fiók kezelése</string>
+      <string id="AutomaticAccountName_Help">Fióknév vagy névelőtag megadása</string>
+      <string id="AutomaticAccountNameRandomization_Help">Meghatározza, hogy az automatikus fióknevet véletlenszerűen kell-e generálni.</string>
       <string id="SUPPORTED_Windows10">Legalább Microsoft Windows 10 vagy újabb</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ További információért lásd: https://go.microsoft.com/fwlink/?linkid=2188435
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Jelszó-összetettség</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Jelszó hossza</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Jelszó kora (nap)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Jelszó hossza (szavak)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ További információért lásd: https://go.microsoft.com/fwlink/?linkid=2188435
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Türelmi idő (óra):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Műveletek:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Műveletek:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Adja meg a kezelni kívánt célfiókot:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Automatikus fióknév (vagy névelőtag):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">A felügyelt fiók engedélyezése</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Véletlenszerű név generálása a kezelt fiók számára</checkBox>
       </presentation>
     </presentationTable>
   </resources>

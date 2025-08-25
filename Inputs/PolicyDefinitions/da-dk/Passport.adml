@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">Brug certifikat til godkendelse lokalt</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">Brug Hav tillid til clouden for godkendelse i det lokale miljø</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">Deaktiver cachelagring af Windows Hello til virksomheder legitimationsoplysninger efter logon</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello til virksomheder er en alternativ metode til at logge på Windows ved hjælp af din Active Directory- eller Azure Active Directory-konto. Metoden erstatter adgangskoder, chipkort og virtuelle chipkort.
 
@@ -111,16 +113,17 @@ Hvis du deaktiverer denne politikindstilling, forhindrer Windows Hello til virks
 Bemærk! Hvis du deaktiverer denne politik, kan brugerne ikke bruge biometrikbevægelser på enheden, og det gælder alle kontotyper.
         </string>
         <string id="MSPassport_EnableEnhancedSignInSecurity">Aktiver ESS med understøttet eksternt udstyr</string>
-        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Forbedret loginsikkerhed isolerer Windows Hello biometriske (ansigts- og fingeraftryk) skabelondata og matchende handlinger til hardware, der er tillid til, eller angivne hukommelsesområder, hvilket betyder, at resten af operativsystemet ikke kan få adgang til eller ændre dem. Da kanalen for kommunikation mellem sensorerne og algoritmen også er sikret, er det umuligt for malware at indsætte eller genafspille data for at simulere en bruger, der logger på eller låse en bruger ud af maskinen.
+        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">Forbedret loginsikkerhed (Enhanced Sign-in Security – ESS) isolerer Windows Hello biometriske (ansigts- og fingeraftryk) skabelondata og matchende handlinger til hardware, der er tillid til, eller angivne hukommelsesområder, hvilket betyder, at resten af operativsystemet ikke kan få adgang til eller ændre dem. Da kanalen for kommunikation mellem sensorerne og algoritmen også er sikret, er det umuligt for malware at indsætte eller genafspille data for at simulere en bruger, der logger på eller låse en bruger ud af maskinen.
 Hvis du aktiverer denne politik, kan den have følgende mulige værdier:
 
-0 - Forbedret loginsikkerhed er aktiveret med eksterne enheder og indbyggede ikke-ESS sensorer
-Forbedret loginsikkerhed aktiveres på systemer med kompatibel software og hardware, der følger den eksisterende standardfunktionsmåde i Windows. Godkendelseshandlinger for eksterne Windows Hello-kompatible enheder vil være tilladt med de aktuelle funktionsbegrænsninger. Med denne indstilling aktiveres ESS desuden på enheder med en blanding af biometriske enheder, f.eks. en ESS-kompatibel FPR og et ikke-ESS-kompatibelt kamera.
+0 – Forbedret loginsikkerhed er deaktiveret med ydre enheders sensorer
+ESS vil være deaktiveret på systemer med kompatibel software og hardware. Godkendelseshandlinger for eksterne Windows Hello kompatible enheder vil være tilladt med de aktuelle funktionsbegrænsninger.
 
-1 - Forbedret loginsikkerhed er aktiveret uden eksterne enheder eller indbyggede ikke-ESS sensorer (standard og anbefales til højeste sikkerhed)
-Forbedret loginsikkerhed aktiveres på systemer med kompatibel software og hardware, der følger den eksisterende standardfunktionsmåde i Windows. Godkendelseshandlinger for enhver biometrisk enhed for eksterne enheder blokeres og er ikke tilgængelige for Windows Hello.
+1 – Forbedret loginsikkerhed er aktiveret uden sensorer for eksterne enheder (standard og anbefalet)
+ESS vil være aktiveret på systemer med kompatibel software og hardware, der følger den eksisterende standardfunktionsmåde i Windows. Godkendelseshandlinger for enhver ekstern biometrisk blokeres og er ikke tilgængelige for Windows Hello.
 
 Hvis du deaktiverer eller undlader at konfigurere denne politik, blokeres ikke-ESS sensorer på ESS-enheden.
+
         </string>
         <string id="MSPassport_EnablePinRecovery">Brug genoprettelse med pinkode</string>
         <string id="MSPassport_EnablePinRecoveryExplain">Med denne politik kan en bruger bruge tjenesten til genoprettelse med pinkode i Windows Hello til virksomheder til at ændre en glemt pinkode uden at miste tilknyttede legitimationsoplysninger eller certifikater, herunder nøgler, der er knyttet til brugerens personlige konti på enheden. Dette opnås ved, at den Azure-baserede tjeneste til genoprettelse med pinkode krypterer en genoprettelseshemmelighed, som lagres på enheden, og at der stilles krav om, at både tjenesten til genoprettelse med pinkode og enheden benytter kryptering. Ved genoprettelse med pinkode skal brugeren udføre multifaktorgodkendelse med Azure Active Directory.
@@ -149,6 +152,8 @@ Hvis du deaktiverer eller undlader at konfigurere denne politikindstilling, brug
  
 Bemærk! et miljø, der aktiverer denne politikindstilling, og politikindstillingen "Brug Windows Hello til virksomheder" kræver en eller flere Windows Server 2016-domænecontrollere. Ellers vil Windows Hello til virksomheder-godkendelse ikke fungere korrekt.
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">Legitimationsoplysningerne til Windows Hello til virksomheder cachelagres efter login for at tillade, at visse sikkerhedsrelaterede programmer bruger legitimationsoplysningerne uovervåget for ikke at forstyrre brugeroplevelsen. Aktivér denne politik for at slå dette fra, og fjern cachen, så brugerinput er eksplicit nødvendigt.</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">Konfigurer faktorer for at låse enhed op</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">Konfigurer en kommasepareret liste over GUID'er til programmer til håndtering af legitimationsoplysninger, for eksempel GUID'er til programmer til håndtering af ansigtstræk og fingeraftryk, der skal bruges som første og anden faktor til at låse op. Hvis den signaludbyder, der er tillid til, angives som en af faktorerne til at låse op, skal du også konfigurere en kommasepareret liste over signalregler i xml-format for hver signaltype, der skal verificeres.

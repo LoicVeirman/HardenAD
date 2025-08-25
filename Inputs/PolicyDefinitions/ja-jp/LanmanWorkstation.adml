@@ -36,6 +36,8 @@ AES_128_CCM
 
 このポリシー設定を無効にした場合、SMB クライアントは安全でないゲスト ログオンを拒否します。
 
+署名を有効にした場合、SMB クライアントは安全でないゲスト ログオンを拒否します。
+
 安全でないゲスト ログオンがファイル サーバーによって使用されるのは、共有フォルダーに対する認証されていないアクセスを許可することが目的です。エンタープライズ環境では一般的ではありませんが、ファイル サーバーとして動作しているコンシューマー NAS (ネットワーク接続ストレージ) アプライアンスでは、安全でないゲスト ログオンが頻繁に使用されています。Windows ファイル サーバーでは認証を要求し、既定では安全でないゲスト ログオンを使用しません。安全でないゲスト ログオンは認証されていないため、SMB 署名、SMB 暗号化などの重要なセキュリティ機能が無効になります。結果として、安全でないゲスト ログオンを許可するクライアントは、さまざまな man-in-the-middle 攻撃に対して脆弱になり、データ損失、データの破損、マルウェアに対するリスクにつながる可能性があります。また、安全でないゲスト ログオンを使用してファイル サーバーに書き込まれたデータには、ネットワーク上のすべてのユーザーからアクセスできる可能性があります。Microsoft では、安全でないゲスト ログオンを無効にして、認証されたアクセスが要求されるようにファイル サーバーを構成することをお勧めします。
       </string>
 
@@ -61,6 +63,7 @@ AES_128_CCM
         注: このポリシーは、Windows Server によって提供されるスケールアウト ファイル サーバーに接続する場合には、影響しません。汎用ファイル サーバーの役割を持つ Windows フェールオーバー クラスターでホストされるファイルに定期的に接続するクライアントに対しては、このポリシーを有効にしないことをお勧めします。有効にすると、フェールオーバー回数、メモリ使用率、CPU 使用率が不当に増える可能性があります。
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Windows Server 2022 以降または Windows 11 以降</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Windows Server 2025 以降または Windows 11 以降</string>
       <string id="Pol_EnableCompressedTraffic_Name">既定で SMB 圧縮を使用する</string>
       <string id="Pol_EnableCompressedTraffic_Help">このポリシーは、SMB クライアントが既定でトラフィック圧縮を使用するかどうかを制御します。
 
@@ -77,11 +80,129 @@ AES_128_CCM
 
 このポリシー設定を無効にするか、未構成にした場合、SMB クライアントはトラフィックを圧縮する可能性があります (他のポリシーと条件の組み合わせによって異なります)。
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">SMB の最大バージョンを義務付ける</string>
+      <string id="Pol_MaxSmb2Dialect_Help">このポリシーは、SMB プロトコルの最大バージョンを制御します
+
+注: SMB 1 コンポーネントが現時点でもインストールされ有効になっている場合、このグループ ポリシーは SMB 1 の使用を妨げません。
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">SMB の最小バージョンを義務付ける</string>
+      <string id="Pol_MinSmb2Dialect_Help">このポリシーは、SMB プロトコルの最小バージョンを制御します
+
+注: SMB 1 コンポーネントが現時点でもインストールされ有効になっている場合、このグループ ポリシーは SMB 1 の使用を妨げません。
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">NTLM (LM、NTLM、NTLMv2) をブロックする</string>
+      <string id="Pol_BlockNTLM_Help">このポリシーは、SMB クライアントがリモート接続認証のために NTLM をブロックするかどうかを制御します。
+
+このポリシー設定を有効にした場合、SMB クライアントはリモート接続認証に NTLM を使用しません。
+
+このポリシー設定を無効にした場合、または構成しなかった場合でも、SMB クライアントは NTLM を使用できます。
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">NTLM サーバー例外一覧をブロックする</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">このポリシー設定は、指定されたサーバーへのアクセスに NTLM を使用できるかどうかを決定します。
+
+このポリシー設定を有効にすると (NTLM をブロックする (LM、NTLM、NTLMv2) ポリシーが有効な場合にのみ有効)、指定されたサーバーへのアクセスに NTLM が使用される可能性があります。編集ボックスに目的のサーバー (DNS 名、IP アドレス、または NetBIOS 名) を 1 行に 1 つのサーバー名で入力してください。
+
+このポリシー設定を無効にした場合、または構成しなかった場合、サーバーへの NTLM アクセスは他の設定によって決定されます。
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">リモート メールスロットを有効にする</string>
+      <string id="Pol_EnableRemoteMailslots_Help">このポリシーでは、SMB クライアントが MUP 経由のリモート メールスロットを有効または無効にするかどうかを制御します。
+
+このポリシー設定を無効にした場合、リモート メールスロットは MUP 経由で機能しないため、SMB クライアント リダイレクターを経由しません。
+
+このポリシー設定を構成しなかった場合、リモート メールスロットは MUP 経由で許可される可能性があります。
+      </string>
+      <string id="Pol_RequireEncryption_Name">暗号化が必要</string>
+      <string id="Pol_RequireEncryption_Help">このポリシーでは、SMB クライアントで暗号化を要求するかどうかを制御します。
+
+このポリシー設定を有効にした場合、SMB クライアントでは、暗号化とデータの暗号化をサポートするために SMB サーバーが必要になります。
+
+このポリシー設定を無効にするか、未構成にした場合、SMB クライアントは暗号化を要求しません。ただし、SMB 暗号化がまだ必要な可能性があります。以下のメモを参照してください。
+
+注: このポリシーは、共有単位、サーバー単位、マップされたドライブごとの接続プロパティと組み合わされ、SMB 暗号化が必要になる場合があります。SMB サーバーは SMB 暗号化をサポートし、有効にする必要があります。たとえば、このポリシーを無効にした場合 (または構成しなかった場合)、SMB サーバー共有に必要な暗号化がある場合でも、SMB クライアントは暗号化を実行できます。
+
+重要: SMB 暗号化には SMB 3.0 以降が必要です
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">代替ポートを有効にする</string>
+      <string id="Pol_EnableAlternativePorts_Help">このポリシーは、SMB クライアントが代替ポートを有効または無効にするかどうかを制御します。
+
+このポリシー設定を無効にした場合、代替ポートは SMB クライアントで使用されません。
+
+このポリシー設定を構成しなかった場合、SMB クライアントで代替ポートが使用される可能性があります。
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">監査サーバーは暗号化をサポートしていません</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">このポリシーは、SMB サーバーが暗号化をサポートしていない場合に、SMB クライアントが監査イベントを有効にするかどうかを制御します。
+
+このポリシー設定を有効にした場合、SMB サーバーが暗号化をサポートしていない場合、SMB クライアントはイベントをログに記録します。
+
+このポリシー設定を無効にするか、未構成にした場合、SMB クライアントはイベントをログに記録しません。
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">監査サーバーが署名をサポートしていない</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">このポリシーは、SMB サーバーが署名をサポートしていない場合に、SMB クライアントが監査イベントを有効にするかどうかを制御します。
+
+このポリシー設定を有効にすると、SMB サーバーが署名をサポートしていない場合に、SMB クライアントはイベントをログに記録します。
+
+このポリシー設定を無効にするか構成しなかった場合、SMB クライアントはイベントをログに記録しません。
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">安全でないゲスト ログオンを監査する</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">このポリシーでは、SMB クライアントがゲスト アカウントとしてログオンしたときに、SMB クライアントが監査イベントを有効にするかどうかを制御します。
+
+このポリシー設定を有効にした場合、SMB クライアントはクライアントがゲスト アカウントとしてログオンしたときにイベントをログに記録します。
+
+このポリシー設定を無効にするか、未構成にした場合、SMB クライアントはイベントをログに記録しません。
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">代替ポート マッピング</string>
+      <string id="Pol_AlternativePortMappings_Help">このポリシー設定は、SMB クライアントが使用する代替ポート レジストリ マッピングを決定します。
+
+このポリシー設定を有効にした場合、マッピングのサーバー名が接続の対象サーバー名と一致する場合、最初の有効なマッピングが使用されます。
+
+このポリシー設定を有効にして、有効なマッピングを少なくとも 1 つ指定しない場合、またはこのポリシー設定を無効にした場合、または構成しなかった場合、SMB クライアントは、NET USE コマンドや New-SmbMapping コマンドなど、別のポート使用法を決定する他の方法を参照します。
+
+例：
+
+contososa.file.core.windows.net:tcp:448
+edgesrv1.corp.contoso.com:quic:450
+
+この設定を変更する方法:
+
+編集ボックスで必要な代替ポート マッピングを 1 行に 1 つのマッピング エントリで配置します。
+
+各マッピング エントリの形式は、上記の例で行われたように、サーバー名、トランスポートの種類、ポート番号をコロンで区切って指定します。
+
+注: このポリシーを有効にするには、Windows の再起動は必要ありません。
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>暗号:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>SMB バージョンを選択します:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">バージョン:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>SMB バージョンを選択します:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">バージョン:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>NTLM サーバー例外一覧をブロックする:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>代替ポート レジストリ マッピング:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

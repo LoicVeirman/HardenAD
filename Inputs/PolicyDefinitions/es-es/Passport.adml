@@ -12,6 +12,8 @@
         <string id="WHFB_UseCertificateForOnPremAuth">Uso de un certificado para la autenticación local</string>
         <!-- Add support for cloud trust deployments -->
         <string id="WHFB_UseCloudTrustForOnPremAuth">Use la confianza de nube para la autenticación local</string>
+        <!-- Allow disablement of key cache hardening -->
+        <string id="WHFB_DisablePostLogonCredentialCaching">Deshabilitar el almacenamiento en caché de las credenciales de Windows Hello para empresas después de iniciar sesión</string>
         <!-- DropdownList Button strings -->
         <string id="MSPassport_UsePassportForWorkExplain">Windows Hello para empresas es un método alternativo para iniciar sesión en Windows con la cuenta de Active Directory o Azure Active Directory que puede reemplazar las contraseñas, las tarjetas inteligentes y las tarjetas inteligentes virtuales.
 
@@ -111,17 +113,18 @@ Si deshabilitas esta configuración de directiva, Windows Hello para empresas im
 NOTA: si deshabilitas esta directiva, el usuario no podrá usar gestos de biometría en el dispositivo para todos los tipos de cuenta.
         </string>
         <string id="MSPassport_EnableEnhancedSignInSecurity">Habilitar ESS con periféricos admitidos</string>
-        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">La seguridad de inicio de sesión mejorada (ESS) aísla los datos de la plantilla biométrica (cara y huella digital) de Windows Hello y las operaciones de coincidencia en hardware de confianza o en las regiones de memoria especificadas, lo que significa que el resto del sistema operativo no puede acceder a ellos ni alterarlos. Dado que el canal de comunicación entre los sensores y el algoritmo también está protegido, es imposible que el malware inserte o reproduzca datos con el fin de simular a un usuario que inicia sesión o bloquear a un usuario fuera de su equipo.
+        <string id="MSPassport_EnableEnhancedSignInSecurityExplain">La seguridad de inicio de sesión mejorada (ESS) aísla los datos de la plantilla biométrica (cara y huella digital) de Windows Hello y las operaciones de coincidencia en hardware de confianza o las regiones de memoria especificadas, lo que significa que el resto del sistema operativo no puede acceder a ellos ni alterarlos. Dado que el canal de comunicación entre los sensores y el algoritmo también está protegido, es imposible que el malware inserte o reproduzca datos con el fin de simular un usuario que inicia sesión o bloquear a un usuario fuera de su equipo.
 Si habilita esta directiva, puede tener los siguientes valores posibles:
 
-0 - Seguridad de inicio de sesión mejorada habilitada con sensores periféricos e integrados que no son ESS
+0 - Seguridad de inicio de sesión mejorada deshabilitada con sensores periféricos
  
-La seguridad de inicio de sesión mejorada se habilitará en sistemas con software y hardware compatibles, siguiendo el comportamiento existente de forma predeterminada en Windows. Se permitirán las operaciones de autenticación de dispositivos periféricos compatibles con Windows Hello, sujetas a las limitaciones de las características actuales. Además, con esta configuración, se habilitará la ESS en dispositivos con una mezcla de dispositivos biométricos, como un FPR compatible con ESS y una cámara no compatible con ESS.
+ESS se deshabilitará en sistemas con software y hardware compatibles. Se permitirán las operaciones de autenticación de dispositivos periféricos compatibles con Windows Hello, sujetas a las limitaciones de las características actuales.
 
-1- Seguridad de inicio de sesión mejorada habilitada sin sensores periféricos o integrados que no sean ESS (valor predeterminado y recomendado para mayor seguridad)
-La seguridad de inicio de sesión mejorada se habilitará en sistemas con software y hardware compatibles, siguiendo el comportamiento predeterminado existente en Windows. Las operaciones de autenticación de cualquier dispositivo biométrico periférico se bloquearán y no estarán disponibles para Windows Hello.
+1- Seguridad de inicio de sesión mejorada habilitada sin sensores periféricos (valor predeterminado y recomendado)
+ESS habilitará en sistemas con software y hardware compatibles, siguiendo el comportamiento predeterminado existente en Windows. Las operaciones de autenticación de cualquier dispositivo biométrico periférico se bloquearán y no estarán disponibles para Windows Hello.
 
 Si deshabilita o no configura esta directiva, los sensores que no sean ESS se bloquearán en el dispositivo ESS.
+
         </string>
         <string id="MSPassport_EnablePinRecovery">Recuperación PIN de uso</string>
         <string id="MSPassport_EnablePinRecoveryExplain">La recuperación de PIN permite que el usuario cambie un PIN que olvidó con el servicio de recuperación de PIN de Windows Hello para empresas, sin perder las credenciales ni los certificados asociados, incluidas las claves asociadas a las cuentas personales del usuario en el dispositivo. Para conseguir esto, el servicio de recuperación de PIN basado en Azure cifra un secreto de recuperación, que se almacena en el dispositivo. La recuperación de PIN requiere que el usuario realice una autenticación multifactor en Azure Active Directory.
@@ -150,6 +153,8 @@ Si deshabilitas o no estableces esta configuración de Directiva, Windows Hello 
  
 Nota: los entornos que habilitan esta configuración de directiva y la configuración de directiva "usar Windows Hello para empresas" requieren uno o más controladores de dominio de Windows Server 2016. De lo contrario, se producirá un error en la autenticación de Windows Hello para empresas.
         </string>
+        <!-- Explain Text for DisablePostLogonCredentialCaching -->
+        <string id="WHFB_DisablePostLogonCredentialCachingExplain">La credencial Windows Hello para empresas se almacena en caché después del inicio de sesión para permitir que determinadas aplicaciones relacionadas con la seguridad usen la credencial automáticamente para no interrumpir la experiencia del usuario. Habilite esta directiva para desactivarla, quitando la memoria caché para que la entrada del usuario sea necesaria explícitamente.</string>
         <!-- Explain text for device unlock policy -->
         <string id="MSPassport_UseDeviceUnlock">Configurar factores de desbloqueo de dispositivo</string>
         <string id="MSPassport_UseDeviceUnlock_Explain">Configura una lista de valores separados por comas con los GUID de proveedores de credenciales, como los GUID de proveedores de reconocimiento facial y de huellas digitales, para usar como primer y segundo factor de desbloqueo. Si el proveedor de señal de confianza se especifica como uno de los factores de desbloqueo, también debes configurar una lista independiente de reglas de señal como valores separados por comas con formato XML para cada tipo de señal que se va a comprobar.

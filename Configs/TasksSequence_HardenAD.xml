@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Settings>
 	<!--
-  		Revision: 2025/08/18 - contact@hardenad.net
+  		Revision: 2024/04/13 - contact@hardenad.net
 	-->
 	<Version>
 		<Edition Name="Community Edition" />
-		<Release Major="02" Minor="09" BugFix="009" />
+		<Release Major="02" Minor="09" BugFix="008" />
 	</Version>
 	<History>
 		<LastRun Date="" System="" isPDCemulator="" />
@@ -172,17 +172,12 @@
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=UsersT2,OU=_Administration,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="CreateChild, DeleteChild" RightType="Allow" Inheritance="All" InheritedObjects="" ObjectType="user" TargetDN="OU=UsersT2L,OU=_Administration,ROOTDN" />
 		<ACL Trustee="L-S-T2-DELEG_User - Create and Delete (administration)" Right="GenericAll" RightType="Allow" Inheritance="Descendents" InheritedObjects="user" ObjectType="" TargetDN="OU=UsersT2L,OU=_Administration,ROOTDN" />
-		
 
 		<!-- 
 			Delegation for L-S-T2-DELEG_Group - Manage  BitlockerKey
 		-->
-		<ACL Trustee="L-S-T2-DELEG_Group - Manage BitlockerKey (administration)" Right="GenericAll" RightType="Allow" Inheritance="All" InheritedObjects="msFVE-RecoveryInformation" ObjectType="" TargetDN="OU=Workstations,OU=Harden_T12,ROOTDN" />
-		<ACL Trustee="L-S-T1-DELEG_Group - Manage BitlockerKey (administration)" Right="GenericAll" RightType="Allow" Inheritance="All" InheritedObjects="msFVE-RecoveryInformation" ObjectType="" TargetDN="OU=Servers,OU=Harden_T12,ROOTDN" />
-		
-		
-		
-		
+		<ACL Trustee="L-S-T2-DELEG_Group - Manage BitlockerKey" Right="GenericAll" RightType="Allow" Inheritance="All" InheritedObjects="msFVE-RecoveryInformation" ObjectType="" TargetDN="OU=Workstations,OU=Harden_T12,ROOTDN" />
+		<ACL Trustee="L-S-T1-DELEG_Group - Manage BitlockerKey" Right="GenericAll" RightType="Allow" Inheritance="All" InheritedObjects="msFVE-RecoveryInformation" ObjectType="" TargetDN="OU=Servers,OU=Harden_T12,ROOTDN" />
 		
 		<!-- Production ==========
 			Delegation for L-S-T1-DELEG_Computer - Create and Delete 
@@ -235,8 +230,8 @@
 		<!-- 
 			Delegation for L-S-T2-DELEG_Group - Manage Membership 
 		-->
-		<ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden_T12,ROOTDN" />
-		<ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="" TargetDN="OU=Groups,OU=Harden_TL,ROOTDN" />
+		<ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="member" TargetDN="OU=Groups,OU=Harden_T12,ROOTDN" />
+		<ACL Trustee="L-S-T2-DELEG_Group - Manage Membership" Right="ReadProperty, WriteProperty" RightType="Allow" Inheritance="Descendents" InheritedObjects="group" ObjectType="member" TargetDN="OU=Groups,OU=Harden_TL,ROOTDN" />
 		<!-- 
 			Delegation for auditing computer creation and deletion 
 		-->
@@ -245,6 +240,7 @@
 			Custom Access Rule: allow domain join only
 		-->
 		<SDDL Trustee="L-S-T0-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Workstations,OU=Harden_T0,ROOTDN" />
+		<SDDL Trustee="L-S-T0-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Servers,OU=Harden_T0,ROOTDN" />
 		<SDDL Trustee="L-S-T1-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Servers,OU=Harden_T12,ROOTDN" />
 		<SDDL Trustee="L-S-T1-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Computers,OU=Provisioning,ROOTDN" />
 		<SDDL Trustee="L-S-T2-DELEG_Computer - Join Domain" CustomAccessRule="Computer_DomJoin" TargetDN="OU=Workstations,OU=Harden_T12,ROOTDN" />
@@ -478,65 +474,37 @@
 		<GPO BackupID="{3B8C8687-8779-4042-AFF9-83F88BB4B894}" Validation="Yes" Name="HAD-Auto-Update-S1-Thu-0h-Srv" Description="--- Harden AD --- &quot; ,&quot; Scheduling of updates and reboot after 15min of the machine in W1 on Wednesday at 00:00 AM">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Servers" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{89B9E68A-F486-4FA3-B336-7B10B22E714A}" Validation="Yes" Name="HAD-Auto-Update-S1-Thu-1h-Srv" Description="--- Harden AD --- &quot; ,&quot; Scheduling of updates and reboot after 15min of the machine in W1 on Wednesday at 01:00 AM">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Servers" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{7B81D2FF-C69F-4B0C-A91F-DAF6D953555E}" Validation="Yes" Name="HAD-Auto-Update-S3-Thu-0h-Srv" Description="--- Harden AD --- &quot; ,&quot; Scheduling of updates and reboot after 15min of the machine in W3 on Wednesday at 00:00 AM">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Servers" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{A89FC9A2-EB8E-4E4D-8031-80BF04F5A992}" Validation="Yes" Name="HAD-Auto-Update-S3-Thu-1h-Srv" Description="--- Harden AD --- &quot; ,&quot; Scheduling of updates and reboot after 15min of the machine in W3 on Wednesday at 01:00 AM">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Servers" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{5B6FA350-D2C7-4A62-A107-3C59017EBAAC}" Validation="Yes" Name="HAD-Auto-Update-S4-Thu-0h-Srv" Description="--- Harden AD --- &quot; ,&quot; Scheduling of updates and reboot after 15min of the machine in W4 on Wednesday at 00:00 AM">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Servers" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{69D0F16E-B88F-4965-8B1D-1AB6CD1B7C7A}" Validation="Yes" Name="HAD-Auto-Update-S4-Thu-1h-Srv" Description="--- Harden AD --- &quot; ,&quot; Scheduling of updates and reboot after 15min of the machine in W4 on Wednesday at 01:00 AM">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Servers" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{22589A7C-8042-48FD-95F5-64673EE4BAAA}" Validation="Yes" Name="HAD-Auto-Update-Win10-11" Description="--- Harden AD --- &quot; ,&quot; Setting up Windows Update on Windows 10/11 machines according to the recommendations">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-Supported-OS-Clients" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{3BE6078C-5B36-4C4A-80BB-C619EA5C98B3}" Validation="Yes" Name="HAD-Auto-Update-Win7-8" Description="--- Harden AD --- &quot; ,&quot; Setting up Windows Update on Windows 7/8 machines according to the recommendations">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -549,30 +517,26 @@
 		<GPO BackupID="{1B4B82CB-D2BC-487D-96E5-6DC7FF7A168B}" Validation="Yes" Name="HAD-BitLocker-TPMOnly-Enabled-Win10-11" Description="--- Harden AD --- &quot; ,&quot; Enable BitLocker encryption with Trusted Platform Module.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-Supported-OS-Clients" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{ABAE4BF3-6399-48C5-A687-669FF1C8DC0A}" Validation="Yes" Name="HAD-BitLocker-PIN-Enabled-Win10-11" Description="--- Harden AD --- &quot; ,&quot; Enable BitLocker encryption with Trusted Platform Module. 6-digit PIN code required.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-Supported-OS-Clients" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{D71ADCFE-2648-481E-8CFC-936389800BBE}" Validation="Yes" Name="HAD-BitLocker-USB-Win10-11" Description="--- Harden AD --- &quot; ,&quot; Enable BitLocker encryption for USB drives with a password.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-Supported-OS-Clients" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{47755F08-5D33-4934-A33B-D795A076BDE0}" Validation="Yes" Name="HAD-BitLocker-RecoveryKey-Required" Description="--- Harden AD --- &quot; ,&quot; Enable BitLocker encryption for USB drives with a password.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-Supported-OS-Clients" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!--
 			BLOODHOUND 
@@ -587,10 +551,6 @@
 		<GPO BackupID="{4AA1D324-A28C-4E3D-A356-A9992E1ED1F4}" Validation="Yes" Name="HAD-Camera-on-lockon-Disabled" Description="--- Harden AD --- &quot; ,&quot; Blocks the camera on the lock screen.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Clients" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			LEGACY: BLOCK DC LOCATOR REGISTRATION 
@@ -616,11 +576,7 @@
 		</GPO>
 		<GPO BackupID="{FE6AD3D8-4733-4C25-9006-BB2B2402FD07}" Validation="Yes" Name="HAD-Firewall-Block-Inbound" Description="--- Harden AD --- &quot; ,&quot; Setup Microsoft Firewall in active mode in addition to system local rules.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			GPO PROCESSUS 
@@ -634,53 +590,32 @@
 		-->
 		<GPO BackupID="{4C100949-4368-407F-B371-A80615D07305}" Validation="Yes" Name="HAD-IPv6-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables IPv6.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
-
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			KERBEROS 
 		-->
 		<GPO BackupID="{960547AE-574B-4A5E-B238-7A6C0DD491D2}" Validation="Yes" Name="HAD-Kerberos-AES-Enabled" Description="--- Harden AD --- &quot; ,&quot; Set the encryption types that Kerberos is allowed to use.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			LAPS 
 		-->
 		<GPO BackupID="{614C4CD2-6F10-416C-90C4-BB1AB8703FA1}" Validation="Yes" Name="HAD-LAPS-Configuration" Description="--- Harden AD --- &quot; ,&quot; Configuration of the LAPS utility.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoFilter WMI="Legacy-LAPS-Configuration" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoFilter WMI="Windows-NoDC" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{6D104481-B9FC-4ABD-ACD0-CAB7BE59833E}" Validation="Yes" Name="HAD-LAPS-X64-Deployment" Description="--- Harden AD --- &quot; ,&quot; Deployment of the LAPS utility for 64bit systems.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoFilter WMI="Legacy-LAPS-Deployment-x64" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoFilter WMI="Windows-x64-NoDC" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{BAC83533-881C-427B-BDB8-A70526A84ADD}" Validation="Yes" Name="HAD-LAPS-X86-Deployment" Description="--- Harden AD --- &quot; ,&quot; Deployment of the LAPS utility for 32bit systems.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoFilter WMI="Legacy-LAPS-Deployment-x32" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoFilter WMI="Windows-x86-NoDC" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			LDAP PROTOCOL 
@@ -698,7 +633,7 @@
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{47A91C4D-D50A-4C35-9AE3-DFF1DB8299E4}" Validation="Yes" Name="HAD-LDAP-Client-Signing-Required" Description="--- Harden AD --- &quot; ,&quot; Requires signing for LDAP communications with a client.">
-			<GpoMode Mode="BOTH" Tier="Tier0" />	
+			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{DA84E960-529F-4580-A16A-E8C73CCE27F0}" Validation="Yes" Name="HAD-LDAP-Server-Signing-Required" Description="--- Harden AD --- &quot; ,&quot; Requires signing for LDAP communications with a server.">
@@ -728,19 +663,11 @@
 		</GPO>
 		<GPO BackupID="{5B9C9897-9806-4996-A3E6-10403FD271ED}" Validation="Yes" Name="HAD-NTLM1-LMx-Disabled" Description="--- Harden AD --- &quot; ,&quot; Forces the use of NTLMv2 response. LM and NTLMv1 responses are refused.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{BFB24A1C-121B-400E-86C2-CD43AD6FFA54}" Validation="Yes" Name="HAD-NTLMv2-128bits-Required" Description="--- Harden AD --- &quot; ,&quot; Configure NTLMv2 to use 128-bit encryption.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			LOCAL ADMINISTRATORS 
@@ -892,81 +819,45 @@
 		<GPO BackupID="{38C8D47E-E4F2-4DF2-8B60-BE9B3E53647D}" Validation="Yes" Name="HAD-Logon-Cache-0" Description="--- Harden AD --- &quot; ,&quot; No login credentials cached from servers.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Servers" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{8A504326-5E46-4446-B879-6D81286DD3E3}" Validation="Yes" Name="HAD-Logon-Cache-3" Description="--- Harden AD --- &quot; ,&quot; Keeps three login credentials cached from servers.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Clients" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			OS HARDENING 
 		-->
 		<GPO BackupID="{41D3950E-ACD2-4CD8-99B5-DE791765C727}" Validation="Yes" Name="HAD-MSLive-Accounts-Disabled" Description="--- Harden AD --- &quot; ,&quot; Blocks the use of personal Microsoft accounts.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{10950762-6CD5-45DE-AC42-C5EA5D1FC08C}" Validation="Yes" Name="HAD-NBT-NS-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables DNS Fallback functionality: NBT-NS.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{0B5A54A5-92DB-4405-AE69-CB2154F4E613}" Validation="Yes" Name="HAD-PageFile-Shutdown-Cleared" Description="--- Harden AD --- &quot; ,&quot; Empty the pagefile.sys on each shutdown.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{993763F7-7500-4F90-89F7-52EF29307A2E}" Validation="Yes" Name="HAD-Print-Spooler-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables the print spooler service on windows system.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Servers" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{A10BD6F3-E157-46B1-AA07-D3ED1BC764BD}" Validation="Yes" Name="HAD-Remote-Assistance-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disable Windows remote assistance.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Clients" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{393E2FCB-5EDC-4E30-B82C-2B125193B550}" Validation="Yes" Name="HAD-Screenlock-Enabled" Description="--- Harden AD --- &quot; ,&quot; Lock inactive sessions after 20 minutes.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{6D9CD91B-F046-41C4-8BC1-4001459D3890}" Validation="Yes" Name="HAD-Secure-NetLogon" Description="--- Harden AD --- &quot; ,&quot; Secure Netlogon service.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{6697D7EB-62A0-4474-A4FE-5376411CE853}" Validation="Yes" Name="HAD-Svc-Browser-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disable the Windows Browser service.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -980,43 +871,23 @@
 		</GPO>
 		<GPO BackupID="{E8BF7E49-1AB8-430E-A215-E36E83FFD59F}" Validation="Yes" Name="HAD-UAC-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables UAC's approval mode for all administrators.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{C1E0AA24-E741-429C-A7C6-DE7577079C87}" Validation="Yes" Name="HAD-WDigest-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables WDigest protocol.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{5E8614C4-055C-48F4-B2DB-639997ECAE42}" Validation="Yes" Name="HAD-Windows-Defender-Config" Description="--- Harden AD --- &quot; ,&quot; Configures Windows Defender.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{118544C0-E432-4DE0-A070-55294BEC9ADD}" Validation="Yes" Name="HAD-WinRM-Basic-Digest-Auth-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disallows basic, unencrypted authentication for WinRM use.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{A0BAE75B-F3AF-423B-B2EA-66C42DE37632}" Validation="Yes" Name="HAD-WebProxyAutoDiscovery-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disable Web Proxy Auto-Discovery Protocol.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			GENERAL LOGS AND AUDIT 
@@ -1081,11 +952,7 @@
 		-->
 		<GPO BackupID="{589A5268-EEC7-4BA1-9A76-83413E07891A}" Validation="Yes" Name="HAD-SMB-Signing-Configuration" Description="--- Harden AD --- &quot; ,&quot; Configure SMB signing for clients.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{B87B962E-845A-400E-8B28-3C091B1BF3FF}" Validation="Yes" Name="HAD-SMB1-Audit-Enabled" Description="--- Harden AD --- &quot; ,&quot; Creates a scheduled task to audit SMBv1.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -1093,58 +960,34 @@
 			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{EA56678C-2BC0-4072-B5EC-D1324F947620}" Validation="Yes" Name="HAD-SMB1-Client-Only-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1 only for clients.">
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoMode Mode="BOTH" Tier="Tier0" />
 		</GPO>
 		<GPO BackupID="{B8A4774E-05C7-45CE-AC2A-653F40946C02}" Validation="Yes" Name="HAD-SMB1-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disable SMBv1.">
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoMode Mode="BOTH" Tier="Tier0" />
 		</GPO>
 		<GPO BackupID="{824987C5-3B3A-4662-9708-42E6A1CEE9A0}" Validation="Yes" Name="HAD-SMB1-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1.">
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoMode Mode="BOTH" Tier="Tier0" />
 		</GPO>
 		<GPO BackupID="{061C9FFC-D968-4BB1-B83B-C3606AC33F2F}" Validation="Yes" Name="HAD-SMB1-Server-Only-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SMBv1 only for servers.">
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoMode Mode="BOTH" Tier="Tier0" />
 		</GPO>
 		<GPO BackupID="{2D9C0297-0579-46AB-89FC-91F3297B190B}" Validation="Yes" Name="HAD-UNC-Hardened-Path" Description="--- Harden AD --- &quot; ,&quot; Requires Integrity and Mutual Authentication for UNC paths.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=Domain Controllers,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!-- 
 			TLS AND SSL HARDENING 
 		-->
 		<GPO BackupID="{C0267EE4-1CE1-4850-81A2-4DB345D44E6B}" Validation="Yes" Name="HAD-SSL2-SSL3-Disabled" Description="--- Harden AD --- &quot; ,&quot; Disables SSLv2 and SSLv3 on Windows systems.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{8FFB2716-85D4-4484-A8ED-8ED26940CDE9}" Validation="Yes" Name="HAD-SSL2-SSL3-Enabled" Description="--- Harden AD --- &quot; ,&quot; Enables SSLv2 and SSLv3 on Windows systems.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{B4C2B39F-E3A1-475A-9842-77E97684DC74}" Validation="Yes" Name="HAD-TLS-1_0-Disabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{224C9138-3AF5-409D-9C6D-9BFAC92B7238}" Validation="Yes" Name="HAD-TLS-1_0-Enabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -1154,19 +997,10 @@
 		</GPO>
 		<GPO BackupID="{310E54F3-C138-4D2E-9609-CD80A4E56C7E}" Validation="Yes" Name="HAD-TLS-1_1-Enabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
+		
 		<GPO BackupID="{7FD95C5F-05C8-4CBC-9257-F701C0D58A48}" Validation="Yes" Name="HAD-TLS-1_2-Enabled" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<!--
 			DOMAIN JOIN
@@ -1181,6 +1015,7 @@
 		<GPO BackupID="{B25D0E6D-70B8-40E4-B1D0-78F6FE9CF76F}" Validation="Yes" Name="HAD-QwantSearch" Description="--- Harden AD --- &quot; ,&quot; Configure default search provider.">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-x64-NoDC" />
+			<GpoLink Path="OU=Workstations,OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 
 		<!--
@@ -1200,12 +1035,7 @@
 		</GPO>
 		<GPO BackupID="{AADB1B68-BF3A-4060-8C58-06CC12376B42}" Validation="Yes" Name="HAD-DEP-Config" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
-
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{3393F8AD-6A51-42BC-95DE-1E3207079E6F}" Validation="Yes" Name="HAD-DMA-Protection" Description="--- Harden AD --- &quot; ,&quot; Block external devices to access to the RAM without authorization">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -1222,7 +1052,9 @@
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Clients" />
 			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawT0,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawT12L,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawAccess,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{7A167C17-59F3-474C-8BBF-D395C27A59FE}" Validation="Yes" Name="HAD-LSASS-Audit" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -1230,27 +1062,16 @@
 		</GPO>
 		<GPO BackupID="{C1703AE2-DA27-4E5A-A593-BB20736AC05E}" Validation="Yes" Name="HAD-LSASS-Config" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
 			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoFilter WMI="Windows-OS-Clients" />
 		</GPO>
 		<GPO BackupID="{F72EB12F-47A6-4359-A1D7-4D60D6F86FA1}" Validation="Yes" Name="HAD-mDNS-Disabled" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{CD678449-FC2B-48C1-858A-36AA71A7FABE}" Validation="Yes" Name="HAD-NTLM-Disabled" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{EF230FE4-3A22-465C-947E-2D0A75C15A2D}" Validation="Yes" Name="HAD-Smart-Card-Config" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -1258,26 +1079,18 @@
 		<GPO BackupID="{FC3CC8F2-3F10-4A4B-A31A-9644CB7E706B}" Validation="Yes" Name="HAD-SMB-Config-24H2" Description="--- Harden AD --- &quot; ,&quot; Harden the SMB protocol (minimum version : Windows 11 24h2)">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-11_24h2-and-server-2025-NoDC" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{6F71B9A1-CD97-4C3A-9556-71DC3C05BDB5}" Validation="Yes" Name="HAD-UAC-Advanced-Enabled" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{0E19D1BA-F69C-455D-B88C-7204C492F5BE}" Validation="Yes" Name="HAD-User-Config" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-OS-Clients" />
 			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_TL,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawT0,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawT12L,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
+			<GpoLink Path="OU=PawAccess,OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 		<GPO BackupID="{ED9D1A53-4841-4410-9A43-BA6D78CA1EBD}" Validation="Yes" Name="HAD-Virtualization-Based-Protection-Enabled" Description="--- Harden AD --- &quot; ,&quot; ">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
@@ -1288,10 +1101,6 @@
 		<GPO BackupID="{218B7866-14AD-42AD-9DCD-9E284B85C5BA}" Validation="Yes" Name="HAD-Windows-LAPS" Description="--- Harden AD --- &quot; ,&quot; Deploy Windows LAPS">
 			<GpoMode Mode="BOTH" Tier="Tier0" />
 			<GpoFilter WMI="Windows-Laps-Supported" />
-			<GpoLink Path="OU=_Administration,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T0,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Harden_T12,RootDN" Enabled="Yes" Enforced="Yes" />
-			<GpoLink Path="OU=Computers,OU=Provisioning,RootDN" Enabled="Yes" Enforced="Yes" />
 		</GPO>
 	</GroupPolicies>
 	<Accounts>
@@ -1493,11 +1302,11 @@
 
 
 
-		<Group name="L-S-T1-DELEG_Group - Manage BitlockerKey (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT1,OU=_Administration,ROOTDN">
+		<Group name="L-S-T1-DELEG_Group - Manage BitlockerKey" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT1,OU=_Administration,ROOTDN">
 			<Member samAccountName="G-S-T1_Managers" />
 			<Member samAccountName="G-S-T1_Administrators" />
 		</Group>
-		<Group name="L-S-T2-DELEG_Group - Manage BitlockerKey (administration)" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
+		<Group name="L-S-T2-DELEG_Group - Manage BitlockerKey" Category="Security" Scope="domainLocal" Description="Members of this group can create, update and delete users within Tier 1 administration OU" Path="OU=Deleg,OU=GroupsT2,OU=_Administration,ROOTDN">
 			<Member samAccountName="G-S-T2_Managers" />
 			<Member samAccountName="G-S-T2_Administrators" />
 		</Group>

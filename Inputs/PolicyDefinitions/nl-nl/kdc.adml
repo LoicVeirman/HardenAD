@@ -115,6 +115,25 @@ Gebeurtenissen gegenereerd door deze configuratie: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Ondersteund</string>
       <string id="PKINITHashAlgorithm_Audited">Gecontroleerd</string>
       <string id="PKINITHashAlgorithm_NotSupported">Niet ondersteund</string>
+      <string id="StrongNameMatches">Sterke toewijzingen op basis van namen voor certificaten toestaan</string>
+      <string id="StrongNameMatches_explain">Met deze beleidsinstelling kunt u alternatieve id's op basis van namen gebruiken om certificaten die zijn uitgegeven aan Active Directory-gebruikersaccounts sterk toe te wijzen en op te geven welke certificaten aan welke accounts worden toegewezen. Als deze instelling niet is ingeschakeld, moeten certificaten voldoen aan de criteria voor sterke toewijzing die zijn opgegeven in aka.ms/StrongCertMapKB, waardoor in het algemeen op naam gebaseerde id's niet worden toegestaan.
+
+Elke toewijzing die in dit beleid is opgegeven, moet een beleids-OID bevatten naast een IssuerSubject en/of een UPN-achtervoegsel met behulp van de syntaxis die hieronder is opgegeven. Als een geldige toewijzing voor een bepaald certificaat niet kan worden gevonden in dit beleid, probeert Active Directory een overeenkomst te vinden met behulp van de bestaande criteria voor sterke toewijzing die zijn opgegeven in KB5014754. Certificaattoewijzingen die niet voldoen aan de criteria 'sterke naamtoewijzing' (dit beleid) of de bestaande criteria 'sterke toewijzing' worden als ongeldig beschouwd voor verificatie.
+
+De algemene beleidsindeling en enkele voorbeelden worden hieronder weergegeven. Dit beleid is alleen van toepassing op Active Directory-gebruikersaccounts.
+
+Algemene syntaxis
+==============
+&lt;thumbprint&gt;; &lt;lijst met methoden voor naamovereenkomst&gt;; &lt;&gt;
+
+Voorbeelden
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+Het beleid moet exact één certificaatvingerafdruk per regel bevatten, waarbij elke regel wordt weergegeven als een tuple. Vingerafdrukken moeten uniek zijn en kunnen niet worden herhaald in meerdere regels. De secties van elke tuple die worden gescheiden door puntkomma's moeten in de aangegeven volgorde staan, terwijl de velden gescheiden door komma's in elke volgorde kunnen zijn. De regels zelf worden gescheiden door nieuwe regels.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Gebeurtenissen gegenereerd door deze configuratie: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Regels voor overeenkomsten van sterke namen:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>

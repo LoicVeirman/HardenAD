@@ -33,8 +33,8 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informa
       <string id="LAPS_PasswordSettings">Definições de Palavra-passe</string>
       <string id="LAPS_PasswordSettings_Help">Configura parâmetros de palavra-passe
 
-Complexidade de palavra-passe: quais os caracteres usados ao gerar uma nova palavra-passe
-  Predefinição: letras grandes + letras pequenas + números + carateres especiais
+Complexidade da palavra-passe: que carateres são utilizados ao gerar uma nova palavra-passe
+  Predefinição: Letras grandes + letras pequenas + números + carateres especiais
 
 Comprimento da palavra-passe
   Mínimo: 8 carateres
@@ -46,25 +46,36 @@ Duração da palavra-passe em dias
   Máximo: 365 dias
   Predefinição: 30 dias
 
+Comprimento da frase de acesso
+  Mínimo: 3 palavras
+  Máximo: 10 palavras
+  Predefinição: 6 palavras
+
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
+
+A lista de frases de acesso tirada de "Deep Dive: EFF's New Wordlists for Random Passphrases" da Electronic Frontier Foundation e é utilizada ao abrigo de uma licença de Atribuição CC-BY-3.0. Consulte https://go.microsoft.com/fwlink/?linkid=2255471 para obter mais informações.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Letras grandes</string>
       <string id="LAPS_PwdComplexity_Item_2">Letras grandes + letras pequenas</string>
       <string id="LAPS_PwdComplexity_Item_3">Letras grandes + letras pequenas + números</string>
       <string id="LAPS_PwdComplexity_Item_4">Letras grandes + letras pequenas + números + especiais</string>
+      <string id="LAPS_PwdComplexity_Item_5">Letras grandes + letras pequenas + números + carateres especiais (leitura melhorada)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Frase de acesso (palavras longas)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Frase de acesso (palavras curtas)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Frase de acesso (palavras curtas com prefixos exclusivos)</string>
       <string id="LAPS_AdminName">Nome da conta de administrador a gerir</string>
       <string id="LAPS_AdminName_Help">Esta definição de política especifica um nome de conta de administrador personalizado para gerir a palavra-passe.
 
-Se esta definição de política estiver ativada, a LAPS irá gerir a palavra-passe para uma conta local com este nome.
+Se esta definição de política estiver ativada, o LAPS irá gerir a palavra-passe para uma conta local com este nome.
 
-Se esta definição de política estiver desativada ou não configurada, a LAPS irá gerir a palavra-passe para a conta de administrador conhecida.
+Se esta definição de política estiver desativada ou não configurada, o LAPS irá gerir a palavra-passe para a conta de administrador conhecida.
 
 NÃO ative esta definição de política para gerir a conta de administrador incorporada. A conta de administrador incorporada é detetada automaticamente pelo SID bem conhecido e não depende do nome da conta.
 
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">Não permitir o tempo de expiração da palavra-passe superior ao necessário pela política</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Se esta definição estiver ativada ou não estiver configurada, a expiração da palavra-passe planeada para um valor superior à duração da palavra-passe, tal como indicado pela política "Definições de palavra-passe", NÃO é permitida. Quando essa expiração for detetada, a palavra-passe é alterada imediatamente e a expiração da palavra-passe é definida de acordo com a política.
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Se esta definição estiver ativada ou não estiver configurada, a expiração da palavra-passe planeada para um valor superior à duração da palavra-passe, tal como indicado pela política "Definições de palavra-passe", NÃO é permitida. Quando essa expiração for detectada, a palavra-passe é alterada imediatamente e a expiração da palavra-passe é definida de acordo com a política.
 
 Se esta definição estiver desativada, o tempo de expiração da palavra-passe pode ser superior ao requerido pela política "Definições de palavra-passe".
 
@@ -88,15 +99,27 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informa
       <string id="LAPS_ADPasswordEncryptionPrincipal">Configurar desencriptadores de palavra-passe autorizados</string>
       <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Configure esta definição para controlar o utilizador ou grupo específico que está autorizado a desencriptar palavras-passe encriptadas.
 
-A configuração desta definição não tem efeito se a encriptação de palavra-passe tiver sido ativada.
+A configuração desta definição não tem efeito, a menos que a encriptação de palavra-passe tenha sido ativada.
 
 Se esta definição estiver ativada, as palavras-passe encriptadas serão desencriptáveis pelo grupo especificado.
 
-Se esta definição estiver desativada ou não configurada, as palavras-passe encriptadas serão desencriptáveis pelo grupo de Administradores do Domínio.
+Se esta definição estiver desativada ou não estiver configurada, as palavra-passe encriptados serão desencriptáveis pelo grupo de Administradores de Domínio.
 
-Esta definição tem de ser configurada com um SID no formato de cadeia ("S-1-5-21-2127521184-1604012920-1887927527-35197") ou com o nome de um grupo ou utilizador no formato "domínio \ (grupo ou utilizador)". O utilizador ou grupo especificado tem de poder ser resolvido pelo dispositivo gerido; caso contrário, não serão efetuadas cópias de segurança das palavras-passe .
+Esta definição tem de ser configurada com um nome de domínio qualificado de um grupo ou utilizador ou um SID em formato de cadeia. Exemplos válidos incluem:
 
-Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Não coloque o nome de utilizador\grupo ou o SID entre aspas ou parênteses.
+
+O utilizador ou grupo especificado tem de ser resolvível pelo dispositivo gerido, caso contrário, não será feita a cópia de segurança das palavras-passe.
+
+NOTA: esta definição é ignorada quando são criadas cópias de segurança de palavras-passe do Modo de Reparação dos Serviços de Diretório (DSRM) num controlador de domínio. Nesse cenário, esta definição é sempre predefinida para o grupo de Administradores de Domínio do controlador de domínio.
+
+Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para mais informações.
       </string>
       <string id="LAPS_ADEncryptedPasswordHistorySize">Configurar o tamanho do histórico de palavras-passe encriptadas</string>
       <string id="LAPS_ADEncryptedPasswordHistorySize_Help">Utilize esta definição para configurar o número de palavras-passe encriptadas anteriores que serão armazenadas no Active Directory.
@@ -125,36 +148,76 @@ Se esta definição estiver desativada ou não estiver configurada, não será e
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para mais informações.
       </string>
       <string id="LAPS_PostAuthenticationActions">Ações de pós-autenticação</string>
-      <string id="LAPS_PostAuthenticationActions_Help">Esta política configura ações de pós-autenticação que serão executadas após a deteção de uma autenticação pela conta gerida.
+      <string id="LAPS_PostAuthenticationActions_Help">Esta política configura ações de pós-autenticação que serão executadas após detetar uma autenticação pela conta gerida.
 
-Período de tolerância: especifica o período de tempo (em horas) a aguardar após uma autenticação antes de executar as ações de pós-autenticação especificadas.
+Período de tolerância: especifica a quantidade de tempo (em horas) a aguardar após uma autenticação antes de executar as ações de pós-autenticação especificadas.
 
-Se esta definição estiver ativada e for superior a zero, as ações de pós-autenticação especificadas serão executadas após a expiração do período de tolerância.
+Se esta definição estiver ativada e for superior a zero, as ações de pós-autenticação especificadas serão executadas após o fim do período de tolerância.
 
-Se esta definição estiver desativada ou não configurada, as ações de pós-autenticação especificadas serão executadas após um período de tolerância de 24 horas predefinido.
+Se esta definição estiver desativada ou não estiver configurada, as ações de pós-autenticação especificadas serão executadas após um período de tolerância predefinido de 24 horas.
 
-Se esta definição for igual a zero, não serão executadas ações de pós-autenticação.
+Se esta definição for igual a zero, nenhuma ação de pós-autenticação será executada.
 
-Ações: especifica as ações a tomar após a expiração do período de tolerância.
+Ações: especifica as ações a tomar após o fim do período de tolerância.
 
-Repor palavra-passe: após a expiração do período de tolerância, a palavra-passe da conta gerida será reposta.
+Repor a palavra-passe: após o fim do período de tolerância, a palavra-passe da conta gerida será reposta.
 
-Repor a palavra-passe e terminar sessão na conta gerida: após a expiração do período de tolerância, a palavra-passe da conta gerida será reposta e quaisquer sessões de início de sessão interativo que utilizem a conta gerida serão terminadas.
+Repor a palavra-passe e terminar a sessão da conta gerida: após o fim do período de tolerância, a palavra-passe da conta gerida será reposta e todas as sessões de início de sessão interativas que utilizam a conta gerida serão terminadas.
 
-(NOTA: após quaisquer sessões de início de sessão interativo serem terminadas, poderão ainda existir outras sessões autenticadas em utilização pela conta gerida. A única forma fiável de garantir que a palavra-passe anterior já não se encontra em utilização é reiniciar o dispositivo.)
+Repor a palavra-passe e reiniciar: após o fim do período de tolerância, a palavra-passe da conta gerida será reposta e o dispositivo gerido será reiniciado.
 
-Repor a palavra-passe e reiniciar: após a expiração do período de tolerância, a palavra-passe da conta gerida será reposta e o dispositivo gerido será reiniciado imediatamente.
+Repor a palavra-passe, terminar a sessão da conta gerida, e terminar todos os processos restantes: após o fim do período de tolerância, a palavra-passe da conta gerida será reposta, todas as sessões de início de sessão interativas que utilizam a conta gerida serão terminadas e todos os processos restantes serão encerrados.
 
-Se esta definição estiver desativada ou não estiver configurada, as ações de pós-autenticação serão predefinidas para "Repor a palavra-passe e terminar sessão na conta gerida".
+(NOTA: após todas as sessões de início de sessão interativas serem terminadas, poderão ainda existir outras sessões autenticadas em uso pela conta gerida. A única forma robusta de garantir que a palavra-passe anterior já não está em uso é reiniciar o dispositivo.)
 
-Nota: a conta DSRM em controladores de domínio não pode ser configurada para ações de pós-autenticação. Esta política não tem efeito em controladores de domínio e será ignorada mesmo que seja configurada para um DC.
+Se esta definição estiver desativada ou não configurada, as ações de pós-autenticação serão repostas para "Repor a palavra-passe e terminar a sessão da conta gerida".
 
-Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
+Nota: a conta DSRM nos controladores de domínio não pode ser configurada para ações de pós-autenticação. Esta política não tem efeito nos controladores de domínio e será ignorada mesmo se configurada para um DC.
+
+Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para mais informações.
       </string>
       <string id="PostAuthenticationActions_Item0">Desativado - não efetuar ações</string>
       <string id="PostAuthenticationActions_Item1">Repor a palavra-passe</string>
       <string id="PostAuthenticationActions_Item3">Repor a palavra-passe e terminar sessão na conta gerida</string>
       <string id="PostAuthenticationActions_Item5">Repor a palavra-passe e reiniciar o dispositivo</string>
+      <string id="PostAuthenticationActions_Item11">Reponha a palavra-passe, termine sessão na conta gerida e termine todos os processos restantes</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Configurar a gestão de conta automática</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Esta política configura as opções de política de gestão de conta automática.
+
+Especifique a conta de destino a gerir: especifica se a conta de administrador incorporada ou uma conta personalizada deve ser gerida.
+
+Nome da conta automática (ou prefixo do nome): especifica o nome, ou prefixo do nome, a utilizar para a conta gerida.
+
+Se esta definição de política estiver configurada, o Windows LAPS irá utilizá-la como o nome da conta ou prefixo do nome da conta de destino.
+
+Se esta definição de política não estiver configurada, o Windows LAPS utilizará "WLapsAdmin" como o nome da conta ou prefixo do nome.
+
+Nota: este nome é tratado como um prefixo quando a aleatorização do nome da conta está configurada, consulte os comentários abaixo.
+
+Ativar a conta gerida: especifica se a conta gerida deve ou não estar ativada.
+
+Se esta definição de política estiver configurada, o Windows LAPS ativará a conta gerida especificada.
+
+Se esta definição de política não estiver configurada, o Windows LAPS desativará a conta gerida especificada.
+
+Nota: o Windows LAPS irá manter e rodar regularmente a palavra-passe da conta gerida, independentemente de a conta ser mantida num estado ativado\desativado.
+
+Aleatorizar o nome da conta gerida: especifica se o nome da conta gerida deve ser aleatório com um sufixo numérico aleatório.
+
+Se esta definição de política estiver configurada, o Windows LAPS adicionará um sufixo numérico aleatório de oito dígitos ao nome da conta automática gerida e irá aleatorizar novamente o nome da conta gerida sempre que a palavra-passe for rodada.
+
+Se esta definição de política não estiver configurada, o Windows LAPS utilizará o nome da conta automática gerida conforme configurado.
+
+Se o prefixo do nome da conta automática gerida estiver configurado, o Windows LAPS utilizará até os primeiros doze (12) carateres desse nome como prefixo para o nome aleatório. Se o nome da conta automática gerida não estiver configurado, o Windows LAPS utilizará "WLapsAdmin" como prefixo do nome.
+
+Nota: a conta DSRM nos controladores de domínio não pode ser configurada para gestão de conta automática. Esta política não tem efeito nos controladores de domínio e será ignorada mesmo se configurada para um controlador de domínio.
+
+Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para mais informações.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Gerir a conta de administrador incorporada</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Gerir uma conta de administrador personalizada</string>
+      <string id="AutomaticAccountName_Help">Especifique o nome da conta ou o prefixo do nome</string>
+      <string id="AutomaticAccountNameRandomization_Help">Especifica se o nome automático da conta deve ser aleatório.</string>
       <string id="SUPPORTED_Windows10">Pelo menos, Microsoft Windows 10 ou posterior</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informa
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Complexidade da Palavra-passe</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Comprimento da Palavra-passe</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Duração da Palavra-passe (Dias)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Comprimento da Frase de Acesso (palavras)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informa
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Período de tolerância (horas):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Ações:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Ações:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Especifique a conta de destino a gerir:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Nome da conta automática (ou prefixo do nome):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Ativar a conta gerida</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Aleatorizar o nome da conta gerida</checkBox>
       </presentation>
     </presentationTable>
   </resources>

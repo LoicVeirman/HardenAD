@@ -36,7 +36,9 @@ Se si abilita o non si configura questa impostazione dei criteri, il client SMB 
 
 Se si disabilita questa impostazione dei criteri, il client SMB rifiuta gli accessi guest non sicuri.
 
-Gli accessi guest non sicuri vengono usati dai file server per consentire l'accesso non autenticato alle cartelle condivise. Pur essendo inconsueti in un ambiente aziendale, gli accessi guest non sicuri vengono usati di frequente dai dispositivi NAS (Network Attached Storage) consumer che operano come file server. I file server Windows richiedono l'autenticazione e non usano gli accessi guest non sicuri per impostazione predefinita. Perché gli accessi guest non sicuri non sono autenticati, importanti funzionalità di sicurezza come la firma SMB e la crittografia SMB sono disabilitate. Di conseguenza, i client che consentono gli accessi guest non sicuri sono vulnerabili a un'ampia gamma di attacchi man-in-the-middle che possono comportare la perdita di dati, il danneggiamento dei dati e l'esposizione a malware. Inoltre, eventuali dati scritti in un file server usando un accesso guest non sicuro sono potenzialmente accessibili a tutti gli utenti della rete. Microsoft consiglia di disabilitare gli accessi guest non sicuri e di configurare i file server in modo da richiedere l'accesso autenticato."
+Se si abilita la firma, il client SMB rifiuterà gli accessi guest non sicuri.
+
+Gli accessi guest non sicuri vengono utilizzati dai file server per consentire l'accesso non autenticato alle cartelle condivise.Gli accessi guest non sicuri vengono usati dai file server per consentire l'accesso non autenticato alle cartelle condivise. Pur essendo inconsueti in un ambiente aziendale, gli accessi guest non sicuri vengono usati di frequente dai dispositivi NAS (Network Attached Storage) consumer che operano come file server. I file server Windows richiedono l'autenticazione e non usano gli accessi guest non sicuri per impostazione predefinita. Perché gli accessi guest non sicuri non sono autenticati, importanti funzionalità di sicurezza come la firma SMB e la crittografia SMB sono disabilitate. Di conseguenza, i client che consentono gli accessi guest non sicuri sono vulnerabili a un'ampia gamma di attacchi man-in-the-middle che possono comportare la perdita di dati, il danneggiamento dei dati e l'esposizione a malware. Inoltre, eventuali dati scritti in un file server usando un accesso guest non sicuro sono potenzialmente accessibili a tutti gli utenti della rete. Microsoft consiglia di disabilitare gli accessi guest non sicuri e di configurare i file server in modo da richiedere l'accesso autenticato."
       </string>
 
       <string id="Pol_EnableCSCforCAShares_Name">Disponibilità dei file offline nelle condivisioni con disponibilità continua</string>
@@ -61,6 +63,7 @@ Gli accessi guest non sicuri vengono usati dai file server per consentire l'acce
         Nota: questo criterio non ha effetto in caso di connessione a condivisioni File server di scalabilità orizzontale fornite da un sistema Windows Server. Microsoft sconsiglia di abilitare questo criterio per i client che si connettono regolarmente a file ospitati in un cluster di failover di Windows con il ruolo File server per uso generale, perché questo può influire negativamente sui tempi di failover e aumentare l'uso della memoria e della CPU.
       </string>
       <string id="SUPPORTED_Windows_Server_2022_Windows_11_0">Almeno Windows Server 2022 o Windows 11</string>
+      <string id="SUPPORTED_Windows_Server_2025_Windows_11_0">Almeno Windows Server 2025 o Windows 11</string>
       <string id="Pol_EnableCompressedTraffic_Name">Usa compressione SMB per impostazione predefinita</string>
       <string id="Pol_EnableCompressedTraffic_Help">Questo criterio controlla se il client SMB usa la compressione del traffico per impostazione predefinita.
 
@@ -77,11 +80,129 @@ Se si abilita questa impostazione dei criteri, il client SMB non comprimerà mai
 
 Se si disabilita o non si configura questa impostazione dei criteri, il client SMB potrebbe comprimere il traffico ,a seconda di una combinazione di altri criteri e condizioni.
       </string>
+      <string id="Pol_MaxSmb2Dialect_Name">Rendi obbligatoria la versione massima di SMB</string>
+      <string id="Pol_MaxSmb2Dialect_Help">Questo criterio controlla la versione massima del protocollo SMB
+
+Nota: questo criterio di gruppo non impedisce l'utilizzo di SMB 1 se tale componente è ancora installato e abilitato.
+      </string>
+      <string id="Pol_MinSmb2Dialect_Name">Rendi obbligatoria la versione minima di SMB</string>
+      <string id="Pol_MinSmb2Dialect_Help">Questo criterio controlla la versione minima del protocollo SMB
+
+Nota: questo criterio di gruppo non impedisce l'utilizzo di SMB 1 se tale componente è ancora installato e abilitato.
+      </string>
+      <string id="Dialect_0x202">SMB 2.0.2</string>
+      <string id="Dialect_0x210">SMB 2.1.0</string>
+      <string id="Dialect_0x300">SMB 3.0.0</string>
+      <string id="Dialect_0x302">SMB 3.0.2</string>
+      <string id="Dialect_0x311">SMB 3.1.1</string>
+      <string id="Pol_BlockNTLM_Name">Block NTLM (LM, NTLM, NTLMv2)</string>
+      <string id="Pol_BlockNTLM_Help">Questo criterio controlla se il client SMB bloccherà NTLM per l'autenticazione della connessione remota.
+
+Se si abilita questa impostazione dei criteri, il client SMB non userà NTLM per l'autenticazione della connessione remota.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il client SMB potrà comunque utilizzare NTLM.
+      </string>
+      <string id="Pol_BlockNTLMServerExceptionList_Name">Blocca elenco eccezioni server NTLM</string>
+      <string id="Pol_BlockNTLMServerExceptionList_Help">Questa impostazione dei criteri determina se è possibile utilizzare NTLM per accedere ai server specificati.
+
+Se si abilita questa impostazione dei criteri(vaild solo se il criterio Blocca NTLM (LM, NTLM, NTLMv2) è abilitato), è possibile utilizzare NTLM per accedere ai server specificati. Immettere i server desiderati (nome DNS, indirizzo IP o nome NetBIOS) nella casella di modifica, un nome server per riga.
+
+Se si disabilita o non si configura questa impostazione dei criteri, l'accesso NTLM ai server verrà determinato da altre impostazioni.
+      </string>
+      <string id="Pol_EnableRemoteMailslots_Name">Abilita mailslot remoti</string>
+      <string id="Pol_EnableRemoteMailslots_Help">Questo criterio controlla se il client SMB abiliterà o disabiliterà mailslot remoti tramite MUP.
+
+Se si disabilita questa impostazione dei criteri, i mailslot remoti non funzioneranno tramite MUP, quindi non passeranno attraverso il redirector del client SMB.
+
+Se non si configura questa impostazione dei criteri, i mailslot remoti potrebbero essere consentiti tramite MUP.
+      </string>
+      <string id="Pol_RequireEncryption_Name">Richiedi crittografia</string>
+      <string id="Pol_RequireEncryption_Help">Questo criterio controlla se il client SMB richiederà la crittografia.
+
+Se si abilita questa impostazione dei criteri, il client SMB richiederà al server SMB di supportare la crittografia e la crittografia dei dati.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il client SMB non richiederà la crittografia. Tuttavia, potrebbe essere ancora necessaria la crittografia SMB; vedere le note di seguito.
+
+Nota: Questo criterio è combinato con le proprietà di connessione per condivisione, per server e per unità mappata, attraverso le quali può essere richiesta la crittografia SMB. Il server SMB deve supportare e abilitare la crittografia SMB. Ad esempio, se questo criterio deve essere disabilitato (o non configurato), il client SMB potrebbe comunque eseguire la crittografia se una condivisione del server SMB richiede la crittografia.
+
+Importante: La crittografia SMB richiede SMB 3.0 o versione successiva
+      </string>
+      <string id="Pol_EnableAlternativePorts_Name">Abilita porte alternative</string>
+      <string id="Pol_EnableAlternativePorts_Help">Questo criterio controlla se il client SMB abiliterà o disabiliterà le porte alternative.
+
+Se si disabilita questa impostazione dei criteri, le porte alternative non verranno utilizzate dal client SMB.
+
+Se non si configura questa impostazione dei criteri, il client SMB potrebbe utilizzare porte alternative.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Name">Il server di audit non supporta la crittografia</string>
+      <string id="Pol_AuditServerDoesNotSupportEncryption_Help">Questo criterio controlla se il client SMB abiliterà l'evento di controllo quando il server SMB non supporta la crittografia.
+
+Se si abilita questa impostazione dei criteri, il client SMB registrerà l'evento quando il server SMB non supporta la crittografia.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il client SMB non registrerà l'evento.
+      </string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Name">Il server di controllo non supporta la firma</string>
+      <string id="Pol_AuditServerDoesNotSupportSigning_Help">Questo criterio controlla se il client SMB abiliterà l'evento di controllo quando il server SMB non è compatibile con la firma.
+
+Se abiliti questa impostazione dei criterio, il client SMB abiliterà la registrazione dell'evento quando il server SMB non è compatibile con la firma.
+
+Se disabiliti o non configuri questa impostazione dei criteri, il client SMB non registrerà l'evento.
+      </string>
+      <string id="Pol_AuditInsecureGuestLogon_Name">Controlla l'accesso guest non sicuro</string>
+      <string id="Pol_AuditInsecureGuestLogon_Help">Questo criterio controlla se il client SMB abiliterà l'evento di controllo quando il client è connesso come account guest.
+
+Se si abilita questa impostazione dei criteri, il client SMB registrerà l'evento quando il client viene connesso come account guest.
+
+Se si disabilita o non si configura questa impostazione dei criteri, il client SMB non registrerà l'evento.
+      </string>
+      <string id="Pol_AlternativePortMappings_Name">Mapping di porte alternative</string>
+      <string id="Pol_AlternativePortMappings_Help">Questa impostazione dei criteri determina i mapping alternativi del Registro di sistema delle porte utilizzati dal client SMB.
+
+Se si abilita questa impostazione dei criteri, verrà utilizzato il primo mapping valido se il nome del server del mapping corrisponde al nome del server di destinazione per la connettività.
+
+Se si abilita questa impostazione dei criteri e non si specifica almeno un mapping valido o se si disabilita o non si configura questa impostazione dei criteri, il client SMB farà riferimento ad altri metodi per determinare l'utilizzo alternativo delle porte, ad esempio con i comandi NET USE o New-SmbMapping.
+
+Esempi:
+
+contososa.file.core.windows.net:tcp:448
+edgesrv1.corp.contoso.com:quic:450
+
+Come modificare questa impostazione:
+
+Dispone i mapping di porte alternative desiderati nella casella di modifica con una voce di mapping per riga.
+
+Il formato di ogni voce di mapping specifica un nome server, un tipo di trasporto e un numero di porta separati da due punti come indicato nell'esempio precedente.
+
+Nota: per rendere effettivo questo criterio, non è necessario riavviare Windows.
+      </string>
+      <string id="Pol_EnableSMBQUIC_Name">Enable SMB over QUIC</string>
+      <string id="Pol_EnableSMBQUIC_Help">This policy setting controls whether the SMB client will enable SMB over QUIC.
+
+If you disable this policy setting, the SMB client will not allow initiating connections over QUIC. In this case, if the user attempts to connect over QUIC, SMB client will attempt to connect over TCP.
+
+If you do not configure this policy setting, the SMB client may allow initiating connections over QUIC.
+    </string>
     </stringTable>
     <presentationTable>
       <presentation id="Pol_CipherSuiteOrder">
         <text>Pacchetti di crittografia:</text>
         <multiTextBox refId="MultiText_CipherSuiteOrder"/>
+      </presentation>
+      <presentation id="Pol_MaxSmb2Dialect">
+        <text>Selezionare la versione SMB:</text>
+        <dropdownList refId="MaxSmb2Dialect" defaultItem="0">Versione:</dropdownList>
+      </presentation>
+      <presentation id="Pol_MinSmb2Dialect">
+        <text>Selezionare la versione SMB:</text>
+        <dropdownList refId="MinSmb2Dialect" defaultItem="0">Versione:</dropdownList>
+      </presentation>
+      <presentation id="Pol_BlockNTLMServerExceptionList">
+        <text>Blocca elenco eccezioni server NTLM:</text>
+        <multiTextBox refId="MultiText_BlockNTLMServerExceptionList"/>
+      </presentation>
+      <presentation id="Pol_AlternativePortMappings">
+        <text>Mapping alternativi del Registro di sistema delle porte:</text>
+        <multiTextBox refId="MultiText_AlternativePortMappings"/>
       </presentation>
     </presentationTable>
   </resources>

@@ -298,16 +298,28 @@ Essa configuração de política é recomendada para reduzir a superfície de at
 Se você habilitar essa configuração de política, esse controlador de domínio não processará mensagens de entrada do slot de correio usadas no nome de domínio NetBIOS baseado no local do controlador de domínio.
 
 Se você desabilitar ou não definir essa configuração de política, esse controlador de domínio processará as mensagens de entrada do slot de correio. Esse é o comportamento padrão do localizador de controladores de domínio.</string>
+
       <string id="Netlogon_AvoidFallbackNetbiosDiscovery">Não usar a descoberta baseada em NetBIOS para o local de controlador de domínio quando há falha na descoberta baseada em DNS</string>
-      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Essa configuração de política permite controlar o algoritmo de local do controlador de domínio. Por padrão, o algoritmo de local do DC prefere a descoberta baseada em DNS quando o nome de domínio DNS é conhecido. Se a descoberta baseada em DNS falhar e o nome de domínio NetBIOS for conhecido, o algoritmo usará a descoberta baseada em NetBIOS como mecanismo de fallback.
+      <string id="Netlogon_AvoidFallbackNetbiosDiscovery_Help">Essa configuração de política permite que você controle o algoritmo de localização do controlador de domínio (DC). Por padrão, o algoritmo de localização do controlador de domínio prefere a descoberta baseada em DNS se o nome de domínio DNS for conhecido. Se a descoberta baseada em DNS falhar e o nome de domínio NetBIOS for conhecido, o algoritmo usará a descoberta baseada em NetBIOS como um mecanismo de fallback.
 
-A descoberta baseada em NetBIOS usa um servidor WINS e mensagens do slot de correio, mas não usa informações do site. Sendo assim, ela não garante que os clientes descobrirão o DC mais próximo. Ela permite também que um cliente de site do hub descubra um DC do site de ramificação mesmo que o DC do site de ramificação grave apenas registros DNS específicos do site (conforme recomendado). Por esses motivos, a descoberta baseada em NetBIOS não é recomendada.
+A descoberta baseada em NetBIOS usa um servidor WINS e mensagens de slot de correio, mas não usa informações do site. Portanto, não garante que os clientes descubram o DC mais próximo. Ele também permite que um cliente de site de hub descubra um DC de site de filial, mesmo que o DC de site de filial registre apenas registros DNS específicos do site (conforme recomendado). Por esses motivos, a descoberta baseada em NetBIOS não é recomendada.
 
-Observe que essa configuração de política não afeta a descoberta baseada em NetBIOS para local de DC quando somente o nome de domínio NetBIOS é conhecido.
+Observe que essa configuração de diretiva não afeta a descoberta baseada em NetBIOS para localização de controlador de domínio se apenas o nome de domínio NetBIOS for conhecido.
 
-Se você habilitar ou não definir essa configuração de política, o algoritmo de local do DC não usará a descoberta baseada em NetBIOS como o mecanismo de fallback quando houver falha na descoberta baseada em DNS. Esse é o comportamento padrão.
+Se você habilitar ou não definir essa configuração de política, o algoritmo de localização do controlador de domínio não usará a descoberta baseada em NetBIOS como um mecanismo de fallback quando a descoberta baseada em DNS falhar. Este é o comportamento padrão.
 
-Se você desabilitar essa configuração de política, o algoritmo de local do DC poderá usar a descoberta baseada em NetBIOS como o mecanismo de fallback quando houver falha na descoberta baseada em DNS.</string>
+Se você desabilitar essa configuração de política, o algoritmo de localização do controlador de domínio poderá usar a descoberta baseada em NetBIOS como um mecanismo de fallback quando a descoberta baseada em DNS falhar.
+
+Essa configuração não tem efeito, a menos que a configuração BlockNetbiosDiscovery esteja desativada. A descoberta baseada em NetBIOS é considerada insegura, tem muitas limitações e será descontinuada em uma versão futura. Por esses motivos, a descoberta baseada em NetBIOS não é recomendada. Consulte https://aka.ms/dclocatornetbiosdeprecation para obter mais informações.</string>
+
+      <string id="Netlogon_BlockNetbiosDiscovery">Bloquear a descoberta baseada em NetBIOS para o local do controlador de domínio</string>
+      <string id="Netlogon_BlockNetbiosDiscovery_Help">Essa configuração de política permite controlar se o algoritmo de localização do controlador de domínio (DC) NetBIOS_based descoberta para o local do controlador de domínio.
+
+Se você habilitar ou não definir essa configuração de política, o algoritmo de local dc nunca usará a descoberta baseada em NetBIOS. Este é o comportamento padrão.
+
+Se você desabilitar essa configuração de política, o algoritmo de local do CONTROLADOR de Domínio poderá usar a descoberta baseada em NetBIOS quando necessário. O comportamento final é ainda mais regido pela configuração AvoidFallbackNetbiosDiscovery.
+
+A descoberta baseada em NetBIOS é considerada não seguro, tem muitas limitações e será preterida em uma versão futura. Por esses motivos, a descoberta baseada em NetBIOS não é recomendada. Consulte https://aka.ms/dclocatornetbiosdeprecation para obter mais informações.</string>
 
       <string id="Netlogon_AddressLookupOnPingBehavior">Especifique comportamento de consulta de endereços para ping de localização de controlador de domínio</string>
       <string id="Netlogon_AddressLookupOnPingBehavior_Help">Esta configuração de política define como um controlador de domínio se comporta ao responder a um cliente cujo endereço de IP não mapeia para nenhum site configurado.

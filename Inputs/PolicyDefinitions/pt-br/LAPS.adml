@@ -13,9 +13,9 @@ As configurações permitidas são:
 
 0=Desabilitado (não será feito backup da senha)
 
-1=Fazer backup da senha para Azure Active Directory
+1=Backup senha a ser Azure Active Directory
 
-2=Fazer backup da senha no Active Directory
+2=Backup senha para o Active Directory
 
 Se não for especificado, esta configuração usará como padrão 0 (Desabilitado).
 
@@ -31,7 +31,7 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informa
       <string id="LAPS_BackupDirectoryAzure">Microsoft Azure AD</string>
       <string id="LAPS_BackupDirectoryAD">Active Directory</string>
       <string id="LAPS_PasswordSettings">Configurações de Senha</string>
-      <string id="LAPS_PasswordSettings_Help">Configura os parâmetros de senha
+      <string id="LAPS_PasswordSettings_Help">Configura parâmetros de senha
 
 Complexidade da senha: quais caracteres são usados ao gerar uma nova senha
   Padrão: letras grandes + letras pequenas + números + caracteres especiais
@@ -41,17 +41,28 @@ Comprimento da senha
   Máximo: 64 caracteres
   Padrão: 14 caracteres
 
-Idade da senha em dias
-  Mínimo: 1 dia (7 dias quando o diretório de backup está configurado para ser o Microsoft Azure AD)
+Duração da senha em dias
+  Mínimo: 1 dia (7 dias quando o diretório de backup está configurado para ser Azure AD)
   Máximo: 365 dias
   Padrão: 30 dias
 
+Comprimento da senha
+  Mínimo: 3 palavras
+  Máximo: 10 palavras
+  Padrão: 6 palavras
+
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
+
+Lista de frase secreta obtida de "Deep Dive: New Wordlists for Random Passphrases" de EFF pela Electronic Frontier Foundation e é usada sob uma licença de Atribuição CC-BY-3.0. Consulte https://go.microsoft.com/fwlink/?linkid=2255471 para obter mais informações.
       </string>
       <string id="LAPS_PwdComplexity_Item_1">Letras grandes</string>
       <string id="LAPS_PwdComplexity_Item_2">Letras grandes + letras pequenas</string>
       <string id="LAPS_PwdComplexity_Item_3">Letras grandes + letras pequenas + números</string>
       <string id="LAPS_PwdComplexity_Item_4">Letras grandes + letras pequenas + números + especiais</string>
+      <string id="LAPS_PwdComplexity_Item_5">Letras grandes + letras pequenas + números + especiais (legibilidade aprimorada)</string>
+      <string id="LAPS_PwdComplexity_Item_6">Senha (palavras longas)</string>
+      <string id="LAPS_PwdComplexity_Item_7">Senha (palavras curtas)</string>
+      <string id="LAPS_PwdComplexity_Item_8">Senha (palavras curtas com prefixos exclusivos)</string>
       <string id="LAPS_AdminName">Nome da conta Administrador a ser gerenciada</string>
       <string id="LAPS_AdminName_Help">Esta configuração de política especifica um nome de conta de Administrador personalizado para o qual gerenciar a senha.
 
@@ -64,9 +75,9 @@ NÃO habilite essa configuração de política para gerenciar a conta de adminis
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
       </string>
       <string id="LAPS_DontAllowPwdExpirationBehindPolicy">Não permitir o tempo de expiração da senha por mais tempo do que o exigido pela política</string>
-      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Se esta configuração estiver habilitada ou não for definida, a expiração de senha planejada por mais tempo do que a duração da senha ditada pela política "Configurações de Senha" NÃO será permitida. Quando essa expiração é detectada, a senha é alterada imediatamente e a expiração da senha é definida de acordo com a política.
+      <string id="LAPS_DontAllowPwdExpirationBehindPolicy_Help">Se esta configuração estiver habilitada ou não for definida, a expiração de senha planejada por mais tempo do que a duração da senha ditada pela política "Senha Configurações" NÃO será permitida. Quando essa expiração é detectada, a senha é alterada imediatamente e a expiração da senha é definida de acordo com a política.
 
-Se esta configuração for desabilitada, o tempo de expiração da senha poderá ser maior do que o exigido pela política "Configurações de Senha".
+Se esta configuração estiver desabilitada, o tempo de expiração da senha poderá ser maior do que o exigido pela política "Senha Configurações".
 
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
       </string>
@@ -86,15 +97,27 @@ Esta configuração usará como padrão a habilitada se não estiver configurada
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
       </string>
       <string id="LAPS_ADPasswordEncryptionPrincipal">Configurar os descriptografadores de senha autorizados</string>
-      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Defina esta configuração para controlar o usuário ou grupo específico que está autorizado a descriptografar senhas criptografadas.
+      <string id="LAPS_ADPasswordEncryptionPrincipal_Help">Defina essa configuração para controlar o usuário ou grupo específico que está autorizado a descriptografar senhas criptografadas.
 
-A definição desta configuração não tem efeito a menos que a criptografia de senha tenha sido habilitada.
+Definir essa configuração não terá efeito, a menos que a criptografia de senha tenha sido habilitada.
 
-Se esta configuração estiver habilitada, as senhas criptografadas serão descriptografadas pelo grupo especificado.
+Se essa configuração estiver habilitada, as senhas criptografadas serão descriptografadas pelo grupo especificado.
 
-Se esta configuração estiver desabilitada ou não definida, as senhas criptografadas poderão ser descriptografadas pelo grupo de Administradores de Domínio.
+Se essa configuração estiver desabilitada ou não estiver definida, as senhas criptografadas serão descriptografadas pelo grupo de Administradores de Domínio.
 
-Esta configuração deve ser definida com uma SID no formato de cadeia de caracteres ("S-1-5-21-2127521184-1604012920-1887927527-35197") ou o nome de um grupo ou usuário no formato "domínio\(grupo ou usuário)". O usuário ou grupo especificado deve ter a capacidade de ser resolvido pelo dispositivo gerenciado, caso contrário, não haverá backup das senhas.
+Essa configuração deve ser definida com um nome qualificado de domínio de um grupo ou usuário ou um SID em formato de cadeia de caracteres. Exemplos válidos incluem:
+
+contoso\LAPSAdmins
+
+lapsadmins@contoso.com
+
+S-1-5-21-2127521184-1604012920-1887927527-35197
+
+Não coloque o nome de usuário\grupo ou SID entre aspas ou parênteses.
+
+O usuário ou grupo especificado deve ser resolvido pelo dispositivo gerenciado; caso contrário, não será feito o backup das senhas.
+
+OBSERVAÇÃO: essa configuração é ignorada quando é feito backup de senhas de contas do DSRM (Modo de Reparo de Serviços de Diretório) em um controlador de domínio. Nesse cenário, essa configuração sempre usa como padrão o grupo de Administradores de Domínio do domínio do controlador de domínio.
 
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
       </string>
@@ -125,29 +148,31 @@ Se essa configuração for desabilitada ou não for definida, não será feito b
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
       </string>
       <string id="LAPS_PostAuthenticationActions">Ações pós-autenticação</string>
-      <string id="LAPS_PostAuthenticationActions_Help">Esta política configura ações de pós-autenticação que serão executadas após a detecção de uma autenticação pela conta gerenciada.
+      <string id="LAPS_PostAuthenticationActions_Help">Esta política configura ações pós-autenticação que serão executadas após detectar uma autenticação pela conta gerenciada.
 
-Período de carência: especifica o período de tempo (em horas) de espera após uma autenticação antes de executar as ações de pós-autenticação especificadas.
+Período de cortesia: especifica a quantidade de tempo (em horas) a aguardar após uma autenticação antes de executar as ações de pós-autenticação especificadas.
 
-Se essa configuração for habilitada e maior que zero, as ações de pós-autenticação especificadas serão executadas após a expiração do período de carência.
+Se esta configuração estiver habilitada e for maior que zero, as ações de pós-autenticação especificadas serão executadas após a expiração do período de cortesia.
 
-Se essa configuração for desabilitada ou não for definida, as ações de pós-autenticação especificadas serão executadas após um período de carência padrão de 24 horas.
+Se esta configuração estiver desabilitada ou não configurada, as ações de pós-autenticação especificadas serão executadas após um período de carência padrão de 24 horas.
 
-Se essa configuração for igual a zero, nenhuma ação pós-autenticação será executada.
+Se esta configuração for igual a zero, nenhuma ação pós-autenticação será executada.
 
-Ações: especifica as ações a serem tomadas após a expiração do período de carência.
+Ações: especifica as ações a serem tomadas após a expiração do período de cortesia.
 
-Redefinir senha: após a expiração do período de carência, a senha da conta gerenciada será redefinida.
+Redefinir senha: ao expirar o período de cortesia, a senha da conta gerenciada é redefinida.
 
-Redefinir a senha e fazer logoff da conta gerenciada: após a expiração do período de carência, a senha da conta gerenciada será redefinida e todas as sessões de logon interativos usando a conta gerenciada serão encerradas.
+Redefinir a senha e fazer logoff da conta gerenciada: ao expirar o período de cortesia, a senha da conta gerenciada é redefinida e todas as sessões de logon interativas usando a conta gerenciada são desconectadas.
 
-(OBSERVAÇÃO: após o término de qualquer sessão de logon interativo, ainda poderá haver outras sessões autenticadas em uso pela conta gerenciada. A única maneira avançada de garantir que a senha anterior esteja mais em uso é reinicializar o dispositivo.)
+Redefina a senha e reinicie: ao expirar o período de cortesia, a senha da conta gerenciada é redefinida e o dispositivo gerenciado é reinicializado.
 
-Redefinir a senha e reinicializar: após a expiração do período de carência, a senha da conta gerenciada será redefinida e o dispositivo gerenciado será reinicializado imediatamente.
+Redefina a senha, faça logoff da conta gerenciada e encerre todos os processos restantes: após a expiração do período de cortesia, a senha da conta gerenciada é redefinida, todas as sessões de logon interativas usando a conta gerenciada são desconectadas e todos os processos restantes são encerrados.
 
-Se essa configuração for desabilitada ou não for definida, as ações pós-autenticação usarão como padrão "Redefinir a senha e fazer logoff da conta gerenciada".
+(OBSERVAÇÃO: após o término de qualquer sessão de logon interativa, ainda pode haver outras sessões autenticadas em uso pela conta gerenciada. A única maneira robusta de garantir que a senha anterior permaneça em uso por mais tempo é reinicializar o dispositivo.)
 
-Observação: a conta DSRM em controladores de domínio não pode ser configurada para ações pós-autenticação. Esta política não tem efeito sobre controladores de domínio e será ignorada mesmo se configurada para um controlador de domínio.
+Se esta configuração estiver desabilitada ou não configurada, as ações pós-autenticação serão padronizadas para "Redefinir a senha e fazer logoff da conta gerenciada".
+
+Observação: a conta DSRM em controladores de domínio não pode ser configurada para ações pós-autenticação. Esta política não tem efeito em controladores de domínio e será ignorada mesmo se configurada para um controlador de domínio.
 
 Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
       </string>
@@ -155,6 +180,44 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informa
       <string id="PostAuthenticationActions_Item1">Redefinir a senha</string>
       <string id="PostAuthenticationActions_Item3">Redefinir a senha e fazer logoff da conta gerenciada</string>
       <string id="PostAuthenticationActions_Item5">Redefinir a senha e reinicializar o dispositivo</string>
+      <string id="PostAuthenticationActions_Item11">Redefinir a senha, fazer logoff da conta gerenciada e encerrar todos os processos restantes</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy">Configurar o gerenciamento automático de contas</string>
+      <string id="LAPS_AutomaticAccountManagementPolicy_Help">Essa política configura opções de política de gerenciamento automático de contas.
+
+Especifique a conta de destino a ser gerenciada: especifica se a conta de administrador integrada ou uma conta personalizada deve ser gerenciada.
+
+Nome automático da conta (ou prefixo do nome): especifica o nome, ou prefixo do nome, a ser usado para a conta gerenciada.
+
+Se essa configuração de política estiver configurada, o Windows LAPS a usará como nome da conta ou prefixo do nome da conta de destino.
+
+Se esta configuração de política não estiver configurada, o Windows LAPS usará "WLapsAdmin" como nome da conta ou prefixo do nome.
+
+Observação: esse nome é tratado como um prefixo quando a randomização do nome da conta é configurada, veja os comentários abaixo.
+
+Habilitar conta gerenciada: especifica se a conta gerenciada deve ser habilitada ou não.
+
+Se essa configuração de política estiver configurada, o Windows LAPS habilitará a conta gerenciada especificada.
+
+Se essa configuração de política não estiver configurada, o Windows LAPS desabilitará a conta gerenciada especificada.
+
+Observação: o Windows LAPS manterá e alternará regularmente a senha da conta gerenciada, independentemente de a conta ser mantida com status habilitado/desabilitado.
+
+Randomizar o nome da conta gerenciada: especifica se o nome da conta gerenciada deve ser randomizado com um sufixo numérico aleatório.
+
+Se essa configuração de política estiver configurada, o Windows LAPS adicionará um sufixo numérico aleatório de oito dígitos ao nome da conta automática gerenciada e randomizará novamente o nome da conta gerenciada sempre que a senha for alternada.
+
+Se essa configuração de política não estiver definida, o Windows LAPS usará o nome da conta automática gerenciada conforme configurado.
+
+Se o prefixo do nome da conta automática gerenciada estiver configurado, o Windows LAPS usará até os primeiros doze (12) caracteres desse nome como prefixo para o nome aleatório. Se o nome da conta automática gerenciada não estiver configurado, o Windows LAPS usará "WLapsAdmin" como prefixo do nome.
+
+Observação: a conta DSRM em controladores de domínio não pode ser configurada para gerenciamento automático de contas. Essa política não tem efeito nos controladores de domínio e será ignorada mesmo se configurada para um controlador de domínio.
+
+Veja https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informações.
+      </string>
+      <string id="AutomaticAccountManagementTarget_Item0">Gerenciar a conta de administrador integrada</string>
+      <string id="AutomaticAccountManagementTarget_Item1">Gerenciar uma conta de administrador personalizada</string>
+      <string id="AutomaticAccountName_Help">Especifique o nome da conta ou o prefixo do nome</string>
+      <string id="AutomaticAccountNameRandomization_Help">Especifica se o nome automático da conta deve ser aleatório.</string>
       <string id="SUPPORTED_Windows10">Pelo menos Microsoft Windows 10 ou posterior</string>
     </stringTable>
     <presentationTable>
@@ -165,6 +228,7 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informa
         <dropdownList refId="LAPS_PasswordComplexity" defaultItem="3">Complexidade da Senha</dropdownList>
         <decimalTextBox refId="LAPS_PasswordLength" defaultValue="14">Comprimento da Senha</decimalTextBox>
         <decimalTextBox refId="LAPS_PasswordAgeDays" defaultValue="30">Idade da Senha (dias)</decimalTextBox>
+        <decimalTextBox refId="LAPS_PassphraseLength" defaultValue="6">Comprimento da senha (palavras)</decimalTextBox>
       </presentation>
       <presentation id="LAPS_AdminName">
         <textBox refId="TEXT_AdminAccountName">
@@ -181,7 +245,15 @@ Consulte https://go.microsoft.com/fwlink/?linkid=2188435 para obter mais informa
       </presentation>
       <presentation id="LAPS_PostAuthenticationActions">
         <decimalTextBox refId="LAPS_PostAuthenticationResetDelay_INT" defaultValue="24">Período de carência (horas):</decimalTextBox>
-        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="3">Ações:</dropdownList>
+        <dropdownList refId="LAPS_PostAuthenticationActions" defaultItem="2">Ações:</dropdownList>
+      </presentation>
+      <presentation id="LAPS_AutomaticAccountManagementPolicy">
+        <dropdownList refId="LAPS_AutomaticAccountManagementTarget" defaultItem="0">Especifique a conta de destino a ser gerenciada:</dropdownList>
+        <textBox refId="LAPS_AutomaticAccountManagementNameOrPrefix">
+          <label>Nome automático da conta (ou prefixo do nome):</label>
+        </textBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementEnableAccount">Habilite a conta gerenciada</checkBox>
+        <checkBox refId="LAPS_AutomaticAccountManagementRandomizeName">Randomize o nome da conta gerenciada</checkBox>
       </presentation>
     </presentationTable>
   </resources>

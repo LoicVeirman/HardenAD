@@ -17,6 +17,9 @@
     <string id="Quarantine">Quarentena</string>
     <string id="RealtimeProtection">Proteção em Tempo Real</string>
     <string id="Remediation">Remediação</string>
+    <string id="Remediation_BNB">Blocos de Rede Comportamentais</string>
+    <string id="Remediation_BNB_REP">Proteção contra Encriptação Remota</string>
+    <string id="Remediation_BNB_BFP">Proteção contra Força Bruta</string>
     <string id="Reporting">Relatórios</string>
     <string id="Scan">Análise</string>
     <string id="SignatureUpdate">Atualizações de Informações de Segurança</string>
@@ -47,6 +50,10 @@ Ativada
  Ativado: 
  Se ativar esta definição, os Administradores Locais deixarão de poder ver a lista de exclusões na Aplicação de Segurança do Windows ou através do PowerShell.
  Nota: a aplicação desta definição não irá remover exclusões, apenas impedirá que as pessoas sejam visíveis para os Administradores Locais. Isto é refletido em Get-MpPreference.</string>
+    <string id="HideExclusionsFromLocalUsers">Decidir se as exclusões são visíveis para os utilizadores locais</string>
+    <string id="HideExclusionsFromLocalUsers_Explain">
+    Esta definição de política controla se as exclusões são visíveis para os utilizadores locais no dispositivo.
+    Utilize a definição de política HideExclusionsFromLocalAdmins para ocultar exclusões de utilizadores locais padrão e administrativos.</string>
     <string id="AllowNetworkProtectionOnWinServer">Esta definições controla se a proteção de rede tem permissão para ser configurada para o modo de bloqueio ou auditoria no Windows Server.</string>
     <string id="AllowNetworkProtectionOnWinServer_Explain">
     Desativado (predefinição): 
@@ -57,11 +64,29 @@ Ativada
     Tenha em atenção que esta configuração depende da configuração EnableNetworkProtection. Se esta configuração for falsa, o EnableNetworkProtection será ignorado, caso contrário, a proteção da rede será iniciada no Windows Server, dependendo do valor EnableNetworkProtection.</string>
     <string id="DisableDatagramProcessing">Esta definição controla o processamento de datagramas da proteção da rede.</string>
     <string id="DisableDatagramProcessing_Explain">
-    Ativado (Predefinição): 
+    Desativado (Predefinição): 
     Se Não Estiver Configurado ou estiver Desativado, o processamento de datagramas será ativado para proteção da rede.
 
-    Enabled: 
+    Ativado: 
     Se estiver Ativado, o processamento de datagramas será desativado para a proteção da rede.</string>
+    <string id="EnableConvertWarnToBlock">Converter veredito de aviso para bloquear</string>
+    <string id="EnableConvertWarnToBlock_Explain">
+    A proteção de rede inspeciona o tráfego de rede e determina se permite ou bloqueia o tráfego ou apresenta um aviso.
+    
+    Desativado (Predefinição): 
+    Se Não Estiver Configurado ou Desativado, a proteção de rede apresentará um aviso para vereditos de aviso.
+
+    Ativado: 
+    Se esta definição estiver Ativada, a proteção de rede bloqueia o tráfego de rede em vez de apresentar um aviso.</string>
+    <string id="AllowSwitchToAsyncInspection">Ativar inspeção assíncrona</string>
+    <string id="AllowSwitchToAsyncInspection_Explain">
+    Decida se a proteção de rede pode melhorar o desempenho, ao mudar da inspeção em tempo real para a inspeção assíncrona.
+
+    Desativado (Predefinição): 
+    Se Não Estiver Configurado ou Desativado, a inspeção assíncrona não será ativada para proteção de rede.
+
+    Ativado: 
+    Se ativado, a mudança para a inspeção assíncrona será permitida para proteção de rede.</string>
     <string id="DisableAutoExclusions">Desativar Exclusões Automáticas</string>
     <string id="DisableAutoExclusions_Explain">
         Permite que um administrador especifique se a funcionalidade de Exclusões Automáticas para SKUs de Servidor deve ser desativada.
@@ -142,15 +167,19 @@ Se desativar ou não configurar esta definição, o servidor proxy não será ig
       Se desativar ou não configurar esta definição, o proxy ignora este passo de contingência de acordo com a ordem especificada acima.
     </string>
     <string id="RandomizeScheduleTaskTimes">Aleatorizar horário das tarefas agendadas</string>
-    <string id="RandomizeScheduleTaskTimes_Explain">Esta definição da política permite configurar a análise agendada e a janela da hora de início da atualização da informação de segurança agendada em horas.
+    <string id="RandomizeScheduleTaskTimes_Explain">Esta definição de política permite configurar a aleatoriedade da hora de início da análise agendada e a hora de início da atualização da definição agendada.
 
-    Se desativar ou não configurar esta definição, as tarefas programadas começarão a uma hora aleatória dentro de 4 horas após a hora especificada no Programador de Tarefas.
-     Se ativar esta definição, poderá alargar ou estreitar este período de aleatorização. Especifique uma janela de aleatorização de entre 1 e 23 horas.</string>
+Se ativar ou não configurar esta definição de política e não tiver definido uma janela de aleatoriedade na definição Configurar janela de aleatoriedade da hora da tarefa agendada, a aleatoriedade será adicionada entre 0 e 4 horas.
+        Se ativar ou não configurar esta definição de política e definir uma janela de aleatoriedade na definição Configurar janela de aleatoriedade de tempo de tarefa agendada, será utilizada a janela de aleatoriedade configurada.
+        Se desativar esta definição de política, mas configurar a janela de aleatoriedade da hora da tarefa agendada, a aleatoriedade não será efetuada. 
+    </string>
     <string id="SchedulerRandomizationTime">Configurar horas de tarefas agendadas da janela aleatoriedade</string>
-    <string id="SchedulerRandomizationTime_Explain">Esta definição da política permite configurar a hora de início da análise agendada e a janela da hora de início da atualização da informação de segurança agendada em horas.
+    <string id="SchedulerRandomizationTime_Explain">Esta definição de política permite-lhe configurar a hora de início da análise de tarefas agendada e a janela de hora de início da atualização de informações de segurança agendada em horas. Esta definição afeta a configuração Selecionar aleatoriamente as horas de tarefas agendadas.
 
-    Se desativar ou não configurar esta definição, as tarefas programadas começarão a uma hora aleatória dentro de um intervalo de 4 horas após a hora de início especificada.
-     Se ativar esta definição, deverá escolher uma janela de aleatorização em horas. O intervalo possível da janela de aleatorização é entre 1 e 23 horas.</string>
+        Se ativar esta definição, tem de escolher uma janela de seleção aleatória em horas. O intervalo da janela de seleção aleatória possível é entre 1 e 23 horas. O intervalo de seleção aleatória implementado é entre 0 e o valor configurado. 
+        Ao ativar esta definição, as definições Selecionar aleatoriamente horas de tarefas agendadas utilizam a janela de seleção aleatória especificada nesta definição de configuração. 
+        Se desativar ou não configurar esta definição de política, as definições Selecionar aleatoriamente as horas de tarefas agendadas selecionarão aleatoriamente as horas de tarefas agendadas entre 0 e 4 horas.</string>
+
     <string id="ServiceKeepAlive">Permitir que o serviço antimalware esteja sempre em execução</string>
     <string id="ServiceKeepAlive_Explain">Esta definição de política permite configurar se o serviço antimalware se manterá ou não em execução quando as informações de segurança de antivírus e antispyware estiverem desativadas. É recomendado manter esta definição desativada.
 
@@ -219,6 +248,22 @@ Se desativar ou não configurar esta definição, os itens serão indefinidament
 Se ativar ou não configurar esta definição, a análise de scripts será ativada.
 
 Se desativar esta definição, a análise de scripts será desativada.</string>
+
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate">Configurar a proteção em tempo real e as Atualizações de Informações de Segurança durante a OOBE</string>
+    <string id="RealtimeProtection_OobeEnableRtpAndSigUpdate_Explain">Esta definição de política permite-lhe configurar se a proteção em tempo real e as Atualizações de Informações de Segurança estão ativadas durante a OOBE (Experiência de Primeira Execução).
+ 
+    Se ativar esta definição, a proteção em tempo real e as Atualizações de Informações de Segurança serão ativadas durante a OOBE.
+ 
+    Se desativar ou não configurar esta definição de política, a proteção em tempo real e as Atualizações de Informações de Segurança durante a OOBE não são ativadas.</string>
+
+    <string id="RealtimeProtection_PerformanceModeStatus">Configurar o estado do modo de desempenho</string>
+    <string id="RealtimeProtection_PerformanceModeStatus_Explain">Esta política controla o modo de desempenho do Antivírus do Microsoft Defender para Unidades de Desenvolvimento.
+
+    Uma Unidade de Desenvolvimento é uma unidade de disco otimizada para um desempenho mais elevado em cenários de desenvolvimento de software. Quando esta política está Ativada ou não configurada, o Modo de desempenho é ativado para o Antivírus do Microsoft Defender. No Modo de desempenho, as verificações de segurança do Antivírus do Microsoft Defender dos conteúdos armazenados em Unidades de Desenvolvimento são realizadas de forma assíncrona para melhorar o desempenho. O modo de desempenho requer que as seguintes políticas também sejam ativadas: “Ativar unidade de desenvolvimento” e “Política de anexação de filtros de unidades de desenvolvimento”.
+
+    Se Ativar ou não configurar esta definição de política, o Modo de desempenho é ativado.
+
+    Se Desativar esta definição de política, o Modo de desempenho será desativado e o Antivírus do Microsoft Defender protegerá uma Unidade de Desenvolvimento da mesma forma que outras unidades.</string>
 
     <string id="RealtimeProtection_DisableBehaviorMonitoring">Ativar monitorização de comportamento</string>
     <string id="RealtimeProtection_DisableBehaviorMonitoring_Explain">Esta definição de política permite configurar a monitorização de comportamento.
@@ -359,6 +404,92 @@ Se desativar ou não configurar esta definição, será executada uma análise c
 Se ativar esta definição, será executada uma análise completa agendada para conclusão da remediação à hora especificada.
 
 Se desativar ou não configurar esta definição, será executada uma análise completa agendada para conclusão da remediação à hora predefinida.</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">Configurar Modo de Proteção contra Encriptação Remota</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_Explain">
+    Defina o modo de Proteção contra Encriptação Remota no Antivírus do Microsoft Defender, que pode detetar e bloquear tentativas de substituir ficheiros locais por versões encriptadas a partir de outro dispositivo. 
+
+    Definições suportadas:
+    * 0 - Não configurado ou Predefinição: aplique as predefinições, que podem variar consoante a versão do motor antivírus e a plataforma
+    * 1 - Bloquear: impeça comportamentos suspeitos e maliciosos
+    * 2 - Auditar: gere deteções DRP sem bloquear
+    * 4 - Desativado: a funcionalidade está desativada sem impacto no desempenho
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_0">Predefinição</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_1">Bloquear</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_2">Auditoria</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState_3">Desativado</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">Configurar o tempo de bloqueio da Proteção contra Encriptação Remota</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime_Explain">
+    Defina o tempo máximo de bloqueio de um endereço IP pela Proteção de Encriptação Remota. Após este período, os endereços IP bloqueados poderão reiniciar as ligações. 
+
+Definições suportadas:
+    * 0 - Nenhum: a lógica de funcionalidades interna determinará o tempo de bloqueio real
+    * Especifique outras horas em incrementos de 15 minutos
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">Configurar a agressividade com que a Proteção contra Encriptação Remota bloqueia ameaças</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_Explain">
+    Defina os critérios para quando a proteção de prevenção de encriptação remota bloqueia endereços IP.
+
+    Definições suportadas:
+    *0 - Baixo: bloqueia apenas quando o nível de confiança é de 100% (predefinição)
+    *1 - Médio: utilizar a agregação em cloud e bloquear quando o nível de confiança for superior a 99%
+    *2 - Elevado: utilizar a informação e o contexto da cloud e bloquear quando o nível de confiança for superior a 90%
+    </string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_0">Baixa</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_1">Médio</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness_2">Alta</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions"> Definir exclusões da Proteção contra Encriptação Remota</string>
+    <string id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions_Explain">
+    Especifique endereços IP, sub-redes e nomes de domínio a excluir da Proteção contra Encriptação Remota. Note que os atacantes podem falsificar endereços e nomes excluídos para contornar a proteção.
+
+    Introduza cada endereço ou sub-rede numa nova linha como um par nome-valor:
+    - Coluna Nome: introduza um endereço IP ou um nome de sub-rede. Por exemplo, ""1.1.127.0"" impedirá que este endereço IP seja bloqueado.
+    - Coluna do valor: introduza ""0"" para cada item
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">Configurar modo de Proteção contra Força Bruta</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_Explain">
+    Defina o modo para a Proteção contra Força Bruta no Antivírus do Microsoft Defender, que pode detetar e bloquear tentativas de iniciar sessão e de começar sessões de forma forçada.
+
+    Definições suportadas:
+    * 0 - Não configurado ou Predefinição: aplique as predefinições, que podem variar consoante a versão do motor antivírus e a plataforma
+    * 1 - Bloquear: impeça comportamentos suspeitos e maliciosos
+    * 2 - Auditar: gere deteções DRP sem bloquear
+    * 4 - Desativado: a funcionalidade está desativada sem impacto no desempenho
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_0">Predefinição</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_1">Bloquear</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_2">Auditoria</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState_3">Desativado</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">Configurar o tempo de bloqueio da Proteção contra Força Bruta</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime_Explain">
+    Defina o tempo máximo que um endereço IP é bloqueado pela Proteção Brute-Force. Após este período, os endereços IP bloqueados poderão iniciar sessão e iniciar sessões.
+
+Definições suportadas:
+    * 0 - Nenhum: a lógica de funcionalidades interna determinará o tempo de bloqueio real
+    * Especifique outras horas em incrementos de 15 minutos
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">Configurar a agressividade da Proteção contra Força Bruta</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_Explain">
+    Defina os critérios para quando a Proteção Brute-Force bloqueia endereços IP.
+
+Definições suportadas:
+    *0 - Baixo: bloquear apenas quando o nível de confiança for 100% (Predefinição)
+    *1 - Médio: utilize a agregação da cloud e bloqueie quando o nível de confiança está acima de 99%
+    *2 - Alta: utilize informações e contexto da cloud e bloqueie quando o nível de confiança estiver acima de 90%
+    </string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_0">Baixa</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_1">Médio</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness_2">Alta</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions">Definir exclusões da Proteção contra Força Bruta</string>
+    <string id="Remediation_BNB_BFP_BruteForceProtectionExclusions_Explain">
+    Especifique endereços IP, sub-redes ou nomes de estações de trabalho a excluir da Proteção contra Força Bruta. Os endereços IP excluídos não serão verificados quanto a possíveis atividades de força bruta.
+    
+    Note que os atacantes podem falsificar endereços e nomes excluídos para contornar a proteção. Certifique-se de que os nomes são exclusivos e pouco suscetíveis de serem adivinhados pelos atacantes.
+
+    Introduza cada endereço ou sub-rede numa nova linha como um par nome-valor:
+    - Coluna Nome: introduza um endereço IP, um nome de sub-rede ou um nome de estação de trabalho. Por exemplo, "1.1.127.0" excluirá este endereço IP de ser bloqueado pelo BFP.
+    - Coluna do valor: introduza "0" para cada item
+    </string>
     <string id="Reporting_AdditionalActionTimeout">Configurar tempo limite para deteções que exijam análise adicional</string>
     <string id="Reporting_AdditionalActionTimeout_Explain">Esta definição de política configura o tempo, em minutos, antes de uma deteção no estado de "ação adicional" passar para o estado "eliminada".</string>
     <string id="Reporting_CriticalFailureTimeout">Configurar tempo limite para deteções em estado de falha crítica</string>
@@ -398,6 +529,12 @@ Se desativar ou não configurar esta definição, será aplicado o valor predefi
 Se configurar esta definição para 0, não serão enviados relatórios de estado de funcionamento do serviço.
 
 O valor máximo permitido para ser definido é de 14400 minutos (10 dias).</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting">Configurar se a Assinatura Dinâmica deve comunicar eventos ignorados da Assinatura Dinâmica</string>
+    <string id="Reporting_EnableDynamicSignatureDroppedEventReporting_Explain">Esta definição de política configura se o relatório de eventos ignorados para a assinatura dinâmica.
+
+Se não configurar esta definição, será aplicado o valor predefinido. O valor predefinido está definido como desativado (não são comunicados eventos).
+    Se configurar esta definição como ativada, os eventos ignorados da assinatura dinâmica serão comunicados.
+    Se configurar esta definição como desativada, os eventos ignorados da assinatura dinâmica não serão comunicados.</string>
       <string id="Scan_AllowPause">Permitir que os utilizadores coloquem a análise em pausa</string>
     <string id="Scan_AllowPause_Explain">Esta definição de política permite gerir se os utilizadores finais poderão ou não colocar em pausa uma análise em curso.
 
@@ -456,6 +593,10 @@ Se desativar ou não configurar esta definição, as análises de atualização 
 Se ativar esta definição, as análises de atualização de análises rápidas agendadas serão ativadas. Se um computador se encontrar offline durante duas análises agendadas consecutivas, será iniciada uma análise de atualização da próxima vez que um utilizador iniciar sessão no computador.  Se não estiver configurada qualquer análise agendada, não será executada qualquer análise de atualização.
 
 Se desativar ou não configurar esta definição, as análises de atualização de análises rápidas agendadas serão desativadas.</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan">Acionar uma análise rápida após X dias sem análises</string>
+    <string id="Scan_DaysUntilAggressiveCatchupQuickScan_Explain">Esta definição de política define o número de dias que podem passar desde a última análise antes de uma análise rápida de atualização agressiva ser automaticamente acionada. O valor representa o número de dias que podem passar sem que sejam efetuadas análises antes de ser acionada uma análise rápida agressiva.
+    
+Os valores válidos variam entre 7 e 60 dias. Se não estiver configurado, as análises rápidas agressivas serão desativadas. Por predefinição, o valor é definido para 25 dias quando ativado.</string>
     <string id="Scan_DisableEmailScanning">Ativar análise de correio eletrónico</string>
     <string id="Scan_DisableEmailScanning_Explain">Esta definição de política permite configurar a análise de e-mail. Quando a análise de e-mail estiver ativada, o motor analisará os ficheiros e a caixa de correio, de acordo com o respetivo formato específico, de modo a verificar os corpos e anexos das mensagens de correio. Atualmente são suportados diversos formatos de e-mail, como, por exemplo, pst (Outlook), dbx, mbx, mime (Outlook Express), binhex (Mac). A análise de e-mails não é suportada em clientes de e-mail modernos.
     
@@ -498,12 +639,12 @@ Se desativar ou não configurar esta definição, não será criado um ponto de 
 Se ativar esta definição, as unidades de rede mapeadas serão analisadas.
 
 Se desativar ou não configurar esta definição, as unidades de rede mapeadas não serão analisadas.</string>
-    <string id="Scan_DisableScanningNetworkFiles">Analisar ficheiros de rede</string>
-    <string id="Scan_DisableScanningNetworkFiles_Explain">Esta definição de política permite configurar a análise de ficheiros de rede. É recomendado não ativar esta definição.
+    <string id="Scan_DisableScanningNetworkFiles">Configurar a análise de ficheiros de rede</string>
+    <string id="Scan_DisableScanningNetworkFiles_Explain">Esta definição de política permite a análise de ficheiros de rede utilizando a proteção de acesso. A predefinição está ativada. Recomendado para permanecer ativado na maioria dos casos.
 
-Se ativar esta definição, os ficheiros de rede serão analisados.
+Se ativar ou não configurar esta definição, os ficheiros de rede serão analisados.
 
-Se desativar ou não configurar esta definição, os ficheiros de rede não serão analisados.</string>
+Se desativar esta definição, os ficheiros de rede não serão analisados.</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor">Configurar ignorar definição local da percentagem máxima de utilização da CPU</string>
     <string id="Scan_LocalSettingOverrideAvgCPULoadFactor_Explain">Esta definição de política configura ignorar definição local para configuração da percentagem máxima de utilização da CPU durante a análise. A definição só pode ser configurada pela Política de Grupo.
 
@@ -615,6 +756,18 @@ Se desativar ou não configurar esta definição, será executada uma análise a
 
         Se desativar ou não configurar esta definição, não serão realizadas alterações à prioridade da CPU durante análises agendadas.
     </string>
+
+    <string id="Scan_QuickScanIncludeExclusions">Analisar ficheiros e diretórios excluídos durante análises rápidas</string>
+    <string id="Scan_QuickScanIncludeExclusions_Explain">
+        Esta definição de política permite-lhe analisar ficheiros e diretórios excluídos durante análises rápidas.
+
+Se definir esta definição de política como 1, todos os ficheiros e diretórios excluídos da proteção em tempo real utilizando exclusões contextuais são analisados durante uma análise rápida.
+
+Se definir esta política como 0 ou não a configurar, as exclusões não são analisadas durante análises rápidas.
+    </string>
+	<string id="Scan_QuickScanIncludeExclusions_Disabled">0</string>
+	<string id="Scan_QuickScanIncludeExclusions_RtpExclusions">1</string>
+
     <string id="SignatureUpdate_ASSignatureDue">Definir o número de dias até que as informações de segurança de spyware sejam consideradas desatualizadas</string>
     <string id="SignatureUpdate_ASSignatureDue_Explain">Esta definição de política permite definir o número de dias que terão de passar até que as informações de segurança de spyware sejam consideradas desatualizadas. Se as informações de segurança forem consideradas desatualizadas, este estado poderá acionar várias ações adicionais, incluindo reverter para uma origem de atualização alternativa ou apresentar um ícone de aviso na interface do utilizador. Por predefinição, este valor é definido para 7 dias.
 
@@ -637,6 +790,13 @@ Se desativar ou não configurar esta definição, as informações de segurança
     <string id="SignatureUpdate_SharedSignaturesLocation_Explain">Esta definição de política permite definir a localização das informações de segurança para computadores configurados com VDI. 
 
     Se desativar ou não configurar esta definição, as informações de segurança serão referenciadas a partir da origem de localização predefinida.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly">Configure atualizações de informações de segurança de acordo com o agendador para clientes VDI.</string>
+    <string id="SignatureUpdate_SharedSignaturesLocationUpdateAtScheduledTimeOnly_Explain">Esta definição de política permite-lhe configurar atualizações de informações de segurança de acordo com o programador para computadores configurados por VDI. É utilizado em conjunto com a localização das informações de segurança partilhadas (SharedSignaturesLocation).
+
+    Se ativar esta definição de política e configurar SharedSignaturesLocation, as atualizações da localização configurada ocorrem apenas na hora de atualização agendada configurada anteriormente.
+
+    Se desativar ou não configurar esta definição de política, as atualizações ocorrem sempre que é detetada uma nova atualização de informações de segurança na localização especificada por SharedSignaturesLocation.
+    </string>
     <string id="SignatureUpdate_DisableScanOnUpdate">Ativar análise após atualização das informações de segurança</string>
     <string id="SignatureUpdate_DisableScanOnUpdate_Explain">Esta definição de política permite configurar o início automático de uma análise após a atualização das informações de segurança.
 
@@ -829,12 +989,6 @@ Os valores válidos para as ações de remediação são:
 
       Se ativar esta definição, as notificações do Antivírus do Microsoft Defender não serão apresentadas nos clientes.
     </string>
-    <string id="UX_Configuration_CustomDefaultActionToastString">Apresentar texto adicional aos clientes quando for necessário executar uma ação</string>
-    <string id="UX_Configuration_CustomDefaultActionToastString_Explain">Esta definição de política permite configurar se será ou não apresentado texto adicional aos clientes quando for necessário executar uma ação. O texto apresentado consiste numa cadeia personalizada definida pelo administrador. Por exemplo, o número de telefone de contacto do suporte técnico da empresa. A interface do cliente apresentará um máximo de 1024 carateres. As cadeias com um comprimento superior serão truncadas antes da apresentação.
-
-Se ativar esta definição, será apresentado o texto adicional especificado.
-
-Se desativar ou não configurar esta definição, não será apresentado qualquer texto adicional.</string>
     <string id="MpCloudBlockLevel">Selecionar o nível de proteção da cloud</string>
     <string id="MpCloudBlockLevel_Explain">
       Esta definição de política determina a agressividade do Antivírus do Microsoft Defender ao bloquear e analisar ficheiros suspeitos.
@@ -912,6 +1066,17 @@ Se desativar ou não configurar esta definição, não será apresentado qualque
     O mesmo que Desativado.
 
     Pode configurar regras de ASR na definição de GP para Configurar regras de Attack Surface Reduction.
+    </string>
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Aplicar uma lista de exclusões a regras específicas de redução da superfície de ataque (RSA)</string>d
+    <string id="ExploitGuard_ASR_ASROnlyPerRuleExclusions_Explain">
+    Esta política permite que um administrador especifique uma lista de exclusões para regras de RSA específicas.
+    Cada entrada é um par nome/valor. A chave indica o GUID da regra e o valor é um conjunto de caminhos completos separados pelo caráter &gt;, que indica as exclusões para essa regra de RSA específica.
+
+    NOTA: o GUID é uma CHAVE, não um valor.
+
+    Exemplo:
+    CHAVE: "{75668C1F-73B5-4CF0-BB93-3ECF5DB7C484}"
+    VALOR: "C:\Notepad.exe&gt;c:\regedit.exe&gt;C:\SomeFolder\test.exe"
     </string>
     <string id="ExploitGuard_ASR_Rules">Configurar regras de Redução de Superfície de Ataque</string>
     <string id="ExploitGuard_ASR_Rules_Explain">
@@ -1118,13 +1283,66 @@ Se desativar ou não configurar esta definição, não será apresentado qualque
     <string id="DeviceControl_DefaultEnforcement_DefaultDeny">Negação predefinida</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation">Definir a localização remota dos dados de prova do Controlo de Dispositivos</string>
     <string id="DeviceControl_DataDuplicationRemoteLocation_Explain">
-        Defina a localização remota do ficheiro de prova, onde o serviço de Controlo de Dispositivos irá mover os dados de prova capturados.
+        Defina a localização remota do ficheiro de provas, onde o serviço Controlo de Dispositivos irá mover os dados de provas capturados.
+
+Ao configurar esta definição, certifique-se de que o Controlo de Dispositivos está Ativado e de que o caminho fornecido é um caminho remoto ao qual o utilizador pode aceder.
     </string>
+	<string id="DeviceControl_DataDuplicationLocalRetentionPeriod">Definir o período de retenção para ficheiros na cache de controlo do dispositivo local</string>
+    <string id="DeviceControl_DataDuplicationLocalRetentionPeriod_Explain">
+        Esta definição de política determina durante quanto tempo o controlo de dispositivo retém ficheiros para provas na respetiva cache local no dispositivo. O controlo do dispositivo mantém um ficheiro na respetiva cache local apenas se não conseguir carregar o ficheiro para uma partilha de rede designada ou armazenamento do Azure. 
+
+Por predefinição, o controlo do dispositivo retém ficheiros na respetiva cache local durante 60 dias.
+    </string>
+	<string id="DeviceControl_SecuredDevicesConfiguration">Ativar o controlo do dispositivo para tipos de dispositivo específicos</string>
+    <string id="DeviceControl_SecuredDevicesConfiguration_Explain">
+        Esta definição de política controla que tipos de dispositivo, identificados pelos respetivos PrimaryIds, terão a proteção de controlo de dispositivos ativada. Se ativar esta definição para determinados tipos de dispositivo, o controlo de dispositivos regulará o acesso a esses dispositivos com base na política personalizada correspondente. O controlo de dispositivos será desativado para todos os outros tipos de dispositivo suportados, mesmo que políticas de proteção personalizadas estejam configuradas para esses dispositivos.
+ 
+        Esta definição suporta atualmente estes tipos de dispositivo: RemovableMediaDevices, CdRomDevices, WpdDevices e PrinterDevices. 
+ 
+        Se ativar esta definição de política, mas não especificar nenhum PrimaryId, o controlo de dispositivos será desativado em todos os tipos de dispositivo suportados.
+ 
+        Se desativar ou não configurar esta definição de política, o controlo de dispositivos será imposto em todos os dispositivos suportados com base nas respetivas políticas personalizadas correspondentes.
+    </string>
+	<string id="DeviceControl_CustomSupportLink">Configurar uma ligação de suporte para notificações de controlo de dispositivos</string>
+    <string id="DeviceControl_CustomSupportLink_Explain">
+        Esta definição permite que a sua organização especifique a ligação "Obter Suporte" nas notificações de controlo do dispositivo. 
+		
+Quando configurado, o botão "Obter Suporte" navega automaticamente para a ligação especificada.
+    </string>
+	<string id="DeviceControl_PolicyRefreshFailureInterval">Definir a taxa de atualização da política</string>
+    <string id="DeviceControl_PolicyRefreshFailureInterval_Explain">
+        Esta definição define o intervalo, em minutos, em que o dispositivo tentará carregar novamente a configuração de política no caso de ter ocorrido um erro e a política não ter sido carregada.
+	</string>
+	<string id="DeviceControl_AzureAdRefreshInterval">Definir a taxa de atualização do Azure AD</string>
+    <string id="DeviceControl_AzureAdRefreshInterval_Explain">
+        Esta definição define o intervalo, em minutos, em que o dispositivo irá consultar Azure AD para atualizar definições, configuração e associações a grupos relacionados.
+	</string>
+	<string id="DeviceControl_DataDuplicationMaximumQuota">Definir o limite de duplicação de dados (MB)</string>
+    <string id="DeviceControl_DataDuplicationMaximumQuota_Explain">
+        Esta definição define a quantidade máxima de dados que podem ser duplicados para controlo de dispositivos. 
+		
+Quando o limite for atingido, os ficheiros copiados para armazenamento amovível não serão duplicados no computador.
+	</string>
     <string id="Features_DeviceControlEnabled">Controlo de Dispositivos</string>
     <string id="DeviceControl_DeviceControlEnabled_Explain">
         Ative ou Desative o Controlo de Dispositivos do Defender neste computador.
         Nota: tem de estar inscrito como E3 ou E5 para que o Controlo de Dispositivos seja ativado.
     </string>
+    <string id="Features_TDTFeatureEnabled">Nível de Integração do Intel TDT</string>
+    <string id="Features_TDTFeatureEnabled_Explain">Esta definição de política configura o nível de integração Intel TDT para dispositivos compatíveis com Intel TDT.
+
+        Se não configurar esta definição, será aplicado o valor predefinido. O valor predefinida é controlado pelas atualizações de informações de segurança da Microsoft. A Microsoft ativará o Intel TDT se houver uma ameaça conhecida.
+        Se configurar esta definição como ativada, a integração do Intel TDT será ativada.
+        Se configurar esta definição como desativada, a integração do Intel TDT será desativada.</string>
+    <string id="Features_PassiveRemediation">Ativar o EDR no modo de bloqueio</string>
+    <string id="Features_PassiveRemediation_Explain">Esta definição de política ativa ou desativa o EDR no modo de bloqueio (também conhecido como "remediação passiva"). O EDR no modo de bloqueio é recomendado para dispositivos que executam o Antivírus do Microsoft Defender no modo passivo. Disponível na versão de plataforma: 4.18.2202.X
+
+        O tipo dos dados é um número inteiro
+
+        Valores suportados:
+
+1: Ativar o EDR no modo de bloqueio
+        0: Desativar o EDR no modo de bloqueio</string>
     </stringTable>
     <presentationTable>
     <presentation id="ProxyBypass">
@@ -1171,11 +1389,38 @@ Se desativar ou não configurar esta definição, não será apresentado qualque
     <presentation id="RealtimeProtection_RealtimeScanDirection">
     <dropdownList refId="RealtimeProtection_RealtimeScanDirection" noSort="true" defaultItem="0">Configurar monitorização da atividade de programas e ficheiros recebidos e enviados</dropdownList>
     </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_ConfiguredState" noSort="true" defaultItem="0">Especificar o estado da Proteção contra Encriptação Remota</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_REP_RemoteEncryptionProtection_MaxBlockTime" defaultValue="15">Especifique durante quanto tempo pretende bloquear deteções, em minutos</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_REP_RemoteEncryptionProtection_Aggressiveness" noSort="true" defaultItem="0">Especifique a agressividade com que a Proteção contra Encriptação Remota bloqueia ameaças</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">
+        <listBox refId="Remediation_BNB_REP_RemoteEncryptionProtectionExclusions">Exclusões da Proteção contra Encriptação Remota</listBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_ConfiguredState" noSort="true" defaultItem="0">Especificar o estado da Proteção contra Força Bruta</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime">
+        <decimalTextBox refId="Remediation_BNB_BFP_BruteForceProtection_MaxBlockTime" defaultValue="15">Especifique durante quanto tempo pretende bloquear deteções, em minutos</decimalTextBox>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness">
+        <dropdownList refId="Remediation_BNB_BFP_BruteForceProtection_Aggressiveness" noSort="true" defaultItem="0">Especifique o nível de agressividade com que a Proteção contra Força Bruta bloqueia as ameaças</dropdownList>
+    </presentation>
+    <presentation id="Remediation_BNB_BFP_BruteForceProtectionExclusions">
+        <listBox refId="Remediation_BNB_BFP_BruteForceProtectionExclusions">Exclusões da Proteção contra Força Bruta</listBox>
+    </presentation>
     <presentation id="Remediation_Scan_ScheduleDay">
     <dropdownList refId="Remediation_Scan_ScheduleDay" noSort="true" defaultItem="0">Especificar o dia da semana para execução de uma análise completa agendada para conclusão da remediação</dropdownList>
     </presentation>
     <presentation id="Remediation_Scan_ScheduleTime">
     <decimalTextBox refId="Remediation_Scan_ScheduleTime" defaultValue="120">Especificar a hora de execução de uma análise completa agendada para conclusão da remediação</decimalTextBox>
+    </presentation>
+    <presentation id="Scan_DaysUntilAggressiveCatchupQuickScan">
+    <decimalTextBox refId="Scan_DaysUntilAggressiveCatchupQuickScan" defaultValue="25">Especifique quantos dias sem análises devem passar antes de uma análise rápida agressiva ser acionada</decimalTextBox>
     </presentation>
     <presentation id="Scan_MissedScheduledScanCountBeforeCatchup">
     <decimalTextBox refId="Scan_MissedScheduledScanCountBeforeCatchup" defaultValue="2">Define o número de análises agendadas que se pode falhar, após as quais é forçada uma análise de atualização</decimalTextBox>
@@ -1273,11 +1518,6 @@ Se desativar ou não configurar esta definição, não será apresentado qualque
     <presentation id="Threats_ThreatSeverityDefaultAction">
     <listBox refId="Threats_ThreatSeverityDefaultActionList">Especificar níveis de alerta das ameaças cuja deteção não deverá acionar a ação predefinida</listBox>
     </presentation>
-    <presentation id="UX_Configuration_CustomDefaultActionToastString">
-    <textBox refId="UX_Configuration_CustomDefaultActionToastString">
-        <label>Apresentar texto adicional aos clientes quando for necessário executar uma ação</label>
-    </textBox>
-    </presentation>
     <presentation id="SignatureUpdate_ExpiryNotificationIntervalDays">
         <decimalTextBox refId="SignatureUpdate_ExpiryNotificationIntervalDays">Especificar o intervalo para as notificações de expiração</decimalTextBox>
     </presentation>
@@ -1293,6 +1533,9 @@ Se desativar ou não configurar esta definição, não será apresentado qualque
     <presentation id="ExploitGuard_ASR_ASROnlyExclusions">
         <listBox refId="ExploitGuard_ASR_ASROnlyExclusions">Exclusões das regras ASR:</listBox>
     </presentation>
+    <presentation id="ExploitGuard_ASR_ASROnlyPerRuleExclusions">
+        <listBox refId="ExploitGuard_ASR_ASROnlyPerRuleExclusions">Exclusões para cada regra de RSA:</listBox>
+    </presentation>
     <presentation id="ExploitGuard_ASR_Rules">
         <listBox refId="ExploitGuard_ASR_Rules">Defina o estado de cada regra ASR:</listBox>
     </presentation>
@@ -1307,6 +1550,9 @@ Se desativar ou não configurar esta definição, não será apresentado qualque
     </presentation>
     <presentation id="Root_PUAProtection">
         <dropdownList refId="Root_PUAProtection" noSort="true" defaultItem="0"></dropdownList>
+    </presentation>
+    <presentation id="Scan_QuickScanIncludeExclusions">
+        <dropdownList refId="Scan_QuickScanIncludeExclusions" noSort="true" defaultItem="0"></dropdownList>
     </presentation>
     <presentation id="DeviceControl_PolicyGroups">
     <textBox refId="DeviceControl_PolicyGroups">
@@ -1338,6 +1584,34 @@ Se desativar ou não configurar esta definição, não será apresentado qualque
         <label>Definir a localização remota de duplicação de dados de Controlo de Dispositivos.</label>
     </textBox>
     </presentation>
+	<presentation id="DeviceControl_DataDuplicationLocalRetentionPeriod">
+		<decimalTextBox refId="DeviceControl_DataDuplicationLocalRetentionPeriod" defaultValue="60">Definir o período de retenção para ficheiros na cache de controlo do dispositivo local</decimalTextBox>
+    </presentation>
+	<presentation id="DeviceControl_SecuredDevicesConfiguration">
+    <textBox refId="DeviceControl_SecuredDevicesConfiguration">
+        <label>Ativar o controlo do dispositivo para tipos de dispositivo específicos</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_CustomSupportLink">
+    <textBox refId="DeviceControl_CustomSupportLink">
+        <label>Configurar uma ligação de suporte para notificações de controlo de dispositivos</label>
+    </textBox>
+    </presentation>
+	<presentation id="DeviceControl_PolicyRefreshFailureInterval">
+    <textBox refId="DeviceControl_PolicyRefreshFailureInterval">
+        <label>Definir a taxa de atualização da política</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_AzureAdRefreshInterval">
+    <textBox refId="DeviceControl_AzureAdRefreshInterval">
+        <label>Definir a taxa de atualização do Azure AD</label>
+    </textBox>
+	</presentation>
+	<presentation id="DeviceControl_DataDuplicationMaximumQuota">
+    <textBox refId="DeviceControl_DataDuplicationMaximumQuota">
+        <label>Definir o limite de duplicação de dados (MB)</label>
+    </textBox>
+	</presentation>
    </presentationTable>
 </resources>
 </policyDefinitionResources>

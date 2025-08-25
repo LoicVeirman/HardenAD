@@ -115,6 +115,25 @@ Události generované touto konfigurací: 309, 310.
       <string id="PKINITHashAlgorithm_Supported">Podporováno</string>
       <string id="PKINITHashAlgorithm_Audited">Auditováno</string>
       <string id="PKINITHashAlgorithm_NotSupported">Nepodporováno</string>
+      <string id="StrongNameMatches">Povolit silná mapování certifikátů založená na názvu</string>
+      <string id="StrongNameMatches_explain">Toto nastavení zásad umožňuje použití alternativních identifikátorů založených na názvu k silnému mapování certifikátů vydaných uživatelským účtům služby Active Directory a určuje, které certifikáty jsou mapované na které účty. Bez povolení tohoto nastavení musí certifikáty splňovat kritéria „silného mapování“ zadaná v aka.ms/StrongCertMapKB, což obecně zakazuje identifikátory založené na názvu.
+
+Každé mapování zadané v této zásadě musí obsahovat identifikátor OID zásad spolu s elementem IssuerSubject a/nebo příponou UPN pomocí syntaxe zadané níže. Pokud v této zásadě nelze najít platné mapování pro daný certifikát, pokusí se služba Active Directory najít shodu pomocí existujících kritérií silného mapování zadaných v KB5014754. Mapování certifikátů, která nevyhovují buď kritériím „mapování silných názvů“ (této zásadě) nebo existujícím kritériím „silného mapování“, budou pro ověřování považována za neplatná.
+
+Obecný formát zásad a některé příklady jsou uvedeny níže. Tyto zásady platí pouze pro uživatelské účty služby Active Directory.
+
+Obecná syntaxe
+==============
+&lt;thumbprint&gt;; &lt;list of oids&gt;; &lt;name-match methods&gt;
+
+Příklady
+==============
+IssuerThumbprint1; oid1, oid2, oid3; UpnSuffix=domain.com
+IssuerThumbprint2; oid1; UpnSuffix=domain.com, UpnSuffix=other.domain.com, IssuerSubject
+IssuerThumbprint3; oid1, oid2; IssuerSubject
+
+Zásady musí na jedno pravidlo obsahovat přesně jeden kryptografický otisk certifikátu, přičemž každé pravidlo je reprezentované jako řazená kolekce členů. Kryptografické otisky musí být jedinečné a nemohou se opakovat ve více pravidlech. Oddíly každé řazené kolekce členů oddělené středníkem musí být v uvedeném pořadí, zatímco pole oddělená čárkami můžou být v libovolném pořadí. Pravidla samotná jsou oddělená novými řádky.
+      </string>
     </stringTable>
     <presentationTable>
       <presentation id="emitlili">
@@ -148,6 +167,9 @@ Události generované touto konfigurací: 309, 310.
         <dropdownList refId="PKINITHashAlgorithmSHA256" noSort="true" defaultItem="0">SHA-256</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA384" noSort="true" defaultItem="0">SHA-384</dropdownList>
         <dropdownList refId="PKINITHashAlgorithmSHA512" noSort="true" defaultItem="0">SHA-512</dropdownList>
+      </presentation>
+      <presentation id="StrongNameMatches">
+          <multiTextBox refId="StrongNameMatchesList">Pravidla shody se silným názvem:</multiTextBox>
       </presentation>
     </presentationTable>
   </resources>
