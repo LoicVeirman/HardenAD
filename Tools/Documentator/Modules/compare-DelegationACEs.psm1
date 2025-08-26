@@ -1,7 +1,7 @@
 Function compare-DelegationACEs {
     <#
         .SYNOPSIS
-        Compare two edition of had, section delegation ACEs
+        Compare two edition of had, section delegationACEs
 
         .PARAMETER OldData
         The xml data to compare with.
@@ -31,12 +31,12 @@ Function compare-DelegationACEs {
     # Prepare collect data (md form)
     $ChangeLog = @(
         "# CHANGE LOG: DelegationACEs  "
-        "Below information details all changes in TasksSequence_HardenAD.xml done in this edition.  "
+        "Below information details all changes in TasksSequence_HardenAD.xml/DelegationACEs done in this edition.  "
         " "
         "---  "
     )
     $ResumeLog = @(
-        "### TasksSequence_HardenAD.xml: DelegationACEs "
+        "### DelegationACEs "
         ' '
     )
     #endRegion init

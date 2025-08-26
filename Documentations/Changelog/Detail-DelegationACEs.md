@@ -1,5 +1,5 @@
 ﻿# CHANGE LOG: DelegationACEs  
-Below information details all changes in TasksSequence_HardenAD.xml done in this edition.  
+Below information details all changes in TasksSequence_HardenAD.xml/DelegationACEs done in this edition.  
  
 ---  
 ### ACL  

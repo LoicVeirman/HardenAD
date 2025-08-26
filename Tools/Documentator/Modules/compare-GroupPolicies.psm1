@@ -1,0 +1,207 @@
+Function compare-GroupPolicies {
+    <#
+        .SYNOPSIS
+        Compare two edition of had, section GroupPolicies
+
+        .PARAMETER OldData
+        The xml data to compare with.
+
+        .PARAMETER NewData
+        The xml data from the new release.
+
+        .NOTES 
+        Version 1.0.0
+        Author  Loic VEIRMAN MSSEC
+    #>
+
+    Param(
+        [parameter(Mandatory,Position=0)]
+        $OldData,
+
+        [parameter(Mandatory,Position=1)]
+        $NewData
+    )
+
+    #region .. init
+    $oldWMI = $OldData.WmiFilters.Filter
+    $newWMI = $newData.WmiFilters.Filter
+    $oldGPO = $OldData.GPO
+    $newGPO = $NewData.GPO
+    # Prepare collect data (md form)
+    $ChangeLog = @(
+        "# CHANGE LOG: GroupPolicies  "
+        "Below information details all changes in TasksSequence_HardenAD.xml/GroupPolicies done in this edition.  "
+        " "
+        "---  "
+    )
+    $ResumeLog = @(
+        "### GroupPolicies "
+        ' '
+    )
+    #endRegion init
+
+    #region .. Wmifilters
+    $ChangeLog += @('### WMI Filters',' ','Status|Name|Source','---|---|---  ')
+    $sameWMI   = 0
+    $UpdateWMI = 0
+    $RemoveWMI = 0
+    $AddWMI    = 0
+    $TotalWMI  = 0
+
+    foreach ($Object in (Compare-Object $oldWMI.Name $newWMI.Name -IncludeEqual)) {
+        Switch ($Object.SideIndicator) {
+            "==" {
+                # Present in both file
+                $TotalWMI++
+                if ( ($oldWMI | Where-Object { $_.Name -eq $Object.InputObject }).Source -eq ($newWMI | Where-Object { $_.Name -eq $Object.InputObject }).Source) {
+                    $ChangeLog += "No change|$($Object.InputObject)|$(($newWMI | Where-Object { $_.Name -eq $Object.InputObject }).Source)"
+                    $sameWMI++
+                }
+                else {
+                    $ChangeLog += "Source updated|$($Object.InputObject)|$($newWMI | Where-Object { $_.Name -eq $Object.InputObject }).Source)"
+                    $UpdateWMI++
+                }
+            }
+            "=>" {
+                # Present in new file
+                $ChangeLog += "Added|$($Object.InputObject)|$(($newWMI | Where-Object { $_.Name -eq $Object.InputObject }).Source)"
+                $AddWMI++
+                $TotalWMI++
+            }
+            "<=" {
+                # Present in old file
+                $ChangeLog += "Removed|$($Object.InputObject)|$(($oldWMI | Where-Object { $_.Name -eq $Object.InputObject }).Source)"
+                $RemoveWMI++
+            }
+        }
+    }
+    $ChangeLog += "  "
+    $resumeTxt = "There are $($TotalWMI) WMI filter present in this edition:"
+    Switch ($sameWMI) {
+        { $_ -eq 0 } { $resumeTxt += " none were kept from the previous edition"  }
+        { $_ -eq 1 } { $resumeTxt += " $($sameWMI) was kept from the previous edition"  }
+        { $_ -gt 1 } { $resumeTxt += " $($sameWMI) were kept from the previous edition"  }
+    }
+    if ($UpdateWMI -gt 0) {
+        $resumeTxt += ", $($UpdateWMI) have been updated"
+    }
+    if ($AddWMI -gt 0) {
+        $resumeTxt += ", $($AddWMI) have been added"
+    }
+    Switch ($removeWMI) {
+        { $_ -eq 0 } { $resumeTxt += " and none were removed from the previous edition.  "  }
+        { $_ -eq 1 } { $resumeTxt += " and $($sameWMI) was removed from the previous edition.  "  }
+        { $_ -gt 1 } { $resumeTxt += " and $($sameWMI) were removed from the previous edition.  "  }
+    }
+    $ResumeLog += @($resumeTxt,'  ')
+    #endRegion WmiFilters
+
+    #region .. GPO
+    $addGPO    = 0
+    $sameGPO   = 0
+    $totalGPO  = 0
+    $removeGPO = 0
+    $updateGPO = 0
+    $GpoDetail = @()
+
+     $ChangeLog += @('### GPO',' ','GPO|Status  ','---|---  ')
+
+    foreach ($Object in (Compare-Object $oldGPO.Name $newGPO.Name -IncludeEqual)) {
+        Switch ($Object.SideIndicator) {
+            "==" {
+                # Present in both
+                $totalGPO++
+                
+                # Ensure backupID are the same
+                $oldBkpID = ($oldGPO | Where-Object { $_.Name -eq $Object.InputObject }).BackupID
+                $newBkpID = ($newGPO | Where-Object { $_.Name -eq $Object.InputObject }).BackupID
+                
+                if ($oldBkpID -eq $newBkpID) {
+                    # Compute common path to the main folder
+                    $gpoFolder = "Inputs\GroupPolicies\$($Object.InputObject)\$($newBkpID)"
+                    
+                    # Get file and hashes to ensure both match and there is no hidden change...
+                    $oldFiles = @()
+                    $newFiles = @()
+                    Get-ChildItem -Path "$($PreviousSourceFolder)\$($gpoFolder)" -Recurse -File | ForEach-Object { $oldFiles += New-Object -TypeName psobject -Property @{File = $_.Name ; Hash = (Get-FileHash $_.Fullname).Hash } }
+                    Get-ChildItem -Path "$(Resolve-Path ..\..)\$($gpoFolder)" -Recurse -File | ForEach-Object { $newFiles += New-Object -TypeName psobject -Property @{File = $_.Name ; Hash = (Get-FileHash $_.Fullname).Hash } }
+                    
+                    # Any removed or added file?
+                    $FirstMatch = $true
+                    foreach ($file in (Compare-Object $oldFiles.File $newFiles.file)) {
+                        if ($FirstMatch) {
+                            $FirstMatch = $false
+                            $updateGPO++
+                            $GpoDetail += "**$($Object.InputObject):**  "
+                        }
+                        if ($file.SideIndicator -eq "<=") {
+                            $gpoDetail += "> File removed: $($file.InputObject)  "
+                        }
+                        Else {
+                            $gpoDetail += "> File added: $($file.InputObject)  "
+                        }
+                    }
+                    # Any modified file?
+                    foreach ($file in (Compare-Object $oldFiles.hash $newFiles.hash)) {
+                        if ($FirstMatch) {
+                            $FirstMatch = $false
+                            $updateGPO++
+                            $GpoDetail += "**$($Object.InputObject):**  "
+                        }
+                        if ($file.SideIndicator -eq "=>") {
+                            $gpoDetail += "> File modified: $(($newfiles | Where-Object { $_.Hash -eq $file.InputObject}).file)  "
+                        }
+                    }
+                    if ($FirstMatch) {
+                        $ChangeLog += "$($Object.InputObject)|No change"
+                    } 
+                    else {
+                        $ChangeLog += "$($Object.InputObject)|Updated (files mismatch)"
+                    }
+                } 
+                Else {
+                    # Mismatch, hence its a new GPO
+                    $ChangeLog += "$($Object.InputObject)|Updated (new backupID)"
+                    $GpoDetail += @("**$($Object.InputObject):**  ",'> New backup ID that indicates potential changes.  ','  ')
+                }
+            }
+            "=>" {
+                # Present in new
+                $totalGPO++
+                $addGPO++
+                $ChangeLog += "$($Object.InputObject)|Added"
+            }
+            "<=" {
+                # Present in old
+                $removeGPO++
+                $ChangeLog += "$($Object.InputObject)|Removed"
+            }
+        }
+        $GpoDetail += '  '
+    }
+    $ChangeLog += @('  ',$GpoDetail,'  ')
+    $resumeTxt = "There are $($totalGPO) GPO present in this edition:"
+    Switch ($sameGPO) {
+        { $_ -eq 0 } { $resumeTxt += " none were kept from the previous edition"  }
+        { $_ -eq 1 } { $resumeTxt += " $($sameGPO) was kept from the previous edition"  }
+        { $_ -gt 1 } { $resumeTxt += " $($sameGPO) were kept from the previous edition"  }
+    }
+    if ($UpdateGPO -gt 0) {
+        $resumeTxt += ", $($UpdateWMI) have been updated"
+    }
+    if ($addGPO -gt 0) {
+        $resumeTxt += ", $($AddGPO) have been added"
+    }
+    Switch ($removeGPO) {
+        { $_ -eq 0 } { $resumeTxt += " and none were removed from the previous edition.  "  }
+        { $_ -eq 1 } { $resumeTxt += " and $($sameGPO) was removed from the previous edition.  "  }
+        { $_ -gt 1 } { $resumeTxt += " and $($sameGPO) were removed from the previous edition.  "  }
+    }
+    $ResumeLog += $resumeTxt
+    #endRegion GPO
+
+    #region .. Finally
+    $ChangeLog | out-file ..\..\Documentations\Changelog\Detail-GroupPolicies.md -Encoding UTF8 -Force
+    return $ResumeLog
+    #endRegion Finally
+}

@@ -1,5 +1,5 @@
 ﻿# CHANGE LOG: OrganizationalUnits  
-Below information details all changes in TasksSequence_HardenAD.xml done in this edition.  
+Below information details all changes in TasksSequence_HardenAD.xml/OrganizationalUnits done in this edition.  
  
 ---  
 ### Class List 
