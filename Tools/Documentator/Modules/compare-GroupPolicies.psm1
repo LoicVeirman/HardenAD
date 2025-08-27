@@ -104,11 +104,14 @@ Function compare-GroupPolicies {
     $updateGPO = 0
     $GpoDetail = @()
 
-     $ChangeLog += @('### GPO',' ','GPO|Status  ','---|---  ')
+    $ChangeLog += @('### GPO',' ','GPO|Status  ','---|---  ')
 
     foreach ($Object in (Compare-Object $oldGPO.Name $newGPO.Name -IncludeEqual)) {
         Switch ($Object.SideIndicator) {
             "==" {
+                # Flag for modification present
+                $gpoModified = $false
+                $FirstMatch  = $true
                 # Present in both
                 $totalGPO++
                 
@@ -126,14 +129,17 @@ Function compare-GroupPolicies {
                     Get-ChildItem -Path "$($PreviousSourceFolder)\$($gpoFolder)" -Recurse -File | ForEach-Object { $oldFiles += New-Object -TypeName psobject -Property @{File = $_.Name ; Hash = (Get-FileHash $_.Fullname).Hash } }
                     Get-ChildItem -Path "$(Resolve-Path ..\..)\$($gpoFolder)" -Recurse -File | ForEach-Object { $newFiles += New-Object -TypeName psobject -Property @{File = $_.Name ; Hash = (Get-FileHash $_.Fullname).Hash } }
                     
-                    # Any removed or added file?
-                    $FirstMatch = $true
+                    # Any removed or added file? We discard equal files
                     foreach ($file in (Compare-Object $oldFiles.File $newFiles.file)) {
+                        # Tag for modification
+                        $gpoModified = $true
+                        # Check if Gpo Details header needed
                         if ($FirstMatch) {
                             $FirstMatch = $false
                             $updateGPO++
                             $GpoDetail += "**$($Object.InputObject):**  "
                         }
+                        # Define if added or removed
                         if ($file.SideIndicator -eq "<=") {
                             $gpoDetail += "> File removed: $($file.InputObject)  "
                         }
@@ -141,40 +147,154 @@ Function compare-GroupPolicies {
                             $gpoDetail += "> File added: $($file.InputObject)  "
                         }
                     }
-                    # Any modified file?
+                    # Any modified file? Discard equals.
                     foreach ($file in (Compare-Object $oldFiles.hash $newFiles.hash)) {
+                        # Tag for modification
+                        $gpoModified = $true
+                        # Check if Gpo Details header needed
                         if ($FirstMatch) {
                             $FirstMatch = $false
                             $updateGPO++
                             $GpoDetail += "**$($Object.InputObject):**  "
                         }
+                        # We only care about file modified in the new release
                         if ($file.SideIndicator -eq "=>") {
                             $gpoDetail += "> File modified: $(($newfiles | Where-Object { $_.Hash -eq $file.InputObject}).file)  "
                         }
                     }
-                    if ($FirstMatch) {
-                        $ChangeLog += "$($Object.InputObject)|No change"
-                    } 
-                    else {
-                        $ChangeLog += "$($Object.InputObject)|Updated (files mismatch)"
-                    }
-                } 
+                }
+                # New backup files
                 Else {
                     # Mismatch, hence its a new GPO
-                    $ChangeLog += "$($Object.InputObject)|Updated (new backupID)"
+                    $gpoModified = $True
+                    $updateGPO++
                     $GpoDetail += @("**$($Object.InputObject):**  ",'> New backup ID that indicates potential changes.  ','  ')
                 }
+
+                # Ensure no modification on WmiFilter applied to the Gpo
+                $oldGpoFilter = ($oldGPO | Where-Object { $_.Name -eq $Object.InputObject }).GpoFilter
+                $newGpoFilter = ($oldGPO | Where-Object { $_.Name -eq $Object.InputObject }).GpoFilter
+
+                # mismatch between new and old and old have a value?
+                Switch ($oldGpoFilter) {
+                    # No old gpo filter
+                    { $_ -eq $null } {
+                        Switch ($newGpoFilter) {
+                            # no new too - nothing to do here.
+                            { $_ -eq $null } { }
+                            # this is a change: a filter is now present.
+                            { $_ -ne $null } {
+                                # Gpo is modified
+                                $gpoModified = $true
+                                # First match?
+                                if ($FirstMatch) {
+                                    $FirstMatch = $false
+                                    $updateGPO++
+                                    $GpoDetail += "**$($Object.InputObject):**  "
+                                }
+                                # Append detail
+                                $GpoDetail += "> WMI Filter has been set to $($newGpoFilter.wmi) while there was none before  "
+                            }
+                        }
+                    }
+                    # old gpo filter present
+                    { $_ -ne $null } {
+                        Switch ($newGpoFilter) {
+                            { $_ -eq $null } { 
+                                # Gpo is modified
+                                $gpoModified = $true
+                                # First match?
+                                if ($FirstMatch) {
+                                    $FirstMatch = $false
+                                    $updateGPO++
+                                    $GpoDetail += "**$($Object.InputObject):**  "
+                                }
+                                # Append detail
+                                $GpoDetail += "> WMI Filter has been removed  "
+                            }
+                            { $_ -ne $null } {
+                                # Check if value has changed
+                                if ($oldGpoFilter.WMI -ne $newGpoFilter.WMI) {
+                                    # Gpo is modified
+                                    $gpoModified = $true
+                                    # First match?
+                                    if ($FirstMatch) {
+                                        $FirstMatch = $false
+                                        $updateGPO++
+                                        $GpoDetail += "**$($Object.InputObject):**  "
+                                    }
+                                    # Append detail
+                                    $GpoDetail += "> WMI Filter has been changed to $($newGpoFilter.wmi)  "
+                                }
+                            }
+                        }
+                    }
+                }
+
+                # Ensure no modification were done on gpLinks
+                $oldGpoLinks =  ($oldGPO | Where-Object { $_.Name -eq $Object.InputObject }).GpoLink
+                $newGpoLinks =  ($oldGPO | Where-Object { $_.Name -eq $Object.InputObject }).GpoLink
+
+                if ($oldGpoLinks -and $newGpoLinks) {
+                    foreach ($gpoLink in (Compare-Object $oldGpoLinks.path $newGpoLinks.Path)) {
+                        # We do not care about the sideIdicator "==" which indicates no change
+                        switch ($gpoLink.SideIndicator) {
+                            "=>" {
+                                # New settings applied
+                                $gpoModified = $true
+
+                                if ($FirstMatch) {
+                                    $FirstMatch = $false
+                                    $updateGPO++
+                                    $GpoDetail += "**$($Object.InputObject):**  "
+                                }
+                                $GpoDetail += "> GPLink has been set to $($gpoLink.InputObject)"
+                            }
+                            "<=" {
+                                # New settings applied
+                                $gpoModified = $true
+
+                                if ($FirstMatch) {
+                                    $FirstMatch = $false
+                                    $updateGPO++
+                                    $GpoDetail += "**$($Object.InputObject):**  "
+                                }
+                                $GpoDetail += "> GPLink has been removed from $($gpoLink.InputObject)"
+                            }
+                        }
+                    }
+                }
+                Elseif ($newGpoLinks) {
+                    # Has only new links
+                    $gpoModified = $true
+                    foreach ($gpoLink in $newGpoLinks) {
+                        if ($FirstMatch) {
+                            $FirstMatch = $false
+                            $updateGPO++
+                            $GpoDetail += "**$($Object.InputObject):**  "
+                        }
+                        $GpoDetail += "> GPLink has been set to $($gpoLink.InputObject)"
+                    }
+                }
+                # Finally update that...
+                if ($gpoModified) {
+                    $ChangeLog += "$($Object.InputObject)|GPO updated"
+                }
+                else {
+                    $ChangeLog += "$($Object.InputObject)|GPO unmodified"
+                }
+
             }
             "=>" {
                 # Present in new
                 $totalGPO++
                 $addGPO++
-                $ChangeLog += "$($Object.InputObject)|Added"
+                $ChangeLog += "$($Object.InputObject)|GPO added"
             }
             "<=" {
                 # Present in old
                 $removeGPO++
-                $ChangeLog += "$($Object.InputObject)|Removed"
+                $ChangeLog += "$($Object.InputObject)|GPO removed"
             }
         }
         $GpoDetail += '  '
@@ -187,20 +307,23 @@ Function compare-GroupPolicies {
         { $_ -gt 1 } { $resumeTxt += " $($sameGPO) were kept from the previous edition"  }
     }
     if ($UpdateGPO -gt 0) {
-        $resumeTxt += ", $($UpdateWMI) have been updated"
+        $resumeTxt += ", $($UpdateGPO) have been updated"
     }
     if ($addGPO -gt 0) {
         $resumeTxt += ", $($AddGPO) have been added"
     }
     Switch ($removeGPO) {
         { $_ -eq 0 } { $resumeTxt += " and none were removed from the previous edition.  "  }
-        { $_ -eq 1 } { $resumeTxt += " and $($sameGPO) was removed from the previous edition.  "  }
-        { $_ -gt 1 } { $resumeTxt += " and $($sameGPO) were removed from the previous edition.  "  }
+        { $_ -eq 1 } { $resumeTxt += " and $($removeGPO) was removed from the previous edition.  "  }
+        { $_ -gt 1 } { $resumeTxt += " and $($removeGPO) were removed from the previous edition.  "  }
     }
     $ResumeLog += $resumeTxt
     #endRegion GPO
 
     #region .. Finally
+    if (Test-Path ..\..\Documentations\Changelog\Detail-GroupPolicies.md) {
+        [void](Remove-Item ..\..\Documentations\Changelog\Detail-GroupPolicies.md -Force)
+    }
     $ChangeLog | out-file ..\..\Documentations\Changelog\Detail-GroupPolicies.md -Encoding UTF8 -Force
     return $ResumeLog
     #endRegion Finally

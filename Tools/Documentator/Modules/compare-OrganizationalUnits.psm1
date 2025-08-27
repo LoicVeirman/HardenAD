@@ -3,10 +3,10 @@ Function compare-OrganizationalUnits {
         .SYNOPSIS
         Compare two edition of had, section organizational unit
 
-        .PARAMETER OldData
+        .PARAMETER OldXml
         The xml data to compare with.
 
-        .PARAMETER NewData
+        .PARAMETER NewXml
         The xml data from the new release.
 
         .NOTES 
@@ -15,10 +15,10 @@ Function compare-OrganizationalUnits {
     #>
     Param(
         [parameter(Mandatory,Position=0)]
-        $OldData,
+        $OldXml,
 
         [parameter(Mandatory,Position=1)]
-        $NewData
+        $NewXml
     )
     #region .. Functions
     function ouTreechecker {

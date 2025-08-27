@@ -57,128 +57,128 @@ Added|Windows-Laps-Supported|Windows-Laps-Supported.mof
  
 GPO|Status  
 ---|---  
-HAD-Auto-Update-S1-Thu-0h-Srv|Updated (files mismatch)
-HAD-Auto-Update-S1-Thu-1h-Srv|No change
-HAD-Auto-Update-S3-Thu-0h-Srv|No change
-HAD-Auto-Update-S3-Thu-1h-Srv|No change
-HAD-Auto-Update-S4-Thu-0h-Srv|No change
-HAD-Auto-Update-S4-Thu-1h-Srv|No change
-HAD-Auto-Update-Win10-11|No change
-HAD-Auto-Update-Win7-8|No change
-HAD-BitLocker-TPMOnly-Enabled-Win10-11|Updated (new backupID)
-HAD-BitLocker-PIN-Enabled-Win10-11|Updated (new backupID)
-HAD-BitLocker-USB-Win10-11|No change
-HAD-BloodHound-Mitigation|No change
-HAD-Camera-on-lockon-Disabled|No change
-HAD-DCLocaltor-Configuration|No change
-HAD-DistributedFileSystem-Disabled|No change
-HAD-Firewall-Audit-Only|No change
-HAD-Firewall-Block-Inbound|No change
-HAD-GPO-Refresh-Cycle|Updated (new backupID)
-HAD-IPv6-Disabled|No change
-HAD-Kerberos-AES-Enabled|No change
-HAD-LAPS-Configuration|No change
-HAD-LAPS-X64-Deployment|No change
-HAD-LAPS-X86-Deployment|No change
-HAD-LDAP-Audit-Enabled|No change
-HAD-LDAP-CBT-Enabled|No change
-HAD-LDAP-Client-Signing-Not-Required|No change
-HAD-LDAP-Client-Signing-Required|No change
-HAD-LDAP-Server-Signing-Required|No change
-HAD-LDAP-Audit-Disabled|No change
-HAD-LLMNR-Disabled|No change
-HAD-LMHASH-Disabled|No change
-HAD-NTLM-Audit-Enabled|No change
-HAD-NTLM1-LMx-Disabled|No change
-HAD-NTLMv2-128bits-Required|No change
-HAD-LocalAdmins-Paw|Updated (files mismatch)
-HAD-LocalAdmins-PawT0|Updated (files mismatch)
-HAD-LocalAdmins-PawT12L|Updated (files mismatch)
-HAD-LocalAdmins-T0-Srv|Updated (files mismatch)
-HAD-LocalAdmins-T0-Wks|Updated (files mismatch)
-HAD-LocalAdmins-T1|Updated (files mismatch)
-HAD-LocalAdmins-T1L|Updated (files mismatch)
-HAD-LocalAdmins-T2|Updated (files mismatch)
-HAD-LocalAdmins-T2L|Updated (files mismatch)
-HAD-Local-Accounts-Config|No change
-HAD-LoginRestrictions-Paw|Updated (new backupID)
-HAD-LoginRestrictions-PawT0|No change
-HAD-LoginRestrictions-PawT12L|No change
-HAD-LoginRestrictions-T0|Updated (files mismatch)
-HAD-LoginRestrictions-T1|Updated (files mismatch)
-HAD-LoginRestrictions-T1L|Updated (files mismatch)
-HAD-LoginRestrictions-T2|Updated (files mismatch)
-HAD-LoginRestrictions-T2L|Updated (files mismatch)
-HAD-Logon-Cache-0|No change
-HAD-MSLive-Accounts-Disabled|No change
-HAD-NBT-NS-Disabled|Updated (new backupID)
-HAD-PageFile-Shutdown-Cleared|No change
-HAD-Print-Spooler-Disabled|No change
-HAD-Remote-Assistance-Disabled|No change
-HAD-Screenlock-Enabled|No change
-HAD-Secure-NetLogon|No change
-HAD-Svc-Browser-Disabled|No change
-HAD-Svc-Server-Disabled|No change
-HAD-UAC-Enabled|No change
-HAD-WDigest-Disabled|No change
-HAD-Windows-Defender-Config|No change
-HAD-WinRM-Basic-Digest-Auth-Disabled|Updated (new backupID)
-HAD-WebProxyAutoDiscovery-Disabled|Updated (new backupID)
-HAD-PowerShell-Logs|No change
-HAD-Security-Logs|No change
-HAD-TS-Local-admins-groups|Updated (new backupID)
-HAD-TS-PDC-Flush-admin-groups|Updated (new backupID)
-HAD-TS-Reset-Computer-Sddl|Updated (new backupID)
-HAD-RDP-Disabled|No change
-HAD-RDP-Enabled|No change
-HAD-RDP-NLA-Enabled|No change
-HAD-Smart-Card-Required|No change
-HAD-SMB-Signing-Configuration|Updated (new backupID)
-HAD-SMB1-Audit-Enabled|Updated (new backupID)
-HAD-SMB1-Client-Only-Enabled|Updated (new backupID)
-HAD-SMB1-Disabled|Updated (new backupID)
-HAD-SMB1-Enabled|Updated (new backupID)
-HAD-SMB1-Server-Only-Enabled|Updated (new backupID)
-HAD-UNC-Hardened-Path|Updated (files mismatch)
-HAD-SSL2-SSL3-Disabled|Updated (new backupID)
-HAD-SSL2-SSL3-Enabled|Updated (new backupID)
-HAD-TLS-1_0-Disabled|Updated (new backupID)
-HAD-TLS-1_0-Enabled|Updated (new backupID)
-HAD-TLS-1_1-Disabled|Updated (new backupID)
-HAD-TLS-1_1-Enabled|Updated (new backupID)
-HAD-TLS-1_2-Enabled|Updated (new backupID)
-HAD-DC-Allow-Computer-Account-ReUse|Updated (files mismatch)
-HAD-QwantSearch|No change
-HAD-BitLocker-RecoveryKey-Required|Added
-HAD-LocalRDU-Paw|Added
-HAD-LocalRDU-PawT0|Added
-HAD-LocalRDU-PawT12L|Added
-HAD-LocalRDU-T0-Srv|Added
-HAD-LocalRDU-T0-Wks|Added
-HAD-LocalRDU-T1|Added
-HAD-LocalRDU-T1L|Added
-HAD-LocalRDU-T2|Added
-HAD-LocalRDU-T2L|Added
-HAD-Logon-Cache-3|Added
-HAD-Applocker-Win10-11|Added
-HAD-CredentialManager-Disabled|Added
-HAD-DEP-Config|Added
-HAD-DMA-Protection|Added
-HAD-Drivers-Config|Added
-HAD-Inactivity-Config|Added
-HAD-LSASS-Audit|Added
-HAD-LSASS-Config|Added
-HAD-mDNS-Disabled|Added
-HAD-NTLM-Disabled|Added
-HAD-Smart-Card-Config|Added
-HAD-SMB-Config-24H2|Added
-HAD-UAC-Advanced-Enabled|Added
-HAD-User-Config|Added
-HAD-Virtualization-Based-Protection-Enabled|Added
-HAD-Windows-LAPS|Added
-HAD-FIPS-Enabled|Removed
-HAD-Logon-Cache-2|Removed
-HAD-TLS-1_2-Disabled|Removed
+HAD-Auto-Update-S1-Thu-0h-Srv|GPO updated
+HAD-Auto-Update-S1-Thu-1h-Srv|GPO unmodified
+HAD-Auto-Update-S3-Thu-0h-Srv|GPO unmodified
+HAD-Auto-Update-S3-Thu-1h-Srv|GPO unmodified
+HAD-Auto-Update-S4-Thu-0h-Srv|GPO unmodified
+HAD-Auto-Update-S4-Thu-1h-Srv|GPO unmodified
+HAD-Auto-Update-Win10-11|GPO unmodified
+HAD-Auto-Update-Win7-8|GPO unmodified
+HAD-BitLocker-TPMOnly-Enabled-Win10-11|GPO updated
+HAD-BitLocker-PIN-Enabled-Win10-11|GPO updated
+HAD-BitLocker-USB-Win10-11|GPO unmodified
+HAD-BloodHound-Mitigation|GPO unmodified
+HAD-Camera-on-lockon-Disabled|GPO unmodified
+HAD-DCLocaltor-Configuration|GPO unmodified
+HAD-DistributedFileSystem-Disabled|GPO unmodified
+HAD-Firewall-Audit-Only|GPO unmodified
+HAD-Firewall-Block-Inbound|GPO unmodified
+HAD-GPO-Refresh-Cycle|GPO updated
+HAD-IPv6-Disabled|GPO unmodified
+HAD-Kerberos-AES-Enabled|GPO unmodified
+HAD-LAPS-Configuration|GPO unmodified
+HAD-LAPS-X64-Deployment|GPO unmodified
+HAD-LAPS-X86-Deployment|GPO unmodified
+HAD-LDAP-Audit-Enabled|GPO unmodified
+HAD-LDAP-CBT-Enabled|GPO unmodified
+HAD-LDAP-Client-Signing-Not-Required|GPO unmodified
+HAD-LDAP-Client-Signing-Required|GPO unmodified
+HAD-LDAP-Server-Signing-Required|GPO unmodified
+HAD-LDAP-Audit-Disabled|GPO unmodified
+HAD-LLMNR-Disabled|GPO unmodified
+HAD-LMHASH-Disabled|GPO unmodified
+HAD-NTLM-Audit-Enabled|GPO unmodified
+HAD-NTLM1-LMx-Disabled|GPO unmodified
+HAD-NTLMv2-128bits-Required|GPO unmodified
+HAD-LocalAdmins-Paw|GPO updated
+HAD-LocalAdmins-PawT0|GPO updated
+HAD-LocalAdmins-PawT12L|GPO updated
+HAD-LocalAdmins-T0-Srv|GPO updated
+HAD-LocalAdmins-T0-Wks|GPO updated
+HAD-LocalAdmins-T1|GPO updated
+HAD-LocalAdmins-T1L|GPO updated
+HAD-LocalAdmins-T2|GPO updated
+HAD-LocalAdmins-T2L|GPO updated
+HAD-Local-Accounts-Config|GPO unmodified
+HAD-LoginRestrictions-Paw|GPO updated
+HAD-LoginRestrictions-PawT0|GPO unmodified
+HAD-LoginRestrictions-PawT12L|GPO unmodified
+HAD-LoginRestrictions-T0|GPO updated
+HAD-LoginRestrictions-T1|GPO updated
+HAD-LoginRestrictions-T1L|GPO updated
+HAD-LoginRestrictions-T2|GPO updated
+HAD-LoginRestrictions-T2L|GPO updated
+HAD-Logon-Cache-0|GPO unmodified
+HAD-MSLive-Accounts-Disabled|GPO unmodified
+HAD-NBT-NS-Disabled|GPO updated
+HAD-PageFile-Shutdown-Cleared|GPO unmodified
+HAD-Print-Spooler-Disabled|GPO unmodified
+HAD-Remote-Assistance-Disabled|GPO unmodified
+HAD-Screenlock-Enabled|GPO unmodified
+HAD-Secure-NetLogon|GPO unmodified
+HAD-Svc-Browser-Disabled|GPO unmodified
+HAD-Svc-Server-Disabled|GPO unmodified
+HAD-UAC-Enabled|GPO unmodified
+HAD-WDigest-Disabled|GPO unmodified
+HAD-Windows-Defender-Config|GPO unmodified
+HAD-WinRM-Basic-Digest-Auth-Disabled|GPO updated
+HAD-WebProxyAutoDiscovery-Disabled|GPO updated
+HAD-PowerShell-Logs|GPO unmodified
+HAD-Security-Logs|GPO unmodified
+HAD-TS-Local-admins-groups|GPO updated
+HAD-TS-PDC-Flush-admin-groups|GPO updated
+HAD-TS-Reset-Computer-Sddl|GPO updated
+HAD-RDP-Disabled|GPO unmodified
+HAD-RDP-Enabled|GPO unmodified
+HAD-RDP-NLA-Enabled|GPO unmodified
+HAD-Smart-Card-Required|GPO unmodified
+HAD-SMB-Signing-Configuration|GPO updated
+HAD-SMB1-Audit-Enabled|GPO updated
+HAD-SMB1-Client-Only-Enabled|GPO updated
+HAD-SMB1-Disabled|GPO updated
+HAD-SMB1-Enabled|GPO updated
+HAD-SMB1-Server-Only-Enabled|GPO updated
+HAD-UNC-Hardened-Path|GPO updated
+HAD-SSL2-SSL3-Disabled|GPO updated
+HAD-SSL2-SSL3-Enabled|GPO updated
+HAD-TLS-1_0-Disabled|GPO updated
+HAD-TLS-1_0-Enabled|GPO updated
+HAD-TLS-1_1-Disabled|GPO updated
+HAD-TLS-1_1-Enabled|GPO updated
+HAD-TLS-1_2-Enabled|GPO updated
+HAD-DC-Allow-Computer-Account-ReUse|GPO updated
+HAD-QwantSearch|GPO unmodified
+HAD-BitLocker-RecoveryKey-Required|GPO added
+HAD-LocalRDU-Paw|GPO added
+HAD-LocalRDU-PawT0|GPO added
+HAD-LocalRDU-PawT12L|GPO added
+HAD-LocalRDU-T0-Srv|GPO added
+HAD-LocalRDU-T0-Wks|GPO added
+HAD-LocalRDU-T1|GPO added
+HAD-LocalRDU-T1L|GPO added
+HAD-LocalRDU-T2|GPO added
+HAD-LocalRDU-T2L|GPO added
+HAD-Logon-Cache-3|GPO added
+HAD-Applocker-Win10-11|GPO added
+HAD-CredentialManager-Disabled|GPO added
+HAD-DEP-Config|GPO added
+HAD-DMA-Protection|GPO added
+HAD-Drivers-Config|GPO added
+HAD-Inactivity-Config|GPO added
+HAD-LSASS-Audit|GPO added
+HAD-LSASS-Config|GPO added
+HAD-mDNS-Disabled|GPO added
+HAD-NTLM-Disabled|GPO added
+HAD-Smart-Card-Config|GPO added
+HAD-SMB-Config-24H2|GPO added
+HAD-UAC-Advanced-Enabled|GPO added
+HAD-User-Config|GPO added
+HAD-Virtualization-Based-Protection-Enabled|GPO added
+HAD-Windows-LAPS|GPO added
+HAD-FIPS-Enabled|GPO removed
+HAD-Logon-Cache-2|GPO removed
+HAD-TLS-1_2-Disabled|GPO removed
   
 **HAD-Auto-Update-S1-Thu-0h-Srv:**  
 > File removed: trompette.tmp  

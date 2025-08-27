@@ -15,10 +15,11 @@
 Param(
     [Parameter(Mandatory)]
     [String]
-    $Global:PreviousSourceFolder
+    $PreviousVersionPath
 )
 Try {
     #region .. Welcome
+    New-Variable -Name $PreviousSourceFolder -Option AllScope,Constant -Value $PreviousVersionPath 
     # Import modules
     [void](Import-Module .\Modules -Force -ErrorAction Stop)
     #.Header data
@@ -82,9 +83,9 @@ Try {
 
     # Routine call function and catch result. The function are listed in an array here under (noun only).
     $routines = @(
-        #'OrganizationalUnits'
-        #'DelegationACEs'
-        #'Translation'
+        'OrganizationalUnits'
+        'DelegationACEs'
+        'Translation'
         'GroupPolicies'
         #'Accounts'
         #'Groups'
@@ -97,7 +98,12 @@ Try {
     # Let's the party begin...
     foreach ($routine in $routines) {
         WriteScreen I0 "analyzing $($routine) section"
-        $mdResume += . "compare-$routine" $oldXML.Settings.$routine $newXML.Settings.$routine
+        if ($routine -ne 'OrganizationalUnits') {
+            $mdResume += . "compare-$routine" $oldXML.Settings.$routine $newXML.Settings.$routine
+        } 
+        Else {
+            $mdResume += . "compare-$routine" $oldXML $newXML
+        }
         WriteScreen R0 "Anlyze of $($routine) section;done"
     }
     #endRegion Routine
