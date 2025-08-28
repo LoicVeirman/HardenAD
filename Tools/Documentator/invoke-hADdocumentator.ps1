@@ -88,7 +88,7 @@ Try {
         'Translation'
         'GroupPolicies'
         'Accounts'
-        #'Groups'
+        'Groups'
         #'DefaultMembers'
         #'TaskSchedules'
         #'LocalAdminPasswordSolution'

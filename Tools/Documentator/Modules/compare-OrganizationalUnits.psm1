@@ -210,11 +210,12 @@ Function compare-OrganizationalUnits {
         $ChangeLog += "  "
     }
     if ($Global:OUchanged) {
-        $ResumeLog += "The architecture of the organizational units contains some change that can be reviewed in *Details-OrganizationalUnits.md*."
+        $ResumeLog += "The architecture of the organizational units contains some change.  "
     }
     Else {
         $ResumeLog += "There was no change to the default OU tree design."
     }
+    $ResumeLog += @('  ','Details can be reviewed in *Details-OrganizationalUnits.md*.')
     #endRegion OU Tree
     
     # outing log details

@@ -1,6 +1,6 @@
 ﻿# HARDEN AD CHANGE LOG  
  
-File updated on 2025-08-28 [11:37:24]  
+File updated on 2025-08-28 [18:46:38]  
  
 ---  
 ### About this file  
@@ -9,7 +9,9 @@ File updated on 2025-08-28 [11:37:24]
  
 The previous edition contained 5 Class: 5 were kept, 0 were removed and 0 were added.
 There were 0 Class renamed and 0 Class with an updated description.
-The architecture of the organizational units contains some change that can be reviewed in *Details-OrganizationalUnits.md*.
+The architecture of the organizational units contains some change.  
+  
+Details can be reviewed in *Details-OrganizationalUnits.md*.
 ### DelegationACEs 
  
 There is a total of 53 ACL present in the new edition. 47 were not modified from the previous release, 2 were removed from the previous edition and 4 were added from the previous edition.
@@ -32,3 +34,8 @@ Details can be reviewed in _Detail-GroupPolicies.md_.
 There are 10 accounts present in this edition: 10 were kept from the previous edition and none were removed from the previous edition.  
   
 Details can be reviewed in _Detail-Accounts.md_.
+### Groups 
+ 
+There are 64 accounts present in this edition: none were kept from the previous edition, 3 have been modified, 8 have been added and none were removed from the previous edition.  
+  
+Details can be reviewed in _Detail-Groups.md_.
