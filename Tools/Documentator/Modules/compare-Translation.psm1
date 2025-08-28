@@ -127,7 +127,6 @@ Function compare-Translation {
     $ChangeLog += '  '
     #endRegion Keyword
 
-
     #region .. Finally
     $ChangeLog | out-file ..\..\Documentations\Changelog\Detail-translation.md -Encoding UTF8 -Force
     $ResumeTxt = "There is a total of $($WKtotal) WellKnownID in this new edition. In this update"
@@ -164,7 +163,7 @@ Function compare-Translation {
         { $_ -eq 1 } { $ResumeTxt += " and $($KWold) was removed.  " }
         { $_ -gt 1 } { $ResumeTxt += " and $($KWold) were removed.  " }
     }
-    $ResumeLog += @($ResumeTxt,'  ')
+    $ResumeLog += @($ResumeTxt,'  ','Details can be reviewed in _Detail-Translation.md_.')
     return $ResumeLog
     #endRegion Finally
 }

@@ -19,7 +19,7 @@ Param(
 )
 Try {
     #region .. Welcome
-    New-Variable -Name $PreviousSourceFolder -Option AllScope,Constant -Value $PreviousVersionPath 
+    $Global:PreviousSourceFolder = $PreviousVersionPath -replace '\\$'
     # Import modules
     [void](Import-Module .\Modules -Force -ErrorAction Stop)
     #.Header data
@@ -87,7 +87,7 @@ Try {
         'DelegationACEs'
         'Translation'
         'GroupPolicies'
-        #'Accounts'
+        'Accounts'
         #'Groups'
         #'DefaultMembers'
         #'TaskSchedules'
