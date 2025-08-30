@@ -83,14 +83,14 @@ Try {
 
     # Routine call function and catch result. The function are listed in an array here under (noun only).
     $routines = @(
-        'OrganizationalUnits'
-        'DelegationACEs'
-        'Translation'
-        'GroupPolicies'
-        'Accounts'
-        'Groups'
-        'DefaultMembers'
-        'LocalAdminPasswordSolution'
+        #'OrganizationalUnits'
+        #'DelegationACEs'
+        #'Translation'
+        #'GroupPolicies'
+        #'Accounts'
+        #'Groups'
+        #'DefaultMembers'
+        #'LocalAdminPasswordSolution'
         'Sequence'
     )
 

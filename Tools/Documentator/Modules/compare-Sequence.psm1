@@ -1,7 +1,7 @@
 Function compare-Sequence {
     <#
         .SYNOPSIS
-        Compare two edition of had, section DefaultMembers
+        Compare two edition of had, section Sequence
 
         .PARAMETER OldData
         The xml data to compare with.
@@ -23,29 +23,42 @@ Function compare-Sequence {
     )
 
     #region .. init
-    $OldSelf = $OldData.AdmPwdSelfPermission
-    $OldPwdR = $OldData.AdmPwdPasswordReader
-    $OldPwdW = $OldData.AdmPwdPasswordReset
-    $newSelf = $newData.AdmPwdSelfPermission
-    $newPwdR = $newData.AdmPwdPasswordReader
-    $newPwdW = $newData.AdmPwdPasswordReset
     # Prepare collect data (md form)
     $ChangeLog = @(
-        "# CHANGE LOG: LocalAdminPasswordSolution  "
-        "Below information details all changes in TasksSequence_HardenAD.xml/LocalAdminPasswordSolution done in this edition.  "
+        "# CHANGE LOG: Sequence  "
+        "Below information details all changes in TasksSequence_HardenAD.xml/Sequence done in this edition.  "
         " "
         "---  "
     )
     $ResumeLog = @(
-        "### LocalAdminPasswordSolution "
+        "### Sequence "
         ' '
     )
     #endRegion init
 
+    #region .. Sequence 
+    foreach ($object in Compare-Object $OldData.ID.Number $NewData.Id.Number -IncludeEqual) {
+        $zTotal++
+        Switch ($object.sideIndicator) {
+            "==" {
+                # present in both - everything to be checked...
+            }
+            "<=" {
+                # Only present in old
+                $zRemoved
+            }
+            "=>" {
+                # Only present in new
+                $zAdded++
+                
+            }
+        }
+    } 
+    #endRegion Sequence 
 
     # Generate output data
     $ChangeLog += @('  ',$ChangeDetails,'  ')
-    $ResumeTxt = "There are $($zTotal) permissions present in this edition:"
+    $ResumeTxt = "There are $($zTotal) actions present in this edition:"
     switch ($zIdentical) {
         { $_ -eq 0 } { $resumeTxt += " none were kept from the previous edition" }
         { $_ -eq 1 } { $resumeTxt += " $($zIdentical) was kept from the previous edition" }
