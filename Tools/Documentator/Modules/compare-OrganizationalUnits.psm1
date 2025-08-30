@@ -215,7 +215,7 @@ Function compare-OrganizationalUnits {
     Else {
         $ResumeLog += "There was no change to the default OU tree design."
     }
-    $ResumeLog += @('  ','Details can be reviewed in *Details-OrganizationalUnits.md*.')
+    $ResumeLog += @('  ','Details can be reviewed in [*Details-OrganizationalUnits.md*](/Documentations/Changelog/Details-OrganizationalUnits.md).')
     #endRegion OU Tree
     
     # outing log details

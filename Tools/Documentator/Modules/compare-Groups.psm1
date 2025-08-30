@@ -186,7 +186,7 @@ Function compare-Groups {
         { $_ -eq 1 } { $resumeTxt += " and $($groupRemoved) was removed from the previous edition.  " }
         { $_ -gt 1 } { $resumeTxt += " and $($groupRemoved) were removed from the previous edition.  " }
     }
-    $ResumeLog += @($ResumeTxt,'  ','Details can be reviewed in _Detail-Groups.md_.')
+    $ResumeLog += @($ResumeTxt,'  ','Details can be reviewed in [_Detail-Groups.md_](/Documentations/Changelog/Detail-Groups.md).')
     #endRegion Compare groups
 
     #region .. Finally

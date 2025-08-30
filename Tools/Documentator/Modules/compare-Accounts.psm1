@@ -147,7 +147,7 @@ Function compare-Accounts {
         { $_ -eq 1 } { $resumeTxt += " and $($UserRemoved) was removed from the previous edition.  " }
         { $_ -gt 1 } { $resumeTxt += " and $($UserRemoved) were removed from the previous edition.  " }
     }
-    $ResumeLog += @($ResumeTxt,'  ','Details can be reviewed in _Detail-Accounts.md_.')
+    $ResumeLog += @($ResumeTxt,'  ','Details can be reviewed in [_Detail-Accounts.md_](/Documentations/Changelog/Detail-Accounts.md).')
     #endRegion Check Users
 
     #region .. Finally

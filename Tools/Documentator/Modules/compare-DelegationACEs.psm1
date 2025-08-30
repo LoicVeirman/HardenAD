@@ -171,7 +171,7 @@ Function compare-DelegationACEs {
         $resumTxt += " and $($SDDLAdded) were added from the previous edition"
     }
     $resumTxt += "."
-    $ResumeLog += @($ResumeTxt,'  ','Details can be reviewed in _Detail-DelegationACEs.md_.')
+    $ResumeLog += @($ResumeTxt,'  ','Details can be reviewed in [_Detail-DelegationACEs.md_](/Documentations/Changelog/Detail-DelegationACEs.md).')
     #endRegion Compare SDDL
 
     #region .. Finally

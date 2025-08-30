@@ -317,7 +317,7 @@ Function compare-GroupPolicies {
         { $_ -eq 1 } { $resumeTxt += " and $($removeGPO) was removed from the previous edition.  "  }
         { $_ -gt 1 } { $resumeTxt += " and $($removeGPO) were removed from the previous edition.  "  }
     }
-    $ResumeLog += @($ResumeTxt,'  ','Details can be reviewed in _Detail-GroupPolicies.md_.')
+    $ResumeLog += @($ResumeTxt,'  ','Details can be reviewed in [_Detail-GroupPolicies.md_](/Documentations/Changelog/Detail-GroupPolicies.md).')
     #endRegion GPO
 
     #region .. Finally

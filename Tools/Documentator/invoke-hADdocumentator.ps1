@@ -89,10 +89,9 @@ Try {
         'GroupPolicies'
         'Accounts'
         'Groups'
-        #'DefaultMembers'
-        #'TaskSchedules'
-        #'LocalAdminPasswordSolution'
-        #'Sequence'
+        'DefaultMembers'
+        'LocalAdminPasswordSolution'
+        'Sequence'
     )
 
     # Let's the party begin...
@@ -110,7 +109,7 @@ Try {
 
     #region .. Byebye
     # Compute Header
-    $mdResume | Out-File ..\..\Documentations\Changelog\Resume-ThisEdition.md -Encoding UTF8 -Force
+    $mdResume | Out-File ..\..\Documentations\Resume-ThisEdition.md -Encoding UTF8 -Force
     $HeaderOver = "Script's done"
     $MyFlatedLine = ""
     for ($i = 1 ; $i -le $HeaderOver.Length + 2 ; $i++) {
@@ -128,7 +127,6 @@ Try {
 }
 Catch {
     #region .. Unexpected Error
-    $mdResume | Out-File ..\..\Documentations\Changelog\Resume-ThisEdition.md -Encoding UTF8 -Force
     WriteScreen E0 @("Unexpected error - Script's leaves unexpectedly.",$_)
     Exit 1
     #endRegion Unexpected Error
