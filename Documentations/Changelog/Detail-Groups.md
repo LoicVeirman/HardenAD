@@ -21,9 +21,9 @@ L-S-T1|No change
 L-S-T2|No change  
 L-S-T1L|No change  
 L-S-T2L|No change  
-L-S-T0_PawAccess_Logon|Modified  
-L-S-T0_PawT0_Logon|Modified  
-L-S-T0_PawT12L_Logon|Modified  
+L-S-T0_PawAccess_Logon|No change  
+L-S-T0_PawT0_Logon|No change  
+L-S-T0_PawT12L_Logon|No change  
 L-S-T0_LocalAdmins_Servers|No change  
 L-S-T1_LocalAdmins_Servers|No change  
 L-S-T1L_LocalAdmins_Servers|No change  
@@ -79,15 +79,8 @@ L-S-T2-DELEG_Group - Manage BitlockerKey|Added
   
   
   
-**L-S-T0_PawAccess_Logon:**  
-> Removed member: *G-S-T0_Managers*  
   
-**L-S-T0_PawT0_Logon:**  
-> Group scope changed to *domainLocal*  
   
-**L-S-T0_PawT12L_Logon:**  
-> Group description changed to *Members of this group will be able to connect to the T1, T2 and TLegacy administration stations*  
-> Added member: *L-S-T1*  
   
   
   

@@ -57,7 +57,7 @@ Added|Windows-Laps-Supported|Windows-Laps-Supported.mof
  
 GPO|Status  
 ---|---  
-HAD-Auto-Update-S1-Thu-0h-Srv|GPO updated
+HAD-Auto-Update-S1-Thu-0h-Srv|GPO unmodified
 HAD-Auto-Update-S1-Thu-1h-Srv|GPO unmodified
 HAD-Auto-Update-S3-Thu-0h-Srv|GPO unmodified
 HAD-Auto-Update-S3-Thu-1h-Srv|GPO unmodified
@@ -180,8 +180,6 @@ HAD-FIPS-Enabled|GPO removed
 HAD-Logon-Cache-2|GPO removed
 HAD-TLS-1_2-Disabled|GPO removed
   
-**HAD-Auto-Update-S1-Thu-0h-Srv:**  
-> File removed: trompette.tmp  
   
   
   
