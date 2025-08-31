@@ -11,7 +11,7 @@ The previous edition contained 5 Class: 5 were kept, 0 were removed and 0 were a
 There were 0 Class renamed and 0 Class with an updated description.
 The architecture of the organizational units contains some change.  
   
-Details can be reviewed in [*Details-OrganizationalUnits.md*](/Documentations/Changelog/Details-OrganizationalUnits.md).
+Details can be reviewed in [*Details-OrganizationalUnits.md*](/Documentations/Changelog/Detail-OrganizationalUnits.md).
 ### DelegationACEs 
  
 There is a total of 53 ACL present in the new edition. 47 were not modified from the previous release, 2 were removed from the previous edition and 4 were added from the previous edition.
