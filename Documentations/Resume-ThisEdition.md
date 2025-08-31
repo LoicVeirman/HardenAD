@@ -21,7 +21,7 @@ Details can be reviewed in [_Detail-DelegationACEs.md_](/Documentations/Changelo
  
 There is a total of 91 WellKnownID in this new edition. In this update 71 are unchanged, 1 have its translation changed, 19 have been added and 3 were removed. There is also a total of 26 Keywords in this new edition: 26 are unchanged and none were removed.  
   
-Details can be reviewed in [_Detail-Translation.md_](/Documentations/Changelog/Detail-Translation.md).
+Details can be reviewed in [_Detail-Translation.md_](/Documentations/Changelog/Detail-translation.md).
 ### GroupPolicies 
  
 There are 46 WMI filter present in this edition: 41 were kept from the previous edition, 5 have been added and none were removed from the previous edition.  
