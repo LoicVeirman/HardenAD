@@ -141,6 +141,7 @@ Function compare-Groups {
                     }
                 }
                 if ($FirstMatch) {
+                    $GroupIdentical++
                     $ChangeLog += "$($Object.InputObject)|No change  "
                 }
                 Else {
