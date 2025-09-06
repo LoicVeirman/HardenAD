@@ -281,6 +281,7 @@ Function compare-GroupPolicies {
                     $ChangeLog += "$($Object.InputObject)|GPO updated"
                 }
                 else {
+                    $sameGPO++
                     $ChangeLog += "$($Object.InputObject)|GPO unmodified"
                 }
 
