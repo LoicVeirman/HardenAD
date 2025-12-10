@@ -47,6 +47,9 @@ Detailed documentation is available in the docs/ folder. It includes:
 
 The official documentation is present on the community website (https://hardenad.net).
 
+# ?? Need Help
+Use the Discussion tab or the Issue tab to ask directly the author some explanation!  
+
 # 🤝 Contributing
 We welcome contributions! Feel free to submit issues, feature requests, or pull requests. See CONTRIBUTING.md for more details.
 
